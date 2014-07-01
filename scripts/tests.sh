@@ -1,4 +1,4 @@
 SRCDIR=/vagrant
 
 cd $SRCDIR
-nosetests -w tests "$@"
+nosetests tests/*.py "$@"
