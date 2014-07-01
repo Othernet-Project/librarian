@@ -26,6 +26,22 @@ PACMAN="pacman --noconfirm --noprogressbar"
 SRCDIR=/vagrant
 PRODUCTION=$NO
 
+SPOOLDIR=/var/spool/downloads
+CONTENTDIR=/srv/outernet
+APPDIR=/srv/librarian
+DBDIR=/var/lib/outernet
+
+
+###############################################################################
+# FILESYSTEM
+###############################################################################
+
+echo "Creating directory structure"
+mkdir -p $SPOOLDIR      # Directory to hold downloaded zipballs
+mkdir -p $CONTENTDIR    # Directory to hold prepared content
+mkdir -p $APPDIR        # Directory to hold librarian application
+mkdir -p $DBDIR         # Directory to hold database files
+
 
 ###############################################################################
 # PACKAGES
@@ -42,3 +58,5 @@ $PACMAN -Sq --needed python python-pip sqlite
 
 #echo "Installing dependencies"
 $PIP install -r "$SRCDIR/conf/requirements.txt"
+
+
