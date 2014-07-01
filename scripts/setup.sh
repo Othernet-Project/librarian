@@ -56,7 +56,8 @@ $PACMAN -Sq --needed python python-pip sqlite
 # LIBRARIES AND DATA FILES
 ###############################################################################
 
-#echo "Installing dependencies"
+echo "Installing dependencies"
 $PIP install -r "$SRCDIR/conf/requirements.txt"
-
-
+if [[ $PRODUCTION == $NO ]]; then
+    $PIP install -r "$SRCDIR/conf/dev_requirements.txt"
+fi

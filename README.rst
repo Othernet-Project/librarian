@@ -44,12 +44,16 @@ Testing the app
 
 To start the application, ssh into the Vagrant box and run::
 
-    /vagrant/script/startapp.sh
+    bash /vagrant/script/startapp.sh
 
 The script takes any arguments that the main application module
 (``librarian/app.py``) takes. Look at the ``app`` module for more information.
 
 Once it's started, it can be accessed at `port 8080`_ on your local machine.
+
+To run unit tests use this script::
+
+    bash /vagrant/scripts/tests.sh
 
 
 .. _Vagrant: http://www.vagrantup.com/
