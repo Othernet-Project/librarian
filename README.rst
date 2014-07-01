@@ -42,9 +42,17 @@ the directory to the source code directory, and run::
 Testing the app
 ===============
 
-TODO
+To start the application, ssh into the Vagrant box and run::
+
+    /vagrant/script/startapp.sh
+
+The script takes any arguments that the main application module
+(``librarian/app.py``) takes. Look at the ``app`` module for more information.
+
+Once it's started, it can be accessed at `port 8080`_ on your local machine.
 
 
 .. _Vagrant: http://www.vagrantup.com/
 .. _custom Vagrant base box: https://github.com/Outernet-Project/archlinux-vagrant
 .. _VritualBox: https://www.virtualbox.org/
+.. _port 8080: http://localhost:8080/
