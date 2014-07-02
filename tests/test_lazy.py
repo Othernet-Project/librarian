@@ -90,7 +90,7 @@ def test_boolean_coercion():
     """ Boolean coercion should work lazily """
     fn, lazy = get_lazy()
     bool(lazy)
-    assert fn.called_once(), "Should be called once"
+    fn.assert_called_once()
 
 
 def test_comparison():
@@ -110,7 +110,7 @@ def test_call():
     """ Calling the lazy object """
     fn, lazy = get_lazy()
     lazy()
-    assert fn.return_value.called_once(), "Should have called return value"
+    fn.return_value.assert_called_once()
 
 
 def test_caching():
@@ -153,7 +153,17 @@ def test_caching_vs_noncaching():
 
 
 def test_decorator_with_args():
-    fn, lazy = get_lazy(1, 2, 3)
+    fn = mock.Mock()
     fn.return_value = 'foo'
-    str(lazy)
-    assert fn.called_once_with(1, 2, 3)
+    lazy_fn = lazy(fn)
+    lazy_fn(1, 2, 3)._eval()
+    fn.assert_called_once_with(1, 2, 3)
+
+
+def test_decorator_with_kwargs():
+    fn = mock.Mock()
+    fn.return_value = 'foo'
+    lazy_fn = lazy(fn)
+    lazy_fn(1, 2, foo=3)._eval()
+    fn.assert_called_once_with(1, 2, foo=3)
+
