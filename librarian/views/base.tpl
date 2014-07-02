@@ -6,12 +6,18 @@
         <link rel="stylesheet" href="/static/css/{{ style }}.css">
     </head>
     <body>
+        <div="languages">
+            % for locale, lang in languages:
+                <a href="{{ i18n_path(locale=locale) }}">{{ lang }}</a>
+            % end
+        </div>
+
         <div class="body">
         {{! base }}
         </div>
 
         <div class="footer">
-        <p class="appver">Librarian v{{ app_version }}</p>
+        <p class="appver">{{ _('Librarian') }} v{{ app_version }}</p>
         <p class="copy">2014 Outernet Inc</p>
         </div>
     </body>

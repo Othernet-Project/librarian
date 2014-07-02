@@ -1,2 +1,3 @@
 % rebase('base.tpl')
-<h1>Dashboard</h1>
+<h1>{{ _('Dashboard') }}</h1>
+
