@@ -50,6 +50,26 @@ def test_coerced():
     assert s == 'foobar', "Should be 'foobar', got '%s'" % s
 
 
+def test_coercion_should_return_string():
+    fn, lazy = get_lazy()
+    fn.return_value = 1
+    try:
+        s = str(lazy)
+    except Exception as err:
+        assert False, "Should not raise, but raised '%s'" % err
+    assert s == '1', "S should be string '1', got '%s' instead" % s
+
+
+def test_coercion_into_bytes():
+    fn, lazy = get_lazy()
+    fn.return_value = 1
+    try:
+        s = bytes(lazy)
+    except Exception as err:
+        assert False, "Should not raise, but raised '%s'" % err
+    assert s == b'\x00', "Should be b'\x00', got '%s' instead" % s
+
+
 def test_interpolated():
     """ Should evaluate a function when interpolated into string """
     fn, lazy = get_lazy()
@@ -131,3 +151,9 @@ def test_caching_vs_noncaching():
     assert isinstance(val1, Lazy), "Expected Lazy instance"
     assert isinstance(val2, CachingLazy), "Expected CachingLazy instance"
 
+
+def test_decorator_with_args():
+    fn, lazy = get_lazy(1, 2, 3)
+    fn.return_value = 'foo'
+    str(lazy)
+    assert fn.called_once_with(1, 2, 3)

@@ -43,7 +43,7 @@ class Lazy:
         return '<Lazy {}>'.format(self._func)
 
     def __str__(self):
-        return self._eval()
+        return str(self._eval())
 
     def __bytes__(self):
         return bytes(self._eval())
