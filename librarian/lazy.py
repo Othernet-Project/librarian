@@ -112,20 +112,22 @@ class CachingLazy(Lazy):
 def lazy(fn, lazy_class=Lazy):
     """ Converts a function into lazily evaluated version
 
-    The function will return a ``Lazy`` or ``CachingLazy`` instance, which
-    evaluates the original function only when its special methods are called.
+    The lazy object is instance of ``Lazy`` class, but this can be overridden
+    by using ``lazy_class`` argument.
 
-    The ``always_evaluate`` argument determines whether ``Lazy`` or
-    ``CachingLazy`` instance is retruned. If ``True`` is passed, a ``Lazy``
-    object is returned, which will always reevaluate the function call whenever
-    the return value is actually used. Otherwise, the return value is behave
-    'normally', meaning it will only cause the function call to be evaluated
-    once.
-
-    :param always_evaluate:     whether to always reevaluate the result
-                                (default: ``False``)
+    :param lazy_class:  class to use for creating lazy objects
     """
     @wraps(fn)
     def decorator(*args, **kwargs):
         return lazy_class(fn, args, kwargs)
     return decorator
+
+
+def caching_lazy(fn):
+    """ Convert a function into lazily evaluated version which caches value
+
+    This is the equivalent of using the ``lazy`` decorator with ``CachingLazy``
+    class. Use this decorator as shortcut when caching behavior is needed
+    (provides a more intiutive interface).
+    """
+    return lazy(fn, lazy_class=CachingLazy)
