@@ -62,7 +62,14 @@ if __name__ == '__main__':
                         'file', default=CONFPATH)
     parser.add_argument('--debug-conf', action='store_true', help='print out '
                         'the configuration in use and exit')
+    parser.add_argument('--version', action='store_true', help='print out '
+                        'version number and exit')
     args = parser.parse_args(sys.argv[1:])
+
+    if args.version:
+        print('v%s' % __version__)
+        sys.exit(0)
+
     app.config.load_config(args.conf)
 
     if args.debug_conf:
