@@ -12,22 +12,34 @@ import os
 from os.path import join, dirname, abspath, normpath, exists
 
 import bottle
-from bottle import request
+from bottle import request, view
 
+from librarian.i18n import (lazy_gettext as gettext, lazy_ngettext as ngettext,
+                            i18n_path, I18NPlugin)
 import librarian
 __version__ = librarian.__version__
 __autho__ = librarian.__author__
 
 
+_ = gettext
+
 MODDIR = dirname(abspath(__file__))
 CONFPATH = normpath(join(MODDIR, '../conf/librarian.ini'))
 
+LANGS = [
+    ('de_DE', 'Deutsch'),
+    ('en_US', 'English'),
+    ('fr_FR', 'français'),
+    ('es_ES', 'español'),
+    ('zh_CN', '中文')
+]
+DEFAULT_LOCALE = 'en_US'
 
 app = bottle.Bottle()
 
 
 @app.get('/')
-@bottle.view('dashboard')
+@view('dashboard')
 def dashboard():
     """ Render the dashboard """
     return {}
@@ -40,10 +52,13 @@ def start():
     bottle.TEMPLATE_PATH.insert(0, config['librarian.views'])
     bottle.BaseTemplate.defaults.update({
         'app_version': __version__,
-        'title': config['librarian.default_title'],
+        'request': request,
+        'title': _('Librarian'),
         'style': 'site',  # Default stylesheet
     })
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
+    wsgiapp = I18NPlugin(wsgiapp, 'librarian', LANGS, DEFAULT_LOCALE,
+                         locale_dir=config['librarian.locale'])
     bottle.run(app=wsgiapp,
                server=config['librarian.server'],
                host=config['librarian.bind'],
