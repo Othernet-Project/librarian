@@ -72,21 +72,51 @@ def test_comparison():
     assert lazy >= 1
     assert lazy <= 1
     assert lazy != 0
-    assert fn.called_once(), "Expected one cal, got %s" % fn.call_count
+    assert fn.call_count == 6, "Expected 6 calls, got %s" % fn.call_count
 
 
-def test_calling():
-    """ Calling the lazy object will call function's return value """
+def test_call():
+    """ Calling the lazy object """
     fn, lazy = get_lazy()
     lazy()
     assert fn.return_value.called_once(), "Should have called return value"
 
 
+def test_caching():
+    """ Caching lazy only evaluates once """
+    fn = mock.Mock()
+    lazy = CachingLazy(fn)
+    lazy._eval()
+    lazy._eval()
+    assert fn.call_count == 1, "Expected one call, got %s" % fn.call_count
+    assert lazy._called, "Should set called flag to True"
+
+
 def test_decorator():
-    """ Test lazy decorator """
+    """ Calling the lazy object will call function's return value """
     fn = mock.Mock()
     lazy_fn = lazy(fn)
     val = lazy_fn()
     assert fn.called == False, "Should not be called before value is accessed"
     assert isinstance(val, Lazy), "Return value should be a Lazy instance"
+
+
+def test_caching_vs_noncaching():
+    """ Testing use of different Lazy classes """
+    fn1 = mock.Mock()
+    fn2 = mock.Mock()
+    lazy_fn = lazy(fn1)
+    lazy_caching_fn = lazy(fn2, CachingLazy)
+    val1 = lazy_fn()
+    val1._eval()
+    val1._eval()
+    val1._eval()
+    val2 = lazy_caching_fn()
+    val2._eval()
+    val2._eval()
+    val2._eval()
+    assert fn1.call_count == 3, "Expected 3 calls, got %s" % fn1.call_count
+    assert fn2.call_count == 1, "Expected one call, got %s" % fn2.call_count
+    assert isinstance(val1, Lazy), "Expected Lazy instance"
+    assert isinstance(val2, CachingLazy), "Expected CachingLazy instance"
 
