@@ -30,11 +30,7 @@ class Lazy:
         self._kwargs = kwargs
 
     def _eval(self):
-        try:
-            return self._func(*self._args, **self._kwargs)
-        except Exception as err:
-            print('args', self._args)
-            print('kwargs', self._kwargs)
+        return self._func(*self._args, **self._kwargs)
 
     @staticmethod
     def _eval_other(other):
