@@ -15,13 +15,11 @@
 
 set -e
 
-SRCDIR=/vagrant
-LOCALEDIR=$SRCDIR/locales
-TEMPLATE=$LOCALEDIR/librarian.pot
+SCRIPTDIR="$( cd "$( dirname "$0" )" && pwd )"
+. "$SCRIPTDIR/i18n_vars"
+
 PYEXT=py
 TPLEXT=tpl
-
-LANGUAGES=( de_DE en_US es_ES fr_FR zh_CN )
 
 # Paths that will be processed
 PYTHON_PATHS=(librarian)
@@ -45,7 +43,7 @@ process_dir() {
             echo "Creating new PO template $TEMPLATE"
         fi
         xgettext -L python --force-po --copyright-holder="Outernet Inc" \
-            --msgid-bugs-address=translations@outernet.is \
+            --msgid-bugs-address=translations@outernet.is --from-code=UTF-8 \
             -o $TEMPLATE $joinopt $file
     done
 }
@@ -56,7 +54,7 @@ process_dir() {
 #
 get_po_path() {
     lang=$1
-    echo "$LOCALEDIR/${lang}.po"
+    echo "$LOCALEDIR/${lang}/LC_MESSAGES/${DOMAIN}.po"
 }
 
 # update_po $lang
@@ -97,6 +95,7 @@ done
 
 for language in ${LANGUAGES[*]}; do
     path=$(get_po_path "$language")
+    mkdir -p $(dirname "$path")
     if [[ ! -f "$path" ]]; then
         create_po "$language"
     else
