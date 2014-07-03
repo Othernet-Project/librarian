@@ -61,7 +61,7 @@ def start():
 
     # Add middlewares
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
-    wsgiapp = I18NPlugin(wsgiapp, 'librarian', LANGS, DEFAULT_LOCALE,
+    wsgiapp = I18NPlugin(wsgiapp, LANGS, DEFAULT_LOCALE, domain='librarian',
                          locale_dir=config['librarian.locale'])
 
     # Srart the server
