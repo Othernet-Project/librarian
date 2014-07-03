@@ -49,6 +49,8 @@ def start():
     """ Start the application """
 
     config = app.config
+
+    # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, config['librarian.views'])
     bottle.BaseTemplate.defaults.update({
         'app_version': __version__,
@@ -56,9 +58,13 @@ def start():
         'title': _('Librarian'),
         'style': 'site',  # Default stylesheet
     })
+
+    # Add middlewares
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
     wsgiapp = I18NPlugin(wsgiapp, 'librarian', LANGS, DEFAULT_LOCALE,
                          locale_dir=config['librarian.locale'])
+
+    # Srart the server
     bottle.run(app=wsgiapp,
                server=config['librarian.server'],
                host=config['librarian.bind'],
