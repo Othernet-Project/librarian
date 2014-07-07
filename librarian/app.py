@@ -16,6 +16,8 @@ from bottle import request, view
 
 import librarian.helpers
 from librarian import migrations
+from librarian.exceptions import *
+from librarian import content_crypto
 from librarian.i18n import lazy_gettext, I18NPlugin, i18n_path
 import librarian
 
@@ -51,6 +53,13 @@ def start():
     """ Start the application """
 
     config = app.config
+
+    # Import gnupg keys
+    try:
+        content_crypto.import_key(keypath=config['content.key'],
+                                  keyring=config['content.keyring'])
+    except content_crypto.KeyImportError as err:
+        warn(AppStartupWarning(err))
 
     # Run database migrations
     migrations.connect(config['database.path'])
