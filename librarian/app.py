@@ -14,16 +14,16 @@ from os.path import join, dirname, abspath, normpath, exists
 import bottle
 from bottle import request, view
 
-from librarian.i18n import (lazy_gettext as gettext, lazy_ngettext as ngettext,
-                            i18n_path, I18NPlugin)
 import librarian.helpers
 from librarian import migrations
+from librarian.i18n import lazy_gettext, I18NPlugin, i18n_path
 import librarian
+
 __version__ = librarian.__version__
 __autho__ = librarian.__author__
 
 
-_ = gettext
+_ = lazy_gettext
 
 MODDIR = dirname(abspath(__file__))
 CONFPATH = normpath(join(MODDIR, '../conf/librarian.ini'))
@@ -69,7 +69,8 @@ def start():
 
     # Add middlewares
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
-    wsgiapp = I18NPlugin(wsgiapp, LANGS, DEFAULT_LOCALE, domain='librarian',
+    wsgiapp = I18NPlugin(wsgiapp, langs=LANGS, default_locale=DEFAULT_LOCALE,
+                         domain='librarian',
                          locale_dir=config['librarian.locale'])
 
     # Srart the server
