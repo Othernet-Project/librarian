@@ -87,9 +87,9 @@ def start():
     bottle.run(app=wsgiapp,
                server=config['librarian.server'],
                host=config['librarian.bind'],
-               port=config['librarian.port'],
-               reloader=config['librarian.debug'],
-               debug=config['librarian.debug'])
+               port=int(config['librarian.port']),
+               reloader=config['librarian.debug'] == 'yes',
+               debug=config['librarian.debug'] == 'yes')
 
 
 if __name__ == '__main__':
