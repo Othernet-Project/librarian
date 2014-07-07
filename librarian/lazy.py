@@ -39,6 +39,21 @@ class Lazy:
         except AttributeError:
             return other
 
+    def __getattr__(self, attr):
+        obj = self._eval()
+        return getattr(obj, attr)
+
+    # We don't need __setattr__ and __delattr__ because the proxy object is not
+    # really an object.
+
+    def __getitem__(self, key):
+        obj = self._eval()
+        return obj.__getitem__(key)
+
+    @property
+    def __class__(self):
+        return self._eval().__class__
+
     def __repr__(self):
         return '<Lazy {}>'.format(self._func)
 
@@ -85,6 +100,9 @@ class Lazy:
     def __add__(self, other):
         other = self._eval_other(other)
         return self._eval() + other
+
+    def __radd__(self, other):
+        return self._eval_other(other) + self._eval()
 
     def __bool__(self):
         return bool(self._eval())
