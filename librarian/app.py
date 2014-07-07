@@ -16,6 +16,7 @@ from bottle import request, view
 
 from librarian.i18n import (lazy_gettext as gettext, lazy_ngettext as ngettext,
                             i18n_path, I18NPlugin)
+import librarian.helpers
 from librarian import migrations
 import librarian
 __version__ = librarian.__version__
@@ -63,6 +64,7 @@ def start():
         'request': request,
         'title': _('Librarian'),
         'style': 'site',  # Default stylesheet
+        'h': librarian.helpers,
     })
 
     # Add middlewares
