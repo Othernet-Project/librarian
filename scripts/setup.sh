@@ -30,6 +30,7 @@ SPOOLDIR=/var/spool/downloads
 CONTENTDIR=/srv/outernet
 APPDIR=/srv/librarian
 DBDIR=/var/lib/outernet
+KEYDIR=/var/lib/outernet/gnupg
 
 
 ###############################################################################
@@ -40,7 +41,9 @@ echo "Creating directory structure"
 mkdir -p $SPOOLDIR      # Directory to hold downloaded zipballs
 mkdir -p $CONTENTDIR    # Directory to hold prepared content
 mkdir -p $APPDIR        # Directory to hold librarian application
-mkdir -p $DBDIR         # Directory to hold database files
+mkdir -p $KEYDIR        # Directory to hold gnupg keys (includes $DBDIR)
+chmod 700 $SPOOLDIR     # This dir should be kept safe
+chmod 700 $KEYDIR       # Application runs as root, so it's OK if it's 700
 
 
 ###############################################################################
