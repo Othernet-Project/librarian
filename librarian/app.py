@@ -16,6 +16,7 @@ from bottle import request, view
 
 from librarian.i18n import (lazy_gettext as gettext, lazy_ngettext as ngettext,
                             i18n_path, I18NPlugin)
+from librarian import migrations
 import librarian
 __version__ = librarian.__version__
 __autho__ = librarian.__author__
@@ -49,6 +50,11 @@ def start():
     """ Start the application """
 
     config = app.config
+
+    # Run database migrations
+    migrations.connect(config['database.path'])
+    migrations.migrate(config['database.migrations'])
+    migrations.disconnect()
 
     # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, config['librarian.views'])
