@@ -9,6 +9,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
+from warnings import warn
 from os.path import join, dirname, abspath, normpath, exists
 
 import bottle
