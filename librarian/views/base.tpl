@@ -2,6 +2,8 @@
 
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>{{ title }} v{{ app_version }}</title>
         <link rel="stylesheet" href="/static/css/{{ style }}.css">
     </head>

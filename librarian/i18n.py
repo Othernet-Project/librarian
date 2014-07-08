@@ -193,9 +193,8 @@ class I18NPlugin(object):
             request.locale = locale = request.environ.get('LOCALE')
             if locale not in self.locales:
                 # If no locale had been specified, redirect to default one
-                redirect(self.add_prefix(
-                    request.environ.get('ORIGINAL_PATH', '/'),
-                    self.default_locale))
+                path = request.environ.get('ORIGINA_PATH', '/')
+                redirect(i18n_path(path, self.default_locale))
             request.gettext = self.gettext_apis[locale]
             return callback(*args, **kwargs)
         return wrapper
@@ -206,10 +205,6 @@ class I18NPlugin(object):
             if path_prefix == locale.lower():
                 return locale
         return None
-
-    @staticmethod
-    def add_prefix(path, locale):
-        return i18n_path(path, locale)
 
     @staticmethod
     def strip_prefix(path, locale):

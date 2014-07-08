@@ -3,4 +3,5 @@ __pycache__/
 *.sw[op]
 *.mo
 /.vagrant
+/tmp
 

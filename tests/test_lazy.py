@@ -50,6 +50,17 @@ def test_coerced():
     assert s == 'foobar', "Should be 'foobar', got '%s'" % s
 
 
+def test_reverse_coerced():
+    """ Should evaluate a function when added to a string """
+    fn, lazy = get_lazy()
+    fn.return_value = 'foo'
+    s = 'bar' + lazy
+    assert s == 'barfoo'
+    s = 'bar'
+    s += lazy
+    assert s == 'barfoo'
+
+
 def test_coercion_should_return_string():
     fn, lazy = get_lazy()
     fn.return_value = 1
@@ -166,4 +177,30 @@ def test_decorator_with_kwargs():
     lazy_fn = lazy(fn)
     lazy_fn(1, 2, foo=3)._eval()
     fn.assert_called_once_with(1, 2, foo=3)
+
+
+def test_lazy_class():
+    fn = mock.Mock()
+    fn.return_value = 1  # int
+    lazy_fn = lazy(fn)
+    lazy_obj = lazy_fn()
+    assert isinstance(lazy_obj, int)
+    fn.return_value = 'str'  # str
+    assert isinstance(lazy_obj, str)
+
+
+def test_subscript():
+    fn = mock.Mock()
+    fn.return_value = 'foo'
+    lazy_fn = lazy(fn)
+    lazy_obj = lazy_fn()
+    assert lazy_obj[:2] == 'fo'
+
+
+def test_methods():
+    fn = mock.Mock()
+    fn.return_value = 'foobar'
+    lazy_fn = lazy(fn)
+    lazy_obj = lazy_fn()
+    assert lazy_obj.replace('bar', 'foo') == 'foofoo'
 

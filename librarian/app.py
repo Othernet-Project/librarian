@@ -8,20 +8,26 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import os
-from os.path import join, dirname, abspath, normpath, exists
+from warnings import warn
+from os.path import join, dirname, abspath, normpath
 
 import bottle
 from bottle import request, view
 
-from librarian.i18n import (lazy_gettext as gettext, lazy_ngettext as ngettext,
-                            i18n_path, I18NPlugin)
+import librarian.helpers
+from librarian import migrations
+from librarian.exceptions import *
+from librarian import content_crypto
+from librarian import downloads
+from librarian import squery
+from librarian.i18n import lazy_gettext, I18NPlugin, i18n_path
 import librarian
+
 __version__ = librarian.__version__
 __autho__ = librarian.__author__
 
 
-_ = gettext
+_ = lazy_gettext
 
 MODDIR = dirname(abspath(__file__))
 CONFPATH = normpath(join(MODDIR, '../conf/librarian.ini'))
@@ -45,26 +51,87 @@ def dashboard():
     return {}
 
 
+@app.get('/downloads/')
+@view('downloads', vals={})
+def list_downloads():
+    """ Render a list of downloaded content """
+    # FIXME: The whole process of decrypting signed content is vulnerable to
+    # injection of supposedly decrypted zip files. If attacker is able to gain
+    # access to filesystem and is able to write a new zip file in the spool
+    # directory, the system will treat it as a safe content file. There are
+    # currently no mechanisms for invalidating such files.
+    decryptables = downloads.get_decryptable()
+    extracted, errors = downloads.decrypt_all(decryptables)
+    zipballs = downloads.get_zipballs()
+    metadata = []
+    for z in zipballs:
+        meta = downloads.get_metadata(z)
+        meta['md5'] = downloads.get_md5_from_path(z)
+        metadata.append(meta)
+    # FIXME: Log errors
+    return dict(metadata=metadata, errors=errors)
+
+
+@app.post('/downloads/')
+@view('downloads_error')
+def manage_downloads():
+    """ Manage the downloaded content """
+    forms = request.forms
+    action = forms.get('action')
+    file_list = forms.getall('selection')
+    if not action:
+        # Bad action
+        return {'error': _('Invalid action, please use one of the form '
+                           'buttons.')}
+    if action == 'add':
+        downloads.add_to_archive(file_list)
+    if action == 'delete':
+        downloads.remove_downloads(file_list)
+    bottle.redirect(i18n_path('/downloads/'))
+
+
 def start():
     """ Start the application """
 
     config = app.config
+
+    # Import gnupg keys
+    try:
+        content_crypto.import_key(keypath=config['content.key'],
+                                  keyring=config['content.keyring'])
+    except content_crypto.KeyImportError as err:
+        warn(AppStartupWarning(err))
+
+    # Run database migrations
+    db = squery.Database(config['database.path'])
+    migrations.migrate(db, config['database.migrations'])
+    db.disconnect()
+
+    app.install(squery.database_plugin)
+
+    # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, config['librarian.views'])
     bottle.BaseTemplate.defaults.update({
         'app_version': __version__,
         'request': request,
         'title': _('Librarian'),
         'style': 'site',  # Default stylesheet
+        'h': librarian.helpers,
     })
+
+    # Add middlewares
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
-    wsgiapp = I18NPlugin(wsgiapp, 'librarian', LANGS, DEFAULT_LOCALE,
+    wsgiapp = I18NPlugin(wsgiapp, langs=LANGS, default_locale=DEFAULT_LOCALE,
+                         domain='librarian',
                          locale_dir=config['librarian.locale'])
+
+    # Srart the server
     bottle.run(app=wsgiapp,
                server=config['librarian.server'],
                host=config['librarian.bind'],
-               port=config['librarian.port'],
-               reloader=config['librarian.debug'],
-               debug=config['librarian.debug'])
+               port=int(config['librarian.port']),
+               reloader=config['librarian.debug'] == 'yes',
+               debug=config['librarian.debug'] == 'yes')
 
 
 if __name__ == '__main__':
