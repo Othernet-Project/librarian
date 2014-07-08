@@ -10,6 +10,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 import json
+import shutil
 import zipfile
 from contextlib import closing
 from functools import partial
@@ -25,7 +26,8 @@ __version__ = _version
 __author__ = _author
 __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
            'get_decryptable', 'decrypt_all', 'get_zipballs', 'get_timestamp',
-           'get_md5_from_path', 'get_zip_path', 'get_file', 'get_metadata',)
+           'get_md5_from_path', 'get_zip_path', 'get_file', 'get_metadata',
+           'add_to_archive',)
 
 
 class ContentError(BaseException):
@@ -262,4 +264,27 @@ def remove_downloads(md5s):
         except OSError:
             print('not removed')
             pass  # Intentionally ignoring. Not considered critical.
+
+
+def add_to_archive(hashes):
+    query = """
+    REPLACE INTO zipballs
+    (md5, domain, url, title, images, timestamp, updated)
+    VALUES
+    (:md5, :domain, :url, :title, :images, :timestamp, :updated)
+    """
+    config = request.app.config
+    target_dir = config['content.contentdir']
+    db = request.db
+    metadata = []
+    for md5, path in [(h, get_spool_zip_path(h)) for h in hashes]:
+        meta = get_metadata(path)
+        meta['md5'] = md5
+        meta['updated'] = datetime.now()
+        shutil.move(path, target_dir)
+        metadata.append(meta)
+    with db.transaction() as cur:
+        cur.executemany(query, metadata)
+        rowcount = cur.rowcount
+    return rowcount
 
