@@ -8,9 +8,8 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import os
 from warnings import warn
-from os.path import join, dirname, abspath, normpath, exists
+from os.path import join, dirname, abspath, normpath
 
 import bottle
 from bottle import request, view
