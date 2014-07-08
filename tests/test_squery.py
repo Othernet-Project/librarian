@@ -17,69 +17,145 @@ from librarian.squery import *
 
 
 @mock.patch('librarian.squery.sqlite3')
-def test_connect(sqlite3):
-    connect('foo')
+def test_db_initialize(sqlite3):
+    db = Database('foo')
+    assert db.dbpath == 'foo'
+    assert db.db is None
+    assert db._cursor is None
+
+
+@mock.patch('librarian.squery.sqlite3')
+def test_db_repr(sqlite3):
+    db = Database('foo')
+    assert repr(db) == "<Database dbpath='foo'>"
+
+
+@mock.patch('librarian.squery.sqlite3')
+def test_db_connect(sqlite3):
+    db = Database('foo')
+    db.connect()
     sqlite3.connect.assert_called_once_with('foo')
+    assert db.db == sqlite3.connect.return_value
 
 
 @mock.patch('librarian.squery.sqlite3')
-def test_connect_stores_connection(sqlite3):
-    from librarian import squery
-    connect('foo')
-    assert squery.DB == sqlite3.connect.return_value
+def test_db_disconnect(sqlite3):
+    db = Database('foo')
+    db.connect()
+    db.disconnect()
+    assert sqlite3.connect.return_value.close.call_count == 1
+    assert db.db is None
 
 
 @mock.patch('librarian.squery.sqlite3')
-def test_disconnect(sqlite3):
-    connect('foo')
-    disconnect()
-    sqlite3.connect.return_value.close.assert_called_once()
+def test_disconnect_wihtout_connection(sqlite3):
+    db = Database('foo')
+    db.connect()
+    db.disconnect()
+    db.disconnect()
+    assert sqlite3.connect.return_value.close.call_count == 1
 
 
 @mock.patch('librarian.squery.sqlite3')
-def test_disconnect_removes_cached_connection(sqlite3):
-    from librarian import squery
-    connect('foo')
-    assert squery.DB is not None
-    disconnect()
-    assert squery.DB == None
+def test_cursor_property(sqlite3):
+    db = Database('foo')
+    db.connect()
+    cur = db.cursor
+    assert cur == sqlite3.connect.return_value.cursor.return_value
 
 
 @mock.patch('librarian.squery.sqlite3')
-def test_disconnect_with_no_connection(sqlite3):
-    with pytest.raises(DBError):
-        disconnect()
+def test_cursor_connects(sqlite3):
+    db = Database('foo')
+    cur = db.cursor
+    assert sqlite3.connect.call_count == 1
 
 
 @mock.patch('librarian.squery.sqlite3')
-def test_execute_with_new_cursor(sqlite3):
-    connect('foo')
-    connection = sqlite3.connect.return_value
-    cursor = connection.cursor.return_value
-    query('SELECT ? FROM foo;', 'bar')
-    connection.cursor.assert_called_once()
-    cursor.execute.assert_called_once_with('SELECT ? FROM foo;', ('bar',))
+def test_cursor_is_cached(sqlite3):
+    db = Database('foo')
+    cur = db.cursor
+    assert db._cursor is not None
+    assert cur == db._cursor
+    cur = db.cursor
+    assert sqlite3.connect.call_count == 1
 
 
 @mock.patch('librarian.squery.sqlite3')
-def test_execute_with_existing_cursor(sqlite3):
-    cursor = mock.Mock()
-    connect('foo')
-    connection = sqlite3.connection.return_value
-    query('SELECT ? FROM foo;', 'bar', cursor=cursor)
-    connection.cursor.assert_not_called()
-    cursor.execute.assert_called_once_with('SELECT ? FROM foo;', ('bar',))
+def test_query_uses_cursor(sqlite3):
+    # FIXME: We really should be testing if the property has been accessed
+    db = Database('foo')
+    db.connect()
+    db.query('SELECT * FROM foo;')
+    assert sqlite3.connect.return_value.cursor.call_count == 1
 
 
-def test_query_with_kw_params():
-    cursor = mock.Mock()
-    query('SELECT :foo FROM :bar', foo='foo', bar='bar', cursor=cursor)
-    cursor.execute.assert_called_once_with('SELECT :foo FROM :bar',
-                                           {'foo': 'foo', 'bar': 'bar'})
+@mock.patch('librarian.squery.sqlite3')
+def test_query_calls_execute(sqlite3):
+    db = Database('foo')
+    db.connect()
+    db.query('SELECT * FROM foo;')
+    cur = db.cursor
+    cur.execute.assert_called_once_with('SELECT * FROM foo;', ())
 
 
-def test_query_returns_cursor():
-    cursor = mock.Mock()
-    ret = query('SELECT * FROM foo', cursor=cursor)
-    assert ret == cursor
+@mock.patch('librarian.squery.sqlite3')
+def test_query_with_params(sqlite3):
+    db = Database('foo')
+    db.connect()
+    db.query('SELECT ? FROM foo;', 'bar')
+    cur = db.cursor
+    cur.execute.assert_called_once_with('SELECT ? FROM foo;', ('bar',))
+
+
+@mock.patch('librarian.squery.sqlite3')
+def test_query_with_kw_params(sqlite3):
+    db = Database('foo')
+    db.connect()
+    db.query('SELECT :col FROM foo;', col='bar')
+    db.cursor.execute.assert_called_once_with('SELECT :col FROM foo;',
+                                              {'col': 'bar'})
+
+
+@mock.patch('librarian.squery.sqlite3')
+def test_query_returns_cursor(sqlite3):
+    db = Database('foo')
+    db.connect()
+    ret = db.query('SELECT * FROM foo')
+    assert ret == db.cursor
+
+
+@mock.patch('librarian.squery.sqlite3')
+def test_transaction_uses_cursor(sqlite3):
+    db = Database('foo')
+    with db.transaction() as cur:
+        pass
+    assert sqlite3.connect.return_value.cursor.called
+
+
+@mock.patch('librarian.squery.sqlite3')
+def test_transaction_begins_and_commits(sqlite3):
+    db = Database('foo')
+    with db.transaction() as cur:
+        pass
+    db.cursor.execute.assert_called_with('BEGIN')
+    assert db.db.commit.called
+
+
+@mock.patch('librarian.squery.sqlite3')
+def test_transaction_rollback(sqlite3):
+    db = Database('foo')
+    with pytest.raises(Exception):
+        with db.transaction() as cur:
+            raise Exception()
+    assert db.db.commit.called == False
+    assert db.db.rollback.called
+
+
+@mock.patch('librarian.squery.sqlite3')
+def test_transaction_silent(sqlite3):
+    db = Database('foo')
+    with db.transaction(silent=True) as cur:
+        raise Exception()
+    assert True  # All ok if no exception leaks
 

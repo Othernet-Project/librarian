@@ -13,78 +13,65 @@ from functools import wraps
 from itertools import dropwhile
 from contextlib import contextmanager
 
+from bottle import request
+
 from . import __version__ as _version, __author__ as _author
 
 __version__ = _version
 __author__ = _author
-__all__ = ('DBError', 'transaction', 'connect', 'disconnect', 'query',)
+__all__ = ('Database', 'database_plugin',)
 
 
-DB = None
+class Database:
+    def __init__(self, dbpath):
+        self.dbpath = dbpath
+        self.db = None
+        self._cursor = None
+
+    def connect(self):
+        if self.db is None:
+            self.db = sqlite3.connect(self.dbpath)
+
+    def disconnect(self):
+        if self.db is not None:
+            self.db.close()
+            self.db = None
+
+    def query(self, qry, *params, **kwparams):
+        cursor = self.cursor
+        cursor.execute(qry, kwparams or params)
+        return cursor
+
+    @property
+    def cursor(self):
+        self.connect()
+        if self._cursor is None:
+            self._cursor = self.db.cursor()
+        return self._cursor
+
+    @contextmanager
+    def transaction(self, silent=False):
+        self.cursor.execute('BEGIN')
+        try:
+            yield self.cursor
+            self.db.commit()
+        except Exception as err:
+            self.db.rollback()
+            if silent:
+                return
+            raise
+
+    def __repr__(self):
+        return "<Database dbpath='%s'>" % self.dbpath
 
 
-class DBError(BaseException):
-    pass
-
-
-@contextmanager
-def transaction():
-    cur = DB.cursor()
-    cur.execute('BEGIN')
-    try:
-        yield cur
-        DB.commit()
-    except sqlite3.OperationalError:
-        DB.rollback()
-        raise
-
-
-def connect(db):
-    """ Return database connection for database at specified path
-
-    This function uses a global variable as cache so once it has established a
-    connection, it returns the same connection object to all callers.
-
-    :param db:  database path
-    :returns:   connection object
-    """
-    global DB  # Yes, it's ugly, but it works for this simple module
-    print('Connecting to SQLite3 database at %s' % db)
-    DB = sqlite3.connect(db)
-
-
-def disconnect():
-    """ Disconnect from the database
-
-    :param db:  database path
-    """
-    global DB  # Yes, it's ugly, but it works for this simple module
-    try:
-        DB.close()
-        print("Disconnected from SQLite3 database")
-    except AttributeError:
-        raise DBError('No connection to close')
-    finally:
-        DB = None
-
-
-def query(qry, *params, cursor=None, **kwparams):
-    """ Obtain a cursor if needed and run query
-
-    Parameters and keyword parameters are mutually exclusive, and keyword
-    parameters take precendence. If you specify both positional and keyword
-    parameters, only the keyword parameters are used.
-
-    :param qry:         query
-    :param cursor:      cursor object (a new one is obtained if this argument
-                        is missing)
-    :param params:      parameters
-    :param kwparams:    keyword parameters
-    """
-    try:
-        cur = cursor or DB.cursor()
-    except AttributeError:
-        raise DBError('Not connected')
-    cur.execute(qry, kwparams or params)
-    return cur
+def database_plugin(callback):
+    @wraps(callback)
+    def plugin(*args, **kwargs):
+        config = request.app.config
+        request.db = db = Database(config['database.path'])
+        body = callback(*args, **kwargs)
+        db.disconnect()
+        return body
+    return plugin
 
