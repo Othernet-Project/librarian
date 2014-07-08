@@ -15,14 +15,13 @@ from functools import wraps
 from itertools import dropwhile
 from contextlib import contextmanager
 
-from .squery import transaction, query
 from . import __version__ as _version, __author__ as _author
 
 
 __version__ = _version
 __author__ = _author
-__all__ = ('transaction', 'connect', 'disconnect', 'get_migrations',
-           'get_migration_version', 'run_migration', 'migrate')
+__all__ = ('get_migrations', 'get_migration_version', 'run_migration',
+           'migrate')
 
 
 MTABLE = 'migrations'   # SQL table in which migration data is stored
@@ -46,11 +45,15 @@ def get_migrations(path, min_ver=0):
     return dropwhile(lambda x: x[1] < min_ver, paths)
 
 
-def get_migration_version():
-    """ Query database and return migration version """
+def get_migration_version(db):
+    """ Query database and return migration version
+
+    :param db:  connetion object
+    :returns:   current migration version or -1 if no migrations exist
+    """
     qry = 'select version from %s where id == 0;' % MTABLE
     try:
-        cur = query(qry)
+        cur = db.query(qry)
     except sqlite3.OperationalError as err:
         if 'no such table' in str(err):
             return -1
@@ -58,29 +61,31 @@ def get_migration_version():
     return cur.fetchone()[0]
 
 
-def run_migration(path, version):
+def run_migration(db, path, version):
     """ Run migration script
 
+    :param db:      database connection object
     :param path:    path of the migration script
     :param version: version number of the migration
     """
     with open(path, 'r') as script:
         sql = script.read()
-    with transaction() as cur:
+    with db.transaction() as cur:
         cur.executescript(sql)
         qry = 'replace into %s (id, version) values (?, ?)' % MTABLE
-        query(qry, 0, version, cursor=cur)
+        db.query(qry, 0, version)
 
 
-def migrate(path):
+def migrate(db, path):
     """ Run all migrations that have not been run
 
     Migrations will be run inside a transaction.
 
+    :param db:      database connection object
     :param path:    path that contains migrations
     """
-    ver = get_migration_version()
+    ver = get_migration_version(db)
     migrations = get_migrations(path, ver + 1)
     for path, version in migrations:
-        run_migration(path, version)
+        run_migration(db, path, version)
         print("Completed migration %s" % version)

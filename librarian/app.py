@@ -63,8 +63,11 @@ def start():
         warn(AppStartupWarning(err))
 
     # Run database migrations
-    squery.connect(config['database.path'])
-    migrations.migrate(config['database.migrations'])
+    db = squery.Database(config['database.path'])
+    migrations.migrate(db, config['database.migrations'])
+    db.disconnect()
+
+    app.install(squery.database_plugin)
 
     # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, config['librarian.views'])
