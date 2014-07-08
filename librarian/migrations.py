@@ -15,7 +15,7 @@ from functools import wraps
 from itertools import dropwhile
 from contextlib import contextmanager
 
-from .squery import transaction, connect, disconnect
+from .squery import transaction, query
 from . import __version__ as _version, __author__ as _author
 
 
@@ -48,10 +48,9 @@ def get_migrations(path, min_ver=0):
 
 def get_migration_version():
     """ Query database and return migration version """
-    cur = DB.cursor()
     qry = 'select version from %s where id == 0;' % MTABLE
     try:
-        cur.execute(qry)
+        cur = query(qry)
     except sqlite3.OperationalError as err:
         if 'no such table' in str(err):
             return -1
@@ -70,7 +69,7 @@ def run_migration(path, version):
     with transaction() as cur:
         cur.executescript(sql)
         qry = 'replace into %s (id, version) values (?, ?)' % MTABLE
-        cur.execute(qry, (0, version))
+        query(qry, 0, version, cursor=cur)
 
 
 def migrate(path):

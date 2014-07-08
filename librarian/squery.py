@@ -17,10 +17,14 @@ from . import __version__ as _version, __author__ as _author
 
 __version__ = _version
 __author__ = _author
-__all__ = ()
+__all__ = ('DBError', 'transaction', 'connect', 'disconnect', 'query',)
 
 
 DB = None
+
+
+class DBError(BaseException):
+    pass
 
 
 @contextmanager
@@ -55,7 +59,32 @@ def disconnect():
     :param db:  database path
     """
     global DB  # Yes, it's ugly, but it works for this simple module
-    DB.close()
-    DB = None
-    print("Disconnected from SQLite3 database")
+    try:
+        DB.close()
+        print("Disconnected from SQLite3 database")
+    except AttributeError:
+        raise DBError('No connection to close')
+    finally:
+        DB = None
+
+
+def query(qry, *params, cursor=None, **kwparams):
+    """ Obtain a cursor if needed and run query
+
+    Parameters and keyword parameters are mutually exclusive, and keyword
+    parameters take precendence. If you specify both positional and keyword
+    parameters, only the keyword parameters are used.
+
+    :param qry:         query
+    :param cursor:      cursor object (a new one is obtained if this argument
+                        is missing)
+    :param params:      parameters
+    :param kwparams:    keyword parameters
+    """
+    try:
+        cur = cursor or DB.cursor()
+    except AttributeError:
+        raise DBError('Not connected')
+    cur.execute(qry, kwparams or params)
+    return cur
 
