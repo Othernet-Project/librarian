@@ -15,56 +15,18 @@ from functools import wraps
 from itertools import dropwhile
 from contextlib import contextmanager
 
+from .squery import transaction, connect, disconnect
 from . import __version__ as _version, __author__ as _author
 
 
 __version__ = _version
 __author__ = _author
 __all__ = ('transaction', 'connect', 'disconnect', 'get_migrations',
-           'find_migration', 'get_migration_version', 'run_migration',
-           'migrate')
+           'get_migration_version', 'run_migration', 'migrate')
 
 
-DB = None               # cache database object
 MTABLE = 'migrations'   # SQL table in which migration data is stored
 MIGRATION_FILE_RE = re.compile('^\d{2}_[^.]+\.sql$')
-
-
-@contextmanager
-def transaction():
-    cur = DB.cursor()
-    cur.execute('BEGIN')
-    try:
-        yield cur
-        DB.commit()
-    except sqlite3.OperationalError:
-        DB.rollback()
-        raise
-
-
-def connect(db):
-    """ Return database connection for database at specified path
-
-    This function uses a global variable as cache so once it has established a
-    connection, it returns the same connection object to all callers.
-
-    :param db:  database path
-    :returns:   connection object
-    """
-    global DB  # Yes, it's ugly, but it works for this simple module
-    print('Connecting to SQLite3 database at %s' % db)
-    DB = sqlite3.connect(db)
-
-
-def disconnect():
-    """ Disconnect from the database
-
-    :param db:  database path
-    """
-    global DB  # Yes, it's ugly, but it works for this simple module
-    DB.close()
-    DB = None
-    print("Disconnected from SQLite3 database")
 
 
 def get_migrations(path, min_ver=0):
