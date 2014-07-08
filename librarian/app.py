@@ -19,6 +19,7 @@ import librarian.helpers
 from librarian import migrations
 from librarian.exceptions import *
 from librarian import content_crypto
+from librarian import squery
 from librarian.i18n import lazy_gettext, I18NPlugin, i18n_path
 import librarian
 
@@ -63,9 +64,8 @@ def start():
         warn(AppStartupWarning(err))
 
     # Run database migrations
-    migrations.connect(config['database.path'])
+    squery.connect(config['database.path'])
     migrations.migrate(config['database.migrations'])
-    migrations.disconnect()
 
     # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, config['librarian.views'])
