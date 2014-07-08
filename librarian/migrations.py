@@ -58,7 +58,7 @@ def get_migration_version(db):
         if 'no such table' in str(err):
             return -1
         raise
-    return cur.fetchone()[0]
+    return cur.fetchone().version
 
 
 def run_migration(db, path, version):

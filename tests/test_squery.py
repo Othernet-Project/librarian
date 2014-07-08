@@ -34,7 +34,8 @@ def test_db_repr(sqlite3):
 def test_db_connect(sqlite3):
     db = Database('foo')
     db.connect()
-    sqlite3.connect.assert_called_once_with('foo')
+    sqlite3.connect.assert_called_once_with(
+        'foo', detect_types=sqlite3.PARSE_DECLTYPES)
     assert db.db == sqlite3.connect.return_value
 
 
@@ -158,4 +159,21 @@ def test_transaction_silent(sqlite3):
     with db.transaction(silent=True) as cur:
         raise Exception()
     assert True  # All ok if no exception leaks
+
+
+def test_dbdict():
+    d = dbdict({'foo': 'bar'})
+    assert d.foo == 'bar'
+    assert d['foo'] == 'bar'
+
+
+def test_dbdict_can_initialize_with_kwargs():
+    d = dbdict(foo='bar')
+    assert d.foo == 'bar'
+
+
+def test_dbdict_membership():
+    d = dbdict(foo='bar')
+    assert 'foo' in d
+    assert 'bar' not in d
 

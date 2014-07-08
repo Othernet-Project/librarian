@@ -8,6 +8,8 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import os
+import stat
 from warnings import warn
 from os.path import join, dirname, abspath, normpath
 
@@ -20,6 +22,7 @@ from librarian.exceptions import *
 from librarian import content_crypto
 from librarian import downloads
 from librarian import squery
+from librarian import send_file
 from librarian.i18n import lazy_gettext, I18NPlugin, i18n_path
 import librarian
 
@@ -73,7 +76,7 @@ def list_downloads():
 
 
 @app.post('/downloads/')
-@view('downloads_error')
+@view('downloads_error')  # TODO: Add this view
 def manage_downloads():
     """ Manage the downloaded content """
     forms = request.forms
@@ -88,6 +91,32 @@ def manage_downloads():
     if action == 'delete':
         downloads.remove_downloads(file_list)
     bottle.redirect(i18n_path('/downloads/'))
+
+
+@app.get('/content/')
+@view('content_list')
+def content_list():
+    """ Show list of content """
+    db = request.db
+    db.query('SELECT * FROM zipballs ORDER BY updated DESC;')
+    return {'metadata': db.cursor.fetchall()}
+
+
+@app.get('/content/<content_id>/<filename>')
+def content_file(content_id, filename):
+    zippath = downloads.get_zip_path(content_id)
+    try:
+        metadata, content = downloads.get_file(zippath, filename)
+    except KeyError:
+        bottle.abort(404, 'Not found')
+    size = metadata.file_size
+    timestamp = os.stat(zippath)[stat.ST_MTIME]
+    return send_file.send_file(content, filename, size, timestamp)
+
+
+@app.get('/content/<content_id>/')
+def content_index(content_id):
+    return content_file(content_id, 'index.html')
 
 
 def start():
