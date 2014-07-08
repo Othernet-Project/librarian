@@ -10,8 +10,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import sqlite3
 from functools import wraps
-from itertools import dropwhile
 from contextlib import contextmanager
+
+from dateutil.parser import parse
 
 from bottle import request
 
@@ -19,7 +20,37 @@ from . import __version__ as _version, __author__ as _author
 
 __version__ = _version
 __author__ = _author
-__all__ = ('Database', 'database_plugin',)
+__all__ = ('dbdict', 'Database', 'database_plugin',)
+
+
+class dbdict(dict):
+    """ Dictionary subclass that allows attribute access to items """
+    def __init__(self, *args, **kwargs):
+        if args:
+            super().__init__(args[0])
+        else:
+            super().__init__(kwargs)
+
+    def __getattr__(self, attr):
+        return self[attr]
+
+
+def dbdict_factory(cursor, row):
+    """ Convert a row returned from a query into ``dbdict`` objects
+
+    :param cursor:  cursor object
+    :param row:     row tuple
+    :returns:       row as ``dbdict`` object
+    """
+    # TODO: Unit tests
+    colnames = [d[0] for d in cursor.description]
+    return dbdict(dict(zip(colnames, row)))
+
+
+def convert_timestamp(ts):
+    # TODO: Unit tests
+    return parse(ts)
+sqlite3.register_converter('timestamp', convert_timestamp)
 
 
 class Database:
@@ -29,8 +60,11 @@ class Database:
         self._cursor = None
 
     def connect(self):
+        # TODO: Add unit test for row_factory override
         if self.db is None:
-            self.db = sqlite3.connect(self.dbpath)
+            self.db = sqlite3.connect(self.dbpath,
+                                      detect_types=sqlite3.PARSE_DECLTYPES)
+            self.db.row_factory = dbdict_factory
 
     def disconnect(self):
         if self.db is not None:
