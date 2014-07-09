@@ -36,25 +36,35 @@
 
 
 .toolbar {
-  margin-bottom: 1em;
+  margin: 1em 0 1em;
+  border-bottom: 1px solid $light-grey;
 
-  a {
+  a, span {
     display: inline-block;
-    background: $outernet-blue;
-    color: $white;
     padding: 0.2em 0.7em;
     margin-right: 0.5em;
     text-transform: uppercase;
     font-size: 80%;
+  }
+
+  a {
+    background: $light-grey;
+    color: $black;
 
     &:hover {
       text-decoration: none;
       background: lighten($outernet-blue, 20);
+      color: $white;
     }
 
     &:visited {
-      color: $white;
+      color: $black;
     }
+  }
+
+  span {
+    background: $grey;
+    color: $white;
   }
 }
 

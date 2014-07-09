@@ -18,9 +18,9 @@
             % end
         </div>
         <div class="toolbar">
-            <a href="{{ i18n_path('/') }}">{{ _('Dashboard') }}</a>
-            <a href="{{ i18n_path('/content/') }}">{{ _('Archive') }}</a>
-            <a href="{{ i18n_path('/downloads/') }}">{{ _('Updates') }}</a>
+            {{! h.link_other(_('Dashboard'), i18n_path('/'), request.original_path, h.SPAN) }}
+            {{! h.link_other(_('Archive'), i18n_path('/content/'), request.original_path, h.SPAN) }}
+            {{! h.link_other(_('Updates'), i18n_path('/downloads/'), request.original_path, h.SPAN) }}
         </div>
 
         <div class="body">
