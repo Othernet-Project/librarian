@@ -12,6 +12,8 @@ import types
 import functools
 from urllib.parse import quote
 
+from dateutil.parser import parse
+
 from . import __version__ as _version, __author__ as _author
 
 __version__ = _version
@@ -232,3 +234,8 @@ def trunc(s, n):
 def yesno(val, yes='yes', no='no'):
     """ Return ``yes`` or ``no`` depending on whether ``val`` is ``True`` """
     return yes if val else no
+
+
+def strft(ts, fmt):
+    """ Format datetime object or timestamp as string using provided format """
+    return parse(ts).strftime(fmt)
