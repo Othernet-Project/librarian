@@ -34,6 +34,7 @@ _ = lazy_gettext
 
 MODDIR = dirname(abspath(__file__))
 CONFPATH = normpath(join(MODDIR, '../conf/librarian.ini'))
+STATICDIR = normpath(join(MODDIR, '../static'))
 
 LANGS = [
     ('de_DE', 'Deutsch'),
@@ -119,6 +120,11 @@ def content_index(content_id):
     return content_file(content_id, 'index.html')
 
 
+@app.get('/static/<path:path>', no_i18n=True)
+def send_static(path):
+    return bottle.static_file(path, root=STATICDIR)
+
+
 def start():
     """ Start the application """
 
@@ -144,7 +150,7 @@ def start():
         'app_version': __version__,
         'request': request,
         'title': _('Librarian'),
-        'style': 'site',  # Default stylesheet
+        'style': 'screen',  # Default stylesheet
         'h': librarian.helpers,
     })
 

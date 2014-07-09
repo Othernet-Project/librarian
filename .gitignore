@@ -4,4 +4,5 @@ __pycache__/
 *.mo
 /.vagrant
 /tmp
+/static/.sass-cache
 
