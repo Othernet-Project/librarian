@@ -20,6 +20,7 @@
   font-size: 90%;
 
   a, span.current {
+    color: $black;
     display: inline-block;
     padding: 0.2em 0.5em;
   }
@@ -34,7 +35,7 @@
   }
 
   a:visited {
-    color: $outernet-blue;
+    color: $black;
   }
 }
 
