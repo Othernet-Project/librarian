@@ -17,14 +17,21 @@ body {
 }
 
 h1 {
-  color: $outernet-red;
+  margin: 2em 0 1em;
 }
 
 h2 {
   color: $outernet-red;
+  border-bottom: 1px solid $outernet-red;
   font-size: 130%;
   font-weight: bold;
   margin: 2em 0 1em;
+}
+
+h3 {
+  font-weight: bold;
+  color: $outernet-red;
+  margin: 1em 0 1em;
 }
 
 ul {
