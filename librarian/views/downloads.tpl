@@ -7,7 +7,7 @@
         <tr>
         <th>{{ _('select') }}</th>
         <th>{{ _('title') }}</th>
-        <th>{{ _('timestamp') }}</th>
+        <th>{{ _('date') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -18,7 +18,7 @@
                     <input type="checkbox" name="selection" value="{{ meta['md5'] }}" checked>
                 </td>
                 <td class="downloads-title">{{ meta['title'] }}</td>
-                <td class="downloads-timestamp">{{ meta['timestamp'] }}</td>
+                <td class="downloads-timestamp">{{ h.strft(meta['timestamp'], '%m-%d') }}</td>
             </tr>
             % end
         % else:
