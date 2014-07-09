@@ -176,7 +176,7 @@ def vselect(name, choices, values, **attrs):
     return SELECT(''.join(options), _id=name, _name=name, **attrs)
 
 
-def link_other(label, url, path, wrapper=None):
+def link_other(label, url, path, wrapper=None, **kwargs):
     """ Only wrap label in anchor if given URL is not the path
 
     :param label:   label of the link
@@ -187,10 +187,10 @@ def link_other(label, url, path, wrapper=None):
     """
     if url == path:
         try:
-            return wrapper(label)
+            return wrapper(label, **kwargs)
         except TypeError:
             return label
-    return A(label, href=url)
+    return A(label, href=url, **kwargs)
 
 
 def field_error(errors_dict, field_name):
