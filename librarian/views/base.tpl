@@ -8,15 +8,19 @@
         <link rel="stylesheet" href="/static/css/{{ style }}.css">
     </head>
     <body>
-        <div="languages">
+        <div id="languages">
             % for locale, lang in languages:
+                % if locale != request.locale:
                 <a href="{{ i18n_path(locale=locale) }}">{{ lang }}</a>
+                % else:
+                <span class="current">{{ lang }}</span>
+                % end
             % end
         </div>
         <div class="toolbar">
-            <a href="{{ i18n_path('/') }}">{{ _('Dashboard') }}</a>
-            <a href="{{ i18n_path('/downloads/') }}">{{ _('Updates') }}</a>
-            <a href="{{ i18n_path('/content/') }}">{{ _('Archive') }}</a>
+            {{! h.link_other(_('Dashboard'), i18n_path('/'), request.original_path, h.SPAN, _class="dashboard") }}
+            {{! h.link_other(_('Archive'), i18n_path('/content/'), request.original_path, h.SPAN, _class="archive") }}
+            {{! h.link_other(_('Updates'), i18n_path('/downloads/'), request.original_path, h.SPAN, _class="updates") }}
         </div>
 
         <div class="body">

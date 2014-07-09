@@ -34,6 +34,7 @@ _ = lazy_gettext
 
 MODDIR = dirname(abspath(__file__))
 CONFPATH = normpath(join(MODDIR, '../conf/librarian.ini'))
+STATICDIR = normpath(join(MODDIR, '../static'))
 
 LANGS = [
     ('de_DE', 'Deutsch'),
@@ -111,12 +112,20 @@ def content_file(content_id, filename):
         bottle.abort(404, 'Not found')
     size = metadata.file_size
     timestamp = os.stat(zippath)[stat.ST_MTIME]
+    if filename.endswith('.html'):
+        # Patch HTML with link to stylesheet
+        size, content = downloads.patch_html(content)
     return send_file.send_file(content, filename, size, timestamp)
 
 
 @app.get('/content/<content_id>/')
 def content_index(content_id):
     return content_file(content_id, 'index.html')
+
+
+@app.get('/static/<path:path>', no_i18n=True)
+def send_static(path):
+    return bottle.static_file(path, root=STATICDIR)
 
 
 def start():
@@ -144,7 +153,7 @@ def start():
         'app_version': __version__,
         'request': request,
         'title': _('Librarian'),
-        'style': 'site',  # Default stylesheet
+        'style': 'screen',  # Default stylesheet
         'h': librarian.helpers,
     })
 

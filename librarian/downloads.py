@@ -12,6 +12,7 @@ import os
 import json
 import shutil
 import zipfile
+from io import BytesIO
 from contextlib import closing
 from functools import partial
 from datetime import datetime, timedelta
@@ -27,7 +28,7 @@ __author__ = _author
 __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
            'get_decryptable', 'decrypt_all', 'get_zipballs', 'get_timestamp',
            'get_md5_from_path', 'get_zip_path', 'get_file', 'get_metadata',
-           'add_to_archive',)
+           'add_to_archive', 'patch_html')
 
 
 class ContentError(BaseException):
@@ -288,3 +289,16 @@ def add_to_archive(hashes):
         rowcount = cur.rowcount
     return rowcount
 
+
+def patch_html(content):
+    """ Patches HTML and adds a link tag for stylesheet
+
+    :param content:     file-like object
+    :returns:           tuple of new size and BytesIO object
+    """
+    style_html = '<link rel="stylesheet" href="/static/css/content.css">'
+    html = content.read().decode('utf8')
+    html = html.replace('</head>', style_html + '</head>')
+    html_bytes = bytes(html, encoding='utf8')
+    size = len(html_bytes)
+    return size, BytesIO(html_bytes)

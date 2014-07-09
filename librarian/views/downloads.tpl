@@ -1,5 +1,5 @@
-% rebase('base.tpl', title=_('Downloads'))
-<h1>{{ _('Downloads') }}</h1>
+% rebase('base.tpl', title=_('Updates'))
+<h1>{{ _('Updates') }}</h1>
 
 <form method="POST">
 <table>
@@ -23,7 +23,7 @@
             % end
         % else:
             <tr>
-            <td colspan="3">{{ _('There is no new content') }}</td>
+            <td class="empty" colspan="3">{{ _('There is no new content') }}</td>
             </tr>
         % end
     </tbody>
