@@ -19,9 +19,13 @@
   border-bottom: 1px solid $light-grey;
   font-size: 90%;
 
-  a {
+  a, span.current {
     display: inline-block;
     padding: 0.2em 0.5em;
+  }
+
+  a:visited {
+    color: $outernet-blue;
   }
 }
 

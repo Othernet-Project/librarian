@@ -10,7 +10,11 @@
     <body>
         <div id="languages">
             % for locale, lang in languages:
+                % if locale != request.locale:
                 <a href="{{ i18n_path(locale=locale) }}">{{ lang }}</a>
+                % else:
+                <span class="current">{{ lang }}</span>
+                % end
             % end
         </div>
         <div class="toolbar">
