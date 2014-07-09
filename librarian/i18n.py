@@ -191,11 +191,13 @@ class I18NPlugin(object):
         """ Bottle plugin """
         ignored = route.config.get('no_i18n', False)
         def wrapper(*args, **kwargs):
+            request.original_path = request.environ.get('ORIGINAL_PATH',
+                                                        request.fullpath)
             if not ignored:
                 request.locale = locale = request.environ.get('LOCALE')
                 if locale not in self.locales:
                     # If no locale had been specified, redirect to default one
-                    path = request.environ.get('ORIGINA_PATH', '/')
+                    path = request.original_path
                     redirect(i18n_path(path, self.default_locale))
                 request.gettext = self.gettext_apis[locale]
             return callback(*args, **kwargs)
