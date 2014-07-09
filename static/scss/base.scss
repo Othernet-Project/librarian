@@ -60,8 +60,10 @@ table {
     padding: 0.5em;
 
     &.empty {
-      background: desaturate(lighten($outernet-yellow, 20), 40);
+      background: $light-grey;
+      color: $grey;
       text-align: center;
+      padding: 2em 0.5em;
     }
   }
 

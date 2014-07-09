@@ -42,18 +42,20 @@
   a, span {
     display: inline-block;
     padding: 0.2em 0.7em;
+    padding-left: 32px;
     margin-right: 0.5em;
     text-transform: uppercase;
-    font-size: 80%;
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
   }
 
   a {
-    background: $light-grey;
+    background-color: $white;
     color: $black;
 
     &:hover {
       text-decoration: none;
-      background: lighten($outernet-blue, 20);
+      background-color: lighten($outernet-blue, 20);
       color: $white;
     }
 
@@ -63,8 +65,19 @@
   }
 
   span {
-    background: $grey;
-    color: $white;
+    background-color: $light-grey;
+  }
+
+  .dashboard {
+    background-image: image-url('home.png');
+  }
+
+  .archive {
+    background-image: image-url('document.png');
+  }
+
+  .updates {
+    background-image: image-url('antenna.png');
   }
 }
 

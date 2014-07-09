@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="24"
+   height="24"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="camera.svg"
+   inkscape:export-filename="C:\code\work\librarian\static\img\camera.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     id="namedview3031"
+     showgrid="true"
+     inkscape:object-paths="true"
+     inkscape:object-nodes="false"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:zoom="27.812867"
+     inkscape:cx="19.358909"
+     inkscape:cy="11.291054"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3065" />
+  </sodipodi:namedview>
+  <defs
+     id="defs4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="matrix(1.0985387,0,0,1.1111121,-1.1970774,-1143.959)"
+     id="layer1">
+    <path
+       d="m 10.888888,1031.3622 c -0.615554,0 -1.1111104,0.5017 -1.1111104,1.125 l 0,1.125 -5.5555554,0 C 2.9911111,1033.6122 2,1034.6158 2,1035.8623 l 0,11.2498 c 0,1.2465 0.9911111,2.2501 2.2222222,2.2501 l 15.5555568,0 c 1.231109,0 2.222221,-1.0036 2.222221,-2.2501 l 0,-11.2498 c 0,-1.2465 -0.991112,-2.2501 -2.222221,-2.2501 l -4.444446,0 0,-1.125 c 0,-0.6233 -0.495556,-1.125 -1.111111,-1.125 l -3.333334,0 z M 12,1036.9871 c 2.4546,0 4.444446,2.0148 4.444446,4.5001 0,2.4854 -1.989846,4.5 -4.444446,4.5 -2.4545993,0 -4.4444444,-2.0146 -4.4444444,-4.5 0,-2.4853 1.9898451,-4.5001 4.4444444,-4.5001 z"
+       id="rect3776"
+       style="fill:#333333;fill-opacity:1;stroke:none"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>
