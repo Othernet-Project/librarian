@@ -8,15 +8,15 @@
         <link rel="stylesheet" href="/static/css/{{ style }}.css">
     </head>
     <body>
-        <div="languages">
+        <div id="languages">
             % for locale, lang in languages:
                 <a href="{{ i18n_path(locale=locale) }}">{{ lang }}</a>
             % end
         </div>
         <div class="toolbar">
             <a href="{{ i18n_path('/') }}">{{ _('Dashboard') }}</a>
-            <a href="{{ i18n_path('/downloads/') }}">{{ _('Updates') }}</a>
             <a href="{{ i18n_path('/content/') }}">{{ _('Archive') }}</a>
+            <a href="{{ i18n_path('/downloads/') }}">{{ _('Updates') }}</a>
         </div>
 
         <div class="body">

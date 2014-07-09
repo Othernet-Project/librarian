@@ -20,4 +20,58 @@ body, html {
   font-family: $base-font;
   font-size: $base-size;
   line-height: $base-lh;
+  padding: 1em;
+}
+
+h1 {
+  font-size: 200%;
+  color: $grey;
+  line-height: $base-lh;
+}
+
+a {
+  text-decoration: none;
+  color: $outernet-blue;
+
+  &:hover {
+    color: darken($outernet-blue, 10);
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: desaturate(lighten($outernet-blue, 10), 50);
+  }
+}
+
+button {
+  cursor: pointer;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+table {
+  width: 100%;
+  margin-bottom: 1em;
+
+  td {
+    vertical-align: top;
+    padding: 0.5em;
+
+    &.empty {
+      background: desaturate(lighten($outernet-yellow, 20), 40);
+      text-align: center;
+    }
+  }
+
+  th {
+    font-weight: bold;
+    vertical-align: bottom;
+    padding: 1em 0.5em 0.5em;
+  }
+
+  tr {
+    border-bottom: 1px solid $light-grey;
+  }
 }

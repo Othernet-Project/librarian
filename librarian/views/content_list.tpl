@@ -1,10 +1,14 @@
-% rebase('base.tpl', title=_('Content archive'))
-<h1>{{ _('Content archive') }}</h1>
+% rebase('base.tpl', title=_('Archive'))
+<h1>{{ _('Archive') }}</h1>
 
 % if not metadata:
 <p>Content archive is currently empty</p>
 % else:
 <table class="content-list">
+    <tr class="header">
+    <th>{{ _('date') }}</th>
+    <th>{{ _('title') }}</th>
+    </tr>
     % for meta in metadata:
     <tr>
     <td>{{ meta['updated'].strftime('%m-%d') }}</td>

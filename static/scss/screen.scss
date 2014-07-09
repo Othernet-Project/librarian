@@ -10,3 +10,59 @@
  */
 
 @import "base";
+
+
+#languages {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-bottom: 1px solid $light-grey;
+  font-size: 90%;
+
+  a {
+    display: inline-block;
+    padding: 0.2em 0.5em;
+  }
+}
+
+
+.buttons {
+  text-align: right;
+}
+
+
+.toolbar {
+  margin-bottom: 1em;
+
+  a {
+    display: inline-block;
+    background: $outernet-blue;
+    color: $white;
+    padding: 0.2em 0.7em;
+    margin-right: 0.5em;
+    text-transform: uppercase;
+    font-size: 80%;
+
+    &:hover {
+      text-decoration: none;
+      background: lighten($outernet-blue, 20);
+    }
+
+    &:visited {
+      color: $white;
+    }
+  }
+}
+
+.footer {
+  margin-top: 1em;
+  border-top: 1px solid $light-grey;
+  padding-top: 0.5em;
+  color: $grey;
+  font-size: 80%;
+  text-align: right;
+
+  p {
+    margin-bottom: 0;
+  }
+}
