@@ -24,6 +24,15 @@
     padding: 0.2em 0.5em;
   }
 
+  a {
+    border-bottom: 1px solid transparent;
+  }
+
+  a:hover, span.current {
+    text-decoration: none;
+    border-bottom: 1px solid $outernet-blue;
+  }
+
   a:visited {
     color: $outernet-blue;
   }
@@ -47,16 +56,15 @@
     text-transform: uppercase;
     background-repeat: no-repeat;
     background-position: 2px 2px;
+    border-bottom: 2px solid transparent;
   }
 
   a {
-    background-color: $white;
     color: $black;
 
     &:hover {
       text-decoration: none;
-      background-color: lighten($outernet-blue, 20);
-      color: $white;
+      border-bottom: 2px solid $outernet-blue;
     }
 
     &:visited {
@@ -65,7 +73,7 @@
   }
 
   span {
-    background-color: $light-grey;
+    border-bottom: 2px solid $outernet-blue;
   }
 
   .dashboard {
