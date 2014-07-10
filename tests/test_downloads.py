@@ -20,7 +20,7 @@ from librarian.content_crypto import DecryptionError
 # This seems to be the best way to obtain the UnicodeDecodeError object.
 # See: http://stackoverflow.com/a/6849485/234932
 RAISE_UNICODE_EXCEPTION = lambda s: 'a'.encode('utf16').decode('utf8')
-MOD = 'librarian.downloads'
+MOD = 'librarian.downloads.'
 
 
 def configure(**kwargs):
@@ -47,16 +47,16 @@ def return_multi(mock_object, iterable):
     mock_object.side_effect = iter_return
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.os.listdir')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'os.listdir')
 def test_find_signed_uses_config(listdir, request):
     request.app.config = configure()
     find_signed()
     listdir.assert_called_once_with('/foo')
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.os.listdir')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'os.listdir')
 def test_find_signed_filters_by_extension(listdir, request):
     request.app.config = configure()
     listdir.return_value = ['1', '2.sig', '3.sig', '4.txt', '5.zip']
@@ -67,9 +67,9 @@ def test_find_signed_filters_by_extension(listdir, request):
     assert ret == ['/foo/4.txt']
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.datetime')
-@mock.patch('librarian.downloads.timedelta')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'datetime')
+@mock.patch(MOD + 'timedelta')
 def test_is_expired_uses_keep(timedelta, datetime, request):
     request.app.config = configure()
     timedelta.side_effect = lambda days: days
@@ -82,9 +82,9 @@ def test_is_expired_uses_keep(timedelta, datetime, request):
     timedelta.assert_called_with(days=6)
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.datetime')
-@mock.patch('librarian.downloads.timedelta')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'datetime')
+@mock.patch(MOD + 'timedelta')
 def test_is_expired_tests_expiration(timedelta, datetime, request):
     request.app.config = configure()
     timedelta.side_effect = lambda days: days
@@ -94,9 +94,9 @@ def test_is_expired_tests_expiration(timedelta, datetime, request):
     assert is_expired(2) == True
 7
 
-@mock.patch('librarian.downloads.is_expired')
-@mock.patch('librarian.downloads.os.path.getmtime')
-@mock.patch('librarian.downloads.os.unlink')
+@mock.patch(MOD + 'is_expired')
+@mock.patch(MOD + 'os.path.getmtime')
+@mock.patch(MOD + 'os.unlink')
 def test_cleanup_unlinks_old(unlink, getmtime, is_expired_p):
     return_multi(is_expired_p, [True, False, True])
     cleanup(['foo', 'bar', 'baz'])
@@ -104,27 +104,27 @@ def test_cleanup_unlinks_old(unlink, getmtime, is_expired_p):
     unlink.assert_has_calls([mock.call('foo'), mock.call('baz')])
 
 
-@mock.patch('librarian.downloads.is_expired')
-@mock.patch('librarian.downloads.os.path.getmtime')
-@mock.patch('librarian.downloads.os.unlink')
+@mock.patch(MOD + 'is_expired')
+@mock.patch(MOD + 'os.path.getmtime')
+@mock.patch(MOD + 'os.unlink')
 def test_cleanup_returns_kept(unlink, getmtime, is_expired_p):
     return_multi(is_expired_p, [True, False, True])
     ret = cleanup(['foo', 'bar', 'baz'])
     assert ret == ['bar']
 
 
-@mock.patch('librarian.downloads.find_signed')
-@mock.patch('librarian.downloads.cleanup')
+@mock.patch(MOD + 'find_signed')
+@mock.patch(MOD + 'cleanup')
 def test_get_decryptable(cleanup, find_signed):
     ret = get_decryptable()
     assert ret == cleanup.return_value
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.extract_content')
-@mock.patch('librarian.downloads.is_expired')
-@mock.patch('librarian.downloads.os.unlink')
-@mock.patch('librarian.downloads.partial')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'extract_content')
+@mock.patch(MOD + 'is_expired')
+@mock.patch(MOD + 'os.unlink')
+@mock.patch(MOD + 'partial')
 def test_decrypt_uses_config(partial, unlink, is_expired_p, extract_content,
                              request):
     request.app.config = configure()
@@ -133,11 +133,11 @@ def test_decrypt_uses_config(partial, unlink, is_expired_p, extract_content,
                                     output_dir='/foo', output_ext='zip')
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.extract_content')
-@mock.patch('librarian.downloads.is_expired')
-@mock.patch('librarian.downloads.os.unlink')
-@mock.patch('librarian.downloads.partial')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'extract_content')
+@mock.patch(MOD + 'is_expired')
+@mock.patch(MOD + 'os.unlink')
+@mock.patch(MOD + 'partial')
 def test_decrypt_extracts(partial, unlink, is_extract_p, extract_content,
                           request):
     request.app.config = configure()
@@ -147,11 +147,11 @@ def test_decrypt_extracts(partial, unlink, is_extract_p, extract_content,
     extract.assert_calls(mock.call('foo'), mock.call('bar'), mock.call('baz'))
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.extract_content')
-@mock.patch('librarian.downloads.is_expired')
-@mock.patch('librarian.downloads.os.unlink')
-@mock.patch('librarian.downloads.partial')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'extract_content')
+@mock.patch(MOD + 'is_expired')
+@mock.patch(MOD + 'os.unlink')
+@mock.patch(MOD + 'partial')
 def test_decrypt_removes_extracted(partial, unlink, is_extract_p,
                                    extract_content, request):
     request.app.config = configure()
@@ -160,11 +160,11 @@ def test_decrypt_removes_extracted(partial, unlink, is_extract_p,
     unlink.assrt_calls(mock.call('foo'), mock.call('bar'), mock.call('baz'))
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.extract_content')
-@mock.patch('librarian.downloads.is_expired')
-@mock.patch('librarian.downloads.os.unlink')
-@mock.patch('librarian.downloads.partial')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'extract_content')
+@mock.patch(MOD + 'is_expired')
+@mock.patch(MOD + 'os.unlink')
+@mock.patch(MOD + 'partial')
 def test_decrypt_return_values(partial, unlink, is_extract_p, extract_content,
                                request):
     request.app.config = configure()
@@ -175,11 +175,11 @@ def test_decrypt_return_values(partial, unlink, is_extract_p, extract_content,
     assert errors == []
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.extract_content')
-@mock.patch('librarian.downloads.is_expired')
-@mock.patch('librarian.downloads.os.unlink')
-@mock.patch('librarian.downloads.partial')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'extract_content')
+@mock.patch(MOD + 'is_expired')
+@mock.patch(MOD + 'os.unlink')
+@mock.patch(MOD + 'partial')
 def test_decrypt_return_values(partial, unlink, is_extract_p, extract_content,
                                request):
     request.app.config = configure()
@@ -191,16 +191,16 @@ def test_decrypt_return_values(partial, unlink, is_extract_p, extract_content,
     assert isinstance(errors[0], DecryptionError)
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.os')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'os')
 def test_get_zipballs_uses_spooldir(os, request):
     request.app.config = configure()
     get_zipballs()
     os.listdir.assert_called_with('/foo')
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.os')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'os')
 def test_get_zipballs_returns_full_paths(os, request):
     request.app.config = configure()
     os.listdir.return_value = ['foo.zip', 'bar.zip', 'baz.zip']
@@ -209,7 +209,7 @@ def test_get_zipballs_returns_full_paths(os, request):
     assert ret == ['/foo/foo.zip', '/foo/bar.zip', '/foo/baz.zip']
 
 
-@mock.patch('librarian.downloads.os')
+@mock.patch(MOD + 'os')
 def test_get_timestamp(os):
     ret = get_timestamp('foo')
     os.stat.assert_called_once_with('foo')
@@ -224,8 +224,8 @@ def test_get_md5_from_path():
     assert ret == 'baz'
 
 
-@mock.patch('librarian.downloads.zipfile')
-@mock.patch('librarian.downloads.closing')
+@mock.patch(MOD + 'zipfile')
+@mock.patch(MOD + 'closing')
 def test_get_file_extracts_from_zip(closing, zipfile):
     get_file('foo.zip', 'bar.txt')
     zipfile.is_zipfile.assert_called_once_with('foo.zip')
@@ -235,8 +235,8 @@ def test_get_file_extracts_from_zip(closing, zipfile):
     zipball.open.assert_called_once_with('foo/bar.txt', 'r')
 
 
-@mock.patch('librarian.downloads.zipfile')
-@mock.patch('librarian.downloads.closing')
+@mock.patch(MOD + 'zipfile')
+@mock.patch(MOD + 'closing')
 def test_get_file_return_values(closing, zipfile):
     meta, content = get_file('foo.zip', 'bar.txt')
     zipball = closing.return_value.__enter__.return_value
@@ -244,9 +244,9 @@ def test_get_file_return_values(closing, zipfile):
     assert content == zipball.open.return_value
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.get_file')
-@mock.patch('librarian.downloads.json')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'get_file')
+@mock.patch(MOD + 'json')
 def test_get_meta_uses_metadata_setting(json, get_file, request):
     request.app.config = configure()
     mock_file = mock.Mock()
@@ -259,9 +259,9 @@ def test_get_meta_uses_metadata_setting(json, get_file, request):
     get_file.assert_called_with('foo.zip', 'foo.txt')
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.get_file')
-@mock.patch('librarian.downloads.json')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'get_file')
+@mock.patch(MOD + 'json')
 def test_get_meta_parses_json(json, get_file, request):
     request.app.config = configure()
     mock_file = mock.Mock()
@@ -272,9 +272,9 @@ def test_get_meta_parses_json(json, get_file, request):
     assert ret == json.loads.return_value
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.get_file')
-@mock.patch('librarian.downloads.json')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'get_file')
+@mock.patch(MOD + 'json')
 def test_get_meta_invalid_json(json, get_file, request):
     request.app.config = configure()
     mock_file = mock.Mock()
@@ -285,8 +285,8 @@ def test_get_meta_invalid_json(json, get_file, request):
         get_metadata('foo.zip')
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.json')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'json')
 @mock.patch('builtins.str')
 def test_get_meta_invalid_json(str_p, json, request):
     request.app.config = configure()
@@ -295,7 +295,7 @@ def test_get_meta_invalid_json(str_p, json, request):
         get_metadata('foo.zip')
 
 
-@mock.patch('librarian.downloads.os')
+@mock.patch(MOD + 'os')
 def test_get_zip_path_in(os):
     os.path.exists.return_value = True
     os.path.join.return_value = '/foo/foobar.zip'
@@ -304,7 +304,7 @@ def test_get_zip_path_in(os):
     assert ret == '/foo/foobar.zip'
 
 
-@mock.patch('librarian.downloads.os')
+@mock.patch(MOD + 'os')
 def test_get_zip_path_in_returns_none(os):
     os.path.exists.return_value = False
     os.path.join.return_value = '/foo/foobar.zip'
@@ -312,8 +312,8 @@ def test_get_zip_path_in_returns_none(os):
     assert ret is None
 
 
-@mock.patch('librarian.downloads.request')
-@mock.patch('librarian.downloads.get_zip_path_in')
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'get_zip_path_in')
 def test_get_zip_path(get_zip_path_in_p, request):
     request.app.config = configure()
     get_zip_path('foo')
