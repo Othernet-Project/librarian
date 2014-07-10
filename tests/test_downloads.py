@@ -13,6 +13,7 @@ from unittest import mock
 
 import pytest
 
+from librarian import downloads
 from librarian.downloads import *
 from librarian.content_crypto import DecryptionError
 
@@ -314,12 +315,82 @@ def test_get_zip_path_in_returns_none(os):
 
 @mock.patch(MOD + 'request')
 @mock.patch(MOD + 'get_zip_path_in')
-def test_get_zip_path(get_zip_path_in_p, request):
+def test_get_zip_path(gzpi_p, request):
     request.app.config = configure()
     get_zip_path('foo')
-    get_zip_path_in_p.assert_called_with('foo', '/foo')
-    request.app.config = configure(contentdir='/bar')
-    get_zip_path('bar')
-    get_zip_path_in_p.assert_called_with('bar', '/bar')
+    gzpi_p.assert_called_with('foo', '/foo')
 
+    request.app.config = configure(contentdir='/bar')
+    ret = get_zip_path('bar')
+    gzpi_p.assert_called_with('bar', '/bar')
+    assert ret == gzpi_p.return_value
+
+
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'get_zip_path_in')
+def test_get_spool_zip_path(gzpi_p, request):
+    request.app.config = configure()
+    get_spool_zip_path('foo')
+    gzpi_p.assert_called_with('foo', '/foo')
+
+    request.app.config = configure(spooldir='/bar')
+    ret = get_spool_zip_path('bar')
+    gzpi_p.assert_called_with('bar', '/bar')
+    assert ret == gzpi_p.return_value
+
+
+@mock.patch(MOD + 'get_spool_zip_path')
+@mock.patch(MOD + 'os')
+def test_remove_downloads(os, gszp_p):
+    mock_md5s = ['a', 'b', 'c']
+    remove_downloads(mock_md5s)
+    assert gszp_p.call_count == 3
+    os.unlink.assert_has_calls([
+        mock.call(gszp_p.return_value),
+        mock.call(gszp_p.return_value),
+        mock.call(gszp_p.return_value),
+    ])
+
+
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'datetime')
+@mock.patch(MOD + 'shutil')
+@mock.patch(MOD + 'get_spool_zip_path')
+@mock.patch(MOD + 'get_metadata')
+def test_add_to_archive_moves_zipballs(gm_p, gszp_p, shutil, datetime, request):
+    request.app.config = configure()
+    gszp_p.side_effect = lambda s: s + '.zip'
+    ret = add_to_archive(['a', 'b', 'c'])
+    shutil.move.assert_has_calls([
+        mock.call('a.zip', request.app.config['content.contentdir']),
+        mock.call('b.zip', request.app.config['content.contentdir']),
+        mock.call('c.zip', request.app.config['content.contentdir']),
+    ])
+
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'datetime')
+@mock.patch(MOD + 'shutil')
+@mock.patch(MOD + 'get_spool_zip_path')
+@mock.patch(MOD + 'get_metadata')
+def test_add_to_archive_runs_sql_queries(gm_p, gszp_p, shutil, datetime, request):
+    request.app.config = configure()
+    gm_p.side_effect = lambda p: {'foo': 'bar'}
+    ret = add_to_archive(['a', 'b', 'c'])
+    cursor = request.db.transaction.return_value.__enter__.return_value
+    cursor.executemany.assert_called_once_with(
+        downloads.ADD_QUERY,
+        [{'md5': 'a', 'updated': datetime.now.return_value, 'foo': 'bar'},
+         {'md5': 'b', 'updated': datetime.now.return_value, 'foo': 'bar'},
+         {'md5': 'c', 'updated': datetime.now.return_value, 'foo': 'bar'}]
+    )
+    assert ret == cursor.rowcount
+
+
+def test_patch_html():
+    from io import BytesIO
+    html = '<html><head></head><body>foo</body></html>'
+    size, ret = patch_html(BytesIO(html.encode('utf-8')))
+    s = ret.read().decode('utf8')
+    assert size == len(html) + len(downloads.STYLE_LINK)
+    assert downloads.STYLE_LINK in s
 

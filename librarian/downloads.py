@@ -27,8 +27,17 @@ __version__ = _version
 __author__ = _author
 __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
            'get_decryptable', 'decrypt_all', 'get_zipballs', 'get_timestamp',
-           'get_md5_from_path', 'get_zip_path_in', 'get_zip_path', 'get_file',
+           'get_md5_from_path', 'get_zip_path_in', 'get_zip_path',
+           'remove_downloads', 'get_spool_zip_path', 'get_file',
            'get_metadata', 'add_to_archive', 'patch_html')
+
+ADD_QUERY = """
+REPLACE INTO zipballs
+(md5, domain, url, title, images, timestamp, updated)
+VALUES
+(:md5, :domain, :url, :title, :images, :timestamp, :updated)
+"""
+STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
 
 
 class ContentError(BaseException):
@@ -264,19 +273,11 @@ def remove_downloads(md5s):
             continue  # Ignoring non-existent paths
         try:
             os.unlink(path)
-            print('Removed', path)
         except OSError:
-            print('not removed')
             pass  # Intentionally ignoring. Not considered critical.
 
 
 def add_to_archive(hashes):
-    query = """
-    REPLACE INTO zipballs
-    (md5, domain, url, title, images, timestamp, updated)
-    VALUES
-    (:md5, :domain, :url, :title, :images, :timestamp, :updated)
-    """
     config = request.app.config
     target_dir = config['content.contentdir']
     db = request.db
@@ -288,7 +289,7 @@ def add_to_archive(hashes):
         shutil.move(path, target_dir)
         metadata.append(meta)
     with db.transaction() as cur:
-        cur.executemany(query, metadata)
+        cur.executemany(ADD_QUERY, metadata)
         rowcount = cur.rowcount
     return rowcount
 
@@ -299,9 +300,8 @@ def patch_html(content):
     :param content:     file-like object
     :returns:           tuple of new size and BytesIO object
     """
-    style_html = '<link rel="stylesheet" href="/static/css/content.css">'
     html = content.read().decode('utf8')
-    html = html.replace('</head>', style_html + '</head>')
+    html = html.replace('</head>', STYLE_LINK + '</head>')
     html_bytes = bytes(html, encoding='utf8')
     size = len(html_bytes)
     return size, BytesIO(html_bytes)
