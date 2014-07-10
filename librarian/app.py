@@ -52,7 +52,8 @@ app = bottle.Bottle()
 @view('dashboard')
 def dashboard():
     """ Render the dashboard """
-    return {}
+    spool, content, total = downloads.free_space()
+    return locals()
 
 
 @app.get('/downloads/')
