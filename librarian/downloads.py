@@ -27,8 +27,8 @@ __version__ = _version
 __author__ = _author
 __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
            'get_decryptable', 'decrypt_all', 'get_zipballs', 'get_timestamp',
-           'get_md5_from_path', 'get_zip_path', 'get_file', 'get_metadata',
-           'add_to_archive', 'patch_html')
+           'get_md5_from_path', 'get_zip_path_in', 'get_zip_path', 'get_file',
+           'get_metadata', 'add_to_archive', 'patch_html')
 
 
 class ContentError(BaseException):
@@ -215,7 +215,11 @@ def get_metadata(path):
 
 
 def get_zip_path_in(md5, directory):
-    """ Return zip path in a directory """
+    """ Return zip path in a directory
+
+    :param md5:         MD5 hex of the zipball
+    :param directory:   directory in which to look for files
+    """
     filepath = os.path.join(directory, md5 + '.zip')
     if os.path.exists(filepath):
         return filepath
@@ -228,7 +232,6 @@ def get_zip_path(md5):
     :param md5:     md5 of the zipball
     :returns:       actual path to the file of ``None`` if file cannot be found
     """
-    # FIXME: Unit tests
     config = request.app.config
     contentdir = config['content.contentdir']
     return get_zip_path_in(md5, contentdir)

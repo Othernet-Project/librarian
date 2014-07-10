@@ -20,6 +20,7 @@ from librarian.content_crypto import DecryptionError
 # This seems to be the best way to obtain the UnicodeDecodeError object.
 # See: http://stackoverflow.com/a/6849485/234932
 RAISE_UNICODE_EXCEPTION = lambda s: 'a'.encode('utf16').decode('utf8')
+MOD = 'librarian.downloads'
 
 
 def configure(**kwargs):
@@ -31,6 +32,7 @@ def configure(**kwargs):
         'content.keyring': '/bar',
         'content.output_ext': 'zip',
         'content.metadata': 'info.json',
+        'content.contentdir': '/foo',
     }
     kwargs = {'content.' + k: v for k, v in kwargs.items()}
     opts.update(kwargs)
@@ -291,4 +293,33 @@ def test_get_meta_invalid_json(str_p, json, request):
     str_p.side_effect = RAISE_UNICODE_EXCEPTION
     with pytest.raises(ContentError):
         get_metadata('foo.zip')
+
+
+@mock.patch('librarian.downloads.os')
+def test_get_zip_path_in(os):
+    os.path.exists.return_value = True
+    os.path.join.return_value = '/foo/foobar.zip'
+    ret = get_zip_path_in('foobar', '/foo')
+    os.path.join.assert_called_with('/foo', 'foobar.zip')
+    assert ret == '/foo/foobar.zip'
+
+
+@mock.patch('librarian.downloads.os')
+def test_get_zip_path_in_returns_none(os):
+    os.path.exists.return_value = False
+    os.path.join.return_value = '/foo/foobar.zip'
+    ret = get_zip_path_in('foobar', '/foo')
+    assert ret is None
+
+
+@mock.patch('librarian.downloads.request')
+@mock.patch('librarian.downloads.get_zip_path_in')
+def test_get_zip_path(get_zip_path_in_p, request):
+    request.app.config = configure()
+    get_zip_path('foo')
+    get_zip_path_in_p.assert_called_with('foo', '/foo')
+    request.app.config = configure(contentdir='/bar')
+    get_zip_path('bar')
+    get_zip_path_in_p.assert_called_with('bar', '/bar')
+
 
