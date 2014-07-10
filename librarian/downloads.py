@@ -266,7 +266,6 @@ def remove_downloads(md5s):
 
     :param md5s:    iterable containing MD5 hexdigests
     """
-    # FIXME: Unit tests
     for md5 in md5s:
         path = get_spool_zip_path(md5)
         if not path:
