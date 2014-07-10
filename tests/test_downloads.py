@@ -394,3 +394,35 @@ def test_patch_html():
     assert size == len(html) + len(downloads.STYLE_LINK)
     assert downloads.STYLE_LINK in s
 
+
+@mock.patch(MOD + 'os')
+def test_path_space(os):
+    os.statvfs.return_value.f_frsize = 2
+    os.statvfs.return_value.f_bavail = 3
+    os.statvfs.return_value.f_blocks = 4
+    dev, free, tot = path_space('foo')
+    os.stat.assert_called_with('foo')
+    os.statvfs.assert_called_with('foo')
+    assert dev == os.stat.return_value.st_dev
+    assert free == 6
+    assert tot == 8
+
+
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'path_space')
+def test_free_space(ps_p, request):
+    request.app.config = configure(spooldir='/spool', contentdir='/content')
+    ps_p.return_value = (1, 2, 3)
+    ret = free_space()
+    ps_p.assert_has_calls([mock.call('/spool'), mock.call('/content')])
+    assert ret == ((2, 3), (2, 3), (2, 3))
+
+
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'path_space')
+def test_free_space_different_drives(ps_p, request):
+    request.app.config = configure(spooldir='/spool', contentdir='/content')
+    return_multi(ps_p, [(1, 2, 3), (3, 4, 5)])
+    ret = free_space()
+    ps_p.assert_has_calls([mock.call('/spool'), mock.call('/content')])
+    assert ret == ((2, 3), (4, 5), (6, 8))

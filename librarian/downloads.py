@@ -29,7 +29,8 @@ __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
            'get_decryptable', 'decrypt_all', 'get_zipballs', 'get_timestamp',
            'get_md5_from_path', 'get_zip_path_in', 'get_zip_path',
            'remove_downloads', 'get_spool_zip_path', 'get_file',
-           'get_metadata', 'add_to_archive', 'patch_html')
+           'get_metadata', 'add_to_archive', 'patch_html', 'path_space',
+           'free_space',)
 
 ADD_QUERY = """
 REPLACE INTO zipballs
@@ -304,3 +305,41 @@ def patch_html(content):
     html_bytes = bytes(html, encoding='utf8')
     size = len(html_bytes)
     return size, BytesIO(html_bytes)
+
+
+def path_space(path):
+    """ Return device number and free space in bytes for given path
+
+    :param path:    path for which to return the data
+    :returns:       three-tuple containing drive number, free space, total
+                    space
+    """
+    dev = os.stat(path).st_dev
+    stat = os.statvfs(path)
+    free = stat.f_frsize * stat.f_bavail
+    total = stat.f_blocks * stat.f_frsize
+    return dev, free, total
+
+
+def free_space():
+    """ Returns free space information about spool and content dirs and totals
+
+    In case the spool directory and content directory are on the same drive,
+    the space information is the same for both directories and totals.
+
+    :returns:   three-tuple of two-tuples containing free and total spaces for
+                spool directory, content directory, and totals respectively
+    """
+    config = request.app.config
+    sdir = config['content.spooldir']
+    cdir = config['content.contentdir']
+    sdev, sfree, stot = path_space(sdir)
+    cdev, cfree, ctot = path_space(cdir)
+    if sdev == cdev:
+        total_free = sfree
+        total = stot
+    else:
+        total_free = sfree + cfree
+        total = stot + ctot
+    return (sfree, stot), (cfree, ctot), (total_free, total)
+
