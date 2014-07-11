@@ -27,8 +27,27 @@ __version__ = _version
 __author__ = _author
 __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
            'get_decryptable', 'decrypt_all', 'get_zipballs', 'get_timestamp',
-           'get_md5_from_path', 'get_zip_path', 'get_file', 'get_metadata',
-           'add_to_archive', 'patch_html')
+           'get_md5_from_path', 'get_zip_path_in', 'get_zip_path',
+           'remove_downloads', 'get_spool_zip_path', 'get_file',
+           'get_metadata', 'add_to_archive', 'patch_html', 'path_space',
+           'free_space', 'zipball_count', 'archive_space_used',
+           'favorite_content', 'mark_favorite', 'last_update')
+
+ADD_QUERY = """
+REPLACE INTO zipballs
+(md5, domain, url, title, images, timestamp, updated)
+VALUES
+(:md5, :domain, :url, :title, :images, :timestamp, :updated)
+"""
+COUNT_QUERY = "SELECT count(*) FROM zipballs;"
+FAVS_QUERY = """
+SELECT * FROM zipballs
+WHERE favorite = 1
+ORDER BY views DESC, updated DESC;
+"""
+MARK_FAV_QUERY = "UPDATE zipballs SET favorite = :fav WHERE md5 = :md5;"
+LAST_DATE_QUERY = "SELECT updated FROM zipballs ORDER BY updated DESC LIMIT 1"
+STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
 
 
 class ContentError(BaseException):
@@ -215,7 +234,11 @@ def get_metadata(path):
 
 
 def get_zip_path_in(md5, directory):
-    """ Return zip path in a directory """
+    """ Return zip path in a directory
+
+    :param md5:         MD5 hex of the zipball
+    :param directory:   directory in which to look for files
+    """
     filepath = os.path.join(directory, md5 + '.zip')
     if os.path.exists(filepath):
         return filepath
@@ -228,7 +251,6 @@ def get_zip_path(md5):
     :param md5:     md5 of the zipball
     :returns:       actual path to the file of ``None`` if file cannot be found
     """
-    # FIXME: Unit tests
     config = request.app.config
     contentdir = config['content.contentdir']
     return get_zip_path_in(md5, contentdir)
@@ -254,26 +276,17 @@ def remove_downloads(md5s):
 
     :param md5s:    iterable containing MD5 hexdigests
     """
-    # FIXME: Unit tests
     for md5 in md5s:
         path = get_spool_zip_path(md5)
         if not path:
             continue  # Ignoring non-existent paths
         try:
             os.unlink(path)
-            print('Removed', path)
         except OSError:
-            print('not removed')
             pass  # Intentionally ignoring. Not considered critical.
 
 
 def add_to_archive(hashes):
-    query = """
-    REPLACE INTO zipballs
-    (md5, domain, url, title, images, timestamp, updated)
-    VALUES
-    (:md5, :domain, :url, :title, :images, :timestamp, :updated)
-    """
     config = request.app.config
     target_dir = config['content.contentdir']
     db = request.db
@@ -285,7 +298,7 @@ def add_to_archive(hashes):
         shutil.move(path, target_dir)
         metadata.append(meta)
     with db.transaction() as cur:
-        cur.executemany(query, metadata)
+        cur.executemany(ADD_QUERY, metadata)
         rowcount = cur.rowcount
     return rowcount
 
@@ -296,9 +309,110 @@ def patch_html(content):
     :param content:     file-like object
     :returns:           tuple of new size and BytesIO object
     """
-    style_html = '<link rel="stylesheet" href="/static/css/content.css">'
     html = content.read().decode('utf8')
-    html = html.replace('</head>', style_html + '</head>')
+    html = html.replace('</head>', STYLE_LINK + '</head>')
     html_bytes = bytes(html, encoding='utf8')
     size = len(html_bytes)
     return size, BytesIO(html_bytes)
+
+
+def path_space(path):
+    """ Return device number and free space in bytes for given path
+
+    :param path:    path for which to return the data
+    :returns:       three-tuple containing drive number, free space, total
+                    space
+    """
+    dev = os.stat(path).st_dev
+    stat = os.statvfs(path)
+    free = stat.f_frsize * stat.f_bavail
+    total = stat.f_blocks * stat.f_frsize
+    return dev, free, total
+
+
+def free_space():
+    """ Returns free space information about spool and content dirs and totals
+
+    In case the spool directory and content directory are on the same drive,
+    the space information is the same for both directories and totals.
+
+    :returns:   three-tuple of two-tuples containing free and total spaces for
+                spool directory, content directory, and totals respectively
+    """
+    config = request.app.config
+    sdir = config['content.spooldir']
+    cdir = config['content.contentdir']
+    sdev, sfree, stot = path_space(sdir)
+    cdev, cfree, ctot = path_space(cdir)
+    if sdev == cdev:
+        total_free = sfree
+        total = stot
+    else:
+        total_free = sfree + cfree
+        total = stot + ctot
+    return (sfree, stot), (cfree, ctot), (total_free, total)
+
+
+def zipball_count():
+    """ Return the count of zipballs in archive
+
+    :returns:   integer count
+    """
+    db = request.db
+    db.query(COUNT_QUERY)
+    return db.cursor.fetchone()['count(*)']
+
+
+def archive_space_used():
+    """ Return the space used by zipballs in content directory
+
+    :returns:   used space in bytes
+    """
+    config = request.app.config
+    cdir = config['content.contentdir']
+    zipballs = os.listdir(cdir)
+    return sum([os.stat(os.path.join(cdir, f)).st_size
+                for f in zipballs
+                if f.endswith('.zip')])
+
+
+def favorite_content(limit=None):
+    """ Query database for favorited content
+
+    :param limit:   optional limit on number of items to fetch
+    :returns:       iterable of dbdict objects
+    """
+    # TODO: Unit tests
+    db = request.db
+    if limit:
+        db.query(FAVS_QUERY.strip(';\n ') + ' LIMIT ?;', limit)
+    else:
+        db.query(FAVS_QUERY)
+    return db.cursor.fetchall()
+
+
+def mark_favorite(md5, val=1):
+    """ Mark archive record with MD5 key as favorite
+
+    :param md5:     primary key of the record
+    :param val:     favorite value, set it to 1 for favorite, 0 for unfavorite
+    :returns:       ``True`` if update was successful, ``False`` otherwise
+    """
+    # TODO: Unit tests
+    db = request.db
+    db.query(MARK_FAV_QUERY, fav=val, md5=md5)
+    db.commit()
+    return db.cursor.rowcount == 1
+
+
+def last_update():
+    """ Get timestamp of the last updated zipball
+
+    :returns:   datetime object of the last updated zipball
+    """
+    # TODO: Unit tests
+    db = request.db
+    db.query(LAST_DATE_QUERY)
+    res = db.cursor.fetchone()
+    return res and res.updated
+

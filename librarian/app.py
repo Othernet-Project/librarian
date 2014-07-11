@@ -52,7 +52,12 @@ app = bottle.Bottle()
 @view('dashboard')
 def dashboard():
     """ Render the dashboard """
-    return {}
+    spool, content, total = downloads.free_space()
+    count = downloads.zipball_count()
+    used = downloads.archive_space_used()
+    favorites = downloads.favorite_content(limit=5)
+    last_update = downloads.last_update()
+    return locals()
 
 
 @app.get('/downloads/')
@@ -121,6 +126,24 @@ def content_file(content_id, filename):
 @app.get('/content/<content_id>/')
 def content_index(content_id):
     return content_file(content_id, 'index.html')
+
+
+@app.get('/favorites/')
+@bottle.view('favorites.tpl')
+def list_favorites():
+    return {'metadata': downloads.favorite_content()}
+
+
+@app.post('/favorites/')
+def add_favorite():
+    md5 = request.forms.get('md5')
+    try:
+        val = int(request.forms.get('fav', '1'))
+    except (TypeError, ValueError):
+        bottle.abort(400, _('Invalid request'))
+    if (not md5) or (not downloads.mark_favorite(md5, val)):
+        bottle.abort(400, _('Invalid request'))
+    bottle.redirect(i18n_path('/favorites/'))
 
 
 @app.get('/static/<path:path>', no_i18n=True)

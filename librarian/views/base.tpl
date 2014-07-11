@@ -19,6 +19,7 @@
         </div>
         <div class="toolbar">
             {{! h.link_other(_('Dashboard'), i18n_path('/'), request.original_path, h.SPAN, _class="dashboard") }}
+            {{! h.link_other(_('Favorites'), i18n_path('/favorites/'), request.original_path, h.SPAN, _class="favorites") }}
             {{! h.link_other(_('Archive'), i18n_path('/content/'), request.original_path, h.SPAN, _class="archive") }}
             {{! h.link_other(_('Updates'), i18n_path('/downloads/'), request.original_path, h.SPAN, _class="updates") }}
         </div>

@@ -81,6 +81,10 @@
     background-image: image-url('home.png');
   }
 
+  .favorites {
+    background-image: image-url('fav.png');
+  }
+
   .archive {
     background-image: image-url('document.png');
   }
@@ -101,4 +105,44 @@
   p {
     margin-bottom: 0;
   }
+}
+
+.content-archive {
+  .stat {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 2em;
+
+    .number {
+      display: inline-block;
+      font-size: 200%;
+      font-weight: bold;
+    }
+  }
+}
+
+.diskspace {
+  .label { 
+    font-weight: bold;
+  }
+  .all {
+    display: block;
+    width: 50%;
+    background: $light-grey;
+    color: $white;
+
+    .free {
+      display: inline-block;
+      background: $outernet-green;
+      text-align: center;
+    }
+  }
+
+  .low .free {
+    background: $outernet-red;
+  }
+}
+
+.center {
+  text-align: center;
 }

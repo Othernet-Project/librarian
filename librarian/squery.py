@@ -76,6 +76,9 @@ class Database:
         cursor.execute(qry, kwparams or params)
         return cursor
 
+    def commit(self):
+        self.db.commit()
+
     @property
     def cursor(self):
         self.connect()
