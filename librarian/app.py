@@ -55,6 +55,7 @@ def dashboard():
     spool, content, total = downloads.free_space()
     count = downloads.zipball_count()
     used = downloads.archive_space_used()
+    last_update = downloads.last_update()
     return locals()
 
 

@@ -1,9 +1,5 @@
 % rebase('base.tpl', title=_('Dashboard'))
-<h1>{{ _('Dashboard') }}</h1>
-
 <div class="content-archive dash-section">
-    <h2>{{ _('Content archive') }}</h2>
-
     <div class="stat count">
     <span class="number">{{ count }}</span>
     <span class="label">{{ ngettext('items in the archive', 'items in the archive', count) }}</span>
@@ -13,6 +9,13 @@
     <span class="number">{{ h.hsize(used) }}</span>
     <span class="label">{{ _('used space') }}</span>
     </div>
+
+    <div class="stat update">
+    <span class="number">{{ last_update.strftime('%m-%d') if last_update else '?' }}</span>
+    <span class="label">{{ _('last update') }}</span>
+    </div>
+</div>
+
 </div>
 
 <div class="diskspace dash-section">

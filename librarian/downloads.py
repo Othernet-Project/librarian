@@ -39,6 +39,7 @@ VALUES
 (:md5, :domain, :url, :title, :images, :timestamp, :updated)
 """
 COUNT_QUERY = "SELECT count(*) FROM zipballs;"
+LAST_DATE_QUERY = "SELECT updated FROM zipballs ORDER BY updated DESC LIMIT 1"
 STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
 
 
@@ -358,3 +359,16 @@ def archive_space_used():
     return sum([os.stat(os.path.join(cdir, f)).st_size
                 for f in zipballs
                 if f.endswith('.zip')])
+
+
+def last_update():
+    """ Get timestamp of the last updated zipball
+
+    :returns:   datetime object of the last updated zipball
+    """
+    # TODO: Unit tests
+    db = request.db
+    db.query(LAST_DATE_QUERY)
+    res = db.cursor.fetchone()
+    return res and res.updated
+
