@@ -53,6 +53,8 @@ app = bottle.Bottle()
 def dashboard():
     """ Render the dashboard """
     spool, content, total = downloads.free_space()
+    count = downloads.zipball_count()
+    used = downloads.archive_space_used()
     return locals()
 
 
