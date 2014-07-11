@@ -30,7 +30,7 @@ __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
            'get_md5_from_path', 'get_zip_path_in', 'get_zip_path',
            'remove_downloads', 'get_spool_zip_path', 'get_file',
            'get_metadata', 'add_to_archive', 'patch_html', 'path_space',
-           'free_space',)
+           'free_space', 'zipball_count', 'archive_space_used',)
 
 ADD_QUERY = """
 REPLACE INTO zipballs
@@ -38,6 +38,7 @@ REPLACE INTO zipballs
 VALUES
 (:md5, :domain, :url, :title, :images, :timestamp, :updated)
 """
+COUNT_QUERY = "SELECT count(*) FROM zipballs;"
 STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
 
 
@@ -343,3 +344,17 @@ def free_space():
         total = stot + ctot
     return (sfree, stot), (cfree, ctot), (total_free, total)
 
+
+def zipball_count():
+    db = request.db
+    db.query(COUNT_QUERY)
+    return db.cursor.fetchone()['count(*)']
+
+
+def archive_space_used():
+    config = request.app.config
+    cdir = config['content.contentdir']
+    zipballs = os.listdir(cdir)
+    return sum([os.stat(os.path.join(cdir, f)).st_size
+                for f in zipballs
+                if f.endswith('.zip')])

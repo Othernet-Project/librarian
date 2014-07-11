@@ -426,3 +426,30 @@ def test_free_space_different_drives(ps_p, request):
     ret = free_space()
     ps_p.assert_has_calls([mock.call('/spool'), mock.call('/content')])
     assert ret == ((2, 3), (4, 5), (6, 8))
+
+
+@mock.patch(MOD + 'request')
+def test_zipball_count_returns_aggregate(request):
+    ret = zipball_count()
+    request.db.query.assert_called_with(downloads.COUNT_QUERY)
+    assert ret == request.db.cursor.fetchone.return_value['count(*)']
+
+
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'os')
+def test_archive_space_returns_zipball_space(os, request):
+    request.app.config = configure(contentdir='/content')
+    os.stat.return_value.st_size = 2
+    os.listdir.return_value = ['a.zip', 'b.zip', 'c.zip']
+    ret = archive_space_used()
+    assert ret == 6
+
+
+@mock.patch(MOD + 'request')
+@mock.patch(MOD + 'os')
+def test_archive_space_ignores_non_zip(os, request):
+    request.app.config = configure(contentdir='/content')
+    os.stat.return_value.st_size = 2
+    os.listdir.return_value = ['a.zip', 'b.txt', 'c.zip']
+    ret = archive_space_used()
+    assert ret == 4
