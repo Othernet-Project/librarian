@@ -1,0 +1,148 @@
+/**
+ * screen.scss: Master stylesheet for screens
+ * 
+ * Copyright 2014, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "base";
+
+
+#languages {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-bottom: 1px solid $light-grey;
+  font-size: 90%;
+
+  a, span.current {
+    color: $black;
+    display: inline-block;
+    padding: 0.2em 0.5em;
+  }
+
+  a {
+    border-bottom: 1px solid transparent;
+  }
+
+  a:hover, span.current {
+    text-decoration: none;
+    border-bottom: 1px solid $outernet-blue;
+  }
+
+  a:visited {
+    color: $black;
+  }
+}
+
+
+.buttons {
+  text-align: right;
+}
+
+
+.toolbar {
+  margin: 1em 0 1em;
+  border-bottom: 1px solid $light-grey;
+
+  a, span {
+    display: inline-block;
+    padding: 0.2em 0.7em;
+    padding-left: 32px;
+    margin-right: 0.5em;
+    text-transform: uppercase;
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
+    border-bottom: 2px solid transparent;
+  }
+
+  a {
+    color: $black;
+
+    &:hover {
+      text-decoration: none;
+      border-bottom: 2px solid $outernet-blue;
+    }
+
+    &:visited {
+      color: $black;
+    }
+  }
+
+  span {
+    border-bottom: 2px solid $outernet-blue;
+  }
+
+  .dashboard {
+    background-image: image-url('home.png');
+  }
+
+  .favorites {
+    background-image: image-url('fav.png');
+  }
+
+  .archive {
+    background-image: image-url('document.png');
+  }
+
+  .updates {
+    background-image: image-url('antenna.png');
+  }
+}
+
+.footer {
+  margin-top: 1em;
+  border-top: 1px solid $light-grey;
+  padding-top: 0.5em;
+  color: $grey;
+  font-size: 80%;
+  text-align: right;
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.content-archive {
+  .stat {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 2em;
+
+    .number {
+      display: inline-block;
+      font-size: 200%;
+      font-weight: bold;
+    }
+  }
+}
+
+.diskspace {
+  .label { 
+    font-weight: bold;
+  }
+  .all {
+    display: block;
+    width: 50%;
+    background: $light-grey;
+    color: $white;
+
+    .free {
+      display: inline-block;
+      background: $outernet-green;
+      text-align: center;
+    }
+  }
+
+  .low .free {
+    background: $outernet-red;
+  }
+}
+
+.center {
+  text-align: center;
+}

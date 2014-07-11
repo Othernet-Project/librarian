@@ -1,5 +1,8 @@
 __pycache__/
 *.py[cod]
 *.sw[op]
+*.mo
 /.vagrant
+/tmp
+/static/.sass-cache
 

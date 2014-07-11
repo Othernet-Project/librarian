@@ -1,0 +1,103 @@
+/**
+ * base.scss: Base stylesheets
+ * 
+ * Copyright 2014, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "compass/reset";
+@import "compass/css3";
+@import "partials/colors";
+@import "partials/fonts";
+
+body, html {
+  background: $white;
+  color: $black;
+  font-family: $base-font;
+  font-size: $base-size;
+  line-height: $base-lh;
+  padding: 1em;
+}
+
+h1 {
+  font-size: 200%;
+  color: $outernet-blue;
+  line-height: $base-lh;
+}
+
+h2 {
+  color: $outernet-red;
+  border-bottom: 1px solid $outernet-red;
+  font-size: 130%;
+  font-weight: bold;
+  margin: 2em 0 1em;
+}
+
+h3 {
+  font-weight: bold;
+  color: $outernet-red;
+  margin: 1em 0 1em;
+}
+
+ul {
+  margin-bottom: 1em;
+  padding-left: 1em;
+
+  li {
+    list-style: disc;
+    padding-left: 1em;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: $outernet-blue;
+
+  &:hover {
+    color: darken($outernet-blue, 10);
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: desaturate(lighten($outernet-blue, 10), 50);
+  }
+}
+
+button {
+  cursor: pointer;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+table {
+  width: 100%;
+  margin-bottom: 1em;
+
+  td {
+    vertical-align: top;
+    padding: 0.5em;
+
+    &.empty {
+      background: $light-grey;
+      color: $grey;
+      text-align: center;
+      padding: 2em 0.5em;
+    }
+  }
+
+  th {
+    font-weight: bold;
+    vertical-align: bottom;
+    padding: 1em 0.5em 0.5em;
+  }
+
+  tr {
+    border-bottom: 1px solid $light-grey;
+  }
+}
