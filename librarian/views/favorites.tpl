@@ -1,8 +1,8 @@
-% rebase('base.tpl', title=_('Archive'))
-<h1>{{ _('Archive') }}</h1>
+% rebase('base.tpl', title=_('Favorites'))
+<h1>{{ _('Favorites') }}</h1>
 
 % if not metadata:
-<p>{{ _('Content archive is currently empty') }}</p>
+<p>{{ _('You have not favorted any content yet') }}</p>
 % else:
 <table class="content-list">
     <tr class="header">
@@ -12,15 +12,12 @@
     </tr>
     % for meta in metadata:
     <tr>
-    <td class="center">
-        % if meta['favorite']:
-        <img src="/static/img/fav.png" alt="favorite">
-        % else:
+    <td class="centered">
         <form action="{{ i18n_path('/favorites/') }}" method="POST">
-        {{! h.HIDDEN('md5', meta['md5']) }}
-        <button type="submit">{{ _('favorite') }}</button>
+            {{! h.HIDDEN('fav', '0') }}
+            {{! h.HIDDEN('md5', meta['md5']) }}
+            <button type="submit">{{ _('unfavorite') }}</button>
         </form>
-        % end
     </td>
     <td>{{ meta['updated'].strftime('%m-%d') }}</td>
     <td><a href="{{ i18n_path('/content/%s/' % meta['md5']) }}">{{ meta['title'] }}</a></td>

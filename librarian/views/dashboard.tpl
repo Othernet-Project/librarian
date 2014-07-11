@@ -16,6 +16,19 @@
     </div>
 </div>
 
+<div class="favorites">
+    <h2>{{ _('Favorite content') }}</h2>
+
+    % if not favorites:
+    <p>{{ _('You have not favorted any content yet') }}</p>
+    % else:
+    <ul>
+        % for favorite in favorites:
+        <li><a href="{{ i18n_path('/content/%s/' % favorite['md5']) }}">{{ favorite['title'] }}</a></li>
+        % end
+    </ul>
+    <p><a href="{{ i18n_path('/favorites/') }}">{{ _('see all favorites') }} >></a></p>
+    % end
 </div>
 
 <div class="diskspace dash-section">

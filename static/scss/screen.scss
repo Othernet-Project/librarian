@@ -81,6 +81,10 @@
     background-image: image-url('home.png');
   }
 
+  .favorites {
+    background-image: image-url('fav.png');
+  }
+
   .archive {
     background-image: image-url('document.png');
   }
@@ -137,4 +141,8 @@
   .low .free {
     background: $outernet-red;
   }
+}
+
+.center {
+  text-align: center;
 }
