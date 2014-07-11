@@ -30,7 +30,8 @@ __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
            'get_md5_from_path', 'get_zip_path_in', 'get_zip_path',
            'remove_downloads', 'get_spool_zip_path', 'get_file',
            'get_metadata', 'add_to_archive', 'patch_html', 'path_space',
-           'free_space', 'zipball_count', 'archive_space_used',)
+           'free_space', 'zipball_count', 'archive_space_used',
+           'favorite_content', 'mark_favorite', 'last_update')
 
 ADD_QUERY = """
 REPLACE INTO zipballs
@@ -39,6 +40,12 @@ VALUES
 (:md5, :domain, :url, :title, :images, :timestamp, :updated)
 """
 COUNT_QUERY = "SELECT count(*) FROM zipballs;"
+FAVS_QUERY = """
+SELECT * FROM zipballs
+WHERE favorite = 1
+ORDER BY views DESC, updated DESC;
+"""
+MARK_FAV_QUERY = "UPDATE zipballs SET favorite = :fav WHERE md5 = :md5;"
 LAST_DATE_QUERY = "SELECT updated FROM zipballs ORDER BY updated DESC LIMIT 1"
 STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
 
@@ -347,18 +354,55 @@ def free_space():
 
 
 def zipball_count():
+    """ Return the count of zipballs in archive
+
+    :returns:   integer count
+    """
     db = request.db
     db.query(COUNT_QUERY)
     return db.cursor.fetchone()['count(*)']
 
 
 def archive_space_used():
+    """ Return the space used by zipballs in content directory
+
+    :returns:   used space in bytes
+    """
     config = request.app.config
     cdir = config['content.contentdir']
     zipballs = os.listdir(cdir)
     return sum([os.stat(os.path.join(cdir, f)).st_size
                 for f in zipballs
                 if f.endswith('.zip')])
+
+
+def favorite_content(limit=None):
+    """ Query database for favorited content
+
+    :param limit:   optional limit on number of items to fetch
+    :returns:       iterable of dbdict objects
+    """
+    # TODO: Unit tests
+    db = request.db
+    if limit:
+        db.query(FAVS_QUERY.strip(';\n ') + ' LIMIT ?;', limit)
+    else:
+        db.query(FAVS_QUERY)
+    return db.cursor.fetchall()
+
+
+def mark_favorite(md5, val=1):
+    """ Mark archive record with MD5 key as favorite
+
+    :param md5:     primary key of the record
+    :param val:     favorite value, set it to 1 for favorite, 0 for unfavorite
+    :returns:       ``True`` if update was successful, ``False`` otherwise
+    """
+    # TODO: Unit tests
+    db = request.db
+    db.query(MARK_FAV_QUERY, fav=val, md5=md5)
+    db.commit()
+    return db.cursor.rowcount == 1
 
 
 def last_update():
