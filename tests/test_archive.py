@@ -18,6 +18,14 @@ MOD = 'librarian.lib.archive.'
 from utils import *
 
 
+def test_parse_size():
+    assert parse_size('10') == 10.0
+    assert parse_size('200B') == 200.0
+    assert parse_size('5K') == 5120.0
+    assert parse_size('1.4M') == 1468006.4
+    assert parse_size('20G') == 21474836480.0
+
+
 @mock.patch(MOD + 'request')
 @mock.patch(MOD + 'datetime')
 @mock.patch(MOD + 'shutil')

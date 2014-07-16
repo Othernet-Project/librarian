@@ -14,11 +14,20 @@ from datetime import datetime
 
 from bottle import request
 
-from .downloads import get_spool_zip_path, get_metadata
+from .downloads import get_spool_zip_path, get_zip_path, get_metadata
 
 
-__all__ = ('get_content', 'add_to_archive', 'path_space', 'free_space',
-           'zipball_count', 'archive_space_used', 'last_update', 'add_view',)
+__all__ = ('get_content', 'get_old_content', 'parse_size', 'cleanup_list',
+           'add_to_archive', 'remove_from_archive', 'path_space', 'free_space',
+           'zipball_count', 'archive_space_used', 'last_update', 'add_view',
+           'needed_space', 'cleanup_list')
+
+FACTORS = {
+    'b': 1,
+    'k': 1024,
+    'm': 1024 * 1024,
+    'g': 1024 * 1024 * 1024,
+}
 
 
 LIST_QUERY = """
@@ -26,11 +35,21 @@ SELECT *
 FROM zipballs
 ORDER BY date(updated) DESC, views DESC;
 """
+LIST_DELETABLE = """
+SELECT md5, updated, title, views
+FROM zipballs
+WHERE favorite = 0
+ORDER BY updated ASC, views ASC;
+"""
 ADD_QUERY = """
 REPLACE INTO zipballs
 (md5, domain, url, title, images, timestamp, updated)
 VALUES
 (:md5, :domain, :url, :title, :images, :timestamp, :updated)
+"""
+REMOVE_QUERY = """
+DELETE FROM zipballs
+WHERE md5 = ?;
 """
 COUNT_QUERY = """
 SELECT count(*)
@@ -50,9 +69,37 @@ WHERE md5 = ?
 
 
 def get_content():
+    # TODO: tests
     db = request.db
     db.query(LIST_QUERY)
     return db.cursor.fetchall()
+
+
+def get_old_content():
+    # TODO: tests
+    db = request.db
+    db.query(LIST_DELETABLE)
+    return db.cursor.fetchall()
+
+
+def parse_size(size):
+    """ Parses size with B, K, M, or G suffix and returns in size bytes
+
+    :param size:    human-readable size with suffix
+    :returns:       size in bytes or 0 if source string is using invalid
+                    notation
+    """
+    size = size.strip().lower()
+    if size[-1] not in 'bkmg':
+        suffix = 'b'
+    else:
+        suffix = size[-1]
+        size = size[:-1]
+    try:
+        size = float(size)
+    except ValueError:
+        return 0
+    return size * FACTORS[suffix]
 
 
 def add_to_archive(hashes):
@@ -60,7 +107,7 @@ def add_to_archive(hashes):
     target_dir = config['content.contentdir']
     db = request.db
     metadata = []
-    for md5, path in [(h, get_spool_zip_path(h)) for h in hashes]:
+    for md5, path in ((h, get_spool_zip_path(h)) for h in hashes):
         meta = get_metadata(path)
         meta['md5'] = md5
         meta['updated'] = datetime.now()
@@ -70,6 +117,25 @@ def add_to_archive(hashes):
         cur.executemany(ADD_QUERY, metadata)
         rowcount = cur.rowcount
     return rowcount
+
+
+def remove_from_archive(hashes):
+    # TODO: tests
+    config = request.app.config
+    target_dir = config['content.contentdir']
+    db = request.db
+    success = []
+    failed = []
+    for md5, path in ((h, get_zip_path(h)) for h in hashes):
+        try:
+            os.unlink(path)
+        except OSError:
+            failed.append(md5)
+            continue
+        success.append(md5)
+    with db.transaction() as cur:
+        cur.executemany(REMOVE_QUERY, [(s,) for s in success])
+    return success, failed
 
 
 def zipball_count():
@@ -119,6 +185,21 @@ def free_space():
     return (sfree, stot), (cfree, ctot), (total_free, total)
 
 
+def get_zip_space(filename, directory=None):
+    """ Return space taken up by a file in content directory
+
+    Directory can be overridden by a custom path supplied as ``directory``
+    argument. This is useful if we want to prevent multiple lookups of the
+    directory path.
+
+    :param filename:    name of the zipfile
+    :param directory:   directory of the file
+    :returns:           space taken in bytes
+    """
+    directory = directory or request.app.config['content.contentdir']
+    return os.stat(os.path.join(directory, filename)).st_size
+
+
 def archive_space_used():
     """ Return the space used by zipballs in content directory
 
@@ -127,7 +208,7 @@ def archive_space_used():
     config = request.app.config
     cdir = config['content.contentdir']
     zipballs = os.listdir(cdir)
-    return sum([os.stat(os.path.join(cdir, f)).st_size
+    return sum([get_zip_space(f, cdir)
                 for f in zipballs
                 if f.endswith('.zip')])
 
@@ -153,4 +234,35 @@ def add_view(md5):
     db.query(VIEWCOUNT_QUERY, md5)
     db.commit()
     return db.cursor.rowcount
+
+
+def needed_space():
+    """ Returns amount of space that needs to be freed in content directory
+
+    :returns:   space in bytes
+    """
+    # TODO: tests
+    config = request.app.config
+    return max([0, parse_size(config['storage.minfree']) - free_space()[1][0]])
+
+
+def cleanup_list():
+    """ Return a generator of zipball metadata necessary to free enough space
+
+    The generator will stop yielding as soon as enough zipballs have been
+    yielded to satisfy the minimum free space requirement set in the
+    configuration.
+    """
+    # TODO: tests
+    old = get_old_content()
+    config = request.app.config
+    cdir = config['content.contentdir']
+    zspace = lambda z: get_zip_space(z['md5'] + '.zip', cdir)
+    zipballs = map(lambda z: (z.setdefault('size', zspace(z)) and z), old)
+    space = needed_space()
+    while space > 0:
+        zipball = next(zipballs)
+        space -= zipball['size']
+        yield zipball
+
 
