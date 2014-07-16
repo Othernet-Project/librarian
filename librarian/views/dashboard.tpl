@@ -46,6 +46,12 @@
     <p class="total">
     % include('_space_info', label=_('total space'), space=total)
     </p>
+    % if needed:
+    <p class="warning">
+    {{ _('You are running low on disk space.') }}
+    <a href="{{ i18n_path('/cleanup/') }}">{{ _('Free some space now') }}</a>
+    </p>
+    % end
 </div>
 
 
