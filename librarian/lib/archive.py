@@ -18,7 +18,7 @@ from .downloads import get_spool_zip_path, get_metadata
 
 
 __all__ = ('get_content', 'add_to_archive', 'path_space', 'free_space',
-           'zipball_count', 'archive_space_used', 'last_update',)
+           'zipball_count', 'archive_space_used', 'last_update', 'add_view',)
 
 
 LIST_QUERY = """
@@ -137,7 +137,6 @@ def last_update():
 
     :returns:   datetime object of the last updated zipball
     """
-    # TODO: Unit tests
     db = request.db
     db.query(LAST_DATE_QUERY)
     res = db.cursor.fetchone()

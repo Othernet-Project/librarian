@@ -112,3 +112,18 @@ def test_archive_space_ignores_non_zip(os, request):
     os.listdir.return_value = ['a.zip', 'b.txt', 'c.zip']
     ret = archive_space_used()
     assert ret == 4
+
+
+@mock.patch(MOD + 'request')
+def test_last_update(request):
+    ret = last_update()
+    request.db.query.assert_called_with(archive.LAST_DATE_QUERY)
+    assert ret == request.db.cursor.fetchone.return_value.updated
+
+
+@mock.patch(MOD + 'request')
+def test_add_view(request):
+    ret = add_view('foo')
+    request.db.query.assert_called_with(archive.VIEWCOUNT_QUERY, 'foo')
+    assert request.db.commit.called
+    assert ret == request.db.cursor.rowcount
