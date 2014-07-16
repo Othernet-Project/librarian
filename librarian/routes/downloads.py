@@ -10,6 +10,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from bottle import request, view, redirect, default_app
 
+from ..lib import archive
 from ..lib import downloads
 from ..lib.i18n import i18n_path, lazy_gettext as _
 
@@ -54,7 +55,7 @@ def manage_downloads():
         return {'error': _('Invalid action, please use one of the form '
                            'buttons.')}
     if action == 'add':
-        downloads.add_to_archive(file_list)
+        archive.add_to_archive(file_list)
     if action == 'delete':
         downloads.remove_downloads(file_list)
     redirect(i18n_path('/downloads/'))
