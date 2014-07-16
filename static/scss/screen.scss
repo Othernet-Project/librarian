@@ -146,3 +146,26 @@
 .center {
   text-align: center;
 }
+
+.warning, .note, .message {
+  padding: 1em;
+  font-weight: bold;
+}
+
+.warning {
+  color: $outernet-red;
+  border: 1px solid $outernet-red;
+  background: desaturate(lighten($outernet-red, 50), 30);
+}
+
+.note {
+  color: $outernet-green;
+  border: 1px solid $outernet-green;
+  background: desaturate(lighten($outernet-green, 45), 10);
+}
+
+.message {
+  color: $outernet-orange;
+  border: 1px solid $outernet-orange;
+  background: desaturate(lighten($outernet-orange, 35), 10);
+}

@@ -164,6 +164,23 @@ def vinput(name, values, **attrs):
     return INPUT(_id=name, _name=name, value=value, **attrs)
 
 
+def checkbox(name, value, values, default=False, **attrs):
+    """ Render checkbox with value """
+    if name in values:
+        try:
+            values = values.getall(name)
+        except AttributeError:
+            values = values.get(name, [])
+        if value in values:
+            attrs['checked'] = 'checked'
+    elif default:
+        if default:
+            attrs['checked'] = 'checked'
+    elif 'checked' in attrs:
+        del attrs['checked']
+    return INPUT(_type='checkbox', _id=name, _name=name, value=value, **attrs)
+
+
 def vselect(name, choices, values, **attrs):
     """ Render select list with value preselected """
     value = values.get(name)
