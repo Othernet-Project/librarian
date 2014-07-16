@@ -13,8 +13,8 @@ import stat
 
 from bottle import request, view, abort, default_app
 
-from .. import downloads
-from .. import send_file
+from ..lib import downloads
+from ..lib import send_file
 
 __all__ = ('app', 'content_list', 'content_file', 'content_index',)
 

@@ -14,13 +14,11 @@ from urllib.parse import quote
 
 from dateutil.parser import parse
 
-from . import __version__ as _version, __author__ as _author
 
-__version__ = _version
-__author__ = _author
 __all__ = ('plur', 'hsize', 'attr', 'tag', 'SPAN', 'UL', 'LI', 'P', 'A',
            'INPUT', 'BUTTON', 'SUBMIT', 'HIDDEN', 'vinput', 'link_other',
            'field_error', 'form_errors', 'quote', 'trunc', 'yesno')
+
 
 SIZES = 'KMGTP'
 FERR_CLS = 'form-errors'
@@ -77,13 +75,13 @@ def hsize(size, unit='B', step=1024):
     Example::
 
         >>> hsize(12)
-        '12 B'
+        '12.00 B'
         >>> hsize(1030)
-        '1 KB'
+        '1.01 KB'
         >>> hsize(1536)
-        '1.5 KB'
+        '1.50 KB'
         >>> hsize(2097152)
-        '2 MB'
+        '2.00 MB'
 
     :param size:    size in base units
     :param unit:    base unit without prefix

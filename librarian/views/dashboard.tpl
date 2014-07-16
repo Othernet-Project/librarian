@@ -11,7 +11,7 @@
     </div>
 
     <div class="stat update">
-    <span class="number">{{ last_update.strftime('%m-%d') if last_update else '?' }}</span>
+    <span class="number">{{ last_updated.strftime('%m-%d') if last_updated else '?' }}</span>
     <span class="label">{{ _('last update') }}</span>
     </div>
 </div>

@@ -10,8 +10,8 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from bottle import request, view, redirect, default_app
 
-from .. import downloads
-from ..i18n import i18n_path, lazy_gettext as _
+from ..lib import downloads
+from ..lib.i18n import i18n_path, lazy_gettext as _
 
 __all__ = ('app', 'list_downloads', 'manage_downloads',)
 

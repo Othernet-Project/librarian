@@ -14,12 +14,12 @@ from os.path import join, dirname, abspath, normpath
 import bottle
 from bottle import request
 
-import librarian.helpers
-from librarian import migrations
 from librarian.exceptions import *
-from librarian import content_crypto
-from librarian import squery
-from librarian.i18n import lazy_gettext as _, I18NPlugin
+from librarian.lib import content_crypto
+from librarian.lib import squery
+from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
+from librarian.utils import helpers
+from librarian.utils import migrations
 from librarian.routes import *  # Only importing so routes are rgistered
 import librarian
 
@@ -80,7 +80,7 @@ def start():
         'request': request,
         'title': _('Librarian'),
         'style': 'screen',  # Default stylesheet
-        'h': librarian.helpers,
+        'h': helpers,
     })
 
     # Add middlewares
