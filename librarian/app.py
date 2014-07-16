@@ -8,29 +8,24 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import os
-import stat
 from warnings import warn
 from os.path import join, dirname, abspath, normpath
 
 import bottle
-from bottle import request, view
+from bottle import request
 
-import librarian.helpers
-from librarian import migrations
 from librarian.exceptions import *
-from librarian import content_crypto
-from librarian import downloads
-from librarian import squery
-from librarian import send_file
-from librarian.i18n import lazy_gettext, I18NPlugin, i18n_path
+from librarian.lib import content_crypto
+from librarian.lib import squery
+from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
+from librarian.utils import helpers
+from librarian.utils import migrations
+from librarian.routes import *  # Only importing so routes are rgistered
 import librarian
 
 __version__ = librarian.__version__
 __autho__ = librarian.__author__
 
-
-_ = lazy_gettext
 
 MODDIR = dirname(abspath(__file__))
 CONFPATH = normpath(join(MODDIR, '../conf/librarian.ini'))
@@ -45,110 +40,18 @@ LANGS = [
 ]
 DEFAULT_LOCALE = 'en_US'
 
-app = bottle.Bottle()
 
-
-@app.get('/')
-@view('dashboard')
-def dashboard():
-    """ Render the dashboard """
-    spool, content, total = downloads.free_space()
-    count = downloads.zipball_count()
-    used = downloads.archive_space_used()
-    favorites = downloads.favorite_content(limit=5)
-    last_update = downloads.last_update()
-    return locals()
-
-
-@app.get('/downloads/')
-@view('downloads', vals={})
-def list_downloads():
-    """ Render a list of downloaded content """
-    # FIXME: The whole process of decrypting signed content is vulnerable to
-    # injection of supposedly decrypted zip files. If attacker is able to gain
-    # access to filesystem and is able to write a new zip file in the spool
-    # directory, the system will treat it as a safe content file. There are
-    # currently no mechanisms for invalidating such files.
-    decryptables = downloads.get_decryptable()
-    extracted, errors = downloads.decrypt_all(decryptables)
-    zipballs = downloads.get_zipballs()
-    metadata = []
-    for z in zipballs:
-        meta = downloads.get_metadata(z)
-        meta['md5'] = downloads.get_md5_from_path(z)
-        metadata.append(meta)
-    # FIXME: Log errors
-    return dict(metadata=metadata, errors=errors)
-
-
-@app.post('/downloads/')
-@view('downloads_error')  # TODO: Add this view
-def manage_downloads():
-    """ Manage the downloaded content """
-    forms = request.forms
-    action = forms.get('action')
-    file_list = forms.getall('selection')
-    if not action:
-        # Bad action
-        return {'error': _('Invalid action, please use one of the form '
-                           'buttons.')}
-    if action == 'add':
-        downloads.add_to_archive(file_list)
-    if action == 'delete':
-        downloads.remove_downloads(file_list)
-    bottle.redirect(i18n_path('/downloads/'))
-
-
-@app.get('/content/')
-@view('content_list')
-def content_list():
-    """ Show list of content """
-    db = request.db
-    db.query('SELECT * FROM zipballs ORDER BY updated DESC;')
-    return {'metadata': db.cursor.fetchall()}
-
-
-@app.get('/content/<content_id>/<filename>')
-def content_file(content_id, filename):
-    zippath = downloads.get_zip_path(content_id)
-    try:
-        metadata, content = downloads.get_file(zippath, filename)
-    except KeyError:
-        bottle.abort(404, 'Not found')
-    size = metadata.file_size
-    timestamp = os.stat(zippath)[stat.ST_MTIME]
-    if filename.endswith('.html'):
-        # Patch HTML with link to stylesheet
-        size, content = downloads.patch_html(content)
-    return send_file.send_file(content, filename, size, timestamp)
-
-
-@app.get('/content/<content_id>/')
-def content_index(content_id):
-    return content_file(content_id, 'index.html')
-
-
-@app.get('/favorites/')
-@bottle.view('favorites.tpl')
-def list_favorites():
-    return {'metadata': downloads.favorite_content()}
-
-
-@app.post('/favorites/')
-def add_favorite():
-    md5 = request.forms.get('md5')
-    try:
-        val = int(request.forms.get('fav', '1'))
-    except (TypeError, ValueError):
-        bottle.abort(400, _('Invalid request'))
-    if (not md5) or (not downloads.mark_favorite(md5, val)):
-        bottle.abort(400, _('Invalid request'))
-    bottle.redirect(i18n_path('/favorites/'))
+app = bottle.default_app()
 
 
 @app.get('/static/<path:path>', no_i18n=True)
 def send_static(path):
     return bottle.static_file(path, root=STATICDIR)
+
+
+# Note that all other routes are reigsted when ``librarian.routes.*`` is
+# imported at the top of this module. All routes are registered against the
+# default_app, so they don't need to be mounted explicitly.
 
 
 def start():
@@ -177,7 +80,7 @@ def start():
         'request': request,
         'title': _('Librarian'),
         'style': 'screen',  # Default stylesheet
-        'h': librarian.helpers,
+        'h': helpers,
     })
 
     # Add middlewares
