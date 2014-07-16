@@ -17,10 +17,15 @@ from bottle import request
 from .downloads import get_spool_zip_path, get_metadata
 
 
-__all__ = ('add_to_archive', 'path_space', 'free_space', 'zipball_count',
-           'archive_space_used', 'last_update',)
+__all__ = ('get_content', 'add_to_archive', 'path_space', 'free_space',
+           'zipball_count', 'archive_space_used', 'last_update',)
 
 
+LIST_QUERY = """
+SELECT *
+FROM zipballs
+ORDER BY date(updated) DESC, views DESC;
+"""
 ADD_QUERY = """
 REPLACE INTO zipballs
 (md5, domain, url, title, images, timestamp, updated)
@@ -37,6 +42,10 @@ FROM zipballs
 ORDER BY updated DESC
 LIMIT 1;
 """
+def get_content():
+    db = request.db
+    db.query(LIST_QUERY)
+    return db.cursor.fetchall()
 
 
 def add_to_archive(hashes):

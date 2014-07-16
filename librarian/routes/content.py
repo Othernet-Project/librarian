@@ -13,6 +13,7 @@ import stat
 
 from bottle import request, view, abort, default_app
 
+from ..lib import archive
 from ..lib import downloads
 from ..lib import send_file
 
@@ -28,9 +29,7 @@ app = default_app()
 @view('content_list')
 def content_list():
     """ Show list of content """
-    db = request.db
-    db.query('SELECT * FROM zipballs ORDER BY updated DESC;')
-    return {'metadata': db.cursor.fetchall()}
+    return {'metadata': archive.get_content()}
 
 
 @app.get(PREFIX + '/<content_id>/<filename>')
