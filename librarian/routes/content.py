@@ -52,5 +52,6 @@ def content_file(content_id, filename):
 @app.get(PREFIX + '/%s/' % CONTENT_ID)
 def content_index(content_id):
     """ Shorthand for /<content_id>/index.html """
+    archive.add_view(content_id)
     return content_file(content_id, 'index.html')
 

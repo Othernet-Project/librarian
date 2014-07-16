@@ -42,6 +42,13 @@ FROM zipballs
 ORDER BY updated DESC
 LIMIT 1;
 """
+VIEWCOUNT_QUERY = """
+UPDATE zipballs
+SET views = views + 1
+WHERE md5 = ?
+"""
+
+
 def get_content():
     db = request.db
     db.query(LIST_QUERY)
@@ -135,4 +142,16 @@ def last_update():
     db.query(LAST_DATE_QUERY)
     res = db.cursor.fetchone()
     return res and res.updated
+
+
+def add_view(md5):
+    """ Increments the viewcount for zipball with specified MD5
+
+    :param md5:     MD5 of the zipball
+    :returns:       ``True`` if successful, ``False`` otherwise
+    """
+    db = request.db
+    db.query(VIEWCOUNT_QUERY, md5)
+    db.commit()
+    return db.cursor.rowcount
 
