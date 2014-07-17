@@ -26,7 +26,7 @@ PACMAN="pacman --noconfirm --noprogressbar"
 SRCDIR=/vagrant
 PRODUCTION=$NO
 
-SPOOLDIR=/var/spool/downloads
+SPOOLDIR=/var/spool/downloads/content
 CONTENTDIR=/srv/zipballs
 APPDIR=/opt/librarian
 DBDIR=/var/lib/outernet
