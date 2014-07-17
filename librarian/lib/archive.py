@@ -111,6 +111,10 @@ def add_to_archive(hashes):
         meta = get_metadata(path)
         meta['md5'] = md5
         meta['updated'] = datetime.now()
+        # Check target path first
+        target_path = os.path.join(target_dir, os.path.basename(path))
+        if os.path.exists(target_path):
+            os.unlink(target_path)
         shutil.move(path, target_dir)
         metadata.append(meta)
     with db.transaction() as cur:
