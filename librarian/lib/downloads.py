@@ -117,12 +117,23 @@ def decrypt_all(signed):
 
     for signedf in signed:
         try:
-            extracted.append(extract(signedf))
+            # TODO: Check space before continuing
+            zipball = extract(signedf)
         except DecryptionError as err:
             errors.append(err)
             continue
-        # Should we remove the signed file?
-        os.unlink(signedf)
+        # TODO: Add test for this branching
+        if zipfile.is_zipfile(zipball):
+            # This seems to be a zip file, so we can include it in the list of
+            # extracted files and remove the signed source
+            extracted.append(zipfile)
+            os.unlink(signedf)
+        else:
+            # Zipball is invalid. We will leave the signed source alone (maybe
+            # it was not downloaded correctly and will be re-downloaded), and
+            # remove the zipball.
+            errors.append(signedf)
+            os.unlink(zipfile)
     return extracted, errors
 
 
