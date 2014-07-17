@@ -121,6 +121,7 @@ def decrypt_all(signed):
         except DecryptionError as err:
             errors.append(err)
             continue
+        # Should we remove the signed file?
         os.unlink(signedf)
     return extracted, errors
 
