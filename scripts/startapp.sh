@@ -1,4 +1,4 @@
-SRCDIR=/vagrant
+SRCDIR=/opt/librarian
 LIBDIR=$SRCDIR/librarian
 
 cd $LIBDIR
