@@ -12,10 +12,6 @@ import os.path
 
 from gnupg import GPG
 
-from . import __version__ as _version, __author__ as _author
-
-__version__ = _version
-__author__ = _author
 __all__ = ('CryptoError', 'KeyImportError', 'DecryptionError', 'import_key',
            'extract_content',)
 

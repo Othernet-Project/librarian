@@ -14,11 +14,7 @@ import time
 from bottle import (HTTPResponse, HTTPError, parse_date, parse_range_header,
                     request)
 
-from . import __version__ as _version, __author__ as _author
 
-
-__version__ = _version
-__author__ = _author
 __all__ = ('MIME_TYPES', 'EXTENSIONS', 'DEFAULT_TYPE', 'get_mimetype',
            'format_ts', 'iter_read_range', 'send_file',)
 

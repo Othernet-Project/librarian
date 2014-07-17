@@ -10,7 +10,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from unittest import mock
 
-from librarian.i18n import *
+from librarian.lib.i18n import *
+
+MOD = 'librarian.lib.i18n.'
 
 
 def is_lazy(obj):
@@ -45,7 +47,7 @@ def test_gettext_string():
     assert is_lazy(s), "Should be a lazy object"
 
 
-@mock.patch('librarian.i18n.request')
+@mock.patch(MOD + 'request')
 def test_lazy_gettext_request(request):
     """ Lazy gettext uses ``request.gettext.gettext`` method """
     _ = lazy_gettext
@@ -54,7 +56,7 @@ def test_lazy_gettext_request(request):
     assert s == request.gettext.gettext.return_value, "Should use gettext"
 
 
-@mock.patch('librarian.i18n.request')
+@mock.patch(MOD + 'request')
 def test_lazy_ngettext_request(request):
     """ Lazy ngettext uses ``request.gettext.ngettext`` method """
     _ = lazy_ngettext
@@ -63,7 +65,7 @@ def test_lazy_ngettext_request(request):
     assert s == request.gettext.ngettext.return_value, "Should use ngettext"
 
 
-@mock.patch('librarian.i18n.request')
+@mock.patch(MOD + 'request')
 def test_full_path(request):
     """ ``full_path()`` returns full path with query string """
     request.fullpath = '/'
@@ -86,7 +88,7 @@ def test_i18n_returns_lazy():
     assert is_lazy(s), "Should be a lazy object"
 
 
-@mock.patch('librarian.i18n.request')
+@mock.patch(MOD + 'request')
 def test_i18n_path(request):
     """ ``i18n_path()`` should use locale to prefix the path """
     request.locale = 'en_US'
@@ -97,7 +99,7 @@ def test_i18n_path(request):
     assert s == '/es_es/foo'
 
 
-@mock.patch('librarian.i18n.request')
+@mock.patch(MOD + 'request')
 def test_i18n_custom_locale(request):
     """ ``i18n_path()`` should use custom locale if provided """
     request.locale = 'en_US'
@@ -105,7 +107,7 @@ def test_i18n_custom_locale(request):
     assert s == '/es_es/foo', "Should return specified locale instead"
 
 
-@mock.patch('librarian.i18n.request')
+@mock.patch(MOD + 'request')
 def test_i18n_current_path(request):
     """ ``i18n_path()`` uses current path if none is provided """
     request.fullpath = '/foo/bar/baz'
@@ -118,8 +120,8 @@ def test_api_version():
     assert I18NPlugin.api == 2, "Should be version 2"
 
 
-@mock.patch('librarian.i18n.gettext.translation')
-@mock.patch('librarian.i18n.BaseTemplate')
+@mock.patch(MOD + 'gettext.translation')
+@mock.patch(MOD + 'BaseTemplate')
 def test_initialization_attrs(BaseTemplate, translation):
     """ Should init with expected attrs """
     app = mock.Mock()
@@ -136,8 +138,8 @@ def test_initialization_attrs(BaseTemplate, translation):
     tret = translation.return_value
     assert ret.gettext_apis['foo'] == tret, "Translation API for locale"
 
-@mock.patch('librarian.i18n.gettext.translation')
-@mock.patch('librarian.i18n.BaseTemplate')
+@mock.patch(MOD + 'gettext.translation')
+@mock.patch(MOD + 'BaseTemplate')
 def test_initialization_update_template_basics(BaseTemplate, translation):
     """ Should update template defaults """
     app = mock.Mock()
@@ -152,8 +154,8 @@ def test_initialization_update_template_basics(BaseTemplate, translation):
     })
 
 
-@mock.patch('librarian.i18n.gettext.translation')
-@mock.patch('librarian.i18n.BaseTemplate')
+@mock.patch(MOD + 'gettext.translation')
+@mock.patch(MOD + 'BaseTemplate')
 def test_initialization_install_plugin(BaseTemplate, translation):
     """ Should init and install plugin """
     app = mock.Mock()
@@ -163,8 +165,8 @@ def test_initialization_install_plugin(BaseTemplate, translation):
     app.install.assert_called_once_with(ret)
 
 
-@mock.patch('librarian.i18n.gettext.translation')
-@mock.patch('librarian.i18n.BaseTemplate')
+@mock.patch(MOD + 'gettext.translation')
+@mock.patch(MOD + 'BaseTemplate')
 def test_initialization_no_plugin(BaseTemplate, translation):
     """ Should not install itself if ``noplugin`` arg is ``True`` """
     app = mock.Mock()
@@ -174,9 +176,9 @@ def test_initialization_no_plugin(BaseTemplate, translation):
     assert app.install.called == False, "Should not install the plugin"
 
 
-@mock.patch('librarian.i18n.gettext.translation')
-@mock.patch('librarian.i18n.BaseTemplate')
-@mock.patch('librarian.i18n.warn')
+@mock.patch(MOD + 'gettext.translation')
+@mock.patch(MOD + 'BaseTemplate')
+@mock.patch(MOD + 'warn')
 def test_initialization_wanrn(warn, BaseTemplate, translation):
     """ Should warn for each locale if gettext.translate() raises OSError """
     def raise_os_error(*args, **kwargs):

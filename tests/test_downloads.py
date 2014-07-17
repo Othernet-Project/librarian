@@ -1,5 +1,5 @@
 """
-test_downloads.py: Unit tests for ``librarian.downloads`` module
+test_downloads.py: Unit tests for ``librarian.lib.downloads`` module
 
 Copyright 2014, Outernet Inc.
 Some rights reserved.
@@ -8,44 +8,20 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import itertools
 from unittest import mock
 
 import pytest
 
-from librarian import downloads
-from librarian.downloads import *
-from librarian.content_crypto import DecryptionError
+from librarian.lib import downloads
+from librarian.lib.downloads import *
+from librarian.lib.content_crypto import DecryptionError
 
+from utils import *
 
 # This seems to be the best way to obtain the UnicodeDecodeError object.
 # See: http://stackoverflow.com/a/6849485/234932
 RAISE_UNICODE_EXCEPTION = lambda s: 'a'.encode('utf16').decode('utf8')
-MOD = 'librarian.downloads.'
-
-
-def configure(**kwargs):
-    """ Helper that provides a mock config dict """
-    opts = {
-        'content.spooldir': '/foo',
-        'content.extension': 'sig',
-        'content.keep': '12',
-        'content.keyring': '/bar',
-        'content.output_ext': 'zip',
-        'content.metadata': 'info.json',
-        'content.contentdir': '/foo',
-    }
-    kwargs = {'content.' + k: v for k, v in kwargs.items()}
-    opts.update(kwargs)
-    return opts
-
-
-def return_multi(mock_object, iterable):
-    """ Makes the mock object to return from the iterator """
-    rvals = itertools.cycle(iterable)
-    def iter_return(*args, **kwargs):
-        return next(rvals)
-    mock_object.side_effect = iter_return
+MOD = 'librarian.lib.downloads.'
 
 
 @mock.patch(MOD + 'request')
@@ -126,8 +102,9 @@ def test_get_decryptable(cleanup, find_signed):
 @mock.patch(MOD + 'is_expired')
 @mock.patch(MOD + 'os.unlink')
 @mock.patch(MOD + 'partial')
-def test_decrypt_uses_config(partial, unlink, is_expired_p, extract_content,
-                             request):
+@mock.patch(MOD + 'zipfile')
+def test_decrypt_uses_config(zipfile, partial, unlink, is_expired_p,
+                             extract_content, request):
     request.app.config = configure()
     decrypt_all(['foo', 'bar', 'baz'])
     partial.assert_called_once_with(extract_content, keyring='/bar',
@@ -139,8 +116,9 @@ def test_decrypt_uses_config(partial, unlink, is_expired_p, extract_content,
 @mock.patch(MOD + 'is_expired')
 @mock.patch(MOD + 'os.unlink')
 @mock.patch(MOD + 'partial')
-def test_decrypt_extracts(partial, unlink, is_extract_p, extract_content,
-                          request):
+@mock.patch(MOD + 'zipfile')
+def test_decrypt_extracts(zipfile, partial, unlink, is_extract_p,
+                          extract_content, request):
     request.app.config = configure()
     decrypt_all(['foo', 'bar', 'baz'])
     extract = partial.return_value
@@ -153,7 +131,8 @@ def test_decrypt_extracts(partial, unlink, is_extract_p, extract_content,
 @mock.patch(MOD + 'is_expired')
 @mock.patch(MOD + 'os.unlink')
 @mock.patch(MOD + 'partial')
-def test_decrypt_removes_extracted(partial, unlink, is_extract_p,
+@mock.patch(MOD + 'zipfile')
+def test_decrypt_removes_extracted(zipfile, partial, unlink, is_extract_p,
                                    extract_content, request):
     request.app.config = configure()
     decrypt_all(['foo', 'bar', 'baz'])
@@ -352,40 +331,6 @@ def test_remove_downloads(os, gszp_p):
     ])
 
 
-@mock.patch(MOD + 'request')
-@mock.patch(MOD + 'datetime')
-@mock.patch(MOD + 'shutil')
-@mock.patch(MOD + 'get_spool_zip_path')
-@mock.patch(MOD + 'get_metadata')
-def test_add_to_archive_moves_zipballs(gm_p, gszp_p, shutil, datetime, request):
-    request.app.config = configure()
-    gszp_p.side_effect = lambda s: s + '.zip'
-    ret = add_to_archive(['a', 'b', 'c'])
-    shutil.move.assert_has_calls([
-        mock.call('a.zip', request.app.config['content.contentdir']),
-        mock.call('b.zip', request.app.config['content.contentdir']),
-        mock.call('c.zip', request.app.config['content.contentdir']),
-    ])
-
-@mock.patch(MOD + 'request')
-@mock.patch(MOD + 'datetime')
-@mock.patch(MOD + 'shutil')
-@mock.patch(MOD + 'get_spool_zip_path')
-@mock.patch(MOD + 'get_metadata')
-def test_add_to_archive_runs_sql_queries(gm_p, gszp_p, shutil, datetime, request):
-    request.app.config = configure()
-    gm_p.side_effect = lambda p: {'foo': 'bar'}
-    ret = add_to_archive(['a', 'b', 'c'])
-    cursor = request.db.transaction.return_value.__enter__.return_value
-    cursor.executemany.assert_called_once_with(
-        downloads.ADD_QUERY,
-        [{'md5': 'a', 'updated': datetime.now.return_value, 'foo': 'bar'},
-         {'md5': 'b', 'updated': datetime.now.return_value, 'foo': 'bar'},
-         {'md5': 'c', 'updated': datetime.now.return_value, 'foo': 'bar'}]
-    )
-    assert ret == cursor.rowcount
-
-
 def test_patch_html():
     from io import BytesIO
     html = '<html><head></head><body>foo</body></html>'
@@ -395,61 +340,3 @@ def test_patch_html():
     assert downloads.STYLE_LINK in s
 
 
-@mock.patch(MOD + 'os')
-def test_path_space(os):
-    os.statvfs.return_value.f_frsize = 2
-    os.statvfs.return_value.f_bavail = 3
-    os.statvfs.return_value.f_blocks = 4
-    dev, free, tot = path_space('foo')
-    os.stat.assert_called_with('foo')
-    os.statvfs.assert_called_with('foo')
-    assert dev == os.stat.return_value.st_dev
-    assert free == 6
-    assert tot == 8
-
-
-@mock.patch(MOD + 'request')
-@mock.patch(MOD + 'path_space')
-def test_free_space(ps_p, request):
-    request.app.config = configure(spooldir='/spool', contentdir='/content')
-    ps_p.return_value = (1, 2, 3)
-    ret = free_space()
-    ps_p.assert_has_calls([mock.call('/spool'), mock.call('/content')])
-    assert ret == ((2, 3), (2, 3), (2, 3))
-
-
-@mock.patch(MOD + 'request')
-@mock.patch(MOD + 'path_space')
-def test_free_space_different_drives(ps_p, request):
-    request.app.config = configure(spooldir='/spool', contentdir='/content')
-    return_multi(ps_p, [(1, 2, 3), (3, 4, 5)])
-    ret = free_space()
-    ps_p.assert_has_calls([mock.call('/spool'), mock.call('/content')])
-    assert ret == ((2, 3), (4, 5), (6, 8))
-
-
-@mock.patch(MOD + 'request')
-def test_zipball_count_returns_aggregate(request):
-    ret = zipball_count()
-    request.db.query.assert_called_with(downloads.COUNT_QUERY)
-    assert ret == request.db.cursor.fetchone.return_value['count(*)']
-
-
-@mock.patch(MOD + 'request')
-@mock.patch(MOD + 'os')
-def test_archive_space_returns_zipball_space(os, request):
-    request.app.config = configure(contentdir='/content')
-    os.stat.return_value.st_size = 2
-    os.listdir.return_value = ['a.zip', 'b.zip', 'c.zip']
-    ret = archive_space_used()
-    assert ret == 6
-
-
-@mock.patch(MOD + 'request')
-@mock.patch(MOD + 'os')
-def test_archive_space_ignores_non_zip(os, request):
-    request.app.config = configure(contentdir='/content')
-    os.stat.return_value.st_size = 2
-    os.listdir.return_value = ['a.zip', 'b.txt', 'c.zip']
-    ret = archive_space_used()
-    assert ret == 4

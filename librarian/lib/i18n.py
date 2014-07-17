@@ -15,10 +15,8 @@ from warnings import warn
 from bottle import request, redirect, BaseTemplate
 
 from .lazy import lazy, caching_lazy
-from . import __version__ as _version, __author__ as _author
 
-__version__ = _version
-__author__ = _author
+
 __all__ = ('dummy_gettext', 'dummy_ngettext', 'lazy_gettext', 'lazy_ngettext',
            'full_path', 'i18n_path', 'I18NPlugin',)
 

@@ -11,7 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from unittest import mock
 
-from librarian.lazy import *
+from librarian.lib.lazy import *
 
 
 def get_lazy(*args, **kwargs):

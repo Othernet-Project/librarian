@@ -11,7 +11,7 @@
     </div>
 
     <div class="stat update">
-    <span class="number">{{ last_update.strftime('%m-%d') if last_update else '?' }}</span>
+    <span class="number">{{ last_updated.strftime('%m-%d') if last_updated else '?' }}</span>
     <span class="label">{{ _('last update') }}</span>
     </div>
 </div>
@@ -46,6 +46,12 @@
     <p class="total">
     % include('_space_info', label=_('total space'), space=total)
     </p>
+    % if needed:
+    <p class="warning">
+    {{ _('You are running low on disk space.') }}
+    <a href="{{ i18n_path('/cleanup/') }}">{{ _('Free some space now') }}</a>
+    </p>
+    % end
 </div>
 
 
