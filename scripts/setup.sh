@@ -40,10 +40,11 @@ KEYDIR=/var/lib/outernet/gnupg
 echo "Creating directory structure"
 mkdir -p $SPOOLDIR      # Directory to hold downloaded zipballs
 mkdir -p $CONTENTDIR    # Directory to hold prepared content
-mkdir -p $APPDIR        # Directory to hold librarian application
 mkdir -p $KEYDIR        # Directory to hold gnupg keys (includes $DBDIR)
 chmod 700 $SPOOLDIR     # This dir should be kept safe
 chmod 700 $KEYDIR       # Application runs as root, so it's OK if it's 700
+rm -rf "$APPDIR" || true  # Kill this just in case it already exists
+ln -s "$SRCDIR" "$APPDIR"
 
 
 ###############################################################################
@@ -64,3 +65,4 @@ $PIP install -r "$SRCDIR/conf/requirements.txt"
 if [[ $PRODUCTION == $NO ]]; then
     $PIP install -r "$SRCDIR/conf/dev_requirements.txt"
 fi
+
