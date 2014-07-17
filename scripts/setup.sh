@@ -27,8 +27,8 @@ SRCDIR=/vagrant
 PRODUCTION=$NO
 
 SPOOLDIR=/var/spool/downloads
-CONTENTDIR=/srv/outernet
-APPDIR=/srv/librarian
+CONTENTDIR=/srv/zipballs
+APPDIR=/opt/librarian
 DBDIR=/var/lib/outernet
 KEYDIR=/var/lib/outernet/gnupg
 
