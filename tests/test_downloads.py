@@ -102,8 +102,9 @@ def test_get_decryptable(cleanup, find_signed):
 @mock.patch(MOD + 'is_expired')
 @mock.patch(MOD + 'os.unlink')
 @mock.patch(MOD + 'partial')
-def test_decrypt_uses_config(partial, unlink, is_expired_p, extract_content,
-                             request):
+@mock.patch(MOD + 'zipfile')
+def test_decrypt_uses_config(zipfile, partial, unlink, is_expired_p,
+                             extract_content, request):
     request.app.config = configure()
     decrypt_all(['foo', 'bar', 'baz'])
     partial.assert_called_once_with(extract_content, keyring='/bar',
@@ -115,8 +116,9 @@ def test_decrypt_uses_config(partial, unlink, is_expired_p, extract_content,
 @mock.patch(MOD + 'is_expired')
 @mock.patch(MOD + 'os.unlink')
 @mock.patch(MOD + 'partial')
-def test_decrypt_extracts(partial, unlink, is_extract_p, extract_content,
-                          request):
+@mock.patch(MOD + 'zipfile')
+def test_decrypt_extracts(zipfile, partial, unlink, is_extract_p,
+                          extract_content, request):
     request.app.config = configure()
     decrypt_all(['foo', 'bar', 'baz'])
     extract = partial.return_value
@@ -129,7 +131,8 @@ def test_decrypt_extracts(partial, unlink, is_extract_p, extract_content,
 @mock.patch(MOD + 'is_expired')
 @mock.patch(MOD + 'os.unlink')
 @mock.patch(MOD + 'partial')
-def test_decrypt_removes_extracted(partial, unlink, is_extract_p,
+@mock.patch(MOD + 'zipfile')
+def test_decrypt_removes_extracted(zipfile, partial, unlink, is_extract_p,
                                    extract_content, request):
     request.app.config = configure()
     decrypt_all(['foo', 'bar', 'baz'])
