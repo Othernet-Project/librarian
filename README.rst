@@ -55,8 +55,15 @@ To run unit tests use this script::
 
     bash /vagrant/scripts/tests.sh
 
+Contributing interface translations
+===================================
+
+You can either translate using the .po files in the project directory, or use
+the hosted version `on POEditor`_ (recommended). Note that Librarian is
+currently under active development, so strings *will* change from time to time.
 
 .. _Vagrant: http://www.vagrantup.com/
 .. _custom Vagrant base box: https://github.com/Outernet-Project/archlinux-vagrant
 .. _VritualBox: https://www.virtualbox.org/
 .. _port 8080: http://localhost:8080/
+.. _on POEditor: https://poeditor.com/join/project?hash=90911b6fc31f2d68c7debd999aa078c6
