@@ -2,7 +2,7 @@
 <div class="content-archive dash-section">
     <div class="stat count">
     <span class="number">{{ count }}</span>
-    <span class="label">{{ ngettext('items in the archive', 'items in the archive', count) }}</span>
+    <span class="label">{{ ngettext('item in the archive', 'items in the archive', count) }}</span>
     </div>
 
     <div class="stat space">
