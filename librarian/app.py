@@ -24,7 +24,7 @@ from librarian.routes import *  # Only importing so routes are rgistered
 import librarian
 
 __version__ = librarian.__version__
-__autho__ = librarian.__author__
+__author__ = librarian.__author__
 
 
 MODDIR = dirname(abspath(__file__))
