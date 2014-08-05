@@ -1,8 +1,9 @@
 include README.rst
 include COPYING
-include static/css/*.css
-include static/img/*.png
-include locales/**/LC_MESSAGES/*.[mp]o
-include migrations/*.sql
-include keys/*
+include librarian/static/css/*.css
+include librarian/static/img/*.png
+include librarian/locales/**/LC_MESSAGES/*.[mp]o
+include librarian/migrations/*.sql
+include librarian/keys/*
 include librarian/views/*.tpl
+include librarian/librarian.ini

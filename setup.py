@@ -2,14 +2,20 @@ import os
 from glob import glob
 from setuptools import setup, find_packages
 
-
 def read(fname):
     """ Return content of specified file """
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
-def data(pattern):
-    """ Returns normalized paths for given glob pattern """
-    return [os.path.normpath(p) for p in glob(pattern)]
+def data(patterns=[]):
+    """ For each pattern, return mapping for data_files """
+    data_files = []
+    for pattern in patterns:
+        pattern = os.path.join('librarian', pattern)
+        paths = [os.path.normpath(p) for p in glob(pattern)]
+        for p in paths:
+            p = os.sep.join(p.split(os.sep)[1:])
+            data_files.append(p)
+    return data_files
 
 setup(
     name = 'librarian',
@@ -22,14 +28,17 @@ setup(
     keywords = 'outernet content archive library',
     url = 'https://github.com/Outernet-Project/librarian',
     packages=find_packages(),
-    data_files=[
-        ('', data('static/css/*.css')),
-        ('', data('static/img/*.png')),
-        ('', data('locales/**/LC_MESSAGES/*.[mp]o')),
-        ('', data('migrations/*.sql')),
-        ('', data('keys/*')),
-        ('', data('librarian/views/*.tpl'))
-    ],
+    package_data={
+        'librarian': data([
+            'static/css/*.css',
+            'static/img/*.png',
+            'migrations/*.sql',
+            'keys/*',
+            'views/*.tpl',
+            'locales/**/LC_MESSAGES/*.[mp]o',
+            'librarian.ini',
+        ]),
+    },
     long_description=read('README.rst'),
     install_requires = [
         'bottle==0.12.7',
