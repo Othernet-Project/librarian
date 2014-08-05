@@ -35,7 +35,8 @@ setup(
             'migrations/*.sql',
             'keys/*',
             'views/*.tpl',
-            'locales/**/LC_MESSAGES/*.[mp]o'
+            'locales/**/LC_MESSAGES/*.[mp]o',
+            'librarian.ini',
         ]),
     },
     long_description=read('README.rst'),
