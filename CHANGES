@@ -1,0 +1,6 @@
+2014-08-15 : v0.1a4 : Branko Vukelic <branko@outernet.is>
+    - Added logging to core modules
+    - Added log listing to dashboard
+    - Converted Librarian to proper pyhton package with setup module
+    
+    
