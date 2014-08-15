@@ -169,3 +169,12 @@
   border: 1px solid $outernet-orange;
   background: desaturate(lighten($outernet-orange, 35), 10);
 }
+
+.dash-logs textarea {
+  width: 100%;
+  height: 200px;
+  color: $black;
+  background: transparent;
+  font-family: monospace;
+  border: 0 solid transparent;
+}

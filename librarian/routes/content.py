@@ -10,6 +10,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 import stat
+import logging
 
 from bottle import request, view, abort, default_app
 
@@ -40,10 +41,13 @@ def content_file(content_id, filename):
     try:
         metadata, content = downloads.get_file(zippath, filename)
     except KeyError:
+        logging.debug("File '%s' not found in '%s'" % (filename, zippath))
         abort(404, 'Not found')
     size = metadata.file_size
     timestamp = os.stat(zippath)[stat.ST_MTIME]
     if filename.endswith('.html'):
+        logging.debug("Patching HTML file '%s' with Librarian stylesheet" % (
+                      filename))
         # Patch HTML with link to stylesheet
         size, content = downloads.patch_html(content)
     return send_file.send_file(content, filename, size, timestamp)

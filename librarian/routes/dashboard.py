@@ -34,6 +34,8 @@ def dashboard():
     favorites = favorite_content(limit=5)
     last_updated = archive.last_update()
     needed = archive.needed_space()
+    with open(request.app.config['logging.output'], 'rt') as log:
+        logs = ''.join(reversed(list(log)))
     return locals()
 
 
