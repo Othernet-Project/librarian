@@ -41,8 +41,8 @@ def list_downloads():
     logging.info("Found %s decrypted files" % (len(zipballs)))
     metadata = []
     for z in zipballs:
+        logging.debug("<%s> getting metadata" % z)
         try:
-            logging.debug("<%s> getting metadata" % z)
             meta = downloads.get_metadata(z)
             meta['md5'] = downloads.get_md5_from_path(z)
             metadata.append(meta)
