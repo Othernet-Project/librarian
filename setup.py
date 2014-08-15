@@ -2,6 +2,8 @@ import os
 from glob import glob
 from setuptools import setup, find_packages
 
+import librarian
+
 def read(fname):
     """ Return content of specified file """
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -19,7 +21,7 @@ def data(patterns=[]):
 
 setup(
     name = 'librarian',
-    version = '0.1a4',
+    version = librarian.__version__,
     author = 'Outernet Inc',
     author_email = 'branko@outernet.is',
     description = ('Web-based UI for managing local Outernet broadcast '
