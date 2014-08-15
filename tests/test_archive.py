@@ -47,7 +47,9 @@ def test_add_to_archive_moves_zipballs(gm_p, gszp_p, shutil, datetime, request):
 @mock.patch(MOD + 'shutil')
 @mock.patch(MOD + 'get_spool_zip_path')
 @mock.patch(MOD + 'get_metadata')
-def test_add_to_archive_runs_sql_queries(gm_p, gszp_p, shutil, datetime, request):
+@mock.patch(MOD + 'os')
+def test_add_to_archive_runs_sql_queries(os, gm_p, gszp_p, shutil, datetime,
+                                         request):
     request.app.config = configure()
     gm_p.side_effect = lambda p: {'foo': 'bar'}
     ret = add_to_archive(['a', 'b', 'c'])
