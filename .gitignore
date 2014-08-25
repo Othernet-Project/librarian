@@ -4,7 +4,7 @@ __pycache__/
 *.mo
 /.vagrant
 /tmp
-/static/.sass-cache
+/librarian/static/.sass-cache
 /dist
 /librarian.egg-info
 
