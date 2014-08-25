@@ -2,12 +2,14 @@
 <h1>{{ _('Updates') }}</h1>
 
 <form method="POST">
+% if metadata:
 <p class="controls" id="controls">
     <a class="sel-all button" href="?sel=1">{{ _('Select all') }}</a>
     <a class="sel-none button" href="?sel=0">{{ _('Select none') }}</a>
     <button type="submit" name="action" value="add" class="special">{{ _('Add selected to archive') }}</button>
     <button type="submit" name="action" value="delete" class="danger">{{ _('Delete selected') }}</button>
 </p>
+% end
 
 <table>
     <thead>
@@ -34,18 +36,20 @@
             % end
         % else:
             <tr>
-            <td class="empty" colspan="3">{{ _('There is no new content') }}</td>
+            <td class="empty" colspan="4">{{ _('There is no new content') }}</td>
             </tr>
         % end
     </tbody>
 </table>
 
+% if metadata:
 <p class="buttons">
 <a class="sel-all button" href="?sel=1">{{ _('Select all') }}</a>
 <a class="sel-none button" href="?sel=0">{{ _('Select none') }}</a>
 <button type="submit" name="action" value="add" class="special">{{ _('Add selected to archive') }}</button>
 <button type="submit" name="action" value="delete" class="danger">{{ _('Delete selected') }}</button>
 </p>
+% end
 </form>
 
 <script src="/static/js/jquery.js"></script>
