@@ -2,9 +2,9 @@
 <h1>
 {{ _('Library') }}
 % if query:
-<span>{{ str(_("Showing search results for '%s'")) % query }}</span>
+<span>{{ str(_("Showing search results for '%(terms)s'")) % {'terms': query} }}</span>
 % elif metadata:
-<span>{{ str(ngettext('Showing %s of %s item', 'Showing %s of %s items', total_items)) % (len(metadata), total_items) }}</span>
+<span>{{ str(ngettext('Showing %(count)s of %(total)s item', 'Showing %(count)s of %(total)s items', total_items)) % {'count': len(metadata), 'total': total_items}) }}</span>
 % end
 </h1>
 
@@ -13,7 +13,7 @@
         % if not query:
         <p>{{ _('Content library is currently empty') }}</p>
         % else:
-        <p>{{ str(_("There are no search results for '%s'")) % query }}</p>
+        <p>{{ str(_("There are no search results for '%(terms)s'")) % {'terms': query} }}</p>
         % end
     % else:
     <form id="pager" class="pager controls">
