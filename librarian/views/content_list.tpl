@@ -28,6 +28,7 @@
         </select>
         <label for="perpage">per page</label>
         <button id="go-button" type="submit" class="special">{{ _('go') }}</button>
+        % include('_simple_pager')
         </p>
     </form>
     <table class="content-list">
@@ -53,6 +54,9 @@
         </tr>
         % end
     </table>
+    <p class="controls">
+    % include('_simple_pager')
+    </p>
     % end 
 </div>
 

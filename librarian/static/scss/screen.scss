@@ -10,6 +10,7 @@
  */
 
 @import "base";
+@import "compass/typography/text/replacement";
 
 body, html {
   padding: 0;
@@ -221,12 +222,20 @@ h2 {
   padding: 1em 0 0.3em;
   text-align: right;
   border-bottom: 1px solid $light-grey;
+
+  .next {
+    @include replace-text-with-dimensions('forward.png');
+  }
+
+  .prev {
+    @include replace-text-with-dimensions('back.png');
+  }
 }
 
 button, .button {
   display: inline-block;
   vertical-align: middle;
-  background: $black;
+  background-color: $black;
   color: $white;
   border: 0 solid transparent;
   padding: 0.2em 0.5em;
@@ -236,22 +245,22 @@ button, .button {
   @include border-radius(4px);
 
   &:hover {
-    background: black;
+    background-color: black;
   }
 
   &.special {
-    background: $outernet-blue;
+    background-color: $outernet-blue;
 
     &:hover {
-      background: darken($outernet-blue, 20);
+      background-color: darken($outernet-blue, 20);
     }
   }
 
   &.danger {
-    background: $outernet-red;
+    background-color: $outernet-red;
 
     &:hover {
-      background: darken($outernet-red, 20);
+      background-color: darken($outernet-red, 20);
     }
   }
 }
