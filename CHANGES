@@ -1,6 +1,17 @@
+2014-08-25 : v0.1a5 : Branko Vukelic <branko@outernet.is>
+    - Removed check for decryptable content from updates page handler
+    - Added select all and select none buttons on updates page
+    - Improved appearance of all buttons
+    - Changed all references to 'archive' into 'library'
+    - Added simple title search on library page
+    - Newest updatas are always shown at top on updates page
+    - Dashboard now shows number of and last date of updates
+    - Archive page now has a pager
+    - Minor stylesheet fix for content
+    - Improved icon designs
+
 2014-08-15 : v0.1a4 : Branko Vukelic <branko@outernet.is>
     - Added logging to core modules
     - Added log listing to dashboard
     - Converted Librarian to proper pyhton package with setup module
-    
-    
+   
