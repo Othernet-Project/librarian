@@ -8,6 +8,8 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import logging
+
 from datetime import datetime
 
 from bottle import request, view, abort, redirect, default_app, MultiDict
@@ -41,6 +43,9 @@ def dashboard():
     if zipballs:
         last_zip = datetime.fromtimestamp(zipballs[0][1])
         zipballs = len(zipballs)
+        logging.debug('Found %s updates' % zipballs)
+    else:
+        logging.debug('No updates found')
     with open(request.app.config['logging.output'], 'rt') as log:
         logs = ''.join(reversed(list(log)))
     return locals()
