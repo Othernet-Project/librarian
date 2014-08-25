@@ -10,6 +10,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 import stat
+import math
 import logging
 
 from bottle import request, view, abort, default_app
@@ -31,7 +32,28 @@ app = default_app()
 @view('content_list')
 def content_list():
     """ Show list of content """
-    return {'metadata': archive.get_content()}
+    try:
+        f_per_page = int(request.params.get('c', 1))
+    except ValueError as e:
+        f_per_page = 1
+    f_per_page = max(1, min(4, f_per_page))
+    try:
+        page = int(request.params.get('p', 1))
+    except ValueError:
+        page = 1
+    per_page = f_per_page * 20
+    total_items = archive.get_count()
+    total_pages = math.ceil(total_items / per_page)
+    page = max(1, min(total_pages, page))
+    offset = (page - 1) * per_page
+    return {
+        'metadata': archive.get_content(offset, per_page),
+        'total_items': total_items,
+        'total_pages': total_pages,
+        'per_page': per_page,
+        'f_per_page': f_per_page,
+        'page': page
+    }
 
 
 @app.get(PREFIX + '/%s/<filename>' % CONTENT_ID)

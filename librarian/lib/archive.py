@@ -18,10 +18,10 @@ from bottle import request
 from .downloads import get_spool_zip_path, get_zip_path, get_metadata
 
 
-__all__ = ('get_content', 'get_old_content', 'parse_size', 'cleanup_list',
-           'add_to_archive', 'remove_from_archive', 'path_space', 'free_space',
-           'zipball_count', 'archive_space_used', 'last_update', 'add_view',
-           'needed_space', 'cleanup_list')
+__all__ = ('get_count', 'get_content', 'get_old_content', 'parse_size',
+           'cleanup_list', 'add_to_archive', 'remove_from_archive',
+           'path_space', 'free_space', 'zipball_count', 'archive_space_used',
+           'last_update', 'add_view', 'needed_space', 'cleanup_list')
 
 FACTORS = {
     'b': 1,
@@ -30,11 +30,21 @@ FACTORS = {
     'g': 1024 * 1024 * 1024,
 }
 
-
+COUNT_QUERY = """
+SELECT COUNT(id)
+FROM zipballs;
+"""
 LIST_QUERY = """
 SELECT *
 FROM zipballs
 ORDER BY date(updated) DESC, views DESC;
+"""
+PAGE_QUERY = """
+SELECT *
+FROM zipballs
+ORDER BY date(updated) DESC, views DESC
+LIMIT :limit
+OFFSET :offset;
 """
 LIST_DELETABLE = """
 SELECT md5, updated, title, views
@@ -69,10 +79,17 @@ WHERE md5 = ?
 """
 
 
-def get_content():
+def get_count():
     # TODO: tests
     db = request.db
-    db.query(LIST_QUERY)
+    db.query(COUNT_QUERY)
+    return db.cursor.fetchall()[0]['count(*)']
+
+
+def get_content(offset=0, limit=0):
+    # TODO: tests
+    db = request.db
+    db.query(PAGE_QUERY, offset=offset, limit=limit)
     return db.cursor.fetchall()
 
 
