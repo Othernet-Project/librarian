@@ -1,8 +1,8 @@
-% rebase('base.tpl', title=_('Archive'))
-<h1>{{ _('Archive') }}</h1>
+% rebase('base.tpl', title=_('Library'))
+<h1>{{ _('Library') }}</h1>
 
 % if not metadata:
-<p>{{ _('Content archive is currently empty') }}</p>
+<p>{{ _('Content library is currently empty') }}</p>
 % else:
 <table class="content-list">
     <tr class="header">

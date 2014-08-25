@@ -2,7 +2,7 @@
 <div class="content-archive dash-section">
     <div class="stat count">
     <span class="number">{{ count }}</span>
-    <span class="label">{{ ngettext('item in the archive', 'items in the archive', count) }}</span>
+    <span class="label">{{ ngettext('item in the library', 'items in the library', count) }}</span>
     </div>
 
     <div class="stat space">
@@ -40,7 +40,7 @@
     % end
     % if content != total:
         <p class="content">
-        % include('_space_info', label=_('content archive'), space=content)
+        % include('_space_info', label=_('content library'), space=content)
         </p>
     % end
     <p class="total">
