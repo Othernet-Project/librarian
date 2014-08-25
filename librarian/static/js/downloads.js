@@ -1,11 +1,11 @@
 !function(window, $) {
   var checkboxes = $('.downloads-selection input[type=checkbox]');
-  $('#sel-all').on('click', function (e) {
+  $('.sel-all').on('click', function (e) {
     e.preventDefault();
     checkboxes.prop('checked', true);
     checkboxes.change();
   });
-  $('#sel-none').on('click', function (e) {
+  $('.sel-none').on('click', function (e) {
     e.preventDefault();
     checkboxes.prop('checked', false);
     checkboxes.change();

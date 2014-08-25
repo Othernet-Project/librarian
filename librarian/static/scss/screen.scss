@@ -208,6 +208,14 @@ button, .button {
       background: darken($outernet-blue, 20);
     }
   }
+
+  &.danger {
+    background: $outernet-red;
+
+    &:hover {
+      background: darken($outernet-red, 20);
+    }
+  }
 }
 
 a.button:hover, a.button:visited {
@@ -220,5 +228,5 @@ label {
 }
 
 tr.selected {
-  background: lighten($outernet-blue, 35);
+  color: $outernet-green;
 }

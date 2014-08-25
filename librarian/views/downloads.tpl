@@ -1,12 +1,14 @@
 % rebase('base.tpl', title=_('Updates'))
 <h1>{{ _('Updates') }}</h1>
 
+<form method="POST">
 <p class="controls" id="controls">
-    <a id="sel-all" class="button" href="?sel=1">select all</a>
-    <a id="sel-none" class="button" href="?sel=0">select none</a>
+    <a class="sel-all button" href="?sel=1">{{ _('Select all') }}</a>
+    <a class="sel-none button" href="?sel=0">{{ _('Select none') }}</a>
+    <button type="submit" name="action" value="add" class="special">{{ _('Add selected to archive') }}</button>
+    <button type="submit" name="action" value="delete" class="danger">{{ _('Delete selected') }}</button>
 </p>
 
-<form method="POST">
 <table>
     <thead>
         <tr>
@@ -39,8 +41,10 @@
 </table>
 
 <p class="buttons">
+<a class="sel-all button" href="?sel=1">{{ _('Select all') }}</a>
+<a class="sel-none button" href="?sel=0">{{ _('Select none') }}</a>
 <button type="submit" name="action" value="add" class="special">{{ _('Add selected to archive') }}</button>
-<button type="submit" name="action" value="delete">{{ _('Delete selected') }}</button>
+<button type="submit" name="action" value="delete" class="danger">{{ _('Delete selected') }}</button>
 </p>
 </form>
 
