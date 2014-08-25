@@ -29,6 +29,7 @@
         </div>
 
         <div class="footer">
+        <p class="logo"><img src="/static/img/outernet_logo.png" alt="Outernet: Humanity's Public Library"></p>
         <p class="appver">{{ _('Librarian') }} v{{ app_version }}</p>
         <p class="copy">2014 Outernet Inc</p>
         </div>
