@@ -39,7 +39,7 @@ def dashboard():
     zipballs = downloads.get_zipballs()
     zipballs = list(reversed(downloads.order_zipballs(zipballs)))
     if zipballs:
-        last_zip = datetime.fromtimestamp(zipballs[-1][1])
+        last_zip = datetime.fromtimestamp(zipballs[0][1])
         zipballs = len(zipballs)
     with open(request.app.config['logging.output'], 'rt') as log:
         logs = ''.join(reversed(list(log)))
