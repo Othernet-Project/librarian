@@ -196,6 +196,13 @@ def test_get_timestamp(os):
     assert ret == os.stat.return_value.st_mtime
 
 
+@mock.patch(MOD + 'get_timestamp')
+@mock.patch(MOD + 'datetime')
+def test_get_timestamp_as_datetime(datetime, get_timestamp):
+    ret = get_timestamp_as_datetime('foo')
+    datetime.fromtimestamp.assert_called_with(get_timestamp.return_value)
+    assert ret == datetime.fromtimestamp.return_value
+
 def test_get_md5_from_path():
     ret = get_md5_from_path('/foo/1e43d05c85612e500c5d244394e24ec3.zip')
     assert ret == '1e43d05c85612e500c5d244394e24ec3'

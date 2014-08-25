@@ -24,9 +24,9 @@ from .content_crypto import extract_content, DecryptionError
 
 __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
            'get_decryptable', 'decrypt_all', 'get_zipballs', 'get_timestamp',
-           'get_md5_from_path', 'get_zip_path_in', 'get_zip_path',
-           'remove_downloads', 'get_spool_zip_path', 'get_file',
-           'get_metadata', 'patch_html',)
+           'get_timestamp_as_datetime', 'get_md5_from_path', 'get_zip_path_in',
+           'get_zip_path', 'remove_downloads', 'get_spool_zip_path',
+           'get_file', 'get_metadata', 'patch_html',)
 
 
 STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
@@ -168,6 +168,19 @@ def get_timestamp(path):
     :returns:       seconds since epoch
     """
     return os.stat(path).st_mtime
+
+
+def get_timestamp_as_datetime(path):
+    """ Get timestamp of a file as datetime object
+
+    For archived zipballs, this is usually the time when zipball was written to
+    disk.
+
+    :param path:    path to the file
+    :returns:       datetime object
+    """
+    ts = get_timestamp(path)
+    return datetime.fromtimestamp(ts)
 
 
 def get_md5_from_path(path):
