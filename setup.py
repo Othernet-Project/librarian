@@ -34,6 +34,7 @@ setup(
         'librarian': data([
             'static/css/*.css',
             'static/img/*.png',
+            'static/js/*.js',
             'migrations/*.sql',
             'keys/*',
             'views/*.tpl',
