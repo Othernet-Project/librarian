@@ -4,7 +4,7 @@
 % if query:
 <span>{{ str(_("Showing search results for '%(terms)s'")) % {'terms': query} }}</span>
 % elif metadata:
-<span>{{ str(ngettext('Showing %(count)s of %(total)s item', 'Showing %(count)s of %(total)s items', total_items)) % {'count': len(metadata), 'total': total_items}) }}</span>
+<span>{{ str(ngettext('Showing %(count)s of %(total)s item', 'Showing %(count)s of %(total)s items', total_items)) % {'count': len(metadata), 'total': total_items} }}</span>
 % end
 </h1>
 
