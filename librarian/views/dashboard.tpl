@@ -11,6 +11,8 @@
     <span class="label">{{ _('last update') }}</span>
     </div>
 </div>
+% else:
+    <h1>{{ _('Dashboard') }}</h1>
 % end
 
 <div class="favorites">

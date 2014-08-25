@@ -26,12 +26,12 @@
   }
 
   a {
-    border-bottom: 1px solid transparent;
+    border-bottom: 2px solid transparent;
   }
 
   a:hover, span.current {
     text-decoration: none;
-    border-bottom: 1px solid $outernet-blue;
+    border-bottom: 2px solid $outernet-blue;
   }
 
   a:visited {
@@ -40,14 +40,23 @@
 }
 
 
+h1 {
+  background: $outernet-blue;
+  color: $white;
+  padding: 0.2em 0.5em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
 .buttons {
   text-align: right;
 }
 
 
 .toolbar {
-  margin: 1em 0 1em;
-  border-bottom: 1px solid $light-grey;
+  margin: 1em 0 0;
+  background: $black;
+  color: $white;
 
   a, span {
     display: inline-block;
@@ -57,24 +66,24 @@
     text-transform: uppercase;
     background-repeat: no-repeat;
     background-position: 2px 2px;
-    border-bottom: 2px solid transparent;
+    border-bottom: 6px solid transparent;
   }
 
   a {
-    color: $black;
+    color: $white;
 
     &:hover {
       text-decoration: none;
-      border-bottom: 2px solid $outernet-blue;
+      border-bottom: 6px solid $outernet-blue;
     }
 
     &:visited {
-      color: $black;
+      color: $white;
     }
   }
 
   span {
-    border-bottom: 2px solid $outernet-blue;
+    border-bottom: 6px solid $outernet-blue;
   }
 
   .dashboard {
@@ -95,16 +104,20 @@
 }
 
 .footer {
+  background: $outernet-blue;
+  padding: 0.2em 0.5em 2em;
+  color: $white;
   margin-top: 1em;
-  border-top: 1px solid $light-grey;
-  padding-top: 0.5em;
-  color: $grey;
   font-size: 80%;
   text-align: right;
 
   p {
     margin-bottom: 0;
   }
+}
+
+.body {
+  min-height: 300px;
 }
 
 .content-archive {
