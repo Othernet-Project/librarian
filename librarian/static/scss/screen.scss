@@ -32,11 +32,13 @@ body, html {
 
   a {
     border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
   }
 
   a:hover, span.current {
     text-decoration: none;
-    border-top: 2px solid $white;
+    border-top: 2px solid $outernet-yellow;
+    border-bottom: 2px solid $outernet-yellow;
   }
 
   a:visited {
