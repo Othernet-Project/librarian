@@ -29,6 +29,7 @@ app = default_app()
 @view('downloads', vals={})
 def list_downloads():
     """ Render a list of downloaded content """
+    selection = request.params.get('sel', '1') != '0'
     zipballs = list(downloads.get_zipballs())
     logging.info("Found %s decrypted files" % (len(zipballs)))
     metadata = []
@@ -45,7 +46,7 @@ def list_downloads():
             # don't know what to do with the file so we'll remove it.
             logging.error("<%s> error unpacking: %s" % (z, err))
             os.unlink(z)
-    return dict(metadata=metadata)
+    return dict(metadata=metadata, selection=selection)
 
 
 @app.post(PREFIX + '/')

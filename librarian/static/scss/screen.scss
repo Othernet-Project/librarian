@@ -178,3 +178,47 @@
   font-family: monospace;
   border: 0 solid transparent;
 }
+
+.controls {
+  padding: 1em 0 0.3em;
+  text-align: right;
+  border-bottom: 1px solid $light-grey;
+}
+
+button, .button {
+  display: inline-block;
+  vertical-align: middle;
+  background: $black;
+  color: $white;
+  border: 0 solid transparent;
+  padding: 0.2em 0.5em;
+  font-size: $base-size;
+  font-family: $base-font;
+  line-height: $base-lh;
+  @include border-radius(4px);
+
+  &:hover {
+    background: black;
+  }
+
+  &.special {
+    background: $outernet-blue;
+
+    &:hover {
+      background: darken($outernet-blue, 20);
+    }
+  }
+}
+
+a.button:hover, a.button:visited {
+  color: $white;
+  text-decoration: none;
+}
+
+label {
+  cursor: pointer;
+}
+
+tr.selected {
+  background: lighten($outernet-blue, 35);
+}

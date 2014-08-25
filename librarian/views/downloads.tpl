@@ -1,6 +1,11 @@
 % rebase('base.tpl', title=_('Updates'))
 <h1>{{ _('Updates') }}</h1>
 
+<p class="controls" id="controls">
+    <a id="sel-all" class="button" href="?sel=1">select all</a>
+    <a id="sel-none" class="button" href="?sel=0">select none</a>
+</p>
+
 <form method="POST">
 <table>
     <thead>
@@ -16,9 +21,11 @@
             % for meta in metadata:
             <tr>
                 <td class="downloads-selection">
-                    <input type="checkbox" name="selection" value="{{ meta['md5'] }}" checked>
+                    <input id="check-{{ meta['md5'] }}" type="checkbox" name="selection" value="{{ meta['md5'] }}"{{ selection and ' checked' or ''}}>
                 </td>
-                <td class="downloads-title">{{ meta['title'] }}</td>
+                <td class="downloads-title">
+                    <label for="check-{{ meta['md5'] }}">{{ meta['title'] }}</label>
+                </td>
                 <td class="downloads-timestamp">{{ h.strft(meta['timestamp'], '%m-%d') }}</td>
                 <td class="downloads-ftimestamp">{{ meta['ftimestamp'].strftime('%m-%d') }}</td>
             </tr>
@@ -32,8 +39,10 @@
 </table>
 
 <p class="buttons">
-<button type="submit" name="action" value="add">{{ _('Add selected to archive') }}</button>
+<button type="submit" name="action" value="add" class="special">{{ _('Add selected to archive') }}</button>
 <button type="submit" name="action" value="delete">{{ _('Delete selected') }}</button>
 </p>
 </form>
 
+<script src="/static/js/jquery.js"></script>
+<script src="/static/js/downloads.js"></script>
