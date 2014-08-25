@@ -7,7 +7,8 @@
         <tr>
         <th>{{ _('select') }}</th>
         <th>{{ _('title') }}</th>
-        <th>{{ _('date') }}</th>
+        <th>{{ _('broadcast') }}</th>
+        <th>{{ _('downloaded') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
                 </td>
                 <td class="downloads-title">{{ meta['title'] }}</td>
                 <td class="downloads-timestamp">{{ h.strft(meta['timestamp'], '%m-%d') }}</td>
+                <td class="downloads-ftimestamp">{{ meta['ftimestamp'].strftime('%m-%d') }}</td>
             </tr>
             % end
         % else:

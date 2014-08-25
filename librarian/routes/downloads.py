@@ -45,6 +45,7 @@ def list_downloads():
         try:
             meta = downloads.get_metadata(z)
             meta['md5'] = downloads.get_md5_from_path(z)
+            meta['ftimestamp'] = downloads.get_timestamp_as_datetime(z)
             metadata.append(meta)
         except downloads.ContentError as err:
             # Zip file is invalid. This means that the file is corrupted or the
