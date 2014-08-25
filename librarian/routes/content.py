@@ -41,18 +41,33 @@ def content_list():
         page = int(request.params.get('p', 1))
     except ValueError:
         page = 1
+    query = request.params.getunicode('q', '').strip()
+
     per_page = f_per_page * 20
-    total_items = archive.get_count()
+
+    if query:
+        total_items = archive.get_search_count(query)
+    else:
+        total_items = archive.get_count()
+
     total_pages = math.ceil(total_items / per_page)
     page = max(1, min(total_pages, page))
     offset = (page - 1) * per_page
+
+    if query:
+        metadata = archive.search_content(query, offset, per_page)
+    else:
+        metadata = archive.get_content(offset, per_page)
+
     return {
-        'metadata': archive.get_content(offset, per_page),
+        'metadata': metadata,
         'total_items': total_items,
         'total_pages': total_pages,
         'per_page': per_page,
         'f_per_page': f_per_page,
-        'page': page
+        'page': page,
+        'vals': request.params.decode(),
+        'query': query,
     }
 
 

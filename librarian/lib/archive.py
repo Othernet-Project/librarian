@@ -18,10 +18,11 @@ from bottle import request
 from .downloads import get_spool_zip_path, get_zip_path, get_metadata
 
 
-__all__ = ('get_count', 'get_content', 'get_old_content', 'parse_size',
-           'cleanup_list', 'add_to_archive', 'remove_from_archive',
-           'path_space', 'free_space', 'zipball_count', 'archive_space_used',
-           'last_update', 'add_view', 'needed_space', 'cleanup_list')
+__all__ = ('get_count', 'get_search_count', 'get_content', 'search_content',
+           'get_old_content', 'parse_size', 'cleanup_list', 'add_to_archive',
+           'remove_from_archive', 'path_space', 'free_space', 'zipball_count',
+           'archive_space_used', 'last_update', 'add_view', 'needed_space',
+           'cleanup_list')
 
 FACTORS = {
     'b': 1,
@@ -31,17 +32,25 @@ FACTORS = {
 }
 
 COUNT_QUERY = """
-SELECT COUNT(id)
+SELECT COUNT(*) AS count
 FROM zipballs;
-"""
-LIST_QUERY = """
-SELECT *
-FROM zipballs
-ORDER BY date(updated) DESC, views DESC;
 """
 PAGE_QUERY = """
 SELECT *
 FROM zipballs
+ORDER BY date(updated) DESC, views DESC
+LIMIT :limit
+OFFSET :offset;
+"""
+SEARCH_COUNT_QUERY = """
+SELECT COUNT(*) AS count
+FROM zipballs
+WHERE title LIKE :terms;
+"""
+SEARCH_QUERY = """
+SELECT *
+FROM zipballs
+WHERE title LIKE :terms
 ORDER BY date(updated) DESC, views DESC
 LIMIT :limit
 OFFSET :offset;
@@ -86,10 +95,26 @@ def get_count():
     return db.cursor.fetchall()[0]['count(*)']
 
 
+def get_search_count(terms):
+    # TODO: tests
+    terms = '%' + terms.lower() + '%'
+    db = request.db
+    db.query(SEARCH_COUNT_QUERY, terms=terms)
+    return db.cursor.fetchall()[0]['count']
+
+
 def get_content(offset=0, limit=0):
     # TODO: tests
     db = request.db
     db.query(PAGE_QUERY, offset=offset, limit=limit)
+    return db.cursor.fetchall()
+
+
+def search_content(terms, offset=0, limit=0):
+    # TODO: tests
+    terms = '%' + terms.lower() + '%'
+    db = request.db
+    db.query(SEARCH_QUERY, terms=terms, offset=offset, limit=limit)
     return db.cursor.fetchall()
 
 
