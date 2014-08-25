@@ -37,11 +37,3 @@
 </p>
 </form>
 
-% if errors:
-<h2>Errors</h2>
-<ul class="error">
-    % for error in errors:
-    <li>{{ error.message }}</li>
-    % end
-</ul>
-% end

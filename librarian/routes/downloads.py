@@ -29,14 +29,6 @@ app = default_app()
 @view('downloads', vals={})
 def list_downloads():
     """ Render a list of downloaded content """
-    # FIXME: The whole process of decrypting signed content is vulnerable to
-    # injection of supposedly decrypted zip files. If attacker is able to gain
-    # access to filesystem and is able to write a new zip file in the spool
-    # directory, the system will treat it as a safe content file. There are
-    # currently no mechanisms for invalidating such files.
-    decryptables = downloads.get_decryptable()
-    logging.debug("Found %s decryptable files" % (len(decryptables)))
-    extracted, errors = downloads.decrypt_all(decryptables)
     zipballs = list(downloads.get_zipballs())
     logging.info("Found %s decrypted files" % (len(zipballs)))
     metadata = []
@@ -53,8 +45,7 @@ def list_downloads():
             # don't know what to do with the file so we'll remove it.
             logging.error("<%s> error unpacking: %s" % (z, err))
             os.unlink(z)
-    # FIXME: Log errors
-    return dict(metadata=metadata, errors=errors)
+    return dict(metadata=metadata)
 
 
 @app.post(PREFIX + '/')
