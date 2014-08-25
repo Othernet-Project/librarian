@@ -8,6 +8,8 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+from datetime import datetime
+
 from bottle import request, view, abort, redirect, default_app, MultiDict
 
 from ..lib import downloads
@@ -34,6 +36,11 @@ def dashboard():
     favorites = favorite_content(limit=5)
     last_updated = archive.last_update()
     needed = archive.needed_space()
+    zipballs = downloads.get_zipballs()
+    zipballs = list(reversed(downloads.order_zipballs(zipballs)))
+    if zipballs:
+        last_zip = datetime.fromtimestamp(zipballs[-1][1])
+        zipballs = len(zipballs)
     with open(request.app.config['logging.output'], 'rt') as log:
         logs = ''.join(reversed(list(log)))
     return locals()

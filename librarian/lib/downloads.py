@@ -158,6 +158,18 @@ def get_zipballs():
     return (os.path.join(spooldir, f) for f in zipfiles)
 
 
+def order_zipballs(zipballs):
+    """ Order zipball paths by timestamp and return timestamps
+
+    :param zipballs:    iterable containing zipballs such as return value of
+                        ``get_zipballs`` function
+    :returns:           iterable contianing two-tuples of zipballs and their
+                        timestamps
+    """
+    zipdates = [(z, os.stat(z).st_mtime) for z in zipballs]
+    return sorted(zipdates, key=lambda x: x[1])
+
+
 def get_timestamp(path):
     """ Get the timestamp of a file
 

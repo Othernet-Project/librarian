@@ -1,20 +1,17 @@
 % rebase('base.tpl', title=_('Dashboard'))
-<div class="content-archive dash-section">
+% if zipballs:
+<div class="dash-updates content-archive dash-section">
     <div class="stat count">
-    <span class="number">{{ count }}</span>
-    <span class="label">{{ ngettext('item in the library', 'items in the library', count) }}</span>
+    <span class="number">{{ zipballs }}</span>
+    <span class="label">{{ ngettext('update available', 'updates available', zipballs) }}</span>
     </div>
 
     <div class="stat space">
-    <span class="number">{{ h.hsize(used) }}</span>
-    <span class="label">{{ _('used space') }}</span>
-    </div>
-
-    <div class="stat update">
-    <span class="number">{{ last_updated.strftime('%m-%d') if last_updated else '?' }}</span>
+    <span class="number">{{ last_zip.strftime('%m-%d') }}</span>
     <span class="label">{{ _('last update') }}</span>
     </div>
 </div>
+% end
 
 <div class="favorites">
     <h2>{{ _('Favorite content') }}</h2>
@@ -32,7 +29,7 @@
 </div>
 
 <div class="diskspace dash-section">
-    <h2>{{ _('Disk space') }}</h2>
+    <h2>{{ _('Content library stats') }}</h2>
     % if spool != total:
         <p class="spool">
         % include('_space_info', label=_('download directory'), space=spool)
@@ -53,6 +50,19 @@
     </p>
     % end
 </div>
+
+<div class="content-archive dash-section">
+    <div class="stat count">
+    <span class="number">{{ count }}</span>
+    <span class="label">{{ ngettext('item in the library', 'items in the library', count) }}</span>
+    </div>
+
+    <div class="stat space">
+    <span class="number">{{ h.hsize(used) }}</span>
+    <span class="label">{{ _('used space') }}</span>
+    </div>
+</div>
+
 
 <div class="dash-logs">
     <h2>{{ _('Application logs') }}</h2>

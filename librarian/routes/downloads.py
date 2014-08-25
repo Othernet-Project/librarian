@@ -10,6 +10,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 import logging
+from datetime import datetime
 
 from bottle import request, view, redirect, default_app
 
@@ -30,15 +31,16 @@ app = default_app()
 def list_downloads():
     """ Render a list of downloaded content """
     selection = request.params.get('sel', '1') != '0'
-    zipballs = list(downloads.get_zipballs())
-    logging.info("Found %s decrypted files" % (len(zipballs)))
+    zipballs = downloads.get_zipballs()
+    zipballs = list(reversed(downloads.order_zipballs(zipballs)))
+    logging.info("Found %s zipfiles" % (len(zipballs)))
     metadata = []
-    for z in zipballs:
+    for z, ts in zipballs:
         logging.debug("<%s> getting metadata" % z)
         try:
             meta = downloads.get_metadata(z)
             meta['md5'] = downloads.get_md5_from_path(z)
-            meta['ftimestamp'] = downloads.get_timestamp_as_datetime(z)
+            meta['ftimestamp'] = datetime.fromtimestamp(ts)
             metadata.append(meta)
         except downloads.ContentError as err:
             # Zip file is invalid. This means that the file is corrupted or the
