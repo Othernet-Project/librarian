@@ -11,31 +11,36 @@
 
 @import "base";
 
+body, html {
+  padding: 0;
+}
+
+.inner {
+  padding: 1em;
+}
 
 #languages {
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-bottom: 1px solid $light-grey;
+  text-align: right;
+  background: $black;
   font-size: 90%;
 
   a, span.current {
-    color: $black;
+    color: $white;
     display: inline-block;
     padding: 0.2em 0.5em;
   }
 
   a {
-    border-bottom: 2px solid transparent;
+    border-top: 2px solid transparent;
   }
 
   a:hover, span.current {
     text-decoration: none;
-    border-bottom: 2px solid $outernet-blue;
+    border-top: 2px solid $white;
   }
 
   a:visited {
-    color: $black;
+    color: $white;
   }
 }
 
@@ -46,6 +51,15 @@ h1 {
   padding: 0.2em 0.5em;
   font-weight: bold;
   margin-bottom: 0.5em;
+
+  span {
+    font-size: 50%;
+    font-weight: normal;
+  }
+}
+
+h2 {
+  margin: 0 0 1em;
 }
 
 .buttons {
@@ -54,7 +68,6 @@ h1 {
 
 
 .toolbar {
-  margin: 1em 0 0;
   background: $black;
   color: $white;
 
@@ -181,6 +194,10 @@ h1 {
   color: $outernet-orange;
   border: 1px solid $outernet-orange;
   background: desaturate(lighten($outernet-orange, 35), 10);
+}
+
+.dash-section {
+  padding-bottom: 2em;
 }
 
 .dash-logs textarea {
