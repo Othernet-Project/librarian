@@ -7,8 +7,8 @@
 <table class="content-list">
     <tr class="header">
     <th></th>
-    <th>{{ _('date') }}</th>
     <th>{{ _('title') }}</th>
+    <th>{{ _('added') }}</th>
     </tr>
     % for meta in metadata:
     <tr>
@@ -22,8 +22,8 @@
         </form>
         % end
     </td>
-    <td>{{ meta['updated'].strftime('%m-%d') }}</td>
     <td><a href="{{ i18n_path('/content/%s/' % meta['md5']) }}">{{ meta['title'] }}</a></td>
+    <td>{{ meta['updated'].strftime('%m-%d') }}</td>
     </tr>
     % end
 </table>
