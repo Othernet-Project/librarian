@@ -8,7 +8,9 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import logging
 from warnings import warn
+from logging.config import dictConfig as log_config
 from os.path import join, dirname, abspath, normpath
 
 import bottle
@@ -24,12 +26,17 @@ from librarian.routes import *  # Only importing so routes are rgistered
 import librarian
 
 __version__ = librarian.__version__
-__autho__ = librarian.__author__
+__author__ = librarian.__author__
 
 
 MODDIR = dirname(abspath(__file__))
-CONFPATH = normpath(join(MODDIR, '../conf/librarian.ini'))
-STATICDIR = normpath(join(MODDIR, '../static'))
+
+def in_pkg(*paths):
+    """ Return path relative to module directory """
+    return normpath(join(MODDIR, *paths))
+
+CONFPATH = in_pkg('librarian.ini')
+STATICDIR = in_pkg('static')
 
 LANGS = [
     ('de_DE', 'Deutsch'),
@@ -54,27 +61,52 @@ def send_static(path):
 # default_app, so they don't need to be mounted explicitly.
 
 
-def start():
+def start(logfile=None):
     """ Start the application """
 
     config = app.config
 
+    log_config({
+        'version': 1,
+        'root': {
+            'handlers': ['file'],
+            'level': logging.DEBUG,
+        },
+        'handlers': {
+            'file': {
+                'class' : 'logging.handlers.RotatingFileHandler',
+                'formatter': 'default',
+                'filename': logfile or config['logging.output'],
+                'maxBytes': int(config['logging.size']),
+                'backupCount': int(config['logging.backups'])
+            },
+        },
+        'formatters': {
+            'default': {
+                'format' : config['logging.format'],
+                'datefmt' : config['logging.date_format']
+            },
+        },
+    })
+
     # Import gnupg keys
     try:
-        content_crypto.import_key(keypath=config['content.key'],
+        content_crypto.import_key(in_pkg('keys', config['content.key']),
                                   keyring=config['content.keyring'])
     except content_crypto.KeyImportError as err:
+        logging.error("Could not import keys: %s" % err)
         warn(AppStartupWarning(err))
 
     # Run database migrations
     db = squery.Database(config['database.path'])
-    migrations.migrate(db, config['database.migrations'])
+    migrations.migrate(db, in_pkg('migrations'))
+    logging.debug("Finished running migrations")
     db.disconnect()
 
     app.install(squery.database_plugin)
 
     # Set some basic configuration
-    bottle.TEMPLATE_PATH.insert(0, config['librarian.views'])
+    bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))
     bottle.BaseTemplate.defaults.update({
         'app_version': __version__,
         'request': request,
@@ -86,10 +118,10 @@ def start():
     # Add middlewares
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
     wsgiapp = I18NPlugin(wsgiapp, langs=LANGS, default_locale=DEFAULT_LOCALE,
-                         domain='librarian',
-                         locale_dir=config['librarian.locale'])
+                         domain='librarian', locale_dir=in_pkg('locales'))
 
     # Srart the server
+    logging.info('Starting Librarian')
     bottle.run(app=wsgiapp,
                server=config['librarian.server'],
                host=config['librarian.bind'],
@@ -110,6 +142,8 @@ if __name__ == '__main__':
                         'the configuration in use and exit')
     parser.add_argument('--version', action='store_true', help='print out '
                         'version number and exit')
+    parser.add_argument('--log', metavar='PATH', help='path to log file '
+                        '(default: as configured in .ini file)', default=None)
     args = parser.parse_args(sys.argv[1:])
 
     if args.version:
@@ -122,4 +156,4 @@ if __name__ == '__main__':
         pprint.pprint(app.config, indent=4)
         sys.exit(0)
 
-    start()
+    start(args.log)

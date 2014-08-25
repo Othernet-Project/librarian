@@ -10,6 +10,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 import shutil
+import logging
 from datetime import datetime
 
 from bottle import request
@@ -108,18 +109,23 @@ def add_to_archive(hashes):
     db = request.db
     metadata = []
     for md5, path in ((h, get_spool_zip_path(h)) for h in hashes):
+        logging.debug("<%s> adding to archive (#%s)" % (path, md5))
         meta = get_metadata(path)
         meta['md5'] = md5
         meta['updated'] = datetime.now()
         # Check target path first
         target_path = os.path.join(target_dir, os.path.basename(path))
         if os.path.exists(target_path):
+            logging.debug("<%s> removing existing path" % target_path)
             os.unlink(target_path)
         shutil.move(path, target_dir)
         metadata.append(meta)
+        logging.debug("<%s> successfully imported" % path)
     with db.transaction() as cur:
+        logging.debug("Adding new content to archive database")
         cur.executemany(ADD_QUERY, metadata)
         rowcount = cur.rowcount
+    logging.debug("%s items added to database" % rowcount)
     return rowcount
 
 
@@ -131,14 +137,19 @@ def remove_from_archive(hashes):
     success = []
     failed = []
     for md5, path in ((h, get_zip_path(h)) for h in hashes):
+        logging.debug("<%s> removing from archive (#%s)" % (path, md5))
         try:
             os.unlink(path)
-        except OSError:
+        except OSError as err:
+            logging.error("<%s> cannot delete: %s" % (path, err))
             failed.append(md5)
             continue
         success.append(md5)
     with db.transaction() as cur:
+        logging.debug("Removing %s items from archive database" % len(success))
         cur.executemany(REMOVE_QUERY, [(s,) for s in success])
+        rowcount = cur.rowcount
+    logging.debug("%s items removed from database" % rowcount)
     return success, failed
 
 

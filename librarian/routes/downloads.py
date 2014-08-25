@@ -9,6 +9,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
+import logging
 
 from bottle import request, view, redirect, default_app
 
@@ -34,18 +35,22 @@ def list_downloads():
     # directory, the system will treat it as a safe content file. There are
     # currently no mechanisms for invalidating such files.
     decryptables = downloads.get_decryptable()
+    logging.debug("Found %s decryptable files" % (len(decryptables)))
     extracted, errors = downloads.decrypt_all(decryptables)
-    zipballs = downloads.get_zipballs()
+    zipballs = list(downloads.get_zipballs())
+    logging.info("Found %s decrypted files" % (len(zipballs)))
     metadata = []
     for z in zipballs:
+        logging.debug("<%s> getting metadata" % z)
         try:
             meta = downloads.get_metadata(z)
             meta['md5'] = downloads.get_md5_from_path(z)
             metadata.append(meta)
-        except downloads.ContentError:
+        except downloads.ContentError as err:
             # Zip file is invalid. This means that the file is corrupted or the
             # original file was signed with corrupt data in it. Either way, we
             # don't know what to do with the file so we'll remove it.
+            logging.error("<%s> error unpacking: %s" % (z, err))
             os.unlink(z)
     # FIXME: Log errors
     return dict(metadata=metadata, errors=errors)

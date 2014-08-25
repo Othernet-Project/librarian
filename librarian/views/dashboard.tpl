@@ -54,4 +54,10 @@
     % end
 </div>
 
+<div class="dash-logs">
+    <h2>{{ _('Application logs') }}</h2>
+    <p>{{ _('Logs are shown in reverse chronological order') }}</p>
+    <textarea>{{ logs }}</textarea>
+</div>
+
 

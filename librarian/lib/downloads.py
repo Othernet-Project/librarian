@@ -11,6 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import os
 import json
 import zipfile
+import logging
 from io import BytesIO
 from contextlib import closing
 from functools import partial
@@ -78,11 +79,14 @@ def cleanup(files):
     :returns:       list of files that were kept
     """
     kept = []
+    logging.debug("Cleaning up spool directory")
     for path in files:
         if is_expired(os.path.getmtime(path)):
+            logging.debug("Removing expired file '%s'" % path)
             os.unlink(path)
         else:
             kept.append(path)
+    logging.debug("Cleanup complete, %s files kept" % len(kept))
     return kept
 
 
@@ -116,24 +120,29 @@ def decrypt_all(signed):
     errors = []
 
     for signedf in signed:
+        logging.debug("<%s> verifying" % signedf)
         try:
             # TODO: Check space before continuing
             zipball = extract(signedf)
         except DecryptionError as err:
+            logging.error("<%s> could not decrypt: %s" % (
+                signedf, err))
             errors.append(err)
             continue
         # TODO: Add test for this branching
         if zipfile.is_zipfile(zipball):
             # This seems to be a zip file, so we can include it in the list of
             # extracted files and remove the signed source
-            extracted.append(zipfile)
+            extracted.append(zipball)
             os.unlink(signedf)
+            logging.info("<%s> verified" % zipball)
         else:
             # Zipball is invalid. We will leave the signed source alone (maybe
             # it was not downloaded correctly and will be re-downloaded), and
             # remove the zipball.
+            logging.error("<%s> invalid zip file" % zipball)
             errors.append(signedf)
-            os.unlink(zipfile)
+            os.unlink(zipball)
     return extracted, errors
 
 
@@ -268,14 +277,17 @@ def remove_downloads(md5s):
 
     :param md5s:    iterable containing MD5 hexdigests
     """
+    logging.debug("Removing %s items from spool directory" % len(md5s))
     for md5 in md5s:
         path = get_spool_zip_path(md5)
         if not path:
+            logging.debug("<%s> not found on disk" % path)
             continue  # Ignoring non-existent paths
         try:
             os.unlink(path)
-        except OSError:
-            pass  # Intentionally ignoring. Not considered critical.
+            logging.debug("<%s> removed" % path)
+        except OSError as err:
+            logging.error("<%s> cound not remove: %s" % (path, err))
 
 
 def patch_html(content):
