@@ -38,7 +38,7 @@ FROM zipballs;
 PAGE_QUERY = """
 SELECT *
 FROM zipballs
-ORDER BY date(updated) DESC, views DESC
+ORDER BY datetime(updated) DESC, views DESC
 LIMIT :limit
 OFFSET :offset;
 """
