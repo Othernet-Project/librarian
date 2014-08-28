@@ -71,7 +71,7 @@ def content_list():
     }
 
 
-@app.get(PREFIX + '/%s/<filename>' % CONTENT_ID)
+@app.get(PREFIX + '/%s/<filename:path>' % CONTENT_ID)
 def content_file(content_id, filename):
     """ Serve file from zipball with specified id """
     zippath = downloads.get_zip_path(content_id)
