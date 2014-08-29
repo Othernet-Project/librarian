@@ -2,6 +2,7 @@
     - Fixed bug where archiving the same content twice results in duplicates
     - Librarian is now able to serve subpaths from the zip files
     - All archived content is now sorted by date *and* time of archival
+    - Fixed update datestamp on dashboard to match the latest update
 
 2014-08-25 : v0.1a5 : Branko Vukelic <branko@outernet.is>
     - Removed check for decryptable content from updates page handler
