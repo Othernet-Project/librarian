@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2014-08-25 18:42+0000\n"
-"PO-Revision-Date: 2014-07-25 12:03+0000\n"
+"POT-Creation-Date: 2014-09-06 07:50+0000\n"
+"PO-Revision-Date: 2014-09-06 07:50+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -17,7 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: /vagrant/librarian/app.py:78 /vagrant/librarian/views/base.tpl:32
 #: /vagrant/librarian/app.py:113 /vagrant/librarian/views/base.tpl:33
 msgid "Librarian"
 msgstr ""
@@ -40,8 +39,8 @@ msgstr ""
 
 #: /vagrant/librarian/views/base.tpl:23
 #: /vagrant/librarian/views/content_list.tpl:1
-#: /vagrant/librarian/views/content_list.tpl:2
-msgid "Archive"
+#: /vagrant/librarian/views/content_list.tpl:3
+msgid "Library"
 msgstr ""
 
 #: /vagrant/librarian/views/base.tpl:24
@@ -73,17 +72,11 @@ msgid "delete?"
 msgstr ""
 
 #: /vagrant/librarian/views/cleanup.tpl:25
-#: /vagrant/librarian/views/content_list.tpl:10
-#: /vagrant/librarian/views/downloads.tpl:10
-#: /vagrant/librarian/views/favorites.tpl:10
 #: /vagrant/librarian/views/favorites.tpl:11
 msgid "date"
 msgstr ""
 
 #: /vagrant/librarian/views/cleanup.tpl:26
-#: /vagrant/librarian/views/content_list.tpl:11
-#: /vagrant/librarian/views/downloads.tpl:9
-#: /vagrant/librarian/views/favorites.tpl:11
 #: /vagrant/librarian/views/content_list.tpl:52
 #: /vagrant/librarian/views/downloads.tpl:19
 #: /vagrant/librarian/views/favorites.tpl:12
@@ -107,110 +100,14 @@ msgid "Delete selected now"
 msgstr ""
 
 #: /vagrant/librarian/views/content_list.tpl:5
-msgid "Content archive is currently empty"
-msgstr ""
-
-#: /vagrant/librarian/views/content_list.tpl:21
-#: /vagrant/librarian/views/content_list.tpl:63
-msgid "favorite"
-msgstr ""
-
-#: /vagrant/librarian/views/dashboard.tpl:5
-msgid "item in the archive"
-msgid_plural "items in the archive"
-msgstr[0] ""
-msgstr[1] ""
-
-#: /vagrant/librarian/views/dashboard.tpl:10
-#: /vagrant/librarian/views/dashboard.tpl:64
-msgid "used space"
-msgstr ""
-
-#: /vagrant/librarian/views/dashboard.tpl:15
-#: /vagrant/librarian/views/dashboard.tpl:11
-msgid "last update"
-msgstr ""
-
-#: /vagrant/librarian/views/dashboard.tpl:20
-msgid "Favorite content"
-msgstr ""
-
-#: /vagrant/librarian/views/dashboard.tpl:23
-#: /vagrant/librarian/views/favorites.tpl:5
-#: /vagrant/librarian/views/favorites.tpl:6
-msgid "You have not favorted any content yet"
-msgstr ""
-
-#: /vagrant/librarian/views/dashboard.tpl:30
-msgid "see all favorites"
-msgstr ""
-
-#: /vagrant/librarian/views/dashboard.tpl:35
-msgid "Disk space"
-msgstr ""
-
-#: /vagrant/librarian/views/dashboard.tpl:38
-msgid "download directory"
-msgstr ""
-
-#: /vagrant/librarian/views/dashboard.tpl:43
-msgid "content archive"
-msgstr ""
-
-#: /vagrant/librarian/views/dashboard.tpl:47
-msgid "total space"
-msgstr ""
-
-#: /vagrant/librarian/views/dashboard.tpl:51
-msgid "You are running low on disk space."
-msgstr ""
-
-#: /vagrant/librarian/views/dashboard.tpl:52
-msgid "Free some space now"
-msgstr ""
-
-#: /vagrant/librarian/views/downloads.tpl:8
-#: /vagrant/librarian/views/downloads.tpl:18
-msgid "select"
-msgstr ""
-
-#: /vagrant/librarian/views/downloads.tpl:26
-#: /vagrant/librarian/views/downloads.tpl:40
-msgid "There is no new content"
-msgstr ""
-
-#: /vagrant/librarian/views/downloads.tpl:33
-#: /vagrant/librarian/views/downloads.tpl:10
-#: /vagrant/librarian/views/downloads.tpl:50
-msgid "Add selected to archive"
-msgstr ""
-
-#: /vagrant/librarian/views/downloads.tpl:34
-#: /vagrant/librarian/views/downloads.tpl:11
-#: /vagrant/librarian/views/downloads.tpl:51
-msgid "Delete selected"
-msgstr ""
-
-#: /vagrant/librarian/views/favorites.tpl:19
-#: /vagrant/librarian/views/favorites.tpl:20
-msgid "unfavorite"
-msgstr ""
-
-#: /vagrant/librarian/views/base.tpl:23
-#: /vagrant/librarian/views/content_list.tpl:1
-#: /vagrant/librarian/views/content_list.tpl:3
-msgid "Library"
-msgstr ""
-
-#: /vagrant/librarian/views/content_list.tpl:5
 #, python-format
-msgid "Showing search results for '%s'"
+msgid "Showing search results for '%(terms)s'"
 msgstr ""
 
 #: /vagrant/librarian/views/content_list.tpl:7
 #, python-format
-msgid "Showing %s of %s item"
-msgid_plural "Showing %s of %s items"
+msgid "Showing %(count)s of %(total)s item"
+msgid_plural "Showing %(count)s of %(total)s items"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -220,7 +117,7 @@ msgstr ""
 
 #: /vagrant/librarian/views/content_list.tpl:16
 #, python-format
-msgid "There are no search results for '%s'"
+msgid "There are no search results for '%(terms)s'"
 msgstr ""
 
 #: /vagrant/librarian/views/content_list.tpl:21
@@ -240,18 +137,55 @@ msgstr ""
 msgid "added"
 msgstr ""
 
+#: /vagrant/librarian/views/content_list.tpl:63
+msgid "favorite"
+msgstr ""
+
 #: /vagrant/librarian/views/dashboard.tpl:6
 msgid "update available"
 msgid_plural "updates available"
 msgstr[0] ""
 msgstr[1] ""
 
+#: /vagrant/librarian/views/dashboard.tpl:11
+msgid "last update"
+msgstr ""
+
+#: /vagrant/librarian/views/dashboard.tpl:20
+msgid "Favorite content"
+msgstr ""
+
+#: /vagrant/librarian/views/dashboard.tpl:23
+#: /vagrant/librarian/views/favorites.tpl:6
+msgid "You have not favorted any content yet"
+msgstr ""
+
+#: /vagrant/librarian/views/dashboard.tpl:30
+msgid "see all favorites"
+msgstr ""
+
 #: /vagrant/librarian/views/dashboard.tpl:35
 msgid "Content library stats"
 msgstr ""
 
+#: /vagrant/librarian/views/dashboard.tpl:38
+msgid "download directory"
+msgstr ""
+
 #: /vagrant/librarian/views/dashboard.tpl:43
 msgid "content library"
+msgstr ""
+
+#: /vagrant/librarian/views/dashboard.tpl:47
+msgid "total space"
+msgstr ""
+
+#: /vagrant/librarian/views/dashboard.tpl:51
+msgid "You are running low on disk space."
+msgstr ""
+
+#: /vagrant/librarian/views/dashboard.tpl:52
+msgid "Free some space now"
 msgstr ""
 
 #: /vagrant/librarian/views/dashboard.tpl:59
@@ -259,6 +193,10 @@ msgid "item in the library"
 msgid_plural "items in the library"
 msgstr[0] ""
 msgstr[1] ""
+
+#: /vagrant/librarian/views/dashboard.tpl:64
+msgid "used space"
+msgstr ""
 
 #: /vagrant/librarian/views/dashboard.tpl:70
 msgid "Application logs"
@@ -278,6 +216,20 @@ msgstr ""
 msgid "Select none"
 msgstr ""
 
+#: /vagrant/librarian/views/downloads.tpl:10
+#: /vagrant/librarian/views/downloads.tpl:50
+msgid "Add selected to archive"
+msgstr ""
+
+#: /vagrant/librarian/views/downloads.tpl:11
+#: /vagrant/librarian/views/downloads.tpl:51
+msgid "Delete selected"
+msgstr ""
+
+#: /vagrant/librarian/views/downloads.tpl:18
+msgid "select"
+msgstr ""
+
 #: /vagrant/librarian/views/downloads.tpl:20
 msgid "broadcast"
 msgstr ""
@@ -286,19 +238,10 @@ msgstr ""
 msgid "downloaded"
 msgstr ""
 
-#: /vagrant/librarian/views/content_list.tpl:5
-#, python-format
-msgid "Showing search results for '%(terms)s'"
+#: /vagrant/librarian/views/downloads.tpl:40
+msgid "There is no new content"
 msgstr ""
 
-#: /vagrant/librarian/views/content_list.tpl:7
-#, python-format
-msgid "Showing %(count)s of %(total)s item"
-msgid_plural "Showing %(count)s of %(total)s items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: /vagrant/librarian/views/content_list.tpl:16
-#, python-format
-msgid "There are no search results for '%(terms)s'"
+#: /vagrant/librarian/views/favorites.tpl:20
+msgid "unfavorite"
 msgstr ""
