@@ -62,8 +62,19 @@ You can either translate using the .po files in the project directory, or use
 the hosted version `on POEditor`_ (recommended). Note that Librarian is
 currently under active development, so strings *will* change from time to time.
 
+If you are contributing, or considering contributing translations, please swing
+by our forums_ and say hello.
+
+Reporting bugs and feature requests
+===================================
+
+Bugs and feature requests can be posted either in our forums_ or in the GitHub
+`issue tracker`_.
+
 .. _Vagrant: http://www.vagrantup.com/
 .. _custom Vagrant base box: https://github.com/Outernet-Project/archlinux-vagrant
 .. _VritualBox: https://www.virtualbox.org/
 .. _port 8080: http://localhost:8080/
 .. _on POEditor: https://poeditor.com/join/project?hash=90911b6fc31f2d68c7debd999aa078c6
+.. _forums: https://discuss.outernet.is/
+.. _issue tracker: https://github.com/Outernet-Project/librarian/issues
