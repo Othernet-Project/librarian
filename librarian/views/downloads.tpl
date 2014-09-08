@@ -61,7 +61,7 @@
     %# Translators, used as button label on updates page for unmarking all content for import
     <a class="sel-none button" href="?sel=0">{{ _('Select none') }}</a>
     %# Translators, used as button label on updates page for adding marked content to library
-    <button type="submit" name="action" value="add" class="special">{{ _('Add selected to archive') }}</button>
+    <button type="submit" name="action" value="add" class="special">{{ _('Add selected to library') }}</button>
     %# Translators, used as button label on updates page for permanently deleting all downloaded content
     <button type="submit" name="action" value="delete" class="danger">{{ _('Delete selected') }}</button>
     </p>

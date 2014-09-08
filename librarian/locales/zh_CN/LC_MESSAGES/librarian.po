@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2014-09-08 09:31+0000\n"
+"POT-Creation-Date: 2014-09-08 14:29+0000\n"
 "PO-Revision-Date: 2014-09-08 09:31+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,6 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+#. Translators, used as default page title
+#. Translators, used in page title
+#. Translators, used in footer
+#. Translators, used as default page title
+#. Translators, used in page title
+#. Translators, used in footer
 #. Translators, used as default page title
 #. Translators, used in page title
 #. Translators, used in footer
@@ -38,12 +44,24 @@ msgstr ""
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
 #: /vagrant/librarian/views/base.tpl:23
 #: /vagrant/librarian/views/dashboard.tpl:2
 #: /vagrant/librarian/views/dashboard.tpl:19
 msgid "Dashboard"
 msgstr ""
 
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
@@ -56,6 +74,12 @@ msgstr ""
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
 #: /vagrant/librarian/views/base.tpl:27
 #: /vagrant/librarian/views/content_list.tpl:2
 #: /vagrant/librarian/views/content_list.tpl:5
@@ -65,12 +89,22 @@ msgstr ""
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
 #: /vagrant/librarian/views/base.tpl:29
 #: /vagrant/librarian/views/downloads.tpl:2
 #: /vagrant/librarian/views/downloads.tpl:4
 msgid "Updates"
 msgstr ""
 
+#. Translators, used as page title
+#. Translators, used as page title on clean-up page
+#. Translators, used as page title
+#. Translators, used as page title on clean-up page
 #. Translators, used as page title
 #. Translators, used as page title on clean-up page
 #: /vagrant/librarian/views/cleanup.tpl:2
@@ -101,11 +135,23 @@ msgstr ""
 
 #. Translators, in table header on clean-up page, date added to library
 #. Translators, used in table header, date added to library
+#. Translators, in table header on clean-up page, date added to library
+#. Translators, used in table header, date added to library
+#. Translators, in table header on clean-up page, date added to library
+#. Translators, used in table header, date added to library
 #: /vagrant/librarian/views/cleanup.tpl:32
 #: /vagrant/librarian/views/favorites.tpl:15
 msgid "date"
 msgstr ""
 
+#. Translators, in table header on clean-up page, content title
+#. Translators, used in table header, page title
+#. Translators, used as table header, content title
+#. Translators, used in table header, content title
+#. Translators, in table header on clean-up page, content title
+#. Translators, used in table header, page title
+#. Translators, used as table header, content title
+#. Translators, used in table header, content title
 #. Translators, in table header on clean-up page, content title
 #. Translators, used in table header, page title
 #. Translators, used as table header, content title
@@ -169,6 +215,10 @@ msgstr ""
 
 #. Translators, used as label for search button
 #. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
+#. Translators, used as label for search button
+#. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
+#. Translators, used as label for search button
+#. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
 #: /vagrant/librarian/views/content_list.tpl:31
 #: /vagrant/librarian/views/content_list.tpl:56
 msgid "go"
@@ -216,6 +266,10 @@ msgstr ""
 msgid "Favorite content"
 msgstr ""
 
+#. Translators, shown on dashboard in favorites section when user has not favorited any content
+#. Translators, used as note shown on favorites page when user has no favorites
+#. Translators, shown on dashboard in favorites section when user has not favorited any content
+#. Translators, used as note shown on favorites page when user has no favorites
 #. Translators, shown on dashboard in favorites section when user has not favorited any content
 #. Translators, used as note shown on favorites page when user has no favorites
 #: /vagrant/librarian/views/dashboard.tpl:29
@@ -296,6 +350,7 @@ msgstr ""
 
 #. Translators, used as button label on updates page for adding marked content to library
 #: /vagrant/librarian/views/downloads.tpl:15
+#: /vagrant/librarian/views/downloads.tpl:64
 msgid "Add selected to library"
 msgstr ""
 
