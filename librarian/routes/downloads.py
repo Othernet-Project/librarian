@@ -59,7 +59,8 @@ def manage_downloads():
     action = forms.get('action')
     file_list = forms.getall('selection')
     if not action:
-        # Bad action
+        # Translators, used as error message shown to user when wrong action
+        # code is submitted to server
         return {'error': _('Invalid action, please use one of the form '
                            'buttons.')}
     if action == 'add':

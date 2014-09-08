@@ -65,16 +65,22 @@ def cleanup():
     forms = request.forms
     action = forms.get('action', 'check')
     if action not in ['check', 'delete']:
+        # Translators, used as response to innvalid HTTP request
         abort(400, _('Invalid request'))
     selected = forms.getall('selection')
     metadata = list(archive.cleanup_list())
     selected = [z for z in metadata if z['md5'] in selected]
     if action == 'check':
         if not selected:
+            # Translators, used as message to user when clean-up is started
+            # without selecting any content
             message = _('No content selected')
         else:
             tot = hsize(sum([s['size'] for s in selected]))
             message = str(
+                # Translators, used when user is previewing clean-up, %s is
+                # replaced by amount of content that can be freed in bytes,
+                # KB, MB, etc
                 _('%s can be freed by removing selected content')) % tot
         return {'vals': forms, 'metadata': metadata, 'message': message,
                 'needed': archive.needed_space()}
@@ -85,8 +91,12 @@ def cleanup():
             redirect(i18n_path('/'))
 
         if errors:
+            # Translators, error message shown on clean-up page when some of
+            # the content could not be removed for unknown reasons
             message = _('Some files could not be removed')
         elif not selected:
+            # Translators, error message shown on clean-up page when there was
+            # no deletable content
             message = _('Nothing to delete')
         metadata = archive.cleanup_list()
         return {'vals': MultiDict(), 'metadata': metadata,

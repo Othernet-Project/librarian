@@ -35,8 +35,10 @@ def add_favorite():
     try:
         val = int(request.forms.get('fav', '1'))
     except (TypeError, ValueError):
+        # Translators, used as response to innvalid HTTP request
         abort(400, _('Invalid request'))
     if (not md5) or (not mark_favorite(md5, val)):
+        # Translators, used as response to innvalid HTTP request
         abort(400, _('Invalid request'))
     redirect(i18n_path('/favorites/'))
 
