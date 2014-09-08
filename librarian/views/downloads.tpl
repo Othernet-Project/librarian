@@ -1,13 +1,19 @@
+%# Translators, used as page title
 % rebase('base.tpl', title=_('Updates'))
+%# Translators, used as page heading
 <h1>{{ _('Updates') }}</h1>
 
 <div class="inner">
     <form method="POST">
     % if metadata:
     <p class="controls" id="controls">
+        %# Translators, used as button label on updates page for marking all content for import
         <a class="sel-all button" href="?sel=1">{{ _('Select all') }}</a>
+        %# Translators, used as button label on updates page for unmarking all content for import
         <a class="sel-none button" href="?sel=0">{{ _('Select none') }}</a>
+        %# Translators, used as button label on updates page for adding marked content to library
         <button type="submit" name="action" value="add" class="special">{{ _('Add selected to library') }}</button>
+        %# Translators, used as button label on updates page for permanently deleting all downloaded content
         <button type="submit" name="action" value="delete" class="danger">{{ _('Delete selected') }}</button>
     </p>
     % end
@@ -15,9 +21,13 @@
     <table>
         <thead>
             <tr>
+            %# Translators, used as table header, above checkbox for selecting updates for import
             <th>{{ _('select') }}</th>
+            %# Translators, used as table header, content title
             <th>{{ _('title') }}</th>
+            %# Translators, used as table header, broadcast date
             <th>{{ _('broadcast') }}</th>
+            %# Translators, used as table header, download date
             <th>{{ _('downloaded') }}</th>
             </tr>
         </thead>
@@ -37,6 +47,7 @@
                 % end
             % else:
                 <tr>
+                %# Translators, note that appears in table on updates page when there is no new downloaded content
                 <td class="empty" colspan="4">{{ _('There is no new content') }}</td>
                 </tr>
             % end
@@ -45,9 +56,13 @@
 
     % if metadata:
     <p class="buttons">
+    %# Translators, used as button label on updates page for marking all content for import
     <a class="sel-all button" href="?sel=1">{{ _('Select all') }}</a>
+    %# Translators, used as button label on updates page for unmarking all content for import
     <a class="sel-none button" href="?sel=0">{{ _('Select none') }}</a>
+    %# Translators, used as button label on updates page for adding marked content to library
     <button type="submit" name="action" value="add" class="special">{{ _('Add selected to archive') }}</button>
+    %# Translators, used as button label on updates page for permanently deleting all downloaded content
     <button type="submit" name="action" value="delete" class="danger">{{ _('Delete selected') }}</button>
     </p>
     % end
