@@ -44,7 +44,7 @@ process_dir() {
         fi
         xgettext -L python --force-po --copyright-holder="Outernet Inc" \
             --msgid-bugs-address=translations@outernet.is --from-code=UTF-8 \
-            -o $TEMPLATE $joinopt $file
+            --add-comments="Translators," -o $TEMPLATE $joinopt $file
     done
 }
 
