@@ -65,6 +65,12 @@ currently under active development, so strings *will* change from time to time.
 If you are contributing, or considering contributing translations, please swing
 by our forums_ and say hello.
 
+List of translation contributors
+--------------------------------
+
+- Josep Manel - Spanish
+- Mogens From - Danish
+
 Reporting bugs and feature requests
 ===================================
 
