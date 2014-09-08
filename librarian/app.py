@@ -110,6 +110,7 @@ def start(logfile=None):
     bottle.BaseTemplate.defaults.update({
         'app_version': __version__,
         'request': request,
+        # Translators, used as default page title
         'title': _('Librarian'),
         'style': 'screen',  # Default stylesheet
         'h': helpers,
