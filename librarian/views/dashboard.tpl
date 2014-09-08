@@ -1,3 +1,4 @@
+%# Translators, used as page title
 % rebase('base.tpl', title=_('Dashboard'))
 % if zipballs:
 <div class="dash-updates content-archive dash-section">

@@ -1,6 +1,7 @@
-% rebase('base.tpl', title=_('Archive clean-up'))
+%# Translators, used as page title
+% rebase('base.tpl', title=_('Library clean-up'))
 %# Translators, used as page title on clean-up page
-<h1>{{ _('Archive clean-up') }}</h1>
+<h1>{{ _('Library clean-up') }}</h1>
 
 % if message:
 <p class="message">{{ message }}</p>
@@ -27,7 +28,7 @@
     <tr class="header">
     %# Translators, in table header on clean-up page, above checkboxes for marking deletion candidates
     <th>{{ _('delete?') }}</th>
-    %# Translators, in table header on clean-up page, date added to archive
+    %# Translators, in table header on clean-up page, date added to library
     <th>{{ _('date') }}</th>
     %# Translators, in table header on clean-up page, content title
     <th>{{ _('title') }}</th>

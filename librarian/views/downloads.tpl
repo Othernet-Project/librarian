@@ -7,7 +7,7 @@
     <p class="controls" id="controls">
         <a class="sel-all button" href="?sel=1">{{ _('Select all') }}</a>
         <a class="sel-none button" href="?sel=0">{{ _('Select none') }}</a>
-        <button type="submit" name="action" value="add" class="special">{{ _('Add selected to archive') }}</button>
+        <button type="submit" name="action" value="add" class="special">{{ _('Add selected to library') }}</button>
         <button type="submit" name="action" value="delete" class="danger">{{ _('Delete selected') }}</button>
     </p>
     % end
