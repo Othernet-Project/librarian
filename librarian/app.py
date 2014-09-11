@@ -39,11 +39,7 @@ CONFPATH = in_pkg('librarian.ini')
 STATICDIR = in_pkg('static')
 
 LANGS = [
-    ('de_DE', 'Deutsch'),
     ('en_US', 'English'),
-    ('fr_FR', 'français'),
-    ('es_ES', 'español'),
-    ('zh_CN', '中文')
 ]
 DEFAULT_LOCALE = 'en_US'
 
