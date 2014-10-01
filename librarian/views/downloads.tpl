@@ -4,6 +4,15 @@
 <h1>{{ _('Updates') }}</h1>
 
 <div class="inner">
+    <div class="controls">
+    {{! h.form(method='GET') }}
+        <label for="page">{{ _('page') }}</label>
+        {{! h.vselect('p', pager.pager_choices, vals, _id='page') }}
+        {{! h.vselect('pp', pager.per_page_choices, vals, id='per-page') }}
+        <label for="per-page">{{ _('per page') }}</label>
+        <button type="submit">{{ _('Reload') }}</button>
+    </form>
+    </div>
     <form method="POST">
     % if metadata:
     <p class="controls" id="controls">

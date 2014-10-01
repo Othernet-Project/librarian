@@ -17,10 +17,12 @@ from bottle import request, view, redirect, default_app
 from ..lib import archive
 from ..lib import downloads
 from ..lib.i18n import i18n_path, lazy_gettext as _
+from ..lib.pager import Pager
 
 __all__ = ('app', 'list_downloads', 'manage_downloads',)
 
 PREFIX = '/downloads'
+PER_PAGE = 20
 
 
 app = default_app()
@@ -33,9 +35,11 @@ def list_downloads():
     selection = request.params.get('sel', '1') != '0'
     zipballs = downloads.get_zipballs()
     zipballs = list(reversed(downloads.order_zipballs(zipballs)))
-    logging.info("Found %s zipfiles" % (len(zipballs)))
+    pager = Pager(zipballs)
+    pager.get_paging_params()
+    logging.info("Found %s zipfiles" % pager.get_total_count())
     metadata = []
-    for z, ts in zipballs:
+    for z, ts in pager.get_items():
         logging.debug("<%s> getting metadata" % z)
         try:
             meta = downloads.get_metadata(z)
@@ -48,7 +52,8 @@ def list_downloads():
             # don't know what to do with the file so we'll remove it.
             logging.error("<%s> error unpacking: %s" % (z, err))
             os.unlink(z)
-    return dict(metadata=metadata, selection=selection)
+    return dict(vals=request.params, metadata=metadata, selection=selection,
+                pager=pager)
 
 
 @app.post(PREFIX + '/')
