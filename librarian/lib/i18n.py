@@ -1,11 +1,8 @@
 """
-i18n.py: Localization support for bottle and SimpleTemplate
+.. module:: bottle_utils.i18n
+   :synopsis: Translation helpers and plugin
 
-Copyright 2014, Outernet Inc.
-Some rights reserved.
-
-This software is free software licensed under the terms of GPLv3. See COPYING
-file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
+.. moduleauthor:: Outernet Inc <hello@outernet.is>
 """
 
 import re
@@ -17,41 +14,180 @@ from bottle import request, redirect, BaseTemplate
 from .lazy import lazy, caching_lazy
 
 
-__all__ = ('dummy_gettext', 'dummy_ngettext', 'lazy_gettext', 'lazy_ngettext',
-           'full_path', 'i18n_path', 'I18NPlugin',)
+CONTEXT_SEPARATOR = '\x04'
 
 
 def dummy_gettext(message):
+    """
+    Mimic ``gettext()`` function. This is a passthrough function with the same
+    signature as ``gettext()``. It can be used to simulate translation for
+    applications that are untranslated, without the overhead of calling the
+    real ``gettext()``.
+
+    :param message:     message string
+    :returns:           unmodified input
+    """
     return message
 
 
 def dummy_ngettext(singular, plural, n):
+    """
+    Mimic ``ngettext()`` function. This is a passthrough function with the
+    same signature as ``ngettext()``. It can be used to simulate translation
+    for applications that are untranslated, without the overhead of calling the
+    real ``ngettext()``.
+
+    This function returns the verbatim singular message if ``n`` is 1,
+    otherwise the verbatim plural message.
+
+    :param singular:    singular message string
+    :param plural:      plural message string
+    :param n:           count
+    :returns:           unmodified singular or plural message
+    """
     if n == 1:
         return singular
     return plural
 
 
+def dummy_pgettext(context, message):
+    """
+    Mimic ``pgettext()`` function. This is a passthrough function with the same
+    signature as ``pgettext()``. It can be used to simulate translation for
+    applications that are untranslated, without the overhead of calling the
+    real ``pgettext()`.
+
+    :param context:     message context (ignored)
+    :param message:     translatable message
+    :returns:           unmodified message
+    """
+    return dummy_gettext(message)
+
+
+def dummy_npgettext(context, singular, plural, n):
+    """
+    Mimic ``npgettext()`` function. This is a passthrough function with teh
+    same signature as ``npgettext()``. It can be used to simulate translation
+    for applications that are untranslated, without the overhead of calling the
+    real ``npgettext()`` function.
+
+    :param singular:    singular message string
+    :param plural:      plural message string
+    :param n:           count
+    :returns:           unmodified singular or plural message
+    """
+    return dummy_ngettext(singular, plural, n)
+
+
 @lazy
 def lazy_gettext(message):
+    """
+    Lazily evaluated version of ``gettext()``.
+
+    This function uses the appropriate Gettext API object based on the value of
+    ``bottle.request.gettext`` set by the plugin. It will fail with
+    ``AttributeError`` exception if the plugin is not installed.
+
+    :param message:     translatable message
+    :returns:           lazy proxy object
+    """
     gettext = request.gettext.gettext
     return gettext(message)
 
 
 @lazy
 def lazy_ngettext(singular, plural, n):
+    """
+    Lazily evaluated version of ``ngettext()``.
+
+    This function uses the appropriate Gettext API object based on the value of
+    ``bottle.request.gettext`` set by the plugin. It will fail with
+    ``AttributeError`` exception if the plugin is not installed.
+
+    :param singular:    translatable singular message
+    :param plural:      translatable plural message
+    :param n:           count
+    :returns:           lazy proxy object
+    """
     ngettext = request.gettext.ngettext
     return ngettext(singular, plural, n)
 
 
+def lazy_pgettext(context, message):
+    """
+    :py:func:`bottle_utils.i18n.lazy_gettext` wrapper with message context.
+
+    This function is a wrapper around :py:func:`bottle_utils.i18n.lazy_gettext`
+    that provides message context. It is useful in situations where short
+    messages (usually one word) are used in several different contexts for
+    which separate translations may be needed in different languages.
+
+    The function itself is not lazily evaluated, but its return value comes
+    from ``lazy_gettext()`` call, and it is effectively lazy as a result.
+
+    :param context:     message context
+    :param message:     translatable message
+    :returns:           lazy proxy object
+    """
+    message = '%s%s%s' % (context, CONTEXT_SEPARATOR, message)
+    return lazy_gettext(message)
+
+
+def lazy_npgettext(context, singular, plural, n):
+    """
+    :py:func:`bottle_utils.i18n.lazy_ngettext` wrapper with message context.
+
+    This function is a wrapper around
+    :py:func:`bottle_utils.i18n.lazy_ngettext`
+    that provides message context. It is useful in situations where messages
+    are used in several different contexts for which separate translations may
+    be required for different languages.
+
+    The function itself is not lazy, but it returns the return value of
+    ``lazy_ngettext()``, and it is effectively lazy. Hence the name.
+
+    :param context:     message context
+    :param singular:    translatable singular message
+    :param plural:      translatable plural message
+    :param n:           count
+    :returns:           lazy proxy object
+    """
+    singular = '%s%s%s'  % (context, CONTEXT_SEPARATOR, singular)
+    plural = '%s%s%s' % (context, CONTEXT_SEPARATOR, plural)
+    return lazy_ngettext(singular, plural, n)
+
+
 def full_path():
+    """
+    Calculate full path including query string for current request. This is a
+    helper function used by :py:func:`~bottle_utils.i18n.i18n_path`. It uses
+    the current request context to obtain information about the path.
+
+    :returns:   path with query string
+    """
     path = request.fullpath
     qs = request.query_string
     if qs:
         return '%s?%s' % (path, qs)
     return path
 
+
 @lazy
 def i18n_path(path=None, locale=None):
+    """
+    Return current request path or specified path for given or current locale.
+    This function can be used to obtain paths for different locales.
+
+    If no ``path`` argument is passed, the
+    :py:func:`~bottle_utils.i18n.full_path` is called to obtain the full path
+    for current request.
+
+    If ``locale`` argument is omitted, current locale is used.
+
+    :param path:    request path
+    :param locale:  locale
+    :returns:       locale-prefixed path
+    """
     path = path or full_path()
     locale = locale or request.locale
     return '/{}{}'.format(locale.lower(), path)
@@ -62,14 +198,15 @@ class I18NWarning(RuntimeWarning):
 
 
 class I18NPlugin(object):
-    """ Bottle plugin and WSGI middleware for handling i18n routes
-
-    This class is a middleware. However, if the ``app`` argument is a
-    ``Bottle`` object (bottle app), it will also install itself as a plugin.
-    The plugin follows the `version 2 API`_ and implements the ``apply()``
-    method which applies the plugin to all routes. The plugin and middleware
-    parts were merged into one class because they depend on each other and
-    can't really be used separately.
+    """
+    Bottle plugin and WSGI middleware for handling i18n routes.  This class is
+    a middleware. However, if the ``app`` argument is a ``Bottle`` object
+    (bottle app), it will also install itself as a plugin.  The plugin follows
+    the `version 2 API <http://bottlepy.org/docs/0.12/plugindev.html>`_ and
+    implements the :py:meth:`~bottle_utils.i18n.I18NPlugin.apply` method which
+    applies the plugin to all routes. The plugin and middleware parts were
+    merged into one class because they depend on each other and can't really be
+    used separately.
 
     During initialization, the class will set up references to locales,
     directory paths, and build a mapping between locale names and appropriate
@@ -112,41 +249,54 @@ class I18NPlugin(object):
     if you wish (e.g., you wish to apply the plugin yourself some other way).
 
     .. _gettext API: https://docs.python.org/3.4/library/gettext.html
+
+    The locale directory should be in a format which ``gettext.translations()``
+    understands. This is a path that contains a subtree matching this format::
+
+        locale_dir/LANG/LC_MESSAGES/DOMAIN.mo
+
+    The ``LANG`` should match any of the supported languages, and ``DOMAIN``
+    should match the specified domain.
+
+    :param app:             ``Bottle`` object
+    :param langs:           iterable containing languages as ``(locale,
+                            name)`` tuples
+    :param default_locale:  default locale
+    :param locale_dir:      directory containing translations
+    :param domain:          the gettext domain
+    :param noplugin:
     """
 
+    #: Bottle plugin name
     name = 'i18n'
+    #: Bottle plugin API version
     api = 2
 
     def __init__(self, app, langs, default_locale, locale_dir,
                  domain='messages', noplugin=False):
-        """
-        The locale directory should be in a format which
-        ``gettext.translations()`` understands. This is a path that contains a
-        subtree matching this format:
-
-            locale_dir/LANG/LC_MESSAGES/DOMAIN.mo
-
-        The ``LANG`` should match any of the supported languages, and
-        ``DOMAIN`` should match the specified domain.
-
-        .. _version 2 API: http://bottlepy.org/docs/0.12/plugindev.html
-
-        :param app:             ``Bottle`` object
-        :param langs:           iterable containing languages as ``(locale,
-                                name)`` tuples
-        :param default_locale:  default locale
-        :param locale_dir:      directory containing translations
-        :param domain:          the gettext domain
-        :param noplugin:
-        """
+        #: The original bottle application object is accessible as ``app``
+        #: attribute after initialization.
         self.app = app
+
+        #: Supported languages as iterable of `(locale, native_name)` tuples.
         self.langs = langs
+
+        #: Supported locales (calculated based on ``langs`` iterable).
         self.locales = [lang[0] for lang in langs]
+
+        #: Default locale.
         self.default_locale = default_locale
+
+        #: Directory that stores ``.po`` and ``.mo`` files.
         self.locale_dir = locale_dir
+
+        #: Domain of the translation.
         self.domain = domain
 
+        #: A dictionary that maps locales to ``gettext.translation()`` objects
+        #: for each locale. Appropriate API object is selected from each
         self.gettext_apis = {}
+
         # Prepare gettext class-based APIs for consumption
         for locale in self.locales:
             try:
@@ -161,6 +311,8 @@ class I18NPlugin(object):
             '_': lazy_gettext,
             'gettext': lazy_gettext,
             'ngettext': lazy_ngettext,
+            'pgettext': lazy_pgettext,
+            'npgettext': lazy_npgettext,
             'i18n_path': i18n_path,
             'languages': langs,
         })
@@ -177,7 +329,6 @@ class I18NPlugin(object):
                              'plugin installation.'))
 
     def __call__(self, e, h):
-        """ Middleware """
         path = e['PATH_INFO']
         e['LOCALE'] = locale = self.match_locale(path)
         e['ORIGINAL_PATH'] = path
@@ -186,8 +337,10 @@ class I18NPlugin(object):
         return self.app(e, h)
 
     def apply(self, callback, route):
-        """ Bottle plugin """
-        ignored = route.config.get('no_i18n', False)
+        try:
+            ignored = route.config.get('no_i18n', False)
+        except AttributeError:
+            ignored = False
         def wrapper(*args, **kwargs):
             request.original_path = request.environ.get('ORIGINAL_PATH',
                                                         request.fullpath)
@@ -202,6 +355,18 @@ class I18NPlugin(object):
         return wrapper
 
     def match_locale(self, path):
+        """
+        Matches the locale based on prefix in request path. You can customize
+        this method for a different way of obtaining locale information. Note
+        that ``None`` return value generally means 'use default'.
+
+        The return value of this method is stored in the environment dictionary
+        as ``LOCALE`` key. It is then used by the plugin part of this class to
+        provide translation methods to the rest of the app.
+
+        :param path:    request path
+        :returns:       locale or None
+        """
         path_prefix = path.split('/')[1].lower()
         for locale in self.locales:
             if path_prefix == locale.lower():
@@ -210,5 +375,16 @@ class I18NPlugin(object):
 
     @staticmethod
     def strip_prefix(path, locale):
+        """
+        Strips the locale prefix from the path. This static method is used to
+        recalculate the request path that should be passed to Bottle. The
+        return value of this method replaces the ``PATH_INFO`` key in the
+        environment dictionary, and the original path is saved in
+        ``ORIGINAL_PATH`` key.
+
+        :param path:    request path
+        :param locale:  selected locale
+        :returns:       request path without the locale prefix
+        """
         return path[len(locale) + 1:]
 

@@ -20,7 +20,7 @@ from librarian.exceptions import *
 from librarian.lib import content_crypto
 from librarian.lib import squery
 from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
-from librarian.utils import helpers
+from librarian.lib import html as helpers
 from librarian.utils import migrations
 from librarian.routes import *  # Only importing so routes are rgistered
 import librarian
