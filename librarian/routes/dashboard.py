@@ -22,7 +22,7 @@ from ..utils.helpers import hsize
 
 __all__ = ('app', 'dashboard',)
 
-PREFIX = ''
+PREFIX = '/dashboard'
 
 
 app = default_app()
