@@ -24,7 +24,7 @@
             %# Translators, used main navigation menu
             {{! h.link_other(_('Favorites'), i18n_path('/favorites/'), request.original_path, h.SPAN, _class="favorites") }}
             %# Translators, used main navigation menu
-            {{! h.link_other(_('Updates'), i18n_path('/downloads/'), request.original_path, h.SPAN, _class="updates") }}
+            {{! h.link_other(_('Updates'), i18n_path('/downloads/'), request.original_path, h.SPAN, _class="updates" + (updates > 0 and ' notice' or '')) }}
             %# Translators, used main navigation menu
             {{! h.link_other(_('Dashboard'), i18n_path('/dashboard/'), request.original_path, h.SPAN, _class="dashboard") }}
         </div>

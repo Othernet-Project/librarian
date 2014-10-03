@@ -116,6 +116,10 @@ h2 {
 
   .updates {
     background-image: image-url('antenna.png');
+
+    &.notice {
+      background-image: image-url('antenna_yellow.png');
+    }
   }
 }
 
