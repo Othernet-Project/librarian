@@ -1,3 +1,8 @@
+0000-00-00 : MASTER   : Branko Vukelic <branko@outernet.is>
+    - Pager added to downloads page to speed up processing of many downloads
+    - Moved library listing to main page location, and dashboard to subpath
+    - Added cue to main menu so that use can know there are updates
+
 2014-08-29 : v0.1a5.1 : Branko Vukelic <branko@outernet.is>
     - Fixed bug where archiving the same content twice results in duplicates
     - Librarian is now able to serve subpaths from the zip files
