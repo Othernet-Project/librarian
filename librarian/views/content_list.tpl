@@ -59,30 +59,39 @@
         </p>
     </form>
     <table class="content-list">
-        <tr class="header">
-        <th></th>
-        %# Translators, used in table header, page title
-        <th>{{ _('title') }}</th>
-        %# Translators, used in table header, date added
-        <th>{{ _('added') }}</th>
-        </tr>
-        % for meta in metadata:
-        <tr>
-        <td class="center">
-            % if meta['favorite']:
-            <img src="/static/img/fav.png" alt="favorite">
-            % else:
-            <form action="{{ i18n_path('/favorites/') }}" method="POST">
-            {{! h.HIDDEN('md5', meta['md5']) }}
-            %# Translators, used as button label for adding content to favorites
-            <button type="submit">{{ _('favorite') }}</button>
-            </form>
+        <thead>
+            <tr class="header">
+                <th></th>
+                %# Translators, used in table header, page title
+                <th>{{ _('title') }}</th>
+                %# Translators, used in table header, date added
+                <th>{{ _('added') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            % for meta in metadata:
+            <tr class="data">
+                <td class="center" rowspan="2">
+                    % if meta['favorite']:
+                    <img src="/static/img/fav.png" alt="favorite">
+                    % else:
+                    <form action="{{ i18n_path('/favorites/') }}" method="POST">
+                    {{! h.HIDDEN('md5', meta['md5']) }}
+                    %# Translators, used as button label for adding content to favorites
+                    <button type="submit">{{ _('favorite') }}</button>
+                    </form>
+                    % end
+                </td>
+                <td><a href="{{ i18n_path('/pages/%s/' % meta['md5']) }}">{{ meta['title'] }}</a></td>
+                <td rowspan="2">{{ meta['updated'].strftime('%m-%d') }}</td>
+            </tr>
+            <tr class="badges">
+                <td>
+                % include('_badges')
+                </td>
+            </tr>
             % end
-        </td>
-        <td><a href="{{ i18n_path('/pages/%s/' % meta['md5']) }}">{{ meta['title'] }}</a></td>
-        <td>{{ meta['updated'].strftime('%m-%d') }}</td>
-        </tr>
-        % end
+        </tbody>
     </table>
     <p class="controls">
     % include('_simple_pager')

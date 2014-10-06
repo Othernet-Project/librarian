@@ -23,6 +23,7 @@ from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
 from librarian.lib import html as helpers
 from librarian.lib.lazy import Lazy
 from librarian.lib.downloads import get_zipballs
+from librarian.lib.archive import LICENSES
 from librarian.utils import migrations
 from librarian.routes import *  # Only importing so routes are rgistered
 import librarian
@@ -113,6 +114,7 @@ def start(logfile=None):
         'style': 'screen',  # Default stylesheet
         'h': helpers,
         'updates': Lazy(lambda: len(list(get_zipballs()))),
+        'readable_license': lambda s: dict(LICENSES).get(s, LICENSES[0][1])
     })
 
     # Add middlewares

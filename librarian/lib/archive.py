@@ -17,6 +17,8 @@ from bottle import request
 
 from .downloads import get_spool_zip_path, get_zip_path, get_metadata
 
+from .i18n import lazy_gettext as _
+
 
 __all__ = ('get_count', 'get_search_count', 'get_content', 'search_content',
            'get_old_content', 'parse_size', 'cleanup_list', 'add_to_archive',
@@ -30,6 +32,27 @@ FACTORS = {
     'm': 1024 * 1024,
     'g': 1024 * 1024 * 1024,
 }
+
+LICENSES = (
+    (None, _("Unknown license")),
+    ('CC-BY', _('Creative Commons Attribution')),
+    ('CC-BY-ND', _('Creative Commons Attribution-NoDerivs')),
+    ('CC-BY-NC', _('Creative Commons Attribution-NonCommercial')),
+    ('CC-BY-ND-NC', _('Creative Commons '
+                      'Attribution-NonCommercial-NoDerivs')),
+    ('CC-BY-SA', _('Creative Commons Attribution-ShareAlike')),
+    ('CC-BY-NC-SA', _('Creative Commons '
+                      'Attribution-NonCommercial-ShareAlike')),
+    ('GFDL', _('GNU Free Documentation License')),
+    ('OPL', _('Open Publication License')),
+    ('OCL', _('Open Content License')),
+    ('ADL', _('Against DRM License')),
+    ('FAL', _('Free Art License')),
+    ('PD', _('Public Domain')),
+    ('OF', _('Other free license')),
+    ('ARL', _('All rights reserved')),
+    ('ON', _('Other non-free license')),
+)
 
 COUNT_QUERY = """
 SELECT COUNT(*) AS count
@@ -63,9 +86,11 @@ ORDER BY updated ASC, views ASC;
 """
 ADD_QUERY = """
 REPLACE INTO zipballs
-(md5, domain, url, title, images, timestamp, updated)
+(md5, domain, url, title, images, timestamp, updated, keep_formatting,
+is_partner, is_sponsored, partner, license)
 VALUES
-(:md5, :domain, :url, :title, :images, :timestamp, :updated)
+(:md5, :domain, :url, :title, :images, :timestamp, :updated, :keep_formatting,
+:is_partner, :is_sponsored, :partner, :license)
 """
 REMOVE_QUERY = """
 DELETE FROM zipballs
@@ -216,6 +241,8 @@ def add_to_archive(hashes):
     logging.debug("%s items added to database" % rowcount)
     # Delete obsolete content
     for path in delete_list:
+        if not path:
+            continue
         try:
             os.unlink(path)
         except OSError as err:

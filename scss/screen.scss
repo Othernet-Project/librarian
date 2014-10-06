@@ -300,3 +300,46 @@ tr.selected {
   color: $outernet-green;
 }
 
+.data {
+  border-bottom: none;
+}
+
+.badges td {
+  padding-top: 0;
+}
+
+.badge {
+  display: inline-block;
+  @include border-radius(2px);
+  margin-right: 0.5em;
+  border-bottom: 1px dotted $grey;
+  font-weight: bold;
+  font-size: 90%;
+  white-space: nowrap;
+}
+
+.is-core {
+  color: $outernet-blue;
+  cursor: help;
+}
+
+.is-sponsored {
+  color: $outernet-red;
+  cursor: help;
+}
+
+.is-partner {
+  color: $outernet-green;
+  cursor: help;
+}
+
+.license {
+  cursor: help;
+}
+
+.images .icon {
+  display: inline-block;
+  background: image-url('camera_small.png') no-repeat;
+  width: 16px;
+  height: 16px;
+}

@@ -45,17 +45,22 @@
         <tbody>
             % if metadata:
                 % for meta in metadata:
-                <tr>
-                    <td class="downloads-selection" rowspan="2">
+                <tr class="data">
+                    <td class="downloads-selection" rowspan="3">
                         <input id="check-{{ meta['md5'] }}" type="checkbox" name="selection" value="{{ meta['md5'] }}"{{ selection and ' checked' or ''}}>
                     </td>
-                    <td class="downloads-title"{{ ' rowspan="2"' if meta.get('replaces_title') else '' }}>
+                    <td class="downloads-title"{{ ' rowspan="3"' if meta.get('replaces_title') else '' }}>
                         <label for="check-{{ meta['md5'] }}">{{ meta['title'] }}</label>
                     </td>
-                    <td class="downloads-timestamp" rowspan="2">{{ h.strft(meta['timestamp'], '%m-%d') }}</td>
-                    <td class="downloads-ftimestamp" rowspan="2">{{ meta['ftimestamp'].strftime('%m-%d') }}</td>
+                    <td class="downloads-timestamp" rowspan="3">{{ h.strft(meta['timestamp'], '%m-%d') }}</td>
+                    <td class="downloads-ftimestamp" rowspan="3">{{ meta['ftimestamp'].strftime('%m-%d') }}</td>
                 </tr>
-                <tr>
+                <tr class="badges">
+                    <td>
+                    % include('_badges')
+                    </td>
+                </tr>
+                <tr class="replaces">
                     % if meta.get('replaces_title'):
                     <td class="downloads-replaces">{{ _('replaces:') }} <a href="/pages/{{ meta['replaces'] }}/">{{ meta['replaces_title'] }}</a></td>
                     % end
