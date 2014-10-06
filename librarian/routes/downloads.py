@@ -52,6 +52,8 @@ def list_downloads():
             # don't know what to do with the file so we'll remove it.
             logging.error("<%s> error unpacking: %s" % (z, err))
             os.unlink(z)
+        archive.get_replacements(metadata)
+
     return dict(vals=request.params, metadata=metadata, selection=selection,
                 pager=pager)
 

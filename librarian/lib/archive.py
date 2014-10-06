@@ -71,6 +71,10 @@ REMOVE_QUERY = """
 DELETE FROM zipballs
 WHERE md5 = ?;
 """
+REMOVE_MULTI_QUERY = """
+DELETE FROM zipballs
+WHERE md5 IN (SEQ);
+"""
 COUNT_QUERY = """
 SELECT count(*)
 FROM zipballs;
@@ -86,6 +90,16 @@ UPDATE zipballs
 SET views = views + 1
 WHERE md5 = ?
 """
+TITLES_QUERY = """
+SELECT title, md5
+FROM zipballs
+WHERE md5 IN (SEQ);
+"""
+
+
+def multiarg(n):
+    """ Return ``n`` question marks delimited by comma """
+    return ','.join(('? ' * n).strip().split())
 
 
 def get_count():
@@ -108,6 +122,29 @@ def get_content(offset=0, limit=0):
     db = request.db
     db.query(PAGE_QUERY, offset=offset, limit=limit)
     return db.cursor.fetchall()
+
+
+def get_titles(ids):
+    q = TITLES_QUERY.replace('SEQ', multiarg(len(ids)))
+    db = request.db
+    db.query(q, *ids)
+    return db.cursor.fetchall()
+
+
+def get_replacements(metadata):
+    replacements = []
+    for m in metadata:
+        if m.get('replaces') is not None:
+            replacements.append(m['replaces'])
+    if replacements:
+        titles = get_titles(replacements)
+    else:
+        return []
+    titles = {m['md5']: m['title'] for m in titles}
+    for m in metadata:
+        if m.get('replaces') in titles:
+            m['replaces_title'] = titles[m['replaces']]
+    return metadata
 
 
 def search_content(terms, offset=0, limit=0):
@@ -150,24 +187,50 @@ def add_to_archive(hashes):
     target_dir = config['content.contentdir']
     db = request.db
     metadata = []
+    replaced = []
+    copy_list = []
+    delete_list = []
+    # Prepare data for processing
     for md5, path in ((h, get_spool_zip_path(h)) for h in hashes):
         logging.debug("<%s> adding to archive (#%s)" % (path, md5))
         meta = get_metadata(path)
         meta['md5'] = md5
         meta['updated'] = datetime.now()
-        # Check target path first
-        target_path = os.path.join(target_dir, os.path.basename(path))
-        if os.path.exists(target_path):
-            logging.debug("<%s> removing existing path" % target_path)
-            os.unlink(target_path)
-        shutil.move(path, target_dir)
+        if meta.get('replaces'):
+            logging.debug(
+                "<%s> replaces '%s'" % (path, meta['replaces']))
+            replaced.append(meta['replaces'])
+            delete_list.append(get_zip_path(meta['replaces']))
+        copy_list.append(path)
         metadata.append(meta)
-        logging.debug("<%s> successfully imported" % path)
+    # Create replacement query
+    nreplaced = len(replaced)
+    q = REMOVE_MULTI_QUERY.replace('SEQ', multiarg(nreplaced))
+    # Execute database operations
     with db.transaction() as cur:
         logging.debug("Adding new content to archive database")
         cur.executemany(ADD_QUERY, metadata)
+        logging.debug("Removing replaced content from archive database")
+        cur.execute(q, replaced)
         rowcount = cur.rowcount
     logging.debug("%s items added to database" % rowcount)
+    # Delete obsolete content
+    for path in delete_list:
+        try:
+            os.unlink(path)
+        except OSError as err:
+            logging.error(
+                "<%s> could not delete obsolete file: %s" % (path, err))
+    logging.debug("%s items deleted from storage" % len(delete_list))
+    # Execute storage operations
+    for path in copy_list:
+        # Check target path first
+        target_path = os.path.join(target_dir, os.path.basename(path))
+        if os.path.exists(target_path):
+            logging.debug("<%s> removing existing content" % target_path)
+            os.unlink(target_path)
+        shutil.move(path, target_dir)
+    logging.debug("%s items copied to storage" % len(copy_list))
     return rowcount
 
 
