@@ -6,7 +6,7 @@
 <div class="inner">
     % if not metadata:
     %# Translators, used as note shown on favorites page when user has no favorites
-    <p>{{ _('You have not favorted any content yet') }}</p>
+    <p>{{ _('You have not favorited any content yet') }}</p>
     % else:
     <table class="content-list">
         <tr class="header">
