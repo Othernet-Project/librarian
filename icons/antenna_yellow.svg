@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="24"
+   height="24"
+   id="svg2">
+  <defs
+     id="defs4">
+    <filter
+       x="-0.13565217"
+       y="-0.13565217"
+       width="1.2713042"
+       height="1.2713042"
+       color-interpolation-filters="sRGB"
+       id="filter3768">
+      <feGaussianBlur
+         id="feGaussianBlur3770"
+         stdDeviation="0.21946073" />
+    </filter>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-1028.3622)"
+     id="layer1"
+     style="fill:#ffcc00">
+    <path
+       d="M 15.375,0.4375 C 12.421965,0.58604614 9.2152953,2.8123438 6.78125,6.875 l 3.78125,1.28125 c 1.653299,-2.42 3.636252,-3.29685 5.375,-3.28125 0.447978,0 0.877709,0.098 1.25,0.3125 C 19.173051,6.3339 19.084012,10.2029 17,13.8125 14.915988,17.4221 11.641801,19.3964 9.65625,18.25 8.0455248,17.3201 7.4250143,15.2306 8.5,12.3125 L 5.34375,9.59375 C 2.9813331,14.67265 3.4264476,19.3241 6.4375,21.0625 9.748919,22.9744 15.024564,20.0325 18.21875,14.5 21.412936,8.9675 21.342669,2.94305 18.03125,1.03125 17.410359,0.67275 16.700979,0.47 15.96875,0.4375 15.774505,0.428881 15.571869,0.427597 15.375,0.4375 z M 1.96875,5.875 l 10.6875,7.84375 c 0,0 1.762733,-0.81735 1.59375,-2.84375 l -12.28125,-5 z m 16.0625,10.15625 C 17.058979,18.59455 13.25,21.21875 13.25,21.21875 L 13,23.6875 l 5.34375,0 -0.3125,-7.65625 z m -6.5,6.21875 c 0,0 -1.40625,0.6875 -2.46875,0.625 C 8.875,23.6875 8.875,23.6875 8.875,23.6875 l 2.375,0 0.28125,-1.4375 z"
+       transform="translate(0,1028.3622)"
+       id="path4029"
+       style="color:#000000;fill:#ffcc00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+  </g>
+</svg>

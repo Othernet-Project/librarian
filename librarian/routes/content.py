@@ -21,7 +21,7 @@ from ..lib import send_file
 
 __all__ = ('app', 'content_list', 'content_file', 'content_index',)
 
-PREFIX = '/content'
+PREFIX = ''
 CONTENT_ID = '<content_id:re:[0-9a-f]{32}>'
 
 
@@ -71,7 +71,7 @@ def content_list():
     }
 
 
-@app.get(PREFIX + '/%s/<filename:path>' % CONTENT_ID)
+@app.get(PREFIX + '/pages/%s/<filename:path>' % CONTENT_ID)
 def content_file(content_id, filename):
     """ Serve file from zipball with specified id """
     zippath = downloads.get_zip_path(content_id)
@@ -90,7 +90,7 @@ def content_file(content_id, filename):
     return send_file.send_file(content, filename, size, timestamp)
 
 
-@app.get(PREFIX + '/%s/' % CONTENT_ID)
+@app.get(PREFIX + '/pages/%s/' % CONTENT_ID)
 def content_index(content_id):
     """ Shorthand for /<content_id>/index.html """
     archive.add_view(content_id)

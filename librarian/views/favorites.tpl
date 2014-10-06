@@ -27,7 +27,7 @@
             </form>
         </td>
         <td>{{ meta['updated'].strftime('%m-%d') }}</td>
-        <td><a href="{{ i18n_path('/content/%s/' % meta['md5']) }}">{{ meta['title'] }}</a></td>
+        <td><a href="{{ i18n_path('/pages/%s/' % meta['md5']) }}">{{ meta['title'] }}</a></td>
         </tr>
         % end
     </table>
