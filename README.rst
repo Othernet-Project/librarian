@@ -68,8 +68,18 @@ by our forums_ and say hello.
 List of translation contributors
 --------------------------------
 
-- Josep Manel - Spanish
-- Mogens From - Danish
+- Ismail Al Ahmad 
+- necklinux 
+- Susruthan Seran 
+- cavit 
+- Mogens From 
+- Arthur 
+- David Marques 
+- Luis Fuentes 
+- Josep Manel 
+- Sakara 
+- Salik Zaki Anwar 
+
 
 Reporting bugs and feature requests
 ===================================
