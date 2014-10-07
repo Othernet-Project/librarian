@@ -4,6 +4,7 @@
     - Added cue to main menu so that use can know there are updates
     - Librarian now handles replaces metadta key and removes replaced content
     - Librarian now handles content source, license, and archive metadata
+    - Implemented file listing and managment UI
 
 2014-08-29 : v0.1a5.1 : Branko Vukelic <branko@outernet.is>
     - Fixed bug where archiving the same content twice results in duplicates
