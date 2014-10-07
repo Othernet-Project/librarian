@@ -1,4 +1,7 @@
 0000-00-00 : MASTER   : Branko Vukelic <branko@outernet.is>
+
+
+2014-10-07 : v0.1a6   : Branko Vukelic <branko@outernet.is>
     - Pager added to downloads page to speed up processing of many downloads
     - Moved library listing to main page location, and dashboard to subpath
     - Added cue to main menu so that use can know there are updates
