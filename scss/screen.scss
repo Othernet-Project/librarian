@@ -114,6 +114,10 @@ h2 {
     background-image: image-url('document.png');
   }
 
+  .files {
+    background-image: image-url('files.png');
+  }
+
   .updates {
     background-image: image-url('antenna.png');
 
@@ -342,4 +346,35 @@ tr.selected {
   background: image-url('camera_small.png') no-repeat;
   width: 16px;
   height: 16px;
+}
+
+.file-list {
+  padding: 1em;
+
+  ul {
+    margin: 0;
+    font-size: 120%;
+  }
+
+  a {
+    display: inline-block;
+    color: $black;
+  }
+
+  li {
+    padding-left: 0;
+    margin-bottom: 0.4em;
+  }
+
+  .up {
+    list-style: image-url('folder_up.png')
+  }
+
+  .dir {
+    list-style: image-url('folder.png');
+  }
+
+  .file {
+    list-style: image-url('file.png');
+  }
 }

@@ -22,6 +22,8 @@
             %# Translators, used main navigation menu
             {{! h.link_other(_('Library'), i18n_path('/'), request.original_path, h.SPAN, _class="archive") }}
             %# Translators, used main navigation menu
+            {{! h.link_other(_('Files'), i18n_path('/files/'), request.original_path, h.SPAN, _class="files") }}
+            %# Translators, used main navigation menu
             {{! h.link_other(_('Favorites'), i18n_path('/favorites/'), request.original_path, h.SPAN, _class="favorites") }}
             %# Translators, used main navigation menu
             {{! h.link_other(_('Updates'), i18n_path('/downloads/'), request.original_path, h.SPAN, _class="updates" + (updates > 0 and ' notice' or '')) }}

@@ -13,11 +13,12 @@ import stat
 import math
 import logging
 
-from bottle import request, view, abort, default_app
+from bottle import request, view, abort, default_app, static_file
 
 from ..lib import archive
 from ..lib import downloads
 from ..lib import send_file
+from ..lib import files
 
 __all__ = ('app', 'content_list', 'content_file', 'content_index',)
 
@@ -96,3 +97,16 @@ def content_index(content_id):
     archive.add_view(content_id)
     return content_file(content_id, 'index.html')
 
+
+@app.get(PREFIX + '/files/')
+@app.get(PREFIX + '/files/<path:path>')
+@view('file_list')
+def show_file_list(path='.'):
+    try:
+        path, relpath, dirs, file_list = files.get_dir_contents(path)
+    except files.DoesNotExist:
+        abort(404)
+    except files.IsFileError as err:
+        return static_file(err.path, root=files.get_file_dir())
+    up = os.path.normpath(os.path.join(path, '..'))
+    return dict(path=relpath, dirs=dirs, files=file_list, up=up)
