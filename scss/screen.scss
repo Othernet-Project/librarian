@@ -289,6 +289,11 @@ button, .button {
       background-color: darken($outernet-red, 20);
     }
   }
+
+  &.small {
+    padding: 0.1em 0.3em;
+    font-size: $base-size * 0.9;
+  }
 }
 
 a.button:hover, a.button:visited {
@@ -348,8 +353,25 @@ tr.selected {
   height: 16px;
 }
 
+@mixin icon($name) {
+  display: inline-block;
+  background: transparent image-url("#{$name}.png") no-repeat;
+  width: image-width("#{$name}.png");
+  height: image-width("#{$name}.png");
+  vertical-align: middle;
+}
+
 .file-list {
   padding: 1em;
+
+  .location-bar {
+    p {
+      margin: 0;
+    }
+
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid $light-grey;
+  }
 
   ul {
     margin: 0;
@@ -366,15 +388,33 @@ tr.selected {
     margin-bottom: 0.4em;
   }
 
-  .up {
-    list-style: image-url('folder_up.png')
+  td.icon {
+    width: 16px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  .dir {
-    list-style: image-url('folder.png');
+  .up span.icon {
+    @include icon('folder_up');
   }
 
-  .file {
-    list-style: image-url('file.png');
+  .dir span.icon {
+    @include icon('folder');
+  }
+
+  .file span.icon {
+    @include icon('file');
+  }
+
+  .size {
+    width: 100px;
+  }
+
+  .delete {
+    width: 60px;
+  }
+
+  .rename {
+    width: 220px;
   }
 }

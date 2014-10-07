@@ -11,14 +11,16 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import os
 import stat
 import math
+import shutil
 import logging
 
-from bottle import request, view, abort, default_app, static_file
+from bottle import request, view, abort, default_app, static_file, redirect
 
 from ..lib import archive
 from ..lib import downloads
 from ..lib import send_file
 from ..lib import files
+from ..lib import i18n
 
 __all__ = ('app', 'content_list', 'content_file', 'content_index',)
 
@@ -110,3 +112,46 @@ def show_file_list(path='.'):
         return static_file(err.path, root=files.get_file_dir())
     up = os.path.normpath(os.path.join(path, '..'))
     return dict(path=relpath, dirs=dirs, files=file_list, up=up)
+
+
+def go_to_parent(path):
+    filedir= files.get_file_dir()
+    redirect(i18n.i18n_path('/files/') + os.path.relpath(
+        os.path.dirname(path), filedir))
+
+
+def delete_path(path):
+    filedir= files.get_file_dir()
+    if not os.path.exists(path):
+        abort(404)
+    if os.path.isdir(path):
+        if path == filedir:
+            # FIXME: handle this case
+            abort(400)
+        shutil.rmtree(path)
+    else:
+        os.unlink(path)
+    go_to_parent(path)
+
+
+def rename_path(path):
+    filedir= files.get_file_dir()
+    new_name = request.forms.get('name')
+    if not new_name:
+        go_to_parent(path)
+    new_name = os.path.normpath(new_name)
+    new_path =  os.path.join(os.path.dirname(path), new_name)
+    os.rename(path, new_path)
+    go_to_parent(path)
+
+
+@app.post(PREFIX + '/files/<path:path>')
+def handle_file_action(path):
+    action = request.forms.get('action')
+    path = files.get_full_path(path)
+    if action == 'delete':
+        delete_path(path)
+    elif action == 'rename':
+        rename_path(path)
+    else:
+        abort(400)

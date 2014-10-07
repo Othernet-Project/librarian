@@ -7,7 +7,7 @@
 </h1>
 
 <div class="file-list">
-    {{! h.form('get') }}
+    {{! h.form('get', _class='location-bar') }}
         <p class="path">
         <input type="text" value="{{ path if path != '.' else '' }}">
         %# Translators, used as button in file view address bar
@@ -15,18 +15,47 @@
         </p>
     </form>
 
-    <ul class="file-list-dirs">
+    <table class="file-list-listing">
         % if path != '.':
-        <li class="up"><a href="{{ i18n_path('/files/') + up }}">..</a></li>
+        <tr class="up">
+            <td class="icon"><a href="{{ i18n_path('/files/') + up }}"><span class="icon"></span></a></td>
+            <td colspan="4"><a href="{{ i18n_path('/files/') + up }}">..</a></td>
+        </tr>
         % end
         % for d in dirs:
-        <li class="dir"><a href="{{ i18n_path('/files/') + d.path }}">{{ d.name }}</a></li>
+        <tr class="dir">
+            <td class="icon"><a href="{{ i18n_path('/files/') + d.path }}"><span class="icon"></span></td>
+            <td colspan="2"><a href="{{ i18n_path('/files/') + d.path }}">{{ d.name }}</a></td>
+            <td class="rename">
+                {{! h.form('post', action=i18n_path('/files/') + d.path) }}
+                    <input type="text" name="name" value="{{ d.name }}">
+                    <button class="small" name="action" value="rename" type="submit">{{ _('Rename') }}
+                </form>
+            </td>
+            <td class="delete">
+                {{! h.form('post', action=i18n_path('/files/') + d.path) }}
+                    <button class="small danger" name="action" value="delete" type="submit">{{ _('delete') }}
+                </form>
+            </td>
+        </tr>
         % end
-    </ul>
-
-    <ul class="file-list-files">
         % for f in files:
-        <li class="file"><a href="{{ i18n_path('/files/') + f.path }}">{{ f.name }}</a></li>
+        <tr class="file">
+            <td class="icon"><a href="{{ i18n_path('/files/') + f.path }}"><span class="icon"></span></a>
+            <td><a href="{{ i18n_path('/files/') + f.path }}">{{ f.name }}</a></td>
+            <td class="size">{{ h.hsize(f.size) }}</td>
+            <td class="rename">
+                {{! h.form('post', action=i18n_path('/files/') + f.path) }}
+                    <input type="text" name="name" value="{{ f.name }}">
+                    <button class="small" name="action" value="rename" type="submit">{{ _('Rename') }}
+                </form>
+            </td>
+            <td class="delete">
+                {{! h.form('post', action=i18n_path('/files/') + f.path) }}
+                    <button class="small danger" name="action" value="delete" type="submit">{{ _('delete') }}
+                </form>
+            </td>
+        </tr>
         % end
-    </ul>
+    </table>
 </div>
