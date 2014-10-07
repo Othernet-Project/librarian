@@ -34,7 +34,7 @@
             </td>
             <td class="delete">
                 {{! h.form('post', action=i18n_path('/files/') + d.path) }}
-                    <button class="small danger" name="action" value="delete" type="submit">{{ _('delete') }}
+                    <button class="small danger" name="action" value="delete" type="submit">{{ _('Delete') }}
                 </form>
             </td>
         </tr>
@@ -52,7 +52,7 @@
             </td>
             <td class="delete">
                 {{! h.form('post', action=i18n_path('/files/') + f.path) }}
-                    <button class="small danger" name="action" value="delete" type="submit">{{ _('delete') }}
+                    <button class="small danger" name="action" value="delete" type="submit">{{ _('Delete') }}
                 </form>
             </td>
         </tr>
