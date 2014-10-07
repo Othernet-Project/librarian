@@ -87,10 +87,10 @@ ORDER BY updated ASC, views ASC;
 ADD_QUERY = """
 REPLACE INTO zipballs
 (md5, domain, url, title, images, timestamp, updated, keep_formatting,
-is_partner, is_sponsored, partner, license)
+is_partner, is_sponsored, archive, partner, license)
 VALUES
 (:md5, :domain, :url, :title, :images, :timestamp, :updated, :keep_formatting,
-:is_partner, :is_sponsored, :partner, :license)
+:is_partner, :is_sponsored, :archive, :partner, :license)
 """
 REMOVE_QUERY = """
 DELETE FROM zipballs

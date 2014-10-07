@@ -2,7 +2,7 @@
 <span class="badge images"><span class="icon"></span> {{ meta['images'] }}</span>
 % end
 
-% if meta.get('is_core', False):
+% if meta.get('archive') == 'core':
 <span title="{{ _('This content is part of Outernet core archive') }}"class="badge is-core">
     %# Translators, used as 'content belongs to core archive' badge
     {{ _('core') }}
