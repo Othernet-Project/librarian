@@ -107,6 +107,8 @@ def show_file_list(path='.'):
     try:
         path, relpath, dirs, file_list, readme = files.get_dir_contents(path)
     except files.DoesNotExist:
+        if path == '.':
+            return dict(path='.', dirs=[], files=[], up='.', readme='')
         abort(404)
     except files.IsFileError as err:
         return static_file(err.path, root=files.get_file_dir())
