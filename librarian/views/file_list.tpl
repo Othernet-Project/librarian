@@ -19,7 +19,8 @@
         % if path != '.':
         <tr class="up">
             <td class="icon"><a href="{{ i18n_path('/files/') + up }}"><span class="icon"></span></a></td>
-            <td colspan="4"><a href="{{ i18n_path('/files/') + up }}">..</a></td>
+            %# Translators, used as label for link that leads to parent directory in file listing
+            <td colspan="4"><a href="{{ i18n_path('/files/') + up }}">{{ _('(go up one level)') }}<a></td>
         </tr>
         % end
         % for d in dirs:
