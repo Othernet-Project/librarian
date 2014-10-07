@@ -58,4 +58,9 @@
         </tr>
         % end
     </table>
+
+    % if readme:
+    <h2>{{ _('About this folder') }}</h2>
+    <pre class="readme">{{ readme }}</pre>
+    % end
 </div>

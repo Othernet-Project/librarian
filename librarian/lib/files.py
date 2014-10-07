@@ -45,13 +45,17 @@ def get_dir_contents(path):
     filedir = get_file_dir()
     dirs = []
     files = []
+    readme = ''
     path = get_full_path(path)
     if not os.path.exists(path):
         raise DoesNotExist('Path not found %s' % path)
     if not os.path.isdir(path):
         raise IsFileError('Path is a file', os.path.relpath(path, filedir))
     for p in os.listdir(path):
-        if path.startswith('.'):
+        if p.startswith('.'):
+            if p == '.README':
+                with open(os.path.join(path, p), 'r') as f:
+                    readme = f.read()
             continue
         p = os.path.normpath(os.path.join(path, p))
         if os.path.isdir(p):
@@ -70,4 +74,5 @@ def get_dir_contents(path):
         path,
         os.path.relpath(path, filedir),
         sorted(dirs, key=lambda x: x.name),
-        sorted(files, key=lambda x: x.name))
+        sorted(files, key=lambda x: x.name),
+        readme)

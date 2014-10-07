@@ -105,13 +105,13 @@ def content_index(content_id):
 @view('file_list')
 def show_file_list(path='.'):
     try:
-        path, relpath, dirs, file_list = files.get_dir_contents(path)
+        path, relpath, dirs, file_list, readme = files.get_dir_contents(path)
     except files.DoesNotExist:
         abort(404)
     except files.IsFileError as err:
         return static_file(err.path, root=files.get_file_dir())
     up = os.path.normpath(os.path.join(path, '..'))
-    return dict(path=relpath, dirs=dirs, files=file_list, up=up)
+    return dict(path=relpath, dirs=dirs, files=file_list, up=up, readme=readme)
 
 
 def go_to_parent(path):
