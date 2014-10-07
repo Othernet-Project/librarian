@@ -9,7 +9,7 @@
 <div class="file-list">
     {{! h.form('get', _class='location-bar') }}
         <p class="path">
-        <input type="text" value="{{ path if path != '.' else '' }}">
+        <input type="text" name="p" value="{{ path if path != '.' else '' }}">
         %# Translators, used as button in file view address bar
         <button type="submit">{{ _('go') }}</button>
         </p>

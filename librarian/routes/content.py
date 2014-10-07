@@ -104,6 +104,7 @@ def content_index(content_id):
 @app.get(PREFIX + '/files/<path:path>')
 @view('file_list')
 def show_file_list(path='.'):
+    path = request.params.get('p', path)
     try:
         path, relpath, dirs, file_list, readme = files.get_dir_contents(path)
     except files.DoesNotExist:
