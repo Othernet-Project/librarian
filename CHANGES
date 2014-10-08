@@ -1,5 +1,7 @@
 0000-00-00 : MASTER   : Branko Vukelic <branko@outernet.is>
-
+    - Fixes bug when importing content with partial metadata
+    - Show number of updates in the updates link in main menu
+    - Do not show favorites on dashboard
 
 2014-10-07 : v0.1a6   : Branko Vukelic <branko@outernet.is>
     - Pager added to downloads page to speed up processing of many downloads
