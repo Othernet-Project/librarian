@@ -54,6 +54,10 @@ LICENSES = (
     ('ON', _('Other non-free license')),
 )
 
+METADATA_KEYS = (
+    'domain', 'url', 'title', 'images', 'timestamp', 'keep_formatting',
+    'is_partner', 'is_sponsored', 'archive', 'partner', 'license')
+
 COUNT_QUERY = """
 SELECT COUNT(*) AS count
 FROM zipballs;
@@ -120,6 +124,13 @@ SELECT title, md5
 FROM zipballs
 WHERE md5 IN (SEQ);
 """
+
+
+def add_missing_keys(meta):
+    """ Make sure metadata contains all required keys """
+    for key in METADATA_KEYS:
+        if key not in meta:
+            meta[key] = None
 
 
 def multiarg(n):
@@ -219,6 +230,7 @@ def add_to_archive(hashes):
     for md5, path in ((h, get_spool_zip_path(h)) for h in hashes):
         logging.debug("<%s> adding to archive (#%s)" % (path, md5))
         meta = get_metadata(path)
+        add_missing_keys(meta)
         meta['md5'] = md5
         meta['updated'] = datetime.now()
         if meta.get('replaces'):
