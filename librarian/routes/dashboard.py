@@ -35,7 +35,6 @@ def dashboard():
     spool, content, total = archive.free_space()
     count = archive.zipball_count()
     used = archive.archive_space_used()
-    favorites = favorite_content(limit=5)
     last_updated = archive.last_update()
     needed = archive.needed_space()
     zipballs = downloads.get_zipballs()

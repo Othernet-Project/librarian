@@ -20,23 +20,6 @@
 % end
 
 <div class="inner">
-    <div class="favorites dash-section">
-        %# Translators, used as section heading on dashboard above short listing of favorites
-        <h2>{{ _('Favorite content') }}</h2>
-
-        % if not favorites:
-        %# Translators, shown on dashboard in favorites section when user has not favorited any content
-        <p>{{ _('You have not favorted any content yet') }}</p>
-        % else:
-        <ul>
-            % for favorite in favorites:
-            <li><a href="{{ i18n_path('/content/%s/' % favorite['md5']) }}">{{ favorite['title'] }}</a></li>
-            % end
-        </ul>
-        <p><a href="{{ i18n_path('/favorites/') }}">{{ _('see all favorites') }} >></a></p>
-        % end
-    </div>
-
     <div class="diskspace dash-section">
         %# Translators, used as section heading on dashboard above disk space and similar information
         <h2>{{ _('Content library stats') }}</h2>
