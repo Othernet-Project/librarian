@@ -210,6 +210,29 @@ def get_md5_from_path(path):
     return os.path.basename(os.path.splitext(path)[0])
 
 
+def extract_file(path, filename):
+    """ Extract a single file from a zipball into memory
+
+    This function is cached using in-memory cache with arguments as keys.
+
+    You can read more about the caching in Python documentation.
+
+    https://docs.python.org/3/library/functools.html#functools.lru_cache
+
+    :param path:        path to the zip file
+    :param filename:    name of the file to extract
+    :returns:           two-tuple in ``(metadata, content)`` format, containing
+                        ``zipfile.ZipInfo`` object and file content
+                        respectively
+    """
+    if not zipfile.is_zipfile(path):
+        raise ContentError("'%s' is not a valid zipball" % path, path)
+    with closing(zipfile.ZipFile(path, 'r')) as content:
+        metadata = content.getinfo(filename)
+        content = content.open(filename, 'r')
+    return metadata, content
+
+
 def get_file(path, filename):
     """ Extract a single file from a zipball into memory
 
@@ -228,12 +251,7 @@ def get_file(path, filename):
     # TODO: Add caching
     dirname = get_md5_from_path(path)
     filename = os.path.join(dirname, filename)
-    if not zipfile.is_zipfile(path):
-        raise ContentError("'%s' is not a valid zipball" % path, path)
-    with closing(zipfile.ZipFile(path, 'r')) as content:
-        metadata = content.getinfo(filename)
-        content = content.open(filename, 'r')
-    return metadata, content
+    return extract_file(path, filename)
 
 
 def get_metadata(path):
