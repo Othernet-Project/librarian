@@ -29,9 +29,10 @@ class MetadataError(AppError):
 
 class AppInfo(object):
     """ Class that wraps application metadata """
-    def __init__(self, appid, title, version, descriptions={}, behavior=False):
+    def __init__(self, appid, title, author, version, descriptions={}, behavior=False):
         self.appid = appid
         self.title = title
+        self.author = author
         self.version = version
         self.descriptions = descriptions
         self.url = i18n_path('/apps/%s/' % appid)
@@ -58,7 +59,14 @@ def get_app_info(path):
         meta = json.loads(info)
     except ValueError as err:
         raise MetadataError('Could not decode metadata')
-    return AppInfo(meta['id'], meta['title'], meta['version'],
-                   meta['description'], meta['icon_behavior'])
-
+    try:
+        return AppInfo(
+            appid=meta['id'],
+            title=meta['title'],
+            author=meta['author'],
+            version=meta['version'],
+            descriptions=meta['description'],
+            behavior=meta['icon_behavior'])
+    except KeyError:
+        raise MetadataError('Incomplete metadata')
 

@@ -429,3 +429,35 @@ tr.selected {
     margin-bottom: 1em;
   }
 }
+
+.app-list {
+  padding: 2em;
+
+  li {
+    display: inline-block;
+    text-align: center;
+    clear: right;
+    list-style: none;
+    margin-bottom: 2em;
+    vertical-align: top;
+  }
+
+  .app-icon {
+    display: inline-block;
+    width: 128px;
+    height: 128px;
+    @include box-shadow(0 0 10px transparentize(black, 0.8));
+    @include border-radius(2px);
+    overflow: hidden;
+  }
+
+  .app-version,
+  .app-title,
+  .app-description {
+    display: block;
+  }
+
+  .app-title {
+    font-weight: bold;
+  }
+}
