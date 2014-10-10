@@ -346,6 +346,7 @@ class I18NPlugin(object):
                                                         request.fullpath)
             if not ignored:
                 request.locale = locale = request.environ.get('LOCALE')
+                request.default_locale = self.default_locale
                 if locale not in self.locales:
                     # If no locale had been specified, redirect to default one
                     path = request.original_path
