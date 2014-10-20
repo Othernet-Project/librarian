@@ -68,6 +68,9 @@ by our forums_ and say hello.
 List of translation contributors
 --------------------------------
 
+Special thanks to all those who have contributed their valuable time and
+knowledge:
+
 - Lars Lillo Ulvestad 
 - cavit 
 - Susruthan Seran 
