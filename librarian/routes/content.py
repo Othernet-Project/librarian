@@ -11,10 +11,12 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import os
 import stat
 import math
+import json
 import shutil
 import logging
 
-from bottle import request, view, abort, default_app, static_file, redirect
+from bottle import (
+    request, view, abort, default_app, static_file, redirect, response)
 
 from ..lib import archive
 from ..lib import downloads
@@ -100,20 +102,50 @@ def content_index(content_id):
     return content_file(content_id, 'index.html')
 
 
+def dictify_file_list(file_list):
+    return [{
+        'path': f[0],
+        'name': f[1],
+        'size': f[2],
+    } for f in file_list]
+
+
 @app.get(PREFIX + '/files/')
 @app.get(PREFIX + '/files/<path:path>')
 @view('file_list')
 def show_file_list(path='.'):
     path = request.params.get('p', path)
+    resp_format = request.params.get('f', '')
     try:
         path, relpath, dirs, file_list, readme = files.get_dir_contents(path)
     except files.DoesNotExist:
         if path == '.':
+            if resp_format == 'json':
+                response.content_type = 'application/json'
+                return json.dumps(dict(
+                    dirs=dirs,
+                    files=dictify_file_list(file_list),
+                    readme=readme
+                ))
             return dict(path='.', dirs=[], files=[], up='.', readme='')
         abort(404)
     except files.IsFileError as err:
+        if resp_format == 'json':
+            fstat = os.stat(path)
+            response.content_type = 'application/json'
+            return json.dumps(dict(
+                name=os.path.basename(path),
+                size=fstat[stat.ST_SIZE],
+            ))
         return static_file(err.path, root=files.get_file_dir())
     up = os.path.normpath(os.path.join(path, '..'))
+    if resp_format == 'json':
+        response.content_type = 'application/json'
+        return json.dumps(dict(
+            dirs=dirs,
+            files=dictify_file_list(file_list),
+            readme=readme
+        ))
     return dict(path=relpath, dirs=dirs, files=file_list, up=up, readme=readme)
 
 

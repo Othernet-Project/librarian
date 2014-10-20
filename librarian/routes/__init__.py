@@ -8,3 +8,4 @@ from .dashboard import app as dashboard_app
 from .content import app as content_app
 from .downloads import app as downloads_app
 from .favorites import app as favorites_app
+from .apps import app as apps_app
