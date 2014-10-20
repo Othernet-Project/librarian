@@ -1,5 +1,5 @@
 0000-00-00 : MASTER   : Branko Vukelic <branko@outernet.is>
-
+    - Fixed untrapped errors with bad zipfiles
 
 2014-10-08 : v0.1a6.1 : Branko Vukelic <branko@outernet.is>
     - Fixes bug when importing content with partial metadata
