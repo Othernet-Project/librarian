@@ -68,17 +68,27 @@ by our forums_ and say hello.
 List of translation contributors
 --------------------------------
 
-- Ismail Al Ahmad 
-- necklinux 
-- Susruthan Seran 
+- Lars Lillo Ulvestad 
 - cavit 
+- Susruthan Seran 
 - Mogens From 
-- Arthur 
 - David Marques 
-- Luis Fuentes 
+- Chengtao Hua 
+- necklinux 
+- patrik 
 - Josep Manel 
+- Arthur 
+- Ismail Al Ahmad 
+- Romaric FAVE 
+- Peer Oliver Schmidt 
 - Sakara 
-- Salik Zaki Anwar 
+- Luis Fuentes 
+- Dana Tierney 
+- Ahmed 
+- Navina 
+- Baris Kilic 
+- Buddha Burman 
+- Christoph Nebendahl 
 
 
 Reporting bugs and feature requests
