@@ -1,0 +1,392 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: Librarian\n"
+"Language: no\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: /vagrant/librarian/app.py:114 /vagrant/librarian/views/base.tpl:8
+#: /vagrant/librarian/views/base.tpl:39 /vagrant/librarian/app.py:113
+#: /vagrant/librarian/views/base.tpl:43
+msgid "Librarian"
+msgstr "Bibliotekar"
+
+#: /vagrant/librarian/views/base.tpl:23
+#: /vagrant/librarian/views/dashboard.tpl:2
+#: /vagrant/librarian/views/dashboard.tpl:19
+#: /vagrant/librarian/views/base.tpl:33
+msgid "Dashboard"
+msgstr "Kontrollpanel"
+
+#: /vagrant/librarian/views/base.tpl:25
+#: /vagrant/librarian/views/favorites.tpl:2
+#: /vagrant/librarian/views/favorites.tpl:4
+#: /vagrant/librarian/views/base.tpl:29
+msgid "Favorites"
+msgstr "Favoritter"
+
+#: /vagrant/librarian/views/base.tpl:29
+#: /vagrant/librarian/views/downloads.tpl:2
+#: /vagrant/librarian/views/downloads.tpl:4
+#: /vagrant/librarian/views/base.tpl:31
+msgid "Updates"
+msgstr "Oppdateringer"
+
+#: /vagrant/librarian/views/cleanup.tpl:13
+msgid "%s more space should be freed."
+msgstr "%s mer diskplass bør frigjøres."
+
+#: /vagrant/librarian/views/cleanup.tpl:17
+msgid "Remember that favorited content cannot be deleted."
+msgstr "Husk at innhold merket som favoritter ikke kan slettes."
+
+#: /vagrant/librarian/views/cleanup.tpl:22
+msgid "There is enough free space on storage"
+msgstr "Det er nok diskplass"
+
+#: /vagrant/librarian/views/cleanup.tpl:30
+msgid "delete?"
+msgstr "slette?"
+
+#: /vagrant/librarian/views/cleanup.tpl:32
+#: /vagrant/librarian/views/favorites.tpl:15
+msgid "date"
+msgstr "dato"
+
+#: /vagrant/librarian/views/cleanup.tpl:34
+#: /vagrant/librarian/views/content_list.tpl:65
+#: /vagrant/librarian/views/downloads.tpl:27
+#: /vagrant/librarian/views/favorites.tpl:17
+#: /vagrant/librarian/views/content_list.tpl:66
+#: /vagrant/librarian/views/downloads.tpl:38
+msgid "title"
+msgstr "tittel"
+
+#: /vagrant/librarian/views/cleanup.tpl:36
+msgid "size"
+msgstr "størrelse"
+
+#: /vagrant/librarian/views/cleanup.tpl:52
+msgid "There is enough free space. No clean-up needed."
+msgstr "Det er nok diskplass. Ingen opprydding trengs."
+
+#: /vagrant/librarian/views/cleanup.tpl:59
+msgid "How much space does this free up?"
+msgstr "Hvor mye plass frigjør dette?"
+
+#: /vagrant/librarian/views/cleanup.tpl:61
+msgid "Delete selected now"
+msgstr "Slett valgte nå"
+
+#: /vagrant/librarian/views/content_list.tpl:78
+#: /vagrant/librarian/views/content_list.tpl:81
+msgid "favorite"
+msgstr "favoritt"
+
+#: /vagrant/librarian/views/dashboard.tpl:78
+#: /vagrant/librarian/views/dashboard.tpl:61
+msgid "used space"
+msgstr "benyttet plass"
+
+#: /vagrant/librarian/views/dashboard.tpl:14
+msgid "last update"
+msgstr "siste oppdatering"
+
+#: /vagrant/librarian/views/dashboard.tpl:25
+msgid "Favorite content"
+msgstr "favorittinnhold"
+
+#: /vagrant/librarian/views/dashboard.tpl:29
+#: /vagrant/librarian/views/favorites.tpl:9
+msgid "You have not favorted any content yet"
+msgstr "Du har ikke markert noe innhold som favoritt"
+
+#: /vagrant/librarian/views/dashboard.tpl:36
+msgid "see all favorites"
+msgstr "se alle favoritter"
+
+#: /vagrant/librarian/views/dashboard.tpl:62
+#: /vagrant/librarian/views/dashboard.tpl:45
+msgid "You are running low on disk space."
+msgstr "Du har lite tilgjengelig diskplass."
+
+#: /vagrant/librarian/views/dashboard.tpl:64
+#: /vagrant/librarian/views/dashboard.tpl:47
+msgid "Free some space now"
+msgstr "Frigjør diskplass nå"
+
+#: /vagrant/librarian/views/downloads.tpl:25
+#: /vagrant/librarian/views/downloads.tpl:36
+msgid "select"
+msgstr "velg"
+
+#: /vagrant/librarian/views/downloads.tpl:51
+#: /vagrant/librarian/views/downloads.tpl:72
+msgid "There is no new content"
+msgstr "Det er ikke noe nytt innhold"
+
+#: /vagrant/librarian/views/downloads.tpl:64
+msgid "Add selected to archive"
+msgstr "Legg til valgte til arkiv"
+
+#: /vagrant/librarian/views/downloads.tpl:17
+#: /vagrant/librarian/views/downloads.tpl:66
+#: /vagrant/librarian/views/downloads.tpl:28
+#: /vagrant/librarian/views/downloads.tpl:87
+msgid "Delete selected"
+msgstr "Slett valgte"
+
+#: /vagrant/librarian/views/favorites.tpl:26
+msgid "unfavorite"
+msgstr "Fjern som favoritt"
+
+#: /vagrant/librarian/views/base.tpl:27
+#: /vagrant/librarian/views/content_list.tpl:2
+#: /vagrant/librarian/views/content_list.tpl:5
+#: /vagrant/librarian/views/base.tpl:23
+msgid "Library"
+msgstr "Bibliotek"
+
+#: /vagrant/librarian/views/content_list.tpl:19
+msgid "Content library is currently empty"
+msgstr "Innholdsbibliotek er tomt"
+
+#: /vagrant/librarian/views/content_list.tpl:28
+msgid "search titles"
+msgstr "søk titler"
+
+#: /vagrant/librarian/views/content_list.tpl:31
+#: /vagrant/librarian/views/content_list.tpl:56
+#: /vagrant/librarian/views/file_list.tpl:14
+msgid "go"
+msgstr "gå"
+
+#: /vagrant/librarian/views/content_list.tpl:34
+msgid "clear"
+msgstr "rensk"
+
+#: /vagrant/librarian/views/content_list.tpl:67
+#: /vagrant/librarian/views/content_list.tpl:68
+msgid "added"
+msgstr "lagt til"
+
+#: /vagrant/librarian/views/dashboard.tpl:8
+msgid "update available"
+msgid_plural "updates available"
+msgstr[0] "oppdatering tilgjengelig"
+msgstr[1] "oppdateringer tiljgengelig"
+
+#: /vagrant/librarian/views/dashboard.tpl:42
+#: /vagrant/librarian/views/dashboard.tpl:25
+msgid "Content library stats"
+msgstr "Tall for innholdsbibliotek"
+
+#: /vagrant/librarian/views/dashboard.tpl:72
+#: /vagrant/librarian/views/dashboard.tpl:55
+msgid "item in the library"
+msgid_plural "items in the library"
+msgstr[0] "enhet i biblioteket"
+msgstr[1] "enheter i biblioteket"
+
+#: /vagrant/librarian/views/dashboard.tpl:85
+#: /vagrant/librarian/views/dashboard.tpl:68
+msgid "Application logs"
+msgstr "Applikasjonslogger"
+
+#: /vagrant/librarian/views/dashboard.tpl:87
+#: /vagrant/librarian/views/dashboard.tpl:70
+msgid "Logs are shown in reverse chronological order"
+msgstr "Logger er vist i omvendt kronologisk rekkefølge"
+
+#: /vagrant/librarian/views/downloads.tpl:11
+#: /vagrant/librarian/views/downloads.tpl:60
+#: /vagrant/librarian/views/downloads.tpl:22
+#: /vagrant/librarian/views/downloads.tpl:81
+msgid "Select all"
+msgstr "Velg alle"
+
+#: /vagrant/librarian/views/downloads.tpl:13
+#: /vagrant/librarian/views/downloads.tpl:62
+#: /vagrant/librarian/views/downloads.tpl:24
+#: /vagrant/librarian/views/downloads.tpl:83
+msgid "Select none"
+msgstr "Velg ingen"
+
+#: /vagrant/librarian/views/downloads.tpl:29
+#: /vagrant/librarian/views/downloads.tpl:40
+msgid "broadcast"
+msgstr "kringkast"
+
+#: /vagrant/librarian/views/downloads.tpl:31
+#: /vagrant/librarian/views/downloads.tpl:42
+msgid "downloaded"
+msgstr "nedlastet"
+
+#: /vagrant/librarian/views/content_list.tpl:8
+msgid "Showing search results for '%(terms)s'"
+msgstr "Viser søkeresultater for '%(terms)s'"
+
+#: /vagrant/librarian/views/content_list.tpl:11
+msgid "Showing %(count)s of %(total)s item"
+msgid_plural "Showing %(count)s of %(total)s items"
+msgstr[0] "Viser %(count)s av %(total)s enhet"
+msgstr[1] "Viser %(count)s av %(total)s enheter"
+
+#: /vagrant/librarian/views/content_list.tpl:22
+msgid "There are no search results for '%(terms)s'"
+msgstr "Det er ingen søkeresultater for '%(terms)s'"
+
+#. Translators, used in the pager
+#: /vagrant/librarian/views/_simple_pager.tpl:3
+msgid "previous"
+msgstr "forrige"
+
+#. Translators, used in the pager
+#: /vagrant/librarian/views/_simple_pager.tpl:7
+msgid "next"
+msgstr "neste"
+
+#. Translators, used as page title
+#. Translators, used as page title on clean-up page
+#: /vagrant/librarian/views/cleanup.tpl:2
+#: /vagrant/librarian/views/cleanup.tpl:4
+msgid "Library clean-up"
+msgstr "Rydd i bibliotek"
+
+#. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
+#: /vagrant/librarian/views/content_list.tpl:40
+#: /vagrant/librarian/views/downloads.tpl:10
+msgid "page"
+msgstr "side"
+
+#. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
+#: /vagrant/librarian/views/content_list.tpl:54
+#: /vagrant/librarian/views/downloads.tpl:13
+msgid "per page"
+msgstr "per side"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: /vagrant/librarian/views/dashboard.tpl:46
+#: /vagrant/librarian/views/dashboard.tpl:29
+msgid "download directory (%s free)"
+msgstr "nedlastingsmappe (%s ledig)"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: /vagrant/librarian/views/dashboard.tpl:52
+#: /vagrant/librarian/views/dashboard.tpl:35
+msgid "content library (%s free)"
+msgstr "innholdsbibliotek (%s ledig)"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: /vagrant/librarian/views/dashboard.tpl:57
+#: /vagrant/librarian/views/dashboard.tpl:40
+msgid "total space (%s free)"
+msgstr "total diskplass (%s ledig)"
+
+#. Translators, used as button label on updates page for adding marked content to library
+#: /vagrant/librarian/views/downloads.tpl:15
+#: /vagrant/librarian/views/downloads.tpl:64
+#: /vagrant/librarian/views/downloads.tpl:26
+#: /vagrant/librarian/views/downloads.tpl:85
+msgid "Add selected to library"
+msgstr "Legg valgte til i bibliotek"
+
+#. Translators, used as 'content belongs to core archive' badge
+#: /vagrant/librarian/views/_badges.tpl:8
+msgid "core"
+msgstr "core"
+
+#. Translators, used as 'partner content' badge
+#: /vagrant/librarian/views/_badges.tpl:15
+msgid "partner"
+msgstr "partner"
+
+#. Translators, used as 'sponsored content' badge
+#: /vagrant/librarian/views/_badges.tpl:22
+msgid "sponsored"
+msgstr "sponsored"
+
+#. Translators, used as 'unknown license' badge
+#: /vagrant/librarian/views/_badges.tpl:27
+msgid "unknown"
+msgstr "unknown"
+
+#. Translators, appears next to content title when content is sponsored or is partner content, %s is replaced by person/company name; not part of sentence
+#: /vagrant/librarian/views/_badges.tpl:31
+msgid "from %s"
+msgstr "from %s"
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#: /vagrant/librarian/views/app_list.tpl:2
+#: /vagrant/librarian/views/app_list.tpl:6
+#: /vagrant/librarian/views/base.tpl:27
+msgid "Apps"
+msgstr "Apps"
+
+#. Translators, refers to app author
+#: /vagrant/librarian/views/app_list.tpl:18
+msgid "author:"
+msgstr "author:"
+
+#. Translators, refers to app version
+#: /vagrant/librarian/views/app_list.tpl:20
+msgid "version:"
+msgstr "version:"
+
+#. Translators, message show in app listing when no apps are present.
+#: /vagrant/librarian/views/app_list.tpl:29
+msgid "No apps found."
+msgstr "No apps found."
+
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#: /vagrant/librarian/views/base.tpl:25
+#: /vagrant/librarian/views/file_list.tpl:2
+#: /vagrant/librarian/views/file_list.tpl:6
+msgid "Files"
+msgstr "Files"
+
+#: /vagrant/librarian/views/downloads.tpl:14
+msgid "Reload"
+msgstr "Reload"
+
+#: /vagrant/librarian/views/downloads.tpl:65
+msgid "replaces:"
+msgstr "replaces:"
+
+#. Translators, used as note shown on favorites page when user has no favorites
+#: /vagrant/librarian/views/favorites.tpl:9
+msgid "You have not favorited any content yet"
+msgstr "You have not favorted any content yet"
+
+#. Translators, used as label for link that leads to parent directory in file listing
+#: /vagrant/librarian/views/file_list.tpl:23
+msgid "(go up one level)"
+msgstr "(go up one level)"
+
+#: /vagrant/librarian/views/file_list.tpl:33
+#: /vagrant/librarian/views/file_list.tpl:51
+msgid "Rename"
+msgstr "Rename"
+
+#: /vagrant/librarian/views/file_list.tpl:38
+#: /vagrant/librarian/views/file_list.tpl:56
+msgid "Delete"
+msgstr "delete?"
+
+#: /vagrant/librarian/views/file_list.tpl:64
+msgid "About this folder"
+msgstr "About this folder"
+

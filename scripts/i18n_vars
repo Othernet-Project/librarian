@@ -15,4 +15,4 @@ DOMAIN=librarian
 SRCDIR=/vagrant
 LOCALEDIR=$SRCDIR/librarian/locales
 TEMPLATE=$LOCALEDIR/$DOMAIN.pot
-LANGUAGES=( en_US )
+LANGUAGES=( ar da de en es fr jp nb pt ru sr sv ta tr zh )

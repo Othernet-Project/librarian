@@ -1,0 +1,455 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: Librarian\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. if you are going on the theory that this is a name like Roman
+#.  leave it alone. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. 
+#. Otherwise, the person who works in a library is un bibliothécaire
+#: /vagrant/librarian/app.py:114 /vagrant/librarian/views/base.tpl:8
+#: /vagrant/librarian/views/base.tpl:39 /vagrant/librarian/app.py:113
+#: /vagrant/librarian/views/base.tpl:43
+msgid "Librarian"
+msgstr "Librarian"
+
+#. I am seeing tableau de bord as an analogy to the vehicular system, as in English, with one reference to "un système d'information intelligent de bord"... if this other  translation is known to be better for some reason then fine.... I am uncertain.
+#: /vagrant/librarian/views/base.tpl:23
+#: /vagrant/librarian/views/dashboard.tpl:2
+#: /vagrant/librarian/views/dashboard.tpl:19
+#: /vagrant/librarian/views/base.tpl:33
+msgid "Dashboard"
+msgstr "tableau de commande"
+
+#. yes
+#: /vagrant/librarian/views/base.tpl:25
+#: /vagrant/librarian/views/favorites.tpl:2
+#: /vagrant/librarian/views/favorites.tpl:4
+#: /vagrant/librarian/views/base.tpl:29
+msgid "Favorites"
+msgstr "favoris"
+
+#. yes
+#: /vagrant/librarian/views/base.tpl:29
+#: /vagrant/librarian/views/downloads.tpl:2
+#: /vagrant/librarian/views/downloads.tpl:4
+#: /vagrant/librarian/views/base.tpl:31
+msgid "Updates"
+msgstr "mises à jour"
+
+#: /vagrant/librarian/views/cleanup.tpl:13
+msgid "%s more space should be freed."
+msgstr "%s d'espace doivent être libérés"
+
+#: /vagrant/librarian/views/cleanup.tpl:17
+msgid "Remember that favorited content cannot be deleted."
+msgstr "Rappelez-vous que le contenu favori ne peut être supprimé"
+
+#. lit. Available storable is sufficient. See comments elsewhere about issues with espace. The word does not really translate directly from space and then what gender is it?
+#: /vagrant/librarian/views/cleanup.tpl:22
+msgid "There is enough free space on storage"
+msgstr "Le stockage disponible suffit"
+
+#: /vagrant/librarian/views/cleanup.tpl:30
+msgid "delete?"
+msgstr "supprimer ?"
+
+#: /vagrant/librarian/views/cleanup.tpl:32
+#: /vagrant/librarian/views/favorites.tpl:15
+msgid "date"
+msgstr "date"
+
+#. yes
+#: /vagrant/librarian/views/cleanup.tpl:34
+#: /vagrant/librarian/views/content_list.tpl:65
+#: /vagrant/librarian/views/downloads.tpl:27
+#: /vagrant/librarian/views/favorites.tpl:17
+#: /vagrant/librarian/views/content_list.tpl:66
+#: /vagrant/librarian/views/downloads.tpl:38
+msgid "title"
+msgstr "titre"
+
+#. is this file size?
+#: /vagrant/librarian/views/cleanup.tpl:36
+msgid "size"
+msgstr "taille"
+
+#: /vagrant/librarian/views/cleanup.tpl:52
+msgid "There is enough free space. No clean-up needed."
+msgstr "Il y a assez d'espace. Pas de nettoyage requis"
+
+#. Cela retournera a disponibilité combien d'espace?
+#: /vagrant/librarian/views/cleanup.tpl:59
+msgid "How much space does this free up?"
+msgstr "combien d'espace cela vas libérer ?"
+
+#: /vagrant/librarian/views/cleanup.tpl:61
+msgid "Delete selected now"
+msgstr "Supprimer la sélection maintenant"
+
+#: /vagrant/librarian/views/content_list.tpl:78
+#: /vagrant/librarian/views/content_list.tpl:81
+msgid "favorite"
+msgstr "favori"
+
+#: /vagrant/librarian/views/dashboard.tpl:78
+#: /vagrant/librarian/views/dashboard.tpl:61
+msgid "used space"
+msgstr "espace utilisé"
+
+#. just fine needs nothing
+#: /vagrant/librarian/views/dashboard.tpl:14
+msgid "last update"
+msgstr "dernière mise à jour"
+
+#. favori here is an adjective so no s. That ok with everybody?
+#: /vagrant/librarian/views/dashboard.tpl:25
+msgid "Favorite content"
+msgstr "contenu favori"
+
+#. english has a typo should be favorited
+#: /vagrant/librarian/views/dashboard.tpl:29
+#: /vagrant/librarian/views/favorites.tpl:9
+msgid "You have not favorted any content yet"
+msgstr "vous n'avez pas favorisé de contenu pour l'instant"
+
+#: /vagrant/librarian/views/dashboard.tpl:36
+msgid "see all favorites"
+msgstr "voir tous les favoris"
+
+#: /vagrant/librarian/views/dashboard.tpl:62
+#: /vagrant/librarian/views/dashboard.tpl:45
+msgid "You are running low on disk space."
+msgstr "Niveau faible de stockage disponible"
+
+#: /vagrant/librarian/views/dashboard.tpl:64
+#: /vagrant/librarian/views/dashboard.tpl:47
+msgid "Free some space now"
+msgstr "Prenez donc des mesures."
+
+#: /vagrant/librarian/views/downloads.tpl:25
+#: /vagrant/librarian/views/downloads.tpl:36
+msgid "select"
+msgstr "sélectionner"
+
+#: /vagrant/librarian/views/downloads.tpl:51
+#: /vagrant/librarian/views/downloads.tpl:72
+msgid "There is no new content"
+msgstr "Aucun contenu nouveau"
+
+#. unless there is some reason the French went to plural? English is not so I changed it
+#: /vagrant/librarian/views/downloads.tpl:64
+msgid "Add selected to archive"
+msgstr "Ajouter la sélection a l'archive"
+
+#: /vagrant/librarian/views/downloads.tpl:17
+#: /vagrant/librarian/views/downloads.tpl:66
+#: /vagrant/librarian/views/downloads.tpl:28
+#: /vagrant/librarian/views/downloads.tpl:87
+msgid "Delete selected"
+msgstr "supprimer la sélection"
+
+#: /vagrant/librarian/views/favorites.tpl:26
+msgid "unfavorite"
+msgstr "enlever des favoris"
+
+#. no. Librairie is a bookstore. bibliothèque is feminine if you need to know elsewhere
+#: /vagrant/librarian/views/base.tpl:27
+#: /vagrant/librarian/views/content_list.tpl:2
+#: /vagrant/librarian/views/content_list.tpl:5
+#: /vagrant/librarian/views/base.tpl:23
+msgid "Library"
+msgstr "Bibliothèque"
+
+#. La bibliotheque de contenu est vide a ce moment
+#: /vagrant/librarian/views/content_list.tpl:19
+msgid "Content library is currently empty"
+msgstr "La bibliothèque de contenu est vide"
+
+#. chercher des titres means look for some titles. If the intended meaning is perform a search in the title fields this is definitely better
+#: /vagrant/librarian/views/content_list.tpl:28
+msgid "search titles"
+msgstr "chercher sur les titres"
+
+#. if used in the sense of ok let's do this: de - to let go of (an idea, project, plan, etc)
+#. 
+#. Related: le démarrage - starting up, start, moving off; un démarreur - starter (in a car)
+#. http://french.about.com/od/vocabulary/g/demarrer.htm
+#: /vagrant/librarian/views/content_list.tpl:31
+#: /vagrant/librarian/views/content_list.tpl:56
+#: /vagrant/librarian/views/file_list.tpl:14
+msgid "go"
+msgstr "démarrer"
+
+#. is this a label as in clear the field?
+#: /vagrant/librarian/views/content_list.tpl:34
+msgid "clear"
+msgstr "nettoyer"
+
+#: /vagrant/librarian/views/content_list.tpl:67
+#: /vagrant/librarian/views/content_list.tpl:68
+msgid "added"
+msgstr "ajoutée"
+
+#: /vagrant/librarian/views/dashboard.tpl:8
+msgid "update available"
+msgid_plural "updates available"
+msgstr[0] "mise à jour disponible"
+msgstr[1] "mises à jour disponibles"
+
+#: /vagrant/librarian/views/dashboard.tpl:42
+#: /vagrant/librarian/views/dashboard.tpl:25
+msgid "Content library stats"
+msgstr "statistiques sur la bibliothèque de contenu"
+
+#. 'items' is tough in french. this isn't wrong but better could possibly be found depending on deadlines
+#: /vagrant/librarian/views/dashboard.tpl:72
+#: /vagrant/librarian/views/dashboard.tpl:55
+msgid "item in the library"
+msgid_plural "items in the library"
+msgstr[0] "élément dans la bibliothèque"
+msgstr[1] "éléments dans la bibliothèque"
+
+#. Difficile car log est souvent utilisé en français
+#: /vagrant/librarian/views/dashboard.tpl:85
+#: /vagrant/librarian/views/dashboard.tpl:68
+msgid "Application logs"
+msgstr "logs de l'application"
+
+#: /vagrant/librarian/views/dashboard.tpl:87
+#: /vagrant/librarian/views/dashboard.tpl:70
+msgid "Logs are shown in reverse chronological order"
+msgstr "Les logs sont présentés dans l'ordre chronologique inversé"
+
+#: /vagrant/librarian/views/downloads.tpl:11
+#: /vagrant/librarian/views/downloads.tpl:60
+#: /vagrant/librarian/views/downloads.tpl:22
+#: /vagrant/librarian/views/downloads.tpl:81
+msgid "Select all"
+msgstr "tout sélectionner"
+
+#: /vagrant/librarian/views/downloads.tpl:13
+#: /vagrant/librarian/views/downloads.tpl:62
+#: /vagrant/librarian/views/downloads.tpl:24
+#: /vagrant/librarian/views/downloads.tpl:83
+msgid "Select none"
+msgstr "désélectionner tout"
+
+#: /vagrant/librarian/views/downloads.tpl:29
+#: /vagrant/librarian/views/downloads.tpl:40
+msgid "broadcast"
+msgstr "diffusion"
+
+#. also will take
+#.  an extra e
+#.  if downloaded item is feminine
+#: /vagrant/librarian/views/downloads.tpl:31
+#: /vagrant/librarian/views/downloads.tpl:42
+msgid "downloaded"
+msgstr "téléchargée"
+
+#: /vagrant/librarian/views/content_list.tpl:8
+msgid "Showing search results for '%(terms)s'"
+msgstr "Affichage des résultats de la recherche pour '%(terms)s'"
+
+#. Je n'ai pas totalement saisi la phrase
+#: /vagrant/librarian/views/content_list.tpl:11
+msgid "Showing %(count)s of %(total)s item"
+msgid_plural "Showing %(count)s of %(total)s items"
+msgstr[0] "Affichage de %(count)s éléments sur un total de %(total)s articles"
+msgstr[1] "Affichage du %(count)s de %(total)s d'articles"
+
+#. need some help on the (terms)s thing that's going on there. why are there two 's' characters? this is for search terms?
+#: /vagrant/librarian/views/content_list.tpl:22
+msgid "There are no search results for '%(terms)s'"
+msgstr "Aucun résultat pour '%(terms)s'"
+
+#. Translators, used in the pager
+#: /vagrant/librarian/views/_simple_pager.tpl:3
+msgid "previous"
+msgstr "précédent"
+
+#. Translators, used in the pager
+#: /vagrant/librarian/views/_simple_pager.tpl:7
+msgid "next"
+msgstr "suivant"
+
+#. Translators, used as page title
+#. Translators, used as page title on clean-up page
+#: /vagrant/librarian/views/cleanup.tpl:2
+#: /vagrant/librarian/views/cleanup.tpl:4
+msgid "Library clean-up"
+msgstr "nettoyage de la bibliothèque"
+
+#. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
+#: /vagrant/librarian/views/content_list.tpl:40
+#: /vagrant/librarian/views/downloads.tpl:10
+msgid "page"
+msgstr "page"
+
+#. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
+#: /vagrant/librarian/views/content_list.tpl:54
+#: /vagrant/librarian/views/downloads.tpl:13
+msgid "per page"
+msgstr "par page"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: /vagrant/librarian/views/dashboard.tpl:46
+#: /vagrant/librarian/views/dashboard.tpl:29
+msgid "download directory (%s free)"
+msgstr "dossier téléchargement (%s disponible)"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: /vagrant/librarian/views/dashboard.tpl:52
+#: /vagrant/librarian/views/dashboard.tpl:35
+msgid "content library (%s free)"
+msgstr "bibliothèque de contenu (%s disponible)"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: /vagrant/librarian/views/dashboard.tpl:57
+#: /vagrant/librarian/views/dashboard.tpl:40
+msgid "total space (%s free)"
+msgstr "capacité totale (%s disponible)"
+
+#. Translators, used as button label on updates page for adding marked content to library
+#: /vagrant/librarian/views/downloads.tpl:15
+#: /vagrant/librarian/views/downloads.tpl:64
+#: /vagrant/librarian/views/downloads.tpl:26
+#: /vagrant/librarian/views/downloads.tpl:85
+msgid "Add selected to library"
+msgstr "ajouter la sélection à la bibliothèque"
+
+#. Translators, used as 'content belongs to core archive' badge
+#: /vagrant/librarian/views/_badges.tpl:8
+msgid "core"
+msgstr "core"
+
+#. Translators, used as 'partner content' badge
+#: /vagrant/librarian/views/_badges.tpl:15
+msgid "partner"
+msgstr "partner"
+
+#. Translators, used as 'sponsored content' badge
+#: /vagrant/librarian/views/_badges.tpl:22
+msgid "sponsored"
+msgstr "sponsored"
+
+#. Translators, used as 'unknown license' badge
+#: /vagrant/librarian/views/_badges.tpl:27
+msgid "unknown"
+msgstr "unknown"
+
+#. Translators, appears next to content title when content is sponsored or is partner content, %s is replaced by person/company name; not part of sentence
+#: /vagrant/librarian/views/_badges.tpl:31
+msgid "from %s"
+msgstr "from %s"
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#: /vagrant/librarian/views/app_list.tpl:2
+#: /vagrant/librarian/views/app_list.tpl:6
+#: /vagrant/librarian/views/base.tpl:27
+msgid "Apps"
+msgstr "Apps"
+
+#. Translators, refers to app author
+#: /vagrant/librarian/views/app_list.tpl:18
+msgid "author:"
+msgstr "author:"
+
+#. Translators, refers to app version
+#: /vagrant/librarian/views/app_list.tpl:20
+msgid "version:"
+msgstr "version:"
+
+#. Translators, message show in app listing when no apps are present.
+#: /vagrant/librarian/views/app_list.tpl:29
+msgid "No apps found."
+msgstr "No apps found."
+
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#: /vagrant/librarian/views/base.tpl:25
+#: /vagrant/librarian/views/file_list.tpl:2
+#: /vagrant/librarian/views/file_list.tpl:6
+msgid "Files"
+msgstr "Files"
+
+#: /vagrant/librarian/views/downloads.tpl:14
+msgid "Reload"
+msgstr "Reload"
+
+#: /vagrant/librarian/views/downloads.tpl:65
+msgid "replaces:"
+msgstr "replaces:"
+
+#. Translators, used as note shown on favorites page when user has no favorites
+#: /vagrant/librarian/views/favorites.tpl:9
+msgid "You have not favorited any content yet"
+msgstr "You have not favorted any content yet"
+
+#. Translators, used as label for link that leads to parent directory in file listing
+#: /vagrant/librarian/views/file_list.tpl:23
+msgid "(go up one level)"
+msgstr "(go up one level)"
+
+#: /vagrant/librarian/views/file_list.tpl:33
+#: /vagrant/librarian/views/file_list.tpl:51
+msgid "Rename"
+msgstr "Rename"
+
+#: /vagrant/librarian/views/file_list.tpl:38
+#: /vagrant/librarian/views/file_list.tpl:56
+msgid "Delete"
+msgstr "delete?"
+
+#: /vagrant/librarian/views/file_list.tpl:64
+msgid "About this folder"
+msgstr "About this folder"
+

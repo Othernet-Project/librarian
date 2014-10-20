@@ -42,9 +42,23 @@ CONFPATH = in_pkg('librarian.ini')
 STATICDIR = in_pkg('static')
 
 LANGS = [
-    ('en_US', 'English'),
+    ('ar', 'اللغة العربية'),
+    ('da', 'Dansk'),
+    ('de', 'Deutsch'),
+    ('en', 'English'),
+    ('es', 'Español'),
+    ('fr', 'Français'),
+    ('jp', '日本語'),
+    ('nb', 'Norsk'),
+    ('pt', 'Português'),
+    ('sr', 'Srpski'),
+    ('sv', 'Svensk'),
+    ('ta', 'தமிழ்'),
+    ('tr', 'Türkçe'),
+    ('zh', '中文'),
 ]
-DEFAULT_LOCALE = 'en_US'
+RTL_LANGS = ['ar', 'he', 'ur', 'yi', 'ji', 'iw', 'fa']
+DEFAULT_LOCALE = 'en'
 
 
 app = bottle.default_app()
@@ -114,7 +128,8 @@ def start(logfile=None):
         'style': 'screen',  # Default stylesheet
         'h': helpers,
         'updates': Lazy(lambda: len(list(get_zipballs()))),
-        'readable_license': lambda s: dict(LICENSES).get(s, LICENSES[0][1])
+        'readable_license': lambda s: dict(LICENSES).get(s, LICENSES[0][1]),
+        'is_rtl': Lazy(lambda: request.locale in RTL_LANGS)
     })
 
     # Add middlewares
