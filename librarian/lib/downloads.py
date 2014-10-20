@@ -228,11 +228,14 @@ def get_file(path, filename):
     # TODO: Add caching
     dirname = get_md5_from_path(path)
     filename = os.path.join(dirname, filename)
-    if not zipfile.is_zipfile(path):
-        raise ContentError("'%s' is not a valid zipball" % path, path)
-    with closing(zipfile.ZipFile(path, 'r')) as content:
-        metadata = content.getinfo(filename)
-        content = content.open(filename, 'r')
+    try:
+        with closing(zipfile.ZipFile(path, 'r')) as content:
+            metadata = content.getinfo(filename)
+            content = content.open(filename, 'r')
+    except zipfile.BadZipfile:
+        raise ContentError("'%s' is not a valid zipfile" % path, path)
+    except Exception as err:
+        raise ContentError("'%s' could not be opened: %s" % (path, err), path)
     return metadata, content
 
 
