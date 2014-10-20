@@ -10,7 +10,7 @@
 % end
 
 % if meta.get('is_partner', False):
-<span title="{{ _("This content comes from Outernet's content partner") }}" class="badge is-partner">
+<span title="{{ _('This content comes from Outernet\'s content partner') }}" class="badge is-partner">
     %# Translators, used as 'partner content' badge
     {{ _('partner') }}
 </span>
