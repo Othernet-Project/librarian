@@ -226,8 +226,6 @@ def extract_file(path, filename):
                         respectively
     """
     # TODO: Add caching
-    dirname = get_md5_from_path(path)
-    filename = os.path.join(dirname, filename)
     try:
         with closing(zipfile.ZipFile(path, 'r')) as content:
             metadata = content.getinfo(filename)
