@@ -38,6 +38,8 @@
                     <button class="small danger" name="action" value="delete" type="submit">{{ _('Delete') }}
                 </form>
             </td>
+            <td>
+            </td>
         </tr>
         % end
         % for f in files:
@@ -55,6 +57,14 @@
                 {{! h.form('post', action=i18n_path('/files/') + f.path) }}
                     <button class="small danger" name="action" value="delete" type="submit">{{ _('Delete') }}
                 </form>
+            </td>
+            <td class="execute">
+                % if f.path.endswith('.sh'):
+                {{! h.form('post', action=i18n_path('/files/') + f.path) }}
+                    %# Translators, label for button in file listing that allows user to run a script
+                    <button class="small" name="action" value="exec" type="submit">{{ _('Run') }}
+                </form>
+                % end
             </td>
         </tr>
         % end

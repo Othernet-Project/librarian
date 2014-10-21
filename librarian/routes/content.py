@@ -14,9 +14,11 @@ import math
 import json
 import shutil
 import logging
+import subprocess
 
 from bottle import (
-    request, view, abort, default_app, static_file, redirect, response)
+    request, view, abort, default_app, static_file, redirect, response,
+    template)
 
 from ..lib import archive
 from ..lib import downloads
@@ -180,6 +182,16 @@ def rename_path(path):
     go_to_parent(path)
 
 
+def run_path(path):
+    callargs = [path]
+    proc = subprocess.Popen(callargs, stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, shell=True)
+    out, err = proc.communicate()
+    ret = proc.returncode
+    return ret, out, err
+
+
 @app.post(PREFIX + '/files/<path:path>')
 def handle_file_action(path):
     action = request.forms.get('action')
@@ -188,5 +200,13 @@ def handle_file_action(path):
         delete_path(path)
     elif action == 'rename':
         rename_path(path)
+    elif action == 'exec':
+        if os.path.splitext(path)[1] != '.sh':
+            # For now we only support running BASH scripts
+            abort(400)
+        logging.info("Running script '%s'", path)
+        ret, out, err = run_path(path)
+        logging.debug("Script '%s' finished with return code %s", path, ret)
+        return template('exec_result', ret=ret, out=out, err=err)
     else:
         abort(400)
