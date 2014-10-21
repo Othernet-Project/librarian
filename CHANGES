@@ -2,6 +2,7 @@
     - Fixed untrapped errors with bad zipfiles
     - Implemented simple apps API
     - Integrated trnaslations with good level of completion
+    - Librarian can now run Bash scripts from within the file browser
 
 2014-10-08 : v0.1a6.1 : Branko Vukelic <branko@outernet.is>
     - Fixes bug when importing content with partial metadata
