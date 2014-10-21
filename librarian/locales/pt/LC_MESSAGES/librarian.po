@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Librarian\n"
 "Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2014-10-20 14:08+0000\n"
+"POT-Creation-Date: 2014-10-21 15:17+0000\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -10,6 +10,9 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#. Translators, used as default page title
+#. Translators, used in page title
+#. Translators, used in footer
 #. Translators, used as default page title
 #. Translators, used in page title
 #. Translators, used in footer
@@ -62,6 +65,9 @@ msgstr "próximo"
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
 #: /vagrant/librarian/views/base.tpl:23
 #: /vagrant/librarian/views/dashboard.tpl:2
 #: /vagrant/librarian/views/dashboard.tpl:19
@@ -69,6 +75,9 @@ msgstr "próximo"
 msgid "Dashboard"
 msgstr "Painel de Controlo"
 
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
@@ -112,6 +121,9 @@ msgstr "Favoritos"
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
 #: /vagrant/librarian/views/base.tpl:27
 #: /vagrant/librarian/views/content_list.tpl:2
 #: /vagrant/librarian/views/content_list.tpl:5
@@ -137,6 +149,9 @@ msgstr "Biblioteca"
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
 #: /vagrant/librarian/views/base.tpl:29
 #: /vagrant/librarian/views/downloads.tpl:2
 #: /vagrant/librarian/views/downloads.tpl:4
@@ -144,6 +159,8 @@ msgstr "Biblioteca"
 msgid "Updates"
 msgstr "Actualizações"
 
+#. Translators, used as page title
+#. Translators, used as page title on clean-up page
 #. Translators, used as page title
 #. Translators, used as page title on clean-up page
 #. Translators, used as page title
@@ -194,11 +211,17 @@ msgstr "apagar?"
 #. Translators, used in table header, date added to library
 #. Translators, in table header on clean-up page, date added to library
 #. Translators, used in table header, date added to library
+#. Translators, in table header on clean-up page, date added to library
+#. Translators, used in table header, date added to library
 #: /vagrant/librarian/views/cleanup.tpl:32
 #: /vagrant/librarian/views/favorites.tpl:15
 msgid "date"
 msgstr "data"
 
+#. Translators, in table header on clean-up page, content title
+#. Translators, used in table header, page title
+#. Translators, used as table header, content title
+#. Translators, used in table header, content title
 #. Translators, in table header on clean-up page, content title
 #. Translators, used in table header, page title
 #. Translators, used as table header, content title
@@ -288,6 +311,9 @@ msgstr "procurar títulos"
 #. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
 #. Translators, used as label for search button
 #. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
+#. Translators, used as label for search button
+#. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
+#. Translators, used as button in file view address bar
 #. Translators, used as label for search button
 #. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
 #. Translators, used as button in file view address bar
@@ -530,6 +556,9 @@ msgstr "from %s"
 #. Translators, used as page title
 #. Translators, used as page heading
 #. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
 #: /vagrant/librarian/views/app_list.tpl:2
 #: /vagrant/librarian/views/app_list.tpl:6
 #: /vagrant/librarian/views/base.tpl:27
@@ -551,6 +580,9 @@ msgstr "version:"
 msgid "No apps found."
 msgstr "No apps found."
 
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
@@ -586,15 +618,18 @@ msgstr "(go up one level)"
 
 #: /vagrant/librarian/views/file_list.tpl:33
 #: /vagrant/librarian/views/file_list.tpl:51
+#: /vagrant/librarian/views/file_list.tpl:53
 msgid "Rename"
 msgstr "Rename"
 
 #: /vagrant/librarian/views/file_list.tpl:38
 #: /vagrant/librarian/views/file_list.tpl:56
+#: /vagrant/librarian/views/file_list.tpl:58
 msgid "Delete"
 msgstr "delete?"
 
 #: /vagrant/librarian/views/file_list.tpl:64
+#: /vagrant/librarian/views/file_list.tpl:74
 msgid "About this folder"
 msgstr "About this folder"
 
@@ -605,3 +640,45 @@ msgid "Showing %(count)s of %(total)s items"
 msgid_plural "Showing %(count)s of %(total)s items"
 msgstr[0] "Apresentando %(count)s item de %(total)s"
 msgstr[1] "Apresentando %(count)s itens de %(total)s"
+
+#. Translators, used as page title for page that shows result of running a script
+#. Translators, used as page header for page that shows result of running a script
+#: /vagrant/librarian/views/exec_result.tpl:2
+#: /vagrant/librarian/views/exec_result.tpl:5
+msgid "Script output"
+msgstr ""
+
+#. Translators, return (result) code of the script executed via file browser
+#: /vagrant/librarian/views/exec_result.tpl:11
+msgid "return code:"
+msgstr ""
+
+#. Translators, shown when result code is good (0).
+#: /vagrant/librarian/views/exec_result.tpl:14
+msgid "OK"
+msgstr ""
+
+#. Translators, shown when result code is not good (non-zero).
+#: /vagrant/librarian/views/exec_result.tpl:17
+msgid "error"
+msgstr ""
+
+#. Translators, refers to standard output of script run from file browser (STDOUT)
+#: /vagrant/librarian/views/exec_result.tpl:22
+msgid "Output"
+msgstr ""
+
+#. Translators, shown if script returned no output
+#: /vagrant/librarian/views/exec_result.tpl:27
+msgid "no output"
+msgstr ""
+
+#. Translators, refers to standard errors of script run from file browser (STDERR)
+#: /vagrant/librarian/views/exec_result.tpl:32
+msgid "Errors"
+msgstr ""
+
+#. Translators, label for button in file listing that allows user to run a script
+#: /vagrant/librarian/views/file_list.tpl:65
+msgid "Run"
+msgstr ""
