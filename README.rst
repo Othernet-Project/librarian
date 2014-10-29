@@ -30,6 +30,11 @@ currently under active development, so strings *will* change from time to time.
 If you are contributing, or considering contributing translations, please swing
 by our forums_ and say hello.
 
+Testing translations
+--------------------
+
+Please see the documentation in ``docs/translations.rst`` for more information.
+
 List of translation contributors
 --------------------------------
 
