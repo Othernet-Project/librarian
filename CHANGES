@@ -1,7 +1,12 @@
 0000-00-00 : MASTER   : Branko Vukelic <branko@outernet.is>
+    - Python 2.7 compatibility
+    - Librarian can now use native Python install as development environment
+    - Removed Vagrant support
+
+2014-10-21 : v0.1b1   : Branko Vukelic <branko@outernet.is>
     - Fixed untrapped errors with bad zipfiles
     - Implemented simple apps API
-    - Integrated trnaslations with good level of completion
+    - Integrated translations with good level of completion
     - Librarian can now run Bash scripts from within the file browser
 
 2014-10-08 : v0.1a6.1 : Branko Vukelic <branko@outernet.is>
