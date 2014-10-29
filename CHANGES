@@ -2,6 +2,7 @@
     - Python 2.7 compatibility
     - Librarian can now use native Python install as development environment
     - Removed Vagrant support
+    - Using Python-based scripts for working with message catalogs
 
 2014-10-21 : v0.1b1   : Branko Vukelic <branko@outernet.is>
     - Fixed untrapped errors with bad zipfiles
