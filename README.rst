@@ -15,45 +15,10 @@ planned for future releases.
 
 We chose to use Arch Linux as development.
 
-Development environment
-=======================
+Development environment and running Librarian
+=============================================
 
-To ensure uniform development environment, we are using Vagrant_. In
-particular, we are using a `custom Vagrant base box`_ created for VirtualBox_ using
-Arch Linux 32-bit version. The software will eventually run on ARMv6, but this
-is not relevant for the software as it should be completely cross-platform.
-
-Install Vagrant on your development computer. Then, get the Arch box by running
-the following command::
-
-    vagrant box add archlinux-i686 https://dl.dropboxusercontent.com/s/09iq7rmvs268t64/archlinux-i686-20140630.box
-
-Use the i686 version of the base box later than v20140701.
-
-It's important to name the box `archlinux-i686` as that is the name used in
-the Vagrantfile. If you wnat to use a different name, you'll need to change it 
-in the Vagrantfile as well, but don't commit the changes.
-
-To create the new box using the supplied Vagrantfile, open the terminal, change
-the directory to the source code directory, and run::
-
-    vagrant up
-
-Testing the app
-===============
-
-To start the application, ssh into the Vagrant box and run::
-
-    bash /vagrant/script/startapp.sh
-
-The script takes any arguments that the main application module
-(``librarian/app.py``) takes. Look at the ``app`` module for more information.
-
-Once it's started, it can be accessed at `port 8080`_ on your local machine.
-
-To run unit tests use this script::
-
-    bash /vagrant/scripts/tests.sh
+Please see the documentation in ``docs/dev_env.rst``.
 
 Contributing interface translations
 ===================================
@@ -107,3 +72,4 @@ Bugs and feature requests can be posted either in our forums_ or in the GitHub
 .. _on POEditor: https://poeditor.com/join/project?hash=90911b6fc31f2d68c7debd999aa078c6
 .. _forums: https://discuss.outernet.is/
 .. _issue tracker: https://github.com/Outernet-Project/librarian/issues
+.. _Python download page: https://www.python.org/downloads/
