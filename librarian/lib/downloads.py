@@ -19,14 +19,12 @@ from datetime import datetime, timedelta
 
 from bottle import request
 
-from .content_crypto import extract_content, DecryptionError
-
 
 __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
-           'get_decryptable', 'decrypt_all', 'get_zipballs', 'get_timestamp',
-           'get_timestamp_as_datetime', 'get_md5_from_path', 'get_zip_path_in',
-           'get_zip_path', 'remove_downloads', 'get_spool_zip_path',
-           'get_file', 'get_metadata', 'patch_html',)
+           'get_zipballs', 'get_timestamp', 'get_timestamp_as_datetime',
+           'get_md5_from_path', 'get_zip_path_in', 'get_zip_path',
+           'remove_downloads', 'get_spool_zip_path', 'get_file',
+           'get_metadata', 'patch_html',)
 
 
 STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
@@ -88,62 +86,6 @@ def cleanup(files):
             kept.append(path)
     logging.debug("Cleanup complete, %s files kept" % len(kept))
     return kept
-
-
-def get_decryptable():
-    """ Return an iterable of extractable files
-
-    :returns:   iterable containing files that can be decrypted
-    """
-    return cleanup(find_signed())
-
-
-def decrypt_all(signed):
-    """ Extract all signed files into zip files and remove the originals
-
-    The function will try to extract each of the signed files in the spool
-    directory, and compiled a list of extracted zipballs and list of extraction
-    errors, and return them as a two-tuple.
-
-    Original signed files that are successfully extracted are removed.
-
-    :param signed:  iterable containing paths to be decrypted
-    :returns:       tuple ``(extracted, errors)`` where ``extracted`` is a list
-                    of paths of extracted zipballs, and ``errors`` is a list of
-                    error objects for each failed extraction.
-    """
-    config = request.app.config
-    extract = partial(extract_content, keyring=config['content.keyring'],
-                      output_dir=config['content.spooldir'],
-                      output_ext=config['content.output_ext'])
-    extracted = []
-    errors = []
-
-    for signedf in signed:
-        logging.debug("<%s> verifying" % signedf)
-        try:
-            # TODO: Check space before continuing
-            zipball = extract(signedf)
-        except DecryptionError as err:
-            logging.error("<%s> could not decrypt: %s" % (
-                signedf, err))
-            errors.append(err)
-            continue
-        # TODO: Add test for this branching
-        if zipfile.is_zipfile(zipball):
-            # This seems to be a zip file, so we can include it in the list of
-            # extracted files and remove the signed source
-            extracted.append(zipball)
-            os.unlink(signedf)
-            logging.info("<%s> verified" % zipball)
-        else:
-            # Zipball is invalid. We will leave the signed source alone (maybe
-            # it was not downloaded correctly and will be re-downloaded), and
-            # remove the zipball.
-            logging.error("<%s> invalid zip file" % zipball)
-            errors.append(signedf)
-            os.unlink(zipball)
-    return extracted, errors
 
 
 def get_zipballs():
