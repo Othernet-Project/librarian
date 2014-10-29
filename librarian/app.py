@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 app.py: main web UI module
 
@@ -8,6 +10,10 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+from __future__ import unicode_literals, print_function
+
+import sys
+import pprint
 import logging
 from warnings import warn
 from logging.config import dictConfig as log_config
@@ -17,7 +23,6 @@ import bottle
 from bottle import request
 
 from librarian.exceptions import *
-from librarian.lib import content_crypto
 from librarian.lib import squery
 from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
 from librarian.lib import html as helpers
@@ -102,14 +107,6 @@ def start(logfile=None):
         },
     })
 
-    # Import gnupg keys
-    try:
-        content_crypto.import_key(in_pkg('keys', config['content.key']),
-                                  keyring=config['content.keyring'])
-    except content_crypto.KeyImportError as err:
-        logging.error("Could not import keys: %s" % err)
-        warn(AppStartupWarning(err))
-
     # Run database migrations
     db = squery.Database(config['database.path'])
     migrations.migrate(db, in_pkg('migrations'))
@@ -129,7 +126,7 @@ def start(logfile=None):
         'h': helpers,
         'updates': Lazy(lambda: len(list(get_zipballs()))),
         'readable_license': lambda s: dict(LICENSES).get(s, LICENSES[0][1]),
-        'is_rtl': Lazy(lambda: request.locale in RTL_LANGS)
+        'is_rtl': Lazy(lambda: request.locale in RTL_LANGS),
     })
 
     # Add middlewares
@@ -147,9 +144,17 @@ def start(logfile=None):
                debug=config['librarian.debug'] == 'yes')
 
 
+def main(conf, debug=False, logpath=None):
+    app.config.load_config(conf)
+
+    if debug:
+        pprint.pprint(conf, indent=4)
+        sys.exit(0)
+
+    start(logpath)
+
+
 if __name__ == '__main__':
-    import sys
-    import pprint
     import argparse
 
     parser = argparse.ArgumentParser()
@@ -167,10 +172,4 @@ if __name__ == '__main__':
         print('v%s' % __version__)
         sys.exit(0)
 
-    app.config.load_config(args.conf)
-
-    if args.debug_conf:
-        pprint.pprint(app.config, indent=4)
-        sys.exit(0)
-
-    start(args.log)
+    main(args.conf, args.debug_conf, args.log)
