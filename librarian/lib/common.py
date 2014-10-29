@@ -50,11 +50,13 @@ def to_unicode(v, encoding=None):
     :param encoding:    character set for decoding bytestrings
     :returns:           value as Unicode string
     """
+    if isinstance(v, unicode):
+        return v
     try:
         if encoding:
             return v.decode(encoding)
-        return v.decode()
-    except AttributeError:
+        return v.decode('utf8')
+    except (AttributeError, UnicodeEncodeError):
         return unicode(v)
 
 

@@ -291,7 +291,7 @@ def tag(name, content='', nonclosing=False, **attrs):
     """
     open_tag = '<%s>' % name
     close_tag = '</%s>' % name
-    attrs = ' '.join([attr(k.lstrip('_'), v) for k, v in attrs.items()])
+    attrs = ' '.join([attr(k.lstrip('_'), to_unicode(v)) for k, v in attrs.items()])
     if attrs:
         open_tag = '<%s %s>' % (name, attrs)
     if nonclosing:
@@ -299,11 +299,11 @@ def tag(name, content='', nonclosing=False, **attrs):
         close_tag = ''
     if not isinstance(content, basestring):
         try:
-            return ''.join(['%s%s%s' % (open_tag, c, close_tag)
+            return ''.join(['%s%s%s' % (open_tag, to_unicode(c), close_tag)
                             for c in content])
         except TypeError:
             pass
-    return '%s%s%s' % (open_tag, content, close_tag)
+    return '%s%s%s' % (open_tag, to_unicode(content), close_tag)
 
 
 SPAN = functools.partial(tag, 'span')
@@ -564,14 +564,14 @@ def link_other(label, url, path, wrapper=SPAN, **kwargs):
     :py:func:`~bottle_utils.html.tag` function.
 
     If the URLs match (meaning the page URL matches the target path), the label
-    will be passed to the wrapper function. The default behavior of the wrapper
-    function is to return the label as is. The label is thus returned as is if
-    the URLs match.
-    ::
+    will be passed to the wrapper function. The default wrapper function is
+    :py:func:`~bottle_utils.html.SPAN`, so the label is wrapped in SPAN tag
+    when the URLs matches.::
+
         >>> link_other('foo', '/here', '/there')
         '<a href="/target">foo</a>'
         >>> link_other('foo', '/there', '/there')
-        'foo'
+        '<span>foo</span>'
 
     You can customize the appearance of the label in the case URLs match by
     customizing the wrapper::
@@ -586,10 +586,10 @@ def link_other(label, url, path, wrapper=SPAN, **kwargs):
     can specify them as extra keyword arguments and use any of the helper
     functions in this module.::
 
-        >>> link_other('foo', '/here', '/there', wrapper=SPAN, _class='cls')
+        >>> link_other('foo', '/here', '/there', wrapper=BUTTON, _class='cls')
         '<a class="cls" href="/target">foo</a>'
-        >>> link_other('foo', '/there', '/there', wrapper=SPAN, _class='cls')
-        '<span class="cls">foo</span>'
+        >>> link_other('foo', '/there', '/there', wrapper=BUTTON, _class='cls')
+        '<button class="cls">foo</button>'
 
     :param label:   label of the link
     :param url:     URL to which label should be linked
