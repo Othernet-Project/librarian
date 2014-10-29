@@ -46,7 +46,7 @@ def in_pkg(*paths):
 CONFPATH = in_pkg('librarian.ini')
 STATICDIR = in_pkg('static')
 
-LANGS = [
+LOCALES = [
     ('ar', 'اللغة العربية'),
     ('da', 'Dansk'),
     ('de', 'Deutsch'),
@@ -131,7 +131,7 @@ def start(logfile=None):
 
     # Add middlewares
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
-    wsgiapp = I18NPlugin(wsgiapp, langs=LANGS, default_locale=DEFAULT_LOCALE,
+    wsgiapp = I18NPlugin(wsgiapp, langs=LOCALES, default_locale=DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
 
     # Srart the server
