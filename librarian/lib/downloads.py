@@ -37,7 +37,7 @@ class ContentError(BaseException):
     def __init__(self, msg, path):
         self.message = msg
         self.path = path
-        super().__init__(msg)
+        super(ContentError, self).__init__(msg)
 
 
 def find_signed():

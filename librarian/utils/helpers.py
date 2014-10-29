@@ -8,9 +8,16 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+from __future__ import unicode_literals
+
 import types
 import functools
-from urllib.parse import quote
+
+try:
+    from urllib.parse import quote
+except ImportError:
+    from urllib import quote
+
 
 from dateutil.parser import parse
 

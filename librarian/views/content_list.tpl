@@ -39,7 +39,7 @@
                 %# Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
                 <label for="page">{{ _('page') }}</label>
                 <select id="page" name="p">
-                % for i in range(1, total_pages + 1):
+                % for i in range(1, int(total_pages) + 1):
                 <option value="{{ i }}"{{ i == page and ' selected' or '' }}>{{ i }}</option>
                 % end
                 </select>

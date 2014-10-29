@@ -24,9 +24,9 @@ class dbdict(dict):
     """ Dictionary subclass that allows attribute access to items """
     def __init__(self, *args, **kwargs):
         if args:
-            super().__init__(args[0])
+            super(dbdict, self).__init__(args[0])
         else:
-            super().__init__(kwargs)
+            super(dbdict, self).__init__(kwargs)
 
     def __getattr__(self, attr):
         return self[attr]
