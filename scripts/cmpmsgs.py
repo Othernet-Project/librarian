@@ -30,6 +30,8 @@ if __name__ == '__main__':
         for f in fnmatch.filter(files, '*.po'):
             if 'LC_MESSAGES' not in root:
                 continue
-            convert(os.path.join(root, f))
+            path = os.path.join(root, f)
+            print("Processing '%s'" % path)
+            convert(path)
 
     print('Done')
