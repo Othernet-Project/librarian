@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Librarian\n"
 "Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2014-10-21 15:17+0000\n"
+"POT-Creation-Date: 2014-10-30 14:02+0100\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,9 +31,11 @@ msgstr ""
 #. Translators, used as default page title
 #. Translators, used in page title
 #. Translators, used in footer
+#. Translators, used as default page title
 #: /vagrant/librarian/app.py:114 /vagrant/librarian/views/base.tpl:8
 #: /vagrant/librarian/views/base.tpl:39 /vagrant/librarian/app.py:113
 #: /vagrant/librarian/views/base.tpl:43 /vagrant/librarian/app.py:127
+#: librarian/app.py:124
 msgid "Librarian"
 msgstr "kütüphaneci"
 
@@ -681,4 +683,112 @@ msgstr ""
 #. Translators, label for button in file listing that allows user to run a script
 #: /vagrant/librarian/views/file_list.tpl:65
 msgid "Run"
+msgstr ""
+
+#. Translators, this is used when app doesn't provide a description
+#: librarian/lib/apps.py:45
+msgid "No description provided"
+msgstr ""
+
+#: librarian/lib/archive.py:37
+msgid "Unknown license"
+msgstr ""
+
+#: librarian/lib/archive.py:38
+msgid "Creative Commons Attribution"
+msgstr ""
+
+#: librarian/lib/archive.py:39
+msgid "Creative Commons Attribution-NoDerivs"
+msgstr ""
+
+#: librarian/lib/archive.py:40
+msgid "Creative Commons Attribution-NonCommercial"
+msgstr ""
+
+#: librarian/lib/archive.py:41
+msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
+msgstr ""
+
+#: librarian/lib/archive.py:43
+msgid "Creative Commons Attribution-ShareAlike"
+msgstr ""
+
+#: librarian/lib/archive.py:44
+msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
+msgstr ""
+
+#: librarian/lib/archive.py:46
+msgid "GNU Free Documentation License"
+msgstr ""
+
+#: librarian/lib/archive.py:47
+msgid "Open Publication License"
+msgstr ""
+
+#: librarian/lib/archive.py:48
+msgid "Open Content License"
+msgstr ""
+
+#: librarian/lib/archive.py:49
+msgid "Against DRM License"
+msgstr ""
+
+#: librarian/lib/archive.py:50
+msgid "Free Art License"
+msgstr ""
+
+#: librarian/lib/archive.py:51
+msgid "Public Domain"
+msgstr ""
+
+#: librarian/lib/archive.py:52
+msgid "Other free license"
+msgstr ""
+
+#: librarian/lib/archive.py:53
+msgid "All rights reserved"
+msgstr ""
+
+#: librarian/lib/archive.py:54
+msgid "Other non-free license"
+msgstr ""
+
+#. Translators, used as response to innvalid HTTP request
+#: librarian/routes/favorites.py:39 librarian/routes/favorites.py:42
+#: librarian/routes/dashboard.py:68
+msgid "Invalid request"
+msgstr ""
+
+#. Translators, used as message to user when clean-up is started
+#. without selecting any content
+#: librarian/routes/dashboard.py:76
+#, fuzzy
+msgid "No content selected"
+msgstr "seçili olanı sil"
+
+#. Translators, used when user is previewing clean-up, %s is
+#. replaced by amount of content that can be freed in bytes,
+#. KB, MB, etc
+#: librarian/routes/dashboard.py:83
+#, python-format
+msgid "%s can be freed by removing selected content"
+msgstr ""
+
+#. Translators, error message shown on clean-up page when some of
+#. the content could not be removed for unknown reasons
+#: librarian/routes/dashboard.py:95
+msgid "Some files could not be removed"
+msgstr ""
+
+#. Translators, error message shown on clean-up page when there was
+#. no deletable content
+#: librarian/routes/dashboard.py:99
+msgid "Nothing to delete"
+msgstr ""
+
+#. Translators, used as error message shown to user when wrong action
+#. code is submitted to server
+#: librarian/routes/downloads.py:71
+msgid "Invalid action, please use one of the form buttons."
 msgstr ""
