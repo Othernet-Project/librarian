@@ -20,7 +20,7 @@ through your package manager.
 Installing Python
 -----------------
 
-Under Windows, simply run the official installer.
+Under Windows or Mac, simply run the official installer.
 
 On Ubuntu and Debian, you will need to install python3 package. Information
 about availability of different versions of Python for your system is outside
