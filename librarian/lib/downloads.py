@@ -287,7 +287,7 @@ def patch_html(content):
     """
     html = content.read().decode('utf8')
     html = html.replace('</head>', STYLE_LINK + '</head>')
-    html_bytes = bytes(html, encoding='utf8')
+    html_bytes = html.encode('utf8')
     size = len(html_bytes)
     return size, BytesIO(html_bytes)
 
