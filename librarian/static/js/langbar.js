@@ -14,8 +14,17 @@
   langbar.addClass('js').addClass('closed');
 
   langbar.find('span').on('click', toggleLanguages);
+  langbar.hover(openLanguages, closeLanguages);
 
   function toggleLanguages(e) {
     langbar.toggleClass('closed');
+  }
+
+  function openLanguages() {
+    langbar.removeClass('closed');
+  }
+
+  function closeLanguages() {
+    langbar.addClass('closed');
   }
 }(this, jQuery));

@@ -22,37 +22,8 @@ body, html {
   padding: 1em;
 }
 
-.languages {
-  text-align: right;
-  background: $black;
-  font-size: 90%;
-  padding-bottom: 1em;
-
-  a, span.current {
-    color: $white;
-    display: inline-block;
-    padding: 0.2em 0.5em;
-  }
-
-  a {
-    border-top: 2px solid transparent;
-    border-bottom: 2px solid transparent;
-  }
-
-  a:hover, span.current {
-    text-decoration: none;
-    border-top: 2px solid $yellow;
-    border-bottom: 2px solid $yellow;
-  }
-
-  a:visited {
-    color: $white;
-  }
-}
-
-
 h1 {
-  background: $blue;
+  background: $navy;
   color: $white;
   padding: 0.2em 0.5em;
   font-weight: bold;
@@ -72,70 +43,152 @@ h2 {
   text-align: right;
 }
 
+@mixin toolbar-icon($name) {
+  $image-name: "#{$name}.png";
+  background-image: image-url($image-name);
+}
 
-.toolbar {
-  background: $black;
-  color: $white;
-
-  a, span {
-    display: inline-block;
-    padding: 0.5em 1em;
-    padding-left: 38px;
-    margin-right: 0.5em;
-    text-transform: uppercase;
-    background-repeat: no-repeat;
-    background-position: 6px 7px;
-    border-bottom: 6px solid transparent;
-  }
-
-  a {
+header {
+  .toolbar {
     color: $white;
+    background: $black;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 1;
+    @include box-shadow(0 0 4px transparentize($black, 0.2));
 
-    &:hover {
-      text-decoration: none;
-      border-bottom: 6px solid $blue;
+    a, span {
+      display: block;
+      background-repeat: no-repeat;
+      background-position: 11px 10px;
+      padding-top: 0.7em;
+      padding-right: 21px;
+      padding-bottom: 0.7em;
+      padding-left: 26px;
+      text-indent: -3000px;
+      cursor: pointer;
+      overflow: hidden;
+      @include transition(padding-left 0.3s);
     }
 
-    &:visited {
+    span {
+      background-color: $blue;
+    }
+
+    a {
+      color: $white;
+
+      &:hover {
+        text-decoration: none;
+        background-color: $ash-blue;
+      }
+    }
+
+    &:hover {
+      a, span {
+        text-indent: 0;
+        padding-left: 47px;
+      }
+    }
+
+
+    .dashboard {
+      @include toolbar-icon('home');
+    }
+
+    .favorites {
+      @include toolbar-icon('fav');
+    }
+
+    .archive {
+      @include toolbar-icon('document');
+    }
+
+    .files {
+      @include toolbar-icon('files');
+    }
+
+    .apps {
+      @include toolbar-icon('apps');
+    }
+
+    .updates {
+      @include toolbar-icon('antenna');
+
+      &.notice {
+        background-image: image-url('antenna_yellow.png');
+      }
+    }
+  }
+
+  .languages {
+    text-align: right;
+    background: $black;
+    font-size: 90%;
+    padding-bottom: 1em;
+
+    a, span.current {
+      color: $white;
+      display: inline-block;
+      padding: 0.2em 0.5em;
+    }
+
+    a {
+      border-top: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+    }
+
+    a:hover, span.current {
+      text-decoration: none;
+      border-top: 2px solid $blue;
+      border-bottom: 2px solid $blue;
+    }
+
+    a:visited {
       color: $white;
     }
   }
 
-  span {
-    border-bottom: 6px solid $blue;
-  }
+  .languages.js {
+    position: absolute;
+    padding: 0.4em;
+    top: 0;
+    right: 0;
+    width: 80px;
+    text-align: right;
+    background: $black;
 
-  .dashboard {
-    background-image: image-url('home.png');
-  }
+    @include transition(background-color 0.3s);
 
-  .favorites {
-    background-image: image-url('fav.png');
-  }
+    a {
+      @include transition(height 0.3s);
+      height: 26px;
+      display: block;
+      overflow: hidden;
+    }
 
-  .archive {
-    background-image: image-url('document.png');
-  }
+    span {
+      display: block;
+      cursor: pointer;
+    }
 
-  .files {
-    background-image: image-url('files.png');
-  }
+    &.closed {
+      background: transparent;
 
-  .apps {
-    background-image: image-url('apps.png');
-  }
-
-  .updates {
-    background-image: image-url('antenna.png');
-
-    &.notice {
-      background-image: image-url('antenna_yellow.png');
+      a {
+        border: none;
+        padding: 0;
+        height: 0;
+      }
     }
   }
 }
 
 .footer {
-  background: $blue;
+  background: $dark-grey;
   padding: 0.2em 0.5em 2em;
   color: $white;
   font-size: 80%;
@@ -147,8 +200,9 @@ h2 {
 }
 
 .body {
+  margin-left: 47px;
   min-height: 300px;
-  background: image-url('background.png');
+  background: $white;
 }
 
 .content-archive {
@@ -468,33 +522,3 @@ tr.selected {
   }
 }
 
-header {
-  .languages.js {
-    position: absolute;
-    padding: 0.4em;
-    top: 0;
-    right: 0;
-    width: 80px;
-    text-align: right;
-
-    a {
-      @include transition(height 0.3s);
-      height: 26px;
-      display: block;
-      overflow: hidden;
-    }
-
-    span {
-      display: block;
-      cursor: pointer;
-    }
-
-    &.closed {
-      a {
-        border: none;
-        padding: 0;
-        height: 0;
-      }
-    }
-  }
-}

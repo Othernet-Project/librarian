@@ -19,7 +19,7 @@
                     % end
                 % end
             </div>
-            <div class="toolbar">
+            <div id="toolbar" class="toolbar">
                 %# Translators, used main navigation menu
                 {{! h.link_other(_('Library'), i18n_path('/'), request.original_path, h.SPAN, _class="archive") }}
                 %# Translators, used main navigation menu
