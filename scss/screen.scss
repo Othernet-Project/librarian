@@ -23,15 +23,14 @@ body, html {
 }
 
 h1 {
-  background: $navy;
-  color: $white;
+  background: $dirt;
+  color: $black;
   padding: 0.2em 0.5em;
-  font-weight: bold;
   margin-bottom: 0.5em;
+  text-transform: uppercase;
 
   span {
     font-size: 50%;
-    font-weight: normal;
   }
 }
 
@@ -177,6 +176,10 @@ header {
 
     &.closed {
       background: transparent;
+
+      span {
+        color: $black;
+      }
 
       a {
         border: none;
