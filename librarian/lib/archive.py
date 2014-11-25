@@ -424,4 +424,3 @@ def cleanup_list():
         space -= zipball['size']
         yield zipball
 
-

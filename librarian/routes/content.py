@@ -67,7 +67,7 @@ def content_list():
         metadata = archive.get_content(offset, per_page)
 
     return {
-        'metadata': metadata,
+        'metadata': [downloads.Meta(m) for m in metadata],
         'total_items': total_items,
         'total_pages': total_pages,
         'per_page': per_page,

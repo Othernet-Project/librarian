@@ -28,6 +28,7 @@ __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
 
 
 STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
+IMAGE_EXTENSIONS = ['.png', '.gif', '.jpg', '.jpeg']
 
 
 class ContentError(BaseException):
@@ -291,3 +292,29 @@ def patch_html(content):
     size = len(html_bytes)
     return size, BytesIO(html_bytes)
 
+
+class Meta(object):
+    """ Metadata wrapper """
+
+    def __init__(self, meta):
+        self.meta = meta
+
+    def __getattribute__(self, attr):
+        meta = object.__getattribute__(self, 'meta')
+        if attr in meta:
+            return meta[attr]
+        return object.__getattribute__(self, attr)
+
+    def __getitem__(self, key):
+        return self.meta[key]
+
+    def get(self, key, default=None):
+        return self.meta.get(key, default)
+
+    @property
+    def image(self):
+        zip_path = get_zip_path(self.md5)
+        z = zipfile.ZipFile(zip_path)
+        for name in z.namelist():
+            if os.path.splitext(name)[1].lower() in IMAGE_EXTENSIONS:
+                return name

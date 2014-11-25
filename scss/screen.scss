@@ -13,6 +13,8 @@
 @import "compass/css3";
 @import "compass/typography/text/replacement";
 
+$content-gap: 1em;
+
 body, html {
   padding: 0;
   background: $dark-grey;
@@ -23,12 +25,18 @@ body, html {
 }
 
 h1 {
+  position: fixed;
+  top: 0;
+  left: 47px;
+  right: 0;
   background: $dirt;
   color: $black;
   padding: 0.2em 0.5em;
   margin-bottom: 0.5em;
   text-transform: uppercase;
   line-height: 100%;
+  z-index: 1;
+  @include box-shadow(0 0 5px transparentize($black, 0.5));
 
   span {
     font-size: 50%;
@@ -153,13 +161,14 @@ header {
   }
 
   .languages.js {
-    position: absolute;
+    position: fixed;
     padding: 0.4em;
     top: 0;
     right: 0;
     width: 80px;
     text-align: right;
     background: $black;
+    z-index: 2;
 
     @include transition(background-color 0.3s);
 
@@ -207,6 +216,7 @@ header {
   margin-left: 47px;
   min-height: 300px;
   background: $white;
+  padding-top: 60px;
 }
 
 .content-archive {
@@ -294,7 +304,6 @@ header {
 .controls {
   padding: 1em 0 0.3em;
   text-align: right;
-  border-bottom: 1px solid $light-grey;
 
   .next {
     @include replace-text-with-dimensions('forward.png');
@@ -523,6 +532,75 @@ tr.selected {
 
   .app-title {
     font-weight: bold;
+  }
+}
+
+
+.content-list {
+  padding-top: 1em;
+  text-align: center;
+
+  li {
+    padding: 0;
+    list-style: none;
+    display: inline-block;
+    max-width: 300px;
+    vertical-align: top;
+    margin: 0 $content-gap $content-gap 0;
+    @include box-shadow(0 0 5px transparentize($black, 0.8));
+    border: 1px solid $light-grey;
+
+    h2 {
+      background: $dirt;
+      font-size: 120%;
+
+      a {
+        display: inline-block;
+        padding: 1em;
+        color: $black;
+
+        &:hover {
+          color: $black;
+          text-decoration: none;
+        }
+      }
+    }
+
+    p {
+      padding: 0 1em 1em;
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .partner {
+    h2 {
+      background: $green;
+
+      a {
+        color: $white;
+
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+  }
+
+  .sponsored {
+    h2 {
+      background: $ash-blue;
+
+      a {
+        color: $white;
+
+        &:hover {
+          color: $white;
+        }
+      }
+    }
   }
 }
 
