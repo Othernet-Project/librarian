@@ -10,18 +10,19 @@
  */
 
 @import "base";
+@import "compass/css3";
 @import "compass/typography/text/replacement";
 
 body, html {
   padding: 0;
-  background: $outernet-blue;
+  background: $blue;
 }
 
 .inner {
   padding: 1em;
 }
 
-#languages {
+.languages {
   text-align: right;
   background: $black;
   font-size: 90%;
@@ -40,8 +41,8 @@ body, html {
 
   a:hover, span.current {
     text-decoration: none;
-    border-top: 2px solid $outernet-yellow;
-    border-bottom: 2px solid $outernet-yellow;
+    border-top: 2px solid $yellow;
+    border-bottom: 2px solid $yellow;
   }
 
   a:visited {
@@ -51,7 +52,7 @@ body, html {
 
 
 h1 {
-  background: $outernet-blue;
+  background: $blue;
   color: $white;
   padding: 0.2em 0.5em;
   font-weight: bold;
@@ -92,7 +93,7 @@ h2 {
 
     &:hover {
       text-decoration: none;
-      border-bottom: 6px solid $outernet-blue;
+      border-bottom: 6px solid $blue;
     }
 
     &:visited {
@@ -101,7 +102,7 @@ h2 {
   }
 
   span {
-    border-bottom: 6px solid $outernet-blue;
+    border-bottom: 6px solid $blue;
   }
 
   .dashboard {
@@ -134,7 +135,7 @@ h2 {
 }
 
 .footer {
-  background: $outernet-blue;
+  background: $blue;
   padding: 0.2em 0.5em 2em;
   color: $white;
   font-size: 80%;
@@ -176,13 +177,13 @@ h2 {
 
     .free {
       display: inline-block;
-      background: $outernet-green;
+      background: $green;
       text-align: center;
     }
   }
 
   .low .free {
-    background: $outernet-red;
+    background: $red;
   }
 }
 
@@ -196,21 +197,21 @@ h2 {
 }
 
 .warning {
-  color: $outernet-red;
-  border: 1px solid $outernet-red;
-  background: desaturate(lighten($outernet-red, 50), 30);
+  color: $red;
+  border: 1px solid $red;
+  background: desaturate(lighten($red, 50), 30);
 }
 
 .note {
-  color: $outernet-green;
-  border: 1px solid $outernet-green;
-  background: desaturate(lighten($outernet-green, 45), 10);
+  color: $green;
+  border: 1px solid $green;
+  background: desaturate(lighten($green, 45), 10);
 }
 
 .message {
-  color: $outernet-orange;
-  border: 1px solid $outernet-orange;
-  background: desaturate(lighten($outernet-orange, 35), 10);
+  color: $orange;
+  border: 1px solid $orange;
+  background: desaturate(lighten($orange, 35), 10);
 }
 
 .dash-section {
@@ -227,7 +228,7 @@ h2 {
 }
 
 .dash-updates {
-  background: $outernet-blue;
+  background: $blue;
   color: $white;
   padding: 1em;
 }
@@ -281,18 +282,18 @@ button, .button {
   }
 
   &.special {
-    background-color: $outernet-blue;
+    background-color: $blue;
 
     &:hover {
-      background-color: darken($outernet-blue, 20);
+      background-color: darken($blue, 20);
     }
   }
 
   &.danger {
-    background-color: $outernet-red;
+    background-color: $red;
 
     &:hover {
-      background-color: darken($outernet-red, 20);
+      background-color: darken($red, 20);
     }
   }
 
@@ -312,7 +313,7 @@ label {
 }
 
 tr.selected {
-  color: $outernet-green;
+  color: $green;
 }
 
 .data {
@@ -334,17 +335,17 @@ tr.selected {
 }
 
 .is-core {
-  color: $outernet-blue;
+  color: $blue;
   cursor: help;
 }
 
 .is-sponsored {
-  color: $outernet-red;
+  color: $red;
   cursor: help;
 }
 
 .is-partner {
-  color: $outernet-green;
+  color: $green;
   cursor: help;
 }
 
@@ -464,5 +465,36 @@ tr.selected {
 
   .app-title {
     font-weight: bold;
+  }
+}
+
+header {
+  .languages.js {
+    position: absolute;
+    padding: 0.4em;
+    top: 0;
+    right: 0;
+    width: 80px;
+    text-align: right;
+
+    a {
+      @include transition(height 0.3s);
+      height: 26px;
+      display: block;
+      overflow: hidden;
+    }
+
+    span {
+      display: block;
+      cursor: pointer;
+    }
+
+    &.closed {
+      a {
+        border: none;
+        padding: 0;
+        height: 0;
+      }
+    }
   }
 }

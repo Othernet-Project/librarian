@@ -9,29 +9,31 @@
         <link rel="stylesheet" href="/static/css/{{ style }}.css">
     </head>
     <body>
-        <div id="languages">
-            % for locale, lang in languages:
-                % if locale != request.locale:
-                <a href="{{ i18n_path(locale=locale) }}">{{ lang }}</a>
-                % else:
-                <span class="current">{{ lang }}</span>
+        <header>
+            <div id="languages" class="languages">
+                % for locale, lang in languages:
+                    % if locale != request.locale:
+                    <a href="{{ i18n_path(locale=locale) }}">{{ lang }}</a>
+                    % else:
+                    <span class="current">{{ lang }}</span>
+                    % end
                 % end
-            % end
-        </div>
-        <div class="toolbar">
-            %# Translators, used main navigation menu
-            {{! h.link_other(_('Library'), i18n_path('/'), request.original_path, h.SPAN, _class="archive") }}
-            %# Translators, used main navigation menu
-            {{! h.link_other(_('Files'), i18n_path('/files/'), request.original_path, h.SPAN, _class="files") }}
-            %# Translators, used main navigation menu
-            {{! h.link_other(_('Apps'), i18n_path('/apps/'), request.original_path, h.SPAN, _class="apps") }}
-            %# Translators, used main navigation menu
-            {{! h.link_other(_('Favorites'), i18n_path('/favorites/'), request.original_path, h.SPAN, _class="favorites") }}
-            %# Translators, used main navigation menu
-            {{! h.link_other(_('Updates') + (' (%s)' % updates if updates > 0 else ''), i18n_path('/downloads/'), request.original_path, h.SPAN, _class="updates" + (updates > 0 and ' notice' or '')) }}
-            %# Translators, used main navigation menu
-            {{! h.link_other(_('Dashboard'), i18n_path('/dashboard/'), request.original_path, h.SPAN, _class="dashboard") }}
-        </div>
+            </div>
+            <div class="toolbar">
+                %# Translators, used main navigation menu
+                {{! h.link_other(_('Library'), i18n_path('/'), request.original_path, h.SPAN, _class="archive") }}
+                %# Translators, used main navigation menu
+                {{! h.link_other(_('Files'), i18n_path('/files/'), request.original_path, h.SPAN, _class="files") }}
+                %# Translators, used main navigation menu
+                {{! h.link_other(_('Apps'), i18n_path('/apps/'), request.original_path, h.SPAN, _class="apps") }}
+                %# Translators, used main navigation menu
+                {{! h.link_other(_('Favorites'), i18n_path('/favorites/'), request.original_path, h.SPAN, _class="favorites") }}
+                %# Translators, used main navigation menu
+                {{! h.link_other(_('Updates') + (' (%s)' % updates if updates > 0 else ''), i18n_path('/downloads/'), request.original_path, h.SPAN, _class="updates" + (updates > 0 and ' notice' or '')) }}
+                %# Translators, used main navigation menu
+                {{! h.link_other(_('Dashboard'), i18n_path('/dashboard/'), request.original_path, h.SPAN, _class="dashboard") }}
+            </div>
+        </header>
 
         <div class="body">
         {{! base }}
@@ -43,5 +45,7 @@
         <p class="appver">{{ _('Librarian') }} v{{ app_version }}</p>
         <p class="copy">2014 Outernet Inc</p>
         </div>
+
+        <script src="/static/js/ui.js"></script>
     </body>
 </html>

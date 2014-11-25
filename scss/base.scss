@@ -25,13 +25,13 @@ body, html {
 
 h1 {
   font-size: 200%;
-  color: $outernet-blue;
+  color: $blue;
   line-height: $base-lh;
 }
 
 h2 {
-  color: $outernet-blue;
-  border-bottom: 1px solid $outernet-blue;
+  color: $blue;
+  border-bottom: 1px solid $blue;
   font-size: 130%;
   font-weight: bold;
   margin: 2em 0 1em;
@@ -39,7 +39,7 @@ h2 {
 
 h3 {
   font-weight: bold;
-  color: $outernet-red;
+  color: $red;
   margin: 1em 0 1em;
 }
 
@@ -55,15 +55,15 @@ ul {
 
 a {
   text-decoration: none;
-  color: $outernet-blue;
+  color: $blue;
 
   &:hover {
-    color: darken($outernet-blue, 10);
+    color: darken($blue, 10);
     text-decoration: underline;
   }
 
   &:visited {
-    color: desaturate(lighten($outernet-blue, 10), 50);
+    color: desaturate(lighten($blue, 10), 50);
   }
 }
 
