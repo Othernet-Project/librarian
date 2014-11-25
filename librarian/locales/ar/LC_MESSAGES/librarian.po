@@ -1,44 +1,261 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Librarian\n"
-"Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2014-10-30 14:02+0100\n"
-"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Plural-Forms: nplurals=6; plural= n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"Project-Id-Version: Librarian\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural= n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 
-#. Translators, used as default page title
-#. Translators, used in page title
-#. Translators, used in footer
-#. Translators, used as default page title
-#. Translators, used in page title
-#. Translators, used in footer
-#. Translators, used as default page title
-#. Translators, used in page title
-#. Translators, used in footer
-#. Translators, used as default page title
-#. Translators, used in page title
-#. Translators, used in footer
-#. Translators, used as default page title
-#. Translators, used in page title
-#. Translators, used in footer
-#. Translators, used as default page title
-#. Translators, used in page title
-#. Translators, used in footer
-#. Translators, used as default page title
-#. Translators, used in page title
-#. Translators, used in footer
-#. Translators, used as default page title
 #: /vagrant/librarian/app.py:114 /vagrant/librarian/views/base.tpl:8
 #: /vagrant/librarian/views/base.tpl:39 /vagrant/librarian/app.py:113
 #: /vagrant/librarian/views/base.tpl:43 /vagrant/librarian/app.py:127
 #: librarian/app.py:124
+#, fuzzy
 msgid "Librarian"
-msgstr ""
+msgstr "مكتبيتي\n"
+""
+
+#: /vagrant/librarian/views/base.tpl:23
+#: /vagrant/librarian/views/dashboard.tpl:2
+#: /vagrant/librarian/views/dashboard.tpl:19
+#: /vagrant/librarian/views/base.tpl:33
+msgid "Dashboard"
+msgstr "لوحة التحكم"
+
+#: /vagrant/librarian/views/base.tpl:25
+#: /vagrant/librarian/views/favorites.tpl:2
+#: /vagrant/librarian/views/favorites.tpl:4
+#: /vagrant/librarian/views/base.tpl:29
+msgid "Favorites"
+msgstr "المفضلة"
+
+#: /vagrant/librarian/views/base.tpl:29
+#: /vagrant/librarian/views/downloads.tpl:2
+#: /vagrant/librarian/views/downloads.tpl:4
+#: /vagrant/librarian/views/base.tpl:31
+msgid "Updates"
+msgstr "تحديثات"
+
+#. يجب تحربر المزيد من الساحة %s
+#: /vagrant/librarian/views/cleanup.tpl:13
+msgid "%s more space should be freed."
+msgstr "%s المزيد من المساحة يجب تحريرها"
+
+#: /vagrant/librarian/views/cleanup.tpl:17
+msgid "Remember that favorited content cannot be deleted."
+msgstr "تذكر محتوى المفضله لا يمكن حذفه"
+
+#: /vagrant/librarian/views/cleanup.tpl:22
+msgid "There is enough free space on storage"
+msgstr "لا يوجد مساحة كافية للتخزين"
+
+#: /vagrant/librarian/views/cleanup.tpl:30
+msgid "delete?"
+msgstr "حذف ؟"
+
+#: /vagrant/librarian/views/cleanup.tpl:32
+#: /vagrant/librarian/views/favorites.tpl:15
+msgid "date"
+msgstr "التاريخ"
+
+#: /vagrant/librarian/views/cleanup.tpl:34
+#: /vagrant/librarian/views/content_list.tpl:65
+#: /vagrant/librarian/views/downloads.tpl:27
+#: /vagrant/librarian/views/favorites.tpl:17
+#: /vagrant/librarian/views/content_list.tpl:66
+#: /vagrant/librarian/views/downloads.tpl:38
+msgid "title"
+msgstr "العنوان"
+
+#: /vagrant/librarian/views/cleanup.tpl:36
+msgid "size"
+msgstr "الحجم"
+
+#: /vagrant/librarian/views/cleanup.tpl:52
+msgid "There is enough free space. No clean-up needed."
+msgstr "هناك مساحة حرة كافية, لا داعي للتنظيف"
+
+#: /vagrant/librarian/views/cleanup.tpl:59
+msgid "How much space does this free up?"
+msgstr "كم هي المساحة التي ستصبح حرة ؟"
+
+#: /vagrant/librarian/views/cleanup.tpl:61
+msgid "Delete selected now"
+msgstr "حذف المحدد الآن"
+
+#: /vagrant/librarian/views/content_list.tpl:78
+#: /vagrant/librarian/views/content_list.tpl:81
+msgid "favorite"
+msgstr "المفضلة"
+
+#: /vagrant/librarian/views/dashboard.tpl:78
+#: /vagrant/librarian/views/dashboard.tpl:61
+msgid "used space"
+msgstr "المساحة المستخدمة"
+
+#: /vagrant/librarian/views/dashboard.tpl:14
+msgid "last update"
+msgstr "اخر تحديث"
+
+#: /vagrant/librarian/views/dashboard.tpl:25
+#, fuzzy
+msgid "Favorite content"
+msgstr "محتوى المفضلة"
+
+#: /vagrant/librarian/views/dashboard.tpl:29
+#: /vagrant/librarian/views/favorites.tpl:9
+#, fuzzy
+msgid "You have not favorted any content yet"
+msgstr "لم تضف للفضلة اي محتوى"
+
+#: /vagrant/librarian/views/dashboard.tpl:36
+msgid "see all favorites"
+msgstr "شاهد كل المفضلات"
+
+#: /vagrant/librarian/views/dashboard.tpl:62
+#: /vagrant/librarian/views/dashboard.tpl:45
+msgid "You are running low on disk space."
+msgstr "انك تعاني من نقص في مساحة التخزين"
+
+#: /vagrant/librarian/views/dashboard.tpl:64
+#: /vagrant/librarian/views/dashboard.tpl:47
+msgid "Free some space now"
+msgstr "حرر بعض المساحة الان"
+
+#: /vagrant/librarian/views/downloads.tpl:25
+#: /vagrant/librarian/views/downloads.tpl:36
+msgid "select"
+msgstr "اختر"
+
+#: /vagrant/librarian/views/downloads.tpl:51
+#: /vagrant/librarian/views/downloads.tpl:72
+msgid "There is no new content"
+msgstr "لا يوجد محتوى جديد"
+
+#: /vagrant/librarian/views/downloads.tpl:64
+msgid "Add selected to archive"
+msgstr "اضافة المحدد إلى ألارشيف"
+
+#: /vagrant/librarian/views/downloads.tpl:17
+#: /vagrant/librarian/views/downloads.tpl:66
+#: /vagrant/librarian/views/downloads.tpl:28
+#: /vagrant/librarian/views/downloads.tpl:87
+msgid "Delete selected"
+msgstr "حذف المحدد"
+
+#: /vagrant/librarian/views/favorites.tpl:26
+msgid "unfavorite"
+msgstr "غير مفضلة"
+
+#: /vagrant/librarian/views/base.tpl:27
+#: /vagrant/librarian/views/content_list.tpl:2
+#: /vagrant/librarian/views/content_list.tpl:5
+#: /vagrant/librarian/views/base.tpl:23
+msgid "Library"
+msgstr "المكتبة"
+
+#: /vagrant/librarian/views/content_list.tpl:19
+msgid "Content library is currently empty"
+msgstr "محتوى المكتبة فرغ حاليا"
+
+#: /vagrant/librarian/views/content_list.tpl:28
+msgid "search titles"
+msgstr "ابحث العناوين"
+
+#: /vagrant/librarian/views/content_list.tpl:31
+#: /vagrant/librarian/views/content_list.tpl:56
+#: /vagrant/librarian/views/file_list.tpl:14
+msgid "go"
+msgstr "اذهب"
+
+#: /vagrant/librarian/views/content_list.tpl:34
+msgid "clear"
+msgstr "مسح"
+
+#: /vagrant/librarian/views/content_list.tpl:67
+#: /vagrant/librarian/views/content_list.tpl:68
+msgid "added"
+msgstr "المضاف"
+
+#: /vagrant/librarian/views/dashboard.tpl:8
+msgid "update available"
+msgid_plural "updates available"
+msgstr[0] "لا توجد تحديثات متوفرة"
+msgstr[1] "تحديث متوفر"
+msgstr[2] "تحديثان متوفران"
+msgstr[3] "تحديثات قليلة متوفرة"
+msgstr[4] "عدة تحديثات متوفرة"
+msgstr[5] "تحديثات اخرى متوفرة"
+
+#: /vagrant/librarian/views/dashboard.tpl:42
+#: /vagrant/librarian/views/dashboard.tpl:25
+msgid "Content library stats"
+msgstr "حالة محتوى المكتبة"
+
+#: /vagrant/librarian/views/dashboard.tpl:72
+#: /vagrant/librarian/views/dashboard.tpl:55
+msgid "item in the library"
+msgid_plural "items in the library"
+msgstr[0] "لا توجد عناصر في المكتبة"
+msgstr[1] "العنصر الموجود في المكتبة"
+msgstr[2] "عنصران في المكتبة"
+msgstr[3] "عناصر قليلة في المكتبة "
+msgstr[4] "الكثير من العناصر في المكتبة "
+msgstr[5] "عناصر اخرى في المكتبة"
+
+#: /vagrant/librarian/views/dashboard.tpl:85
+#: /vagrant/librarian/views/dashboard.tpl:68
+msgid "Application logs"
+msgstr "سجلات التطبيق"
+
+#: /vagrant/librarian/views/dashboard.tpl:87
+#: /vagrant/librarian/views/dashboard.tpl:70
+msgid "Logs are shown in reverse chronological order"
+msgstr "سجلات تظهر في ترتيب عكسي"
+
+#: /vagrant/librarian/views/downloads.tpl:11
+#: /vagrant/librarian/views/downloads.tpl:60
+#: /vagrant/librarian/views/downloads.tpl:22
+#: /vagrant/librarian/views/downloads.tpl:81
+msgid "Select all"
+msgstr "حدد الكل"
+
+#: /vagrant/librarian/views/downloads.tpl:13
+#: /vagrant/librarian/views/downloads.tpl:62
+#: /vagrant/librarian/views/downloads.tpl:24
+#: /vagrant/librarian/views/downloads.tpl:83
+msgid "Select none"
+msgstr "حدد لا شيء"
+
+#: /vagrant/librarian/views/downloads.tpl:29
+#: /vagrant/librarian/views/downloads.tpl:40
+msgid "broadcast"
+msgstr "البث"
+
+#: /vagrant/librarian/views/downloads.tpl:31
+#: /vagrant/librarian/views/downloads.tpl:42
+msgid "downloaded"
+msgstr "تم تحميل"
+
+#: /vagrant/librarian/views/content_list.tpl:8
+msgid "Showing search results for '%(terms)s'"
+msgstr "اظهار نتائج البحث (terms)%"
+
+#: /vagrant/librarian/views/content_list.tpl:11
+msgid "Showing %(count)s of %(total)s item"
+msgid_plural "Showing %(count)s of %(total)s items"
+msgstr[0] "عدم اظهار%(count)s ل %(total)s البنود"
+msgstr[1] "اظهار%(count)s ل %(total)s البنود"
+msgstr[2] "اظهار%(count)s ل %(total)s البنود"
+msgstr[3] "اظهار%(count)s ل %(total)s البنود"
+msgstr[4] "اظهار%(count)s ل %(total)s البنود"
+msgstr[5] "اظهار%(count)s ل %(total)s البنود"
+
+#: /vagrant/librarian/views/content_list.tpl:22
+msgid "There are no search results for '%(terms)s'"
+msgstr "ليس هناك نتائج للبحث عن '%(terms)'"
 
 #. Translators, used in the pager
 #: /vagrant/librarian/views/_simple_pager.tpl:3
@@ -50,296 +267,12 @@ msgstr "السابق"
 msgid "next"
 msgstr "التالي"
 
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#: /vagrant/librarian/views/base.tpl:23
-#: /vagrant/librarian/views/dashboard.tpl:2
-#: /vagrant/librarian/views/dashboard.tpl:19
-#: /vagrant/librarian/views/base.tpl:33
-msgid "Dashboard"
-msgstr "لوحة التحكم"
-
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#: /vagrant/librarian/views/base.tpl:25
-#: /vagrant/librarian/views/favorites.tpl:2
-#: /vagrant/librarian/views/favorites.tpl:4
-#: /vagrant/librarian/views/base.tpl:29
-msgid "Favorites"
-msgstr "المفضلة"
-
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#: /vagrant/librarian/views/base.tpl:27
-#: /vagrant/librarian/views/content_list.tpl:2
-#: /vagrant/librarian/views/content_list.tpl:5
-#: /vagrant/librarian/views/base.tpl:23
-msgid "Library"
-msgstr "المكتبة"
-
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#: /vagrant/librarian/views/base.tpl:29
-#: /vagrant/librarian/views/downloads.tpl:2
-#: /vagrant/librarian/views/downloads.tpl:4
-#: /vagrant/librarian/views/base.tpl:31
-msgid "Updates"
-msgstr "تحديثات"
-
-#. Translators, used as page title
-#. Translators, used as page title on clean-up page
-#. Translators, used as page title
-#. Translators, used as page title on clean-up page
-#. Translators, used as page title
-#. Translators, used as page title on clean-up page
-#. Translators, used as page title
-#. Translators, used as page title on clean-up page
-#. Translators, used as page title
-#. Translators, used as page title on clean-up page
-#. Translators, used as page title
-#. Translators, used as page title on clean-up page
 #. Translators, used as page title
 #. Translators, used as page title on clean-up page
 #: /vagrant/librarian/views/cleanup.tpl:2
 #: /vagrant/librarian/views/cleanup.tpl:4
 msgid "Library clean-up"
 msgstr "تنظيف المكتبة"
-
-#. Translators, %s represents the amount of space in bytes, KB, MB, etc
-#: /vagrant/librarian/views/cleanup.tpl:13
-#, python-format
-msgid "%s more space should be freed."
-msgstr "%s المزيد من المساحة يجب تحريرها"
-
-#. Translators, used as note that appears on clean-up page
-#: /vagrant/librarian/views/cleanup.tpl:17
-msgid "Remember that favorited content cannot be deleted."
-msgstr "تذكر محتوى المفضله لا يمكن حذفه"
-
-#. Translators, note that appears on clean-up page when user goes to it even though there is enough space
-#: /vagrant/librarian/views/cleanup.tpl:22
-msgid "There is enough free space on storage"
-msgstr "يوجد مساحة كافية للتخزين"
-
-#. Translators, in table header on clean-up page, above checkboxes for marking deletion candidates
-#: /vagrant/librarian/views/cleanup.tpl:30
-msgid "delete?"
-msgstr "حذف ؟"
-
-#. Translators, in table header on clean-up page, date added to library
-#. Translators, used in table header, date added to library
-#. Translators, in table header on clean-up page, date added to library
-#. Translators, used in table header, date added to library
-#. Translators, in table header on clean-up page, date added to library
-#. Translators, used in table header, date added to library
-#. Translators, in table header on clean-up page, date added to library
-#. Translators, used in table header, date added to library
-#. Translators, in table header on clean-up page, date added to library
-#. Translators, used in table header, date added to library
-#. Translators, in table header on clean-up page, date added to library
-#. Translators, used in table header, date added to library
-#. Translators, in table header on clean-up page, date added to library
-#. Translators, used in table header, date added to library
-#: /vagrant/librarian/views/cleanup.tpl:32
-#: /vagrant/librarian/views/favorites.tpl:15
-msgid "date"
-msgstr "التاريخ"
-
-#. Translators, in table header on clean-up page, content title
-#. Translators, used in table header, page title
-#. Translators, used as table header, content title
-#. Translators, used in table header, content title
-#. Translators, in table header on clean-up page, content title
-#. Translators, used in table header, page title
-#. Translators, used as table header, content title
-#. Translators, used in table header, content title
-#. Translators, in table header on clean-up page, content title
-#. Translators, used in table header, page title
-#. Translators, used as table header, content title
-#. Translators, used in table header, content title
-#. Translators, in table header on clean-up page, content title
-#. Translators, used in table header, page title
-#. Translators, used as table header, content title
-#. Translators, used in table header, content title
-#. Translators, in table header on clean-up page, content title
-#. Translators, used in table header, page title
-#. Translators, used as table header, content title
-#. Translators, used in table header, content title
-#. Translators, in table header on clean-up page, content title
-#. Translators, used in table header, page title
-#. Translators, used as table header, content title
-#. Translators, used in table header, content title
-#. Translators, in table header on clean-up page, content title
-#. Translators, used in table header, page title
-#. Translators, used as table header, content title
-#. Translators, used in table header, content title
-#: /vagrant/librarian/views/cleanup.tpl:34
-#: /vagrant/librarian/views/content_list.tpl:65
-#: /vagrant/librarian/views/downloads.tpl:27
-#: /vagrant/librarian/views/favorites.tpl:17
-#: /vagrant/librarian/views/content_list.tpl:66
-#: /vagrant/librarian/views/downloads.tpl:38
-msgid "title"
-msgstr "العنوان"
-
-#. Translators, in table header on clean-up page, content size on disk
-#: /vagrant/librarian/views/cleanup.tpl:36
-msgid "size"
-msgstr "الحجم"
-
-#. Translators, note that appears on clean-up page inside the table where deletion candidates would normally be shown
-#: /vagrant/librarian/views/cleanup.tpl:52
-msgid "There is enough free space. No clean-up needed."
-msgstr "هناك مساحة حرة كافية, لا داعي للتنظيف"
-
-#. Translators, used as button label for clean-up preview button
-#: /vagrant/librarian/views/cleanup.tpl:59
-msgid "How much space does this free up?"
-msgstr "كم هي المساحة التي ستصبح حرة ؟"
-
-#. Translators, used as button label for clean-up start button, user selects content to be deleted before using this button
-#: /vagrant/librarian/views/cleanup.tpl:61
-msgid "Delete selected now"
-msgstr "حذف المحدد الآن"
-
-#. Translators, used as note on library page when showing search results, %(term)s represents the text typed in by user
-#: /vagrant/librarian/views/content_list.tpl:8
-#, fuzzy, python-format
-msgid "Showing search results for '%(terms)s'"
-msgstr "اظهار نتائج البحث (terms)%"
-
-#. Translators, used as note on library page when showing content list, %(count)s is number of items on the page, %(total)s is total number of items in library
-#: /vagrant/librarian/views/content_list.tpl:11
-#, python-format
-msgid "Showing %(count)s of %(total)s item"
-msgid_plural "Showing %(count)s of %(total)s items"
-msgstr[0] "عدم اظهار%(count)s ل %(total)s البنود"
-msgstr[1] "اظهار%(count)s ل %(total)s البنود"
-msgstr[2] "اظهار%(count)s ل %(total)s البنود"
-msgstr[3] "اظهار%(count)s ل %(total)s البنود"
-msgstr[4] "اظهار%(count)s ل %(total)s البنود"
-msgstr[5] "اظهار%(count)s ل %(total)s البنود"
-
-#. Translators, used as note on library page when library is empty
-#: /vagrant/librarian/views/content_list.tpl:19
-msgid "Content library is currently empty"
-msgstr "محتوى المكتبة فرغ حاليا"
-
-#. Translators, used as note on library page when search does not return anything
-#: /vagrant/librarian/views/content_list.tpl:22
-#, fuzzy, python-format
-msgid "There are no search results for '%(terms)s'"
-msgstr "ليس هناك نتائج للبحث عن '%(terms)'"
-
-#. Translators, used as label for search field, appears before the text box
-#: /vagrant/librarian/views/content_list.tpl:28
-msgid "search titles"
-msgstr "ابحث العناوين"
-
-#. Translators, used as label for search button
-#. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
-#. Translators, used as label for search button
-#. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
-#. Translators, used as label for search button
-#. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
-#. Translators, used as label for search button
-#. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
-#. Translators, used as button in file view address bar
-#. Translators, used as label for search button
-#. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
-#. Translators, used as button in file view address bar
-#. Translators, used as label for search button
-#. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
-#. Translators, used as button in file view address bar
-#. Translators, used as label for search button
-#. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
-#. Translators, used as button in file view address bar
-#: /vagrant/librarian/views/content_list.tpl:31
-#: /vagrant/librarian/views/content_list.tpl:56
-#: /vagrant/librarian/views/file_list.tpl:14
-msgid "go"
-msgstr "اذهب"
-
-#. Translators, used as label for button that clears search results
-#: /vagrant/librarian/views/content_list.tpl:34
-msgid "clear"
-msgstr "مسح"
 
 #. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
 #: /vagrant/librarian/views/content_list.tpl:40
@@ -353,139 +286,23 @@ msgstr "الصفحة"
 msgid "per page"
 msgstr "بالصفحة"
 
-#. Translators, used in table header, date added
-#: /vagrant/librarian/views/content_list.tpl:67
-#: /vagrant/librarian/views/content_list.tpl:68
-msgid "added"
-msgstr "المضاف"
-
-#. Translators, used as button label for adding content to favorites
-#: /vagrant/librarian/views/content_list.tpl:78
-#: /vagrant/librarian/views/content_list.tpl:81
-msgid "favorite"
-msgstr "المفضلة"
-
-#. Translators, appears on dashboard as a label, preceded by update count in big letter
-#: /vagrant/librarian/views/dashboard.tpl:8
-msgid "update available"
-msgid_plural "updates available"
-msgstr[0] "لا توجد تحديثات متوفرة"
-msgstr[1] "تحديث متوفر"
-msgstr[2] "تحديثان متوفران"
-msgstr[3] "تحديثات قليلة متوفرة"
-msgstr[4] "عدة تحديثات متوفرة"
-msgstr[5] "تحديثات اخرى متوفرة"
-
-#. Translators, appears on dashboard as a label, preceded by date of update in big letter
-#: /vagrant/librarian/views/dashboard.tpl:14
-msgid "last update"
-msgstr "اخر تحديث"
-
-#. Translators, used as section heading on dashboard above short listing of favorites
-#: /vagrant/librarian/views/dashboard.tpl:25
-msgid "Favorite content"
-msgstr "محتوى المفضلة"
-
-#. Translators, shown on dashboard in favorites section when user has not favorited any content
-#. Translators, used as note shown on favorites page when user has no favorites
-#. Translators, shown on dashboard in favorites section when user has not favorited any content
-#. Translators, used as note shown on favorites page when user has no favorites
-#. Translators, shown on dashboard in favorites section when user has not favorited any content
-#. Translators, used as note shown on favorites page when user has no favorites
-#: /vagrant/librarian/views/dashboard.tpl:29
-#: /vagrant/librarian/views/favorites.tpl:9
-#, fuzzy
-msgid "You have not favorted any content yet"
-msgstr "لم تضف للفضلة اي محتوى"
-
-#: /vagrant/librarian/views/dashboard.tpl:36
-msgid "see all favorites"
-msgstr "شاهد كل المفضلات"
-
-#. Translators, used as section heading on dashboard above disk space and similar information
-#: /vagrant/librarian/views/dashboard.tpl:42
-#: /vagrant/librarian/views/dashboard.tpl:25
-msgid "Content library stats"
-msgstr "حالة محتوى المكتبة"
-
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: /vagrant/librarian/views/dashboard.tpl:46
 #: /vagrant/librarian/views/dashboard.tpl:29
-#, python-format
 msgid "download directory (%s free)"
-msgstr "دليل التحميل (%s حر)"
+msgstr "دليل التحميل (%ث حر)"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: /vagrant/librarian/views/dashboard.tpl:52
 #: /vagrant/librarian/views/dashboard.tpl:35
-#, fuzzy, python-format
 msgid "content library (%s free)"
-msgstr "محتوى المكتبة (s حر%)"
+msgstr "محتوى المكتبة (ث حر%)"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: /vagrant/librarian/views/dashboard.tpl:57
 #: /vagrant/librarian/views/dashboard.tpl:40
-#, fuzzy, python-format
 msgid "total space (%s free)"
-msgstr "المساحة الاجمالية (s حرة%)"
-
-#. Translators, this is a warning message appearing when disk space is below 10%
-#: /vagrant/librarian/views/dashboard.tpl:62
-#: /vagrant/librarian/views/dashboard.tpl:45
-msgid "You are running low on disk space."
-msgstr "انك تعاني من نقص في مساحة التخزين"
-
-#. Translators, this is a button label that leads to page for library cleanup
-#: /vagrant/librarian/views/dashboard.tpl:64
-#: /vagrant/librarian/views/dashboard.tpl:47
-msgid "Free some space now"
-msgstr "حرر بعض المساحة الان"
-
-#. Translators, used as a label in content library stats section on dashboard, preceded by count of items in the library
-#: /vagrant/librarian/views/dashboard.tpl:72
-#: /vagrant/librarian/views/dashboard.tpl:55
-msgid "item in the library"
-msgid_plural "items in the library"
-msgstr[0] "لا توجد عناصر في المكتبة"
-msgstr[1] "العنصر الموجود في المكتبة"
-msgstr[2] "عنصران في المكتبة"
-msgstr[3] "عناصر قليلة في المكتبة "
-msgstr[4] "الكثير من العناصر في المكتبة "
-msgstr[5] "عناصر اخرى في المكتبة"
-
-#. Translators, used as a label in content library stats section on dashboard, preceded by library size in bytes, KB, MB, etc
-#: /vagrant/librarian/views/dashboard.tpl:78
-#: /vagrant/librarian/views/dashboard.tpl:61
-msgid "used space"
-msgstr "المساحة المستخدمة"
-
-#. Translators, used as section heading on dashboard above disk space and similar information
-#: /vagrant/librarian/views/dashboard.tpl:85
-#: /vagrant/librarian/views/dashboard.tpl:68
-msgid "Application logs"
-msgstr "سجلات التطبيق"
-
-#. Translators, used as note in Application logs section
-#: /vagrant/librarian/views/dashboard.tpl:87
-#: /vagrant/librarian/views/dashboard.tpl:70
-msgid "Logs are shown in reverse chronological order"
-msgstr "سجلات تظهر في ترتيب عكسي"
-
-#. Translators, used as button label on updates page for marking all content for import
-#: /vagrant/librarian/views/downloads.tpl:11
-#: /vagrant/librarian/views/downloads.tpl:60
-#: /vagrant/librarian/views/downloads.tpl:22
-#: /vagrant/librarian/views/downloads.tpl:81
-msgid "Select all"
-msgstr "حدد الكل"
-
-#. Translators, used as button label on updates page for unmarking all content for import
-#: /vagrant/librarian/views/downloads.tpl:13
-#: /vagrant/librarian/views/downloads.tpl:62
-#: /vagrant/librarian/views/downloads.tpl:24
-#: /vagrant/librarian/views/downloads.tpl:83
-msgid "Select none"
-msgstr "حدد لا شيء"
+msgstr "المساحة الاجمالية (ث حرة%)"
 
 #. Translators, used as button label on updates page for adding marked content to library
 #: /vagrant/librarian/views/downloads.tpl:15
@@ -495,80 +312,31 @@ msgstr "حدد لا شيء"
 msgid "Add selected to library"
 msgstr "اضف المحدد للمكتبة"
 
-#. Translators, used as button label on updates page for permanently deleting all downloaded content
-#: /vagrant/librarian/views/downloads.tpl:17
-#: /vagrant/librarian/views/downloads.tpl:66
-#: /vagrant/librarian/views/downloads.tpl:28
-#: /vagrant/librarian/views/downloads.tpl:87
-msgid "Delete selected"
-msgstr "حذف المحدد"
-
-#. Translators, used as table header, above checkbox for selecting updates for import
-#: /vagrant/librarian/views/downloads.tpl:25
-#: /vagrant/librarian/views/downloads.tpl:36
-msgid "select"
-msgstr "اختر"
-
-#. Translators, used as table header, broadcast date
-#: /vagrant/librarian/views/downloads.tpl:29
-#: /vagrant/librarian/views/downloads.tpl:40
-msgid "broadcast"
-msgstr "البث"
-
-#. Translators, used as table header, download date
-#: /vagrant/librarian/views/downloads.tpl:31
-#: /vagrant/librarian/views/downloads.tpl:42
-msgid "downloaded"
-msgstr "تم تحميل"
-
-#. Translators, note that appears in table on updates page when there is no new downloaded content
-#: /vagrant/librarian/views/downloads.tpl:51
-#: /vagrant/librarian/views/downloads.tpl:72
-msgid "There is no new content"
-msgstr "لا يوجد محتوى جديد"
-
-#. Translators, used as button label on updates page for adding marked content to library
-#: /vagrant/librarian/views/downloads.tpl:64
-msgid "Add selected to archive"
-msgstr "اضافة المحدد إلى ألارشيف"
-
-#. Translators, used as button label on favorites page, for removing content from favorites
-#: /vagrant/librarian/views/favorites.tpl:26
-msgid "unfavorite"
-msgstr "غير مفضلة"
-
 #. Translators, used as 'content belongs to core archive' badge
 #: /vagrant/librarian/views/_badges.tpl:8
 msgid "core"
-msgstr "core"
+msgstr "جوهر"
 
 #. Translators, used as 'partner content' badge
 #: /vagrant/librarian/views/_badges.tpl:15
 msgid "partner"
-msgstr "partner"
+msgstr "شريك"
 
 #. Translators, used as 'sponsored content' badge
 #: /vagrant/librarian/views/_badges.tpl:22
 msgid "sponsored"
-msgstr "sponsored"
+msgstr "برعاية"
 
 #. Translators, used as 'unknown license' badge
 #: /vagrant/librarian/views/_badges.tpl:27
 msgid "unknown"
-msgstr "unknown"
+msgstr "غير معروف"
 
 #. Translators, appears next to content title when content is sponsored or is partner content, %s is replaced by person/company name; not part of sentence
 #: /vagrant/librarian/views/_badges.tpl:31
-#, python-format
 msgid "from %s"
-msgstr "from %s"
+msgstr "من %ث"
 
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
 #. Translators, used main navigation menu
@@ -579,29 +347,23 @@ msgstr "from %s"
 #: /vagrant/librarian/views/app_list.tpl:6
 #: /vagrant/librarian/views/base.tpl:27
 msgid "Apps"
-msgstr "Apps"
+msgstr "تطبيقات"
 
 #. Translators, refers to app author
 #: /vagrant/librarian/views/app_list.tpl:18
 msgid "author:"
-msgstr "author:"
+msgstr "المؤلف:"
 
 #. Translators, refers to app version
 #: /vagrant/librarian/views/app_list.tpl:20
 msgid "version:"
-msgstr "version:"
+msgstr "النسخة"
 
 #. Translators, message show in app listing when no apps are present.
 #: /vagrant/librarian/views/app_list.tpl:29
 msgid "No apps found."
-msgstr "No apps found."
+msgstr "لاتوجد تطبيقات"
 
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
@@ -612,201 +374,201 @@ msgstr "No apps found."
 #: /vagrant/librarian/views/file_list.tpl:2
 #: /vagrant/librarian/views/file_list.tpl:6
 msgid "Files"
-msgstr "Files"
+msgstr "ملفات"
 
 #: /vagrant/librarian/views/downloads.tpl:14
 msgid "Reload"
-msgstr "Reload"
+msgstr "اعادة تحميل"
 
 #: /vagrant/librarian/views/downloads.tpl:65
 msgid "replaces:"
-msgstr "replaces:"
+msgstr "اعادة الترتيب"
 
 #. Translators, used as note shown on favorites page when user has no favorites
 #: /vagrant/librarian/views/favorites.tpl:9
 msgid "You have not favorited any content yet"
-msgstr "You have not favorted any content yet"
+msgstr "لم يتم تفضيل اي محتوى حتى الان"
 
 #. Translators, used as label for link that leads to parent directory in file listing
 #: /vagrant/librarian/views/file_list.tpl:23
 msgid "(go up one level)"
-msgstr "(go up one level)"
+msgstr "(اصعد مستوى واحد)"
 
 #: /vagrant/librarian/views/file_list.tpl:33
 #: /vagrant/librarian/views/file_list.tpl:51
 #: /vagrant/librarian/views/file_list.tpl:53
 msgid "Rename"
-msgstr "Rename"
+msgstr "اعادة التسمية"
 
 #: /vagrant/librarian/views/file_list.tpl:38
 #: /vagrant/librarian/views/file_list.tpl:56
 #: /vagrant/librarian/views/file_list.tpl:58
 msgid "Delete"
-msgstr "delete?"
+msgstr "مسح"
 
 #: /vagrant/librarian/views/file_list.tpl:64
 #: /vagrant/librarian/views/file_list.tpl:74
 msgid "About this folder"
-msgstr "About this folder"
+msgstr "عن الملفات"
 
 #. Translators, used as note on library page when showing content list, %(count)s is number of items on the page, %(total)s is total number of items in library
 #: /vagrant/librarian/views/content_list.tpl:11
-#, fuzzy, python-format
 msgid "Showing %(count)s of %(total)s items"
 msgid_plural "Showing %(count)s of %(total)s items"
-msgstr[0] "عدم اظهار%(count)s ل %(total)s البنود"
-msgstr[1] "اظهار%(count)s ل %(total)s البنود"
-msgstr[2] "اظهار%(count)s ل %(total)s البنود"
-msgstr[3] "اظهار%(count)s ل %(total)s البنود"
-msgstr[4] "اظهار%(count)s ل %(total)s البنود"
-msgstr[5] "اظهار%(count)s ل %(total)s البنود"
+msgstr[0] "اظهر % ( عدد) ث من %(اجمالي ) ث السلع"
+msgstr[1] "اظهر % ( عدد) ث من %(اجمالي ) ث السلع"
+msgstr[2] "اظهر % ( عدد) ث من %(اجمالي ) ث السلع"
+msgstr[3] "اظهر % ( عدد) ث من %(اجمالي ) ث السلع"
+msgstr[4] "اظهر % ( عدد) ث من %(اجمالي ) ث السلع"
+msgstr[5] "اظهر % ( عدد) ث من %(اجمالي ) ث السلع"
 
 #. Translators, used as page title for page that shows result of running a script
 #. Translators, used as page header for page that shows result of running a script
 #: /vagrant/librarian/views/exec_result.tpl:2
 #: /vagrant/librarian/views/exec_result.tpl:5
 msgid "Script output"
-msgstr ""
+msgstr "مخرج السكربت"
 
 #. Translators, return (result) code of the script executed via file browser
 #: /vagrant/librarian/views/exec_result.tpl:11
 msgid "return code:"
-msgstr ""
+msgstr "رمز الاسترجاع"
 
 #. Translators, shown when result code is good (0).
 #: /vagrant/librarian/views/exec_result.tpl:14
 msgid "OK"
-msgstr ""
+msgstr "حسنا"
 
 #. Translators, shown when result code is not good (non-zero).
 #: /vagrant/librarian/views/exec_result.tpl:17
 msgid "error"
-msgstr ""
+msgstr "خطا"
 
 #. Translators, refers to standard output of script run from file browser (STDOUT)
 #: /vagrant/librarian/views/exec_result.tpl:22
 msgid "Output"
-msgstr ""
+msgstr "مخرج"
 
 #. Translators, shown if script returned no output
 #: /vagrant/librarian/views/exec_result.tpl:27
 msgid "no output"
-msgstr ""
+msgstr "لايوجد مخرج"
 
 #. Translators, refers to standard errors of script run from file browser (STDERR)
 #: /vagrant/librarian/views/exec_result.tpl:32
 msgid "Errors"
-msgstr ""
+msgstr "اخطاء"
 
 #. Translators, label for button in file listing that allows user to run a script
 #: /vagrant/librarian/views/file_list.tpl:65
 msgid "Run"
-msgstr ""
+msgstr "تشغيل"
 
 #. Translators, this is used when app doesn't provide a description
 #: librarian/lib/apps.py:45
 msgid "No description provided"
-msgstr ""
+msgstr "لا يوجد وصف المقدمة"
 
 #: librarian/lib/archive.py:37
 msgid "Unknown license"
-msgstr ""
+msgstr "رخصة غير معروفه"
 
 #: librarian/lib/archive.py:38
 msgid "Creative Commons Attribution"
-msgstr ""
+msgstr "الإبداعي العزو"
 
 #: librarian/lib/archive.py:39
 msgid "Creative Commons Attribution-NoDerivs"
-msgstr ""
+msgstr "مشاع مبدع-لايوجد استرجاع"
 
 #: librarian/lib/archive.py:40
 msgid "Creative Commons Attribution-NonCommercial"
-msgstr ""
+msgstr "المشاع المبدع نسبة المصنف إلى مؤلفه، غير التجارية"
 
 #: librarian/lib/archive.py:41
 msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
-msgstr ""
+msgstr "المشاع المبدع نسبة المصنف إلى مؤلفه، غير التجارية-لايوجد استرجاع"
 
 #: librarian/lib/archive.py:43
 msgid "Creative Commons Attribution-ShareAlike"
-msgstr ""
+msgstr "مشاع مبدع للوثائق الحرة- شير الايك"
 
 #: librarian/lib/archive.py:44
 msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
-msgstr ""
+msgstr "المشاع المبدع نسبة المصنف إلى مؤلفه، غير التجارية-شير الايك"
 
 #: librarian/lib/archive.py:46
 msgid "GNU Free Documentation License"
-msgstr ""
+msgstr "رخصة جنو للوثائق الحرة"
 
 #: librarian/lib/archive.py:47
 msgid "Open Publication License"
-msgstr ""
+msgstr "ترخيص مفتوح النشر"
 
 #: librarian/lib/archive.py:48
 msgid "Open Content License"
-msgstr ""
+msgstr "افتح محويات الرخيص"
 
 #: librarian/lib/archive.py:49
 msgid "Against DRM License"
-msgstr ""
+msgstr "ضد اولوية الترخيص"
 
 #: librarian/lib/archive.py:50
 msgid "Free Art License"
-msgstr ""
+msgstr "ترخيص الفن مجاني"
 
 #: librarian/lib/archive.py:51
 msgid "Public Domain"
-msgstr ""
+msgstr "المجال العام\n"
+""
 
 #: librarian/lib/archive.py:52
 msgid "Other free license"
-msgstr ""
+msgstr "رخصة مجانية اخرى"
 
 #: librarian/lib/archive.py:53
 msgid "All rights reserved"
-msgstr ""
+msgstr "جميع الحقوق محفوظة"
 
 #: librarian/lib/archive.py:54
 msgid "Other non-free license"
-msgstr ""
+msgstr "الرخص الاخرى غير مجانية"
 
 #. Translators, used as response to innvalid HTTP request
 #: librarian/routes/favorites.py:39 librarian/routes/favorites.py:42
 #: librarian/routes/dashboard.py:68
 msgid "Invalid request"
-msgstr ""
+msgstr "طلب غير معروف"
 
 #. Translators, used as message to user when clean-up is started
 #. without selecting any content
 #: librarian/routes/dashboard.py:76
-#, fuzzy
 msgid "No content selected"
-msgstr "حذف المحدد"
+msgstr "لم يتم إختيار المحتوى"
 
 #. Translators, used when user is previewing clean-up, %s is
 #. replaced by amount of content that can be freed in bytes,
 #. KB, MB, etc
 #: librarian/routes/dashboard.py:83
-#, python-format
 msgid "%s can be freed by removing selected content"
-msgstr ""
+msgstr "%ث يمكن الافراج عنها من خلال مسح المحتويات المختارة"
 
 #. Translators, error message shown on clean-up page when some of
 #. the content could not be removed for unknown reasons
 #: librarian/routes/dashboard.py:95
 msgid "Some files could not be removed"
-msgstr ""
+msgstr "هنالك ملفات لايمكن مسحها"
 
 #. Translators, error message shown on clean-up page when there was
 #. no deletable content
 #: librarian/routes/dashboard.py:99
 msgid "Nothing to delete"
-msgstr ""
+msgstr "ليس هنالك شيء للمسح"
 
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
 #: librarian/routes/downloads.py:71
+#, fuzzy
 msgid "Invalid action, please use one of the form buttons."
-msgstr ""
+msgstr "عمل غير صالح , يرجى استخدام احد ازرار النموذج"
+

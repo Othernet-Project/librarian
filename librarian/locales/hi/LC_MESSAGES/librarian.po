@@ -5,57 +5,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: Librarian\n"
-"Language: sr\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: /vagrant/librarian/app.py:114 /vagrant/librarian/views/base.tpl:8
 #: /vagrant/librarian/views/base.tpl:39 /vagrant/librarian/app.py:113
 #: /vagrant/librarian/views/base.tpl:43 /vagrant/librarian/app.py:127
 #: librarian/app.py:124
 msgid "Librarian"
-msgstr "Librarian"
+msgstr "लाइब्रेरीअन"
 
 #: /vagrant/librarian/views/base.tpl:23
 #: /vagrant/librarian/views/dashboard.tpl:2
 #: /vagrant/librarian/views/dashboard.tpl:19
 #: /vagrant/librarian/views/base.tpl:33
 msgid "Dashboard"
-msgstr "Komandna tabla"
+msgstr "डैशबोर्ड"
 
 #: /vagrant/librarian/views/base.tpl:25
 #: /vagrant/librarian/views/favorites.tpl:2
 #: /vagrant/librarian/views/favorites.tpl:4
 #: /vagrant/librarian/views/base.tpl:29
 msgid "Favorites"
-msgstr "Omiljeno"
+msgstr "पसंदीदा"
 
 #: /vagrant/librarian/views/base.tpl:29
 #: /vagrant/librarian/views/downloads.tpl:2
 #: /vagrant/librarian/views/downloads.tpl:4
 #: /vagrant/librarian/views/base.tpl:31
 msgid "Updates"
-msgstr "Ažuriranja"
+msgstr "अपडेट"
 
 #: /vagrant/librarian/views/cleanup.tpl:13
 msgid "%s more space should be freed."
-msgstr "%s prostora može biti oslobođeno."
+msgstr " प्रतिशत अधिक जगह खाली कर दी जानी चाहिए."
 
 #: /vagrant/librarian/views/cleanup.tpl:17
 msgid "Remember that favorited content cannot be deleted."
-msgstr "Zapamtite da se omiljen sadržaj ne može brisati."
+msgstr "याद रखें की पसंदीदा सामग्री को हटाया नहीं जा सकता"
 
 #: /vagrant/librarian/views/cleanup.tpl:22
 msgid "There is enough free space on storage"
-msgstr "Ima dovoljno prostora u skladištu"
+msgstr "स्टोर में पर्याप्त खाली जगह है"
 
 #: /vagrant/librarian/views/cleanup.tpl:30
+#, fuzzy
 msgid "delete?"
-msgstr "obrisati?"
+msgstr "हटायें?"
 
 #: /vagrant/librarian/views/cleanup.tpl:32
 #: /vagrant/librarian/views/favorites.tpl:15
 msgid "date"
-msgstr "datum"
+msgstr "तारीख"
 
 #: /vagrant/librarian/views/cleanup.tpl:34
 #: /vagrant/librarian/views/content_list.tpl:65
@@ -64,231 +65,231 @@ msgstr "datum"
 #: /vagrant/librarian/views/content_list.tpl:66
 #: /vagrant/librarian/views/downloads.tpl:38
 msgid "title"
-msgstr "naslov"
+msgstr "शीर्षक"
 
 #: /vagrant/librarian/views/cleanup.tpl:36
 msgid "size"
-msgstr "veličina"
+msgstr "आकार"
 
 #: /vagrant/librarian/views/cleanup.tpl:52
 msgid "There is enough free space. No clean-up needed."
-msgstr "U skladištu ima dovoljno prostora. Nema potrebe za čišćenjem."
+msgstr "काफी खाली जगह है. खाली करने की जरूरत नहीं है"
 
 #: /vagrant/librarian/views/cleanup.tpl:59
 msgid "How much space does this free up?"
-msgstr "Koliko bi ovo prostora oslobodilo?"
+msgstr "यह कितनी जगह खाली करता है?"
 
 #: /vagrant/librarian/views/cleanup.tpl:61
+#, fuzzy
 msgid "Delete selected now"
-msgstr "Briši označeno"
+msgstr "हटाएं चयनित ?\n"
+""
 
 #: /vagrant/librarian/views/content_list.tpl:78
 #: /vagrant/librarian/views/content_list.tpl:81
 msgid "favorite"
-msgstr "omiljeni"
+msgstr "मनपसंद"
 
 #: /vagrant/librarian/views/dashboard.tpl:78
 #: /vagrant/librarian/views/dashboard.tpl:61
 msgid "used space"
-msgstr "iskorišćen prostor"
+msgstr "भरी हुई जगह"
 
 #: /vagrant/librarian/views/dashboard.tpl:14
 msgid "last update"
-msgstr "posljednje ažuriranje"
+msgstr "पिछले अपडेट"
 
 #: /vagrant/librarian/views/dashboard.tpl:25
 msgid "Favorite content"
-msgstr "Omiljen sadržaj"
+msgstr "pasandit samaghri"
 
 #: /vagrant/librarian/views/dashboard.tpl:29
 #: /vagrant/librarian/views/favorites.tpl:9
 msgid "You have not favorted any content yet"
-msgstr "Niste označili kao omiljen ni jedan sadržaj"
+msgstr "आपने अभी तक किसी भी सामग्री पसंद नहीं किया  है"
 
 #: /vagrant/librarian/views/dashboard.tpl:36
 msgid "see all favorites"
-msgstr "pokaži sve omiljene"
+msgstr "सभी पसंदीदा चीज़ें देखें"
 
 #: /vagrant/librarian/views/dashboard.tpl:62
 #: /vagrant/librarian/views/dashboard.tpl:45
 msgid "You are running low on disk space."
-msgstr "Ponestaje vam slobodnog prostora u skladištu."
+msgstr "आपकी डिस्क में कम जगह बची हैं"
 
 #: /vagrant/librarian/views/dashboard.tpl:64
 #: /vagrant/librarian/views/dashboard.tpl:47
 msgid "Free some space now"
-msgstr "Oslobodi prostor"
+msgstr "कुछ जगह खाली करें"
 
 #: /vagrant/librarian/views/downloads.tpl:25
 #: /vagrant/librarian/views/downloads.tpl:36
 msgid "select"
-msgstr "označi"
+msgstr "चुने"
 
 #: /vagrant/librarian/views/downloads.tpl:51
 #: /vagrant/librarian/views/downloads.tpl:72
 msgid "There is no new content"
-msgstr "Nema novog sadržaja"
+msgstr "कोई नई सामग्री नहीं है"
 
 #: /vagrant/librarian/views/downloads.tpl:64
 msgid "Add selected to archive"
-msgstr "Dodaj označeno u arhivu"
+msgstr "चयनित को संग्रह में जोड़ें"
 
 #: /vagrant/librarian/views/downloads.tpl:17
 #: /vagrant/librarian/views/downloads.tpl:66
 #: /vagrant/librarian/views/downloads.tpl:28
 #: /vagrant/librarian/views/downloads.tpl:87
 msgid "Delete selected"
-msgstr "Obriši označeno"
+msgstr "चयनित हटाएँ"
 
 #: /vagrant/librarian/views/favorites.tpl:26
 msgid "unfavorite"
-msgstr "izbaci iz omiljenih"
+msgstr "पसंदीदा से हटायें"
 
 #: /vagrant/librarian/views/base.tpl:27
 #: /vagrant/librarian/views/content_list.tpl:2
 #: /vagrant/librarian/views/content_list.tpl:5
 #: /vagrant/librarian/views/base.tpl:23
 msgid "Library"
-msgstr "Biblioteka"
+msgstr "पुस्तकालय"
 
 #: /vagrant/librarian/views/content_list.tpl:19
 msgid "Content library is currently empty"
-msgstr "Bibilioteka sadržaja je trenutno prazna"
+msgstr "सामग्री पुस्तकालय अभी खाली है"
 
 #: /vagrant/librarian/views/content_list.tpl:28
 msgid "search titles"
-msgstr "pretraži naslove"
+msgstr "शीर्षक से खोजें"
 
 #: /vagrant/librarian/views/content_list.tpl:31
 #: /vagrant/librarian/views/content_list.tpl:56
 #: /vagrant/librarian/views/file_list.tpl:14
 msgid "go"
-msgstr "idi"
+msgstr "जायें"
 
 #: /vagrant/librarian/views/content_list.tpl:34
 msgid "clear"
-msgstr "očisti"
+msgstr "हटायें"
 
 #: /vagrant/librarian/views/content_list.tpl:67
 #: /vagrant/librarian/views/content_list.tpl:68
 msgid "added"
-msgstr "dodato"
+msgstr "जोड़ लिया गया"
 
 #: /vagrant/librarian/views/dashboard.tpl:8
 msgid "update available"
 msgid_plural "updates available"
-msgstr[0] "Ažuriranje dostupno"
-msgstr[1] "Ažuriranja dostupna"
-msgstr[2] "novih sadržaja"
+msgstr[0] "अपडेट उपलब्ध\n"
+"P: अपडेटें उपलब्ध"
+msgstr[1] "अपडेट मौजूद है "
 
 #: /vagrant/librarian/views/dashboard.tpl:42
 #: /vagrant/librarian/views/dashboard.tpl:25
 msgid "Content library stats"
-msgstr "Podaci o biblioteci"
+msgstr "सामग्री लाइब्रेरी के आँकड़े"
 
 #: /vagrant/librarian/views/dashboard.tpl:72
 #: /vagrant/librarian/views/dashboard.tpl:55
 msgid "item in the library"
 msgid_plural "items in the library"
-msgstr[0] "stavka u biblioteci"
-msgstr[1] "stavke u biblioteci"
-msgstr[2] "stavki u biblioteci"
+msgstr[0] "पुस्तकालय में चीज़ें"
+msgstr[1] "पुस्तकालय में आइटम"
 
 #: /vagrant/librarian/views/dashboard.tpl:85
 #: /vagrant/librarian/views/dashboard.tpl:68
 msgid "Application logs"
-msgstr "Poruke aplikacije"
+msgstr "एप्लिकेशन सूची"
 
 #: /vagrant/librarian/views/dashboard.tpl:87
 #: /vagrant/librarian/views/dashboard.tpl:70
 msgid "Logs are shown in reverse chronological order"
-msgstr "Poruke su prikazane u obrnutom hronološkom redosledu"
+msgstr "सूची विपरीत कालानुक्रमिक क्रम में दिखाए जाते हैं"
 
 #: /vagrant/librarian/views/downloads.tpl:11
 #: /vagrant/librarian/views/downloads.tpl:60
 #: /vagrant/librarian/views/downloads.tpl:22
 #: /vagrant/librarian/views/downloads.tpl:81
 msgid "Select all"
-msgstr "Označi sve"
+msgstr "सभी का चयन करें"
 
 #: /vagrant/librarian/views/downloads.tpl:13
 #: /vagrant/librarian/views/downloads.tpl:62
 #: /vagrant/librarian/views/downloads.tpl:24
 #: /vagrant/librarian/views/downloads.tpl:83
 msgid "Select none"
-msgstr "Poništi označeno"
+msgstr "कोई भी न चुनें"
 
 #: /vagrant/librarian/views/downloads.tpl:29
 #: /vagrant/librarian/views/downloads.tpl:40
 msgid "broadcast"
-msgstr "prenos"
+msgstr "प्रसारण"
 
 #: /vagrant/librarian/views/downloads.tpl:31
 #: /vagrant/librarian/views/downloads.tpl:42
 msgid "downloaded"
-msgstr "skinuto"
+msgstr "डाउनलोड"
 
 #: /vagrant/librarian/views/content_list.tpl:8
 msgid "Showing search results for '%(terms)s'"
-msgstr "Rezultati pretrage za '%(term)s'"
+msgstr "के लिए खोज परिणाम दिखा रहा है '% (नियम) एस'"
 
 #: /vagrant/librarian/views/content_list.tpl:11
 msgid "Showing %(count)s of %(total)s item"
 msgid_plural "Showing %(count)s of %(total)s items"
-msgstr[0] "Prikazana %(count)s stavka od %(total)s"
-msgstr[1] "Prikazano %(count)s stavke od %(total)s"
-msgstr[2] "Prikazano %(count)s stavki od %(total)s"
+msgstr[0] "% दिखा रहा है (गिनती) एस% की (कुल) के मद"
+msgstr[1] "अभी दिखा रहा है : %(कुल) चीजों की %(गिनती)"
 
 #: /vagrant/librarian/views/content_list.tpl:22
 msgid "There are no search results for '%(terms)s'"
-msgstr "Nema rezultata za '%(term)s'"
+msgstr "के लिए कोई खोज परिणाम '% (नियम) एस' कर रहे हैं"
 
 #. Translators, used in the pager
 #: /vagrant/librarian/views/_simple_pager.tpl:3
 msgid "previous"
-msgstr "prethodna"
+msgstr "पूर्व"
 
 #. Translators, used in the pager
 #: /vagrant/librarian/views/_simple_pager.tpl:7
 msgid "next"
-msgstr "sledeća"
+msgstr "अगला"
 
 #. Translators, used as page title
 #. Translators, used as page title on clean-up page
 #: /vagrant/librarian/views/cleanup.tpl:2
 #: /vagrant/librarian/views/cleanup.tpl:4
 msgid "Library clean-up"
-msgstr "Čišćenje biblioteke"
+msgstr "लाइब्रेरी सफाई"
 
 #. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
 #: /vagrant/librarian/views/content_list.tpl:40
 #: /vagrant/librarian/views/downloads.tpl:10
 msgid "page"
-msgstr "stranica"
+msgstr "पृष्ठ"
 
 #. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
 #: /vagrant/librarian/views/content_list.tpl:54
 #: /vagrant/librarian/views/downloads.tpl:13
 msgid "per page"
-msgstr "po stranici"
+msgstr "प्रति पृष्ठ"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: /vagrant/librarian/views/dashboard.tpl:46
 #: /vagrant/librarian/views/dashboard.tpl:29
 msgid "download directory (%s free)"
-msgstr "folder za skidanje (%s slobodno)"
+msgstr "डाउनलोड निर्देशिका (% मुफ़्त)"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: /vagrant/librarian/views/dashboard.tpl:52
 #: /vagrant/librarian/views/dashboard.tpl:35
 msgid "content library (%s free)"
-msgstr "sadržaj biblioteke (%s slobodno)"
+msgstr "सामग्री पुस्तकालय (% मुफ़्त)"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: /vagrant/librarian/views/dashboard.tpl:57
 #: /vagrant/librarian/views/dashboard.tpl:40
 msgid "total space (%s free)"
-msgstr "ukupan prostor (%s slobodno)"
+msgstr "कुल स्थान (% मुफ़्त)"
 
 #. Translators, used as button label on updates page for adding marked content to library
 #: /vagrant/librarian/views/downloads.tpl:15
@@ -296,32 +297,32 @@ msgstr "ukupan prostor (%s slobodno)"
 #: /vagrant/librarian/views/downloads.tpl:26
 #: /vagrant/librarian/views/downloads.tpl:85
 msgid "Add selected to library"
-msgstr "Dodaj označeno u biblioteku"
+msgstr "पुस्तकालय के लिए चयनित जोड़ें"
 
 #. Translators, used as 'content belongs to core archive' badge
 #: /vagrant/librarian/views/_badges.tpl:8
 msgid "core"
-msgstr "jezgro"
+msgstr "कोर"
 
 #. Translators, used as 'partner content' badge
 #: /vagrant/librarian/views/_badges.tpl:15
 msgid "partner"
-msgstr "partner"
+msgstr "साथी"
 
 #. Translators, used as 'sponsored content' badge
 #: /vagrant/librarian/views/_badges.tpl:22
 msgid "sponsored"
-msgstr "sponzorisao (sponzori)"
+msgstr "प्रायोजित"
 
 #. Translators, used as 'unknown license' badge
 #: /vagrant/librarian/views/_badges.tpl:27
 msgid "unknown"
-msgstr "nepoznato"
+msgstr "अज्ञात"
 
 #. Translators, appears next to content title when content is sponsored or is partner content, %s is replaced by person/company name; not part of sentence
 #: /vagrant/librarian/views/_badges.tpl:31
 msgid "from %s"
-msgstr "od %s"
+msgstr "% s से"
 
 #. Translators, used as page title
 #. Translators, used as page heading
@@ -333,22 +334,22 @@ msgstr "od %s"
 #: /vagrant/librarian/views/app_list.tpl:6
 #: /vagrant/librarian/views/base.tpl:27
 msgid "Apps"
-msgstr "Aplikacije"
+msgstr "एप्प्स"
 
 #. Translators, refers to app author
 #: /vagrant/librarian/views/app_list.tpl:18
 msgid "author:"
-msgstr "autor:"
+msgstr "लेखक:"
 
 #. Translators, refers to app version
 #: /vagrant/librarian/views/app_list.tpl:20
 msgid "version:"
-msgstr "verzija:"
+msgstr "संस्करण:"
 
 #. Translators, message show in app listing when no apps are present.
 #: /vagrant/librarian/views/app_list.tpl:29
 msgid "No apps found."
-msgstr "Nema aplikacija."
+msgstr "कोई एप्प नहीं मिली"
 
 #. Translators, used main navigation menu
 #. Translators, used as page title
@@ -360,197 +361,195 @@ msgstr "Nema aplikacija."
 #: /vagrant/librarian/views/file_list.tpl:2
 #: /vagrant/librarian/views/file_list.tpl:6
 msgid "Files"
-msgstr "Fajlovi"
+msgstr "फ़ाइलें"
 
 #: /vagrant/librarian/views/downloads.tpl:14
 msgid "Reload"
-msgstr "Osveži"
+msgstr "फिर लोड करें"
 
-#. Context: This appears in the updates list when a piece of content replaces some other content which may not be identical. The colon is followed by the title of the existing content.
 #: /vagrant/librarian/views/downloads.tpl:65
 msgid "replaces:"
-msgstr "zamene:"
+msgstr "बदलें :"
 
 #. Translators, used as note shown on favorites page when user has no favorites
 #: /vagrant/librarian/views/favorites.tpl:9
 msgid "You have not favorited any content yet"
-msgstr "Još uvek niste označili ništa kao omiljeno"
+msgstr "आपने अभी तक किसी भी सामग्री को पसंदीदा नहीं किया है"
 
 #. Translators, used as label for link that leads to parent directory in file listing
 #: /vagrant/librarian/views/file_list.tpl:23
 msgid "(go up one level)"
-msgstr "(idi jedan nivo nazad)"
+msgstr "(एक स्तर ऊपर जाना)"
 
 #: /vagrant/librarian/views/file_list.tpl:33
 #: /vagrant/librarian/views/file_list.tpl:51
 #: /vagrant/librarian/views/file_list.tpl:53
 msgid "Rename"
-msgstr "Preimenuj"
+msgstr "नाम बदलें"
 
 #: /vagrant/librarian/views/file_list.tpl:38
 #: /vagrant/librarian/views/file_list.tpl:56
 #: /vagrant/librarian/views/file_list.tpl:58
 msgid "Delete"
-msgstr "Briši"
+msgstr "हटाना"
 
 #: /vagrant/librarian/views/file_list.tpl:64
 #: /vagrant/librarian/views/file_list.tpl:74
 msgid "About this folder"
-msgstr "O ovom folderu"
+msgstr "इस फ़ोल्डर के बारे में"
 
 #. Translators, used as note on library page when showing content list, %(count)s is number of items on the page, %(total)s is total number of items in library
 #: /vagrant/librarian/views/content_list.tpl:11
 msgid "Showing %(count)s of %(total)s items"
 msgid_plural "Showing %(count)s of %(total)s items"
-msgstr[0] "Prikazan %(count)s od %(total)s sadržaja"
-msgstr[1] "Prikazana %(count)s od %(total) sadržaja"
-msgstr[2] "Prikazano %(count)s od %(total) sadržaja"
+msgstr[0] "% दिखा रहा है (गिनती) एस% की (कुल) के आइटम"
+msgstr[1] "अभी दिखा रहा है : %(कुल) चीजों की %(गिनती)"
 
 #. Translators, used as page title for page that shows result of running a script
 #. Translators, used as page header for page that shows result of running a script
 #: /vagrant/librarian/views/exec_result.tpl:2
 #: /vagrant/librarian/views/exec_result.tpl:5
 msgid "Script output"
-msgstr "Izlaz skripte"
+msgstr "स्क्रिप्ट उत्पादन"
 
 #. Translators, return (result) code of the script executed via file browser
 #: /vagrant/librarian/views/exec_result.tpl:11
 msgid "return code:"
-msgstr "povratni kod:"
+msgstr "कोड लौटने:"
 
 #. Translators, shown when result code is good (0).
 #: /vagrant/librarian/views/exec_result.tpl:14
 msgid "OK"
-msgstr "OK"
+msgstr "ठीक"
 
 #. Translators, shown when result code is not good (non-zero).
 #: /vagrant/librarian/views/exec_result.tpl:17
 msgid "error"
-msgstr "greška"
+msgstr "त्रुटि"
 
 #. Translators, refers to standard output of script run from file browser (STDOUT)
 #: /vagrant/librarian/views/exec_result.tpl:22
 msgid "Output"
-msgstr "Izlaz"
+msgstr "उत्पादन"
 
 #. Translators, shown if script returned no output
 #: /vagrant/librarian/views/exec_result.tpl:27
 msgid "no output"
-msgstr "nema izlaza"
+msgstr "कोई उत्पादन नहीं |"
 
 #. Translators, refers to standard errors of script run from file browser (STDERR)
 #: /vagrant/librarian/views/exec_result.tpl:32
 msgid "Errors"
-msgstr "Greške"
+msgstr "त्रुटियाँ"
 
 #. Translators, label for button in file listing that allows user to run a script
 #: /vagrant/librarian/views/file_list.tpl:65
 msgid "Run"
-msgstr "Izvrši"
+msgstr "रन"
 
 #. Translators, this is used when app doesn't provide a description
 #: librarian/lib/apps.py:45
 msgid "No description provided"
-msgstr "Opis nije dostupan"
+msgstr "प्रदान की कोई विवरण नहीं"
 
 #: librarian/lib/archive.py:37
 msgid "Unknown license"
-msgstr "Nepoznata licenca"
+msgstr "अज्ञात  अनुज्ञापत्र "
 
 #: librarian/lib/archive.py:38
 msgid "Creative Commons Attribution"
-msgstr "Zajedničko kreativno pripisivanje"
+msgstr " सृजनशील  सर्वसामान्य रोपण"
 
 #: librarian/lib/archive.py:39
 msgid "Creative Commons Attribution-NoDerivs"
-msgstr "Zajedničko kreativno pripisivanje - Bez izvoda"
+msgstr "क्रिएटिव कॉमन्स रोपण-NoDerivs"
 
 #: librarian/lib/archive.py:40
 msgid "Creative Commons Attribution-NonCommercial"
-msgstr "Zajedničko kreativno pripisivanje - Neprofitno"
+msgstr "क्रिएटिव कॉमन्स रोपण-गैर वाणिज्यिक"
 
 #: librarian/lib/archive.py:41
 msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
-msgstr "Zajedničko kreativno pripisivanje - Neprofitno - Bez izvoda"
+msgstr "क्रिएटिव कॉमन्स रोपण गैर-NoDerivs"
 
 #: librarian/lib/archive.py:43
 msgid "Creative Commons Attribution-ShareAlike"
-msgstr "Zajedničko kreativno pripisivanje - Delenje u istim uslovima"
+msgstr "क्रिएटिव कॉमन्स रोपण- ShareAlike"
 
 #: librarian/lib/archive.py:44
 msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
-msgstr "Zajedničko kreativno pripisivanje - Neprofitno - Delenje u istim uslovima"
+msgstr "क्रिएटिव कॉमन्स रोपण गैर-d प्रलेखन"
 
 #: librarian/lib/archive.py:46
 msgid "GNU Free Documentation License"
-msgstr "GNU licenca za slobodnu dokumentaciju"
+msgstr "ग्नू मुक्त प्रलेखन अनुज्ञापत्र"
 
 #: librarian/lib/archive.py:47
 msgid "Open Publication License"
-msgstr "Licenca otvorene publikacije"
+msgstr "ओपेन पब्लिकेशन अनुज्ञापत्र"
 
 #: librarian/lib/archive.py:48
 msgid "Open Content License"
-msgstr "Licenca otvorenog sadržaja"
+msgstr "खुली सामग्री अनुज्ञापत्र"
 
 #: librarian/lib/archive.py:49
 msgid "Against DRM License"
-msgstr "Licenca protiv DRM-a"
+msgstr "DRM के अनुज्ञापत्र के खिलाफ"
 
 #: librarian/lib/archive.py:50
 msgid "Free Art License"
-msgstr "Licenca besplatne umetnosti"
+msgstr "मुफ्त कला अनुज्ञापत्र"
 
 #: librarian/lib/archive.py:51
 msgid "Public Domain"
-msgstr "Javni domen"
+msgstr " सार्वजनिक डोमेन"
 
 #: librarian/lib/archive.py:52
 msgid "Other free license"
-msgstr "Druge besplatne licence"
+msgstr "अन्य नि: शुल्क अनुज्ञापत्र"
 
 #: librarian/lib/archive.py:53
 msgid "All rights reserved"
-msgstr "Sva prava zadržana"
+msgstr "सर्वाधिकार सुरक्षित"
 
 #: librarian/lib/archive.py:54
 msgid "Other non-free license"
-msgstr "Druge profitne licence"
+msgstr "अन्य गैर-मुक्त अनुज्ञापत्र"
 
 #. Translators, used as response to innvalid HTTP request
 #: librarian/routes/favorites.py:39 librarian/routes/favorites.py:42
 #: librarian/routes/dashboard.py:68
 msgid "Invalid request"
-msgstr "Neispravan zahtev"
+msgstr "अमान्य अनुरोध"
 
 #. Translators, used as message to user when clean-up is started
 #. without selecting any content
 #: librarian/routes/dashboard.py:76
 msgid "No content selected"
-msgstr "Sadržaj nije izabran"
+msgstr "चयनित कोई सामग्री"
 
 #. Translators, used when user is previewing clean-up, %s is
 #. replaced by amount of content that can be freed in bytes,
 #. KB, MB, etc
 #: librarian/routes/dashboard.py:83
 msgid "%s can be freed by removing selected content"
-msgstr "%s može biti oslobodjeno brisanjem sledeceg sadržaja"
+msgstr "% की चयनित सामग्री को हटाने से मुक्त किया जा सकता है"
 
 #. Translators, error message shown on clean-up page when some of
 #. the content could not be removed for unknown reasons
 #: librarian/routes/dashboard.py:95
 msgid "Some files could not be removed"
-msgstr "Neke fajlove je nemoguce ukloniti"
+msgstr "कुछ फ़ाइलें नहीं हटाया जा सकता"
 
 #. Translators, error message shown on clean-up page when there was
 #. no deletable content
 #: librarian/routes/dashboard.py:99
 msgid "Nothing to delete"
-msgstr "Nista za brisanje"
+msgstr "कुछ भी नहीं नष्ट करने के लिए"
 
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
 #: librarian/routes/downloads.py:71
 msgid "Invalid action, please use one of the form buttons."
-msgstr "Nemoguća akcija, molimo koristite jedno od dugmadi obrazca."
+msgstr "अवैध कार्रवाई, फार्म बटनों में से एक का उपयोग करें."
 
