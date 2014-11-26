@@ -28,7 +28,6 @@ __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
 
 
 STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
-IMAGE_EXTENSIONS = ['.png', '.gif', '.jpg', '.jpeg']
 
 
 class ContentError(BaseException):
@@ -295,9 +294,11 @@ def patch_html(content):
 
 class Meta(object):
     """ Metadata wrapper """
+    IMAGE_EXTENSIONS = ['.png', '.gif', '.jpg', '.jpeg']
 
     def __init__(self, meta):
         self.meta = meta
+        self._image = None
 
     def __getattribute__(self, attr):
         meta = object.__getattribute__(self, 'meta')
@@ -313,8 +314,11 @@ class Meta(object):
 
     @property
     def image(self):
+        if self._image is not None:
+            return self._image
         zip_path = get_zip_path(self.md5)
         z = zipfile.ZipFile(zip_path)
         for name in z.namelist():
-            if os.path.splitext(name)[1].lower() in IMAGE_EXTENSIONS:
+            if os.path.splitext(name)[1].lower() in self.IMAGE_EXTENSIONS:
+                self._image = name
                 return name
