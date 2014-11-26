@@ -64,7 +64,8 @@
             <h2 class="title">
                 <a href="{{ i18n_path('/pages/%s/' % meta['md5']) }}">
                     % if meta.images > 0 and meta.image:
-                        <img src="/pages/{{ meta.image }}">
+                        %#<img src="/pages/{{ meta.image }}">
+                        <img src="/static/img/background.png">
                     % end
                     <span>{{ meta['title'] }}</span>
                 </a>

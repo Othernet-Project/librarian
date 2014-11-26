@@ -82,7 +82,7 @@ def send_static(path):
 # default_app, so they don't need to be mounted explicitly.
 
 
-def start(logfile=None):
+def start(logfile=None, profile=False):
     """ Start the application """
 
     config = app.config
@@ -139,6 +139,21 @@ def start(logfile=None):
 
     # Srart the server
     logging.info('Starting Librarian')
+
+    if profile:
+        # Instrument the app to perform profiling
+        print('Profiling enabled')
+        from repoze.profile import ProfileMiddleware
+        wsgiapp = ProfileMiddleware(
+                   wsgiapp,
+                   log_filename=config['profiling.logfile'],
+                   cachegrind_filename=config['profiling.outfile'],
+                   discard_first_request=True,
+                   flush_at_shutdown=True,
+                   path='/__profile__',
+                   unwind=False,
+        )
+
     bottle.run(app=wsgiapp,
                server=config['librarian.server'],
                host=config['librarian.bind'],
@@ -147,14 +162,14 @@ def start(logfile=None):
                debug=config['librarian.debug'] == 'yes')
 
 
-def main(conf, debug=False, logpath=None):
+def main(conf, debug=False, logpath=None, profile=False):
     app.config.load_config(conf)
 
     if debug:
         pprint.pprint(conf, indent=4)
         sys.exit(0)
 
-    start(logpath)
+    start(logpath, profile)
 
 
 if __name__ == '__main__':
@@ -169,10 +184,13 @@ if __name__ == '__main__':
                         'version number and exit')
     parser.add_argument('--log', metavar='PATH', help='path to log file '
                         '(default: as configured in .ini file)', default=None)
+    parser.add_argument('--profile', action='store_true', help='instrument '
+                        'the application to perform profiling (default: '
+                        'disabled)', default=False)
     args = parser.parse_args(sys.argv[1:])
 
     if args.version:
         print('v%s' % __version__)
         sys.exit(0)
 
-    main(args.conf, args.debug_conf, args.log)
+    main(args.conf, args.debug_conf, args.log, args.profile)
