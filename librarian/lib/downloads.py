@@ -10,6 +10,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 import json
+import glob
 import zipfile
 import logging
 from io import BytesIO
@@ -169,9 +170,10 @@ def extract_file(path, filename):
     """
     # TODO: Add caching
     try:
-        with closing(zipfile.ZipFile(path, 'r')) as content:
-            metadata = content.getinfo(filename)
-            content = content.open(filename, 'r')
+        with open(path, 'rb') as f:
+            with zipfile.ZipFile(f) as content:
+                metadata = content.getinfo(filename)
+                content = content.open(filename, 'r')
     except zipfile.BadZipfile:
         raise ContentError("'%s' is not a valid zipfile" % path, path)
     except Exception as err:
@@ -312,13 +314,40 @@ class Meta(object):
     def get(self, key, default=None):
         return self.meta.get(key, default)
 
+    def cache_cover(self, cover_path, content):
+        config = request.app.config
+        covers = config['content.covers']
+        ext = os.path.splitext(cover_path)[1]
+        cover_path = os.path.join(covers, '%s.%s' % (self.md5, ext))
+        if not os.path.exists(covers):
+            os.mkdir(covers)
+        with open(cover_path, 'wb') as f:
+            f.write(content)
+        return os.path.basename(cover_path)
+
+    def get_cover_path(self):
+        config = request.app.config
+        covers = config['content.covers']
+        cover_path = os.path.join(covers, '%s.*' % self.md5)
+        g = glob.glob(cover_path)
+        try:
+            return os.path.basename(g[0])
+        except IndexError:
+            return None
+
     @property
     def image(self):
         if self._image is not None:
             return self._image
+        cover = self.get_cover_path()
+        if cover:
+            self._image = cover
+            return self._image
         zip_path = get_zip_path(self.md5)
-        z = zipfile.ZipFile(zip_path)
-        for name in z.namelist():
-            if os.path.splitext(name)[1].lower() in self.IMAGE_EXTENSIONS:
-                self._image = name
-                return name
+        with open(zip_path, 'rb') as f:
+            z = zipfile.ZipFile(f)
+            for name in z.namelist():
+                if os.path.splitext(name)[1].lower() in self.IMAGE_EXTENSIONS:
+                    self._image = self.cache_cover(name,
+                                                   z.open(name, 'r').read())
+                    return self._image
