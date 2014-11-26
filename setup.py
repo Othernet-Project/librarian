@@ -45,13 +45,7 @@ setup(
         ]),
     },
     long_description=read('README.rst'),
-    install_requires = [
-        'bottle==0.12.7',
-        'werkzeug==0.9.6',
-        'CherryPy==3.3.0',
-        'python-gnupg==0.3.6',
-        'python-dateutil==2.2',
-    ],
+    install_requires = read('conf/requirements.txt').strip().split('\n'),
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Topic :: Utilities',
