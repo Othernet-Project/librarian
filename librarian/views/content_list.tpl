@@ -63,12 +63,15 @@
         <li class="data {{ meta.get('archive', 'unknown') }} {{ 'partner' if meta['is_partner'] else '' }} {{ 'sponsored' if meta['is_sponsored'] else '' }}">
             <h2 class="title">
                 <a href="{{ i18n_path('/pages/%s/' % meta['md5']) }}">
-                    % if meta.images > 1:
+                    % if meta.images > 0 and meta.image:
                         <img src="/pages/{{ meta.image }}">
                     % end
-                    {{ meta['title'] }}
+                    <span>{{ meta['title'] }}</span>
                 </a>
             </h2>
+            <p class="date">
+                {{ meta.timestamp.strftime('%Y-%m-%d') }}
+            </p>
             <p class="badges">
             % include('_badges')
             </p>

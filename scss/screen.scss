@@ -65,7 +65,7 @@ header {
     top: 0;
     bottom: 0;
     overflow: hidden;
-    z-index: 1;
+    z-index: 2;
     @include box-shadow(0 0 4px transparentize($black, 0.2));
 
     a, span {
@@ -535,39 +535,67 @@ tr.selected {
   }
 }
 
+@mixin content-colors($primary, $link) {
+  background: $primary;
+
+  a {
+    color: $link;
+
+    &:hover {
+      color: $link;
+    }
+  }
+}
 
 .content-list {
   padding-top: 1em;
   text-align: center;
 
   li {
+    text-align: left;
     padding: 0;
     list-style: none;
     display: inline-block;
     max-width: 300px;
     vertical-align: top;
     margin: 0 $content-gap $content-gap 0;
-    @include box-shadow(0 0 5px transparentize($black, 0.8));
+    @include box-shadow(0 2px 5px transparentize($black, 0.8));
     border: 1px solid $light-grey;
 
     h2 {
       background: $dirt;
       font-size: 120%;
+      border: none;
+      margin: 0;
+      text-align: center;
+
+      @include content-colors($ash-blue, $white);
 
       a {
         display: inline-block;
-        padding: 1em;
-        color: $black;
+
+        span {
+          display: inline-block;
+          padding: 1em;
+        }
 
         &:hover {
-          color: $black;
           text-decoration: none;
         }
       }
     }
 
     p {
-      padding: 0 1em 1em;
+      padding: 0 1em;
+      font-size: 90%;
+    }
+
+    .date {
+      font-weight: bold;
+      color: $grey;
+      padding: 0.6em 1em;
+      text-align: right;
+      border-bottom: 1px solid $light-grey;
     }
 
     img {
@@ -577,29 +605,13 @@ tr.selected {
 
   .partner {
     h2 {
-      background: $green;
-
-      a {
-        color: $white;
-
-        &:hover {
-          color: $white;
-        }
-      }
+      @include content-colors($green, $white);
     }
   }
 
   .sponsored {
     h2 {
-      background: $ash-blue;
-
-      a {
-        color: $white;
-
-        &:hover {
-          color: $white;
-        }
-      }
+      @include content-colors($pale-blue, $white);
     }
   }
 }
