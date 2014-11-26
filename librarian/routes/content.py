@@ -104,6 +104,13 @@ def content_index(content_id):
     return content_file(content_id, 'index.html')
 
 
+@app.get(PREFIX + '/covers/<path:path>', skip=['i18n'])
+def cover_image(path):
+    config = request.app.config
+    covers = config['content.covers']
+    return static_file(path, root=covers, download=os.path.basename(path))
+
+
 def dictify_file_list(file_list):
     return [{
         'path': f[0],
