@@ -34,7 +34,7 @@
         <a href="{{ i18n_path(request.path) }}" class="button">{{ _('clear') }}</a>
         % end
         </label>
-        <span class="search">
+        <span class="paging">
             % if total_pages > 1:
                 %# Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
                 <label for="page">{{ _('page') }}</label>
@@ -59,24 +59,7 @@
         </p>
     </form>
     <ul id="content-list" class="content-list">
-        % for meta in metadata:
-        <li class="data {{ meta.get('archive', 'unknown') }} {{ 'partner' if meta['is_partner'] else '' }} {{ 'sponsored' if meta['is_sponsored'] else '' }}">
-            <h2 class="title">
-                <a href="{{ i18n_path('/pages/%s/' % meta['md5']) }}">
-                    % if meta.images > 0 and meta.image:
-                        <img src="/covers/{{ meta.image }}">
-                    % end
-                    <span>{{ meta['title'] }}</span>
-                </a>
-            </h2>
-            <p class="date">
-                {{ meta.timestamp.strftime('%Y-%m-%d') }}
-            </p>
-            <p class="badges">
-            % include('_badges')
-            </p>
-        </li>
-        % end
+        % include('_content_list')
     </ul>
     <p class="controls">
     % include('_simple_pager')
@@ -84,5 +67,14 @@
     % end 
 </div>
 
-<script src="/static/js/jquery.js"></script>
+<script id="loading" type="text/template">
+    %# Translators, used as placeholder while infinite scrolling content is being loaded
+    <p class="loading">{{ _('Loading...') }}</p>
+</script>
+
+<script id="end" type="text/template">
+    %# Translators, shown when user reaches the end of the library
+    <p class="end">{{ _('You have reached the end of the library') }}</p>
+</script>
+
 <script src="/static/js/content.js"></script>

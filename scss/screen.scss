@@ -104,7 +104,7 @@ header {
 
 
     .dashboard {
-      @include toolbar-icon('home');
+      @include toolbar-icon('dashboard');
     }
 
     .favorites {
