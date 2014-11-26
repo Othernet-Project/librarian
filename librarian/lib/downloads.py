@@ -13,7 +13,6 @@ import json
 import glob
 import zipfile
 import logging
-from io import BytesIO
 from contextlib import closing
 from functools import partial
 from datetime import datetime, timedelta
@@ -173,7 +172,7 @@ def extract_file(path, filename):
         with open(path, 'rb') as f:
             with zipfile.ZipFile(f) as content:
                 metadata = content.getinfo(filename)
-                content = content.open(filename, 'r')
+                content = content.open(filename, 'r').read()
     except zipfile.BadZipfile:
         raise ContentError("'%s' is not a valid zipfile" % path, path)
     except Exception as err:
@@ -216,7 +215,7 @@ def get_metadata(path):
     meta_filename = config['content.metadata']
     metadata, content = get_file(path, meta_filename)
     try:
-        content = str(content.read().decode('utf-8'))
+        content = str(content.decode('utf-8'))
     except UnicodeDecodeError as err:
         raise ContentError("Failed to decode metadata: '%s'" % err)
     try:
@@ -285,13 +284,13 @@ def patch_html(content):
     """ Patches HTML and adds a link tag for stylesheet
 
     :param content:     file-like object
-    :returns:           tuple of new size and BytesIO object
+    :returns:           tuple of new size and HTML bytestring
     """
-    html = content.read().decode('utf8')
+    html = content.decode('utf8')
     html = html.replace('</head>', STYLE_LINK + '</head>')
     html_bytes = html.encode('utf8')
     size = len(html_bytes)
-    return size, BytesIO(html_bytes)
+    return size, html_bytes
 
 
 class Meta(object):
