@@ -72,7 +72,7 @@ DEFAULT_LOCALE = 'en'
 app = bottle.default_app()
 
 
-@app.get('/static/<path:path>', no_i18n=True)
+@app.get('/static/<path:path>', skip=['i18n'])
 def send_static(path):
     return bottle.static_file(path, root=STATICDIR)
 
