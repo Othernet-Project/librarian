@@ -25,6 +25,7 @@ from ..lib import downloads
 from ..lib import send_file
 from ..lib import files
 from ..lib import i18n
+from ..lib.ajax import roca_view
 
 __all__ = ('app', 'content_list', 'content_file', 'content_index',)
 
@@ -36,7 +37,7 @@ app = default_app()
 
 
 @app.get(PREFIX + '/')
-@view('content_list')
+@roca_view('content_list', '_content_list')
 def content_list():
     """ Show list of content """
     try:
