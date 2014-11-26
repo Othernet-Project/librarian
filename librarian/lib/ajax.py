@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 import functools
 
-from bottle import request, abort
+from bottle import request, abort, template, DictMixin
 
 
 def ajax_only(func):
@@ -36,3 +36,25 @@ def ajax_only(func):
         return func(*args, **kwargs)
     return wrapper
 
+
+def roca_view(full, partial, **defaults):
+    """
+    Render partal for XHR requests and full template otherwise
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            if request.is_xhr:
+                tpl_name = partial
+            else:
+                tpl_name = full
+            result = func(*args, **kwargs)
+            if isinstance(result, (dict, DictMixin)):
+                tplvars = defaults.copy()
+                tplvars.update(result)
+                return template(tpl_name, **tplvars)
+            elif result is None:
+                return template(tpl_name, defaults)
+            return result
+        return wrapper
+    return decorator
