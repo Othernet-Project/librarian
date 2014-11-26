@@ -1,5 +1,9 @@
 %# Translators, used as page title
 % rebase('base.tpl', title=_('Dashboard'))
+
+%# Translators, used as page heading
+<h1>{{ _('Dashboard') }}</h1>
+
 % if zipballs:
 <div class="dash-updates content-archive dash-section">
     <div class="stat count">
@@ -14,9 +18,6 @@
     <span class="label">{{ _('last update') }}</span>
     </div>
 </div>
-% else:
-    %# Translators, used as page heading
-    <h1>{{ _('Dashboard') }}</h1>
 % end
 
 <div class="inner">
