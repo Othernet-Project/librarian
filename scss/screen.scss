@@ -59,7 +59,7 @@ h2 {
 header {
   .toolbar {
     color: $white;
-    background: $black;
+    background: transparentize($black, 0.2);
     position: fixed;
     left: 0;
     top: 0;
