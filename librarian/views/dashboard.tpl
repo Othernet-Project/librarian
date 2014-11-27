@@ -71,5 +71,21 @@
         <p>{{ _('Logs are shown in reverse chronological order') }}</p>
         <textarea>{{ logs }}</textarea>
     </div>
+
+    <div class="dash-about dash-section">
+        %# Translators, used as section heading on dashboard above 'About' section
+        <h2>{{ _('About') }}</h2>
+        %# Translators, this is a note about GPL license in the 'About' section on dashboard
+        <p>
+        {{ _('''
+        This program is free software: you can redistribute it and/or modify it
+        under the terms of the GNU General Public License as published by the
+        Free Software Foundation, either version 3 of the License, or (at your
+        option) any later version.
+        ''') }}
+        </p>
+        %# Translators, used as label for Librarian version in dashboard's 'About' section
+        <p><strong>{{ _('version:') }}</strong> {{ app_version }}</p>
+    </div>
 </div>
 
