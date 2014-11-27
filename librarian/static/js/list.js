@@ -5,7 +5,6 @@
   var totalPages = parseInt(contentList.data('total'), 10);
   var footer = $('.footer');
   var winHeight;
-  var loadOffset;   
   var masonry;
   var loader = $(templates.loading);
   var end = $(templates.end);
@@ -16,7 +15,7 @@
   var params = contentQuery.search(true);
   var page = parseInt(params.p, 10);
 
-  var onScroll = _.debounce(loadContent, 50);
+  var onScroll = _.debounce(loadContent, 50, {leading: true, trailing: false});
 
   // Normalize pager vales
   if (page == null || isNaN(page) || Array.isArray(page)) { page = 1; }
@@ -50,7 +49,6 @@
 
   function updateHeight(e) {
     winHeight = win.height();
-    loadOffset = winHeight * 0.4; // 40% of window height
   }
 
   function loadContent(e) {
@@ -62,8 +60,8 @@
     if (loading) { return; }
     loading = true;
 
-    docPos = win.scrollTop() + winHeight;
-    docHeight = doc.height() - loadOffset;
+    docPos = win.scrollTop();
+    docHeight = doc.height() - winHeight * 2;
 
     if (docPos < docHeight) { 
       loading = false;
