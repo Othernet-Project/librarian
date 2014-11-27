@@ -217,7 +217,7 @@ header {
 .body {
   margin-left: 47px;
   min-height: 300px;
-  background: $white;
+  background: $dirt;
   padding-top: 60px;
 }
 
@@ -562,7 +562,7 @@ tr.selected {
     vertical-align: top;
     margin: 0 $content-gap $content-gap 0;
     @include box-shadow(0 2px 5px transparentize($black, 0.8));
-    border: 1px solid $light-grey;
+    background: $white;
 
     h2 {
       background: $dirt;
