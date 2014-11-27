@@ -11,16 +11,16 @@
                 {{ meta.timestamp.strftime('%Y-%m-%d') }}
                 % if meta.is_partner:
                 / {{ meta.partner }} 
-                / <span class="partner">{{ _('content partner') }}</span>
+                / <span class="special">{{ _('content partner') }}</span>
                 % end
 
                 % if meta.is_sponsored:
                 / {{ meta.partner }} 
-                / <span class="sponsored">{{ _('sponsored content') }}</span>
+                / <span class="special">{{ _('sponsored content') }}</span>
                 % end
 
                 % if meta.archive == 'core':
-                / {{ _('Outernet core archive') }}
+                / <span class="special">{{ _('Outernet core archive') }}</span>
                 % end
             </strong>
             </p>
