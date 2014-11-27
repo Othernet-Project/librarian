@@ -55,10 +55,16 @@ def prep_po_path(template_path, locale):
     return po_path
 
 
+def remove_obsolete(template_path, po_path):
+    subprocess.call(['msgattrib', '--ignore-file=%s' % template_path,
+                     '--set-obsolete', '-o', po_path, po_path])
+
+
 def update_po(template_path, locale):
     po_path = prep_po_path(template_path, locale)
     if os.path.exists(po_path):
-        subprocess.call(['msgmerge', '-o', po_path, po_path, template_path])
+        subprocess.call(['msgmerge', '-N', '-o', po_path, po_path,
+                         template_path])
     else:
         subprocess.call(['msginit', '--locale="%s"' % locale,
                          '--no-translator', '-o', po_path, '-i',
@@ -68,6 +74,10 @@ def update_po(template_path, locale):
             text = f.read()
         with open(po_path, 'w') as f:
             f.write(CHARSET_RE.sub(r'\1UTF-8\2', text))
+    if locale.startswith('en'):
+        # Copy msgid to msgstr for English locale
+        subprocess.call(['msgen', '-o', po_path, po_path])
+    remove_obsolete(template_path, po_path)
     return po_path
 
 
@@ -76,21 +86,22 @@ def process_dir(path, extension, args, template_path):
     Execute ``args`` command on given path for given extensions
     """
     pattern = '*.%s' % extension
+    if os.path.exists(template_path):
+        args.append('--join-existing')
+    processed = []
     for root, dirs, files in os.walk(path):
         for f in fnmatch.filter(files, pattern):
-            fargs = []
-            f = os.path.relpath(os.path.join(root, f))
-            if os.path.exists(template_path):
-                fargs.append('--join-existing')
-            fargs.append(f)
-            out = subprocess.call(args + fargs)
-            if out:
-                print("xgettext failed with status code %s" % out,
-                      file=sys.stderr)
-                print("Command used was: '%s'" % ' '.join(args + fargs))
-                sys.exit(1)
-            else:
-                print("Processed '%s'" % f)
+            path = os.path.relpath(os.path.join(root, f))
+            processed.append(f)
+            args.append(path)
+    out = subprocess.call(args)
+    if out:
+        print("xgettext failed with status code %s" % out,
+              file=sys.stderr)
+        print("Command used was: '%s'" % ' '.join(args + fargs))
+        sys.exit(1)
+    else:
+        print('\n'.join(["Processed '%s'" % p for p in processed]))
 
 
 if __name__ == '__main__':
@@ -184,6 +195,8 @@ if __name__ == '__main__':
     xgettext_args, template_path = make_args(
         localedir, args.domain, args.address, args.comment, package_name,
         version)
+    if os.path.exists(template_path):
+        os.unlink(template_path)
     for ext in exts:
         process_dir(path, ext, xgettext_args, template_path)
 

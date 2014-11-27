@@ -31,7 +31,7 @@ __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
 
 STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
 LICENSES = (
-    (None, _("Unknown license")),
+    (None, _('Unknown license')),
     ('CC-BY', _('Creative Commons Attribution')),
     ('CC-BY-ND', _('Creative Commons Attribution-NoDerivs')),
     ('CC-BY-NC', _('Creative Commons Attribution-NonCommercial')),
