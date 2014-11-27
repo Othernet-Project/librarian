@@ -58,7 +58,7 @@
         </span>
         </p>
     </form>
-    <ul id="content-list" class="content-list">
+    <ul id="content-list" class="content-list" data-total="{{ int(total_pages) }}">
         % include('_content_list')
     </ul>
     <p class="controls">
@@ -68,13 +68,20 @@
 </div>
 
 <script id="loading" type="text/template">
-    %# Translators, used as placeholder while infinite scrolling content is being loaded
-    <p class="loading">{{ _('Loading...') }}</p>
+    <p id="loading" class="loading">
+        <img src="/static/img/loading.gif">
+        %# Translators, used as placeholder while infinite scrolling content is being loaded
+        <span>{{ _('Loading...') }}</span>
+    </p>
 </script>
 
 <script id="end" type="text/template">
+    <p class="end">
     %# Translators, shown when user reaches the end of the library
-    <p class="end">{{ _('You have reached the end of the library') }}</p>
+    {{ _('You have reached the end of the library.') }}
+    %# Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
+    <a href="#content-list">{{ _('Go to top') }}</a>
+    </p>
 </script>
 
 <script src="/static/js/content.js"></script>
