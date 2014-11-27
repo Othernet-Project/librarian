@@ -24,7 +24,7 @@
 % end
 
 %# Translators, used as 'unknown license' badge
-<abbr class="badge license" title="{{ readable_license(meta.get('license')) }}">{{ meta.get('license') or _('unknown') }}</abbr>
+%#<abbr class="badge license" title="{{ readable_license(meta.get('license')) }}">{{ meta.get('license') or _('unknown') }}</abbr>
 
 % if meta.get('partner'):
 %# Translators, appears next to content title when content is sponsored or is partner content, %s is replaced by person/company name; not part of sentence

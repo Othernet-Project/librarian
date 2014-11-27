@@ -18,6 +18,7 @@ $content-gap: 1em;
 body, html {
   padding: 0;
   background: $dark-grey;
+  height: 100%;
 }
 
 .inner {
@@ -166,7 +167,7 @@ header {
     position: fixed;
     padding: 0.4em;
     top: 0;
-    right: 0;
+    right: 1em;
     width: 80px;
     text-align: right;
     background: $black;
@@ -641,5 +642,51 @@ tr.selected {
     text-transform: uppercase;
     font-size: 90%;
     @include border-radius(2px);
+  }
+}
+
+.reader {
+  position: absolute;
+  top: 0;
+  left: 47px;
+  right: 0;
+  height: 100%;
+
+  .reader-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.reader-meta {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  line-height: 120%;
+  background: $ash-blue;
+  color: $white;
+
+  .sponsored {
+    color: $yellow;
+    font-size: 90%;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .inner {
+    padding: 0.5em 1em;
   }
 }

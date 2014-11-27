@@ -79,7 +79,7 @@ def content_list():
     }
 
 
-@app.get(PREFIX + '/pages/%s/<filename:path>' % CONTENT_ID)
+@app.get(PREFIX + '/pages/%s/<filename:path>' % CONTENT_ID, skip=['i18n'])
 def content_file(content_id, filename):
     """ Serve file from zipball with specified id """
     zippath = downloads.get_zip_path(content_id)
@@ -99,10 +99,14 @@ def content_file(content_id, filename):
 
 
 @app.get(PREFIX + '/pages/%s/' % CONTENT_ID)
+@view('reader')
 def content_index(content_id):
-    """ Shorthand for /<content_id>/index.html """
+    """ Loads the reader interface """
     archive.add_view(content_id)
-    return content_file(content_id, 'index.html')
+    try:
+        return dict(meta=downloads.Meta(archive.get_single(content_id)))
+    except IndexError:
+        abort(404)
 
 
 @app.get(PREFIX + '/covers/<path:path>', skip=['i18n'])
