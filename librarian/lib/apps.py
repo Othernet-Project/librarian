@@ -52,7 +52,7 @@ def get_app_info(path):
     except ContentError:
         raise MetadataError('Could not extract metadata')
     try:
-        info = str(info.read().decode('utf8'))
+        info = str(info.decode('utf8'))
     except UnicodeDecodeError as err:
         raise MetadataError('Could not read metadata')
     try:
