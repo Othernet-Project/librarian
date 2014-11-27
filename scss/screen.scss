@@ -673,11 +673,11 @@ tr.selected {
   line-height: 120%;
   background: $ash-blue;
   color: $white;
-
-  .sponsored {
-    color: $yellow;
+  
+  .sponsored, .partner {
     font-size: 90%;
     text-transform: uppercase;
+    color: $yellow;
   }
 
   p {

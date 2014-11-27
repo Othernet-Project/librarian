@@ -9,19 +9,22 @@
             <p class="date">
             <strong>
                 {{ meta.timestamp.strftime('%Y-%m-%d') }}
-                % if meta.is_partner or meta.is_sponsored:
-                / {{ meta.partner }}
+                % if meta.is_partner:
+                / {{ meta.partner }} 
+                / <span class="partner">{{ _('content partner') }}</span>
                 % end
+
+                % if meta.is_sponsored:
+                / {{ meta.partner }} 
+                / <span class="sponsored">{{ _('sponsored content') }}</span>
+                % end
+
                 % if meta.archive == 'core':
                 / {{ _('Outernet core archive') }}
                 % end
-                % if meta.is_sponsored:
-                / <span class="sponsored">{{ _('sponsored content') }}</span>
-                % end
             </strong>
             </p>
-            % if meta.free_license:
-            <p class="licensing">{{ str(_('This content was published under %s license')) % meta.human_license }}</p>
+            <p class="licensing">{{ meta.human_license }}</p>
             % end
         </div>
     </div>
