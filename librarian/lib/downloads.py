@@ -343,10 +343,15 @@ class Meta(object):
             self._image = cover
             return self._image
         zip_path = get_zip_path(self.md5)
-        with open(zip_path, 'rb') as f:
-            z = zipfile.ZipFile(f)
-            for name in z.namelist():
-                if os.path.splitext(name)[1].lower() in self.IMAGE_EXTENSIONS:
-                    self._image = self.cache_cover(name,
-                                                   z.open(name, 'r').read())
-                    return self._image
+        try:
+            with open(zip_path, 'rb') as f:
+                z = zipfile.ZipFile(f)
+                for name in z.namelist():
+                    if os.path.splitext(name)[1].lower() in self.IMAGE_EXTENSIONS:
+                        self._image = self.cache_cover(name,
+                                                       z.open(name, 'r').read())
+                        return self._image
+        except TypeError:
+            # Could not find the zip file
+            logging.error("Could not find zip file '%s.zip'" % self.md5)
+            return None
