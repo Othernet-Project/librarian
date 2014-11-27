@@ -58,7 +58,6 @@ def prep_po_path(template_path, locale):
 def remove_obsolete(template_path, po_path):
     subprocess.call(['msgattrib', '--ignore-file=%s' % template_path,
                      '--set-obsolete', '-o', po_path, po_path])
-    subprocess.call(['msgattrib', '--no-obsolete', '-o', po_path, po_path])
 
 
 def update_po(template_path, locale):
