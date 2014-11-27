@@ -242,8 +242,9 @@ header {
   .all {
     display: block;
     width: 50%;
-    background: $light-grey;
+    background: $grey;
     color: $white;
+    @include border-radius(1.2em);
 
     .free {
       display: inline-block;
