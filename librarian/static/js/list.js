@@ -15,7 +15,7 @@
   var params = contentQuery.search(true);
   var page = parseInt(params.p, 10);
 
-  var onScroll = _.debounce(loadContent, 50, {leading: true, trailing: false});
+  var onScroll = _.debounce(loadContent, 50);
 
   // Normalize pager vales
   if (page == null || isNaN(page) || Array.isArray(page)) { page = 1; }
