@@ -87,22 +87,21 @@ def process_dir(path, extension, args, template_path):
     """
     pattern = '*.%s' % extension
     if os.path.exists(template_path):
-        os.unlink(template_path)
+        args.append('--join-existing')
+    processed = []
     for root, dirs, files in os.walk(path):
         for f in fnmatch.filter(files, pattern):
-            fargs = []
-            f = os.path.relpath(os.path.join(root, f))
-            if os.path.exists(template_path):
-                fargs.append('--join-existing')
-            fargs.append(f)
-            out = subprocess.call(args + fargs)
-            if out:
-                print("xgettext failed with status code %s" % out,
-                      file=sys.stderr)
-                print("Command used was: '%s'" % ' '.join(args + fargs))
-                sys.exit(1)
-            else:
-                print("Processed '%s'" % f)
+            path = os.path.relpath(os.path.join(root, f))
+            processed.append(f)
+            args.append(path)
+    out = subprocess.call(args)
+    if out:
+        print("xgettext failed with status code %s" % out,
+              file=sys.stderr)
+        print("Command used was: '%s'" % ' '.join(args + fargs))
+        sys.exit(1)
+    else:
+        print('\n'.join(["Processed '%s'" % p for p in processed]))
 
 
 if __name__ == '__main__':
@@ -196,6 +195,8 @@ if __name__ == '__main__':
     xgettext_args, template_path = make_args(
         localedir, args.domain, args.address, args.comment, package_name,
         version)
+    if os.path.exists(template_path):
+        os.unlink(template_path)
     for ext in exts:
         process_dir(path, ext, xgettext_args, template_path)
 
