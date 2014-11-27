@@ -55,10 +55,17 @@ def prep_po_path(template_path, locale):
     return po_path
 
 
+def remove_obsolete(template_path, po_path):
+    subprocess.call(['msgattrib', '--ignore-file=%s' % template_path,
+                     '--set-obsolete', '-o', po_path, po_path])
+    subprocess.call(['msgattrib', '--no-obsolete', '-o', po_path, po_path])
+
+
 def update_po(template_path, locale):
     po_path = prep_po_path(template_path, locale)
     if os.path.exists(po_path):
-        subprocess.call(['msgmerge', '-o', po_path, po_path, template_path])
+        subprocess.call(['msgmerge', '-N', '-o', po_path, po_path,
+                         template_path])
     else:
         subprocess.call(['msginit', '--locale="%s"' % locale,
                          '--no-translator', '-o', po_path, '-i',
@@ -68,6 +75,10 @@ def update_po(template_path, locale):
             text = f.read()
         with open(po_path, 'w') as f:
             f.write(CHARSET_RE.sub(r'\1UTF-8\2', text))
+    if locale.startswith('en'):
+        # Copy msgid to msgstr for English locale
+        subprocess.call(['msgen', '-o', po_path, po_path])
+    remove_obsolete(template_path, po_path)
     return po_path
 
 
@@ -76,6 +87,8 @@ def process_dir(path, extension, args, template_path):
     Execute ``args`` command on given path for given extensions
     """
     pattern = '*.%s' % extension
+    if os.path.exists(template_path):
+        os.unlink(template_path)
     for root, dirs, files in os.walk(path):
         for f in fnmatch.filter(files, pattern):
             fargs = []
