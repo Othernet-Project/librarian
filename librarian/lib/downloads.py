@@ -19,6 +19,8 @@ from datetime import datetime, timedelta
 
 from bottle import request
 
+from .i18n import lazy_gettext as _
+
 
 __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
            'get_zipballs', 'get_timestamp', 'get_timestamp_as_datetime',
@@ -28,6 +30,26 @@ __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
 
 
 STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
+LICENSES = (
+    (None, _("Unknown license")),
+    ('CC-BY', _('Creative Commons Attribution')),
+    ('CC-BY-ND', _('Creative Commons Attribution-NoDerivs')),
+    ('CC-BY-NC', _('Creative Commons Attribution-NonCommercial')),
+    ('CC-BY-ND-NC', _('Creative Commons '
+                      'Attribution-NonCommercial-NoDerivs')),
+    ('CC-BY-SA', _('Creative Commons Attribution-ShareAlike')),
+    ('CC-BY-NC-SA', _('Creative Commons '
+                      'Attribution-NonCommercial-ShareAlike')),
+    ('GFDL', _('GNU Free Documentation License')),
+    ('OPL', _('Open Publication License')),
+    ('OCL', _('Open Content License')),
+    ('ADL', _('Against DRM License')),
+    ('FAL', _('Free Art License')),
+    ('PD', _('Public Domain')),
+    ('OF', _('Other free license')),
+    ('ARL', _('All rights reserved')),
+    ('ON', _('Other non-free license')),
+)
 
 
 class ContentError(BaseException):
@@ -335,6 +357,17 @@ class Meta(object):
             return None
 
     @property
+    def free_license(self):
+        return self.license not in ['ARL', 'ON']
+
+    @property
+    def human_license(self):
+        try:
+            return dict(LICENSES)[self.license]
+        except (KeyError, AttributeError):
+            return LICENSES[0][1]
+
+    @property
     def image(self):
         if self._image is not None:
             return self._image
@@ -343,10 +376,15 @@ class Meta(object):
             self._image = cover
             return self._image
         zip_path = get_zip_path(self.md5)
-        with open(zip_path, 'rb') as f:
-            z = zipfile.ZipFile(f)
-            for name in z.namelist():
-                if os.path.splitext(name)[1].lower() in self.IMAGE_EXTENSIONS:
-                    self._image = self.cache_cover(name,
-                                                   z.open(name, 'r').read())
-                    return self._image
+        try:
+            with open(zip_path, 'rb') as f:
+                z = zipfile.ZipFile(f)
+                for name in z.namelist():
+                    if os.path.splitext(name)[1].lower() in self.IMAGE_EXTENSIONS:
+                        self._image = self.cache_cover(name,
+                                                       z.open(name, 'r').read())
+                        return self._image
+        except TypeError:
+            # Could not find the zip file
+            logging.error("Could not find zip file '%s.zip'" % self.md5)
+            return None

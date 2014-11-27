@@ -158,7 +158,6 @@ def start(logfile=None, profile=False):
                server=config['librarian.server'],
                host=config['librarian.bind'],
                port=int(config['librarian.port']),
-               reloader=config['librarian.debug'] == 'yes',
                debug=config['librarian.debug'] == 'yes')
 
 
