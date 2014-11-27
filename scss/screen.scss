@@ -73,13 +73,14 @@ header {
       background-repeat: no-repeat;
       background-position: 11px 10px;
       padding-top: 0.7em;
-      padding-right: 21px;
+      padding-right: 0;
       padding-bottom: 0.7em;
-      padding-left: 26px;
-      text-indent: -3000px;
+      padding-left: 47px;
       cursor: pointer;
       overflow: hidden;
-      @include transition(padding-left 0.3s);
+      width: 0;
+      white-space: nowrap;
+      @include transition(padding-right 0.3s, padding-left 0.3s);
     }
 
     span {
@@ -97,8 +98,9 @@ header {
 
     &:hover {
       a, span {
-        text-indent: 0;
-        padding-left: 47px;
+        width: auto;
+        padding-right: 28px;
+        padding-left: 60px;
       }
     }
 
