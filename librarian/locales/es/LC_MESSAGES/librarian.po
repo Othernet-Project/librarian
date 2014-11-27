@@ -1,523 +1,88 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: Librarian\n"
+"Report-Msgid-Bugs-To: translations@outernet.is\n"
+"POT-Creation-Date: 2014-11-27 20:22+0100\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Project-Id-Version: Librarian\n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: /vagrant/librarian/app.py:114 /vagrant/librarian/views/base.tpl:8
-#: /vagrant/librarian/views/base.tpl:39 /vagrant/librarian/app.py:113
-#: /vagrant/librarian/views/base.tpl:43 /vagrant/librarian/app.py:127
-#: librarian/app.py:124
+#. Translators, used as default page title
+#. Translators, used in page title
+#. Translators, used in footer
+#: librarian/app.py:127 librarian/views/base.tpl:8 librarian/views/base.tpl:46
 msgid "Librarian"
 msgstr "bibliotecario"
-
-#: /vagrant/librarian/views/base.tpl:23
-#: /vagrant/librarian/views/dashboard.tpl:2
-#: /vagrant/librarian/views/dashboard.tpl:19
-#: /vagrant/librarian/views/base.tpl:33
-msgid "Dashboard"
-msgstr "Panel de control"
-
-#: /vagrant/librarian/views/base.tpl:25
-#: /vagrant/librarian/views/favorites.tpl:2
-#: /vagrant/librarian/views/favorites.tpl:4
-#: /vagrant/librarian/views/base.tpl:29
-msgid "Favorites"
-msgstr "Favoritos"
-
-#: /vagrant/librarian/views/base.tpl:29
-#: /vagrant/librarian/views/downloads.tpl:2
-#: /vagrant/librarian/views/downloads.tpl:4
-#: /vagrant/librarian/views/base.tpl:31
-msgid "Updates"
-msgstr "Actualizaciones"
-
-#: /vagrant/librarian/views/cleanup.tpl:13
-msgid "%s more space should be freed."
-msgstr "%s de espacio deberia ser liberado."
-
-#: /vagrant/librarian/views/cleanup.tpl:17
-msgid "Remember that favorited content cannot be deleted."
-msgstr "Recuerda que el contenido favorito no puede ser eliminado."
-
-#: /vagrant/librarian/views/cleanup.tpl:22
-msgid "There is enough free space on storage"
-msgstr "Hay suficiente espacio en el disco"
-
-#: /vagrant/librarian/views/cleanup.tpl:30
-msgid "delete?"
-msgstr "¿borrar?"
-
-#: /vagrant/librarian/views/cleanup.tpl:32
-#: /vagrant/librarian/views/favorites.tpl:15
-msgid "date"
-msgstr "fecha"
-
-#: /vagrant/librarian/views/cleanup.tpl:34
-#: /vagrant/librarian/views/content_list.tpl:65
-#: /vagrant/librarian/views/downloads.tpl:27
-#: /vagrant/librarian/views/favorites.tpl:17
-#: /vagrant/librarian/views/content_list.tpl:66
-#: /vagrant/librarian/views/downloads.tpl:38
-msgid "title"
-msgstr "título"
-
-#: /vagrant/librarian/views/cleanup.tpl:36
-msgid "size"
-msgstr "Tamaño"
-
-#: /vagrant/librarian/views/cleanup.tpl:52
-msgid "There is enough free space. No clean-up needed."
-msgstr "Existe suficiente espacio libre. No es necesario liberar espacio."
-
-#: /vagrant/librarian/views/cleanup.tpl:59
-msgid "How much space does this free up?"
-msgstr "¿Cuánto espacio libera esto?"
-
-#: /vagrant/librarian/views/cleanup.tpl:61
-msgid "Delete selected now"
-msgstr "Borrar seleccionados ahora."
-
-#: /vagrant/librarian/views/content_list.tpl:78
-#: /vagrant/librarian/views/content_list.tpl:81
-msgid "favorite"
-msgstr "favorito"
-
-#: /vagrant/librarian/views/dashboard.tpl:78
-#: /vagrant/librarian/views/dashboard.tpl:61
-msgid "used space"
-msgstr "espacio utilizado"
-
-#: /vagrant/librarian/views/dashboard.tpl:14
-msgid "last update"
-msgstr "última actualización"
-
-#: /vagrant/librarian/views/dashboard.tpl:25
-msgid "Favorite content"
-msgstr "Contenido favorito"
-
-#: /vagrant/librarian/views/dashboard.tpl:29
-#: /vagrant/librarian/views/favorites.tpl:9
-msgid "You have not favorted any content yet"
-msgstr "No has añadido contenido a favoritos"
-
-#: /vagrant/librarian/views/dashboard.tpl:36
-msgid "see all favorites"
-msgstr "Ver los favoritos"
-
-#: /vagrant/librarian/views/dashboard.tpl:62
-#: /vagrant/librarian/views/dashboard.tpl:45
-msgid "You are running low on disk space."
-msgstr "Se está agotando el espacio en disco."
-
-#: /vagrant/librarian/views/dashboard.tpl:64
-#: /vagrant/librarian/views/dashboard.tpl:47
-msgid "Free some space now"
-msgstr "Libera algo de espacio ahora"
-
-#: /vagrant/librarian/views/downloads.tpl:25
-#: /vagrant/librarian/views/downloads.tpl:36
-msgid "select"
-msgstr "seleccionar"
-
-#: /vagrant/librarian/views/downloads.tpl:51
-#: /vagrant/librarian/views/downloads.tpl:72
-msgid "There is no new content"
-msgstr "No hay nuevo contenido"
-
-#: /vagrant/librarian/views/downloads.tpl:64
-msgid "Add selected to archive"
-msgstr "Añadir los seleccionados al repositorio"
-
-#: /vagrant/librarian/views/downloads.tpl:17
-#: /vagrant/librarian/views/downloads.tpl:66
-#: /vagrant/librarian/views/downloads.tpl:28
-#: /vagrant/librarian/views/downloads.tpl:87
-msgid "Delete selected"
-msgstr "Eliminar los seleccionados"
-
-#: /vagrant/librarian/views/favorites.tpl:26
-msgid "unfavorite"
-msgstr "Eliminar de favoritos"
-
-#: /vagrant/librarian/views/base.tpl:27
-#: /vagrant/librarian/views/content_list.tpl:2
-#: /vagrant/librarian/views/content_list.tpl:5
-#: /vagrant/librarian/views/base.tpl:23
-msgid "Library"
-msgstr "Biblioteca"
-
-#: /vagrant/librarian/views/content_list.tpl:19
-msgid "Content library is currently empty"
-msgstr "El contenido de la biblioteca actualmente está vacío"
-
-#: /vagrant/librarian/views/content_list.tpl:28
-msgid "search titles"
-msgstr "buscar titulos"
-
-#: /vagrant/librarian/views/content_list.tpl:31
-#: /vagrant/librarian/views/content_list.tpl:56
-#: /vagrant/librarian/views/file_list.tpl:14
-msgid "go"
-msgstr "ir"
-
-#: /vagrant/librarian/views/content_list.tpl:34
-msgid "clear"
-msgstr "borrar"
-
-#. Past form of add verb, should be añadido in spanish
-#: /vagrant/librarian/views/content_list.tpl:67
-#: /vagrant/librarian/views/content_list.tpl:68
-msgid "added"
-msgstr "añadido"
-
-#: /vagrant/librarian/views/dashboard.tpl:8
-msgid "update available"
-msgid_plural "updates available"
-msgstr[0] "Actualización disponible"
-msgstr[1] "Actualizaciones disponibles"
-
-#: /vagrant/librarian/views/dashboard.tpl:42
-#: /vagrant/librarian/views/dashboard.tpl:25
-msgid "Content library stats"
-msgstr "Estadisticas del contenido de la biblioteca"
-
-#: /vagrant/librarian/views/dashboard.tpl:72
-#: /vagrant/librarian/views/dashboard.tpl:55
-msgid "item in the library"
-msgid_plural "items in the library"
-msgstr[0] "objeto en la biblioteca"
-msgstr[1] "objetos en la biblioteca"
-
-#: /vagrant/librarian/views/dashboard.tpl:85
-#: /vagrant/librarian/views/dashboard.tpl:68
-msgid "Application logs"
-msgstr "Registros de aplicación"
-
-#: /vagrant/librarian/views/dashboard.tpl:87
-#: /vagrant/librarian/views/dashboard.tpl:70
-msgid "Logs are shown in reverse chronological order"
-msgstr "Los registros se muestran en orden cronológico inverso"
-
-#. I woukld make them plural in spanish, "seleccionar todos"
-#: /vagrant/librarian/views/downloads.tpl:11
-#: /vagrant/librarian/views/downloads.tpl:60
-#: /vagrant/librarian/views/downloads.tpl:22
-#: /vagrant/librarian/views/downloads.tpl:81
-msgid "Select all"
-msgstr "Seleccionar todos"
-
-#. Not sure what to write, but Seleccionar ninguno doesn't make any sense in spanish
-#: /vagrant/librarian/views/downloads.tpl:13
-#: /vagrant/librarian/views/downloads.tpl:62
-#: /vagrant/librarian/views/downloads.tpl:24
-#: /vagrant/librarian/views/downloads.tpl:83
-msgid "Select none"
-msgstr "Descartar seleccionados"
-
-#: /vagrant/librarian/views/downloads.tpl:29
-#: /vagrant/librarian/views/downloads.tpl:40
-msgid "broadcast"
-msgstr "emisión"
-
-#: /vagrant/librarian/views/downloads.tpl:31
-#: /vagrant/librarian/views/downloads.tpl:42
-msgid "downloaded"
-msgstr "descargado"
-
-#: /vagrant/librarian/views/content_list.tpl:8
-msgid "Showing search results for '%(terms)s'"
-msgstr "Mostrando resultados de búsqueda para '%(terms)s'"
-
-#: /vagrant/librarian/views/content_list.tpl:11
-msgid "Showing %(count)s of %(total)s item"
-msgid_plural "Showing %(count)s of %(total)s items"
-msgstr[0] "Mostrando %(count)s de %(total)s objeto"
-msgstr[1] "Mostrando %(count)s de %(total)s objetos"
-
-#: /vagrant/librarian/views/content_list.tpl:22
-msgid "There are no search results for '%(terms)s'"
-msgstr "No hay resultados de búsqueda para '%(terms)s'"
-
-#. Translators, used in the pager
-#: /vagrant/librarian/views/_simple_pager.tpl:3
-msgid "previous"
-msgstr "anterior"
-
-#. Translators, used in the pager
-#: /vagrant/librarian/views/_simple_pager.tpl:7
-msgid "next"
-msgstr "siguiente"
-
-#. Translators, used as page title
-#. Translators, used as page title on clean-up page
-#: /vagrant/librarian/views/cleanup.tpl:2
-#: /vagrant/librarian/views/cleanup.tpl:4
-msgid "Library clean-up"
-msgstr "Limpiar biblioteca"
-
-#. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
-#: /vagrant/librarian/views/content_list.tpl:40
-#: /vagrant/librarian/views/downloads.tpl:10
-msgid "page"
-msgstr "página"
-
-#. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
-#: /vagrant/librarian/views/content_list.tpl:54
-#: /vagrant/librarian/views/downloads.tpl:13
-msgid "per page"
-msgstr "por página"
-
-#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: /vagrant/librarian/views/dashboard.tpl:46
-#: /vagrant/librarian/views/dashboard.tpl:29
-msgid "download directory (%s free)"
-msgstr "descargar directorio (%s free)"
-
-#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: /vagrant/librarian/views/dashboard.tpl:52
-#: /vagrant/librarian/views/dashboard.tpl:35
-msgid "content library (%s free)"
-msgstr "contenido de biblioteca (%s free)"
-
-#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: /vagrant/librarian/views/dashboard.tpl:57
-#: /vagrant/librarian/views/dashboard.tpl:40
-msgid "total space (%s free)"
-msgstr "espacio total (%s free)"
-
-#. Translators, used as button label on updates page for adding marked content to library
-#: /vagrant/librarian/views/downloads.tpl:15
-#: /vagrant/librarian/views/downloads.tpl:64
-#: /vagrant/librarian/views/downloads.tpl:26
-#: /vagrant/librarian/views/downloads.tpl:85
-msgid "Add selected to library"
-msgstr "Añadir selección a la biblioteca"
-
-#. Translators, used as 'content belongs to core archive' badge
-#: /vagrant/librarian/views/_badges.tpl:8
-#, fuzzy
-msgid "core"
-msgstr "nucleo"
-
-#. Translators, used as 'partner content' badge
-#: /vagrant/librarian/views/_badges.tpl:15
-msgid "partner"
-msgstr "socio"
-
-#. Translators, used as 'sponsored content' badge
-#: /vagrant/librarian/views/_badges.tpl:22
-msgid "sponsored"
-msgstr "patrocinado"
-
-#. Translators, used as 'unknown license' badge
-#: /vagrant/librarian/views/_badges.tpl:27
-msgid "unknown"
-msgstr "desconocido"
-
-#. Translators, appears next to content title when content is sponsored or is partner content, %s is replaced by person/company name; not part of sentence
-#: /vagrant/librarian/views/_badges.tpl:31
-msgid "from %s"
-msgstr "de %s"
-
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#: /vagrant/librarian/views/app_list.tpl:2
-#: /vagrant/librarian/views/app_list.tpl:6
-#: /vagrant/librarian/views/base.tpl:27
-msgid "Apps"
-msgstr "Aplicaciones"
-
-#. Translators, refers to app author
-#: /vagrant/librarian/views/app_list.tpl:18
-msgid "author:"
-msgstr "autor:"
-
-#. Translators, refers to app version
-#: /vagrant/librarian/views/app_list.tpl:20
-msgid "version:"
-msgstr "versión:"
-
-#. Translators, message show in app listing when no apps are present.
-#: /vagrant/librarian/views/app_list.tpl:29
-msgid "No apps found."
-msgstr "No se han encontrado aplicaciones."
-
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#: /vagrant/librarian/views/base.tpl:25
-#: /vagrant/librarian/views/file_list.tpl:2
-#: /vagrant/librarian/views/file_list.tpl:6
-#, fuzzy
-msgid "Files"
-msgstr "Archivos"
-
-#: /vagrant/librarian/views/downloads.tpl:14
-msgid "Reload"
-msgstr "Actualizar"
-
-#: /vagrant/librarian/views/downloads.tpl:65
-msgid "replaces:"
-msgstr "substituye:"
-
-#. Translators, used as note shown on favorites page when user has no favorites
-#: /vagrant/librarian/views/favorites.tpl:9
-msgid "You have not favorited any content yet"
-msgstr "No tienes aún ningún contenido favorito"
-
-#. Translators, used as label for link that leads to parent directory in file listing
-#: /vagrant/librarian/views/file_list.tpl:23
-msgid "(go up one level)"
-msgstr "(subir un directorio)"
-
-#: /vagrant/librarian/views/file_list.tpl:33
-#: /vagrant/librarian/views/file_list.tpl:51
-#: /vagrant/librarian/views/file_list.tpl:53
-msgid "Rename"
-msgstr "Renombrar"
-
-#: /vagrant/librarian/views/file_list.tpl:38
-#: /vagrant/librarian/views/file_list.tpl:56
-#: /vagrant/librarian/views/file_list.tpl:58
-msgid "Delete"
-msgstr "Borrar"
-
-#: /vagrant/librarian/views/file_list.tpl:64
-#: /vagrant/librarian/views/file_list.tpl:74
-msgid "About this folder"
-msgstr "Acerca de esta carpeta"
-
-#. Translators, used as note on library page when showing content list, %(count)s is number of items on the page, %(total)s is total number of items in library
-#: /vagrant/librarian/views/content_list.tpl:11
-msgid "Showing %(count)s of %(total)s items"
-msgid_plural "Showing %(count)s of %(total)s items"
-msgstr[0] "Mostrando %(count)s de %(total)s objetos"
-msgstr[1] "Mostrando %(count)s de %(total)s objetos"
-
-#. Translators, used as page title for page that shows result of running a script
-#. Translators, used as page header for page that shows result of running a script
-#: /vagrant/librarian/views/exec_result.tpl:2
-#: /vagrant/librarian/views/exec_result.tpl:5
-msgid "Script output"
-msgstr "Secuencia de comandos de salida"
-
-#. Translators, return (result) code of the script executed via file browser
-#: /vagrant/librarian/views/exec_result.tpl:11
-msgid "return code:"
-msgstr "Código de retorno"
-
-#. Translators, shown when result code is good (0).
-#: /vagrant/librarian/views/exec_result.tpl:14
-msgid "OK"
-msgstr "Está bien"
-
-#. Translators, shown when result code is not good (non-zero).
-#: /vagrant/librarian/views/exec_result.tpl:17
-msgid "error"
-msgstr "Error"
-
-#. Translators, refers to standard output of script run from file browser (STDOUT)
-#: /vagrant/librarian/views/exec_result.tpl:22
-msgid "Output"
-msgstr "Salida"
-
-#. Translators, shown if script returned no output
-#: /vagrant/librarian/views/exec_result.tpl:27
-msgid "no output"
-msgstr "Sin salida"
-
-#. Translators, refers to standard errors of script run from file browser (STDERR)
-#: /vagrant/librarian/views/exec_result.tpl:32
-msgid "Errors"
-msgstr "Errores"
-
-#. Translators, label for button in file listing that allows user to run a script
-#: /vagrant/librarian/views/file_list.tpl:65
-msgid "Run"
-msgstr "Ejecutar"
 
 #. Translators, this is used when app doesn't provide a description
 #: librarian/lib/apps.py:45
 msgid "No description provided"
 msgstr "No hay descripción"
 
-#: librarian/lib/archive.py:37
+#: librarian/lib/downloads.py:34
 msgid "Unknown license"
 msgstr "Licencia desconocida"
 
-#: librarian/lib/archive.py:38
+#: librarian/lib/downloads.py:35
 msgid "Creative Commons Attribution"
 msgstr "Atribución Creative Commons"
 
-#: librarian/lib/archive.py:39
+#: librarian/lib/downloads.py:36
 msgid "Creative Commons Attribution-NoDerivs"
 msgstr "Atribución-NoDerivadas Creative Commons"
 
-#: librarian/lib/archive.py:40
+#: librarian/lib/downloads.py:37
 msgid "Creative Commons Attribution-NonCommercial"
 msgstr "Atribución-NoComercial Creative Commons"
 
-#: librarian/lib/archive.py:41
+#: librarian/lib/downloads.py:38
 msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
 msgstr "Atribución-NoComercial-NoDerivadas Creative Commons"
 
-#: librarian/lib/archive.py:43
+#: librarian/lib/downloads.py:40
 msgid "Creative Commons Attribution-ShareAlike"
 msgstr "Atribución-CompartirIgual Creative Commons"
 
-#: librarian/lib/archive.py:44
+#: librarian/lib/downloads.py:41
 msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
 msgstr "Atribución-NoComercial-CompartirIgual Creative Commons"
 
-#. I wouldn't translate those terms, I would wait until they are include within the webplatform and see how they look like
-#: librarian/lib/archive.py:46
+#: librarian/lib/downloads.py:43
 msgid "GNU Free Documentation License"
 msgstr "Licencia de Documentación Libre GNU"
 
-#. I wouldn't translate those terms, I would wait until they are include within the webplatform and see how they look like
-#: librarian/lib/archive.py:47
+#: librarian/lib/downloads.py:44
 msgid "Open Publication License"
 msgstr "Open Publication License"
 
-#. I wouldn't translate those terms, I would wait until they are include within the webplatform and see how they look like
-#: librarian/lib/archive.py:48
+#: librarian/lib/downloads.py:45
 msgid "Open Content License"
 msgstr "Open Content License"
 
-#: librarian/lib/archive.py:49
+#: librarian/lib/downloads.py:46
 msgid "Against DRM License"
 msgstr "En contra de las licencias DRM"
 
-#: librarian/lib/archive.py:50
+#: librarian/lib/downloads.py:47
 msgid "Free Art License"
 msgstr "Free Art License"
 
-#: librarian/lib/archive.py:51
+#: librarian/lib/downloads.py:48
 msgid "Public Domain"
 msgstr "Dominio Público"
 
-#. I would better translate free as in Libre, since we are speaking about GNU, free speech, freedom of knowledge....
-#: librarian/lib/archive.py:52
+#: librarian/lib/downloads.py:49
 msgid "Other free license"
 msgstr "Otra licencia libre"
 
-#: librarian/lib/archive.py:53
+#: librarian/lib/downloads.py:50
 msgid "All rights reserved"
 msgstr "Todos los derechos reservados"
 
-#: librarian/lib/archive.py:54
+#: librarian/lib/downloads.py:51
 msgid "Other non-free license"
 msgstr "Otras licencias no libres"
 
@@ -537,6 +102,7 @@ msgstr "No se seleccionó contenido"
 #. replaced by amount of content that can be freed in bytes,
 #. KB, MB, etc
 #: librarian/routes/dashboard.py:83
+#, python-format
 msgid "%s can be freed by removing selected content"
 msgstr "%s puede ser liberado borrando el contenido seleccionado"
 
@@ -558,3 +124,467 @@ msgstr "Nada que borrar."
 msgid "Invalid action, please use one of the form buttons."
 msgstr "Acción invalida.  Por favor, use uno de los botones del formulario."
 
+#: librarian/views/reader.tpl:14
+msgid "content partner"
+msgstr ""
+
+#: librarian/views/reader.tpl:19
+msgid "sponsored content"
+msgstr ""
+
+#: librarian/views/reader.tpl:23
+msgid "Outernet core archive"
+msgstr ""
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#: librarian/views/content_list.tpl:2 librarian/views/content_list.tpl:5
+#: librarian/views/base.tpl:25
+msgid "Library"
+msgstr "Biblioteca"
+
+#. Translators, used as note on library page when showing search results, %(term)s represents the text typed in by user
+#: librarian/views/content_list.tpl:8
+#, python-format
+msgid "Showing search results for '%(terms)s'"
+msgstr "Mostrando resultados de búsqueda para '%(terms)s'"
+
+#. Translators, used as note on library page when showing content list, %(count)s is number of items on the page, %(total)s is total number of items in library
+#: librarian/views/content_list.tpl:11
+#, python-format
+msgid "Showing %(count)s of %(total)s item"
+msgid_plural "Showing %(count)s of %(total)s items"
+msgstr[0] "Mostrando %(count)s de %(total)s objeto"
+msgstr[1] "Mostrando %(count)s de %(total)s objetos"
+
+#. Translators, used as note on library page when library is empty
+#: librarian/views/content_list.tpl:19
+msgid "Content library is currently empty"
+msgstr "El contenido de la biblioteca actualmente está vacío"
+
+#. Translators, used as note on library page when search does not return anything
+#: librarian/views/content_list.tpl:22
+#, python-format
+msgid "There are no search results for '%(terms)s'"
+msgstr "No hay resultados de búsqueda para '%(terms)s'"
+
+#. Translators, used as label for search field, appears before the text box
+#: librarian/views/content_list.tpl:28
+msgid "search titles"
+msgstr "buscar titulos"
+
+#. Translators, used as label for search button
+#. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
+#. Translators, used as button in file view address bar
+#: librarian/views/content_list.tpl:31 librarian/views/content_list.tpl:56
+#: librarian/views/file_list.tpl:14
+msgid "go"
+msgstr "ir"
+
+#. Translators, used as label for button that clears search results
+#: librarian/views/content_list.tpl:34
+msgid "clear"
+msgstr "borrar"
+
+#. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
+#: librarian/views/content_list.tpl:40 librarian/views/downloads.tpl:10
+msgid "page"
+msgstr "página"
+
+#. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
+#: librarian/views/content_list.tpl:54 librarian/views/downloads.tpl:13
+msgid "per page"
+msgstr "por página"
+
+#. Translators, used as placeholder while infinite scrolling content is being loaded
+#: librarian/views/content_list.tpl:74
+msgid "Loading..."
+msgstr ""
+
+#. Translators, shown when user reaches the end of the library
+#: librarian/views/content_list.tpl:81
+msgid "You have reached the end of the library."
+msgstr ""
+
+#. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
+#: librarian/views/content_list.tpl:83 librarian/views/content_list.tpl:90
+msgid "Go to top"
+msgstr ""
+
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian/views/base.tpl:27 librarian/views/file_list.tpl:2
+#: librarian/views/file_list.tpl:6
+#, fuzzy
+msgid "Files"
+msgstr "Archivos"
+
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian/views/base.tpl:29 librarian/views/app_list.tpl:2
+#: librarian/views/app_list.tpl:6
+msgid "Apps"
+msgstr "Aplicaciones"
+
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian/views/base.tpl:31 librarian/views/favorites.tpl:2
+#: librarian/views/favorites.tpl:4
+msgid "Favorites"
+msgstr "Favoritos"
+
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian/views/base.tpl:33 librarian/views/downloads.tpl:2
+#: librarian/views/downloads.tpl:4
+msgid "Updates"
+msgstr "Actualizaciones"
+
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian/views/base.tpl:35 librarian/views/dashboard.tpl:2
+#: librarian/views/dashboard.tpl:5
+msgid "Dashboard"
+msgstr "Panel de control"
+
+#: librarian/views/downloads.tpl:14
+msgid "Reload"
+msgstr "Actualizar"
+
+#. Translators, used as button label on updates page for marking all content for import
+#: librarian/views/downloads.tpl:22 librarian/views/downloads.tpl:81
+msgid "Select all"
+msgstr "Seleccionar todos"
+
+#. Translators, used as button label on updates page for unmarking all content for import
+#: librarian/views/downloads.tpl:24 librarian/views/downloads.tpl:83
+msgid "Select none"
+msgstr "Descartar seleccionados"
+
+#. Translators, used as button label on updates page for adding marked content to library
+#: librarian/views/downloads.tpl:26 librarian/views/downloads.tpl:85
+msgid "Add selected to library"
+msgstr "Añadir selección a la biblioteca"
+
+#. Translators, used as button label on updates page for permanently deleting all downloaded content
+#: librarian/views/downloads.tpl:28 librarian/views/downloads.tpl:87
+msgid "Delete selected"
+msgstr "Eliminar los seleccionados"
+
+#. Translators, used as table header, above checkbox for selecting updates for import
+#: librarian/views/downloads.tpl:36
+msgid "select"
+msgstr "seleccionar"
+
+#. Translators, used as table header, content title
+#. Translators, in table header on clean-up page, content title
+#. Translators, used in table header, content title
+#: librarian/views/downloads.tpl:38 librarian/views/cleanup.tpl:34
+#: librarian/views/favorites.tpl:17
+msgid "title"
+msgstr "título"
+
+#. Translators, used as table header, broadcast date
+#: librarian/views/downloads.tpl:40
+msgid "broadcast"
+msgstr "emisión"
+
+#. Translators, used as table header, download date
+#: librarian/views/downloads.tpl:42
+msgid "downloaded"
+msgstr "descargado"
+
+#: librarian/views/downloads.tpl:65
+msgid "replaces:"
+msgstr "substituye:"
+
+#. Translators, note that appears in table on updates page when there is no new downloaded content
+#: librarian/views/downloads.tpl:72
+msgid "There is no new content"
+msgstr "No hay nuevo contenido"
+
+#. Translators, used in the pager
+#: librarian/views/_simple_pager.tpl:4
+msgid "previous"
+msgstr "anterior"
+
+#. Translators, used in the pager
+#: librarian/views/_simple_pager.tpl:8
+msgid "next"
+msgstr "siguiente"
+
+#. Translators, used as label for link that leads to parent directory in file listing
+#: librarian/views/file_list.tpl:23
+msgid "(go up one level)"
+msgstr "(subir un directorio)"
+
+#: librarian/views/file_list.tpl:33 librarian/views/file_list.tpl:53
+msgid "Rename"
+msgstr "Renombrar"
+
+#: librarian/views/file_list.tpl:38 librarian/views/file_list.tpl:58
+msgid "Delete"
+msgstr "Borrar"
+
+#. Translators, label for button in file listing that allows user to run a script
+#: librarian/views/file_list.tpl:65
+msgid "Run"
+msgstr "Ejecutar"
+
+#: librarian/views/file_list.tpl:74
+msgid "About this folder"
+msgstr "Acerca de esta carpeta"
+
+#. Translators, used as page title
+#. Translators, used as page title on clean-up page
+#: librarian/views/cleanup.tpl:2 librarian/views/cleanup.tpl:4
+msgid "Library clean-up"
+msgstr "Limpiar biblioteca"
+
+#. Translators, %s represents the amount of space in bytes, KB, MB, etc
+#: librarian/views/cleanup.tpl:13
+#, python-format
+msgid "%s more space should be freed."
+msgstr "%s de espacio deberia ser liberado."
+
+#. Translators, used as note that appears on clean-up page
+#: librarian/views/cleanup.tpl:17
+msgid "Remember that favorited content cannot be deleted."
+msgstr "Recuerda que el contenido favorito no puede ser eliminado."
+
+#. Translators, note that appears on clean-up page when user goes to it even though there is enough space
+#: librarian/views/cleanup.tpl:22
+msgid "There is enough free space on storage"
+msgstr "Hay suficiente espacio en el disco"
+
+#. Translators, in table header on clean-up page, above checkboxes for marking deletion candidates
+#: librarian/views/cleanup.tpl:30
+msgid "delete?"
+msgstr "¿borrar?"
+
+#. Translators, in table header on clean-up page, date added to library
+#. Translators, used in table header, date added to library
+#: librarian/views/cleanup.tpl:32 librarian/views/favorites.tpl:15
+msgid "date"
+msgstr "fecha"
+
+#. Translators, in table header on clean-up page, content size on disk
+#: librarian/views/cleanup.tpl:36
+msgid "size"
+msgstr "Tamaño"
+
+#. Translators, note that appears on clean-up page inside the table where deletion candidates would normally be shown
+#: librarian/views/cleanup.tpl:52
+msgid "There is enough free space. No clean-up needed."
+msgstr "Existe suficiente espacio libre. No es necesario liberar espacio."
+
+#. Translators, used as button label for clean-up preview button
+#: librarian/views/cleanup.tpl:59
+msgid "How much space does this free up?"
+msgstr "¿Cuánto espacio libera esto?"
+
+#. Translators, used as button label for clean-up start button, user selects content to be deleted before using this button
+#: librarian/views/cleanup.tpl:61
+msgid "Delete selected now"
+msgstr "Borrar seleccionados ahora."
+
+#. Translators, appears on dashboard as a label, preceded by update count in big letter
+#: librarian/views/dashboard.tpl:12
+msgid "update available"
+msgid_plural "updates available"
+msgstr[0] "Actualización disponible"
+msgstr[1] "Actualizaciones disponibles"
+
+#. Translators, appears on dashboard as a label, preceded by date of update in big letter
+#: librarian/views/dashboard.tpl:18
+msgid "last update"
+msgstr "última actualización"
+
+#. Translators, used as section heading on dashboard above disk space and similar information
+#: librarian/views/dashboard.tpl:26
+msgid "Content library stats"
+msgstr "Estadisticas del contenido de la biblioteca"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: librarian/views/dashboard.tpl:30
+#, python-format
+msgid "download directory (%s free)"
+msgstr "descargar directorio (%s free)"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: librarian/views/dashboard.tpl:36
+#, python-format
+msgid "content library (%s free)"
+msgstr "contenido de biblioteca (%s free)"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: librarian/views/dashboard.tpl:41
+#, python-format
+msgid "total space (%s free)"
+msgstr "espacio total (%s free)"
+
+#. Translators, this is a warning message appearing when disk space is below 10%
+#: librarian/views/dashboard.tpl:46
+msgid "You are running low on disk space."
+msgstr "Se está agotando el espacio en disco."
+
+#. Translators, this is a button label that leads to page for library cleanup
+#: librarian/views/dashboard.tpl:48
+msgid "Free some space now"
+msgstr "Libera algo de espacio ahora"
+
+#. Translators, used as a label in content library stats section on dashboard, preceded by count of items in the library
+#: librarian/views/dashboard.tpl:56
+msgid "item in the library"
+msgid_plural "items in the library"
+msgstr[0] "objeto en la biblioteca"
+msgstr[1] "objetos en la biblioteca"
+
+#. Translators, used as a label in content library stats section on dashboard, preceded by library size in bytes, KB, MB, etc
+#: librarian/views/dashboard.tpl:62
+msgid "used space"
+msgstr "espacio utilizado"
+
+#. Translators, used as section heading on dashboard above disk space and similar information
+#: librarian/views/dashboard.tpl:69
+msgid "Application logs"
+msgstr "Registros de aplicación"
+
+#. Translators, used as note in Application logs section
+#: librarian/views/dashboard.tpl:71
+msgid "Logs are shown in reverse chronological order"
+msgstr "Los registros se muestran en orden cronológico inverso"
+
+#. Translators, used as section heading on dashboard above 'About' section
+#: librarian/views/dashboard.tpl:77
+msgid "About"
+msgstr ""
+
+#: librarian/views/dashboard.tpl:80
+msgid ""
+"\n"
+"        This program is free software: you can redistribute it and/or modify "
+"it\n"
+"        under the terms of the GNU General Public License as published by "
+"the\n"
+"        Free Software Foundation, either version 3 of the License, or (at "
+"your\n"
+"        option) any later version.\n"
+"        "
+msgstr ""
+
+#. Translators, used as label for Librarian version in dashboard's 'About' section
+#. Translators, refers to app version
+#: librarian/views/dashboard.tpl:88 librarian/views/app_list.tpl:20
+msgid "version:"
+msgstr "versión:"
+
+#. Translators, used as note shown on favorites page when user has no favorites
+#: librarian/views/favorites.tpl:9
+msgid "You have not favorited any content yet"
+msgstr "No tienes aún ningún contenido favorito"
+
+#. Translators, used as button label on favorites page, for removing content from favorites
+#: librarian/views/favorites.tpl:26
+msgid "unfavorite"
+msgstr "Eliminar de favoritos"
+
+#. Translators, used as 'content belongs to core archive' badge
+#: librarian/views/_badges.tpl:8
+#, fuzzy
+msgid "core"
+msgstr "nucleo"
+
+#. Translators, used as 'partner content' badge
+#: librarian/views/_badges.tpl:15
+msgid "partner"
+msgstr "socio"
+
+#. Translators, used as 'sponsored content' badge
+#: librarian/views/_badges.tpl:22
+msgid "sponsored"
+msgstr "patrocinado"
+
+#. Translators, appears next to content title when content is sponsored or is partner content, %s is replaced by person/company name; not part of sentence
+#: librarian/views/_badges.tpl:31
+#, python-format
+msgid "from %s"
+msgstr "de %s"
+
+#. Translators, refers to app author
+#: librarian/views/app_list.tpl:18
+msgid "author:"
+msgstr "autor:"
+
+#. Translators, message show in app listing when no apps are present.
+#: librarian/views/app_list.tpl:29
+msgid "No apps found."
+msgstr "No se han encontrado aplicaciones."
+
+#. Translators, used as page title for page that shows result of running a script
+#. Translators, used as page header for page that shows result of running a script
+#: librarian/views/exec_result.tpl:2 librarian/views/exec_result.tpl:5
+msgid "Script output"
+msgstr "Secuencia de comandos de salida"
+
+#. Translators, return (result) code of the script executed via file browser
+#: librarian/views/exec_result.tpl:11
+msgid "return code:"
+msgstr "Código de retorno"
+
+#. Translators, shown when result code is good (0).
+#: librarian/views/exec_result.tpl:14
+msgid "OK"
+msgstr "Está bien"
+
+#. Translators, shown when result code is not good (non-zero).
+#: librarian/views/exec_result.tpl:17
+msgid "error"
+msgstr "Error"
+
+#. Translators, refers to standard output of script run from file browser (STDOUT)
+#: librarian/views/exec_result.tpl:22
+msgid "Output"
+msgstr "Salida"
+
+#. Translators, shown if script returned no output
+#: librarian/views/exec_result.tpl:27
+msgid "no output"
+msgstr "Sin salida"
+
+#. Translators, refers to standard errors of script run from file browser (STDERR)
+#: librarian/views/exec_result.tpl:32
+msgid "Errors"
+msgstr "Errores"
+
+#~ msgid "favorite"
+#~ msgstr "favorito"
+
+#~ msgid "Favorite content"
+#~ msgstr "Contenido favorito"
+
+#~ msgid "You have not favorted any content yet"
+#~ msgstr "No has añadido contenido a favoritos"
+
+#~ msgid "see all favorites"
+#~ msgstr "Ver los favoritos"
+
+#~ msgid "Add selected to archive"
+#~ msgstr "Añadir los seleccionados al repositorio"
+
+#~ msgid "added"
+#~ msgstr "añadido"
+
+#~ msgid "unknown"
+#~ msgstr "desconocido"
+
+#~ msgid "Showing %(count)s of %(total)s items"
+#~ msgid_plural "Showing %(count)s of %(total)s items"
+#~ msgstr[0] "Mostrando %(count)s de %(total)s objetos"
+#~ msgstr[1] "Mostrando %(count)s de %(total)s objetos"
