@@ -7,6 +7,7 @@
         %# Translators, used in page title
         <title>{{ title }} :: {{ _('Librarian') }} v{{ app_version }}</title>
         <link rel="stylesheet" href="/static/css/{{ style }}.css">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     </head>
     <body>
         <header>
