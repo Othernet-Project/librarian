@@ -523,8 +523,6 @@ tr.selected {
     display: inline-block;
     width: 128px;
     height: 128px;
-    @include box-shadow(0 0 10px transparentize(black, 0.8));
-    @include border-radius(2px);
     overflow: hidden;
   }
 
