@@ -625,3 +625,21 @@ tr.selected {
   text-align: center;
   padding: 2em 0;
 }
+
+.to-top {
+  position: fixed;
+  z-index: 2;
+  bottom: 1em;
+  right: 1em;
+
+  a {
+    display: inline-block;
+    background: transparentize($black, 0.2);
+    border: 1px solid $black;
+    color: $blue;
+    padding: 1em;
+    text-transform: uppercase;
+    font-size: 90%;
+    @include border-radius(2px);
+  }
+}
