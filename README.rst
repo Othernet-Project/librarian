@@ -41,27 +41,78 @@ List of translation contributors
 Special thanks to all those who have contributed their valuable time and
 knowledge:
 
-- Lars Lillo Ulvestad 
-- cavit 
-- Susruthan Seran 
-- Mogens From 
-- David Marques 
-- Chengtao Hua 
-- necklinux 
-- patrik 
-- Josep Manel 
-- Arthur 
-- Ismail Al Ahmad 
-- Romaric FAVE 
-- Peer Oliver Schmidt 
-- Sakara 
-- Luis Fuentes 
-- Dana Tierney 
-- Ahmed 
-- Navina 
-- Baris Kilic 
-- Buddha Burman 
-- Christoph Nebendahl 
+- Susruthan Seran
+- necklinux
+- Mogens From
+- Max Boone
+- Filippo
+- Ignas Sklerius
+- zaid
+- Manish Rastogi
+- cavit
+- Lars Lillo Ulvestad
+- Chengtao Hua
+- Josep Manel
+- patrik
+- Kajcha
+- Morten
+- Ismail Al Ahmad
+- Arthur
+- David Marques
+- Tolga Evcimen
+- Manoel Junior
+- Vibhor Dubey
+- Krabbs
+- Gustaf
+- Romaric FAVE
+- Peer Oliver Schmidt
+- André Daniel
+- Gerry Galactic
+- Navina
+- Frédéric Uhrweiller
+- Sakara
+- Aadarsh
+- Bruno Nogueira
+- Luis Fuentes
+- Frederik
+- Marco Rubio
+- zanghel
+- Gonzalo
+- Benoît Casanova
+- Janberk Genç
+- Christian Novrup
+- Ahmed
+- Dana Tierney
+- Francesca
+- Sebastian Borg
+- Steffie
+- Julien
+- Ronald Philipsen
+- Rebeca Virgo
+- Gabriel
+- Salutlolo
+- Klara Milena Hirscher
+- Baris Kilic
+- Tori Arbaugh
+- Souhaïl BOUGRINE
+- Jannis A. K.
+- Massimiliano CARNEMOLLA
+- Thibaut
+- Zipper
+- Buddha Burman
+- Miguel Maldonado
+- Алексей
+- Andrew
+- Siddharth Nair
+- Zakaria Bendali
+- Roman
+- Christoph Nebendahl
+- Chase Burgess
+- ix
+- Moayed Jaghoub
+- Slandgkearth
+- soukayna
+- Sai Chakradhar Araveti
 
 
 Reporting bugs and feature requests
