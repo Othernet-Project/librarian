@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Librarian\n"
 "Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2014-11-27 20:22+0100\n"
+"POT-Creation-Date: 2014-11-28 10:57+0100\n"
 "Language: no\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -483,6 +483,11 @@ msgstr ""
 #: librarian/views/dashboard.tpl:88 librarian/views/app_list.tpl:20
 msgid "version:"
 msgstr "versjon"
+
+#. Translators, appears in copyright line in dashboard's 'About' section
+#: librarian/views/dashboard.tpl:91
+msgid "Some rights reserved."
+msgstr ""
 
 #. Translators, used as note shown on favorites page when user has no favorites
 #: librarian/views/favorites.tpl:9
