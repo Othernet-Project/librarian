@@ -126,7 +126,7 @@ def get_count():
     # TODO: tests
     db = request.db
     db.query(COUNT_QUERY)
-    return db.cursor.fetchall()[0]['count(*)']
+    return db.results[0]['count(*)']
 
 
 def get_search_count(terms):
@@ -134,28 +134,28 @@ def get_search_count(terms):
     terms = '%' + terms.lower() + '%'
     db = request.db
     db.query(SEARCH_COUNT_QUERY, terms=terms)
-    return db.cursor.fetchall()[0]['count']
+    return db.results[0]['count']
 
 
 def get_content(offset=0, limit=0):
     # TODO: tests
     db = request.db
     db.query(PAGE_QUERY, offset=offset, limit=limit)
-    return db.cursor.fetchall()
+    return db.results
 
 
 def get_single(md5):
     # TODO: tests
     db = request.db
     db.query(GET_SINGLE, md5)
-    return db.cursor.fetchall()[0]
+    return db.results[0]
 
 
 def get_titles(ids):
     q = multiarg(TITLES_QUERY, len(ids))
     db = request.db
     db.query(q, *ids)
-    return db.cursor.fetchall()
+    return db.results
 
 
 def get_replacements(metadata):
@@ -179,14 +179,14 @@ def search_content(terms, offset=0, limit=0):
     terms = '%' + terms.lower() + '%'
     db = request.db
     db.query(SEARCH_QUERY, terms=terms, offset=offset, limit=limit)
-    return db.cursor.fetchall()
+    return db.results
 
 
 def get_old_content():
     # TODO: tests
     db = request.db
     db.query(LIST_DELETABLE)
-    return db.cursor.fetchall()
+    return db.results
 
 
 def parse_size(size):

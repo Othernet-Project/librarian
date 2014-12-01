@@ -50,7 +50,7 @@ def convert_timestamp(ts):
 sqlite3.register_converter('timestamp', convert_timestamp)
 
 
-class Database:
+class Database(object):
     def __init__(self, dbpath):
         self.dbpath = dbpath
         self.db = None
@@ -62,6 +62,9 @@ class Database:
             self.db = sqlite3.connect(self.dbpath,
                                       detect_types=sqlite3.PARSE_DECLTYPES)
             self.db.row_factory = dbdict_factory
+
+            # Use atuocommit mode so we can do manual transactions
+            self.db.isolation_level = None
 
     def disconnect(self):
         if self.db is not None:
@@ -82,6 +85,10 @@ class Database:
         if self._cursor is None:
             self._cursor = self.db.cursor()
         return self._cursor
+
+    @property
+    def results(self):
+        return self.cursor().fetchall()
 
     @contextmanager
     def transaction(self, silent=False):
