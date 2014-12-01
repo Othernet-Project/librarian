@@ -88,7 +88,7 @@ class Database(object):
 
     @property
     def results(self):
-        return self.cursor().fetchall()
+        return self.cursor.fetchall()
 
     @contextmanager
     def transaction(self, silent=False):
