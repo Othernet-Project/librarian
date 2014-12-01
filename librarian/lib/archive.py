@@ -467,7 +467,7 @@ def add_tag(md5, tags, existing_tags={}):
     pairs = ({'content_id': md5, 'tag_id': i} for i in ids)
     with db.transaction() as cur:
         cur.executemany(ADD_TAGS, pairs)
-    return ids
+    return tags
 
 
 def get_tag_content(tags):
