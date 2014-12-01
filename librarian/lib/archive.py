@@ -108,6 +108,37 @@ SELECT *
 FROM zipballs
 WHERE md5 = ?;
 """
+GET_TAGS = """
+SELECT *
+FROM tags;
+"""
+GET_CONTENT_TAGS = """
+SELECT tags.*
+FROM tags NATURAL JOIN taggings
+WHERE taggings.md5 = ?;
+"""
+GET_TAG_CONTENTS = """
+SELECT zipballs.*
+FROM zipballs NATURAL JOIN taggings
+WHERE taggings.tag_id IN (??);
+"""
+GET_TAG_IDS = """
+SELECT *
+FROM tags
+WHERE name IN (??);
+"""
+CREATE_TAGS = """
+INSERT OR REPLACE INTO tags
+(name)
+VALUES
+(:name);
+"""
+ADD_TAGS = """
+INSERT INTO taggings
+(content_id, tag_id)
+VALUES
+(:content_id, :tag_id);
+"""
 
 
 def add_missing_keys(meta):
@@ -414,4 +445,34 @@ def cleanup_list():
         zipball = next(zipballs)
         space -= zipball['size']
         yield zipball
+
+
+def add_tag(md5, tags, existing_tags={}):
+    """ Take content ID and comma-separated tags and create them in DB """
+    tags = [t.strip() for t in tags.split(',')]
+    if not tags:
+        return
+    db = rqeuest.db
+
+    # First ensure all tags exist
+    with db.transaction() as cur:
+        cur.executemany(CREATE_TAGS, tags)
+
+    # Get the IDs of the tags
+    db.query(multiarg(GET_TAG_IDS, len(tags)), tags)
+    tags = db.results
+    ids = [i['tag_id'] for i in tags]
+
+    # Create taggings
+    pairs = ({'content_id': md5, 'tag_id': i} for i in ids)
+    with db.transaction() as cur:
+        cur.executemany(ADD_TAGS, pairs)
+    return ids
+
+
+def get_tag_content(tags):
+    """ Return content list for tags in a list of tag_ids """
+    db = request.db
+    db.query(multiarg(GET_TAG_CONTENTS, len(tags)), tags)
+    return db.results
 
