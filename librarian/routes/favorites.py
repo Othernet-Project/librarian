@@ -15,20 +15,16 @@ from ..lib.i18n import i18n_path, lazy_gettext as _
 
 __all__ = ('app', 'list_favorites', 'add_favorite',)
 
-PREFIX = '/favorites'
-
 
 app = default_app()
 
 
-@app.get(PREFIX + '/')
 @view('favorites.tpl')
 def list_favorites():
     """ List of favorite content """
     return {'metadata': favorite_content()}
 
 
-@app.post(PREFIX + '/')
 def add_favorite():
     """ Add/remove content to favorites list """
     md5 = request.forms.get('md5')

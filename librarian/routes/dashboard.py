@@ -22,13 +22,10 @@ from ..utils.helpers import hsize
 
 __all__ = ('app', 'dashboard',)
 
-PREFIX = '/dashboard'
-
 
 app = default_app()
 
 
-@app.get(PREFIX + '/')
 @view('dashboard')
 def dashboard():
     """ Render the dashboard """
@@ -50,7 +47,6 @@ def dashboard():
     return locals()
 
 
-@app.get(PREFIX + '/cleanup/')
 @view('cleanup', message=None, vals=MultiDict())
 def cleanup_list():
     """ Render a list of items that can be deleted """
@@ -58,7 +54,6 @@ def cleanup_list():
             'needed': archive.needed_space()}
 
 
-@app.post(PREFIX + '/cleanup/')
 @view('cleanup', message=None, vals=MultiDict())
 def cleanup():
     forms = request.forms

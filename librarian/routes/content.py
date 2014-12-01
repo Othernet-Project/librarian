@@ -29,14 +29,10 @@ from ..lib.ajax import roca_view
 
 __all__ = ('app', 'content_list', 'content_file', 'content_index',)
 
-PREFIX = ''
-CONTENT_ID = '<content_id:re:[0-9a-f]{32}>'
-
 
 app = default_app()
 
 
-@app.get(PREFIX + '/')
 @roca_view('content_list', '_content_list')
 def content_list():
     """ Show list of content """
@@ -79,7 +75,6 @@ def content_list():
     }
 
 
-@app.get(PREFIX + '/pages/%s/<filename:path>' % CONTENT_ID, skip=['i18n'])
 def content_file(content_id, filename):
     """ Serve file from zipball with specified id """
     zippath = downloads.get_zip_path(content_id)
@@ -98,9 +93,8 @@ def content_file(content_id, filename):
     return send_file.send_file(content, filename, size, timestamp)
 
 
-@app.get(PREFIX + '/pages/%s/' % CONTENT_ID)
 @view('reader')
-def content_index(content_id):
+def content_reader(content_id):
     """ Loads the reader interface """
     archive.add_view(content_id)
     try:
@@ -109,7 +103,6 @@ def content_index(content_id):
         abort(404)
 
 
-@app.get(PREFIX + '/covers/<path:path>', skip=['i18n'])
 def cover_image(path):
     config = request.app.config
     covers = config['content.covers']
@@ -124,8 +117,6 @@ def dictify_file_list(file_list):
     } for f in file_list]
 
 
-@app.get(PREFIX + '/files/')
-@app.get(PREFIX + '/files/<path:path>')
 @view('file_list')
 def show_file_list(path='.'):
     path = request.params.get('p', path)
@@ -204,7 +195,6 @@ def run_path(path):
     return ret, out, err
 
 
-@app.post(PREFIX + '/files/<path:path>')
 def handle_file_action(path):
     action = request.forms.get('action')
     path = files.get_full_path(path)

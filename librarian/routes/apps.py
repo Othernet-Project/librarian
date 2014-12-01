@@ -22,7 +22,6 @@ PREFIX = '/apps'
 app = default_app()
 
 
-@app.get(PREFIX + '/')
 @view('app_list')
 def show_apps():
     appdir = request.app.config['content.appdir']
@@ -36,13 +35,11 @@ def show_apps():
                 except apps.MetadataError as err:
                     # Skip this app
                     logging.error('<%s> Could not decode app metadata: %s',
-                                  app_path, err)
+                                  path, err)
                     pass
     return dict(apps=apps_found)
 
 
-@app.get(PREFIX + '/<appid>/')
-@app.get(PREFIX + '/<appid>/<path:path>')
 def send_app_file(appid, path='index.html'):
     appdir = request.app.config['content.appdir']
     app_path = os.path.join(appdir, appid + '.zip')
