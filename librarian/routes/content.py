@@ -26,8 +26,7 @@ from ..lib import send_file
 from ..lib import files
 from ..lib import i18n
 from ..lib.ajax import roca_view
-
-__all__ = ('app', 'content_list', 'content_file', 'content_index',)
+from ..lib.i18n import lazy_gettext as _
 
 
 app = default_app()
@@ -45,23 +44,35 @@ def content_list():
         page = int(request.params.get('p', 1))
     except ValueError:
         page = 1
+    try:
+        tag = int(request.params.get('t'))
+    except (TypeError, ValueError):
+        tag = None
+        tag_name = None
+
+    if tag:
+        try:
+            tag_name = archive.get_tag_name(tag)['name']
+        except (IndexError, KeyError):
+            abort(404, _('Specified tag was not found'))
+
     query = request.params.getunicode('q', '').strip()
 
     per_page = f_per_page * 20
 
     if query:
-        total_items = archive.get_search_count(query)
+        total_items = archive.get_search_count(query, tag=tag)
     else:
-        total_items = archive.get_count()
+        total_items = archive.get_count(tag=tag)
 
     total_pages = math.ceil(total_items / per_page)
     page = max(1, min(total_pages, page))
     offset = (page - 1) * per_page
 
     if query:
-        metadata = archive.search_content(query, offset, per_page)
+        metadata = archive.search_content(query, offset, per_page, tag=tag)
     else:
-        metadata = archive.get_content(offset, per_page)
+        metadata = archive.get_content(offset, per_page, tag=tag)
 
     return {
         'metadata': [downloads.Meta(m) for m in metadata],
@@ -72,6 +83,8 @@ def content_list():
         'page': page,
         'vals': request.params.decode(),
         'query': query,
+        'tag': tag_name,
+        'tag_id': tag,
     }
 
 
@@ -94,13 +107,11 @@ def content_file(content_id, filename):
 
 
 @view('reader')
-def content_reader(content_id):
+@archive.with_content
+def content_reader(meta):
     """ Loads the reader interface """
-    archive.add_view(content_id)
-    try:
-        return dict(meta=downloads.Meta(archive.get_single(content_id)))
-    except IndexError:
-        abort(404)
+    archive.add_view(meta.md5)
+    return dict(meta=meta)
 
 
 def cover_image(path):

@@ -1,4 +1,4 @@
-!function (window, $) {
+(function (window, $) {
   var win = $(window);
   var doc = $(document);
   var body = $('html,body');
@@ -104,6 +104,7 @@
     res = $(res);
     contentList.append(res).imagesLoaded(function () {
       contentList.masonry('appended', res);
+      win.trigger('listUpdate', [res]);
     });
     loading = false;
   }
@@ -131,4 +132,4 @@
     body.animate({'scrollTop': 0}, 500);
   }
 
-}(this, jQuery);
+}(this, jQuery));

@@ -26,6 +26,9 @@
             </p>
             <p class="licensing">{{ meta.human_license }}</p>
             % end
+            <p class="tags" data-has-tags="{{ bool(meta.tags) }}">
+            % include('_tag_list')
+            <p>
         </div>
     </div>
 </div>

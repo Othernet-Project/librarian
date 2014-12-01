@@ -30,7 +30,7 @@ from librarian.lib.lazy import Lazy
 from librarian.lib.downloads import get_zipballs
 from librarian.lib.archive import LICENSES
 from librarian.utils import migrations
-from librarian.routes import (content, downloads, apps, dashboard)
+from librarian.routes import (content, tags, downloads, apps, dashboard)
 import librarian
 
 __version__ = librarian.__version__
@@ -88,6 +88,14 @@ app.route('/files/<path:path>', 'GET',
           callback=content.show_file_list)
 app.route('/files/<path:path>', 'POST',
           callback=content.handle_file_action)
+
+# Tags
+app.route('/tags/', 'GET',
+          callback=lambda: None)
+app.route('/tags/<tag_id:int>', 'GET',
+          callback=lambda: None)
+app.route('/tag/<content_id>', 'POST',
+          callback=tags.edit_tags)
 
 # Updates
 app.route('/downloads/', 'GET',
@@ -194,11 +202,12 @@ def start(logfile=None, profile=False):
                    unwind=False,
         )
 
+    bottle.debug(config['librarian.debug'] == 'yes')
     bottle.run(app=wsgiapp,
                server=config['librarian.server'],
                host=config['librarian.bind'],
-               port=int(config['librarian.port']),
-               debug=config['librarian.debug'] == 'yes')
+               reloader=config['librarian.server'] == 'wsgiref',
+               port=int(config['librarian.port']))
 
 
 def main(conf, debug=False, logpath=None, profile=False):

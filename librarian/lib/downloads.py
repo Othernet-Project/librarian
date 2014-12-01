@@ -317,17 +317,21 @@ def patch_html(content):
 
 class Meta(object):
     """ Metadata wrapper """
+
+    # FIXME: Move this to lib.archive
+
     IMAGE_EXTENSIONS = ['.png', '.gif', '.jpg', '.jpeg']
 
     def __init__(self, meta):
         self.meta = meta
+        self.tags = json.loads(meta['tags'] or '{}')
         self._image = None
 
-    def __getattribute__(self, attr):
-        meta = object.__getattribute__(self, 'meta')
-        if attr in meta:
-            return meta[attr]
-        return object.__getattribute__(self, attr)
+    def __getattr__(self, attr):
+        try:
+            return self.meta[attr]
+        except KeyError:
+            raise AttributeError('Attribute or key %s not found'  % attr)
 
     def __getitem__(self, key):
         return self.meta[key]

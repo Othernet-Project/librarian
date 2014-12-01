@@ -6,6 +6,8 @@
 % if query:
 %# Translators, used as note on library page when showing search results, %(term)s represents the text typed in by user
 <span>{{ str(_("Showing search results for '%(terms)s'")) % {'terms': query} }}</span>
+% elif tag:
+<span>{{ str(_("Showing results for tag '%(tag)s'")) % {'tag': tag} }}</span>
 % elif metadata:
 %# Translators, used as note on library page when showing content list, %(count)s is number of items on the page, %(total)s is total number of items in library
 <span>{{ str(ngettext('Showing %(count)s of %(total)s item', 'Showing %(count)s of %(total)s items', total_items)) % {'count': len(metadata), 'total': total_items} }}</span>
@@ -14,15 +16,19 @@
 
 <div class="inner">
     % if not metadata:
-        % if not query:
+        % if not query or not tag:
         %# Translators, used as note on library page when library is empty
         <p>{{ _('Content library is currently empty') }}</p>
-        % else:
+        % elif query:
         %# Translators, used as note on library page when search does not return anything
         <p>{{ str(_("There are no search results for '%(terms)s'")) % {'terms': query} }}</p>
+        % elif tag:
+        %# Translators, used as not on library page when there is no content for given tag
+        <p>{{ str(_("There are no results for '%(tag)s'")) % {'tag': tag} }}</p>
         % end
     % else:
     <form id="pager" class="pager controls">
+        <input type="hidden" name="t" value="{{ tag_id or '' }}">
         <p>
         %# Translators, used as label for search field, appears before the text box
         <label class="search" for="q">{{ _('search titles') }}:
@@ -89,6 +95,21 @@
         %# Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
         <a href="#content-list">{{ _('Go to top') }}</a>
     </div>
+</script>
+
+<script id="tagButton" type="text/template">
+    %# Translators, used as label for button that appears next to tag list
+    <button class="small tag-button">{{ _('Edit tags') }}</button>
+</script>
+
+<script id="closeTagButton" type="text/template">
+    %# Translators, used as label for button that appears in tag editing form
+    <button class="small tag-close-button" type="button">{{ _('Close') }}</button>
+</script>
+
+<script id="tagsUpdateError" type="text/template">
+    %# Translators, error message shown when updating tags fails
+    {{ _('Tags could not be updated.') }}
 </script>
 
 <script src="/static/js/content.js"></script>

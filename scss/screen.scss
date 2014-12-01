@@ -655,7 +655,7 @@ tr.selected {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 60px;
+    bottom: 80px;
 
     iframe {
       width: 100%;
@@ -669,7 +669,7 @@ tr.selected {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 80px;
   line-height: 120%;
   background: $ash-blue;
   color: $white;
@@ -686,5 +686,17 @@ tr.selected {
 
   .inner {
     padding: 0.5em 1em;
+  }
+}
+
+.tag-form {
+  p {
+    margin-bottom: 0;
+  }
+
+  .help {
+    color: $grey;
+    font-weight: bold;
+    margin-bottom: 1em;
   }
 }

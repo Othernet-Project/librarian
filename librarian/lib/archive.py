@@ -9,22 +9,18 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
+import json
 import shutil
 import logging
+from functools import wraps
 from datetime import datetime
 
-from bottle import request
+from bottle import request, abort
 
-from .downloads import get_spool_zip_path, get_zip_path, get_metadata, LICENSES
+from .downloads import (
+    get_spool_zip_path, get_zip_path, get_metadata, LICENSES, Meta)
 
 from .i18n import lazy_gettext as _
-
-
-__all__ = ('get_count', 'get_search_count', 'get_content', 'search_content',
-           'get_old_content', 'parse_size', 'cleanup_list', 'add_to_archive',
-           'remove_from_archive', 'path_space', 'free_space', 'zipball_count',
-           'archive_space_used', 'last_update', 'add_view', 'needed_space',
-           'cleanup_list')
 
 FACTORS = {
     'b': 1,
@@ -41,9 +37,22 @@ COUNT_QUERY = """
 SELECT COUNT(*) AS count
 FROM zipballs;
 """
+TAG_COUNT_QUERY = """
+SELECT COUNT(*) AS count
+FROM zipballs NATURAL JOIN taggings
+WHERE tag_id = ?;
+"""
 PAGE_QUERY = """
 SELECT *
 FROM zipballs
+ORDER BY datetime(updated) DESC, views DESC
+LIMIT :limit
+OFFSET :offset;
+"""
+TAG_PAGE_QUERY = """
+SELECT *
+FROM zipballs NATURAL JOIN taggings
+WHERE tag_id = :tag_id
 ORDER BY datetime(updated) DESC, views DESC
 LIMIT :limit
 OFFSET :offset;
@@ -53,10 +62,23 @@ SELECT COUNT(*) AS count
 FROM zipballs
 WHERE title LIKE :terms;
 """
+TAG_SEARCH_COUNT_QUERY = """
+SELECT COUNT(*) AS count
+FROM zipballs NATURAL JOIN taggings
+WHERE title LIKE :terms AND tag_id = :tag_id;
+"""
 SEARCH_QUERY = """
 SELECT *
 FROM zipballs
 WHERE title LIKE :terms
+ORDER BY date(updated) DESC, views DESC
+LIMIT :limit
+OFFSET :offset;
+"""
+TAG_SEARCH_QUERY = """
+SELECT *
+FROM zipballs NATURAL JOIN taggings
+WHERE title LIKE :terms AND tag_id = :tag_id
 ORDER BY date(updated) DESC, views DESC
 LIMIT :limit
 OFFSET :offset;
@@ -83,10 +105,6 @@ REMOVE_MULTI_QUERY = """
 DELETE FROM zipballs
 WHERE md5 IN (??);
 """
-COUNT_QUERY = """
-SELECT count(*)
-FROM zipballs;
-"""
 LAST_DATE_QUERY = """
 SELECT updated
 FROM zipballs
@@ -112,6 +130,11 @@ GET_TAGS = """
 SELECT *
 FROM tags;
 """
+GET_TAG_BY_ID = """
+SELECT name
+FROM tags
+WHERE tag_id = ?;
+"""
 GET_CONTENT_TAGS = """
 SELECT tags.*
 FROM tags NATURAL JOIN taggings
@@ -122,22 +145,32 @@ SELECT zipballs.*
 FROM zipballs NATURAL JOIN taggings
 WHERE taggings.tag_id IN (??);
 """
-GET_TAG_IDS = """
+GET_TAGS_BY_NAME = """
 SELECT *
 FROM tags
 WHERE name IN (??);
 """
 CREATE_TAGS = """
-INSERT OR REPLACE INTO tags
+INSERT INTO tags
 (name)
 VALUES
 (:name);
 """
 ADD_TAGS = """
 INSERT INTO taggings
-(content_id, tag_id)
+(tag_id, md5)
 VALUES
-(:content_id, :tag_id);
+(:tag_id, :md5);
+"""
+REMOVE_TAGS = """
+DELETE
+FROM taggings
+WHERE md5 = ? AND tag_id IN (??);
+"""
+CACHE_TAGS = """
+UPDATE zipballs
+SET tags = :tags
+WHERE md5 = :md5;
 """
 
 
@@ -153,25 +186,34 @@ def multiarg(query, n):
     return query.replace('??', ', '.join('?' * n))
 
 
-def get_count():
+def get_count(tag=None):
     # TODO: tests
     db = request.db
-    db.query(COUNT_QUERY)
-    return db.results[0]['count(*)']
-
-
-def get_search_count(terms):
-    # TODO: tests
-    terms = '%' + terms.lower() + '%'
-    db = request.db
-    db.query(SEARCH_COUNT_QUERY, terms=terms)
+    if tag:
+        db.query(TAG_COUNT_QUERY, tag)
+    else:
+        db.query(COUNT_QUERY)
     return db.results[0]['count']
 
 
-def get_content(offset=0, limit=0):
+def get_search_count(terms, tag=None):
+    # TODO: tests
+    terms = '%' + terms.lower() + '%'
+    db = request.db
+    if tag:
+        db.query(TAG_SEARCH_COUNT_QUERY, terms=terms, tag_id=tag)
+    else:
+        db.query(SEARCH_COUNT_QUERY, terms=terms)
+    return db.results[0]['count']
+
+
+def get_content(offset=0, limit=0, tag=None):
     # TODO: tests
     db = request.db
-    db.query(PAGE_QUERY, offset=offset, limit=limit)
+    if tag:
+        db.query(TAG_PAGE_QUERY, offset=offset, limit=limit, tag_id=tag)
+    else:
+        db.query(PAGE_QUERY, offset=offset, limit=limit)
     return db.results
 
 
@@ -205,11 +247,15 @@ def get_replacements(metadata):
     return metadata
 
 
-def search_content(terms, offset=0, limit=0):
+def search_content(terms, offset=0, limit=0, tag=None):
     # TODO: tests
     terms = '%' + terms.lower() + '%'
     db = request.db
-    db.query(SEARCH_QUERY, terms=terms, offset=offset, limit=limit)
+    if tag:
+        db.query(TAG_SEARCH_QUERY, terms=terms, offset=offset, limit=limit,
+                 tag_id=tag)
+    else:
+        db.query(SEARCH_QUERY, terms=terms, offset=offset, limit=limit)
     return db.results
 
 
@@ -447,32 +493,58 @@ def cleanup_list():
         yield zipball
 
 
-def add_tag(md5, tags, existing_tags={}):
-    """ Take content ID and comma-separated tags and create them in DB """
-    tags = [t.strip() for t in tags.split(',')]
+def add_tags(meta, tags):
+    """ Take content data and comma-separated tags and add the taggings """
     if not tags:
         return
-    db = rqeuest.db
+    db = request.db
 
     # First ensure all tags exist
     with db.transaction() as cur:
-        cur.executemany(CREATE_TAGS, tags)
+        cur.executemany(CREATE_TAGS, [{'name': t} for t in tags])
 
     # Get the IDs of the tags
-    db.query(multiarg(GET_TAG_IDS, len(tags)), tags)
+    db.query(multiarg(GET_TAGS_BY_NAME, len(tags)), *tags)
     tags = db.results
     ids = [i['tag_id'] for i in tags]
 
     # Create taggings
-    pairs = ({'content_id': md5, 'tag_id': i} for i in ids)
+    pairs = [{'md5': meta.md5, 'tag_id': i} for i in ids]
+    print(pairs)
+    tags_dict = {t['name']: t['tag_id'] for t in tags}
+    meta.tags.update(tags_dict)
     with db.transaction() as cur:
         cur.executemany(ADD_TAGS, pairs)
+        cur.execute(CACHE_TAGS, dict(md5=meta.md5, tags=json.dumps(meta.tags)))
     return tags
 
 
-def get_tag_content(tags):
-    """ Return content list for tags in a list of tag_ids """
+def remove_tags(meta, tags):
+    """ Take content data nad comma-separated tags and removed the taggings """
+    if not tags:
+        return
+    tag_ids = [meta.tags[name] for name in tags]
+    meta.tags = dict((n, i) for n, i in meta.tags.items() if n not in tags)
     db = request.db
-    db.query(multiarg(GET_TAG_CONTENTS, len(tags)), tags)
-    return db.results
+    with db.transaction() as cur:
+        cur.execute(multiarg(REMOVE_TAGS, len(tag_ids)), [meta.md5] + tag_ids)
+        cur.execute(CACHE_TAGS, dict(md5=meta.md5, tags=json.dumps(meta.tags)))
 
+
+def get_tag_name(tag_id):
+    db = request.db
+    db.query(GET_TAG_BY_ID, tag_id)
+    return db.results[0]
+
+
+def with_content(func):
+    @wraps(func)
+    def wrapper(content_id, **kwargs):
+        try:
+            content = get_single(content_id)
+        except IndexError:
+            abort(404)
+        if not content:
+            abort(404)
+        return func(meta=Meta(content), **kwargs)
+    return wrapper

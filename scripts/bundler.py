@@ -18,6 +18,8 @@ import StringIO
 import tempfile
 import subprocess
 
+NEEDS_SHELL = platform.system() == 'Windows'
+
 sources = sys.argv[-1]
 
 if not sources:
@@ -44,7 +46,7 @@ def uglify(paths, bundledir, bundlename, outpath):
                    'relative']
     command = ['uglifyjs'] + paths + map_options + ['-o', outpath]
     try:
-        subprocess.call(command, stdout=stdout)
+        subprocess.call(command, stdout=stdout, shell=NEEDS_SHELL)
     except subprocess.CalledProcessError as err:
         raise MinificationError(paths)
     stdout.seek(0)
