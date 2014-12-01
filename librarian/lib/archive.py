@@ -73,7 +73,7 @@ REPLACE INTO zipballs
 is_partner, is_sponsored, archive, partner, license)
 VALUES
 (:md5, :domain, :url, :title, :images, :timestamp, :updated, :keep_formatting,
-:is_partner, :is_sponsored, :archive, :partner, :license)
+:is_partner, :is_sponsored, :archive, :partner, :license);
 """
 REMOVE_QUERY = """
 DELETE FROM zipballs
@@ -81,7 +81,7 @@ WHERE md5 = ?;
 """
 REMOVE_MULTI_QUERY = """
 DELETE FROM zipballs
-WHERE md5 IN (SEQ);
+WHERE md5 IN (??);
 """
 COUNT_QUERY = """
 SELECT count(*)
@@ -101,7 +101,7 @@ WHERE md5 = ?;
 TITLES_QUERY = """
 SELECT title, md5
 FROM zipballs
-WHERE md5 IN (SEQ);
+WHERE md5 IN (??);
 """
 GET_SINGLE = """
 SELECT *
@@ -117,9 +117,9 @@ def add_missing_keys(meta):
             meta[key] = None
 
 
-def multiarg(n):
-    """ Return ``n`` question marks delimited by comma """
-    return ','.join(('? ' * n).strip().split())
+def multiarg(query, n):
+    """ Returns version of query where '??' is replaced by n placeholders """
+    return query.replace('??', ', '.join('?' * n))
 
 
 def get_count():
@@ -152,7 +152,7 @@ def get_single(md5):
 
 
 def get_titles(ids):
-    q = TITLES_QUERY.replace('SEQ', multiarg(len(ids)))
+    q = multiarg(TITLES_QUERY, len(ids))
     db = request.db
     db.query(q, *ids)
     return db.cursor.fetchall()
@@ -233,7 +233,7 @@ def add_to_archive(hashes):
         metadata.append(meta)
     # Create replacement query
     nreplaced = len(replaced)
-    q = REMOVE_MULTI_QUERY.replace('SEQ', multiarg(nreplaced))
+    q = multiarg(REMOVE_MULTI_QUERY, nreplaced)
     # Execute database operations
     with db.transaction() as cur:
         logging.debug("Adding new content to archive database")
