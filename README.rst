@@ -13,8 +13,6 @@ self-updating.
 The current version does not provide any search capability. That feature is
 planned for future releases.
 
-We chose to use Arch Linux as development.
-
 Development environment and running Librarian
 =============================================
 
