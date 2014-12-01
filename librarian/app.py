@@ -30,7 +30,7 @@ from librarian.lib.lazy import Lazy
 from librarian.lib.downloads import get_zipballs
 from librarian.lib.archive import LICENSES
 from librarian.utils import migrations
-from librarian.routes import *  # Only importing so routes are rgistered
+from librarian.routes import (content, downloads, apps, dashboard)
 import librarian
 
 __version__ = librarian.__version__
@@ -70,6 +70,46 @@ DEFAULT_LOCALE = 'en'
 
 
 app = bottle.default_app()
+
+# Content
+app.route('/', 'GET',
+          callback=content.content_list)
+app.route('/pages/<content_id>/<filename:path>', 'GET', skip=['i18n'],
+          callback=content.content_file)
+app.route('/pages/<content_id>/', 'GET',
+          callback=content.content_reader)
+app.route('/covers/<path:path>', 'GET',
+          callback=content.cover_image, skip=['i18n'])
+
+# Files
+app.route('/files/', 'GET',
+          callback=content.show_file_list)
+app.route('/files/<path:path>', 'GET',
+          callback=content.show_file_list)
+app.route('/files/<path:path>', 'POST',
+          callback=content.handle_file_action)
+
+# Updates
+app.route('/downloads/', 'GET',
+          callback=downloads.list_downloads)
+app.route('/downloads/', 'POST',
+          callback=downloads.manage_downloads)
+
+# Dashboard
+app.route('/dashboard/', 'GET',
+          callback=dashboard.dashboard)
+app.route('/dashboard/cleanup/', 'GET',
+          callback=dashboard.cleanup_list)
+app.route('/dashboard/cleanup/', 'POST',
+          callback=dashboard.cleanup)
+
+# Apps
+app.route('/apps/', 'GET',
+          callback=apps.show_apps)
+app.route('/apps/<appid>/', 'GET',
+          callback=apps.send_app_file)
+app.route('/apps/<appid>/<path:path>', 'GET',
+          callback=apps.send_app_file)
 
 
 @app.get('/static/<path:path>', skip=['i18n'])

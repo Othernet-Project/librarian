@@ -21,14 +21,12 @@ from ..lib.pager import Pager
 
 __all__ = ('app', 'list_downloads', 'manage_downloads',)
 
-PREFIX = '/downloads'
 PER_PAGE = 20
 
 
 app = default_app()
 
 
-@app.get(PREFIX + '/')
 @view('downloads', vals={})
 def list_downloads():
     """ Render a list of downloaded content """
@@ -58,7 +56,6 @@ def list_downloads():
                 pager=pager)
 
 
-@app.post(PREFIX + '/')
 @view('downloads_error')  # TODO: Add this view
 def manage_downloads():
     """ Manage the downloaded content """
