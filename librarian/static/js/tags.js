@@ -1,13 +1,14 @@
 (function (window, $) {
   var win = $(window);
+  var doc = $(document.body);
   var contentList = $('#content-list');
 
   win.on('listUpdate', resetTagForm);
-  contentList.on('click', '.tag-button', openTagForm);
-  contentList.on('click', '.tag-close-button', closeTagForm);
-  contentList.on('submit', '.tag-form', updateTags);
+  doc.on('click', '.tag-button', openTagForm);
+  doc.on('click', '.tag-close-button', closeTagForm);
+  doc.on('submit', '.tag-form', updateTags);
 
-  initTagUIState.call(contentList);
+  initTagUIState.call(doc);
 
   function resetTagForm(e, newItems) {
     initTagUIState.call(newItems);
@@ -26,7 +27,9 @@
     var tags = el.parent();
     tags.hide();
     tags.next('.tag-form').show();
-    contentList.masonry();
+    if (contentList != null && contentList.masonry != null) {
+      contentList.masonry();
+    }
   }
 
   function closeTagForm() {
@@ -36,7 +39,9 @@
     form.hide();
     tags.show();
     form.find('input').val(getTags(tags));
-    contentList.masonry();
+    if (contentList != null && contentList.masonry != null) {
+      contentList.masonry();
+    }
   }
 
   function updateTags(e) {

@@ -4,7 +4,7 @@
     <div class="reader-frame">
         <iframe id="reader-main" class="reader-main" src="/pages/{{ meta.md5 }}/index.html"></iframe>
     </div>
-    <div class="reader-meta">
+    <div class="reader-meta data">
         <div class="inner">
             <p class="date">
             <strong>
@@ -26,10 +26,11 @@
             </p>
             <p class="licensing">{{ meta.human_license }}</p>
             % end
-            <p class="tags" data-has-tags="{{ bool(meta.tags) }}">
-            % include('_tag_list')
-            <p>
+            % include('_tags')
         </div>
     </div>
 </div>
 
+% include('_tag_js_templates')
+
+<script src="/static/js/reader.js"></script>
