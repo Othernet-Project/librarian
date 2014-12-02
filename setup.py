@@ -6,6 +6,9 @@ from setuptools import setup, find_packages
 
 import librarian
 
+# Production requirement, not needed during development
+BJ = ['bjoern==1.4.1']
+
 def read(fname):
     """ Return content of specified file """
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -45,7 +48,7 @@ setup(
         ]),
     },
     long_description=read('README.rst'),
-    install_requires = read('conf/requirements.txt').strip().split('\n'),
+    install_requires = read('conf/requirements.txt').strip().split('\n') + BJ,
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Topic :: Utilities',
