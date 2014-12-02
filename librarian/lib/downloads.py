@@ -219,7 +219,7 @@ def get_file(path, filename):
     """
     # TODO: Add caching
     dirname = get_md5_from_path(path)
-    filename = os.path.join(dirname, filename)
+    filename = '%s/%s' % (dirname, filename)  # we always use forward slash
     return extract_file(path, filename)
 
 
@@ -265,7 +265,7 @@ def get_zip_path(md5):
     :returns:       actual path to the file of ``None`` if file cannot be found
     """
     config = request.app.config
-    contentdir = config['content.contentdir']
+    contentdir = os.path.normpath(config['content.contentdir'])
     return get_zip_path_in(md5, contentdir)
 
 
@@ -276,7 +276,7 @@ def get_spool_zip_path(md5):
     :returns:       actual path to the file of ``None`` if file cannot be found
     """
     config = request.app.config
-    spooldir = config['content.spooldir']
+    spooldir = os.path.normpath(config['content.spooldir'])
     return get_zip_path_in(md5, spooldir)
 
 
