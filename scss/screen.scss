@@ -81,7 +81,7 @@ header {
       overflow: hidden;
       width: 0;
       white-space: nowrap;
-      @include transition(padding-right 0.3s, padding-left 0.3s);
+      @include transition(padding-right 0.2s, padding-left 0.2s);
     }
 
     span {
@@ -330,47 +330,61 @@ header {
   }
 }
 
-button::-moz-focus-inner {
-  border: 0;
-  padding: 0;
+@mixin button($bg: $black, $text: $white, $h-bg: $black, $h-text: $white) {
+  display: inline-block;
+  vertical-align: middle;
+  border: 0 solid transparent;
+  font-size: $base-size;
+  font-family: $base-font;
+  line-height: $base-lh;
+  @include border-radius(2px);
+  padding: 0.2em 0.5em;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}
+
+@mixin button-color($bg: $black, $text: $white, $h-bg: $black, $h-text: $white) {
+  background-color: $bg;
+  color: $text;
+  @include transition(
+    background-color 0.3s, 
+    color 0.3s
+  );
+
+  &:hover {
+    background-color: $h-bg;
+    color: $h-text;
+  }
+}
+
+@mixin button-small {
+  padding: 0.1em 0.3em;
+  font-size: $base-size * 0.9;
 }
 
 
 button, .button {
-  display: inline-block;
-  vertical-align: middle;
-  background-color: $black;
-  color: $white;
-  border: 0 solid transparent;
-  padding: 0.2em 0.5em;
-  font-size: $base-size;
-  font-family: $base-font;
-  line-height: $base-lh;
-  @include border-radius(4px);
-
-  &:hover {
-    background-color: black;
-  }
+  @include button;
+  @include button-color($black, $white, $blue);
 
   &.special {
-    background-color: $blue;
-
-    &:hover {
-      background-color: darken($blue, 20);
-    }
+    @include button-color($ash-blue, $white, darkern($blue, 20));
   }
 
   &.danger {
-    background-color: $red;
-
-    &:hover {
-      background-color: darken($red, 20);
-    }
+    @include button-color($red, $white, darkern($red, 20));
   }
 
   &.small {
-    padding: 0.1em 0.3em;
-    font-size: $base-size * 0.9;
+    @include button-small;
   }
 }
 
@@ -643,6 +657,8 @@ tr.selected {
   }
 }
 
+$reader-meta-height: 90px;
+
 .reader {
   position: absolute;
   top: 0;
@@ -655,7 +671,7 @@ tr.selected {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 80px;
+    bottom: $reader-meta-height;
 
     iframe {
       width: 100%;
@@ -669,7 +685,7 @@ tr.selected {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 80px;
+  height: $reader-meta-height;
   line-height: 120%;
   background: $ash-blue;
   color: $white;
@@ -687,6 +703,10 @@ tr.selected {
   .inner {
     padding: 0.5em 1em;
   }
+
+  .tags {
+    margin-top: 0.5em;
+  }
 }
 
 .tag-form {
@@ -699,4 +719,10 @@ tr.selected {
     font-weight: bold;
     margin-bottom: 1em;
   }
+}
+
+.data .tag {
+  @include button;
+  @include button-small;
+  @include button-color($light-grey, $black, $blue, $white);
 }
