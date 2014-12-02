@@ -15,7 +15,7 @@
   }
 
   function initTagUIState() {
-    var el = $(this).find('.data');
+    var el = $(this);
     var form = el.find('.tag-form');
     form.find('p:first').append(templates.closeTagButton);
     form.hide();
