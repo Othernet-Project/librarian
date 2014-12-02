@@ -85,6 +85,7 @@ def content_list():
         'query': query,
         'tag': tag_name,
         'tag_id': tag,
+        'tag_cloud': archive.get_tag_cloud()
     }
 
 

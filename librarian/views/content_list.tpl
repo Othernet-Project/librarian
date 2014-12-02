@@ -6,8 +6,6 @@
 % if query:
 %# Translators, used as note on library page when showing search results, %(term)s represents the text typed in by user
 <span>{{ str(_("Showing search results for '%(terms)s'")) % {'terms': query} }}</span>
-% elif tag:
-<span>{{ str(_("Showing results for tag '%(tag)s'")) % {'tag': tag} }}</span>
 % elif metadata:
 %# Translators, used as note on library page when showing content list, %(count)s is number of items on the page, %(total)s is total number of items in library
 <span>{{ str(ngettext('Showing %(count)s of %(total)s item', 'Showing %(count)s of %(total)s items', total_items)) % {'count': len(metadata), 'total': total_items} }}</span>
@@ -15,6 +13,7 @@
 </h1>
 
 <div class="inner">
+    % include('_tag_cloud')
     % if not metadata:
         % if not query or not tag:
         %# Translators, used as note on library page when library is empty

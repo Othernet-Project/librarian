@@ -172,6 +172,12 @@ UPDATE zipballs
 SET tags = :tags
 WHERE md5 = :md5;
 """
+GET_TAG_CLOUD = """
+SELECT name, tag_id, count(taggings.tag_id) as count
+FROM tags NATURAL JOIN taggings
+GROUP BY taggings.tag_id
+ORDER BY name ASC;
+"""
 
 
 def add_missing_keys(meta):
@@ -535,6 +541,12 @@ def get_tag_name(tag_id):
     db = request.db
     db.query(GET_TAG_BY_ID, tag_id)
     return db.results[0]
+
+
+def get_tag_cloud():
+    db = request.db
+    db.query(GET_TAG_CLOUD)
+    return db.results
 
 
 def with_content(func):
