@@ -38,7 +38,7 @@ if PY2:
     basestring = basestring
 
 
-def to_unicode(v, encoding=None):
+def to_unicode(v, encoding='utf8'):
     """
     Convert a value to Unicode string (or just string in Py3). This function
     can be used to ensure string is a unicode string. This may be useful when
@@ -53,9 +53,7 @@ def to_unicode(v, encoding=None):
     if isinstance(v, unicode):
         return v
     try:
-        if encoding:
-            return v.decode(encoding)
-        return v.decode('utf8')
+        return v.decode(encoding)
     except (AttributeError, UnicodeEncodeError):
         return unicode(v)
 
