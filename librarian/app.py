@@ -29,6 +29,7 @@ from librarian.lib import html as helpers
 from librarian.lib.lazy import Lazy
 from librarian.lib.downloads import get_zipballs
 from librarian.lib.archive import LICENSES
+from librarian.lib.common import to_unicode
 from librarian.utils import migrations
 from librarian.routes import (content, tags, downloads, apps, dashboard)
 import librarian
@@ -179,6 +180,7 @@ def start(logfile=None, profile=False):
         'updates': Lazy(lambda: len(list(get_zipballs()))),
         'readable_license': lambda s: dict(LICENSES).get(s, LICENSES[0][1]),
         'is_rtl': Lazy(lambda: request.locale in RTL_LANGS),
+        'u': to_unicode,
     })
 
     # Add middlewares

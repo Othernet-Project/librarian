@@ -28,6 +28,6 @@
 
 % if meta.get('partner'):
 %# Translators, appears next to content title when content is sponsored or is partner content, %s is replaced by person/company name; not part of sentence
-<span class="badge attribution">{{ str(_('from %s')) % meta['partner'] }}</span>
+<span class="badge attribution">{{ u(_('from %s')) % meta['partner'] }}</span>
 % end
 

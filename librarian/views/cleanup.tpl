@@ -10,7 +10,7 @@
 % if needed:
 <p class="note">
 %# Translators, %s represents the amount of space in bytes, KB, MB, etc
-{{ str(_('%s more space should be freed.')) % h.hsize(needed) }}
+{{ u(_('%s more space should be freed.')) % h.hsize(needed) }}
 </p>
 <p class="note">
 %# Translators, used as note that appears on clean-up page
