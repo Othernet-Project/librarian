@@ -650,6 +650,11 @@ tr.selected {
       @include border-radius(image-height('delete.png'));
       padding: 1em;
       @include default-shadow;
+      opacity: 0.5;
+
+      &:hover, &:focus {
+        opacity: 1;
+      }
     }
   }
 
