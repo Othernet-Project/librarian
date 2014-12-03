@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: librarian 0.1b2-dev\n"
 "Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2014-12-02 20:22+0100\n"
+"POT-Creation-Date: 2014-12-03 19:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -150,7 +150,7 @@ msgstr ""
 
 #. Translators, refers to app version
 #. Translators, used as label for Librarian version in dashboard's 'About' section
-#: librarian\views\app_list.tpl:20 librarian\views\dashboard.tpl:88
+#: librarian\views\app_list.tpl:20 librarian\views\dashboard.tpl:99
 msgid "version:"
 msgstr ""
 
@@ -266,63 +266,68 @@ msgid_plural "Showing %(count)s of %(total)s items"
 msgstr[0] ""
 msgstr[1] ""
 
-#. Translators, used as note on library page when library is empty
-#: librarian\views\content_list.tpl:20
-msgid "Content library is currently empty"
-msgstr ""
-
-#. Translators, used as note on library page when search does not return anything
-#: librarian\views\content_list.tpl:23
-#, python-format
-msgid "There are no search results for '%(terms)s'"
-msgstr ""
-
-#. Translators, used as not on library page when there is no content for given tag
-#: librarian\views\content_list.tpl:26
-#, python-format
-msgid "There are no results for '%(tag)s'"
-msgstr ""
-
 #. Translators, used as label for search field, appears before the text box
-#: librarian\views\content_list.tpl:33
+#: librarian\views\content_list.tpl:23
 msgid "search titles"
 msgstr ""
 
 #. Translators, used as label for search button
 #. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
 #. Translators, used as button in file view address bar
-#: librarian\views\content_list.tpl:36 librarian\views\content_list.tpl:61
+#: librarian\views\content_list.tpl:26 librarian\views\content_list.tpl:51
 #: librarian\views\file_list.tpl:14
 msgid "go"
 msgstr ""
 
 #. Translators, used as label for button that clears search results
-#: librarian\views\content_list.tpl:39
+#: librarian\views\content_list.tpl:29
 msgid "clear"
 msgstr ""
 
 #. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
-#: librarian\views\content_list.tpl:45 librarian\views\downloads.tpl:10
+#: librarian\views\content_list.tpl:35 librarian\views\downloads.tpl:10
 msgid "page"
 msgstr ""
 
 #. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
-#: librarian\views\content_list.tpl:59 librarian\views\downloads.tpl:13
+#: librarian\views\content_list.tpl:49 librarian\views\downloads.tpl:13
 msgid "per page"
 msgstr ""
 
+#. Translators, used as note on library page when library is empty
+#: librarian\views\content_list.tpl:66
+msgid "Content library is currently empty"
+msgstr ""
+
+#. Translators, used as note on library page when search does not return anything
+#: librarian\views\content_list.tpl:69
+#, python-format
+msgid "There are no search results for '%(terms)s'"
+msgstr ""
+
+#. Translators, used as not on library page when there is no content for given tag
+#: librarian\views\content_list.tpl:72
+#, python-format
+msgid "There are no results for '%(tag)s'"
+msgstr ""
+
+#. Translators, link that loads more content in infinite scrolling page
+#: librarian\views\content_list.tpl:81
+msgid "Load more content"
+msgstr ""
+
 #. Translators, used as placeholder while infinite scrolling content is being loaded
-#: librarian\views\content_list.tpl:79
+#: librarian\views\content_list.tpl:89
 msgid "Loading..."
 msgstr ""
 
 #. Translators, shown when user reaches the end of the library
-#: librarian\views\content_list.tpl:86
+#: librarian\views\content_list.tpl:96
 msgid "You have reached the end of the library."
 msgstr ""
 
 #. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
-#: librarian\views\content_list.tpl:88 librarian\views\content_list.tpl:95
+#: librarian\views\content_list.tpl:98 librarian\views\content_list.tpl:105
 msgid "Go to top"
 msgstr ""
 
@@ -338,67 +343,75 @@ msgstr[1] ""
 msgid "last update"
 msgstr ""
 
-#. Translators, used as section heading on dashboard above disk space and similar information
-#: librarian\views\dashboard.tpl:26
+#: librarian\views\dashboard.tpl:25
 msgid "Content library stats"
 msgstr ""
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian\views\dashboard.tpl:30
+#: librarian\views\dashboard.tpl:31
 #, python-format
 msgid "download directory (%s free)"
 msgstr ""
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian\views\dashboard.tpl:36
+#: librarian\views\dashboard.tpl:37
 #, python-format
 msgid "content library (%s free)"
 msgstr ""
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian\views\dashboard.tpl:41
+#: librarian\views\dashboard.tpl:42
 #, python-format
 msgid "total space (%s free)"
 msgstr ""
 
 #. Translators, this is a warning message appearing when disk space is below 10%
-#: librarian\views\dashboard.tpl:46
+#: librarian\views\dashboard.tpl:47
 msgid "You are running low on disk space."
 msgstr ""
 
 #. Translators, this is a button label that leads to page for library cleanup
-#: librarian\views\dashboard.tpl:48
+#: librarian\views\dashboard.tpl:49
 msgid "Free some space now"
 msgstr ""
 
 #. Translators, used as a label in content library stats section on dashboard, preceded by count of items in the library
-#: librarian\views\dashboard.tpl:56
+#: librarian\views\dashboard.tpl:58
 msgid "item in the library"
 msgid_plural "items in the library"
 msgstr[0] ""
 msgstr[1] ""
 
 #. Translators, used as a label in content library stats section on dashboard, preceded by library size in bytes, KB, MB, etc
-#: librarian\views\dashboard.tpl:62
+#: librarian\views\dashboard.tpl:64
 msgid "used space"
 msgstr ""
 
-#. Translators, used as section heading on dashboard above disk space and similar information
-#: librarian\views\dashboard.tpl:69
+#. Translators, used as section heading on dashboard
+#: librarian\views\dashboard.tpl:71
+msgid "Tuner settings"
+msgstr ""
+
+#: librarian\views\dashboard.tpl:74
+msgid "Access TVHeadend"
+msgstr ""
+
+#. Translators, used as section heading on dashboard above application logs
+#: librarian\views\dashboard.tpl:80
 msgid "Application logs"
 msgstr ""
 
 #. Translators, used as note in Application logs section
-#: librarian\views\dashboard.tpl:71
+#: librarian\views\dashboard.tpl:82
 msgid "Logs are shown in reverse chronological order"
 msgstr ""
 
 #. Translators, used as section heading on dashboard above 'About' section
-#: librarian\views\dashboard.tpl:77
+#: librarian\views\dashboard.tpl:88
 msgid "About"
 msgstr ""
 
-#: librarian\views\dashboard.tpl:80
+#: librarian\views\dashboard.tpl:91
 msgid ""
 "\n"
 "        This program is free software: you can redistribute it and/or modify "
@@ -412,7 +425,7 @@ msgid ""
 msgstr ""
 
 #. Translators, appears in copyright line in dashboard's 'About' section
-#: librarian\views\dashboard.tpl:91
+#: librarian\views\dashboard.tpl:102
 msgid "Some rights reserved."
 msgstr ""
 
@@ -521,20 +534,24 @@ msgstr ""
 msgid "(go up one level)"
 msgstr ""
 
-#: librarian\views\file_list.tpl:33 librarian\views\file_list.tpl:53
+#: librarian\views\file_list.tpl:29
+msgid "There are currently no files or folders here."
+msgstr ""
+
+#: librarian\views\file_list.tpl:39 librarian\views\file_list.tpl:59
 msgid "Rename"
 msgstr ""
 
-#: librarian\views\file_list.tpl:38 librarian\views\file_list.tpl:58
+#: librarian\views\file_list.tpl:44 librarian\views\file_list.tpl:64
 msgid "Delete"
 msgstr ""
 
 #. Translators, label for button in file listing that allows user to run a script
-#: librarian\views\file_list.tpl:65
+#: librarian\views\file_list.tpl:71
 msgid "Run"
 msgstr ""
 
-#: librarian\views\file_list.tpl:74
+#: librarian\views\file_list.tpl:81
 msgid "About this folder"
 msgstr ""
 
@@ -548,6 +565,29 @@ msgstr ""
 
 #: librarian\views\reader.tpl:23
 msgid "Outernet core archive"
+msgstr ""
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian\views\remove_error.tpl:2 librarian\views\remove_error.tpl:5
+msgid "Content could not be removed"
+msgstr ""
+
+#. Translators, message displayed when content cannot be deleted
+#: librarian\views\remove_error.tpl:9
+msgid ""
+"Please make sure the storage device is not write-protected and try again."
+msgstr ""
+
+#. Translators, used as label on button for retrying content removal
+#: librarian\views\remove_error.tpl:13
+msgid "Retry"
+msgstr ""
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian\views\tag_cloud.tpl:2 librarian\views\tag_cloud.tpl:5
+msgid "Tag cloud"
 msgstr ""
 
 #. Translators, used as 'content belongs to core archive' badge

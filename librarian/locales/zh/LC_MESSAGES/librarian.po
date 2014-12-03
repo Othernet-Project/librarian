@@ -1,21 +1,351 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Librarian\n"
-"Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2014-12-02 20:22+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh-CN\n"
 "X-Generator: POEditor.com\n"
+"Project-Id-Version: Librarian\n"
+"Language: zh-CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#. Translators, used as default page title
-#. Translators, used in page title
-#. Translators, used in footer
 #: librarian\app.py:175 librarian\views\base.tpl:8 librarian\views\base.tpl:44
 msgid "Librarian"
 msgstr "文库管理员"
+
+#: librarian\views\base.tpl:33 librarian\views\dashboard.tpl:2
+#: librarian\views\dashboard.tpl:5
+msgid "Dashboard"
+msgstr "仪表板"
+
+#: librarian\views\favorites.tpl:2 librarian\views\favorites.tpl:4
+msgid "Favorites"
+msgstr "收藏"
+
+#: librarian\views\base.tpl:31 librarian\views\downloads.tpl:2
+#: librarian\views\downloads.tpl:4
+msgid "Updates"
+msgstr "更新"
+
+#: librarian\views\cleanup.tpl:13
+msgid "%s more space should be freed."
+msgstr "%s 须释放更多空间。"
+
+#: librarian\views\cleanup.tpl:17
+msgid "Remember that favorited content cannot be deleted."
+msgstr "注意：收藏内容无法删除。"
+
+#: librarian\views\cleanup.tpl:22
+msgid "There is enough free space on storage"
+msgstr "存储器有足够的空间"
+
+#: librarian\views\cleanup.tpl:30
+msgid "delete?"
+msgstr "删除？"
+
+#: librarian\views\cleanup.tpl:32 librarian\views\favorites.tpl:15
+msgid "date"
+msgstr "日期"
+
+#: librarian\views\cleanup.tpl:34 librarian\views\downloads.tpl:38
+#: librarian\views\favorites.tpl:17
+msgid "title"
+msgstr "标题"
+
+#: librarian\views\cleanup.tpl:36
+msgid "size"
+msgstr "大小"
+
+#: librarian\views\cleanup.tpl:52
+msgid "There is enough free space. No clean-up needed."
+msgstr "存储器有足够的空间。无需清理。"
+
+#: librarian\views\cleanup.tpl:59
+msgid "How much space does this free up?"
+msgstr "此次释放多少空间？"
+
+#: librarian\views\cleanup.tpl:61
+msgid "Delete selected now"
+msgstr "删除选择项"
+
+#: librarian\views\dashboard.tpl:64
+msgid "used space"
+msgstr "已使用空间"
+
+#: librarian\views\dashboard.tpl:18
+msgid "last update"
+msgstr "最后更新"
+
+#: librarian\views\dashboard.tpl:47
+msgid "You are running low on disk space."
+msgstr "磁盘空间不足。"
+
+#: librarian\views\dashboard.tpl:49
+msgid "Free some space now"
+msgstr "立即释放一些空间"
+
+#: librarian\views\downloads.tpl:36
+msgid "select"
+msgstr "选择"
+
+#: librarian\views\downloads.tpl:72
+msgid "There is no new content"
+msgstr "没有新内容"
+
+#: librarian\views\downloads.tpl:28 librarian\views\downloads.tpl:87
+msgid "Delete selected"
+msgstr "删除选择项"
+
+#: librarian\views\favorites.tpl:26
+msgid "unfavorite"
+msgstr "取消收藏"
+
+#: librarian\views\base.tpl:25 librarian\views\content_list.tpl:2
+#: librarian\views\content_list.tpl:5
+msgid "Library"
+msgstr "文库"
+
+#: librarian\views\content_list.tpl:66
+#, fuzzy
+msgid "Content library is currently empty"
+msgstr "文库目前暂无内容"
+
+#: librarian\views\content_list.tpl:23
+msgid "search titles"
+msgstr "搜索标题"
+
+#: librarian\views\content_list.tpl:26 librarian\views\content_list.tpl:51
+#: librarian\views\file_list.tpl:14
+msgid "go"
+msgstr "执行"
+
+#: librarian\views\content_list.tpl:29
+msgid "clear"
+msgstr "清除"
+
+#: librarian\views\dashboard.tpl:12
+msgid "update available"
+msgid_plural "updates available"
+msgstr[0] "可用更新"
+
+#: librarian\views\dashboard.tpl:25
+msgid "Content library stats"
+msgstr "文库状态"
+
+#: librarian\views\dashboard.tpl:58
+msgid "item in the library"
+msgid_plural "items in the library"
+msgstr[0] "文库项目"
+
+#: librarian\views\dashboard.tpl:80
+msgid "Application logs"
+msgstr "应用日志"
+
+#: librarian\views\dashboard.tpl:82
+msgid "Logs are shown in reverse chronological order"
+msgstr "按相反时间顺序排列日志"
+
+#: librarian\views\downloads.tpl:22 librarian\views\downloads.tpl:81
+msgid "Select all"
+msgstr "全部选择"
+
+#: librarian\views\downloads.tpl:24 librarian\views\downloads.tpl:83
+msgid "Select none"
+msgstr "取消选择"
+
+#: librarian\views\downloads.tpl:40
+msgid "broadcast"
+msgstr "广播"
+
+#: librarian\views\downloads.tpl:42
+msgid "downloaded"
+msgstr "已下载"
+
+#: librarian\views\content_list.tpl:8
+msgid "Showing search results for '%(terms)s'"
+msgstr "显示'%(terms)s'的搜索结果"
+
+#: librarian\views\content_list.tpl:11
+msgid "Showing %(count)s of %(total)s item"
+msgid_plural "Showing %(count)s of %(total)s items"
+msgstr[0] "显示%(total)s中的%(count)s"
+
+#: librarian\views\content_list.tpl:69
+msgid "There are no search results for '%(terms)s'"
+msgstr "'%(terms)s'的搜索无结果"
+
+#. Translators, used in the pager
+#: librarian\views\_simple_pager.tpl:4
+msgid "previous"
+msgstr "前一页"
+
+#. Translators, used in the pager
+#: librarian\views\_simple_pager.tpl:8
+msgid "next"
+msgstr "后一页"
+
+#. Translators, used as page title
+#. Translators, used as page title on clean-up page
+#: librarian\views\cleanup.tpl:2 librarian\views\cleanup.tpl:4
+msgid "Library clean-up"
+msgstr "清理文库"
+
+#. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
+#: librarian\views\content_list.tpl:35 librarian\views\downloads.tpl:10
+msgid "page"
+msgstr "页"
+
+#. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
+#: librarian\views\content_list.tpl:49 librarian\views\downloads.tpl:13
+msgid "per page"
+msgstr "每页"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: librarian\views\dashboard.tpl:31
+msgid "download directory (%s free)"
+msgstr "下载目录剩余%s"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: librarian\views\dashboard.tpl:37
+msgid "content library (%s free)"
+msgstr "文库剩余%s"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: librarian\views\dashboard.tpl:42
+msgid "total space (%s free)"
+msgstr "总空间剩余%s"
+
+#. Translators, used as button label on updates page for adding marked content to library
+#: librarian\views\downloads.tpl:26 librarian\views\downloads.tpl:85
+msgid "Add selected to library"
+msgstr "增加所选到文库"
+
+#. Translators, used as 'content belongs to core archive' badge
+#: librarian\views\_badges.tpl:8
+msgid "core"
+msgstr "核心"
+
+#. Translators, used as 'partner content' badge
+#: librarian\views\_badges.tpl:15
+msgid "partner"
+msgstr "伙伴"
+
+#. Translators, used as 'sponsored content' badge
+#: librarian\views\_badges.tpl:22
+msgid "sponsored"
+msgstr "赞助"
+
+#. Translators, appears next to content title when content is sponsored or is partner content, %s is replaced by person/company name; not part of sentence
+#: librarian\views\_badges.tpl:31
+msgid "from %s"
+msgstr "从%s "
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#: librarian\views\app_list.tpl:2 librarian\views\app_list.tpl:6
+#: librarian\views\base.tpl:29
+msgid "Apps"
+msgstr "应用"
+
+#. Translators, refers to app author
+#: librarian\views\app_list.tpl:18
+msgid "author:"
+msgstr "作者:"
+
+#. Translators, refers to app version
+#: librarian\views\app_list.tpl:20 librarian\views\dashboard.tpl:99
+msgid "version:"
+msgstr "版本:"
+
+#. Translators, message show in app listing when no apps are present.
+#: librarian\views\app_list.tpl:29
+msgid "No apps found."
+msgstr "未找到应用"
+
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian\views\base.tpl:27 librarian\views\file_list.tpl:2
+#: librarian\views\file_list.tpl:6
+msgid "Files"
+msgstr "文件"
+
+#: librarian\views\downloads.tpl:14
+msgid "Reload"
+msgstr "刷新"
+
+#: librarian\views\downloads.tpl:65
+msgid "replaces:"
+msgstr "替代:"
+
+#. Translators, used as note shown on favorites page when user has no favorites
+#: librarian\views\favorites.tpl:9
+msgid "You have not favorited any content yet"
+msgstr "你还没有收藏内容"
+
+#. Translators, used as label for link that leads to parent directory in file listing
+#: librarian\views\file_list.tpl:23
+msgid "(go up one level)"
+msgstr "(向上一层)"
+
+#: librarian\views\file_list.tpl:39 librarian\views\file_list.tpl:59
+msgid "Rename"
+msgstr "重命名"
+
+#: librarian\views\file_list.tpl:44 librarian\views\file_list.tpl:64
+msgid "Delete"
+msgstr "删除"
+
+#: librarian\views\file_list.tpl:81
+msgid "About this folder"
+msgstr "关于此文件夹"
+
+#. Translators, used as page title for page that shows result of running a script
+#. Translators, used as page header for page that shows result of running a script
+#: librarian\views\exec_result.tpl:2 librarian\views\exec_result.tpl:5
+msgid "Script output"
+msgstr "脚本输出"
+
+#. Translators, return (result) code of the script executed via file browser
+#: librarian\views\exec_result.tpl:11
+msgid "return code:"
+msgstr "返回代码:"
+
+#. Translators, shown when result code is good (0).
+#: librarian\views\exec_result.tpl:14
+msgid "OK"
+msgstr "确定"
+
+#. Translators, shown when result code is not good (non-zero).
+#: librarian\views\exec_result.tpl:17
+msgid "error"
+msgstr "错误"
+
+#. Translators, refers to standard output of script run from file browser (STDOUT)
+#: librarian\views\exec_result.tpl:22
+msgid "Output"
+msgstr "输出"
+
+#. Translators, shown if script returned no output
+#: librarian\views\exec_result.tpl:27
+msgid "no output"
+msgstr "无输出"
+
+#. Translators, refers to standard errors of script run from file browser (STDERR)
+#: librarian\views\exec_result.tpl:32
+msgid "Errors"
+msgstr "错误"
+
+#. Translators, label for button in file listing that allows user to run a script
+#: librarian\views\file_list.tpl:71
+msgid "Run"
+msgstr "运行"
 
 #. Translators, this is used when app doesn't provide a description
 #: librarian\lib\apps.py:45
@@ -86,10 +416,6 @@ msgstr "版权所有"
 msgid "Other non-free license"
 msgstr "其他非自由授权"
 
-#: librarian\routes\content.py:57
-msgid "Specified tag was not found"
-msgstr ""
-
 #. Translators, used as response to innvalid HTTP request
 #: librarian\routes\dashboard.py:63 librarian\routes\favorites.py:35
 #: librarian\routes\favorites.py:38
@@ -106,7 +432,6 @@ msgstr "未选择内容"
 #. replaced by amount of content that can be freed in bytes,
 #. KB, MB, etc
 #: librarian\routes\dashboard.py:78
-#, python-format
 msgid "%s can be freed by removing selected content"
 msgstr "%s"
 
@@ -128,501 +453,130 @@ msgstr "没有什么可以被删除。"
 msgid "Invalid action, please use one of the form buttons."
 msgstr "无效动作，请使用其中一个样式按钮"
 
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#: librarian\views\app_list.tpl:2 librarian\views\app_list.tpl:6
-#: librarian\views\base.tpl:29
-msgid "Apps"
-msgstr "应用"
-
-#. Translators, refers to app author
-#: librarian\views\app_list.tpl:18
-msgid "author:"
-msgstr "作者:"
-
-#. Translators, refers to app version
-#. Translators, used as label for Librarian version in dashboard's 'About' section
-#: librarian\views\app_list.tpl:20 librarian\views\dashboard.tpl:88
-msgid "version:"
-msgstr "版本:"
-
-#. Translators, message show in app listing when no apps are present.
-#: librarian\views\app_list.tpl:29
-msgid "No apps found."
-msgstr "未找到应用"
-
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#: librarian\views\base.tpl:25 librarian\views\content_list.tpl:2
-#: librarian\views\content_list.tpl:5
-msgid "Library"
-msgstr "文库"
-
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#: librarian\views\base.tpl:27 librarian\views\file_list.tpl:2
-#: librarian\views\file_list.tpl:6
-msgid "Files"
-msgstr "文件"
-
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#: librarian\views\base.tpl:31 librarian\views\downloads.tpl:2
-#: librarian\views\downloads.tpl:4
-msgid "Updates"
-msgstr "更新"
-
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#: librarian\views\base.tpl:33 librarian\views\dashboard.tpl:2
-#: librarian\views\dashboard.tpl:5
-msgid "Dashboard"
-msgstr "仪表板"
-
-#. Translators, used as page title
-#. Translators, used as page title on clean-up page
-#: librarian\views\cleanup.tpl:2 librarian\views\cleanup.tpl:4
-msgid "Library clean-up"
-msgstr "清理文库"
-
-#. Translators, %s represents the amount of space in bytes, KB, MB, etc
-#: librarian\views\cleanup.tpl:13
-#, python-format
-msgid "%s more space should be freed."
-msgstr "%s 须释放更多空间。"
-
-#. Translators, used as note that appears on clean-up page
-#: librarian\views\cleanup.tpl:17
-msgid "Remember that favorited content cannot be deleted."
-msgstr "注意：收藏内容无法删除。"
-
-#. Translators, note that appears on clean-up page when user goes to it even though there is enough space
-#: librarian\views\cleanup.tpl:22
-msgid "There is enough free space on storage"
-msgstr "存储器有足够的空间"
-
-#. Translators, in table header on clean-up page, above checkboxes for marking deletion candidates
-#: librarian\views\cleanup.tpl:30
-msgid "delete?"
-msgstr "删除？"
-
-#. Translators, in table header on clean-up page, date added to library
-#. Translators, used in table header, date added to library
-#: librarian\views\cleanup.tpl:32 librarian\views\favorites.tpl:15
-msgid "date"
-msgstr "日期"
-
-#. Translators, in table header on clean-up page, content title
-#. Translators, used as table header, content title
-#. Translators, used in table header, content title
-#: librarian\views\cleanup.tpl:34 librarian\views\downloads.tpl:38
-#: librarian\views\favorites.tpl:17
-msgid "title"
-msgstr "标题"
-
-#. Translators, in table header on clean-up page, content size on disk
-#: librarian\views\cleanup.tpl:36
-msgid "size"
-msgstr "大小"
-
-#. Translators, note that appears on clean-up page inside the table where deletion candidates would normally be shown
-#: librarian\views\cleanup.tpl:52
-msgid "There is enough free space. No clean-up needed."
-msgstr "存储器有足够的空间。无需清理。"
-
-#. Translators, used as button label for clean-up preview button
-#: librarian\views\cleanup.tpl:59
-msgid "How much space does this free up?"
-msgstr "此次释放多少空间？"
-
-#. Translators, used as button label for clean-up start button, user selects content to be deleted before using this button
-#: librarian\views\cleanup.tpl:61
-msgid "Delete selected now"
-msgstr "删除选择项"
-
-#. Translators, used as note on library page when showing search results, %(term)s represents the text typed in by user
-#: librarian\views\content_list.tpl:8
-#, python-format
-msgid "Showing search results for '%(terms)s'"
-msgstr "显示'%(terms)s'的搜索结果"
-
-#. Translators, used as note on library page when showing content list, %(count)s is number of items on the page, %(total)s is total number of items in library
-#: librarian\views\content_list.tpl:11
-#, python-format
-msgid "Showing %(count)s of %(total)s item"
-msgid_plural "Showing %(count)s of %(total)s items"
-msgstr[0] "显示%(total)s中的%(count)s"
-
-#. Translators, used as note on library page when library is empty
-#: librarian\views\content_list.tpl:20
-#, fuzzy
-msgid "Content library is currently empty"
-msgstr "文库目前暂无内容"
-
-#. Translators, used as note on library page when search does not return anything
-#: librarian\views\content_list.tpl:23
-#, python-format
-msgid "There are no search results for '%(terms)s'"
-msgstr "'%(terms)s'的搜索无结果"
-
-#. Translators, used as not on library page when there is no content for given tag
-#: librarian\views\content_list.tpl:26
-#, python-format
-msgid "There are no results for '%(tag)s'"
-msgstr ""
-
-#. Translators, used as label for search field, appears before the text box
-#: librarian\views\content_list.tpl:33
-msgid "search titles"
-msgstr "搜索标题"
-
-#. Translators, used as label for search button
-#. Translators, used as label for pager button that selects the page to which user wants to go, normally hidden when JavaScript is active
-#. Translators, used as button in file view address bar
-#: librarian\views\content_list.tpl:36 librarian\views\content_list.tpl:61
-#: librarian\views\file_list.tpl:14
-msgid "go"
-msgstr "执行"
-
-#. Translators, used as label for button that clears search results
-#: librarian\views\content_list.tpl:39
-msgid "clear"
-msgstr "清除"
-
-#. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
-#: librarian\views\content_list.tpl:45 librarian\views\downloads.tpl:10
-msgid "page"
-msgstr "页"
-
-#. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
-#: librarian\views\content_list.tpl:59 librarian\views\downloads.tpl:13
-msgid "per page"
-msgstr "每页"
-
-#. Translators, used as placeholder while infinite scrolling content is being loaded
-#: librarian\views\content_list.tpl:79
-msgid "Loading..."
-msgstr ""
-
-#. Translators, shown when user reaches the end of the library
-#: librarian\views\content_list.tpl:86
-msgid "You have reached the end of the library."
-msgstr ""
-
-#. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
-#: librarian\views\content_list.tpl:88 librarian\views\content_list.tpl:95
-msgid "Go to top"
-msgstr ""
-
-#. Translators, appears on dashboard as a label, preceded by update count in big letter
-#: librarian\views\dashboard.tpl:12
-msgid "update available"
-msgid_plural "updates available"
-msgstr[0] "可用更新"
-
-#. Translators, appears on dashboard as a label, preceded by date of update in big letter
-#: librarian\views\dashboard.tpl:18
-msgid "last update"
-msgstr "最后更新"
-
-#. Translators, used as section heading on dashboard above disk space and similar information
-#: librarian\views\dashboard.tpl:26
-msgid "Content library stats"
-msgstr "文库状态"
-
-#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian\views\dashboard.tpl:30
-#, python-format
-msgid "download directory (%s free)"
-msgstr "下载目录剩余%s"
-
-#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian\views\dashboard.tpl:36
-#, python-format
-msgid "content library (%s free)"
-msgstr "文库剩余%s"
-
-#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian\views\dashboard.tpl:41
-#, python-format
-msgid "total space (%s free)"
-msgstr "总空间剩余%s"
-
-#. Translators, this is a warning message appearing when disk space is below 10%
-#: librarian\views\dashboard.tpl:46
-msgid "You are running low on disk space."
-msgstr "磁盘空间不足。"
-
-#. Translators, this is a button label that leads to page for library cleanup
-#: librarian\views\dashboard.tpl:48
-msgid "Free some space now"
-msgstr "立即释放一些空间"
-
-#. Translators, used as a label in content library stats section on dashboard, preceded by count of items in the library
-#: librarian\views\dashboard.tpl:56
-msgid "item in the library"
-msgid_plural "items in the library"
-msgstr[0] "文库项目"
-
-#. Translators, used as a label in content library stats section on dashboard, preceded by library size in bytes, KB, MB, etc
-#: librarian\views\dashboard.tpl:62
-msgid "used space"
-msgstr "已使用空间"
-
-#. Translators, used as section heading on dashboard above disk space and similar information
-#: librarian\views\dashboard.tpl:69
-msgid "Application logs"
-msgstr "应用日志"
-
-#. Translators, used as note in Application logs section
-#: librarian\views\dashboard.tpl:71
-msgid "Logs are shown in reverse chronological order"
-msgstr "按相反时间顺序排列日志"
-
-#. Translators, used as section heading on dashboard above 'About' section
-#: librarian\views\dashboard.tpl:77
-msgid "About"
-msgstr ""
-
-#: librarian\views\dashboard.tpl:80
-msgid ""
-"\n"
-"        This program is free software: you can redistribute it and/or modify "
-"it\n"
-"        under the terms of the GNU General Public License as published by "
-"the\n"
-"        Free Software Foundation, either version 3 of the License, or (at "
-"your\n"
-"        option) any later version.\n"
-"        "
-msgstr ""
-
-#. Translators, appears in copyright line in dashboard's 'About' section
-#: librarian\views\dashboard.tpl:91
-msgid "Some rights reserved."
-msgstr ""
-
-#: librarian\views\downloads.tpl:14
-msgid "Reload"
-msgstr "刷新"
-
-#. Translators, used as button label on updates page for marking all content for import
-#: librarian\views\downloads.tpl:22 librarian\views\downloads.tpl:81
-msgid "Select all"
-msgstr "全部选择"
-
-#. Translators, used as button label on updates page for unmarking all content for import
-#: librarian\views\downloads.tpl:24 librarian\views\downloads.tpl:83
-msgid "Select none"
-msgstr "取消选择"
-
-#. Translators, used as button label on updates page for adding marked content to library
-#: librarian\views\downloads.tpl:26 librarian\views\downloads.tpl:85
-msgid "Add selected to library"
-msgstr "增加所选到文库"
-
-#. Translators, used as button label on updates page for permanently deleting all downloaded content
-#: librarian\views\downloads.tpl:28 librarian\views\downloads.tpl:87
-msgid "Delete selected"
-msgstr "删除选择项"
-
-#. Translators, used as table header, above checkbox for selecting updates for import
-#: librarian\views\downloads.tpl:36
-msgid "select"
-msgstr "选择"
-
-#. Translators, used as table header, broadcast date
-#: librarian\views\downloads.tpl:40
-msgid "broadcast"
-msgstr "广播"
-
-#. Translators, used as table header, download date
-#: librarian\views\downloads.tpl:42
-msgid "downloaded"
-msgstr "已下载"
-
-#: librarian\views\downloads.tpl:65
-msgid "replaces:"
-msgstr "替代:"
-
-#. Translators, note that appears in table on updates page when there is no new downloaded content
-#: librarian\views\downloads.tpl:72
-msgid "There is no new content"
-msgstr "没有新内容"
-
-#. Translators, used as page title for page that shows result of running a script
-#. Translators, used as page header for page that shows result of running a script
-#: librarian\views\exec_result.tpl:2 librarian\views\exec_result.tpl:5
-msgid "Script output"
-msgstr "脚本输出"
-
-#. Translators, return (result) code of the script executed via file browser
-#: librarian\views\exec_result.tpl:11
-msgid "return code:"
-msgstr "返回代码:"
-
-#. Translators, shown when result code is good (0).
-#: librarian\views\exec_result.tpl:14
-msgid "OK"
-msgstr "确定"
-
-#. Translators, shown when result code is not good (non-zero).
-#: librarian\views\exec_result.tpl:17
-msgid "error"
-msgstr "错误"
-
-#. Translators, refers to standard output of script run from file browser (STDOUT)
-#: librarian\views\exec_result.tpl:22
-msgid "Output"
-msgstr "输出"
-
-#. Translators, shown if script returned no output
-#: librarian\views\exec_result.tpl:27
-msgid "no output"
-msgstr "无输出"
-
-#. Translators, refers to standard errors of script run from file browser (STDERR)
-#: librarian\views\exec_result.tpl:32
-msgid "Errors"
-msgstr "错误"
-
-#. Translators, used as page title
-#. Translators, used as page heading
-#: librarian\views\favorites.tpl:2 librarian\views\favorites.tpl:4
-msgid "Favorites"
-msgstr "收藏"
-
-#. Translators, used as note shown on favorites page when user has no favorites
-#: librarian\views\favorites.tpl:9
-msgid "You have not favorited any content yet"
-msgstr "你还没有收藏内容"
-
-#. Translators, used as button label on favorites page, for removing content from favorites
-#: librarian\views\favorites.tpl:26
-msgid "unfavorite"
-msgstr "取消收藏"
-
-#. Translators, used as label for link that leads to parent directory in file listing
-#: librarian\views\file_list.tpl:23
-msgid "(go up one level)"
-msgstr "(向上一层)"
-
-#: librarian\views\file_list.tpl:33 librarian\views\file_list.tpl:53
-msgid "Rename"
-msgstr "重命名"
-
-#: librarian\views\file_list.tpl:38 librarian\views\file_list.tpl:58
-msgid "Delete"
-msgstr "删除"
-
-#. Translators, label for button in file listing that allows user to run a script
-#: librarian\views\file_list.tpl:65
-msgid "Run"
-msgstr "运行"
-
-#: librarian\views\file_list.tpl:74
-msgid "About this folder"
-msgstr "关于此文件夹"
-
 #: librarian\views\reader.tpl:14
 msgid "content partner"
-msgstr ""
+msgstr "内容合作伙伴"
 
 #: librarian\views\reader.tpl:19
 msgid "sponsored content"
-msgstr ""
+msgstr "赞助内容"
 
 #: librarian\views\reader.tpl:23
 msgid "Outernet core archive"
-msgstr ""
+msgstr "Outernet 核心档案"
 
-#. Translators, used as 'content belongs to core archive' badge
-#: librarian\views\_badges.tpl:8
-msgid "core"
-msgstr "核心"
+#. Translators, used as placeholder while infinite scrolling content is being loaded
+#: librarian\views\content_list.tpl:89
+msgid "Loading..."
+msgstr "加载中..."
 
-#. Translators, used as 'partner content' badge
-#: librarian\views\_badges.tpl:15
-msgid "partner"
-msgstr "伙伴"
+#. Translators, shown when user reaches the end of the library
+#: librarian\views\content_list.tpl:96
+msgid "You have reached the end of the library."
+msgstr "你已经到达了库的终点"
 
-#. Translators, used as 'sponsored content' badge
-#: librarian\views\_badges.tpl:22
-msgid "sponsored"
-msgstr "赞助"
+#. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
+#: librarian\views\content_list.tpl:98 librarian\views\content_list.tpl:105
+msgid "Go to top"
+msgstr "到顶端"
 
-#. Translators, appears next to content title when content is sponsored or is partner content, %s is replaced by person/company name; not part of sentence
-#: librarian\views\_badges.tpl:31
-#, python-format
-msgid "from %s"
-msgstr "从%s "
+#. Translators, used as section heading on dashboard above 'About' section
+#: librarian\views\dashboard.tpl:88
+msgid "About"
+msgstr "关于"
 
-#. Translators, used in the pager
-#: librarian\views\_simple_pager.tpl:4
-msgid "previous"
-msgstr "前一页"
+#: librarian\views\dashboard.tpl:91
+msgid "\n"
+"        This program is free software: you can redistribute it and/or modify it\n"
+"        under the terms of the GNU General Public License as published by the\n"
+"        Free Software Foundation, either version 3 of the License, or (at your\n"
+"        option) any later version.\n"
+"        "
+msgstr "本程序是自由软件：你可以在由自由软件基金会发布的\n"
+"GNU通用公共许可证，即第3版的许可证的条款下，或者（你自己\n"
+"选择的）任何之后的版本的条款下进行重新分配并且/或者修改它。"
 
-#. Translators, used in the pager
-#: librarian\views\_simple_pager.tpl:8
-msgid "next"
-msgstr "后一页"
+#. Translators, appears in copyright line in dashboard's 'About' section
+#: librarian\views\dashboard.tpl:102
+msgid "Some rights reserved."
+msgstr "保留某些版权"
+
+#: librarian\routes\content.py:57
+msgid "Specified tag was not found"
+msgstr "Specified tag was not found"
+
+#. Translators, used as not on library page when there is no content for given tag
+#: librarian\views\content_list.tpl:72
+msgid "There are no results for '%(tag)s'"
+msgstr "There are no results for '%(tag)s'"
 
 #. Translators, button label for a button that saves user tags for a piece of content
 #: librarian\views\_tags.tpl:8
 msgid "Save tags"
-msgstr ""
+msgstr "Save tags"
 
 #. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
 #: librarian\views\_tags.tpl:12
 msgid "Separate tags with commas"
-msgstr ""
+msgstr "Separate tags with commas"
 
 #. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
 #: librarian\views\_tag_cloud.tpl:5
 msgid "everything"
-msgstr ""
+msgstr "everything"
 
 #. Translators, used as label for button that appears next to tag list
 #: librarian\views\_tag_js_templates.tpl:3
 msgid "Edit tags"
-msgstr ""
+msgstr "Edit tags"
 
 #. Translators, used as label for button that appears in tag editing form
 #: librarian\views\_tag_js_templates.tpl:8
 msgid "Close"
-msgstr ""
+msgstr "Close"
 
 #. Translators, error message shown when updating tags fails
 #: librarian\views\_tag_js_templates.tpl:13
 msgid "Tags could not be updated."
-msgstr ""
+msgstr "Tags could not be updated."
 
-#~ msgid "favorite"
-#~ msgstr "收藏"
+#. Translators, link that loads more content in infinite scrolling page
+#: librarian\views\content_list.tpl:81
+msgid "Load more content"
+msgstr "Load more content"
 
-#~ msgid "Favorite content"
-#~ msgstr "收藏内容"
+#. Translators, used as section heading on dashboard
+#: librarian\views\dashboard.tpl:71
+msgid "Tuner settings"
+msgstr "Tuner settings"
 
-#~ msgid "You have not favorted any content yet"
-#~ msgstr "未收藏任何内容"
+#: librarian\views\dashboard.tpl:74
+msgid "Access TVHeadend"
+msgstr "Access TVHeadend"
 
-#~ msgid "see all favorites"
-#~ msgstr "显示所有收藏"
+#: librarian\views\file_list.tpl:29
+msgid "There are currently no files or folders here."
+msgstr "There are currently no files or folders here."
 
-#~ msgid "Add selected to archive"
-#~ msgstr "归档"
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian\views\remove_error.tpl:2 librarian\views\remove_error.tpl:5
+msgid "Content could not be removed"
+msgstr "Content could not be removed"
 
-#~ msgid "added"
-#~ msgstr "增加"
+#. Translators, message displayed when content cannot be deleted
+#: librarian\views\remove_error.tpl:9
+msgid "Please make sure the storage device is not write-protected and try again."
+msgstr "Please make sure the storage device is not write-protected and try again."
 
-#~ msgid "unknown"
-#~ msgstr "未知"
+#. Translators, used as label on button for retrying content removal
+#: librarian\views\remove_error.tpl:13
+msgid "Retry"
+msgstr "Retry"
 
-#~ msgid "Showing %(count)s of %(total)s items"
-#~ msgid_plural "Showing %(count)s of %(total)s items"
-#~ msgstr[0] "显示%(count) of %(total) 项目"
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian\views\tag_cloud.tpl:2 librarian\views\tag_cloud.tpl:5
+msgid "Tag cloud"
+msgstr "Tag cloud"
+
