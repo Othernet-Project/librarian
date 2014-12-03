@@ -378,7 +378,7 @@ def zipball_count():
     """
     db = request.db
     db.query(COUNT_QUERY)
-    return db.cursor.fetchone()['count(*)']
+    return db.cursor.fetchone()['count']
 
 
 def path_space(path):
@@ -404,6 +404,8 @@ def free_space():
     :returns:   three-tuple of two-tuples containing free and total spaces for
                 spool directory, content directory, and totals respectively
     """
+    if not hasattr(os, 'statvfs'):
+        return (None, None), (None, None), (None, None)
     config = request.app.config
     sdir = config['content.spooldir']
     cdir = config['content.contentdir']
@@ -475,6 +477,8 @@ def needed_space():
     :returns:   space in bytes
     """
     # TODO: tests
+    if not hasattr(os, 'statvfs'):
+        return None
     config = request.app.config
     return max([0, parse_size(config['storage.minfree']) - free_space()[1][0]])
 

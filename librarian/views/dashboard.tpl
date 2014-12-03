@@ -22,31 +22,33 @@
 
 <div class="inner">
     <div class="diskspace dash-section">
-        %# Translators, used as section heading on dashboard above disk space and similar information
         <h2>{{ _('Content library stats') }}</h2>
-        % if spool != total:
-            <p class="spool">
+        % if total != (None, None):
+            %# Translators, used as section heading on dashboard above disk space and similar information
+            % if spool != total:
+                <p class="spool">
+                %# Translators, %s is the amount of free space in bytes, KB, MB, etc.
+                % include('_space_info', label=_('download directory (%s free)'), space=spool)
+                </p>
+            % end
+            % if content != total:
+                <p class="content">
+                %# Translators, %s is the amount of free space in bytes, KB, MB, etc.
+                % include('_space_info', label=_('content library (%s free)'), space=content)
+                </p>
+            % end
+            <p class="total">
             %# Translators, %s is the amount of free space in bytes, KB, MB, etc.
-            % include('_space_info', label=_('download directory (%s free)'), space=spool)
+            % include('_space_info', label=_('total space (%s free)'), space=total)
             </p>
-        % end
-        % if content != total:
-            <p class="content">
-            %# Translators, %s is the amount of free space in bytes, KB, MB, etc.
-            % include('_space_info', label=_('content library (%s free)'), space=content)
+            % if needed:
+            <p class="warning">
+            %# Translators, this is a warning message appearing when disk space is below 10%
+            {{ _('You are running low on disk space.') }}
+            %# Translators, this is a button label that leads to page for library cleanup
+            <a href="{{ i18n_path('/cleanup/') }}">{{ _('Free some space now') }}</a>
             </p>
-        % end
-        <p class="total">
-        %# Translators, %s is the amount of free space in bytes, KB, MB, etc.
-        % include('_space_info', label=_('total space (%s free)'), space=total)
-        </p>
-        % if needed:
-        <p class="warning">
-        %# Translators, this is a warning message appearing when disk space is below 10%
-        {{ _('You are running low on disk space.') }}
-        %# Translators, this is a button label that leads to page for library cleanup
-        <a href="{{ i18n_path('/cleanup/') }}">{{ _('Free some space now') }}</a>
-        </p>
+            % end
         % end
 
         <div class="content-archive">
@@ -74,7 +76,7 @@
     </div>
 
     <div class="dash-logs dash-section">
-        %# Translators, used as section heading on dashboard above disk space and similar information
+        %# Translators, used as section heading on dashboard above application logs
         <h2>{{ _('Application logs') }}</h2>
         %# Translators, used as note in Application logs section
         <p>{{ _('Logs are shown in reverse chronological order') }}</p>
