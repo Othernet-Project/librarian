@@ -64,6 +64,15 @@
         </div>
     </div>
 
+    <div class="dash-tuning dash-section">
+        %# Translators, used as section heading on dashboard
+        <h2>{{ _('Tuner settings') }}</h2>
+
+        <p>
+        <a class="button" href="http://{{ request.urlparts.hostname }}:9981/extjs.html">{{ _('Access TVHeadend') }}</a>
+        </p>
+    </div>
+
     <div class="dash-logs dash-section">
         %# Translators, used as section heading on dashboard above disk space and similar information
         <h2>{{ _('Application logs') }}</h2>
