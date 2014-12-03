@@ -91,13 +91,13 @@ header {
     a {
       color: $white;
 
-      &:hover {
+      &:hover, &:focus {
         text-decoration: none;
         background-color: $ash-blue;
       }
     }
 
-    &:hover {
+    &:hover, &:focus {
       a, span {
         width: auto;
         padding-right: 28px;
@@ -152,7 +152,7 @@ header {
       border-bottom: 2px solid transparent;
     }
 
-    a:hover, span.current {
+    a:hover, a:focus, span.current {
       text-decoration: none;
       border-top: 2px solid $blue;
       border-bottom: 2px solid $blue;
@@ -341,7 +341,7 @@ header {
   padding: 0.2em 0.5em;
   cursor: pointer;
 
-  &:hover {
+  &:hover, &:focus {
     text-decoration: none;
   }
 
@@ -359,7 +359,7 @@ header {
     color 0.3s
   );
 
-  &:hover {
+  &:hover, &:focus {
     background-color: $h-bg;
     color: $h-text;
   }
@@ -399,7 +399,7 @@ button, .button {
   }
 }
 
-a.button:hover, a.button:visited {
+a.button:hover, a.button:focus, a.button:visited {
   color: $white;
   text-decoration: none;
 }
@@ -568,7 +568,7 @@ tr.selected {
   a {
     color: $link;
 
-    &:hover {
+    &:hover, &:focus {
       color: $link;
     }
   }
@@ -606,7 +606,7 @@ tr.selected {
           padding: 1em;
         }
 
-        &:hover {
+        &:hover, &:focus {
           text-decoration: none;
         }
       }
