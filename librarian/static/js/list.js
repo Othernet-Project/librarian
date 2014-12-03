@@ -107,11 +107,11 @@
   function insertContent(res) {
     res = $.trim(res);
     if (res === '') { return loadEmpty(); }
-    loader.hide();
-    loadLink.show();
     res = $(res);
     contentList.append(res).imagesLoaded(function () {
       contentList.masonry('appended', res);
+      loader.hide();
+      loadLink.show();
       win.trigger('listUpdate', [res]);
     });
     loading = false;
