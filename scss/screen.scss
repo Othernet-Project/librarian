@@ -290,6 +290,13 @@ header {
   background: desaturate(lighten($orange, 35), 10);
 }
 
+.empty {
+  background: $light-grey;
+  color: $grey;
+  text-align: center;
+  padding: 2em 0.5em;
+}
+
 .dash-section {
   padding-bottom: 2em;
 }

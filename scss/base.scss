@@ -82,13 +82,6 @@ table {
   td {
     vertical-align: top;
     padding: 0.5em;
-
-    &.empty {
-      background: $light-grey;
-      color: $grey;
-      text-align: center;
-      padding: 2em 0.5em;
-    }
   }
 
   th {

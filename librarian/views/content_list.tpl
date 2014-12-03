@@ -16,18 +16,6 @@
     <div id="tag-cloud-container" class="tag-cloud-container" data-url="{{ i18n_path('/tags/') }}" data-current="{{ tag }}">
         % include('_tag_cloud')
     </div>
-    % if not metadata:
-        % if not query and not tag:
-        %# Translators, used as note on library page when library is empty
-        <p>{{ _('Content library is currently empty') }}</p>
-        % elif query:
-        %# Translators, used as note on library page when search does not return anything
-        <p>{{ str(_("There are no search results for '%(terms)s'")) % {'terms': query} }}</p>
-        % elif tag:
-        %# Translators, used as not on library page when there is no content for given tag
-        <p>{{ str(_("There are no results for '%(tag)s'")) % {'tag': tag} }}</p>
-        % end
-    % else:
     <form id="pager" class="pager controls">
         <input type="hidden" name="t" value="{{ tag_id or '' }}">
         <p>
@@ -38,7 +26,7 @@
         <button class="fake-go small">{{ _('go') }}</button>
         % if query:
         %# Translators, used as label for button that clears search results
-        <a href="{{ i18n_path(request.path) }}" class="button">{{ _('clear') }}</a>
+        <a href="{{ i18n_path(request.path) }}" class="button small">{{ _('clear') }}</a>
         % end
         </label>
         <span class="paging">
@@ -71,7 +59,20 @@
     <p class="controls">
     % include('_simple_pager')
     </p>
-    % end 
+    % if not metadata:
+        <p class="empty">
+        % if not query and not tag:
+        %# Translators, used as note on library page when library is empty
+        {{ _('Content library is currently empty') }}
+        % elif query:
+        %# Translators, used as note on library page when search does not return anything
+        {{ str(_("There are no search results for '%(terms)s'")) % {'terms': query} }}
+        % elif tag:
+        %# Translators, used as not on library page when there is no content for given tag
+        {{ str(_("There are no results for '%(tag)s'")) % {'tag': tag} }}
+        % end
+        </p>
+    % end
 </div>
 
 <script id="loadLink" type="text/template">
