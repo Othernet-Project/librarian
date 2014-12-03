@@ -59,6 +59,7 @@ LOCALES = [
     ('nb', 'Norsk'),
     ('nl', 'Nederlands'),
     ('pt', 'Português'),
+    ('ru', 'Русский'),
     ('sr', 'Srpski'),
     ('sv', 'Svensk'),
     ('ta', 'தமிழ்'),
