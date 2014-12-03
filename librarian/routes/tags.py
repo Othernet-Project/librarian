@@ -9,7 +9,6 @@ from ..lib.ajax import roca_view
 WS = re.compile(r'\s', re.M)
 
 
-@view('tagging_error')
 @archive.with_content
 def edit_tags(meta):
     tags = request.forms.getunicode('tags', '')
