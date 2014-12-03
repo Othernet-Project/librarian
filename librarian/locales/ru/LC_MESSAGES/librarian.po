@@ -125,8 +125,8 @@ msgstr "ясно"
 msgid "update available"
 msgid_plural "updates available"
 msgstr[0] "обновление доступно"
-msgstr[1] ""
-msgstr[2] ""
+msgstr[1] "обновления доступны"
+msgstr[2] "обновления доступны"
 
 #: librarian\views\dashboard.tpl:25
 msgid "Content library stats"
@@ -135,9 +135,9 @@ msgstr "Содержание Статистика библиотеки"
 #: librarian\views\dashboard.tpl:58
 msgid "item in the library"
 msgid_plural "items in the library"
-msgstr[0] "пункт в библиотеке"
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "элемент в библиотеке"
+msgstr[1] "элементы в библиотеке"
+msgstr[2] "элементы в библиотеке"
 
 #: librarian\views\dashboard.tpl:80
 msgid "Application logs"
@@ -170,13 +170,13 @@ msgstr "Показаны результаты поиска для '%(terns)s'"
 #: librarian\views\content_list.tpl:11
 msgid "Showing %(count)s of %(total)s item"
 msgid_plural "Showing %(count)s of %(total)s items"
-msgstr[0] "Показаны %(count)s ов %(total)s товаром"
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Показан %(count)s из %(total)s элемента"
+msgstr[1] "Показаны %(count)s из %(total)s элементов"
+msgstr[2] "Показаны %(count)s из %(total)s элементов"
 
 #: librarian\views\content_list.tpl:69
 msgid "There are no search results for '%(terms)s'"
-msgstr "Там нет результаты поиска по '%(terms)с'"
+msgstr "Здесь нет результатов поиска по '%(terms)с'"
 
 #. Translators, used in the pager
 #: librarian\views\_simple_pager.tpl:4
@@ -192,7 +192,7 @@ msgstr "Следующий"
 #. Translators, used as page title on clean-up page
 #: librarian\views\cleanup.tpl:2 librarian\views\cleanup.tpl:4
 msgid "Library clean-up"
-msgstr "Библиотека очистки"
+msgstr "Чистка библиотеки"
 
 #. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
 #: librarian\views\content_list.tpl:35 librarian\views\downloads.tpl:10
@@ -403,7 +403,7 @@ msgstr "Against DRM License "
 
 #: librarian\lib\downloads.py:47
 msgid "Free Art License"
-msgstr "Free Art License "
+msgstr "Лицензия Свободного Искусства (Free Art License)"
 
 #: librarian\lib\downloads.py:48
 msgid "Public Domain"
@@ -425,50 +425,50 @@ msgstr "Другие не-свободные лицензии"
 #: librarian\routes\dashboard.py:63 librarian\routes\favorites.py:35
 #: librarian\routes\favorites.py:38
 msgid "Invalid request"
-msgstr "Invalid request"
+msgstr "Неверный запрос"
 
 #. Translators, used as message to user when clean-up is started
 #. without selecting any content
 #: librarian\routes\dashboard.py:71
 msgid "No content selected"
-msgstr "No content selected"
+msgstr "Контент не выбран"
 
 #. Translators, used when user is previewing clean-up, %s is
 #. replaced by amount of content that can be freed in bytes,
 #. KB, MB, etc
 #: librarian\routes\dashboard.py:78
 msgid "%s can be freed by removing selected content"
-msgstr "%s can be freed by removing selected content"
+msgstr "%s может быть освобождени путем удаления выбранного Контента"
 
 #. Translators, error message shown on clean-up page when some of
 #. the content could not be removed for unknown reasons
 #: librarian\routes\dashboard.py:90
 msgid "Some files could not be removed"
-msgstr "Some files could not be removed"
+msgstr "Некоторые файлы не могут быть удалены"
 
 #. Translators, error message shown on clean-up page when there was
 #. no deletable content
 #: librarian\routes\dashboard.py:94
 msgid "Nothing to delete"
-msgstr "Nothing to delete"
+msgstr "Ничего удалять"
 
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
 #: librarian\routes\downloads.py:68
 msgid "Invalid action, please use one of the form buttons."
-msgstr "Invalid action, please use one of the available buttons."
+msgstr "Неправильное действие, пожалуйста, используйте одну из кнопок в форме."
 
 #: librarian\views\reader.tpl:14
 msgid "content partner"
-msgstr "content partner"
+msgstr "контент-партнер"
 
 #: librarian\views\reader.tpl:19
 msgid "sponsored content"
-msgstr "sponsored content"
+msgstr "спонсируемый контент"
 
 #: librarian\views\reader.tpl:23
 msgid "Outernet core archive"
-msgstr "Outernet core archive"
+msgstr "Outernet основной архив"
 
 #. Translators, used as placeholder while infinite scrolling content is being loaded
 #: librarian\views\content_list.tpl:89
@@ -478,7 +478,7 @@ msgstr "Загружается..."
 #. Translators, shown when user reaches the end of the library
 #: librarian\views\content_list.tpl:96
 msgid "You have reached the end of the library."
-msgstr "You have reached the end of the library."
+msgstr "Вы достигли конец библиотеки."
 
 #. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
 #: librarian\views\content_list.tpl:98 librarian\views\content_list.tpl:105
@@ -504,84 +504,84 @@ msgstr "Эта программа является свободным прогр
 #. Translators, appears in copyright line in dashboard's 'About' section
 #: librarian\views\dashboard.tpl:102
 msgid "Some rights reserved."
-msgstr "Some rights reserved."
+msgstr "Некоторые права защищены."
 
 #: librarian\routes\content.py:57
 msgid "Specified tag was not found"
-msgstr "Specified tag was not found"
+msgstr "Указанная метка не найдена"
 
 #. Translators, used as not on library page when there is no content for given tag
 #: librarian\views\content_list.tpl:72
 msgid "There are no results for '%(tag)s'"
-msgstr "There are no results for '%(tag)s'"
+msgstr "Нет результатов для '%(tag)s'"
 
 #. Translators, button label for a button that saves user tags for a piece of content
 #: librarian\views\_tags.tpl:8
 msgid "Save tags"
-msgstr "Save tags"
+msgstr "Сохранить mеткy"
 
 #. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
 #: librarian\views\_tags.tpl:12
 msgid "Separate tags with commas"
-msgstr "Separate tags with commas"
+msgstr "Отделить mетки запятыми"
 
 #. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
 #: librarian\views\_tag_cloud.tpl:5
 msgid "everything"
-msgstr "everything"
+msgstr "все"
 
 #. Translators, used as label for button that appears next to tag list
 #: librarian\views\_tag_js_templates.tpl:3
 msgid "Edit tags"
-msgstr "Edit tags"
+msgstr "Редактировать mетки"
 
 #. Translators, used as label for button that appears in tag editing form
 #: librarian\views\_tag_js_templates.tpl:8
 msgid "Close"
-msgstr "Close"
+msgstr "Закрыть"
 
 #. Translators, error message shown when updating tags fails
 #: librarian\views\_tag_js_templates.tpl:13
 msgid "Tags could not be updated."
-msgstr "Tags could not be updated."
+msgstr "Mетки не могут быть обновлены."
 
 #. Translators, link that loads more content in infinite scrolling page
 #: librarian\views\content_list.tpl:81
 msgid "Load more content"
-msgstr "Load more content"
+msgstr "Загрузить больше контента"
 
 #. Translators, used as section heading on dashboard
 #: librarian\views\dashboard.tpl:71
 msgid "Tuner settings"
-msgstr "Tuner settings"
+msgstr "Настройки тюнера"
 
 #: librarian\views\dashboard.tpl:74
 msgid "Access TVHeadend"
-msgstr "Access TVHeadend"
+msgstr "Доступ головной станции ТВ"
 
 #: librarian\views\file_list.tpl:29
 msgid "There are currently no files or folders here."
-msgstr "There are currently no files or folders here."
+msgstr "Здесь пока еще нет файлов или папок."
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\remove_error.tpl:2 librarian\views\remove_error.tpl:5
 msgid "Content could not be removed"
-msgstr "Content could not be removed"
+msgstr "Контент не может быть удален"
 
 #. Translators, message displayed when content cannot be deleted
 #: librarian\views\remove_error.tpl:9
 msgid "Please make sure the storage device is not write-protected and try again."
-msgstr "Please make sure the storage device is not write-protected and try again."
+msgstr "Пожалуйста, убедитесь, что устройства хранения данных не защищено от записи и повторите попытку."
 
 #. Translators, used as label on button for retrying content removal
 #: librarian\views\remove_error.tpl:13
 msgid "Retry"
-msgstr "Retry"
+msgstr "Повторить"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\tag_cloud.tpl:2 librarian\views\tag_cloud.tpl:5
 msgid "Tag cloud"
-msgstr "Tag cloud"
+msgstr "Облако меток"
 
