@@ -11,7 +11,7 @@
         <p class="path">
         <input type="text" name="p" value="{{ path if path != '.' else '' }}">
         %# Translators, used as button in file view address bar
-        <button type="submit">{{ _('go') }}</button>
+        <button type="submit" class="small">{{ _('go') }}</button>
         </p>
     </form>
 
@@ -23,50 +23,57 @@
             <td colspan="4"><a href="{{ i18n_path('/files/') + up }}">{{ _('(go up one level)') }}<a></td>
         </tr>
         % end
-        % for d in dirs:
-        <tr class="dir">
-            <td class="icon"><a href="{{ i18n_path('/files/') + d.path }}"><span class="icon"></span></td>
-            <td colspan="2"><a href="{{ i18n_path('/files/') + d.path }}">{{ d.name }}</a></td>
-            <td class="rename">
-                {{! h.form('post', action=i18n_path('/files/') + d.path) }}
-                    <input type="text" name="name" value="{{ d.name }}">
-                    <button class="small" name="action" value="rename" type="submit">{{ _('Rename') }}
-                </form>
-            </td>
-            <td class="delete">
-                {{! h.form('post', action=i18n_path('/files/') + d.path) }}
-                    <button class="small danger" name="action" value="delete" type="submit">{{ _('Delete') }}
-                </form>
-            </td>
-            <td>
-            </td>
+        % if (not dirs) and (not files):
+        <tr>
+            %# Tanslators, shown in files section when current folder is empty
+            <td class="empty" colspan="6">{{ _('There are currently no files or folders here.') }}</td>
         </tr>
-        % end
-        % for f in files:
-        <tr class="file">
-            <td class="icon"><a href="{{ i18n_path('/files/') + f.path }}"><span class="icon"></span></a>
-            <td><a href="{{ i18n_path('/files/') + f.path }}">{{ f.name }}</a></td>
-            <td class="size">{{ h.hsize(f.size) }}</td>
-            <td class="rename">
-                {{! h.form('post', action=i18n_path('/files/') + f.path) }}
-                    <input type="text" name="name" value="{{ f.name }}">
-                    <button class="small" name="action" value="rename" type="submit">{{ _('Rename') }}
-                </form>
-            </td>
-            <td class="delete">
-                {{! h.form('post', action=i18n_path('/files/') + f.path) }}
-                    <button class="small danger" name="action" value="delete" type="submit">{{ _('Delete') }}
-                </form>
-            </td>
-            <td class="execute">
-                % if f.path.endswith('.sh'):
-                {{! h.form('post', action=i18n_path('/files/') + f.path) }}
-                    %# Translators, label for button in file listing that allows user to run a script
-                    <button class="small" name="action" value="exec" type="submit">{{ _('Run') }}
-                </form>
-                % end
-            </td>
-        </tr>
+        % else:
+            % for d in dirs:
+            <tr class="dir">
+                <td class="icon"><a href="{{ i18n_path('/files/') + d.path }}"><span class="icon"></span></td>
+                <td colspan="2"><a href="{{ i18n_path('/files/') + d.path }}">{{ d.name }}</a></td>
+                <td class="rename">
+                    {{! h.form('post', action=i18n_path('/files/') + d.path) }}
+                        <input type="text" name="name" value="{{ d.name }}">
+                        <button class="small" name="action" value="rename" type="submit">{{ _('Rename') }}
+                    </form>
+                </td>
+                <td class="delete">
+                    {{! h.form('post', action=i18n_path('/files/') + d.path) }}
+                        <button class="small danger" name="action" value="delete" type="submit">{{ _('Delete') }}
+                    </form>
+                </td>
+                <td>
+                </td>
+            </tr>
+            % end
+            % for f in files:
+            <tr class="file">
+                <td class="icon"><a href="{{ i18n_path('/files/') + f.path }}"><span class="icon"></span></a>
+                <td><a href="{{ i18n_path('/files/') + f.path }}">{{ f.name }}</a></td>
+                <td class="size">{{ h.hsize(f.size) }}</td>
+                <td class="rename">
+                    {{! h.form('post', action=i18n_path('/files/') + f.path) }}
+                        <input type="text" name="name" value="{{ f.name }}">
+                        <button class="small" name="action" value="rename" type="submit">{{ _('Rename') }}
+                    </form>
+                </td>
+                <td class="delete">
+                    {{! h.form('post', action=i18n_path('/files/') + f.path) }}
+                        <button class="small danger" name="action" value="delete" type="submit">{{ _('Delete') }}
+                    </form>
+                </td>
+                <td class="execute">
+                    % if f.path.endswith('.sh'):
+                    {{! h.form('post', action=i18n_path('/files/') + f.path) }}
+                        %# Translators, label for button in file listing that allows user to run a script
+                        <button class="small" name="action" value="exec" type="submit">{{ _('Run') }}
+                    </form>
+                    % end
+                </td>
+            </tr>
+            % end
         % end
     </table>
 
