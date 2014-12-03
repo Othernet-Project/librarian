@@ -76,10 +76,12 @@ app.route('/', 'GET',
           callback=content.content_list)
 app.route('/pages/<content_id>/<filename:path>', 'GET', skip=['i18n'],
           callback=content.content_file)
-app.route('/pages/<content_id>/', 'GET',
+app.route('/pages/<content_id>', 'GET',
           callback=content.content_reader)
 app.route('/covers/<path:path>', 'GET',
           callback=content.cover_image, skip=['i18n'])
+app.route('/delete/<content_id>', 'POST',
+          callback=content.remove_content)
 
 # Files
 app.route('/files/', 'GET',

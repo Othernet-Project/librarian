@@ -15,6 +15,10 @@
 
 $content-gap: 1em;
 
+@mixin default-shadow {
+  @include box-shadow(0 2px 5px transparentize($black, 0.7));
+}
+
 body, html {
   padding: 0;
   background: $dark-grey;
@@ -37,7 +41,7 @@ h1 {
   text-transform: uppercase;
   line-height: 100%;
   z-index: 1;
-  @include box-shadow(0 0 5px transparentize($black, 0.5));
+  @include default-shadow;
 
   span {
     font-size: 50%;
@@ -67,7 +71,7 @@ header {
     bottom: 0;
     overflow: hidden;
     z-index: 2;
-    @include box-shadow(0 0 4px transparentize($black, 0.2));
+    @include default-shadow;
 
     a, span {
       display: block;
@@ -586,7 +590,7 @@ tr.selected {
     max-width: 300px;
     vertical-align: top;
     margin: 0 $content-gap $content-gap 0;
-    @include box-shadow(0 2px 5px transparentize($black, 0.8));
+    @include default-shadow;
     background: $white;
 
     h2 {
@@ -627,6 +631,18 @@ tr.selected {
 
     img {
       width: 100%;
+    }
+
+    .delete-button button {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      @include replace-text-with-dimensions('delete.png');
+      background-position: center center;
+      @include button-color($light-grey, $white, $white, $black);
+      @include border-radius(image-height('delete.png'));
+      padding: 1em;
+      @include default-shadow;
     }
   }
 
