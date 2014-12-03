@@ -371,12 +371,19 @@ header {
 }
 
 
+@mixin button-large {
+  padding: 0.5em 1.5em;
+  font-size: $base-size * 1.5;
+  @include border-radius(3px);
+}
+
+
 button, .button {
   @include button;
   @include button-color($black, $white, $blue);
 
   &.special {
-    @include button-color($ash-blue, $white, darkern($blue, 20));
+    @include button-color($ash-blue, $white, $blue, $white);
   }
 
   &.danger {
@@ -385,6 +392,10 @@ button, .button {
 
   &.small {
     @include button-small;
+  }
+
+  &.large {
+    @include button-large;
   }
 }
 

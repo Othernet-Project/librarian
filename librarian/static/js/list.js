@@ -10,6 +10,7 @@
   var loader = $(templates.loading);
   var end = $(templates.end);
   var toTop = $(templates.toTop);
+  var loadLink = $(templates.loadLink);
   var loading = false;
 
   var contentPath = window.location.pathname;
@@ -17,12 +18,17 @@
   var params = contentQuery.search(true);
   var page = parseInt(params.p, 10);
 
-  var onScroll = _.debounce(loadContent, 50);
   var showToTop = _.debounce(toggleToTopButton, 50);
 
   // Normalize pager vales
   if (page == null || isNaN(page) || Array.isArray(page)) { page = 1; }
   if (isNaN(totalPages)) { totalPages = 1; }
+
+  // Content loading
+  if (totalPages > 1) {
+    contentList.after(loadLink);
+    loadLink.on('click', loadContent);
+  }
 
   // Preload the spinner and other elements
   contentList.after(loader);
@@ -50,7 +56,6 @@
   // Inifinite scrolling
   $('.pager-links').remove();  // No pager needed
   $('.paging').remove();
-  win.on('scroll', onScroll);
   win.on('scroll', showToTop);
   win.on('resize', updateHeight);
 
@@ -79,6 +84,7 @@
 
     if (page + 1 > totalPages) {
       end.show();
+      loadLink.hide();
       loadContent = function () {};
       loading = false;
       return;
@@ -91,6 +97,7 @@
     url = contentPath + contentQuery.search();
 
     // Fetch the HTML data
+    loadLink.hide();
     loader.show();
     xhr = $.get(url);
     xhr.done(insertContent);
@@ -101,6 +108,7 @@
     res = $.trim(res);
     if (res === '') { return loadEmpty(); }
     loader.hide();
+    loadLink.show();
     res = $(res);
     contentList.append(res).imagesLoaded(function () {
       contentList.masonry('appended', res);

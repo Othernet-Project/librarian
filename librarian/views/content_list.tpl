@@ -72,6 +72,13 @@
     % end 
 </div>
 
+<script id="loadLink" type="text/template">
+    <p id="more" class="loading">
+        %# Translators, link that loads more content in infinite scrolling page
+        <span><button class="large special">{{ _('Load more content') }}</button></span>
+    </p>
+</script>
+
 <script id="loading" type="text/template">
     <p id="loading" class="loading">
         <img src="/static/img/loading.gif">
