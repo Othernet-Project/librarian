@@ -2,6 +2,8 @@
   var win = $(window);
   var doc = $(document.body);
   var contentList = $('#content-list');
+  var tagCloud = $('#tag-cloud-container');
+  var currentTag = $('#current-tag');
 
   win.on('listUpdate', resetTagForm);
   doc.on('click', '.tag-button', openTagForm);
@@ -60,9 +62,15 @@
       tagList.html(res + templates.tagButton);
       form.data('original', getTags(tagList));
       closeTagForm.call(buttons);
+      updateTagCloud();
     });
     xhr.fail(updateError);
     xhr.always(function () { buttons.prop('disabled', false); });
+  }
+
+  function updateTagCloud() {
+    if (!tagCloud.length) { return; }
+    tagCloud.load(tagCloud.data('url') + '?tag=' + tagCloud.data('current'));
   }
 
   function updateError() {

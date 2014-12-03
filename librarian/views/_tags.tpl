@@ -1,7 +1,7 @@
 <p class="tags" data-has-tags="{{ bool(meta.tags) }}">
 % include('_tag_list')
 </p>
-<form action="{{ i18n_path('/tag/%s' % meta.md5) }}" method="POST" class="tag-form">
+<form action="{{ i18n_path('/tags/%s' % meta.md5) }}" method="POST" class="tag-form">
     <p>
     <input type="text" name="tags" value="{{ ', '.join(meta.tags.keys()) }}">
     %# Translators, button label for a button that saves user tags for a piece of content

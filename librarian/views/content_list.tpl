@@ -13,7 +13,9 @@
 </h1>
 
 <div class="inner">
-    % include('_tag_cloud')
+    <div id="tag-cloud-container" class="tag-cloud-container" data-url="{{ i18n_path('/tags/') }}" data-current="{{ tag }}">
+        % include('_tag_cloud')
+    </div>
     % if not metadata:
         % if not query or not tag:
         %# Translators, used as note on library page when library is empty

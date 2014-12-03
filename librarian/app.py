@@ -91,10 +91,8 @@ app.route('/files/<path:path>', 'POST',
 
 # Tags
 app.route('/tags/', 'GET',
-          callback=lambda: None)
-app.route('/tags/<tag_id:int>', 'GET',
-          callback=lambda: None)
-app.route('/tag/<content_id>', 'POST',
+          callback=tags.tag_cloud)
+app.route('/tags/<content_id>', 'POST',
           callback=tags.edit_tags)
 
 # Updates
