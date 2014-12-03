@@ -17,7 +17,7 @@
         % include('_tag_cloud')
     </div>
     % if not metadata:
-        % if not query or not tag:
+        % if not query and not tag:
         %# Translators, used as note on library page when library is empty
         <p>{{ _('Content library is currently empty') }}</p>
         % elif query:
