@@ -344,8 +344,6 @@ class Meta(object):
         covers = config['content.covers']
         ext = os.path.splitext(cover_path)[1]
         cover_path = os.path.join(covers, '%s.%s' % (self.md5, ext))
-        if not os.path.exists(covers):
-            os.mkdir(covers)
         with open(cover_path, 'wb') as f:
             f.write(content)
         return os.path.basename(cover_path)
