@@ -32,6 +32,7 @@ from librarian.lib.archive import LICENSES
 from librarian.lib.common import to_unicode
 from librarian.utils import migrations
 from librarian.routes import (content, tags, downloads, apps, dashboard)
+from librarian.system import ensure_dir
 import librarian
 
 __version__ = librarian.__version__
@@ -159,6 +160,14 @@ def start(logfile=None, profile=False):
             },
         },
     })
+
+    # Make sure all necessary directories are present
+    ensure_dir(dirname(config['logging.output']))
+    ensure_dir(dirname(config['database.path']))
+    ensure_dir(config['content.spooldir'])
+    ensure_dir(config['content.appdir'])
+    ensure_dir(config['content.contentdir'])
+    ensure_dir(config['content.covers'])
 
     # Run database migrations
     db = squery.Database(config['database.path'])
