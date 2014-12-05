@@ -30,9 +30,9 @@ from librarian.lib.lazy import Lazy
 from librarian.lib.downloads import get_zipballs
 from librarian.lib.archive import LICENSES
 from librarian.lib.common import to_unicode
+from librarian.lib.system import ensure_dir
 from librarian.utils import migrations
 from librarian.routes import (content, tags, downloads, apps, dashboard)
-from librarian.system import ensure_dir
 import librarian
 
 __version__ = librarian.__version__
