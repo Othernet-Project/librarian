@@ -73,7 +73,7 @@ msgstr "espaço usado"
 
 #: librarian\views\dashboard.tpl:18
 msgid "last update"
-msgstr "ultima atualização"
+msgstr "última atualização"
 
 #: librarian\views\dashboard.tpl:47
 msgid "You are running low on disk space."
@@ -265,7 +265,7 @@ msgstr "versão:"
 #. Translators, message show in app listing when no apps are present.
 #: librarian\views\app_list.tpl:29
 msgid "No apps found."
-msgstr "Sem aplicações encontradas."
+msgstr "Nenhuma aplicação encontrada."
 
 #. Translators, used main navigation menu
 #. Translators, used as page title
@@ -458,7 +458,7 @@ msgstr "Acção inválida, utilize um dos botões do formulário"
 
 #: librarian\views\reader.tpl:14
 msgid "content partner"
-msgstr "content partner"
+msgstr "parceiro de conteúdo"
 
 #: librarian\views\reader.tpl:19
 msgid "sponsored content"
@@ -466,7 +466,7 @@ msgstr "conteúdo patrocinado"
 
 #: librarian\views\reader.tpl:23
 msgid "Outernet core archive"
-msgstr "Outernet core archive"
+msgstr "arquivo central Outernet"
 
 #. Translators, used as placeholder while infinite scrolling content is being loaded
 #: librarian\views\content_list.tpl:89
@@ -482,13 +482,14 @@ msgstr "Atingiu o fim da biblioteca."
 #. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
 #: librarian\views\content_list.tpl:98 librarian\views\content_list.tpl:105
 msgid "Go to top"
-msgstr "Go to top"
+msgstr "Ir para o topo"
 
 #. Translators, used as section heading on dashboard above 'About' section
 #: librarian\views\dashboard.tpl:88
 msgid "About"
 msgstr "Acerca"
 
+#. We should keep the formatting, with paragraphs/sections?
 #: librarian\views\dashboard.tpl:91
 msgid "\n"
 "        This program is free software: you can redistribute it and/or modify it\n"
@@ -503,24 +504,25 @@ msgstr "Este programa é software livre: são permitidas a redistribuição e/ou
 msgid "Some rights reserved."
 msgstr "Alguns direitos reservados"
 
+#. To portuguese translators: Podemos manter a palavra em inglês, ou será mais correcto mudar para "palavras-chave" ou "indicador"? Pessoalmente acho mais correcto manter, mas gostava da vossa opinião.
 #: librarian\routes\content.py:57
 msgid "Specified tag was not found"
-msgstr "Specified tag was not found"
+msgstr "Não foi encontrada a tag especificada"
 
 #. Translators, used as not on library page when there is no content for given tag
 #: librarian\views\content_list.tpl:72
 msgid "There are no results for '%(tag)s'"
-msgstr "There are no results for '%(tag)s'"
+msgstr "Não há resultados para '%(tag)s'"
 
 #. Translators, button label for a button that saves user tags for a piece of content
 #: librarian\views\_tags.tpl:8
 msgid "Save tags"
-msgstr "Save tags"
+msgstr "Guardar tags"
 
 #. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
 #: librarian\views\_tags.tpl:12
 msgid "Separate tags with commas"
-msgstr "Separate tags with commas"
+msgstr "Separar as tags com vírgulas"
 
 #. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
 #: librarian\views\_tag_cloud.tpl:5
@@ -530,7 +532,7 @@ msgstr "tudo"
 #. Translators, used as label for button that appears next to tag list
 #: librarian\views\_tag_js_templates.tpl:3
 msgid "Edit tags"
-msgstr "Edit tags"
+msgstr "Editar tags"
 
 #. Translators, used as label for button that appears in tag editing form
 #: librarian\views\_tag_js_templates.tpl:8
@@ -541,45 +543,45 @@ msgstr "Fechar"
 #. Translators, error message shown when updating tags fails
 #: librarian\views\_tag_js_templates.tpl:13
 msgid "Tags could not be updated."
-msgstr "Tags could not be updated."
+msgstr "As tags não puderam ser atualizadas"
 
 #. Translators, link that loads more content in infinite scrolling page
 #: librarian\views\content_list.tpl:81
 msgid "Load more content"
-msgstr "Load more content"
+msgstr "Carregar mais conteúdo"
 
 #. Translators, used as section heading on dashboard
 #: librarian\views\dashboard.tpl:71
 msgid "Tuner settings"
-msgstr "Tuner settings"
+msgstr "Definições do sintonizador"
 
 #: librarian\views\dashboard.tpl:74
 msgid "Access TVHeadend"
-msgstr "Access TVHeadend"
+msgstr "Aceder ao TVHeadend"
 
 #: librarian\views\file_list.tpl:29
 msgid "There are currently no files or folders here."
-msgstr "There are currently no files or folders here."
+msgstr "Não há atualmente ficheiros ou pastas aqui."
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\remove_error.tpl:2 librarian\views\remove_error.tpl:5
 msgid "Content could not be removed"
-msgstr "Content could not be removed"
+msgstr "O conteúdo não pode ser removido"
 
 #. Translators, message displayed when content cannot be deleted
 #: librarian\views\remove_error.tpl:9
 msgid "Please make sure the storage device is not write-protected and try again."
-msgstr "Please make sure the storage device is not write-protected and try again."
+msgstr "Por favor verifica se o dispositivo de armazenamento não está protegido contra escrita e volta a tentar."
 
 #. Translators, used as label on button for retrying content removal
 #: librarian\views\remove_error.tpl:13
 msgid "Retry"
-msgstr "Retry"
+msgstr "Voltar a tentar"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\tag_cloud.tpl:2 librarian\views\tag_cloud.tpl:5
 msgid "Tag cloud"
-msgstr "Tag cloud"
+msgstr "Nuvem tag"
 

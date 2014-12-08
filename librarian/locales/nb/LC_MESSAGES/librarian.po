@@ -239,7 +239,7 @@ msgstr "sponset"
 #. Translators, appears next to content title when content is sponsored or is partner content, %s is replaced by person/company name; not part of sentence
 #: librarian\views\_badges.tpl:31
 msgid "from %s"
-msgstr "fra %er"
+msgstr "fra %s"
 
 #. Translators, used as page title
 #. Translators, used as page heading
@@ -435,8 +435,7 @@ msgstr "Inget innhold valgt"
 #. KB, MB, etc
 #: librarian\routes\dashboard.py:78
 msgid "%s can be freed by removing selected content"
-msgstr "% kan bli ledig ved å slette valgt innhold\n"
-""
+msgstr "%s kan bli ledig ved å slette valgt innhold"
 
 #. Translators, error message shown on clean-up page when some of
 #. the content could not be removed for unknown reasons

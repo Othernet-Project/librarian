@@ -19,7 +19,7 @@ msgstr "Панель"
 
 #: librarian\views\favorites.tpl:2 librarian\views\favorites.tpl:4
 msgid "Favorites"
-msgstr "Избранные"
+msgstr "Любимые"
 
 #: librarian\views\base.tpl:31 librarian\views\downloads.tpl:2
 #: librarian\views\downloads.tpl:4
@@ -32,7 +32,7 @@ msgstr "%s больше места должны быть освобождены.
 
 #: librarian\views\cleanup.tpl:17
 msgid "Remember that favorited content cannot be deleted."
-msgstr "Помните, что избранное содержимое не может быть удалено."
+msgstr "Помните, что любимы контент не может быть удален."
 
 #: librarian\views\cleanup.tpl:22
 msgid "There is enough free space on storage"
@@ -97,7 +97,7 @@ msgstr "Удалить выбранное"
 
 #: librarian\views\favorites.tpl:26
 msgid "unfavorite"
-msgstr "unfavorite"
+msgstr "не любимый"
 
 #: librarian\views\base.tpl:25 librarian\views\content_list.tpl:2
 #: librarian\views\content_list.tpl:5
@@ -292,7 +292,7 @@ msgstr "заменяет:"
 #. Translators, used as note shown on favorites page when user has no favorites
 #: librarian\views\favorites.tpl:9
 msgid "You have not favorited any content yet"
-msgstr "Вы еще не добавил контент в избранное"
+msgstr "Вы еще не избрали любимы контент"
 
 #. Translators, used as label for link that leads to parent directory in file listing
 #: librarian\views\file_list.tpl:23
@@ -305,7 +305,7 @@ msgstr "Переименовать"
 
 #: librarian\views\file_list.tpl:44 librarian\views\file_list.tpl:64
 msgid "Delete"
-msgstr "Удалять"
+msgstr "Удалить"
 
 #: librarian\views\file_list.tpl:81
 msgid "About this folder"

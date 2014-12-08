@@ -28,15 +28,15 @@ msgstr "Aktualisierungen"
 
 #: librarian\views\cleanup.tpl:13
 msgid "%s more space should be freed."
-msgstr "Es muss %s mehr Platz verfügbar werden"
+msgstr "Es muss %s mehr Platz verfügbar gemacht werden."
 
 #: librarian\views\cleanup.tpl:17
 msgid "Remember that favorited content cannot be deleted."
-msgstr "Merken das Favorisierter Inhalt nicht gelöscht werden kann."
+msgstr "Bedenken Sie, dass favorisierte Inhalte nicht gelöscht werden können."
 
 #: librarian\views\cleanup.tpl:22
 msgid "There is enough free space on storage"
-msgstr "Es steht genügend Platz zur Verfügung."
+msgstr "Es steht genügend Speicherplatz zur Verfügung."
 
 #: librarian\views\cleanup.tpl:30
 msgid "delete?"
@@ -57,7 +57,7 @@ msgstr "Größe"
 
 #: librarian\views\cleanup.tpl:52
 msgid "There is enough free space. No clean-up needed."
-msgstr "Es steht genügend Platz zur Verfügung. Aufräumen ist nicht nötig."
+msgstr "Es steht genügend Speicherplatz zur Verfügung. Aufräumen ist nicht nötig."
 
 #: librarian\views\cleanup.tpl:59
 msgid "How much space does this free up?"
@@ -83,7 +83,7 @@ msgstr "Speicherplatz wird knapp."
 #. Ist es nicht eher: Lösche einige Daten
 #: librarian\views\dashboard.tpl:49
 msgid "Free some space now"
-msgstr "Speicherplatz jetzt freigeben"
+msgstr "Geben Sie jetzt Speicherplatz frei"
 
 #: librarian\views\downloads.tpl:36
 msgid "select"
@@ -145,7 +145,7 @@ msgstr "Anwendungsprotokolle"
 
 #: librarian\views\dashboard.tpl:82
 msgid "Logs are shown in reverse chronological order"
-msgstr "Protokolle werden in umgekehrt chronologischer Ordnung gezeigt."
+msgstr "Protokolle werden in umgekehrt chronologischer Ordnung angezeigt."
 
 #: librarian\views\downloads.tpl:22 librarian\views\downloads.tpl:81
 msgid "Select all"
@@ -459,7 +459,7 @@ msgstr "Ungültige Aktion, bitte einen der Formularbuttons benutzen"
 
 #: librarian\views\reader.tpl:14
 msgid "content partner"
-msgstr "content partner"
+msgstr "Partner für Inhalte"
 
 #: librarian\views\reader.tpl:19
 msgid "sponsored content"
@@ -467,7 +467,7 @@ msgstr "Gesponserte Inhalte"
 
 #: librarian\views\reader.tpl:23
 msgid "Outernet core archive"
-msgstr "Outernet core archive"
+msgstr "Outernet Kern-Archiv"
 
 #. Translators, used as placeholder while infinite scrolling content is being loaded
 #: librarian\views\content_list.tpl:89
@@ -496,94 +496,89 @@ msgid "\n"
 "        Free Software Foundation, either version 3 of the License, or (at your\n"
 "        option) any later version.\n"
 "        "
-msgstr "\n"
-"        This program is free software: you can redistribute it and/or modify it\n"
-"        under the terms of the GNU General Public License as published by the\n"
-"        Free Software Foundation, either version 3 of the License, or (at your\n"
-"        option) any later version.\n"
-"        "
+msgstr "Dieses Programm ist freie Software: Sie können es weiter verteilen und/oder modifizieren unter den Bedingungen der GNU General Public License wie sie von der Free Software Foundation veröffentlicht wurde, entweder Version 3 oder (nach Ihrer Wahl) eine spätere Version der Lizenz."
 
 #. Translators, appears in copyright line in dashboard's 'About' section
 #: librarian\views\dashboard.tpl:102
 msgid "Some rights reserved."
-msgstr "Some rights reserved."
+msgstr "Einige Rechte vorbehalten."
 
 #: librarian\routes\content.py:57
 msgid "Specified tag was not found"
-msgstr "Specified tag was not found"
+msgstr "Das angegebene Schlagwort wurde nicht gefunden"
 
 #. Translators, used as not on library page when there is no content for given tag
 #: librarian\views\content_list.tpl:72
 msgid "There are no results for '%(tag)s'"
-msgstr "There are no results for '%(tag)s'"
+msgstr "Es gibt keine Ergebnisse für '%(tag)s'"
 
 #. Translators, button label for a button that saves user tags for a piece of content
 #: librarian\views\_tags.tpl:8
 msgid "Save tags"
-msgstr "Save tags"
+msgstr "Schlagworte speichern"
 
 #. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
 #: librarian\views\_tags.tpl:12
 msgid "Separate tags with commas"
-msgstr "Separate tags with commas"
+msgstr "Schlagworte mit Kommata trennen"
 
 #. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
 #: librarian\views\_tag_cloud.tpl:5
 msgid "everything"
-msgstr "everything"
+msgstr "alles"
 
 #. Translators, used as label for button that appears next to tag list
 #: librarian\views\_tag_js_templates.tpl:3
 msgid "Edit tags"
-msgstr "Edit tags"
+msgstr "Schlagwort bearbeiten"
 
 #. Translators, used as label for button that appears in tag editing form
 #: librarian\views\_tag_js_templates.tpl:8
 msgid "Close"
-msgstr "Close"
+msgstr "Schließen"
 
 #. Translators, error message shown when updating tags fails
 #: librarian\views\_tag_js_templates.tpl:13
 msgid "Tags could not be updated."
-msgstr "Tags could not be updated."
+msgstr "Schlagworte konnten nicht aktualisiert werden."
 
 #. Translators, link that loads more content in infinite scrolling page
 #: librarian\views\content_list.tpl:81
 msgid "Load more content"
-msgstr "Load more content"
+msgstr "Mehr Inhalte laden"
 
 #. Translators, used as section heading on dashboard
 #: librarian\views\dashboard.tpl:71
 msgid "Tuner settings"
-msgstr "Tuner settings"
+msgstr "Tuner Einstellungen"
 
 #: librarian\views\dashboard.tpl:74
 msgid "Access TVHeadend"
-msgstr "Access TVHeadend"
+msgstr "Zugang TVHeadend"
 
 #: librarian\views\file_list.tpl:29
 msgid "There are currently no files or folders here."
-msgstr "There are currently no files or folders here."
+msgstr "Es gibt hier im Moment keine Dateien oder Ordner."
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\remove_error.tpl:2 librarian\views\remove_error.tpl:5
 msgid "Content could not be removed"
-msgstr "Content could not be removed"
+msgstr "Der Inhalt konnte nicht entfernt werden."
 
 #. Translators, message displayed when content cannot be deleted
 #: librarian\views\remove_error.tpl:9
 msgid "Please make sure the storage device is not write-protected and try again."
-msgstr "Please make sure the storage device is not write-protected and try again."
+msgstr "Stellen Sie sicher, dass der Speicher nicht schreibgeschützt ist und versuchen Sie es erneut."
 
 #. Translators, used as label on button for retrying content removal
 #: librarian\views\remove_error.tpl:13
 msgid "Retry"
-msgstr "Retry"
+msgstr "Wiederholen"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\tag_cloud.tpl:2 librarian\views\tag_cloud.tpl:5
 msgid "Tag cloud"
-msgstr "Tag cloud"
+msgstr "Schlagwortwolke"
 

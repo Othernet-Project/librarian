@@ -461,35 +461,35 @@ msgstr "Nedozvoljena akcija, molimo koristite jedno od dugmadi obrazca."
 
 #: librarian\views\reader.tpl:14
 msgid "content partner"
-msgstr "content partner"
+msgstr "partnerski sadržaj"
 
 #: librarian\views\reader.tpl:19
 msgid "sponsored content"
-msgstr "sponsored content"
+msgstr "sponzorisani sadržaj"
 
 #: librarian\views\reader.tpl:23
 msgid "Outernet core archive"
-msgstr "Outernet core archive"
+msgstr "Outernet core arhiva"
 
 #. Translators, used as placeholder while infinite scrolling content is being loaded
 #: librarian\views\content_list.tpl:89
 msgid "Loading..."
-msgstr "Loading..."
+msgstr "Učitavanje..."
 
 #. Translators, shown when user reaches the end of the library
 #: librarian\views\content_list.tpl:96
 msgid "You have reached the end of the library."
-msgstr "You have reached the end of the library."
+msgstr "Došli ste do kraja biblioteke."
 
 #. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
 #: librarian\views\content_list.tpl:98 librarian\views\content_list.tpl:105
 msgid "Go to top"
-msgstr "Go to top"
+msgstr "Idi na vrh"
 
 #. Translators, used as section heading on dashboard above 'About' section
 #: librarian\views\dashboard.tpl:88
 msgid "About"
-msgstr "About"
+msgstr "O Bibliotekaru"
 
 #: librarian\views\dashboard.tpl:91
 msgid "\n"
@@ -498,94 +498,89 @@ msgid "\n"
 "        Free Software Foundation, either version 3 of the License, or (at your\n"
 "        option) any later version.\n"
 "        "
-msgstr "\n"
-"        This program is free software: you can redistribute it and/or modify it\n"
-"        under the terms of the GNU General Public License as published by the\n"
-"        Free Software Foundation, either version 3 of the License, or (at your\n"
-"        option) any later version.\n"
-"        "
+msgstr "Ovaj program je slobodan softver: možete ga redistribuirati i/ili menjati ga u skladu sa uslovima GNU opšte javne licence koju objavljuje Fondacija za slobodan softver, verzije 3 ili (prema vašem nahođenju) bilo koje kasnije verzije."
 
 #. Translators, appears in copyright line in dashboard's 'About' section
 #: librarian\views\dashboard.tpl:102
 msgid "Some rights reserved."
-msgstr "Some rights reserved."
+msgstr "Neka prava zadržana."
 
 #: librarian\routes\content.py:57
 msgid "Specified tag was not found"
-msgstr "Specified tag was not found"
+msgstr "Tag koji ste tražili nije pronađen"
 
 #. Translators, used as not on library page when there is no content for given tag
 #: librarian\views\content_list.tpl:72
 msgid "There are no results for '%(tag)s'"
-msgstr "There are no results for '%(tag)s'"
+msgstr "Nema rezultata za '%(tag)s'"
 
 #. Translators, button label for a button that saves user tags for a piece of content
 #: librarian\views\_tags.tpl:8
 msgid "Save tags"
-msgstr "Save tags"
+msgstr "Sačuvaj tagove"
 
 #. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
 #: librarian\views\_tags.tpl:12
 msgid "Separate tags with commas"
-msgstr "Separate tags with commas"
+msgstr "Tagove odvjajte zapetom"
 
 #. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
 #: librarian\views\_tag_cloud.tpl:5
 msgid "everything"
-msgstr "everything"
+msgstr "svi"
 
 #. Translators, used as label for button that appears next to tag list
 #: librarian\views\_tag_js_templates.tpl:3
 msgid "Edit tags"
-msgstr "Edit tags"
+msgstr "Izmeni tagove"
 
 #. Translators, used as label for button that appears in tag editing form
 #: librarian\views\_tag_js_templates.tpl:8
 msgid "Close"
-msgstr "Close"
+msgstr "Zatvori"
 
 #. Translators, error message shown when updating tags fails
 #: librarian\views\_tag_js_templates.tpl:13
 msgid "Tags could not be updated."
-msgstr "Tags could not be updated."
+msgstr "Izmena tagova je bila neuspešna"
 
 #. Translators, link that loads more content in infinite scrolling page
 #: librarian\views\content_list.tpl:81
 msgid "Load more content"
-msgstr "Load more content"
+msgstr "Učitaj još sadržaja"
 
 #. Translators, used as section heading on dashboard
 #: librarian\views\dashboard.tpl:71
 msgid "Tuner settings"
-msgstr "Tuner settings"
+msgstr "Podešavanja tjunera"
 
 #: librarian\views\dashboard.tpl:74
 msgid "Access TVHeadend"
-msgstr "Access TVHeadend"
+msgstr "Pristupi TVHeadendu"
 
 #: librarian\views\file_list.tpl:29
 msgid "There are currently no files or folders here."
-msgstr "There are currently no files or folders here."
+msgstr "Trenutno nema fajlova i foldera na ovoj lokaciji"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\remove_error.tpl:2 librarian\views\remove_error.tpl:5
 msgid "Content could not be removed"
-msgstr "Content could not be removed"
+msgstr "Brisanje sadržaja je bilo neuspešno"
 
 #. Translators, message displayed when content cannot be deleted
 #: librarian\views\remove_error.tpl:9
 msgid "Please make sure the storage device is not write-protected and try again."
-msgstr "Please make sure the storage device is not write-protected and try again."
+msgstr "Proverite da li je skladišni zaštićen od upisivanja, uklonite zaštitu i probajte ponovo."
 
 #. Translators, used as label on button for retrying content removal
 #: librarian\views\remove_error.tpl:13
 msgid "Retry"
-msgstr "Retry"
+msgstr "Probaj ponovo"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\tag_cloud.tpl:2 librarian\views\tag_cloud.tpl:5
 msgid "Tag cloud"
-msgstr "Tag cloud"
+msgstr "Oblak tagova"
 

@@ -505,56 +505,56 @@ msgstr "\n"
 #. Translators, appears in copyright line in dashboard's 'About' section
 #: librarian\views\dashboard.tpl:102
 msgid "Some rights reserved."
-msgstr "Some rights reserved."
+msgstr "Visse rettigheder resveret"
 
 #: librarian\routes\content.py:57
 msgid "Specified tag was not found"
-msgstr "Specified tag was not found"
+msgstr "Tagget blev ikke fundet"
 
 #. Translators, used as not on library page when there is no content for given tag
 #: librarian\views\content_list.tpl:72
 msgid "There are no results for '%(tag)s'"
-msgstr "There are no results for '%(tag)s'"
+msgstr "Der er ingen resultater for %(tag)s"
 
 #. Translators, button label for a button that saves user tags for a piece of content
 #: librarian\views\_tags.tpl:8
 msgid "Save tags"
-msgstr "Save tags"
+msgstr "Gem tags"
 
 #. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
 #: librarian\views\_tags.tpl:12
 msgid "Separate tags with commas"
-msgstr "Separate tags with commas"
+msgstr "Seperer med kommaer"
 
 #. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
 #: librarian\views\_tag_cloud.tpl:5
 msgid "everything"
-msgstr "everything"
+msgstr "alt"
 
 #. Translators, used as label for button that appears next to tag list
 #: librarian\views\_tag_js_templates.tpl:3
 msgid "Edit tags"
-msgstr "Edit tags"
+msgstr "Rediger tags"
 
 #. Translators, used as label for button that appears in tag editing form
 #: librarian\views\_tag_js_templates.tpl:8
 msgid "Close"
-msgstr "Close"
+msgstr "Luk"
 
 #. Translators, error message shown when updating tags fails
 #: librarian\views\_tag_js_templates.tpl:13
 msgid "Tags could not be updated."
-msgstr "Tags could not be updated."
+msgstr "Tags kunne ikke opdateres"
 
 #. Translators, link that loads more content in infinite scrolling page
 #: librarian\views\content_list.tpl:81
 msgid "Load more content"
-msgstr "Load more content"
+msgstr "Vis mere indhold"
 
 #. Translators, used as section heading on dashboard
 #: librarian\views\dashboard.tpl:71
 msgid "Tuner settings"
-msgstr "Tuner settings"
+msgstr "Tuner indstillinger"
 
 #: librarian\views\dashboard.tpl:74
 msgid "Access TVHeadend"
@@ -562,13 +562,13 @@ msgstr "Access TVHeadend"
 
 #: librarian\views\file_list.tpl:29
 msgid "There are currently no files or folders here."
-msgstr "There are currently no files or folders here."
+msgstr "Der er ingen filer her"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\remove_error.tpl:2 librarian\views\remove_error.tpl:5
 msgid "Content could not be removed"
-msgstr "Content could not be removed"
+msgstr "Indhold kunne ikke fjernes"
 
 #. Translators, message displayed when content cannot be deleted
 #: librarian\views\remove_error.tpl:9
@@ -578,7 +578,7 @@ msgstr "Please make sure the storage device is not write-protected and try again
 #. Translators, used as label on button for retrying content removal
 #: librarian\views\remove_error.tpl:13
 msgid "Retry"
-msgstr "Retry"
+msgstr "Forsøg igen"
 
 #. Translators, used as page title
 #. Translators, used as page heading
