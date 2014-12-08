@@ -40,11 +40,11 @@ Special thanks to all those who have contributed their valuable time and
 knowledge:
 
 - Susruthan Seran
-- necklinux
 - Mogens From
+- necklinux
+- Ignas Sklerius
 - Max Boone
 - Filippo
-- Ignas Sklerius
 - zaid
 - Manish Rastogi
 - cavit
@@ -52,66 +52,69 @@ knowledge:
 - Chengtao Hua
 - Josep Manel
 - patrik
+- Aadarsh
+- André Daniel
 - Kajcha
 - Morten
 - Ismail Al Ahmad
-- Arthur
+- Viktoria
 - David Marques
 - Tolga Evcimen
+- Arthur
 - Manoel Junior
 - Vibhor Dubey
-- Krabbs
 - Gustaf
+- Krabbs
 - Romaric FAVE
 - Peer Oliver Schmidt
-- André Daniel
 - Gerry Galactic
-- Navina
 - Frédéric Uhrweiller
+- Navina
 - Sakara
-- Aadarsh
-- Bruno Nogueira
 - Luis Fuentes
-- Frederik
+- Bruno Nogueira
 - Marco Rubio
+- Frederik
 - zanghel
-- Gonzalo
 - Benoît Casanova
+- Gonzalo
 - Janberk Genç
 - Christian Novrup
-- Ahmed
+- Terrence
+- daming_99
 - Dana Tierney
+- Ahmed
 - Francesca
 - Sebastian Borg
 - Steffie
+- HM
 - Julien
 - Ronald Philipsen
-- Rebeca Virgo
 - Gabriel
+- Rebeca Virgo
 - Salutlolo
-- Klara Milena Hirscher
-- Baris Kilic
 - Tori Arbaugh
+- Baris Kilic
 - Souhaïl BOUGRINE
-- Jannis A. K.
 - Massimiliano CARNEMOLLA
 - Thibaut
-- Zipper
+- Jannis A. K.
 - Buddha Burman
+- Zipper
 - Miguel Maldonado
+- Klara Milena Hirscher
 - Алексей
 - Andrew
-- Siddharth Nair
 - Zakaria Bendali
 - Roman
 - Christoph Nebendahl
+- Siddharth Nair
 - Chase Burgess
-- ix
 - Moayed Jaghoub
 - Slandgkearth
 - soukayna
+- ix
 - Sai Chakradhar Araveti
-
 
 Reporting bugs and feature requests
 ===================================
