@@ -22,22 +22,19 @@ from os.path import join, dirname, abspath, normpath
 import bottle
 from bottle import request
 
-from librarian.exceptions import *
-from librarian.lib import squery
-from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
-from librarian.lib import html as helpers
-from librarian.lib.lazy import Lazy
-from librarian.lib.downloads import get_zipballs
-from librarian.lib.archive import LICENSES
-from librarian.lib.common import to_unicode
-from librarian.lib.system import ensure_dir
-from librarian.utils import migrations
-from librarian.routes import (content, tags, downloads, apps, dashboard)
-import librarian
+from exceptions import *
+from lib import squery
+from lib.i18n import lazy_gettext as _, I18NPlugin
+from lib import html as helpers
+from lib.lazy import Lazy
+from lib.downloads import get_zipballs
+from lib.archive import LICENSES
+from lib.common import to_unicode
+from lib.system import ensure_dir
+from utils import migrations
+from routes import (content, tags, downloads, apps, dashboard)
 
-__version__ = librarian.__version__
-__author__ = librarian.__author__
-
+from . import __version__, __author__
 
 MODDIR = dirname(abspath(__file__))
 
@@ -222,20 +219,7 @@ def start(logfile=None, profile=False):
                port=int(config['librarian.port']))
 
 
-def main(conf, debug=False, logpath=None, profile=False):
-    app.config.load_config(conf)
-
-    if debug:
-        pprint.pprint(conf, indent=4)
-        sys.exit(0)
-
-    start(logpath, profile)
-
-
-if __name__ == '__main__':
-    import argparse
-
-    parser = argparse.ArgumentParser()
+def configure_argparse(parser):
     parser.add_argument('--conf', metavar='PATH', help='path to configuration '
                         'file', default=CONFPATH)
     parser.add_argument('--debug-conf', action='store_true', help='print out '
@@ -247,6 +231,23 @@ if __name__ == '__main__':
     parser.add_argument('--profile', action='store_true', help='instrument '
                         'the application to perform profiling (default: '
                         'disabled)', default=False)
+
+
+def main(conf, debug=False, logpath=None, profile=False):
+    app.config.load_config(conf)
+
+    if debug:
+        pprint.pprint(app.config, indent=4)
+        sys.exit(0)
+
+    start(logpath, profile)
+
+
+if __name__ == '__main__':
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    configure_argparse(parser)
     args = parser.parse_args(sys.argv[1:])
 
     if args.version:

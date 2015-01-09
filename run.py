@@ -24,14 +24,12 @@ os.chdir(scriptdir)
 from librarian import app
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--profile', action='store_true', help='instrument '
-                    'the application to perform profiling (default: '
-                    'disabled)', default=False)
+app.configure_argparse(parser)
 args = parser.parse_args(sys.argv[1:])
 
 ensure_dir('tmp/downloads/content')
 ensure_dir('tmp/downloads/files')
 ensure_dir('tmp/outernet')
 ensure_dir('tmp/zipballs')
-app.main('local.ini', False, profile=args.profile)
+app.main('local.ini', args.debug_conf, profile=args.profile)
 
