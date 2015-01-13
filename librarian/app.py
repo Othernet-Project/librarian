@@ -32,6 +32,7 @@ from lib.archive import LICENSES
 from lib.common import to_unicode
 from lib.system import ensure_dir
 from utils import migrations
+from plugins import install_plugins
 from routes import (content, tags, downloads, apps, dashboard)
 
 from . import __version__, __author__
@@ -106,10 +107,6 @@ app.route('/downloads/', 'POST',
 # Dashboard
 app.route('/dashboard/', 'GET',
           callback=dashboard.dashboard)
-app.route('/dashboard/cleanup/', 'GET',
-          callback=dashboard.cleanup_list)
-app.route('/dashboard/cleanup/', 'POST',
-          callback=dashboard.cleanup)
 
 # Apps
 app.route('/apps/', 'GET',
@@ -134,6 +131,8 @@ def start(logfile=None, profile=False):
     """ Start the application """
 
     config = app.config
+
+    install_plugins(app)
 
     log_config({
         'version': 1,
