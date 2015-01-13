@@ -14,6 +14,33 @@ import bottle
 
 
 class DashboardPlugin(object):
+    # TODO: The JavaScript bit is unclear. We need a better way to account for
+    # JavaScript.
+    """ Base class for dashboard plugins
+
+    This class is used in conjunction with ``_dashboard_section.tpl`` template
+    to display plugin controls on the dashboard.
+
+    The object returns the name of the dashboard section (should be
+    i18n-enabled), and renders a template for the section. The rendered HTML
+    may also include a ``<script>`` tag for linking JavaScript files if such
+    files.
+
+    Subclass can overload any number of methods and properties, but the usual
+    candidate is the ``get_context()`` which provides extra context to the
+    template being rendered. The context should be a dict, and they are passed
+    as exra keyword arguments to ``bottle.template()`` call.
+
+    The ``name`` propery defines the name of the section. This name is assigned
+    as ``class`` and ``id`` attributes on the container element (with ``dash-``
+    prefix when used in ``class`` attribute). You can return different names
+    dynamically by overloading the ``get_name()`` method.
+
+    The ``name`` property also determines the name of the template directory
+    that will be looked up. If you wish to use a different name or different
+    template directory, you can overload the ``get_template_dir()`` method.
+    """
+
     heading = None
     name = None
     javascript = None
