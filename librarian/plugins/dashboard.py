@@ -93,3 +93,5 @@ class DashboardPlugin(object):
         javascript = self.get_javascript()
         return main + javascript
 
+    def __str__(self):
+        return "<DashboardPlugin '%s'>" % self.name
