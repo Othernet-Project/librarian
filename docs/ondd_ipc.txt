@@ -1,0 +1,45 @@
+Get tuner / network status
+
+Send: <get uri="/status"/> Response: <?xml version="1.0"
+encoding="UTF-8"?><response
+code="200"><tuner><lock>yes</lock><signal>65</signal><snr>0.00</snr></tuner><network><stream><pid>65</pid><bitrate>55355</bitrate><stats>1146/1/3</stats><ident>outernet-0</ident></stream></network></response>
+
+Get file download status
+
+Send: <get uri="/files/"/> Response: <?xml version="1.0"
+encoding="UTF-8"?><response
+code="200"><files><file><path>content/0051d970f292ef8afb6d46102e90295e.zip</path><size>327162</size><progress>0</progress>
+</file><file><path>content/005f1d942b971216952437097d605cea.zip</path><size>23070</size><progress>0</progress>
+</file><file><path>content/006c514d4f3bf10bbff0e4152f8cae38.zip</path><size>45833</size><progress>0</progress>
+</file><file><path>content/003669cf61a1f17115b0bf74256114ea.zip</path><size>842880</size><progress>0</progress>
+</file><file><path>content/00e4831fff246b4dc1f391932242ee6d.zip</path><size>112515</size><progress>0</progress>
+</file><file><path>content/00e1b36ee35945c3ee8b307c07ac9cac.zip</path><size>303555</size><progress>0</progress>
+</file><file><path>content/1e2aed956057a38570708be623fc2fc5.zip</path><size>339674</size><progress>80</progress>
+</file><file><path>content/3cbeb6ab2eefce8439493a01fa630f8c.zip</path><size>398882</size><progress>83</progress>
+</file><file><path>content/073d11d032b58497ac9615e69904dcf2.zip</path><size>309354</size><progress>78</progress>
+</file><file><path>content/632d390d18da05fd3eb07c7a15a606ff.zip</path><size>396778</size><progress>83</progress>
+</file><file><path>content/b9ae27a88efed06dae66b0e18cc2f916.zip</path><size>92109</size><progress>0</progress>
+</file><file><path>content/b816d6a2f000c80b7eff39192f7b22c2.zip</path><size>434010</size><progress>77</progress>
+</file><file><path>content/daf8c2632b245ea09d29093f3091f90a.zip</path><size>636538</size><progress>84</progress>
+</file><file><path>content/f18f3eb462f965ecd970d57b0578f60f.zip</path><size>292000</size><progress>88</progress>
+</file><file><path>content/fa7282e1e98f9dcd1454404e9346116a.zip</path><size>19165</size><progress>0</progress>
+</file><file><path>content/05d0087b2f083e6020e02efb51a6283d.zip</path><size>15247159</size><progress>82</progress>
+</file></files></response>
+
+Get settings:
+
+Send: <get uri="/settings"/> Response: <?xml version="1.0"
+encoding="UTF-8"?><response
+code="200"><tuner><delivery>DVB-S</delivery><modulation>QPSK</modulation><frequency>1577</frequency><symbolrate>23000</symbolrate><voltage>13</voltage><tone>yes</tone><azimuth/></tuner></response>
+
+Set Settings
+
+Send: <put
+uri="/settings"><delivery>dvb-s</delivery><modulation>qpsk</modulation><frequency>1577</frequency><symbolrate>23000</symbolrate><tone>Yes</tone><voltage>13</voltage><azimuth>97</azimuth></put>
+Response: <?xml version="1.0" encoding="UTF-8"?><response code="204"/>
+
+
+
+You can test with netcat as well:
+
+echo -e '<get uri="/settings"/>\0' | nc -U /var/run/ondd.ctrl
