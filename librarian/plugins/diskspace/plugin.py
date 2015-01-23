@@ -79,8 +79,8 @@ def install(app, route):
     except AttributeError:
         raise NotSupportedError(
             'Disk space information not available on this platform')
-    route('/cleanup/', 'GET', callback=dashboard.cleanup_list)
-    route('/cleanup/', 'POST', callback=dashboard.cleanup)
+    route('/cleanup/', 'GET', callback=cleanup_list)
+    route('/cleanup/', 'POST', callback=cleanup)
 
 
 class Dashboard(DashboardPlugin):
