@@ -13,7 +13,7 @@ import logging
 import importlib
 
 import bottle
-from bottle import default_app
+from bottle import static_file
 
 from .exceptions import *
 
@@ -44,6 +44,15 @@ def route_plugin(app, name):
     return _route_plugin
 
 
+def route_plugin_static(app, name):
+    def _route_plugin_static(path):
+        return static_file(path,
+                           root=os.path.join(PLUGINS_PATH, name, 'static'))
+    _route_plugin_static.__name__ = '_route_%s_static' % name
+    app.route('/s/%s/<path:path>' % name, 'GET',
+              callback=_route_plugin_static)
+
+
 def install_plugins(app):
     plugins = list_plugins()
     conf = app.config
@@ -63,6 +72,10 @@ def install_plugins(app):
 
         INSTALLED[mod] = plugin
         logging.debug('Installed plugin %s', mod)
+
+        # Add routes for plugin static if plugin contains a static directory
+        if os.path.isdir(os.path.join(PLUGINS_PATH, mod, 'static')):
+            route_plugin_static(app, mod)
 
     # Install dashboard plugins for plugins that have them
     for p in dashboard:
