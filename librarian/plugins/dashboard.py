@@ -41,6 +41,7 @@ class DashboardPlugin(object):
 
     heading = None
     name = None
+    javascript = []
     template_lookup_base = os.path.dirname(__file__)
 
     def get_name(self):
@@ -67,6 +68,9 @@ class DashboardPlugin(object):
                             self.get_name(),
                             'views')
 
+    def get_javascript(self):
+        return self.javascript
+
     def render(self):
         """ Render dashboard section """
         context = {
@@ -75,6 +79,12 @@ class DashboardPlugin(object):
         }
         context.update(self.get_context())
         return bottle.template(self.get_template(), **context)
+
+    def render_javascript(self):
+        html = ''
+        for js in self.get_javascript():
+            html += '<script src="/s/%s/%s"></script>' % (self.name, js)
+        return html
 
     def __str__(self):
         return "<DashboardPlugin '%s'>" % self.name
