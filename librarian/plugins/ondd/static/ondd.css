@@ -1,0 +1,42 @@
+.lock {
+    display: inline-block;
+    color: white;
+    background: red;
+    width: 100px;
+    height: 24px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 90%;
+}
+
+.lock.has {
+    background: green;
+}
+
+.signal {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 250px;
+    height: 24px;
+    color: white;
+    background: black;
+}
+
+.signal-bar {
+    line-height: 24px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: green;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.snr {
+    font-size: 80%;
+}
