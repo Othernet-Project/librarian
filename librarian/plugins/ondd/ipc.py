@@ -47,6 +47,15 @@ def read(sock, buffsize=2014):
     return data[:-1].decode(IN_ENCODING)
 
 
+def parse(data):
+    """ Parse incoming XML into Etree object
+
+    :param data:    XML string
+    :returns:       root node object
+    """
+    return ET.fromstring(data)
+
+
 def send(payload):
     """ Connect to socket configured in the config file
 
@@ -63,16 +72,7 @@ def send(payload):
     with open_socket(conf['ondd.socket']) as sock:
         sock.send(payload)
         data = read(sock)
-    return data
-
-
-def parse(data):
-    """ Parse incoming XML into Etree object
-
-    :param data:    XML string
-    :returns:       root node object
-    """
-    return ET.fromstring(data)
+    return parse(data)
 
 
 def xml_get_path(path):
@@ -92,14 +92,14 @@ def xml_put_path(path, subtree=''):
     return '<put uri="%s">%s</put>' % (path, subtree)
 
 
-def xml_settings(**kwargs):
+def kw2xml(**kwargs):
     """ Convert any keyword parameters to XML
 
     This function does not guarantee the order of the tags.
 
     Example::
 
-        >>> xml_settings(foo='bar', bar='baz', baz=1)
+        >>> kw2xml(foo='bar', bar='baz', baz=1)
         '<foo>bar</foo><bar>baz</bar><baz>1</baz>'
 
     """
@@ -109,21 +109,12 @@ def xml_settings(**kwargs):
     return xml
 
 
-def dvb_settings(frequency, symbolrate, delivery='dvb-s', modulation='qpsk',
-                 tone=True, voltage=13, azimuth=0):
-    """ Returns XML representing DVB settings """
-    tone = yesno(tone)
-    return xml_put_path('/settings', xml_settings(**locals()))
-
-
 def get_status():
     """ Get ONDD status """
     payload = xml_get_path('/status')
-    data = send(payload)
-    root = parse(data)
+    root = send(payload)
     tuner = root.find('tuner')
     net = root.find('network')
-    status = {}
     return {
         'has_lock': tuner.find('lock').text == 'yes',
         'signal': int(tuner.find('signal').text),
@@ -133,3 +124,27 @@ def get_status():
              'bitrate': int(s.find('bitrate').text)}
             for s in net]
     }
+
+
+def get_file_list():
+    """ Get ONDD file download list """
+    payload = xml_get_path('/files/')
+    root = send(payload)
+    out = []
+    flist = root.find('files')
+    for f in flist:
+        out.append({
+            'path': f.find('path').text,
+            'size': int(f.find('size').text),
+            'progress': int(f.find('progress').text),
+        })
+    return out
+
+
+def set_settings(frequency, symbolrate, delivery='dvb-s', modulation='qpsk',
+                 tone=True, voltage=13, azimuth=0):
+    tone = yesno(tone)
+    payload = xml_put_path('/settings', kw2xml(**locals()))
+    root = send(payload)
+    resp = root.find('response')
+    return resp
