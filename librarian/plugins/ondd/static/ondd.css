@@ -1,7 +1,8 @@
 .lock {
+    border: 1px solid #a02c2c;
     display: inline-block;
     color: white;
-    background: red;
+    background: #a02c2c;
     width: 100px;
     height: 24px;
     text-align: center;
@@ -13,7 +14,8 @@
 }
 
 .lock.has {
-    background: green;
+    border-color: #5aa02c;
+    background: #5aa02c;
 }
 
 .signal {
@@ -23,7 +25,10 @@
     width: 250px;
     height: 24px;
     color: white;
-    background: black;
+    background: #ccc;
+    border: 1px solid #bbb;
+    border-top-color: #999;
+    border-left-color: #999;
 }
 
 .signal-bar {
@@ -32,7 +37,7 @@
     top: 0;
     left: 0;
     bottom: 0;
-    background: green;
+    background: #00a2db;
     text-align: center;
     white-space: nowrap;
 }
