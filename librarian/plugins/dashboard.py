@@ -14,8 +14,6 @@ import bottle
 
 
 class DashboardPlugin(object):
-    # TODO: The JavaScript bit is unclear. We need a better way to account for
-    # JavaScript.
     """ Base class for dashboard plugins
 
     This class is used in conjunction with ``_dashboard_section.tpl`` template
@@ -43,7 +41,6 @@ class DashboardPlugin(object):
 
     heading = None
     name = None
-    javascript = None
     template_lookup_base = os.path.dirname(__file__)
 
     def get_name(self):
@@ -53,9 +50,6 @@ class DashboardPlugin(object):
     def get_heading(self):
         """ Return dashboard section heading """
         return self.heading
-
-    def get_javascript(self):
-        return self.javascript or ''
 
     def get_context(self):
         """ Return variables for the dashboard section template """
@@ -73,12 +67,6 @@ class DashboardPlugin(object):
                             self.get_name(),
                             'views')
 
-    def render_script(self):
-        if not self.javascript:
-            return ''
-        return ('<script src="/static/plugins/%s/dashboard.js">'
-                '</script>') % self.get_name()
-
     def render(self):
         """ Render dashboard section """
         context = {
@@ -86,12 +74,7 @@ class DashboardPlugin(object):
             'heading': self.get_heading(),
         }
         context.update(self.get_context())
-        template_dirs = [self.get_template_dir()] + bottle.TEMPLATE_PATH
-        main = bottle.template(self.get_template(),
-                               template_lookup=template_dirs,
-                               **context)
-        javascript = self.get_javascript()
-        return main + javascript
+        return bottle.template(self.get_template(), **context)
 
     def __str__(self):
         return "<DashboardPlugin '%s'>" % self.name
