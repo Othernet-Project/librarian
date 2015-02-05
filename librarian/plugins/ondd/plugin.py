@@ -15,15 +15,13 @@ from ...lib.i18n import lazy_gettext as _
 from ..exceptions import NotSupportedError
 from ..dashboard import DashboardPlugin
 
-from . import ipc
+try:
+    from . import ipc
+except AttributeError:
+    raise NotSupportedError('ONDD plugin requires UNIX sockets')
 
 
 def install(app, route):
-    import socket
-    try:
-        socket.AF_UNIX
-    except AttributeError:
-        raise NotSupportedError('ONDD plugin requires UNIX sockets')
 
 
 class Dashboard(DashboardPlugin):
