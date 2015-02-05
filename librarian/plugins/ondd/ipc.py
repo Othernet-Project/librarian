@@ -145,6 +145,6 @@ def set_settings(frequency, symbolrate, delivery='dvb-s', modulation='qpsk',
                  tone=True, voltage=13, azimuth=0):
     tone = yesno(tone)
     payload = xml_put_path('/settings', kw2xml(**locals()))
-    root = send(payload)
-    resp = root.find('response')
-    return resp
+    resp = send(payload)
+    resp_code = resp.get('code')
+    return resp_code
