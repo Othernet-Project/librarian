@@ -46,5 +46,7 @@
         </div>
 
         <script src="/static/js/ui.js"></script>
+        % setdefault('extra_scripts', '')
+        {{! extra_scripts }}
     </body>
 </html>

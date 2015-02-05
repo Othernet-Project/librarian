@@ -1,5 +1,6 @@
 %# Translators, used as page title
-% rebase('base.tpl', title=_('Dashboard'))
+% scripts = '<script src="/static/js/templates.js"></script>' + ''.join([p.render_javascript() for p in plugins])
+% rebase('base.tpl', title=_('Dashboard'), extra_scripts=scripts)
 
 %# Translators, used as page heading
 <h1>{{ _('Dashboard') }}</h1>
@@ -25,4 +26,3 @@
     {{! plugin.render() }}
     % end
 </div>
-
