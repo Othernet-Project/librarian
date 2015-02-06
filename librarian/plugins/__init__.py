@@ -103,6 +103,7 @@ def install_plugins(app):
         plugin = INSTALLED[p]
         try:
             DASHBOARD.append(plugin.Dashboard())
+            logging.debug('Installed dashboard plugin %s', mod)
         except AttributeError:
             logging.debug('No dashboard plugin for %s', p)
             continue
