@@ -26,15 +26,15 @@ except AttributeError:
 
 
 DELIVERY = (
-    ('1', 'DVB-S'),
-    ('2', 'DVB-S2'),
+    ('DVB-S', 'DVB-S'),
+    ('DVB-S2', 'DVB-S2'),
 )
 
 MODULATION = (
-    ('qp', 'QPSK'),
-    ('8p', '8PSK'),
-    ('1a', '16APSK'),
-    ('2a', '32APSK'),
+    ('QPSK', 'QPSK'),
+    ('8PSK', '8PSK'),
+    ('16APSK', '16APSK'),
+    ('32APSK', '32APSK'),
 )
 
 POLARIZATION = (
@@ -52,9 +52,53 @@ VOLTS = {
     'h': 18,
 }
 
+PRESETS = [
+    ('Galaxy 19 (97.0W)', 1, {
+        'frequency': '12177',
+        'symbolrate': '23000',
+        'polarization': 'v',
+        'delivery': 'DVB-S',
+        'modulation': 'QPSK',
+        'tone': True,
+        'azimuth': 0,
+    }),
+    ('Hotbird 13 (13.0E)', 2, {
+        'frequency': '11470',
+        'symbolrate': '27500',
+        'polarization': 'v',
+        'delivery': 'DVB-S',
+        'modulation': 'QPSK',
+        'tone': True,
+        'azimuth': 0,
+    }),
+    ('Intelsat 20 (68.5E)', 3, {
+        'frequency': '12522',
+        'symbolrate': '27500',
+        'polarization': 'v',
+        'delivery': 'DVB-S',
+        'modulation': 'QPSK',
+        'tone': True,
+        'azimuth': 0,
+    }),
+]
+
 # For easier consumption as view default ctx
 CONST = dict(DELIVERY=DELIVERY, MODULATION=MODULATION,
-             POLARIZATION=POLARIZATION)
+             POLARIZATION=POLARIZATION, PRESETS=PRESETS)
+
+
+def selected_preset(settings):
+    for name, idx, p in PRESETS:
+        match = True
+        for k, v in settings.items():
+            # We convert both values to strings. It doesn't matter because data
+            # comes from trusted sources in both cases. The reason we do this
+            # is that they may be of different type for technical reasons.
+            if str(v) != str(p[k]):
+                match = False
+        if match:
+            return idx
+    return 0
 
 
 @view('ondd/_signal')
@@ -124,4 +168,6 @@ class Dashboard(DashboardPlugin):
     javascript = ['ondd.js']
 
     def get_context(self):
-        return dict(status=ipc.get_status(), vals={}, errors={}, **CONST)
+        settings = ipc.get_settings()
+        return dict(status=ipc.get_status(), vals={}, errors={},
+                    selected_preset=selected_preset(settings), **CONST)
