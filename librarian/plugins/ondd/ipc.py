@@ -109,6 +109,14 @@ def kw2xml(**kwargs):
     return xml
 
 
+def v2pol(volts):
+    if volts == '13':
+        return 'v'
+    elif volts == '18':
+        return 'h'
+    return '0'
+
+
 def get_status():
     """ Get ONDD status """
     payload = xml_get_path('/status')
@@ -139,6 +147,21 @@ def get_file_list():
             'progress': int(f.find('progress').text),
         })
     return out
+
+
+def get_settings():
+    """ Get ONDD tuner settings """
+    payload = xml_get_path('/settings')
+    root = send(payload)
+    tuner = root.find('tuner')
+    return {
+        'frequency': int(tuner.find('frequency').text),
+        'delivery': tuner.find('delivery').text,
+        'modulation': tuner.find('modulation').text,
+        'polarization': v2pol(tuner.find('voltage').text),
+        'tone': tuner.find('tone').text == 'yes',
+        'azimuth': int(tuner.find('azimuth').text or 0),
+    }
 
 
 def set_settings(frequency, symbolrate, delivery='dvb-s', modulation='qpsk',
