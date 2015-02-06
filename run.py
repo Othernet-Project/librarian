@@ -31,5 +31,5 @@ ensure_dir('tmp/downloads/content')
 ensure_dir('tmp/downloads/files')
 ensure_dir('tmp/outernet')
 ensure_dir('tmp/zipballs')
-app.main('local.ini', args.debug_conf, profile=args.profile)
+app.main(args.conf or 'local.ini', args.debug_conf, profile=args.profile)
 
