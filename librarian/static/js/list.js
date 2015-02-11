@@ -6,7 +6,6 @@
   var totalPages = parseInt(contentList.data('total'), 10);
   var footer = $('.footer');
   var winHeight;
-  var masonry;
   var loader = $(templates.loading);
   var end = $(templates.end);
   var toTop = $(templates.toTop);
@@ -40,15 +39,6 @@
 
   // Go-to-top animation
   $('.to-top').click(animateTopScroll);
-
-  // Tiled column layout
-  contentList.masonry({
-    itemSelector: '.data',
-    isAnimatedFromBottom: true
-  });
-
-  // Fix layout once more after images are loaded
-  contentList.imagesLoaded(function () { contentList.masonry(); });
 
   // Fix height data
   updateHeight();
@@ -108,12 +98,9 @@
     res = $.trim(res);
     if (res === '') { return loadEmpty(); }
     res = $(res);
-    contentList.append(res).imagesLoaded(function () {
-      contentList.masonry('appended', res);
-      loader.hide();
-      loadLink.show();
-      win.trigger('listUpdate', [res]);
-    });
+    loader.hide();
+    loadLink.show();
+    win.trigger('listUpdate', [res]);
     loading = false;
   }
 
