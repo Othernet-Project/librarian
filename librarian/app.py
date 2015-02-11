@@ -236,6 +236,7 @@ def main(conf, debug=False, logpath=None, profile=False):
     app.config.load_config(conf)
 
     if debug:
+        print('Configuration file path: %s' % conf)
         pprint.pprint(app.config, indent=4)
         sys.exit(0)
 
