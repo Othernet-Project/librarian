@@ -333,7 +333,7 @@ class Meta(object):
 
     def __init__(self, meta):
         self.meta = meta
-        self.tags = json.loads(meta.get('tags', '{}'))
+        self.tags = json.loads(meta.get('tags') or '{}')
         self._image = None
 
     def __getattr__(self, attr):
