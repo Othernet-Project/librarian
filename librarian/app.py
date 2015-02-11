@@ -22,20 +22,20 @@ from os.path import join, dirname, abspath, normpath
 import bottle
 from bottle import request
 
-from exceptions import *
-from lib import squery
-from lib.i18n import lazy_gettext as _, I18NPlugin
-from lib import html as helpers
-from lib.lazy import Lazy
-from lib.downloads import get_zipballs
-from lib.archive import LICENSES
-from lib.common import to_unicode
-from lib.system import ensure_dir
-from utils import migrations
-from plugins import install_plugins
-from routes import (content, tags, downloads, apps, dashboard)
+from librarian.lib import squery
+from librarian.exceptions import *
+from librarian.lib.lazy import Lazy
+from librarian.utils import migrations
+from librarian.lib import html as helpers
+from librarian.lib.archive import LICENSES
+from librarian.lib.common import to_unicode
+from librarian.lib.system import ensure_dir
+from librarian.plugins import install_plugins
+from librarian.lib.downloads import get_zipballs
+from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
+from librarian.routes import (content, tags, downloads, apps, dashboard)
 
-from . import __version__, __author__
+from librarian import __version__, __author__
 
 MODDIR = dirname(abspath(__file__))
 
@@ -236,6 +236,7 @@ def main(conf, debug=False, logpath=None, profile=False):
     app.config.load_config(conf)
 
     if debug:
+        print('Configuration file path: %s' % conf)
         pprint.pprint(app.config, indent=4)
         sys.exit(0)
 
