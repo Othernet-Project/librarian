@@ -13,8 +13,6 @@
 @import "compass/css3";
 @import "compass/typography/text/replacement";
 
-$content-gap: 1em;
-
 @mixin default-shadow {
   @include box-shadow(0 2px 5px transparentize($black, 0.7));
 }
@@ -587,29 +585,48 @@ tr.selected {
 
 .content-list {
   padding-top: 1em;
-  text-align: center;
 
   li {
     text-align: left;
     padding: 0;
+    margin: 0 0 1em;
     list-style: none;
-    display: inline-block;
-    max-width: 300px;
-    vertical-align: top;
-    margin: 0 $content-gap $content-gap 0;
-    @include default-shadow;
-    background: $white;
+    position: relative;
+    clear: both;
+
+    .thumbnail {
+      width: 100px;
+      height: 100px;
+      float: left;
+      position: relative;
+      overflow: hidden;
+
+      .a {
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        margin-top: -50%;
+      }
+
+      .thumb-image {
+        display: inline-block;
+        width: 100%;
+      }
+    }
+
+    .details {
+      margin-left: 120px;
+    }
 
     h2 {
-      background: $dirt;
-      font-size: 120%;
-      border: none;
-      margin: 0;
-      text-align: center;
-
-      @include content-colors($ash-blue, $white);
-
+      border: 0;
+      font-size: 150%;
+      line-height: 100%;
+      font-weight: normal;
+      margin: 0.4em 0;
+      
       a {
+        color: $dark-grey;
         display: inline-block;
 
         span {
@@ -618,22 +635,37 @@ tr.selected {
         }
 
         &:hover, &:focus {
+          color: $blue;
           text-decoration: none;
         }
       }
     }
 
-    p {
-      padding: 0 1em;
-      font-size: 90%;
+    .label {
+      margin-bottom: 0;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 80%;
+
+      .label-core {
+        color: $ash-blue;
+      }
+
+      .label-sponsored {
+        color: $orange;
+      }
+
+      .label-partner {
+        color: $green;
+      }
     }
 
-    .date {
-      font-weight: bold;
+    .attrib {
+      text-transform: none;
+      font-style: italic;
       color: $grey;
-      padding: 0.6em 1em;
-      text-align: right;
-      border-bottom: 1px solid $light-grey;
+      letter-spacing: 0;
     }
 
     img {
@@ -658,16 +690,8 @@ tr.selected {
     }
   }
 
-  .partner {
-    h2 {
-      @include content-colors($green, $white);
-    }
-  }
-
-  .sponsored {
-    h2 {
-      @include content-colors($pale-blue, $white);
-    }
+  .badges, .tags {
+    display: inline-block;
   }
 }
 
