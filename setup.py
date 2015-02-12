@@ -46,6 +46,7 @@ setup(
             '*.tpl',
             '*.[mp]o',
             '*.ini',
+            '*.sql',
         ]),
     },
     include_data_files=True,
