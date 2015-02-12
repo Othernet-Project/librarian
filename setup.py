@@ -6,23 +6,13 @@ from setuptools import setup, find_packages
 
 import librarian
 
+SCRIPTDIR = os.path.dirname(__file__)
 # Production requirement, not needed during development
 BJ = ['bjoern==1.4.1']
 
 def read(fname):
     """ Return content of specified file """
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
-
-def data(patterns=[]):
-    """ For each pattern, return mapping for data_files """
-    data_files = []
-    for root, files, dirs in os.walk('librarian'):
-        paths = [os.path.join(root, f) for f in files]
-        for pattern in patterns:
-            files = fnmatch.filter(paths, pattern)
-            data_files += files
-    return data_files
+    return open(os.path.join(SCRIPTDIR, fname)).read()
 
 
 setup(
@@ -36,20 +26,7 @@ setup(
     keywords = 'outernet content archive library',
     url = 'https://github.com/Outernet-Project/librarian',
     packages=find_packages(),
-    package_data={
-        'librarian': data([
-            '*.css',
-            '*.png',
-            '*.gif',
-            '*.js',
-            '*.sql',
-            '*.tpl',
-            '*.[mp]o',
-            '*.ini',
-            '*.sql',
-        ]),
-    },
-    include_data_files=True,
+    include_package_data=True,
     long_description=read('README.rst'),
     install_requires = read('conf/requirements.txt').strip().split('\n') + BJ,
     classifiers=[
