@@ -1,0 +1,59 @@
+@mixin icon($name) {
+  display: inline-block;
+  background: transparent image-url("#{$name}.png") no-repeat;
+  width: image-width("#{$name}.png");
+  height: image-width("#{$name}.png");
+  vertical-align: middle;
+}
+
+@mixin toolbar-icon($name) {
+  $image-name: "#{$name}.png";
+  background-image: image-url($image-name);
+}
+
+@mixin button($bg: $black, $text: $white, $h-bg: $black, $h-text: $white) {
+  display: inline-block;
+  vertical-align: middle;
+  border: 0 solid transparent;
+  font-size: $base-size;
+  font-family: $base-font;
+  line-height: $base-lh;
+  @include border-radius(2px);
+  padding: 0.2em 0.5em;
+  cursor: pointer;
+
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}
+
+@mixin button-color($bg: $black, $text: $white, $h-bg: $black, $h-text: $white) {
+  background-color: $bg;
+  color: $text;
+  @include transition(
+    background-color 0.3s, 
+    color 0.3s
+  );
+
+  &:hover, &:focus {
+    background-color: $h-bg;
+    color: $h-text;
+  }
+}
+
+@mixin button-small {
+  padding: 0.1em 0.3em;
+  font-size: $base-size * 0.9;
+}
+
+
+@mixin button-large {
+  padding: 0.5em 1.5em;
+  font-size: $base-size * 1.5;
+  @include border-radius(3px);
+}

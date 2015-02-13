@@ -1,0 +1,19 @@
+.dash-section {
+  padding-bottom: 2em;
+}
+
+.dash-logs textarea {
+  width: 100%;
+  height: 200px;
+  color: $black;
+  background: transparent;
+  font-family: monospace;
+  border: 0 solid transparent;
+}
+
+.dash-updates {
+  background: $blue;
+  color: $white;
+  padding: 1em;
+}
+

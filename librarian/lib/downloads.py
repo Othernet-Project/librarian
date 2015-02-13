@@ -340,7 +340,7 @@ class Meta(object):
         try:
             return self.meta[attr]
         except KeyError:
-            raise AttributeError('Attribute or key %s not found'  % attr)
+            raise AttributeError("Attribute or key '%s' not found" % attr)
 
     def __getitem__(self, key):
         return self.meta[key]

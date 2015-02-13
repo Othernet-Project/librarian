@@ -1,0 +1,108 @@
+body, html {
+  padding: 0;
+  background: $dark-grey;
+  height: 100%;
+}
+
+.inner {
+  padding: 1em;
+}
+
+h1 {
+  position: fixed;
+  top: 0;
+  left: 47px;
+  right: 0;
+  background: $dirt;
+  color: $black;
+  padding: 0.2em 0.5em;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
+  line-height: 100%;
+  z-index: 1;
+  @include default-shadow;
+
+  span {
+    font-size: 50%;
+  }
+}
+
+h2 {
+  margin: 0 0 1em;
+}
+
+.buttons {
+  text-align: right;
+}
+
+.body {
+  margin-left: 47px;
+  min-height: 300px;
+  background: $dirt;
+  padding-top: 60px;
+}
+
+.center {
+  text-align: center;
+}
+
+.warning, .note, .message {
+  padding: 1em;
+  font-weight: bold;
+}
+
+.warning {
+  color: $red;
+  border: 1px solid $red;
+  background: desaturate(lighten($red, 50), 30);
+}
+
+.note {
+  color: $green;
+  border: 1px solid $green;
+  background: desaturate(lighten($green, 45), 10);
+}
+
+.message {
+  color: $orange;
+  border: 1px solid $orange;
+  background: desaturate(lighten($orange, 35), 10);
+}
+
+.empty {
+  background: $light-grey;
+  color: $grey;
+  text-align: center;
+  padding: 2em 0.5em;
+}
+
+button, .button {
+  @include button;
+  @include button-color($black, $white, $blue);
+
+  &.special {
+    @include button-color($ash-blue, $white, $blue, $white);
+  }
+
+  &.danger {
+    @include button-color($red, $white, darkern($red, 20));
+  }
+
+  &.small {
+    @include button-small;
+  }
+
+  &.large {
+    @include button-large;
+  }
+}
+
+a.button:hover, a.button:focus, a.button:visited {
+  color: $white;
+  text-decoration: none;
+}
+
+label {
+  cursor: pointer;
+}
+

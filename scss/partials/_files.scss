@@ -1,0 +1,67 @@
+.file-list {
+  padding: 1em;
+
+  .location-bar {
+    p {
+      margin: 0;
+    }
+
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid $light-grey;
+  }
+
+  ul {
+    margin: 0;
+    font-size: 120%;
+  }
+
+  a {
+    display: inline-block;
+    color: $black;
+  }
+
+  li {
+    padding-left: 0;
+    margin-bottom: 0.4em;
+  }
+
+  td.icon {
+    width: 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .up span.icon {
+    @include icon('folder_up');
+  }
+
+  .dir span.icon {
+    @include icon('folder');
+  }
+
+  .file span.icon {
+    @include icon('file');
+  }
+
+  .size {
+    width: 100px;
+  }
+
+  .delete {
+    width: 60px;
+  }
+
+  .rename {
+    width: 220px;
+  }
+
+  .execute {
+    width: 60px;
+  }
+
+  pre {
+    padding: 0;
+    font-family: monospace;
+    margin-bottom: 1em;
+  }
+}
