@@ -19,6 +19,9 @@ $content-gap: 1em;
 @import "partials/colors";
 @import "mixins/controls";
 @import "mixins/effects";
+@import "mixins/hdpi_images";
+@import "mixins/media_query";
+@import "mixins/sprites";
 
 // Core elements
 @import "partials/basics";

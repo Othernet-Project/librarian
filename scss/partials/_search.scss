@@ -3,11 +3,13 @@
   text-align: right;
 
   .next {
-    @include replace-text-with-dimensions('forward.png');
+    @include icon('forward', no);
+    @include hide-text;
   }
 
   .prev {
-    @include replace-text-with-dimensions('back.png');
+    @include icon('back', no);
+    @include hide-text;
   }
 
   .search {

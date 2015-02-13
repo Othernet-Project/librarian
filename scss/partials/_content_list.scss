@@ -91,13 +91,16 @@
       position: absolute;
       top: 3px;
       right: 3px;
-      @include replace-text-with-dimensions('delete.png');
-      background-position: center center;
-      @include button-color($light-grey, $white, $white, $black);
-      @include border-radius(image-height('delete.png'));
-      padding: 1em;
-      @include default-shadow;
+      padding: 3px;
+      background: $white;
       opacity: 0.5;
+      @include default-shadow;
+      @include border-radius(image-width('icons/1x/delete.png'));
+
+      .icon {
+        @include icon('delete');
+        @include hide-text;
+      }
 
       &:hover, &:focus {
         opacity: 1;

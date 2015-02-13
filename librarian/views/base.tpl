@@ -21,16 +21,17 @@
                 % end
             </div>
             <div id="toolbar" class="toolbar">
+                % icon = '<span class="icon"></span>'
                 %# Translators, used main navigation menu
-                {{! h.link_other(_('Library'), i18n_path('/'), request.original_path, h.SPAN, _class="archive") }}
+                {{! h.link_other(icon + _('Library'), i18n_path('/'), request.original_path, h.SPAN, _class="archive navicon") }}
                 %# Translators, used main navigation menu
-                {{! h.link_other(_('Files'), i18n_path('/files/'), request.original_path, h.SPAN, _class="files") }}
+                {{! h.link_other(icon + _('Files'), i18n_path('/files/'), request.original_path, h.SPAN, _class="files navicon") }}
                 %# Translators, used main navigation menu
-                {{! h.link_other(_('Apps'), i18n_path('/apps/'), request.original_path, h.SPAN, _class="apps") }}
+                {{! h.link_other(icon + _('Apps'), i18n_path('/apps/'), request.original_path, h.SPAN, _class="apps navicon") }}
                 %# Translators, used main navigation menu
-                {{! h.link_other(_('Updates') + (' (%s)' % updates if updates > 0 else ''), i18n_path('/downloads/'), request.original_path, h.SPAN, _class="updates" + (updates > 0 and ' notice' or '')) }}
+                {{! h.link_other(icon + _('Updates') + (' (%s)' % updates if updates > 0 else ''), i18n_path('/downloads/'), request.original_path, h.SPAN, _class="updates navicon" + (updates > 0 and ' notice' or '')) }}
                 %# Translators, used main navigation menu
-                {{! h.link_other(_('Dashboard'), i18n_path('/dashboard/'), request.original_path, h.SPAN, _class="dashboard") }}
+                {{! h.link_other(icon + _('Dashboard'), i18n_path('/dashboard/'), request.original_path, h.SPAN, _class="dashboard navicon") }}
             </div>
         </header>
 

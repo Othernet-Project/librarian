@@ -36,9 +36,6 @@
 }
 
 .images .icon {
-  display: inline-block;
-  background: image-url('camera_small.png') no-repeat;
-  width: 16px;
-  height: 16px;
+  @include icon('camera_small');
 }
 

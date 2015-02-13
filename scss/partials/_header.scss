@@ -10,26 +10,28 @@ header {
     z-index: 2;
     @include default-shadow;
 
-    a, span {
+    .navicon {
       display: block;
       background-repeat: no-repeat;
       background-position: 11px 10px;
-      padding-top: 0.7em;
-      padding-right: 0;
-      padding-bottom: 0.7em;
-      padding-left: 47px;
+      padding: 0.7em 0;
       cursor: pointer;
       overflow: hidden;
-      width: 0;
+      width: 47px;
       white-space: nowrap;
-      @include transition(padding-right 0.2s, padding-left 0.2s);
+      @include transition(padding-right 0.2s);
+
+      .icon {
+        margin-left: 10px;
+        margin-right: 20px;
+      }
     }
 
-    span {
+    span.navicon {
       background-color: $blue;
     }
 
-    a {
+    a.navicon {
       color: $white;
 
       &:hover, &:focus {
@@ -39,39 +41,37 @@ header {
     }
 
     &:hover, &:focus {
-      a, span {
+      .navicon {
         width: auto;
         padding-right: 28px;
-        padding-left: 60px;
       }
     }
 
-
-    .dashboard {
-      @include toolbar-icon('dashboard');
+    .archive .icon {
+      @include icon('document');
     }
 
-    .favorites {
-      @include toolbar-icon('fav');
+    .dashboard .icon {
+      @include icon('dashboard');
     }
 
-    .archive {
-      @include toolbar-icon('document');
+    .archive .icon {
+      @include icon('document');
     }
 
-    .files {
-      @include toolbar-icon('files');
+    .files .icon {
+      @include icon('files');
     }
 
-    .apps {
-      @include toolbar-icon('apps');
+    .apps .icon {
+      @include icon('apps');
     }
 
-    .updates {
-      @include toolbar-icon('antenna');
+    .updates .icon {
+      @include icon('antenna');
 
-      &.notice {
-        background-image: image-url('antenna_yellow.png');
+      &.notice .icon {
+        @include icon('antenna_yellow');
       }
     }
   }

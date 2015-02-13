@@ -1,0 +1,17 @@
+@mixin wider-than($width) {
+  @media all and (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin width-between($min-width, $max-width) {
+  @media all and (min-width: $min-width) and (max-width: $max-width) {
+    @content;
+  }
+}
+
+@mixin narrower-than($width) {
+  @media all and (max-width: $width) {
+    @content;
+  }
+}

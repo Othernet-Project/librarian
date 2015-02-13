@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   version="1.1"
-   width="16"
+   id="svg2"
    height="16"
-   id="svg2">
+   width="16"
+   version="1.1">
   <defs
      id="defs4" />
   <metadata
@@ -26,11 +24,11 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(0,-1036.3622)"
-     id="layer1">
+     id="layer1"
+     transform="translate(0,-1036.3622)">
     <path
-       d="m 6.6875,1039.2372 c -0.4832713,0 -0.9693605,0.3768 -1.09375,0.8438 l -0.4375,1.6562 -3.9375,0 C 0.54998765,1041.7372 0,1042.2559 0,1042.9247 l 0,8.25 c 0,0.6688 0.54998765,1.1875 1.21875,1.1875 l 13.5625,0 c 0.668762,0 1.21875,-0.5187 1.21875,-1.1875 l 0,-8.25 c 0,-0.6688 -0.549988,-1.1875 -1.21875,-1.1875 l -3.90625,0 -0.4375,-1.6562 c -0.118832,-0.4684 -0.610479,-0.8438 -1.09375,-0.8438 l -2.65625,0 z M 8,1043.1747 c 2.126963,0 3.84375,1.7168 3.84375,3.8438 0,2.1269 -1.716787,3.875 -3.84375,3.875 -2.1269628,0 -3.84375,-1.7481 -3.84375,-3.875 0,-2.127 1.7167872,-3.8438 3.84375,-3.8438 z"
+       style="color:#000000;fill:#222222;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="rect2985"
-       style="color:#000000;fill:#1f354f;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+       d="m 6.6875,1039.2372 c -0.4832713,0 -0.9693605,0.3768 -1.09375,0.8438 l -0.4375,1.6562 -3.9375,0 C 0.54998765,1041.7372 0,1042.2559 0,1042.9247 l 0,8.25 c 0,0.6688 0.54998765,1.1875 1.21875,1.1875 l 13.5625,0 c 0.668762,0 1.21875,-0.5187 1.21875,-1.1875 l 0,-8.25 c 0,-0.6688 -0.549988,-1.1875 -1.21875,-1.1875 l -3.90625,0 -0.4375,-1.6562 c -0.118832,-0.4684 -0.610479,-0.8438 -1.09375,-0.8438 l -2.65625,0 z M 8,1043.1747 c 2.126963,0 3.84375,1.7168 3.84375,3.8438 0,2.1269 -1.716787,3.875 -3.84375,3.875 -2.1269628,0 -3.84375,-1.7481 -3.84375,-3.875 0,-2.127 1.7167872,-3.8438 3.84375,-3.8438 z" />
   </g>
 </svg>
