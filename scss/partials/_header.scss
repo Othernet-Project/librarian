@@ -69,10 +69,10 @@ header {
 
     .updates .icon {
       @include icon('antenna');
+    }
 
-      &.notice .icon {
-        @include icon('antenna_yellow');
-      }
+    .notice .icon {
+      @include icon('antenna_yellow');
     }
   }
 
