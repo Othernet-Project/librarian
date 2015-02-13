@@ -3,13 +3,6 @@
 <h1>
 %# Translators, used as page heading
 {{ _('Library') }}
-% if query:
-%# Translators, used as note on library page when showing search results, %(term)s represents the text typed in by user
-<span>{{ u(_("Showing search results for '%(terms)s'")) % {'terms': query} }}</span>
-% elif metadata:
-%# Translators, used as note on library page when showing content list, %(count)s is number of items on the page, %(total)s is total number of items in library
-<span>{{ u(ngettext('Showing %(count)s of %(total)s item', 'Showing %(count)s of %(total)s items', total_items)) % {'count': len(metadata), 'total': total_items} }}</span>
-% end
 </h1>
 
 <div class="inner">
@@ -53,6 +46,10 @@
         </span>
         </p>
     </form>
+    % if query:
+    %# Translators, used as note on library page when showing search results, %(term)s represents the text typed in by user
+    <p class="search-keyword">{{ u(_("Showing search results for '%(terms)s'")) % {'terms': query} }}</p>
+    % end
     <ul id="content-list" class="content-list" data-total="{{ int(total_pages) }}">
         % include('_content_list')
     </ul>
