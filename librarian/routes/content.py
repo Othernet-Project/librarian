@@ -152,6 +152,8 @@ def show_file_list(path='.'):
         up = ''
         dirs, file_list = files.get_search_results(search)
         is_search = True
+        if not len(file_list) and len(dirs) == 1:
+            redirect(i18n_path('/files/%s' % dirs[0].path.replace('\\', '/')))
         if not dirs and not file_list:
             is_missing = True
             readme = _('The files you were looking for could not be found')
