@@ -143,6 +143,7 @@ def dictify_file_list(file_list):
 def show_file_list(path='.'):
     path = request.params.get('p', path)
     resp_format = request.params.get('f', '')
+    conf = request.app.config
     try:
         path, relpath, dirs, file_list, readme = files.get_dir_contents(path)
     except files.DoesNotExist:
@@ -166,6 +167,7 @@ def show_file_list(path='.'):
             ))
         return static_file(err.path, root=files.get_file_dir())
     up = os.path.normpath(os.path.join(path, '..'))
+    up = os.path.relpath(up, conf['content.filedir'])
     if resp_format == 'json':
         response.content_type = 'application/json'
         return json.dumps(dict(
