@@ -3,11 +3,11 @@
 
   li {
     text-align: left;
-    padding: 0;
     margin: 0 0 2em;
     list-style: none;
     position: relative;
     clear: both;
+    border-bottom: 1px solid $light-grey;
 
     .thumbnail {
       width: 100px;
@@ -181,6 +181,10 @@
 
   .badges, .tags {
     display: inline-block;
+  }
+
+  .tags {
+    margin-bottom: 2em;
   }
 }
 
