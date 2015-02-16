@@ -10,6 +10,17 @@ $hover-text: $text-font;
 $loose-spacing: 0.2em;
 
 
+@mixin nudge-horiz($len) {
+  position: relative;
+  left: $len;
+}
+
+@mixin nudge-vert($len) {
+  position: relative;
+  top: $len;
+}
+
+
 @mixin all-caps {
   text-transform: uppercase;
 }

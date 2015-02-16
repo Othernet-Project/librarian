@@ -17,53 +17,37 @@
     </div>
     <form method="POST">
     % if metadata:
-    <p class="controls" id="controls">
-        %# Translators, used as button label on updates page for marking all content for import
-        <a class="sel-all button" href="?sel=1">{{ _('Select all') }}</a>
-        %# Translators, used as button label on updates page for unmarking all content for import
-        <a class="sel-none button" href="?sel=0">{{ _('Select none') }}</a>
-        %# Translators, used as button label on updates page for adding marked content to library
-        <button type="submit" name="action" value="add" class="special">{{ _('Add selected to library') }}</button>
-        %# Translators, used as button label on updates page for permanently deleting all downloaded content
-        <button type="submit" name="action" value="delete" class="danger">{{ _('Delete selected') }}</button>
-    </p>
+    % include('_list_controls')
     % end
 
-    <table>
+    <table class="downloads-list">
         <thead>
             <tr>
             %# Translators, used as table header, above checkbox for selecting updates for import
-            <th>{{ _('select') }}</th>
+            <th class="downloads-selection"><span class="icon">{{ _('select') }}</span></th>
             %# Translators, used as table header, content title
             <th>{{ _('title') }}</th>
             %# Translators, used as table header, broadcast date
-            <th>{{ _('broadcast') }}</th>
+            <th class="do">{{ _('broadcast') }}</th>
             %# Translators, used as table header, download date
-            <th>{{ _('downloaded') }}</th>
+            <th class="do">{{ _('downloaded') }}</th>
             </tr>
         </thead>
         <tbody>
             % if metadata:
                 % for meta in metadata:
                 <tr class="data">
-                    <td class="downloads-selection" rowspan="3">
+                    <td class="downloads-selection">
                         <input id="check-{{ meta['md5'] }}" type="checkbox" name="selection" value="{{ meta['md5'] }}"{{ selection and ' checked' or ''}}>
                     </td>
                     <td class="downloads-title"{{ ' rowspan="3"' if meta.get('replaces_title') else '' }}>
-                        <label for="check-{{ meta['md5'] }}">{{ meta['title'] }}</label>
+                        <p><label for="check-{{ meta['md5'] }}">{{ meta['title'] }}</label></p>
+                        % if meta.get('replaces_title'):
+                        <p class="downloads-replaces">{{ _('replaces:') }} <a href="/pages/{{ meta['replaces'] }}/">{{ meta['replaces_title'] }}</a></p>
+                        % end
                     </td>
-                    <td class="downloads-timestamp" rowspan="3">{{ h.strft(meta['timestamp'], '%m-%d') }}</td>
-                    <td class="downloads-ftimestamp" rowspan="3">{{ meta['ftimestamp'].strftime('%m-%d') }}</td>
-                </tr>
-                <tr class="badges">
-                    <td>
-                    % include('_badges')
-                    </td>
-                </tr>
-                <tr class="replaces">
-                    % if meta.get('replaces_title'):
-                    <td class="downloads-replaces">{{ _('replaces:') }} <a href="/pages/{{ meta['replaces'] }}/">{{ meta['replaces_title'] }}</a></td>
-                    % end
+                    <td class="downloads-timestamp do">{{ h.strft(meta['timestamp'], '%m-%d') }}</td>
+                    <td class="downloads-ftimestamp do">{{ meta['ftimestamp'].strftime('%m-%d') }}</td>
                 </tr>
                 % end
             % else:
@@ -76,16 +60,7 @@
     </table>
 
     % if metadata:
-    <p class="buttons">
-    %# Translators, used as button label on updates page for marking all content for import
-    <a class="sel-all button" href="?sel=1">{{ _('Select all') }}</a>
-    %# Translators, used as button label on updates page for unmarking all content for import
-    <a class="sel-none button" href="?sel=0">{{ _('Select none') }}</a>
-    %# Translators, used as button label on updates page for adding marked content to library
-    <button type="submit" name="action" value="add" class="special">{{ _('Add selected to library') }}</button>
-    %# Translators, used as button label on updates page for permanently deleting all downloaded content
-    <button type="submit" name="action" value="delete" class="danger">{{ _('Delete selected') }}</button>
-    </p>
+    % include('_list_controls')
     % end
     </form>
 </div>

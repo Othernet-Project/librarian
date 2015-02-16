@@ -1,4 +1,35 @@
-tr.selected {
-  color: $green;
+.downloads-list {
+  tr {
+    border-bottom: 1px solid $light-grey;
+  }
+
+  tr.selected {
+    color: $green;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
 }
 
+.list-controls {
+  text-align: right;
+
+  @include narrower-than($phone-portrait-wide) {
+    text-align: center;
+  }
+}
+
+.do {
+  @include narrower-than($phone-portrait-narrow) {
+    display: none;
+  }
+}
+
+.downloads-selection .icon {
+  @include narrower-than($phone-portrait-narrow) {
+    @include icon('check');
+    @include hide-text;
+    @include nudge-horiz(4px);
+  }
+}
