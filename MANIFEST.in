@@ -2,10 +2,4 @@ include README.rst
 include COPYING
 include CHANGES
 include conf/requirements.txt
-include librarian/static/css/*.css
-include librarian/static/img/*.png
-include librarian/locales/**/LC_MESSAGES/*.[mp]o
-include librarian/migrations/*.sql
-include librarian/keys/*
-include librarian/views/*.tpl
-include librarian/librarian.ini
+recursive-include librarian *
