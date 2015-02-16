@@ -52,9 +52,6 @@
     <ul id="content-list" class="content-list" data-total="{{ int(total_pages) }}">
         % include('_content_list')
     </ul>
-    <p class="controls">
-    % include('_simple_pager')
-    </p>
     % if not metadata:
         <p class="empty">
         % if not query and not tag:
