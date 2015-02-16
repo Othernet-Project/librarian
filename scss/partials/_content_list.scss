@@ -175,6 +175,10 @@
   text-align: center;
   padding: 2em 0;
 
+  @include phone-portrait-wide {
+    padding: 0;
+  }
+
   @include phone-portrait-narrow {
     padding: 0;
     font-size: 100%;
