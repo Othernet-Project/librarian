@@ -18,16 +18,16 @@
             <span class="datestamp">
             {{ meta.timestamp.strftime('%Y-%m-%d') }}
             </span>
-            % if meta.partner:
-            <span class="attrib">
-                %# Translators, attribution (e.g., 'By Project Gutenberg')
-                {{ u(_('by %s')) % meta.partner }}
-            </span>
-            % end
         </p>
         <h2 class="title">
             <a href="{{ i18n_path('/pages/%s' % meta.md5) }}">{{ meta.title }}</a>
         </h2>
+        % if meta.partner:
+        <p class="attrib">
+            %# Translators, attribution (e.g., 'By Project Gutenberg')
+            {{ u(_('by %s')) % meta.partner }}
+        </p>
+        % end
         <p class="badges">
         % include('_badges')
         </p>

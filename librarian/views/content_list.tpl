@@ -13,10 +13,9 @@
         <input type="hidden" name="t" value="{{ tag_id or '' }}">
         <p>
         %# Translators, used as label for search field, appears before the text box
-        <label class="search" for="q">{{ _('search titles') }}:
-        {{! h.vinput('q', vals) }}
+        {{! h.vinput('q', vals, _type='text', _class='search', placeholder=_('search titles')) }}<button %# NOTE: keep together
         %# Translators, used as label for search button
-        <button class="fake-go small">{{ _('go') }}</button>
+            class="fake-go"><span class="icon">{{ _('go') }}</span></button>
         % if query:
         %# Translators, used as label for button that clears search results
         <a href="{{ i18n_path(request.path) }}" class="button small">{{ _('clear') }}</a>

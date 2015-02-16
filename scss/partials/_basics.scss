@@ -77,16 +77,35 @@ h2 {
   padding: 2em 0.5em;
 }
 
+// Form elements
+
+label {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=numeric] {
+  @include form-field-basics;
+  @include input-medium;
+  @include input-coloring($white, $black);
+}
+
+select {
+  @include select-medium;
+}
+
 button, .button {
   @include button;
-  @include button-color($black, $white, $blue);
 
   &.special {
-    @include button-color($ash-blue, $white, $blue, $white);
+    @include button-blue;
   }
 
   &.danger {
-    @include button-color($red, $white, darkern($red, 20));
+    @include button-blue;
   }
 
   &.small {
@@ -96,14 +115,5 @@ button, .button {
   &.large {
     @include button-large;
   }
-}
-
-a.button:hover, a.button:focus, a.button:visited {
-  color: $white;
-  text-decoration: none;
-}
-
-label {
-  cursor: pointer;
 }
 

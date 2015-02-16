@@ -1,49 +1,272 @@
-@mixin button-color($bg: $black, $text: $white, $h-bg: $black, $h-text: $white) {
-  background-color: $bg;
-  color: $text;
-  @include transition(
-    background-color 0.3s, 
-    color 0.3s
-  );
+$long-anim: 0.5s;
+$short-anim: 0.2s;
+$small: 18px;
+$medium: 24px;
+$large: 44px;
+$border-width: 2px;
+$border-radius: 3px;
+$min-input-width: 200px;
+$hover-text: $text-font;
+$loose-spacing: 0.2em;
 
-  &:hover, &:focus {
-    background-color: $h-bg;
-    color: $h-text;
-  }
+
+@mixin all-caps {
+  text-transform: uppercase;
 }
 
-@mixin button($bg: $black, $text: $white, $h-bg: $black, $h-text: $white) {
+@mixin loose-spacing {
+  letter-spacing: $loose-spacing;
+}
+
+// Buttons
+
+@mixin no-underline {
+  text-decoration: none;
+}
+
+@mixin button-basics {
   display: inline-block;
   vertical-align: middle;
-  border: 0 solid transparent;
-  font-size: $base-size;
-  font-family: $base-font;
-  line-height: $base-lh;
-  @include border-radius(2px);
-  padding: 0.2em 0.5em;
   cursor: pointer;
+  text-align: center;
+  margin: 0;
+  font-family: $base-font;
+  border-style: solid;
+  border-width: $border-width;
+  @include border-radius($border-radius);
+  @include no-underline;
+  @include all-caps;
+  @include loose-spacing;
+  @include transition(
+    border-color $long-anim, 
+    background-color $short-anim, 
+    color $long-anim
+  );
+}
 
-  @include button-color($bg, $text, $h-bg, $h-text);
+@mixin button-sizing($font-size, $size, $width-factor: 1.5) {
+  $padding: ($size - $font-size) * $width-factor;
+  line-height: $size;
+  padding: 0 $padding;
+  font-size: $font-size;
+  @include box-sizing(content-box);
+  border-width: 1px;
+  border-style: solid;
+
+  &::-moz-focus-inner { 
+    border: 0; 
+    padding: 0; 
+  }
+}
+
+@mixin button-color($face, $text, $line, $h-face, $h-text, $h-line, $no-outline: no) {
+  background: $face;
+  color: $text;
+  border-color: $line;
 
   &:hover, &:focus {
-    text-decoration: none;
+    background: $h-face;
+    color: $h-text;
+    border-color: $h-line;
+    @include no-underline;
+
+    @if $no-outline == yes {
+      border-color: $h-face;
+    } @else { 
+      border-color: $h-line;
+    }
+
+    &:visited {
+      color: $h-text;
+    }
   }
 
-  &::-moz-focus-inner {
-    border: 0;
-    padding: 0;
+  &:visited {
+    color: $text;
   }
+
 }
-
 
 @mixin button-small {
-  padding: 0.1em 0.3em;
-  font-size: $base-size * 0.9;
+  @include button-sizing($base-size * 0.7, $small, 0.7);
 }
 
+@mixin button-medium {
+  @include button-sizing($base-size * 0.9, $medium);
+}
 
 @mixin button-large {
-  padding: 0.5em 1.5em;
-  font-size: $base-size * 1.5;
-  @include border-radius(3px);
+  @include button-sizing($base-size * 1.2, $large);
+}
+
+@mixin button-black {
+  @include button-color($black, $white, $black, $blue, $white, $blue);
+}
+
+@mixin button-blue {
+  @include button-color($blue, $white, $blue, $black, $white, $black);
+}
+
+@mixin button-red {
+  @include button-color($red, $white, $red, $black, $white, $black);
+}
+
+@mixin button-transparent($text: $black) {
+  @include button-color(transparent, $text, $text, $text, $white, $text);
+}
+
+@mixin button {
+  @include button-basics;
+  @include button-medium;
+  @include button-black;
+}
+
+@mixin no-button {
+  background: transparent;
+  color: inherit;
+  border-color: transparent;
+  line-height: inherit;
+  padding: inherit;
+  font-size: inherit;
+  @include box-sizing(inherit);
+  border-width: 0;
+  border-style: none;
+
+  &::-moz-focus-inner { 
+    border: inherit; 
+    padding: inherit; 
+  }
+}
+
+// Decoration
+
+@mixin flat-left {
+  @include border-top-left-radius(0);
+  @include border-bottom-left-radius(0);
+}
+
+@mixin flat-right {
+  @include border-top-right-radius(0);
+  @include border-bottom-right-radius(0);
+}
+
+@mixin flat-top {
+  @include border-top-left-radius(0);
+  @include border-top-right-radius(0);
+}
+
+@mixin flat-bottom {
+  @include border-bottom-left-radius(0);
+  @include border-bottom-right-radius(0);
+}
+
+@mixin no-focus-outline {
+  &:focus {
+    outline: none;
+    @include box-shadow(none);
+  }
+}
+
+@mixin no-error-outline {
+  &:invalid {
+    outline: none;
+    @include box-shadow(none);
+  }
+}
+
+// Input
+
+@mixin form-field-basics {
+  @include box-sizing(content-box);
+  border-width: 2px;
+  border-style: solid;
+  font-family: $base-font;
+  @include border-radius($border-radius);
+  min-width: $min-input-width;
+  @include no-focus-outline;
+  @include no-error-outline;
+  vertical-align: middle;
+}
+
+@mixin input-basics {
+  @include form-field-basics;
+}
+
+@mixin input-sizing($size, $font-size) {
+  line-height: $size;
+  height: $size;
+  font-size: $font-size;
+  padding: 0 $font-size / 2;
+}
+
+@mixin input-coloring($color, $text, $focus-outline: $yellow, $error-outline: $red) {
+  background: $color;
+  border-color: $dirt;
+  color: $text;
+  @include transition(
+    border-color $long-anim, 
+    background-color $short-anim
+  );
+
+  &.error,
+  &:invalid {
+    border-color: $error-outline;
+  }
+
+  &:focus {
+    border-color: $focus-outline;
+    background: lighten($yellow, 50);
+  }
+}
+
+@mixin input-small {
+  @include input-sizing($small, $base-size * 0.8);
+}
+
+@mixin input-medium {
+  @include input-sizing($medium, $base-size)
+}
+
+@mixin input-large {
+  @include input-sizing($large, $base-size * 1.2);
+}
+
+@mixin select-basics {
+  @include form-field-basics;
+}
+
+@mixin select-sizing($size, $font-size) {
+  height: $size;
+  font-size: $font-size;
+  padding: 0 $font-size / 2;
+}
+
+@mixin select-small {
+  @include select-sizing($small, $base-size * 0.8);
+}
+
+@mixin select-medium {
+  @include select-sizing($medium, $base-size)
+}
+
+@mixin select-large {
+  @include select-sizing($large, $base-size * 1.2);
+}
+
+// Other form elements
+
+@mixin field-error {
+  display: inline-block;
+  margin: 1em;
+  padding: 0.2em 0.5em;
+  background: $red;
+  color: $white;
+  font-size: 90%;
+  vertical-align: middle;
+  @include border-radius($border-radius);
+}
+
+@mixin label {
+  @include all-caps;
+  font-size: 90%;
 }

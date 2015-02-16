@@ -1,8 +1,6 @@
 .data .tag,
 .tag-cloud .tag {
-  @include button;
-  @include button-small;
-  @include button-color($light-grey, $black, $blue, $white);
+  @include button-color($light-grey, $black, $light-grey, $black, $white, $black);
 }
 
 .tag-cloud {
@@ -13,8 +11,8 @@
   display: inline-block;
   background: $white;
   color: $black;
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   text-align: center;
   @include border-radius(18px);
   margin-left: 0.2em;
@@ -29,8 +27,14 @@
 }
 
 .tag-cloud .tag-current {
-  @include button;
-  @include button-small;
-  background: $ash-blue;
-  color: $light-grey;
+  @include button-color($light-grey, $grey, $light-grey, $light-grey, $grey, $light-grey);
+}
+
+.tag-button {
+  .icon {
+    @include icon('tag');
+    @include hide-text;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

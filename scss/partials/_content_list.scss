@@ -49,7 +49,7 @@
       font-size: 150%;
       line-height: 100%;
       font-weight: normal;
-      margin: 0.4em 0;
+      margin: 0.4em 0 0.2em;
 
       @include phone-portrait-wide {
         clear: left;
@@ -74,24 +74,28 @@
 
     .label {
       margin-bottom: 0;
-      font-weight: bold;
       text-transform: uppercase;
       font-size: 80%;
       letter-spacing: 0.1em;
+      color: $grey;
 
       @include phone-portrait-wide {
         margin-left: 80px;
         position: relative;
-        top: 3em;
+        top: 2em;
         line-height: 140%;
+
+        .datestamp { 
+          display: block;
+        }
       }
 
       .label-archive {
         vertical-align: middle;
         display: inline-block;
         padding: 0 0.3em;
-        letter-spacing: 0;
         color: $white;
+        @include loose-spacing;
       }
 
       .label-core {
@@ -112,6 +116,12 @@
       font-style: italic;
       color: $grey;
       letter-spacing: 0;
+      margin-bottom: 0.2em;
+    }
+
+    .badges {
+      // NOTE: This is because there are currently no badges to show
+      display: none;
     }
 
     img {
@@ -119,21 +129,26 @@
     }
 
     .delete-button button {
+      @include no-button;
       position: absolute;
-      top: 3px;
-      right: 3px;
+      top: 2px;
+      right: 2px;
       padding: 3px;
       background-color: $light-grey;
       opacity: 0.5;
       @include border-radius(image-width('icons/1x/delete.png'));
+      line-height: 100%;
 
       @include phone-portrait-wide {
         top: 0;
         right: 0;
         opacity: 1;
-        @include button($red, $white, $blue, $white);
-        padding: 4px 7px 7px;
-        line-height: 100%;
+        width: 24px;
+        height: 24px;
+        font-size: 24px;
+        line-height: 68%;
+        letter-spacing: 0;
+        @include button-red;
 
         .altlabel:after {
           content: "\00d7";  // &times entity
@@ -184,7 +199,8 @@
     font-size: 100%;
 
     button {
-      font-size: 100%;
+      @include button-medium;
+      padding: 0;
       width: 100%;
     }
   }
