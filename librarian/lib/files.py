@@ -41,6 +41,27 @@ def get_full_path(path):
     return filedir
 
 
+def get_search_results(s):
+    filedir = get_file_dir()
+    rdirs = []
+    rfiles = []
+    s = s.lower()
+    for root, dirs, files in os.walk(filedir):
+        for d in dirs:
+            if d.startswith('.'):
+                continue
+            if s in d.lower():
+                rdirs.append(Pathdata(
+                    os.path.relpath(os.path.join(root, d), filedir), d, 0))
+        for f in files:
+            if f.startswith('.'):
+                continue
+            if s in f.lower():
+                rfiles.append(Pathdata(
+                    os.path.relpath(os.path.join(root, f), filedir), f, 0))
+    return rdirs, rfiles
+
+
 def get_dir_contents(path):
     filedir = get_file_dir()
     dirs = []

@@ -22,6 +22,12 @@
             %# Translators, used as label for link that leads to parent directory in file listing
             <td colspan="4"><a href="{{ i18n_path('/files/') + up }}">{{ _('(go up one level)') }}<a></td>
         </tr>
+        % elif is_missing or is_search:
+        <tr class="up">
+            <td class="icon"><a href="{{ i18n_path('/files/') }}"><span class="icon"></span></a></td>
+            %# Translators, used as label for link that leads to file list
+            <td colspan="4"><a href="{{ i18n_path('/files/') }}">{{ _('(go to file list)') }}<a></td>
+        </tr>
         % end
         % if (not dirs) and (not files):
         <tr>

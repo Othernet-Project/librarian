@@ -96,6 +96,10 @@ def install_plugins(app):
         INSTALLED[mod] = plugin
         logging.debug('Installed plugin %s', mod)
 
+        # Add routes for plugin static if plugin contains a static directory
+        if os.path.isdir(os.path.join(PLUGINS_PATH, mod, 'static')):
+            route_plugin_static(app, mod)
+
     # Install dashboard plugins for plugins that have them
     for p in dashboard:
         if p not in INSTALLED:
