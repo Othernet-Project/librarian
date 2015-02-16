@@ -78,13 +78,15 @@ def install_plugins(app):
             route_plugin_static(app, mod)
 
     # Install dashboard plugins for plugins that have them
+    logging.debug("Installing dashboard plugins: %s", ', '.join(dashboard))
     for p in dashboard:
         if p not in INSTALLED:
+            logging.deubg("Plugin '%s' is not installed, ignoring", p)
             continue
         plugin = INSTALLED[p]
         try:
             DASHBOARD.append(plugin.Dashboard())
         except AttributeError:
-            logging.debug('No dashboard plugin for %s', p)
+            logging.debug("No dashboard plugin for '%s'", p)
             continue
 
