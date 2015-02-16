@@ -132,8 +132,6 @@ def start(logfile=None, profile=False):
 
     config = app.config
 
-    install_plugins(app)
-
     log_config({
         'version': 1,
         'root': {
@@ -156,6 +154,9 @@ def start(logfile=None, profile=False):
             },
         },
     })
+
+    install_plugins(app)
+    logging.info('Installed all plugins')
 
     # Make sure all necessary directories are present
     ensure_dir(dirname(config['logging.output']))
