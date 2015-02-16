@@ -1,0 +1,69 @@
+Get tuner / network status
+
+Send: <get uri="/status"/> Response: 
+<?xml version="1.0" encoding="UTF-8"?>
+<response code="200">
+    <tuner>
+        <lock>yes</lock>
+        <signal>65</signal>
+        <snr>0.00</snr>
+    </tuner>
+    <network>
+        <stream>
+            <pid>65</pid>
+            <bitrate>55355</bitrate>
+            <stats>1146/1/3</stats>
+            <ident>outernet-0</ident>
+        </stream>
+    </network>
+</response>
+
+Get file download status
+
+Send: <get uri="/files/"/> Response: 
+<?xml version="1.0" encoding="UTF-8"?>
+<response code="200">
+    <files>
+        <file>
+            <path>content/0051d970f292ef8afb6d46102e90295e.zip</path>
+            <size>327162</size>
+            <progress>0</progress>
+        </file>
+        ....
+    </files>
+</response>
+
+Get settings:
+
+Send: <get uri="/settings"/> Response: 
+<?xml version="1.0" encoding="UTF-8"?>
+<response code="200">
+    <tuner>
+        <delivery>DVB-S</delivery>
+        <modulation>QPSK</modulation>
+        <frequency>1577</frequency>
+        <symbolrate>23000</symbolrate>
+        <voltage>13</voltage>
+        <tone>yes</tone>
+        <azimuth/>
+    </tuner>
+</response>
+
+Set Settings
+
+Send: 
+<put uri="/settings">
+    <delivery>dvb-s</delivery>
+    <modulation>qpsk</modulation>
+    <frequency>1577</frequency>
+    <symbolrate>23000</symbolrate>
+    <tone>Yes</tone>
+    <voltage>13</voltage>
+    <azimuth>97</azimuth>
+</put>
+Response: <?xml version="1.0" encoding="UTF-8"?><response code="204"/>
+
+
+You can test with netcat as well:
+
+echo -e '<get uri="/settings"/>\0' | nc -U /var/run/ondd.ctrl

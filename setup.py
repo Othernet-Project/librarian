@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import os
-from glob import glob
+import fnmatch
 from setuptools import setup, find_packages
 
 import librarian
@@ -13,6 +13,7 @@ BJ = ['bjoern==1.4.1']
 def read(fname):
     """ Return content of specified file """
     return open(os.path.join(SCRIPTDIR, fname)).read()
+
 
 setup(
     name = 'librarian',

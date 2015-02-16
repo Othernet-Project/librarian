@@ -5,18 +5,18 @@
     % if spool != total:
         <p class="spool">
         %# Translators, %s is the amount of free space in bytes, KB, MB, etc.
-        % include('_space_info', label=_('download directory (%s free)'), space=spool)
+        % include('diskspace/_space_info', label=_('download directory (%s free)'), space=spool)
         </p>
     % end
     % if content != total:
         <p class="content">
         %# Translators, %s is the amount of free space in bytes, KB, MB, etc.
-        % include('_space_info', label=_('content library (%s free)'), space=content)
+        % include('diskspace/_space_info', label=_('content library (%s free)'), space=content)
         </p>
     % end
     <p class="total">
     %# Translators, %s is the amount of free space in bytes, KB, MB, etc.
-    % include('_space_info', label=_('total space (%s free)'), space=total)
+    % include('diskspace/_space_info', label=_('total space (%s free)'), space=total)
     </p>
     % if needed:
     <p class="warning">

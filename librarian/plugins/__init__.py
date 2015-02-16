@@ -44,13 +44,33 @@ def route_plugin(app, name):
     return _route_plugin
 
 
-def route_plugin_static(app, name):
+def install_views(mod):
+    """ Add view lookup path if plugin has views directory
+
+    :param mod:  module name
+    """
+    view_path = os.path.join(PLUGINS_PATH, mod, 'views')
+    if not os.path.isdir(view_path):
+        return
+    bottle.TEMPLATE_PATH.insert(1, view_path)
+
+
+def install_static(app, mod):
+    """ Add routes for plugin static if plugin contains a static directory
+
+    :param app:  application object
+    :param mod:  module name
+    """
+    static_path = os.path.join(PLUGINS_PATH, mod, 'static')
+    if not os.path.isdir(static_path):
+        return
+
     def _route_plugin_static(path):
-        return static_file(path,
-                           root=os.path.join(PLUGINS_PATH, name, 'static'))
-    _route_plugin_static.__name__ = '_route_%s_static' % name
-    app.route('/s/%s/<path:path>' % name, 'GET',
-              callback=_route_plugin_static)
+        return static_file(path, static_path)
+    _route_plugin_static.__name__ = '_route_%s_static' % mod
+
+    app.route('/s/%s/<path:path>' % mod, 'GET',
+              callback=_route_plugin_static, no_i18n=True)
 
 
 def install_plugins(app):
@@ -70,6 +90,9 @@ def install_plugins(app):
         except NotSupportedError:
             logging.debug('Plugin %s is not supported. Skipping.', mod)
 
+        install_views(mod)
+        install_static(app, mod)
+
         INSTALLED[mod] = plugin
         logging.debug('Installed plugin %s', mod)
 
@@ -86,7 +109,7 @@ def install_plugins(app):
         plugin = INSTALLED[p]
         try:
             DASHBOARD.append(plugin.Dashboard())
+            logging.debug('Installed dashboard plugin %s', mod)
         except AttributeError:
             logging.debug("No dashboard plugin for '%s'", p)
             continue
-
