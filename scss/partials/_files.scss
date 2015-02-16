@@ -17,6 +17,11 @@
 
     button {
       @include flat-left;
+
+      .icon {
+        @include icon('search');
+        @include hide-text;
+      }
     }
 
     padding-bottom: 0.5em;
