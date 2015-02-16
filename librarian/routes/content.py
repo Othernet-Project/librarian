@@ -26,7 +26,7 @@ from ..lib import send_file
 from ..lib import files
 from ..lib import i18n
 from ..lib.ajax import roca_view
-from ..lib.i18n import lazy_gettext as _
+from ..lib.i18n import lazy_gettext as _, i18n_path
 
 
 app = default_app()
@@ -141,39 +141,57 @@ def dictify_file_list(file_list):
 
 @view('file_list')
 def show_file_list(path='.'):
-    path = request.params.get('p', path)
+    search = request.params.get('p')
     resp_format = request.params.get('f', '')
-    try:
-        path, relpath, dirs, file_list, readme = files.get_dir_contents(path)
-    except files.DoesNotExist:
-        if path == '.':
+    conf = request.app.config
+    is_missing = False
+    is_search = False
+
+    if search:
+        relpath = '.'
+        up = ''
+        dirs, file_list = files.get_search_results(search)
+        is_search = True
+        if not len(file_list) and len(dirs) == 1:
+            redirect(i18n_path('/files/%s' % dirs[0].path.replace('\\', '/')))
+        if not dirs and not file_list:
+            is_missing = True
+            readme = _('The files you were looking for could not be found')
+        else:
+            readme = _('This list represents the search results')
+    else:
+        is_search = False
+        try:
+            path, relpath, dirs, file_list, readme = files.get_dir_contents(
+                path)
+        except files.DoesNotExist:
+            is_missing = True
+            relpath = '.'
+            dirs = []
+            file_list = []
+            readme = _('This folder does not exist')
+        except files.IsFileError as err:
             if resp_format == 'json':
+                fstat = os.stat(path)
                 response.content_type = 'application/json'
                 return json.dumps(dict(
-                    dirs=dirs,
-                    files=dictify_file_list(file_list),
-                    readme=readme
+                    name=os.path.basename(path),
+                    size=fstat[stat.ST_SIZE],
                 ))
-            return dict(path='.', dirs=[], files=[], up='.', readme='')
-        abort(404)
-    except files.IsFileError as err:
-        if resp_format == 'json':
-            fstat = os.stat(path)
-            response.content_type = 'application/json'
-            return json.dumps(dict(
-                name=os.path.basename(path),
-                size=fstat[stat.ST_SIZE],
-            ))
-        return static_file(err.path, root=files.get_file_dir())
+            return static_file(err.path, root=files.get_file_dir())
     up = os.path.normpath(os.path.join(path, '..'))
+    up = os.path.relpath(up, conf['content.filedir'])
     if resp_format == 'json':
         response.content_type = 'application/json'
         return json.dumps(dict(
             dirs=dirs,
             files=dictify_file_list(file_list),
-            readme=readme
+            readme=readme,
+            is_missing=is_missing,
+            is_search=is_search,
         ))
-    return dict(path=relpath, dirs=dirs, files=file_list, up=up, readme=readme)
+    return dict(path=relpath, dirs=dirs, files=file_list, up=up, readme=readme,
+                is_missing=is_missing, is_search=is_search)
 
 
 def go_to_parent(path):
