@@ -1,55 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="24"
-   height="24"
-   id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="antenna.svg"
-   inkscape:export-filename="C:\code\work\librarian\librarian\static\img\antenna.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   id="svg2"
+   height="24"
+   width="24">
   <defs
      id="defs4">
     <filter
-       inkscape:collect="always"
        id="filter3784">
       <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="32.188077"
-         id="feGaussianBlur3786" />
+         id="feGaussianBlur3786"
+         stdDeviation="32.188077" />
     </filter>
   </defs>
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="0.1048629"
-     inkscape:cy="2.9002586"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1018"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     inkscape:object-nodes="true"
-     inkscape:snap-smooth-nodes="true"
-     inkscape:snap-global="false" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -63,14 +31,12 @@
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(0,-1028.3622)">
+     transform="translate(0,-1028.3622)"
+     id="layer1">
     <path
-       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="M 15.375 0.4375 C 12.421965 0.58604614 9.2152953 2.8123438 6.78125 6.875 L 10.5625 8.15625 C 12.215799 5.73625 14.198752 4.8594 15.9375 4.875 C 16.385478 4.875 16.815209 4.973 17.1875 5.1875 C 19.173051 6.3339 19.084012 10.2029 17 13.8125 C 14.915988 17.4221 11.641801 19.3964 9.65625 18.25 C 8.0455248 17.3201 7.4250143 15.2306 8.5 12.3125 L 5.34375 9.59375 C 2.9813331 14.67265 3.4264476 19.3241 6.4375 21.0625 C 9.748919 22.9744 15.024564 20.0325 18.21875 14.5 C 21.412936 8.9675 21.342669 2.94305 18.03125 1.03125 C 17.410359 0.67275 16.700979 0.47 15.96875 0.4375 C 15.774505 0.42888125 15.571869 0.42759692 15.375 0.4375 z M 1.96875 5.875 L 12.65625 13.71875 C 12.65625 13.71875 14.418983 12.9014 14.25 10.875 L 1.96875 5.875 z M 18.03125 16.03125 C 17.058979 18.59455 13.25 21.21875 13.25 21.21875 L 13 23.6875 L 18.34375 23.6875 L 18.03125 16.03125 z M 11.53125 22.25 C 11.53125 22.25 10.125 22.9375 9.0625 22.875 C 8.875 23.6875 8.875 23.6875 8.875 23.6875 L 11.25 23.6875 L 11.53125 22.25 z "
+       id="path4029"
        transform="translate(0,1028.3622)"
-       id="path4029" />
+       d="M 15.375 0.4375 C 12.421965 0.58604614 9.2152953 2.8123438 6.78125 6.875 L 10.5625 8.15625 C 12.215799 5.73625 14.198752 4.8594 15.9375 4.875 C 16.385478 4.875 16.815209 4.973 17.1875 5.1875 C 19.173051 6.3339 19.084012 10.2029 17 13.8125 C 14.915988 17.4221 11.641801 19.3964 9.65625 18.25 C 8.0455248 17.3201 7.4250143 15.2306 8.5 12.3125 L 5.34375 9.59375 C 2.9813331 14.67265 3.4264476 19.3241 6.4375 21.0625 C 9.748919 22.9744 15.024564 20.0325 18.21875 14.5 C 21.412936 8.9675 21.342669 2.94305 18.03125 1.03125 C 17.410359 0.67275 16.700979 0.47 15.96875 0.4375 C 15.774505 0.42888125 15.571869 0.42759692 15.375 0.4375 z M 1.96875 5.875 L 12.65625 13.71875 C 12.65625 13.71875 14.418983 12.9014 14.25 10.875 L 1.96875 5.875 z M 18.03125 16.03125 C 17.058979 18.59455 13.25 21.21875 13.25 21.21875 L 13 23.6875 L 18.34375 23.6875 L 18.03125 16.03125 z M 11.53125 22.25 C 11.53125 22.25 10.125 22.9375 9.0625 22.875 C 8.875 23.6875 8.875 23.6875 8.875 23.6875 L 11.25 23.6875 L 11.53125 22.25 z "
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
   </g>
 </svg>

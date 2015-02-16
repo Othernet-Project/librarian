@@ -1,0 +1,41 @@
+.data {
+  border-bottom: none;
+}
+
+.badges td {
+  padding-top: 0;
+}
+
+.badge {
+  display: inline-block;
+  @include border-radius(2px);
+  margin-right: 0.5em;
+  border-bottom: 1px dotted $grey;
+  font-weight: bold;
+  font-size: 90%;
+  white-space: nowrap;
+}
+
+.is-core {
+  color: $blue;
+  cursor: help;
+}
+
+.is-sponsored {
+  color: $red;
+  cursor: help;
+}
+
+.is-partner {
+  color: $green;
+  cursor: help;
+}
+
+.license {
+  cursor: help;
+}
+
+.images .icon {
+  @include icon('camera_small');
+}
+

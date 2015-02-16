@@ -1,0 +1,17 @@
+.footer {
+  background: $dark-grey;
+  padding: 0.2em 0.5em 2em;
+  color: $white;
+  font-size: 80%;
+  text-align: center;
+  margin-left: 47px;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .logo img {
+    width: 120px;
+    height: 60px;
+  }
+}

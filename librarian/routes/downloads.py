@@ -43,7 +43,7 @@ def list_downloads():
             meta = downloads.get_metadata(z)
             meta['md5'] = downloads.get_md5_from_path(z)
             meta['ftimestamp'] = datetime.fromtimestamp(ts)
-            metadata.append(meta)
+            metadata.append(downloads.Meta(meta))
         except downloads.ContentError as err:
             # Zip file is invalid. This means that the file is corrupted or the
             # original file was signed with corrupt data in it. Either way, we

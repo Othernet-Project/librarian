@@ -1,0 +1,22 @@
+.diskspace {
+  .label { 
+    font-weight: bold;
+  }
+  .all {
+    display: block;
+    width: 50%;
+    background: $grey;
+    color: $white;
+    @include border-radius(1.2em);
+
+    .free {
+      display: inline-block;
+      background: $green;
+      text-align: center;
+    }
+  }
+
+  .low .free {
+    background: $red;
+  }
+}

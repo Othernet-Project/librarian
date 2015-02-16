@@ -1,0 +1,4 @@
+tr.selected {
+  color: $green;
+}
+

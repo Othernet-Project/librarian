@@ -1,0 +1,40 @@
+.controls {
+  padding: 1em 0 0.3em;
+  text-align: right;
+  text-align: center;
+  border-top: 1px solid $light-grey;
+  border-bottom: 1px solid $light-grey;
+  margin: 1em 0 2em;
+
+  .next {
+    @include icon('forward', no);
+    @include hide-text;
+  }
+
+  .prev {
+    @include icon('back', no);
+    @include hide-text;
+  }
+
+  .search {
+    @include flat-right;
+
+    @include narrower-than($phone-portrait-narrow) {
+      min-width: 160px;
+    }
+  }
+
+  .fake-go {
+    @include flat-left;
+    .icon {
+      @include icon('search');
+      @include hide-text;
+    }
+  }
+
+  span.search {
+    height: 34px;
+  }
+}
+
+

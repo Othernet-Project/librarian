@@ -1,0 +1,14 @@
+.content-archive {
+  .stat {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 2em;
+
+    .number {
+      display: inline-block;
+      font-size: 200%;
+      font-weight: bold;
+    }
+  }
+}
+

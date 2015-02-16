@@ -1,0 +1,64 @@
+$reader-meta-height: 90px;
+
+.reader {
+  position: absolute;
+  top: 0;
+  left: 47px;
+  right: 0;
+  height: 100%;
+
+  .reader-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: $reader-meta-height;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.reader-meta {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: $reader-meta-height;
+  line-height: 120%;
+  background: $ash-blue;
+  color: $white;
+  
+  .special {
+    font-size: 90%;
+    text-transform: uppercase;
+    color: $yellow;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .inner {
+    padding: 0.5em 1em;
+  }
+
+  .tags {
+    margin-top: 0.5em;
+  }
+}
+
+.tag-form {
+  p {
+    margin-bottom: 0;
+  }
+
+  .help {
+    color: $grey;
+    font-weight: bold;
+    margin-bottom: 1em;
+  }
+}
+

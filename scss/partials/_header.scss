@@ -1,0 +1,81 @@
+header {
+  .toolbar {
+    color: $black;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 2;
+    background-color: $light-grey;
+    @include transition(background-color 0.2s);
+
+    .navicon {
+      display: block;
+      background-repeat: no-repeat;
+      background-position: 11px 10px;
+      padding: 0.7em 0;
+      cursor: pointer;
+      overflow: hidden;
+      width: 47px;
+      white-space: nowrap;
+      @include transition(padding-right 0.2s);
+
+      .icon {
+        margin-left: 10px;
+        margin-right: 20px;
+      }
+    }
+
+    span.navicon {
+      background-color: $blue;
+    }
+
+    a.navicon {
+      color: $white;
+
+      &:hover, &:focus {
+        text-decoration: none;
+        background-color: $ash-blue;
+      }
+    }
+
+    &:hover, &:focus {
+      background-color: $black;
+
+      .navicon {
+        width: auto;
+        padding-right: 28px;
+      }
+    }
+
+    .archive .icon {
+      @include icon('document');
+    }
+
+    .dashboard .icon {
+      @include icon('dashboard');
+    }
+
+    .archive .icon {
+      @include icon('document');
+    }
+
+    .files .icon {
+      @include icon('files');
+    }
+
+    .apps .icon {
+      @include icon('apps');
+    }
+
+    .updates .icon {
+      @include icon('antenna');
+    }
+
+    .notice .icon {
+      @include icon('antenna_yellow');
+    }
+  }
+}
+

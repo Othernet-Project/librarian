@@ -1,0 +1,41 @@
+.data .tag,
+.tag-cloud .tag {
+  @include button-color($light-grey, $black, $light-grey, $black, $white, $black);
+}
+
+.tag-cloud {
+  margin-bottom: 0;
+}
+
+.tag-cloud .tag-count {
+  display: inline-block;
+  background: $white;
+  color: $black;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+  letter-spacing: 0;
+  @include border-radius(18px);
+  margin-left: 0.2em;
+  font-weight: normal;
+}
+
+.tag-cloud .tag, 
+.tag-cloud .tag-current {
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+.tag-cloud .tag-current {
+  @include button-color($light-grey, $grey, $light-grey, $light-grey, $grey, $light-grey);
+}
+
+.tag-button {
+  .icon {
+    @include icon('tag');
+    @include hide-text;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

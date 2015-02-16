@@ -1,0 +1,119 @@
+body, html {
+  padding: 0;
+  background: $white;
+  height: 100%;
+}
+
+.inner {
+  padding: 1em;
+}
+
+h1 {
+  position: fixed;
+  top: 0;
+  left: 47px;
+  right: 0;
+  background: $white;
+  color: $black;
+  padding: 7px 0.5em 8px;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
+  line-height: 100%;
+  z-index: 1;
+  border-bottom: 1px solid $light-grey;
+
+  span {
+    font-size: 50%;
+  }
+}
+
+h2 {
+  margin: 0 0 1em;
+}
+
+.buttons {
+  text-align: right;
+}
+
+.body {
+  margin-left: 47px;
+  min-height: 300px;
+  background: $white;
+  padding-top: 60px;
+  @include default-shadow;
+}
+
+.center {
+  text-align: center;
+}
+
+.warning, .note, .message {
+  padding: 1em;
+  font-weight: bold;
+}
+
+.warning {
+  color: $red;
+  border: 1px solid $red;
+  background: desaturate(lighten($red, 50), 30);
+}
+
+.note {
+  color: $green;
+  border: 1px solid $green;
+  background: desaturate(lighten($green, 45), 10);
+}
+
+.message {
+  color: $orange;
+  border: 1px solid $orange;
+  background: desaturate(lighten($orange, 35), 10);
+}
+
+.empty {
+  background: $light-grey;
+  color: $grey;
+  text-align: center;
+  padding: 2em 0.5em;
+}
+
+// Form elements
+
+label {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=numeric] {
+  @include form-field-basics;
+  @include input-medium;
+  @include input-coloring($white, $black);
+}
+
+select {
+  @include select-medium;
+}
+
+button, .button {
+  @include button;
+
+  &.special {
+    @include button-blue;
+  }
+
+  &.danger {
+    @include button-blue;
+  }
+
+  &.small {
+    @include button-small;
+  }
+
+  &.large {
+    @include button-large;
+  }
+}
+

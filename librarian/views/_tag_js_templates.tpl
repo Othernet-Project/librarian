@@ -1,6 +1,6 @@
 <script id="tagButton" type="text/template">
     %# Translators, used as label for button that appears next to tag list
-    <button class="small tag-button">{{ _('Edit tags') }}</button>
+    <button class="small tag-button"><span class="icon">{{ _('Edit tags') }}</span></button>
 </script>
 
 <script id="closeTagButton" type="text/template">

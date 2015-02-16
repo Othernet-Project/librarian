@@ -322,16 +322,25 @@ class Meta(object):
 
     IMAGE_EXTENSIONS = ['.png', '.gif', '.jpg', '.jpeg']
 
+    LABEL_TITLES = {
+        # Translators, used as label, meaning content belogs to core
+        'core': _('core'),
+        # Translators, used as label, meaning content was sponsored by someone
+        'sponsored': _('sponsored'),
+        # Translators, used as label, meaning content is from a partner
+        'partner': _('partner')
+    }
+
     def __init__(self, meta):
         self.meta = meta
-        self.tags = json.loads(meta['tags'] or '{}')
+        self.tags = json.loads(meta.get('tags') or '{}')
         self._image = None
 
     def __getattr__(self, attr):
         try:
             return self.meta[attr]
         except KeyError:
-            raise AttributeError('Attribute or key %s not found'  % attr)
+            raise AttributeError("Attribute or key '%s' not found" % attr)
 
     def __getitem__(self, key):
         return self.meta[key]
@@ -357,6 +366,19 @@ class Meta(object):
             return os.path.basename(g[0])
         except IndexError:
             return None
+
+    @property
+    def label(self):
+        if self.archive == 'core':
+            return 'core'
+        elif self.is_sponsored:
+            return 'sponsored'
+        elif self.is_partner:
+            return 'partner'
+
+    @property
+    def human_label(self):
+        return self.LABEL_TITLES[self.label]
 
     @property
     def free_license(self):
