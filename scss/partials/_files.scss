@@ -6,6 +6,19 @@
       margin: 0;
     }
 
+    input {
+      @include flat-right;
+
+      @include narrower-than($phone-portrait-narrow) {
+        min-width: 160px;
+        width: 160px;
+      }
+    }
+
+    button {
+      @include flat-left;
+    }
+
     padding-bottom: 0.5em;
     border-bottom: 1px solid $light-grey;
   }
@@ -53,6 +66,15 @@
 
   .rename {
     width: 220px;
+    white-space: nowrap;
+
+    input {
+      @include flat-right;
+    }
+
+    button {
+      @include flat-left;
+    }
   }
 
   .execute {
@@ -64,4 +86,31 @@
     font-family: monospace;
     margin-bottom: 1em;
   }
+
+  @include narrower-than($phone-portrait-wide) {
+    .name {
+      display: block;
+      font-weight: bold;
+    }
+
+    table {
+      overflow: hidden;
+    }
+
+    tr {
+      display: block;
+      margin-bottom: 1em;
+    }
+
+    td {
+      display: block;
+      width: auto;
+    }
+
+    .rename input {
+      min-width: 60px;
+      width: 80px;
+    }
+  }
+
 }
