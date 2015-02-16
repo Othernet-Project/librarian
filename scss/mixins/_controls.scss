@@ -1,24 +1,3 @@
-@mixin button($bg: $black, $text: $white, $h-bg: $black, $h-text: $white) {
-  display: inline-block;
-  vertical-align: middle;
-  border: 0 solid transparent;
-  font-size: $base-size;
-  font-family: $base-font;
-  line-height: $base-lh;
-  @include border-radius(2px);
-  padding: 0.2em 0.5em;
-  cursor: pointer;
-
-  &:hover, &:focus {
-    text-decoration: none;
-  }
-
-  &::-moz-focus-inner {
-    border: 0;
-    padding: 0;
-  }
-}
-
 @mixin button-color($bg: $black, $text: $white, $h-bg: $black, $h-text: $white) {
   background-color: $bg;
   color: $text;
@@ -32,6 +11,30 @@
     color: $h-text;
   }
 }
+
+@mixin button($bg: $black, $text: $white, $h-bg: $black, $h-text: $white) {
+  display: inline-block;
+  vertical-align: middle;
+  border: 0 solid transparent;
+  font-size: $base-size;
+  font-family: $base-font;
+  line-height: $base-lh;
+  @include border-radius(2px);
+  padding: 0.2em 0.5em;
+  cursor: pointer;
+
+  @include button-color($bg, $text, $h-bg, $h-text);
+
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}
+
 
 @mixin button-small {
   padding: 0.1em 0.3em;

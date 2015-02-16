@@ -1,6 +1,6 @@
 body, html {
   padding: 0;
-  background: $dark-grey;
+  background: $white;
   height: 100%;
 }
 
@@ -13,14 +13,14 @@ h1 {
   top: 0;
   left: 47px;
   right: 0;
-  background: $dirt;
+  background: $white;
   color: $black;
-  padding: 0.2em 0.5em;
+  padding: 7px 0.5em 8px;
   margin-bottom: 0.5em;
   text-transform: uppercase;
   line-height: 100%;
   z-index: 1;
-  @include default-shadow;
+  border-bottom: 1px solid $light-grey;
 
   span {
     font-size: 50%;
@@ -38,8 +38,9 @@ h2 {
 .body {
   margin-left: 47px;
   min-height: 300px;
-  background: $dirt;
+  background: $white;
   padding-top: 60px;
+  @include default-shadow;
 }
 
 .center {

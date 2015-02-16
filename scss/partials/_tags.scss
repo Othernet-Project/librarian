@@ -5,6 +5,10 @@
   @include button-color($light-grey, $black, $blue, $white);
 }
 
+.tag-cloud {
+  margin-bottom: 0;
+}
+
 .tag-cloud .tag-count {
   display: inline-block;
   background: $white;

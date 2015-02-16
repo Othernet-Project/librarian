@@ -98,6 +98,7 @@
     res = $.trim(res);
     if (res === '') { return loadEmpty(); }
     res = $(res);
+    contentList.append(res);
     loader.hide();
     loadLink.show();
     win.trigger('listUpdate', [res]);

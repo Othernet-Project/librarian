@@ -11,15 +11,6 @@
     </head>
     <body>
         <header>
-            <div id="languages" class="languages">
-                % for locale, lang in languages:
-                    % if locale != request.locale:
-                    <a href="{{ i18n_path(locale=locale) }}">{{ lang }}</a>
-                    % else:
-                    <span class="current">{{ lang }}</span>
-                    % end
-                % end
-            </div>
             <div id="toolbar" class="toolbar">
                 % icon = '<span class="icon"></span>'
                 %# Translators, used main navigation menu
@@ -37,6 +28,16 @@
 
         <div class="body">
         {{! base }}
+        </div>
+
+        <div id="languages" class="languages">
+            % for locale, lang in languages:
+                % if locale != request.locale:
+                <a href="{{ i18n_path(locale=locale) }}">{{ lang }}</a>
+                % else:
+                <span class="current">{{ lang }}</span>
+                % end
+            % end
         </div>
 
         <div class="footer">

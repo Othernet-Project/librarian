@@ -1,14 +1,14 @@
 header {
   .toolbar {
-    color: $white;
-    background: transparentize($black, 0.2);
+    color: $black;
     position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
     overflow: hidden;
     z-index: 2;
-    @include default-shadow;
+    background-color: $light-grey;
+    @include transition(background-color 0.2s);
 
     .navicon {
       display: block;
@@ -41,6 +41,8 @@ header {
     }
 
     &:hover, &:focus {
+      background-color: $black;
+
       .navicon {
         width: auto;
         padding-right: 28px;
@@ -73,73 +75,6 @@ header {
 
     .notice .icon {
       @include icon('antenna_yellow');
-    }
-  }
-
-  .languages {
-    text-align: right;
-    background: $black;
-    font-size: 90%;
-    padding-bottom: 1em;
-
-    a, span.current {
-      color: $white;
-      display: inline-block;
-      padding: 0.2em 0.5em;
-    }
-
-    a {
-      border-top: 2px solid transparent;
-      border-bottom: 2px solid transparent;
-    }
-
-    a:hover, a:focus, span.current {
-      text-decoration: none;
-      border-top: 2px solid $blue;
-      border-bottom: 2px solid $blue;
-    }
-
-    a:visited {
-      color: $white;
-    }
-  }
-
-  .languages.js {
-    position: fixed;
-    padding: 0.4em;
-    top: 0;
-    right: 1em;
-    width: 80px;
-    text-align: right;
-    background: $black;
-    z-index: 2;
-
-    @include transition(background-color 0.3s);
-
-    a {
-      @include transition(height 0.3s);
-      height: 26px;
-      display: block;
-      overflow: hidden;
-    }
-
-    span {
-      display: block;
-      cursor: pointer;
-    }
-
-    &.closed {
-      background: transparent;
-
-      span {
-        color: $black;
-      }
-
-      a {
-        border: none;
-        padding: 0;
-        height: 0;
-      }
     }
   }
 }

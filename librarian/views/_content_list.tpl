@@ -12,7 +12,7 @@
 
     <div class="details">
         <p class="label">
-            <span class="label-{{ meta.label }}">
+            <span class="label-archive label-{{ meta.label }}">
             {{ meta.human_label }}
             </span>
             <span class="datestamp">
