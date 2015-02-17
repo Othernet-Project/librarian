@@ -66,7 +66,6 @@ PRESETS = [
         'polarization': 'v',
         'delivery': 'DVB-S',
         'modulation': 'QPSK',
-        'tone': True,
         'azimuth': 0,
     }),
     ('Hotbird 13 (13.0E)', 2, {
@@ -75,7 +74,6 @@ PRESETS = [
         'polarization': 'v',
         'delivery': 'DVB-S',
         'modulation': 'QPSK',
-        'tone': True,
         'azimuth': 0,
     }),
     ('Intelsat 20 (68.5E)', 3, {
@@ -84,7 +82,6 @@ PRESETS = [
         'polarization': 'v',
         'delivery': 'DVB-S',
         'modulation': 'QPSK',
-        'tone': True,
         'azimuth': 0,
     }),
 ]
