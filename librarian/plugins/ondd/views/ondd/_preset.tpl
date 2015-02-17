@@ -1,4 +1,4 @@
-<option value="{{ index }}" {{ 'selected' if selected_preset == index else '' }}
+<option value="{{ index }}"
     data-frequency="{{ preset['frequency'] }}"
     data-symbolrate="{{ preset['symbolrate'] }}"
     data-polarization="{{ preset['polarization'] }}"
