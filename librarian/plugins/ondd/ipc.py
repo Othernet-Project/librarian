@@ -11,6 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from __future__ import unicode_literals
 
 import socket
+import logging
 import xml.etree.ElementTree as ET
 from contextlib import contextmanager
 
@@ -75,8 +76,10 @@ def send(payload):
     if not payload[-1] == '\0':
         payload = payload.encode(OUT_ENCODING) + '\0'
     with open_socket(conf['ondd.socket']) as sock:
+        logging.debug('ONDD: sending payload: %s', payload)
         sock.send(payload)
         data = read(sock)
+        logging.debug('ONDD: received data: %s', data[:-1])
     return parse(data)
 
 
@@ -178,10 +181,10 @@ def freq_conv(freq, lnb_type):
 def needs_tone(freq, lnb_type):
     """ Whether LNB needs a 22KHz tone
 
-    Always returns ``False`` for North America Ku band LNBs.
+    Always returns ``True`` for North America Ku band LNBs.
     """
     if lnb_type == 'k':
-        return False
+        return True
     return freq > UN_HI_SW
 
 
@@ -206,4 +209,5 @@ def set_settings(frequency, symbolrate, delivery='dvb-s', modulation='qpsk',
     payload = xml_put_path('/settings', kw2xml(**locals()))
     resp = send(payload)
     resp_code = resp.get('code')
+    logging.debug('ONDD: received response code %s', resp_code)
     return resp_code
