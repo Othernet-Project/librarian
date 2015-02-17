@@ -82,30 +82,40 @@ def install_plugins(app):
 
     # Import each plugin module and initialize it
     for mod in to_install:
-        plugin = __import__('librarian.plugins.%s.plugin' % mod,
-                            fromlist=['plugin'])
+        try:
+            plugin = __import__('librarian.plugins.%s.plugin' % mod,
+                                fromlist=['plugin'])
+            logging.debug("Plugin '%s' loaded", mod)
+        except ImportError:
+            logging.error("Plugin '%s' could not be loaded, skipping", mod)
+            continue
 
         try:
             plugin.install(app, route_plugin(app, mod))
         except NotSupportedError:
-            logging.debug('Plugin %s is not supported. Skipping.', mod)
+            logging.debug("Plugin '%s' is not supported, skipping", mod)
+            continue
+        except AttributeError:
+            logging.error("Plugin '%s' is not correctly implemented, skipping",
+                          mod)
+            continue
 
         install_views(mod)
         install_static(app, mod)
 
         INSTALLED[mod] = plugin
-        logging.debug('Installed plugin %s', mod)
+        logging.info('Installed plugin %s', mod)
 
     # Install dashboard plugins for plugins that have them
     logging.debug("Installing dashboard plugins: %s", ', '.join(dashboard))
     for p in dashboard:
         if p not in INSTALLED:
-            logging.deubg("Plugin '%s' is not installed, ignoring", p)
+            logging.debug("Plugin '%s' is not installed, ignoring", p)
             continue
         plugin = INSTALLED[p]
         try:
             DASHBOARD.append(plugin.Dashboard())
-            logging.debug('Installed dashboard plugin %s', p)
+            logging.info('Installed dashboard plugin %s', p)
         except AttributeError:
             logging.debug("No dashboard plugin for '%s'", p)
             continue
