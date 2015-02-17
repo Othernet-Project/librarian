@@ -134,8 +134,8 @@ def set_settings():
     if errors:
         return dict(errors=errors, vals=request.forms)
 
-    frequency = ipc.freq_conv(frequency, lnb_type)
     needs_tone = ipc.needs_tone(frequency, lnb_type)
+    frequency = ipc.freq_conv(frequency, lnb_type)
 
     resp = ipc.set_settings(frequency=frequency,
                             symbolrate=symbolrate,
