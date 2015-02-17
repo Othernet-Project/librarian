@@ -10,6 +10,8 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import logging
+
 from bottle import view, request, redirect
 
 from ...lib.i18n import lazy_gettext as _, i18n_path
@@ -66,7 +68,6 @@ PRESETS = [
         'polarization': 'v',
         'delivery': 'DVB-S',
         'modulation': 'QPSK',
-        'tone': True,
         'azimuth': 0,
     }),
     ('Hotbird 13 (13.0E)', 2, {
@@ -75,7 +76,6 @@ PRESETS = [
         'polarization': 'v',
         'delivery': 'DVB-S',
         'modulation': 'QPSK',
-        'tone': True,
         'azimuth': 0,
     }),
     ('Intelsat 20 (68.5E)', 3, {
@@ -84,7 +84,6 @@ PRESETS = [
         'polarization': 'v',
         'delivery': 'DVB-S',
         'modulation': 'QPSK',
-        'tone': True,
         'azimuth': 0,
     }),
 ]
@@ -137,8 +136,8 @@ def set_settings():
     if errors:
         return dict(errors=errors, vals=request.forms)
 
-    frequency = ipc.freq_conv(frequency, lnb_type)
     needs_tone = ipc.needs_tone(frequency, lnb_type)
+    frequency = ipc.freq_conv(frequency, lnb_type)
 
     resp = ipc.set_settings(frequency=frequency,
                             symbolrate=symbolrate,
@@ -152,6 +151,8 @@ def set_settings():
         # configuration is not successful
         errors['_'] = _('Transponder configuration could not be set')
         return dict(errors=errors, vals=request.form)
+
+    logging.info('ONDD: tuner settings updated')
 
     redirect(original_route)
 

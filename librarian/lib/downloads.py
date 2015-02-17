@@ -375,6 +375,7 @@ class Meta(object):
             return 'sponsored'
         elif self.is_partner:
             return 'partner'
+        return 'core'
 
     @property
     def human_label(self):
