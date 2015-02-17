@@ -1,6 +1,15 @@
 {{! h.form(action=i18n_path('/p/ondd/settings'), method='post', _class='settings-form', _id='settings-form') }}
     {{! h.form_errors(errors) }}
     <input type="hidden" name="backto" value="{{ request.original_path }}">
+    <input type="hidden" name="preset">
+    <div class="lnb-settings">
+        <p class="lnb">
+            %# Translators, form label for LNB type selection
+            <label for="lnb">{{ _('LNB type') }}</label>
+            {{! h.vselect('lnb', LNB_TYPES, vals) }}
+            {{! h.field_error('lnb', errors) }}
+        </p>
+    </div>
     <div class="settings-fields">
         <p class="frequency">
             %# Translators, form label for transponder frequency

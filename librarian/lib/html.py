@@ -738,3 +738,20 @@ def del_qparam(param):
         pass
     return to_qs(params)
 
+
+def perc_range(n, min_val, max_val):
+    """
+    Return percentage of `n` within `min_val` to `max_val` range
+
+    Example::
+
+        >>> perc_range(40, 20, 60)
+        50
+
+    :param n:           number
+    :param min_val:     smallest value of the range
+    :param max_val:     largest value of the range
+    :returns:           percentage of `n` in the range
+    """
+    return max([min([0, n - min_val]) / (max_val - min_val), 1]) * 100
+

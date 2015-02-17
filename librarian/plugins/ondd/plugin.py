@@ -52,6 +52,13 @@ VOLTS = {
     'h': 18,
 }
 
+LNB_TYPES = (
+    # Translators, this is a type of LNB
+    ('u', _('Universal')),
+    # Translators, this is a type of LNB
+    ('k', _('North America Ku band')),
+)
+
 PRESETS = [
     ('Galaxy 19 (97.0W)', 1, {
         'frequency': '12177',
@@ -63,7 +70,7 @@ PRESETS = [
         'azimuth': 0,
     }),
     ('Hotbird 13 (13.0E)', 2, {
-        'frequency': '11470',
+        'frequency': '11471',
         'symbolrate': '27500',
         'polarization': 'v',
         'delivery': 'DVB-S',
@@ -84,21 +91,7 @@ PRESETS = [
 
 # For easier consumption as view default ctx
 CONST = dict(DELIVERY=DELIVERY, MODULATION=MODULATION,
-             POLARIZATION=POLARIZATION, PRESETS=PRESETS)
-
-
-def selected_preset(settings):
-    for name, idx, p in PRESETS:
-        match = True
-        for k, v in settings.items():
-            # We convert both values to strings. It doesn't matter because data
-            # comes from trusted sources in both cases. The reason we do this
-            # is that they may be of different type for technical reasons.
-            if str(v) != str(p[k]):
-                match = False
-        if match:
-            return idx
-    return 0
+             POLARIZATION=POLARIZATION, PRESETS=PRESETS, LNB_TYPES=LNB_TYPES)
 
 
 @view('ondd/_signal')
@@ -110,6 +103,9 @@ def get_signal_stats():
 def set_settings():
     errors = {}
     original_route = request.forms.get('backto', i18n_path('/dashboard/'))
+    lnb_type = keyof('lnb', LNB_TYPES,
+                     # Translators, error message when LNB type is incorrect
+                     _('Invalid choice for LNB type'), errors)
     frequency = posint('frequency',
                        # Translators, error message when frequency value is
                        # wrong
@@ -141,9 +137,13 @@ def set_settings():
     if errors:
         return dict(errors=errors, vals=request.forms)
 
+    frequency = ipc.freq_conv(frequency, lnb_type)
+    needs_tone = ipc.needs_tone(frequency, lnb_type)
+
     resp = ipc.set_settings(frequency=frequency,
                             symbolrate=symbolrate,
                             delivery=delivery,
+                            tone=needs_tone,
                             modulation=dict(MODULATION)[modulation],
                             voltage=VOLTS[polarization])
 
@@ -151,7 +151,7 @@ def set_settings():
         # Translators, error message shown when setting transponder
         # configuration is not successful
         errors['_'] = _('Transponder configuration could not be set')
-        return dict(errors=errors, vals=request.forms)
+        return dict(errors=errors, vals=request.form)
 
     redirect(original_route)
 
@@ -168,6 +168,6 @@ class Dashboard(DashboardPlugin):
     javascript = ['ondd.js']
 
     def get_context(self):
+        print('here')
         settings = ipc.get_settings()
-        return dict(status=ipc.get_status(), vals={}, errors={},
-                    selected_preset=selected_preset(settings), **CONST)
+        return dict(status=ipc.get_status(), vals={}, errors={}, **CONST)

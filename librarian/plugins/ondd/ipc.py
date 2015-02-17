@@ -21,6 +21,11 @@ from ...lib.html import yesno
 OUT_ENCODING = 'ascii'
 IN_ENCODING = 'utf8'
 
+NA_KU_OFF = 10750  # Frequency offset for North America Ku
+UN_LO_OFF = 9750  # Low band offset
+UN_HI_OFF = 10600  # High band offset
+UN_HI_SW = 11700  # Transponder frequency at which we switch to high band
+
 
 @contextmanager
 def open_socket(path, family=socket.AF_UNIX):
@@ -147,6 +152,37 @@ def get_file_list():
             'progress': int(f.find('progress').text),
         })
     return out
+
+
+def freq_conv(freq, lnb_type):
+    """ Converts transponder frequency to L-band frequency
+
+    The conversion formula requires the LNB type. The type can be either `'k'`
+    for North America Ku band LNB or `'u'` for Universal LNB.
+
+    Example:
+
+        >>> freq_conv(11471, 'u')
+        1721
+
+    """
+    if lnb_type == 'k':
+        # NA Ku band LNB
+        return freq - NA_KU_OFF
+    # Universal
+    if freq > UN_HI_SW:
+        return freq - UN_HI_OFF
+    return freq - UN_LO_OFF
+
+
+def needs_tone(freq, lnb_type):
+    """ Whether LNB needs a 22KHz tone
+
+    Always returns ``False`` for North America Ku band LNBs.
+    """
+    if lnb_type == 'k':
+        return False
+    return freq > UN_HI_SW
 
 
 def get_settings():
