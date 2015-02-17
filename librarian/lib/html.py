@@ -753,5 +753,5 @@ def perc_range(n, min_val, max_val):
     :param max_val:     largest value of the range
     :returns:           percentage of `n` in the range
     """
-    return max([min([0, n - min_val]) / (max_val - min_val), 1]) * 100
+    return min([1, max([0, n - min_val]) / (max_val - min_val)]) * 100
 
