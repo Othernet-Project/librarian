@@ -22,16 +22,25 @@ from ...lib.html import yesno
 OUT_ENCODING = 'ascii'
 IN_ENCODING = 'utf8'
 
+SOCK_FAMILY = socket.AF_UNIX
+
 NA_KU_OFF = 10750  # Frequency offset for North America Ku
 UN_LO_OFF = 9750  # Low band offset
 UN_HI_OFF = 10600  # High band offset
 UN_HI_SW = 11700  # Transponder frequency at which we switch to high band
 
 
+def connect():
+    conf = request.app.config
+    sock_path = conf['ondd.socket']
+    sock = socket.socket(family=SOCK_FAMILY)
+    sock.connect(sock_path)
+    return sock
+
+
 @contextmanager
-def open_socket(path, family=socket.AF_UNIX):
-    sock = socket.socket(family=family)
-    sock.connect(path)
+def open_socket():
+    sock = connect()
     try:
         yield sock
     finally:
@@ -72,10 +81,9 @@ def send(payload):
     :param payload:     the XML payload to send down the pipe
     :returns:           response data
     """
-    conf = request.app.config
     if not payload[-1] == '\0':
         payload = payload.encode(OUT_ENCODING) + '\0'
-    with open_socket(conf['ondd.socket']) as sock:
+    with open_socket() as sock:
         logging.debug('ONDD: sending payload: %s', payload)
         sock.send(payload)
         data = read(sock)

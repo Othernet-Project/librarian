@@ -26,6 +26,14 @@ try:
 except AttributeError:
     raise NotSupportedError('ONDD plugin requires UNIX sockets')
 
+try:
+    # Test connection
+    ipc.connect()
+except Exception as err:
+    logging.error('ONDD: connection failed: %s', err)
+    raise NotSupportedError('ONDD socket refused connection')
+
+
 
 DELIVERY = (
     ('DVB-S', 'DVB-S'),
