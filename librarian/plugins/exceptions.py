@@ -17,4 +17,6 @@ class NotSupportedError(Exception):
     cleanly. It's considered non-fatal and app should run fine after loading
     remaining plugins.
     """
-    pass
+    def __init__(self, reason):
+        self.reason = reason
+        super(NotSupportedError, self).__init__()
