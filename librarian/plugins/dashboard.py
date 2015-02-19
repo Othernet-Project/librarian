@@ -43,6 +43,7 @@ class DashboardPlugin(object):
     name = None
     javascript = []
     template_lookup_base = os.path.dirname(__file__)
+    classes = ['collapsible', 'collapsed']
 
     def get_name(self):
         """ Return section name """
@@ -68,6 +69,9 @@ class DashboardPlugin(object):
                             self.get_name(),
                             'views')
 
+    def get_classes(self):
+        return self.classes
+
     def get_javascript(self):
         return self.javascript
 
@@ -76,6 +80,7 @@ class DashboardPlugin(object):
         context = {
             'name': self.get_name(),
             'heading': self.get_heading(),
+            'classes': self.get_classes(),
         }
         context.update(self.get_context())
         return bottle.template(self.get_template(), **context)
