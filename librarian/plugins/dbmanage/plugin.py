@@ -31,7 +31,7 @@ def serve_dbfile():
 
 
 def install(app, route):
-    route('librarian.sqlite', ['GET'], callback=serve_dbfile)
+    route('librarian.sqlite', ['GET'], callback=serve_dbfile, no_i18n=True)
 
 
 class Dashboard(DashboardPlugin):
