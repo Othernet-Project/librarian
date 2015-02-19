@@ -7,4 +7,3 @@ __pycache__/
 .sass-cache
 /dist
 /librarian.egg-info
-Vagrantfile
