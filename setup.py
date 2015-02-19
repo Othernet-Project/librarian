@@ -8,7 +8,7 @@ import librarian
 
 SCRIPTDIR = os.path.dirname(__file__)
 # Production requirement, not needed during development
-BJ = ['bjoern==1.4.1']
+BJ = ['bjoern==1.4.2']
 
 def read(fname):
     """ Return content of specified file """
