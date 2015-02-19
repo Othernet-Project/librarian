@@ -1,3 +1,5 @@
+% extra_scripts = '<script src="/static/js/content.js"></script>'
+
 %# Translators, used as page title
 % rebase('base.tpl', title=_('Library'))
 <h1>
@@ -101,4 +103,3 @@
 
 % include('_tag_js_templates')
 
-<script src="/static/js/content.js"></script>
