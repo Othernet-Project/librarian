@@ -32,7 +32,6 @@
     max-height: 600px;
     overflow: hidden;
     margin-top: 1em;
-    @include transition(max-height 1s, margin-top 1s);
   }
 
   &.dash-collapsed {
