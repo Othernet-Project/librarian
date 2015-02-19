@@ -21,13 +21,45 @@ __all__ = ('MIME_TYPES', 'EXTENSIONS', 'DEFAULT_TYPE', 'get_mimetype',
 
 # We only neeed MIME types for files Outernet will broadcast
 MIME_TYPES = {
+    # Text/Code
     'txt': 'text/plain',
     'html': 'text/html',
     'css': 'text/css',
-    'git': 'image/gif',
+    'js': 'text/javascript',
+
+    # Image
+    'gif': 'image/gif',
     'jpg': 'image/jpeg',
+    'tiff': 'image/tiff',
     'png': 'image/png',
+    'svg': 'image/svg+xml',
+
+    # Data/Document
+    'pdf': 'application/pdf',
+    'xml': 'text/xml',
     'json': 'application/json',
+
+    # Video
+    'mp4': 'video/mp4',
+    'm4v': 'video/mp4',
+    'ogv': 'video/ogg',
+    'flv': 'video/x-flv',
+    'webm': 'video/webm',
+    '3gp': 'video/3gpp',
+    'mpeg': 'video/mpeg',
+    'mpg': 'video/mpeg',
+
+    # Audio
+    'mp3': 'audio/mpeg',
+    'ogg': 'audio/ogg',
+    'flac': 'audio/flac',
+    'm4a': 'audio/mp4',
+    'mpg': 'video/mpeg',
+
+    # Other
+    'zip': 'application/zip',
+    'gz': 'application/gzip',
+
 }
 EXTENSIONS = MIME_TYPES.keys()
 DEFAULT_TYPE = MIME_TYPES['txt']
