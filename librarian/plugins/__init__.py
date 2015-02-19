@@ -91,16 +91,16 @@ def install_plugins(app):
             continue
         except NotSupportedError as err:
             logging.error(
-                "Plugin '%s' not supported, skipping (reason: %s)", (
-                    mod, err.reason))
+                "Plugin '%s' not supported, skipping (reason: %s)", mod,
+                err.reason)
             continue
 
         try:
             plugin.install(app, route_plugin(app, mod))
         except NotSupportedError as err:
             logging.error(
-                "Plugin '%s' not supported, skipping (reason: %s)", (
-                    mod, err.reason))
+                "Plugin '%s' not supported, skipping (reason: %s)", mod,
+                err.reason)
             continue
         except AttributeError:
             logging.error("Plugin '%s' not correctly implemented, skipping",
