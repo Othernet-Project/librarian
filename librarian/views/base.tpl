@@ -8,6 +8,10 @@
         <title>{{ title }} :: {{ _('Librarian') }} v{{ app_version }}</title>
         <link rel="stylesheet" href="/static/css/{{ style }}.css">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        % setdefault('redirect', None)
+        % if redirect:
+        <meta http-equiv="refresh" content="5; url={{ redirect }}">
+        % end
     </head>
     <body>
         <header>
