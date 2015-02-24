@@ -12,9 +12,11 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from __future__ import unicode_literals, print_function
 
+import os
 import sys
 import pprint
 import logging
+import datetime
 from warnings import warn
 from logging.config import dictConfig as log_config
 from os.path import join, dirname, abspath, normpath
@@ -120,6 +122,33 @@ app.route('/apps/<appid>/<path:path>', 'GET',
 @app.get('/static/<path:path>', skip=['i18n'])
 def send_static(path):
     return bottle.static_file(path, root=STATICDIR)
+
+
+@app.error(500)
+@bottle.view('500')
+def show_error_page(exc):
+    logging.error('Unhandled error %s at %s %s:\n\n%s',
+                  exc.exception,
+                  request.method.upper(),
+                  request.path,
+                  exc.traceback)
+    return dict(trace=exc.traceback)
+
+
+@app.get('/librarian.log', no_i18n=True)
+def send_logfile():
+    conf = request.app.config
+    log_path = conf['logging.output']
+    dirname = os.path.dirname(log_path)
+    filename = os.path.basename(log_path)
+    new_filename = datetime.datetime.now().strftime(
+        'librarian_%%s_%Y-%m-%d_%H-%M-%S.log') % __version__
+    return bottle.static_file(filename, root=dirname, download=new_filename)
+
+
+@app.get('/break')
+def breakme():
+    raise RuntimeError('This is a test')
 
 
 def start(logfile=None, profile=False):
