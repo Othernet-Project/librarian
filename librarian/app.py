@@ -127,7 +127,7 @@ def send_static(path):
 @app.error(500)
 @bottle.view('500')
 def show_error_page(exc):
-    logging.error('Unhandled error %s at %s %s:\n\n%s',
+    logging.error("Unhandled error '%s' at %s %s:\n\n%s",
                   exc.exception,
                   request.method.upper(),
                   request.path,
