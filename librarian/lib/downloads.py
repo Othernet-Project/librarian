@@ -345,6 +345,9 @@ class Meta(object):
     def __getitem__(self, key):
         return self.meta[key]
 
+    def __setitem__(self, key, value):
+        self.meta[key] = value
+
     def get(self, key, default=None):
         return self.meta.get(key, default)
 
