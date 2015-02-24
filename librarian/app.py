@@ -122,11 +122,6 @@ def send_static(path):
     return bottle.static_file(path, root=STATICDIR)
 
 
-# Note that all other routes are reigsted when ``librarian.routes.*`` is
-# imported at the top of this module. All routes are registered against the
-# default_app, so they don't need to be mounted explicitly.
-
-
 def start(logfile=None, profile=False):
     """ Start the application """
 
