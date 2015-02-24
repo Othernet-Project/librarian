@@ -146,11 +146,6 @@ def send_logfile():
     return bottle.static_file(filename, root=dirname, download=new_filename)
 
 
-@app.get('/break')
-def breakme():
-    raise RuntimeError('This is a test')
-
-
 def start(logfile=None, profile=False):
     """ Start the application """
 
