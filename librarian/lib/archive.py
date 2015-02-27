@@ -292,41 +292,28 @@ def parse_size(size):
     return size * FACTORS[suffix]
 
 
-def add_to_archive(hashes):
-    config = request.app.config
-    target_dir = config['content.contentdir']
-    db = request.db
-    metadata = []
-    replaced = []
-    copy_list = []
-    delete_list = []
-    # Prepare data for processing
-    for md5, path in ((h, get_spool_zip_path(h)) for h in hashes):
-        logging.debug("<%s> adding to archive (#%s)" % (path, md5))
-        meta = get_metadata(path)
-        add_missing_keys(meta)
-        meta['md5'] = md5
-        meta['updated'] = datetime.now()
-        if meta.get('replaces'):
-            logging.debug(
-                "<%s> replaces '%s'" % (path, meta['replaces']))
-            replaced.append(meta['replaces'])
-            delete_list.append(get_zip_path(meta['replaces']))
-        copy_list.append(path)
-        metadata.append(meta)
-    # Create replacement query
+def prepare_metadata(md5, path):
+    meta = get_metadata(path)
+    add_missing_keys(meta)
+    meta['md5'] = md5
+    meta['updated'] = datetime.now()
+    return meta
+
+
+def add_meta_to_db(db, metadata, replaced):
     nreplaced = len(replaced)
     q = multiarg(REMOVE_MULTI_QUERY, nreplaced)
-    # Execute database operations
     with db.transaction() as cur:
         logging.debug("Adding new content to archive database")
         cur.executemany(ADD_QUERY, metadata)
         logging.debug("Removing replaced content from archive database")
         cur.execute(q, replaced)
         rowcount = cur.rowcount
-    logging.debug("%s items added to database" % rowcount)
-    # Delete obsolete content
-    for path in delete_list:
+    return rowcount
+
+
+def delete_obsolete(obsolete):
+    for path in obsolete:
         if not path:
             continue
         try:
@@ -334,17 +321,61 @@ def add_to_archive(hashes):
         except OSError as err:
             logging.error(
                 "<%s> could not delete obsolete file: %s" % (path, err))
-    logging.debug("%s items deleted from storage" % len(delete_list))
-    # Execute storage operations
-    for path in copy_list:
-        # Check target path first
+
+
+def copy_to_archive(paths, target_dir):
+    for path in paths:
         target_path = os.path.join(target_dir, os.path.basename(path))
         if os.path.exists(target_path):
             logging.debug("<%s> removing existing content" % target_path)
             os.unlink(target_path)
         shutil.move(path, target_dir)
-    logging.debug("%s items copied to storage" % len(copy_list))
+
+
+def process_content_files(content):
+    to_add = []
+    to_replace = []
+    to_copy = []
+    to_delete = []
+    # Prepare data for processing
+    for md5, path in content:
+        logging.debug("<%s> adding to archive (#%s)" % (path, md5))
+        meta = prepare_metadata(md5, path)
+        if meta.get('replaces'):
+            logging.debug(
+                "<%s> replaces '%s'" % (path, meta['replaces']))
+            to_replace.append(meta['replaces'])
+            to_delete.append(get_zip_path(meta['replaces']))
+        to_copy.append(path)
+        to_add.append(meta)
+    return to_add, to_replace, to_delete, to_copy
+
+
+def process_content(db, to_add, to_replace, to_delete, to_copy):
+    content_dir = request.app.config['content.contentdir']
+    rowcount = add_meta_to_db(db, to_add, to_replace)
+    delete_obsolete(to_delete)
+    copy_to_archive(to_copy, content_dir)
     return rowcount
+
+
+def process(db, content, no_file_ops=False):
+    to_add, to_replace, to_delete, to_copy = process_content_files(content)
+    if no_file_ops:
+        to_delete = []
+        to_copy = []
+    rows = process_content(db, to_add, to_replace, to_delete, to_copy)
+    return rows, len(to_delete), len(to_copy)
+
+
+def add_to_archive(hashes):
+    db = request.db
+    content = ((h, get_spool_zip_path(h)) for h in hashes)
+    rows, deleted, copied = process(db, content)
+    logging.debug("%s items added to database", rows)
+    logging.debug("%s items deleted from storage", deleted)
+    logging.debug("%s items copied to storage", copied)
+    return rows
 
 
 def remove_from_archive(hashes):
