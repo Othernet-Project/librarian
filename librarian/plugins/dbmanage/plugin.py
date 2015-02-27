@@ -58,15 +58,16 @@ def serve_dbfile():
     return static_file(dbname, root=dbdir, download=True)
 
 
-@view('dbmanage/backup_results.tpl', error=None, path=None, time=None)
+@view('dbmanage/backup_results', error=None, path=None, time=None)
 def perform_backup():
     dbpath = get_dbpath()
     bpath = get_backup_path()
     try:
-        time = backup(dbpath, bpath)
+        btime = backup(dbpath, bpath)
+        logging.debug('Database backup took %s seconds', btime)
     except AssertionError as err:
         return dict(error=err.message)
-    return dict(path=get_file_url(), time=time)
+    return dict(path=get_file_url(), time=btime)
 
 
 def install(app, route):
