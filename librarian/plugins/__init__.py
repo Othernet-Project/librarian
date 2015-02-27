@@ -86,8 +86,9 @@ def install_plugins(app):
             plugin = __import__('librarian.plugins.%s.plugin' % mod,
                                 fromlist=['plugin'])
             logging.debug("Plugin '%s' loaded", mod)
-        except ImportError:
-            logging.error("Plugin '%s' could not be loaded, skipping", mod)
+        except ImportError as err:
+            logging.error("Plugin '%s' could not be loaded, skipping (reason: "
+                          "%s)", mod, err)
             continue
         except NotSupportedError as err:
             logging.error(
