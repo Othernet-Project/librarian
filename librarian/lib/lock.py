@@ -83,7 +83,7 @@ def global_lock(attempts=2, timeout=5, always_release=False):
         yield
     except Exception:
         if always_release:
-            do_unlock()
+            do_release()
         raise
     do_release()
     assert not is_locked(), 'Expected global lock to be released'
