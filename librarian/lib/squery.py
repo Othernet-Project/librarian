@@ -102,6 +102,10 @@ class Database(object):
                 return
             raise
 
+    def acquire_lock(self):
+        self.cursor.execute('BEGIN EXCLUSIVE')
+        return self.cursor
+
     def __repr__(self):
         return "<Database dbpath='%s'>" % self.dbpath
 
