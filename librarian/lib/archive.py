@@ -306,9 +306,9 @@ def add_meta_to_db(db, metadata, replaced):
     with db.transaction() as cur:
         logging.debug("Adding new content to archive database")
         cur.executemany(ADD_QUERY, metadata)
+        rowcount = cur.rowcount
         logging.debug("Removing replaced content from archive database")
         cur.execute(q, replaced)
-        rowcount = cur.rowcount
     return rowcount
 
 
