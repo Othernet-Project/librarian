@@ -30,12 +30,15 @@ from librarian.lib.lazy import Lazy
 from librarian.utils import migrations
 from librarian.lib import html as helpers
 from librarian.lib.archive import LICENSES
+from librarian.lib.lock import lock_plugin
 from librarian.lib.common import to_unicode
 from librarian.lib.system import ensure_dir
+from librarian.lib.lock import global_lock
 from librarian.plugins import install_plugins
 from librarian.lib.downloads import get_zipballs
 from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
-from librarian.routes import (content, tags, downloads, apps, dashboard)
+from librarian.routes import (content, tags, downloads, apps, dashboard,
+                              system)
 
 from librarian import __version__, __author__
 
@@ -46,7 +49,6 @@ def in_pkg(*paths):
     return normpath(join(MODDIR, *paths))
 
 CONFPATH = in_pkg('librarian.ini')
-STATICDIR = in_pkg('static')
 
 LOCALES = [
     ('ar', 'اللغة العربية'),
@@ -88,11 +90,11 @@ app.route('/delete/<content_id>', 'POST',
 
 # Files
 app.route('/files/', 'GET',
-          callback=content.show_file_list)
+          callback=content.show_file_list, unlocked=True)
 app.route('/files/<path:path>', 'GET',
-          callback=content.show_file_list)
+          callback=content.show_file_list, unlocked=True)
 app.route('/files/<path:path>', 'POST',
-          callback=content.handle_file_action)
+          callback=content.handle_file_action, unlocked=True)
 
 # Tags
 app.route('/tags/', 'GET',
@@ -112,38 +114,20 @@ app.route('/dashboard/', 'GET',
 
 # Apps
 app.route('/apps/', 'GET',
-          callback=apps.show_apps)
+          callback=apps.show_apps, unlocked=True)
 app.route('/apps/<appid>/', 'GET',
-          callback=apps.send_app_file)
+          callback=apps.send_app_file, unlocked=True)
 app.route('/apps/<appid>/<path:path>', 'GET',
-          callback=apps.send_app_file)
+          callback=apps.send_app_file, unlocked=True)
 
 
-@app.get('/static/<path:path>', skip=['i18n'])
-def send_static(path):
-    return bottle.static_file(path, root=STATICDIR)
-
-
-@app.error(500)
-@bottle.view('500')
-def show_error_page(exc):
-    logging.error("Unhandled error '%s' at %s %s:\n\n%s",
-                  exc.exception,
-                  request.method.upper(),
-                  request.path,
-                  exc.traceback)
-    return dict(trace=exc.traceback)
-
-
-@app.get('/librarian.log', no_i18n=True)
-def send_logfile():
-    conf = request.app.config
-    log_path = conf['logging.output']
-    dirname = os.path.dirname(log_path)
-    filename = os.path.basename(log_path)
-    new_filename = datetime.datetime.now().strftime(
-        'librarian_%%s_%Y-%m-%d_%H-%M-%S.log') % __version__
-    return bottle.static_file(filename, root=dirname, download=new_filename)
+# System routes and error handlers
+app.route('/static/<path:path>', 'GET',
+          callback=system.send_static, no_i18n=True, unlocked=True)
+app.route('/librarian.log', 'GET',
+          callback=system.send_logfile, no_i18n=True, unlocked=True)
+app.error(500)(system.show_error_page)
+app.error(503)(system.show_maint_page)
 
 
 def start(logfile=None, profile=False):
@@ -212,6 +196,7 @@ def start(logfile=None, profile=False):
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
     wsgiapp = I18NPlugin(wsgiapp, langs=LOCALES, default_locale=DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
+    app.install(lock_plugin)
 
     # Srart the server
     logging.info('Starting Librarian')
