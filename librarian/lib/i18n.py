@@ -352,6 +352,7 @@ class I18NPlugin(object):
                 warn(I18NWarning("No MO file found for '%s' locale" % locale))
             self.gettext_apis[locale] = api
 
+        # Provide translation methods to templates
         BaseTemplate.defaults.update({
             '_': lazy_gettext,
             'gettext': lazy_gettext,
@@ -398,6 +399,11 @@ class I18NPlugin(object):
                     redirect(unicode(i18n_path(path, self.default_locale)))
                 else:
                     request.gettext = self.gettext_apis[locale]
+            else:
+                # Dummy translation is used for paths which are excepted from
+                # i18n plugin.
+                request.gettext = gettext.NullTranslations()
+
             return callback(*args, **kwargs)
         return wrapper
 

@@ -117,3 +117,15 @@ button, .button {
   }
 }
 
+pre {
+  font-family: monospace;
+  padding: 1em;
+  font-size: 100%;
+  line-height: 110%;
+  margin-bottom: 1.2em;
+}
+
+pre.trace {
+  border-top: 4px solid $orange;
+  border-bottom: 4px solid $orange;
+}

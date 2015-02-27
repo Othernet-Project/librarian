@@ -12,9 +12,11 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from __future__ import unicode_literals, print_function
 
+import os
 import sys
 import pprint
 import logging
+import datetime
 from warnings import warn
 from logging.config import dictConfig as log_config
 from os.path import join, dirname, abspath, normpath
@@ -28,12 +30,15 @@ from librarian.lib.lazy import Lazy
 from librarian.utils import migrations
 from librarian.lib import html as helpers
 from librarian.lib.archive import LICENSES
+from librarian.lib.lock import lock_plugin
 from librarian.lib.common import to_unicode
 from librarian.lib.system import ensure_dir
+from librarian.lib.lock import global_lock
 from librarian.plugins import install_plugins
 from librarian.lib.downloads import get_zipballs
 from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
-from librarian.routes import (content, tags, downloads, apps, dashboard)
+from librarian.routes import (content, tags, downloads, apps, dashboard,
+                              system)
 
 from librarian import __version__, __author__
 
@@ -44,7 +49,6 @@ def in_pkg(*paths):
     return normpath(join(MODDIR, *paths))
 
 CONFPATH = in_pkg('librarian.ini')
-STATICDIR = in_pkg('static')
 
 LOCALES = [
     ('ar', 'اللغة العربية'),
@@ -86,11 +90,11 @@ app.route('/delete/<content_id>', 'POST',
 
 # Files
 app.route('/files/', 'GET',
-          callback=content.show_file_list)
+          callback=content.show_file_list, unlocked=True)
 app.route('/files/<path:path>', 'GET',
-          callback=content.show_file_list)
+          callback=content.show_file_list, unlocked=True)
 app.route('/files/<path:path>', 'POST',
-          callback=content.handle_file_action)
+          callback=content.handle_file_action, unlocked=True)
 
 # Tags
 app.route('/tags/', 'GET',
@@ -110,21 +114,20 @@ app.route('/dashboard/', 'GET',
 
 # Apps
 app.route('/apps/', 'GET',
-          callback=apps.show_apps)
+          callback=apps.show_apps, unlocked=True)
 app.route('/apps/<appid>/', 'GET',
-          callback=apps.send_app_file)
+          callback=apps.send_app_file, unlocked=True)
 app.route('/apps/<appid>/<path:path>', 'GET',
-          callback=apps.send_app_file)
+          callback=apps.send_app_file, unlocked=True)
 
 
-@app.get('/static/<path:path>', skip=['i18n'])
-def send_static(path):
-    return bottle.static_file(path, root=STATICDIR)
-
-
-# Note that all other routes are reigsted when ``librarian.routes.*`` is
-# imported at the top of this module. All routes are registered against the
-# default_app, so they don't need to be mounted explicitly.
+# System routes and error handlers
+app.route('/static/<path:path>', 'GET',
+          callback=system.send_static, no_i18n=True, unlocked=True)
+app.route('/librarian.log', 'GET',
+          callback=system.send_logfile, no_i18n=True, unlocked=True)
+app.error(500)(system.show_error_page)
+app.error(503)(system.show_maint_page)
 
 
 def start(logfile=None, profile=False):
@@ -193,6 +196,7 @@ def start(logfile=None, profile=False):
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
     wsgiapp = I18NPlugin(wsgiapp, langs=LOCALES, default_locale=DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
+    app.install(lock_plugin)
 
     # Srart the server
     logging.info('Starting Librarian')

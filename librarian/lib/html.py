@@ -739,7 +739,7 @@ def del_qparam(param):
     return to_qs(params)
 
 
-def perc_range(n, min_val, max_val):
+def perc_range(n, min_val, max_val, rounding=2):
     """
     Return percentage of `n` within `min_val` to `max_val` range
 
@@ -751,7 +751,9 @@ def perc_range(n, min_val, max_val):
     :param n:           number
     :param min_val:     smallest value of the range
     :param max_val:     largest value of the range
+    :param rounding:    number of fractional digits to keep
     :returns:           percentage of `n` in the range
     """
-    return min([1, max([0, n - min_val]) / (max_val - min_val)]) * 100
+    return round(
+        min([1, max([0, n - min_val]) / (max_val - min_val)]) * 100, rounding)
 

@@ -78,6 +78,7 @@ class DashboardPlugin(object):
     def render(self):
         """ Render dashboard section """
         context = {
+            'plugin': self,
             'name': self.get_name(),
             'heading': self.get_heading(),
             'classes': self.get_classes(),
