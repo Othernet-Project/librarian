@@ -83,3 +83,4 @@ def backup(src, dst):
     sqlite.sqlite3_close(p_src_db)
     logging.debug("DBMANAGE: backup completed '%s' -> '%s' (took %s seconds)",
                   src, dst, end - start)
+    return end - start
