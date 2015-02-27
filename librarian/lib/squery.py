@@ -79,6 +79,9 @@ class Database(object):
     def commit(self):
         self.db.commit()
 
+    def rollback(self):
+        self.db.rollback()
+
     @property
     def cursor(self):
         self.connect()

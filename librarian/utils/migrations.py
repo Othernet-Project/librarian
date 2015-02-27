@@ -11,6 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import os
 import re
 import sqlite3
+import logging
 from functools import wraps
 from itertools import dropwhile
 from contextlib import contextmanager
@@ -66,6 +67,7 @@ def run_migration(db, path, version):
     with open(path, 'r') as script:
         sql = script.read()
     with db.transaction() as cur:
+        rowcount = cur.rowcount
         cur.executescript(sql)
         qry = 'replace into %s (id, version) values (?, ?)' % MTABLE
         db.query(qry, 0, version)
@@ -80,7 +82,9 @@ def migrate(db, path):
     :param path:    path that contains migrations
     """
     ver = get_migration_version(db)
+    logging.debug('Migration version is %s', ver)
     migrations = get_migrations(path, ver + 1)
     for path, version in migrations:
         run_migration(db, path, version)
-        print("Completed migration %s" % version)
+        logging.debug("Finished migrating to %s",
+                      os.path.splitext(os.path.basename(path))[0])

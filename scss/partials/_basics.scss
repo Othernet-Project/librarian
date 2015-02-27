@@ -48,7 +48,7 @@ h2 {
 }
 
 .warning, .note, .message {
-  padding: 1em;
+  padding: 0.5em;
   font-weight: bold;
 }
 
@@ -128,4 +128,12 @@ pre {
 pre.trace {
   border-top: 4px solid $orange;
   border-bottom: 4px solid $orange;
+}
+
+form.inline {
+  display: inline-block;
+}
+
+.inline-form-wrapper {
+  margin-bottom: 1em;
 }
