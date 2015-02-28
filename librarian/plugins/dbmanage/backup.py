@@ -30,10 +30,12 @@ SQLITE_OPEN_READONLY = 1
 SQLITE_OPEN_READWRITE = 2
 SQLITE_OPEN_CREATE = 4
 
-sqlitelib = find_library('sqlite3')
-if not sqlitelib:
+sqlitelib = find_library('sqlite3') or 'libsqlite3.so'
+try:
+    sqlite = ctypes.CDLL(sqlitelib)
+except OSError:
     raise RuntimeError('Sqlite3 library could not be found')
-sqlite = ctypes.CDLL(sqlitelib)
+
 sqlite.sqlite3_backup_init.restype = ctypes.c_void_p
 
 
