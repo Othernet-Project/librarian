@@ -158,6 +158,9 @@ def start(logfile=None, profile=False):
         },
     })
 
+    # Srart the server
+    logging.info('===== Starting Librarian v%s =====', __version__)
+
     install_plugins(app)
     logging.info('Installed all plugins')
 
@@ -197,9 +200,6 @@ def start(logfile=None, profile=False):
     wsgiapp = I18NPlugin(wsgiapp, langs=LOCALES, default_locale=DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
-
-    # Srart the server
-    logging.info('Starting Librarian')
 
     if profile:
         # Instrument the app to perform profiling
