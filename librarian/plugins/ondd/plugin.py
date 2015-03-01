@@ -26,14 +26,6 @@ try:
 except AttributeError:
     raise NotSupportedError('ONDD plugin requires UNIX sockets')
 
-try:
-    # Test connection
-    ipc.connect()
-except Exception as err:
-    logging.error('ONDD: connection failed: %s', err)
-    raise NotSupportedError('ONDD socket refused connection')
-
-
 
 DELIVERY = (
     ('DVB-S', 'DVB-S'),
@@ -166,8 +158,14 @@ def set_settings():
 
 
 def install(app, route):
-    route('/status', ['GET'], get_signal_stats)
-    route('/settings', ['POST'], set_settings)
+    try:
+        # Test connection
+        ipc.connect(app.config['ondd.socket'])
+    except Exception as err:
+        logging.error('ONDD: connection failed: %s', err)
+        raise NotSupportedError('ONDD socket refused connection')
+    route('/status', 'GET', get_signal_stats)
+    route('/settings', 'POST', set_settings)
 
 
 class Dashboard(DashboardPlugin):

@@ -22,25 +22,21 @@ from ...lib.html import yesno
 OUT_ENCODING = 'ascii'
 IN_ENCODING = 'utf8'
 
-SOCK_FAMILY = socket.AF_UNIX
-
 NA_KU_OFF = 10750  # Frequency offset for North America Ku
 UN_LO_OFF = 9750  # Low band offset
 UN_HI_OFF = 10600  # High band offset
 UN_HI_SW = 11700  # Transponder frequency at which we switch to high band
 
 
-def connect():
-    conf = request.app.config
-    sock_path = conf['ondd.socket']
-    sock = socket.socket(family=SOCK_FAMILY)
-    sock.connect(sock_path)
+def connect(path):
+    sock = socket.socket(socket.AF_UNIX)
+    sock.connect(path)
     return sock
 
 
 @contextmanager
 def open_socket():
-    sock = connect()
+    sock = connect(request.app.config['ondd.socket'])
     try:
         yield sock
     finally:
