@@ -53,8 +53,8 @@ def read(sock, buffsize=2014):
     """
     idata = data = sock.recv(buffsize)
     while idata and '\0' not in idata:
-        data += idata
         idata = sock.recv(buffsize)
+        data += idata
     return data[:-1].decode(IN_ENCODING)
 
 
