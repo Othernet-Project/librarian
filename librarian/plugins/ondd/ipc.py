@@ -149,7 +149,11 @@ def get_status():
 def get_file_list():
     """ Get ONDD file download list """
     payload = xml_get_path('/files/')
-    root = send(payload)
+    try:
+        root = send(payload)
+    except ET.ParseError:
+        logging.error('ONDD: Could not parse XML data')
+        return []
     out = []
     flist = root.find('files')
     for f in flist:
