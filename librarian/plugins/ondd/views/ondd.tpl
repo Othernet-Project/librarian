@@ -8,6 +8,12 @@
 
 % include('ondd/_settings_form')
 
+%# Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
+<h3>{{ _('Downloads in progress') }}</h3>
+<div id="ondd-file-list" data-url="{{ i18n_path('/p/ondd/files') }}">
+    % include('ondd/_file_list')
+</div>
+
 <script type="text/template" id="satPresets">
     <p class="transponder-selection">
     %# Translators, label for select list that allows user to pick a satellite to tune into

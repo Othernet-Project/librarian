@@ -1,6 +1,9 @@
 (function (window, $) {
   var signalStatus = $('#signal-status');
   var url = signalStatus.data('url');
+  var fileList = $('#ondd-file-list');
+  var filesUrl = fileList.data('url');
+
   var refreshInterval = 1000;  // ms
   var satSelection = $(window.templates.satPresets);
   var satSelector = satSelection.find('select');
@@ -23,6 +26,7 @@
 
   function doRefresh() {
     signalStatus.load(url);
+    fileList.load(filesUrl);
   }
 
   function updateForm(e) {

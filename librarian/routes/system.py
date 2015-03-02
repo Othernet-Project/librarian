@@ -14,6 +14,8 @@ from os.path import dirname, join, basename
 
 from bottle import view, request, static_file
 
+from librarian import __version__
+
 
 STATICDIR = join(dirname(dirname(__file__)), 'static')
 
@@ -25,11 +27,11 @@ def send_static(path):
 def send_logfile():
     conf = request.app.config
     log_path = conf['logging.output']
-    dirname = dirname(log_path)
+    log_dir = dirname(log_path)
     filename = basename(log_path)
     new_filename = datetime.datetime.now().strftime(
         'librarian_%%s_%Y-%m-%d_%H-%M-%S.log') % __version__
-    return static_file(filename, root=dirname, download=new_filename)
+    return static_file(filename, root=log_dir, download=new_filename)
 
 
 @view('500')

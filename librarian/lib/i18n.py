@@ -403,6 +403,7 @@ class I18NPlugin(object):
                 # Dummy translation is used for paths which are excepted from
                 # i18n plugin.
                 request.gettext = gettext.NullTranslations()
+                request.locale = self.default_locale
 
             return callback(*args, **kwargs)
         return wrapper
