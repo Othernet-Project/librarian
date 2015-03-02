@@ -14,6 +14,8 @@ from os.path import dirname, join, basename
 
 from bottle import view, request, static_file
 
+from librarian import __version__
+
 
 STATICDIR = join(dirname(dirname(__file__)), 'static')
 
