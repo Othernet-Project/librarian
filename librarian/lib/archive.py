@@ -343,6 +343,9 @@ def process_content_files(content):
     to_delete = []
     # Prepare data for processing
     for md5, path in content:
+        if not path:
+            logging.debug("skipping '%s', file not found", md5)
+            continue
         logging.debug("<%s> adding to archive (#%s)" % (path, md5))
         meta = prepare_metadata(md5, path)
         if meta.get('replaces'):
