@@ -93,6 +93,10 @@ CONST = dict(DELIVERY=DELIVERY, MODULATION=MODULATION,
              POLARIZATION=POLARIZATION, PRESETS=PRESETS, LNB_TYPES=LNB_TYPES)
 
 
+def get_file_list():
+    return (f for f in ipc.get_file_list() if 0 < f['progress'] < 100)
+
+
 @view('ondd/_signal')
 def get_signal_stats():
     return dict(status=ipc.get_status())
@@ -157,6 +161,11 @@ def set_settings():
     redirect(original_route)
 
 
+@view('ondd/_file_list')
+def show_file_list():
+    return dict(files=get_file_list())
+
+
 def install(app, route):
     try:
         # Test connection
@@ -166,6 +175,7 @@ def install(app, route):
         raise NotSupportedError('ONDD socket refused connection')
     route('/status', 'GET', get_signal_stats)
     route('/settings', 'POST', set_settings)
+    route('/files', 'GET', show_file_list)
 
 
 class Dashboard(DashboardPlugin):
@@ -177,4 +187,5 @@ class Dashboard(DashboardPlugin):
     def get_context(self):
         print('here')
         settings = ipc.get_settings()
-        return dict(status=ipc.get_status(), vals={}, errors={}, **CONST)
+        return dict(status=ipc.get_status(), vals={}, errors={},
+                    files=get_file_list(), **CONST)
