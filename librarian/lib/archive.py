@@ -167,6 +167,10 @@ DELETE
 FROM taggings
 WHERE md5 = ? AND tag_id IN (??);
 """
+REMOVE_ALL_TAGS = """
+DELETE FROM taggings
+WHERE md5 = ?;
+"""
 CACHE_TAGS = """
 UPDATE zipballs
 SET tags = :tags
@@ -397,6 +401,7 @@ def remove_from_archive(hashes):
     with db.transaction() as cur:
         logging.debug("Removing %s items from archive database" % len(success))
         cur.executemany(REMOVE_QUERY, [(s,) for s in success])
+        cur.executemany(REMOVE_ALL_TAGS, [(s,) for s in success])
         rowcount = cur.rowcount
     logging.debug("%s items removed from database" % rowcount)
     return success, failed
