@@ -31,7 +31,7 @@ FACTORS = {
 
 METADATA_KEYS = (
     'domain', 'url', 'title', 'images', 'timestamp', 'keep_formatting',
-    'is_partner', 'is_sponsored', 'archive', 'partner', 'license')
+    'is_partner', 'is_sponsored', 'archive', 'partner', 'license', 'language')
 
 COUNT_QUERY = """
 SELECT COUNT(*) AS count
@@ -92,10 +92,10 @@ ORDER BY updated ASC, views ASC;
 ADD_QUERY = """
 REPLACE INTO zipballs
 (md5, domain, url, title, images, timestamp, updated, keep_formatting,
-is_partner, is_sponsored, archive, partner, license)
+is_partner, is_sponsored, archive, partner, license, language)
 VALUES
 (:md5, :domain, :url, :title, :images, :timestamp, :updated, :keep_formatting,
-:is_partner, :is_sponsored, :archive, :partner, :license);
+:is_partner, :is_sponsored, :archive, :partner, :license, :language);
 """
 REMOVE_QUERY = """
 DELETE FROM zipballs
