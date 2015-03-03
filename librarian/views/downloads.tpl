@@ -41,7 +41,7 @@
                         <input id="check-{{ meta['md5'] }}" type="checkbox" name="selection" value="{{ meta['md5'] }}"{{ selection and ' checked' or ''}}>
                     </td>
                     <td class="downloads-title"{{ ' rowspan="3"' if meta.get('replaces_title') else '' }}>
-                        <p><label for="check-{{ meta['md5'] }}">{{ meta['title'] }}</label></p>
+                        <p><label for="check-{{ meta['md5'] }}"><span{{! meta.i18n_attrs }}>{{ meta['title'] }}</span></label></p>
                         % if meta.get('replaces_title'):
                         <p class="downloads-replaces">{{ _('replaces:') }} <a href="/pages/{{ meta['replaces'] }}/">{{ meta['replaces_title'] }}</a></p>
                         % end
