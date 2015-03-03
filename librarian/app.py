@@ -26,6 +26,7 @@ from bottle import request
 
 from librarian.lib import squery
 from librarian.exceptions import *
+from librarian.utils.lang import *
 from librarian.lib.lazy import Lazy
 from librarian.utils import migrations
 from librarian.lib import html as helpers
@@ -49,45 +50,6 @@ def in_pkg(*paths):
     return normpath(join(MODDIR, *paths))
 
 CONFPATH = in_pkg('librarian.ini')
-
-LOCALES = [
-    ('ar',    'اللغة العربية'),
-    ('bn',    'বাংলা'),
-    ('ca',    'català'),
-    ('da',    'Dansk'),
-    ('de',    'Deutsch'),
-    ('en',    'English'),
-    ('es',    'español'),
-    ('fa',    'فارسى'),
-    ('fr',    'français'),
-    ('hi',    'हिन्दी'),
-    ('hr',    'hrvatski'),
-    # ('ht',    'Kreyòl ayisyen'),  # disabled due to bug in Python gettext
-    ('hu',    'magyar'),
-    ('it',    'Italiano'),
-    ('jp',    '日本語'),
-    ('kn',    'ಕನ್ನಡ'),
-    ('ko',    '한국어'),
-    ('lt',    'lietuvių kalba'),
-    ('nb',    'Norsk'),
-    ('ne',    'नेपाली'),
-    ('nl',    'Nederlands'),
-    ('pt',    'português'),
-    ('pt_BR', 'português brasileiro'),
-    ('ro',    'română'),
-    ('ru',    'Русский'),
-    ('sr',    'srpski'),
-    ('sv',    'Svensk'),
-    ('ta',    'தமிழ்'),
-    ('th',    'ภาษาไทย'),
-    ('tr',    'Türkçe'),
-    ('ur',    'اردو'),
-    ('zh',    '中文'),
-]
-
-RTL_LANGS = ['ar', 'he', 'ur', 'yi', 'ji', 'iw', 'fa']
-DEFAULT_LOCALE = 'en'
-
 
 app = bottle.default_app()
 
