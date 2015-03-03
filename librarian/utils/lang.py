@@ -9,40 +9,80 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-LOCALES = [
-    ('ar',    'اللغة العربية'),
-    ('bn',    'বাংলা'),
-    ('ca',    'català'),
-    ('da',    'Dansk'),
-    ('de',    'Deutsch'),
-    ('en',    'English'),
-    ('es',    'español'),
-    ('fa',    'فارسى'),
-    ('fr',    'français'),
-    ('hi',    'हिन्दी'),
-    ('hr',    'hrvatski'),
-    # ('ht',    'Kreyòl ayisyen'),  # disabled due to bug in Python gettext
-    ('hu',    'magyar'),
-    ('it',    'Italiano'),
-    ('jp',    '日本語'),
-    ('kn',    'ಕನ್ನಡ'),
-    ('ko',    '한국어'),
-    ('lt',    'lietuvių kalba'),
-    ('nb',    'Norsk'),
-    ('ne',    'नेपाली'),
-    ('nl',    'Nederlands'),
-    ('pt',    'português'),
-    ('pt_BR', 'português brasileiro'),
-    ('ro',    'română'),
-    ('ru',    'Русский'),
-    ('sr',    'srpski'),
-    ('sv',    'Svensk'),
-    ('ta',    'தமிழ்'),
-    ('th',    'ภาษาไทย'),
-    ('tr',    'Türkçe'),
-    ('ur',    'اردو'),
-    ('zh',    '中文'),
-]
+from __future__ import unicode_literals
 
+import babel
+
+from ..lib.i18n import lazy_gettext as _
+
+# Helper functions are defined above the constants because we used them to
+# generate runtime constants.
+
+def to_locale(code):
+    """ Return `babel.locale` instance matching the locale code """
+    return babel.Locale(*babel.parse_locale(code))
+
+
+def lang_name(code):
+    """ Return native language name for locale code """
+    return to_locale(code).get_display_name()
+
+
+def lang_list(locales):
+    """ Return a list of locale-language two-tuples given list of locales """
+    return [(l, lang_name(l)) for l in locales]
+
+
+def lang_name_getter(ltuple):
+    """ Getter used for sorting language names """
+    return ltuple[1].lower()
+
+
+# These are locales used for language filtering and similar cases. We want them
+# to be as generic as possible, so we only use the main locale without
+# territory part. We assume that a consumer of territorry-specific locale is
+# able to (at least to an extent) understand generic locale (e.g., pt_BR is
+# similar enough to pt).
+LOCALES = [l for l in babel.localedata.locale_identifiers() if len(l) == 2]
+LOCALES.sort()
+
+UI_LOCALES = (
+    'ar',
+    'bn',
+    'ca',
+    'da',
+    'de',
+    'en',
+    'es',
+    'fa',
+    'fr',
+    'hi',
+    'hr',
+    #'ht',   # disabled due to bug in Python gettext
+    'hu',
+    'it',
+    'ja',
+    'kn',
+    'ko',
+    'lt',
+    'nb',
+    'ne',
+    'nl',
+    'pt',
+    'pt_BR',
+    'ro',
+    'ru',
+    'sr_Latn',
+    'sv',
+    'ta',
+    'th',
+    'tr',
+    'ur',
+    'zh',
+)
+
+LANGS = list(sorted(lang_list(LOCALES), key=lang_name_getter))
+SELECT_LANGS = [(None, _('any language'))] + LANGS
+UI_LANGS = list(sorted(lang_list(UI_LOCALES), key=lang_name_getter))
 RTL_LANGS = ['ar', 'he', 'ur', 'yi', 'ji', 'iw', 'fa']
 DEFAULT_LOCALE = 'en'

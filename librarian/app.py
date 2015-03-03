@@ -170,13 +170,17 @@ def start(logfile=None, profile=False):
         'readable_license': lambda s: dict(LICENSES).get(s, LICENSES[0][1]),
         'is_rtl': Lazy(lambda: request.locale in RTL_LANGS),
         'dir': lambda l: 'rtl' if l in RTL_LANGS else 'auto',
+        'LANGS': LANGS,
+        'UI_LANGS': UI_LANGS,
+        'SELECT_LANGS': SELECT_LANGS,
         'u': to_unicode,
     })
 
     # Add middlewares
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
-    wsgiapp = I18NPlugin(wsgiapp, langs=LOCALES, default_locale=DEFAULT_LOCALE,
-                         domain='librarian', locale_dir=in_pkg('locales'))
+    wsgiapp = I18NPlugin(wsgiapp, langs=UI_LANGS,
+                         default_locale=DEFAULT_LOCALE, domain='librarian',
+                         locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
 
     if profile:
