@@ -169,6 +169,7 @@ def start(logfile=None, profile=False):
         'updates': Lazy(lambda: len(list(get_zipballs()))),
         'readable_license': lambda s: dict(LICENSES).get(s, LICENSES[0][1]),
         'is_rtl': Lazy(lambda: request.locale in RTL_LANGS),
+        'dir': lambda l: 'rtl' if l in RTL_LANGS else 'auto',
         'u': to_unicode,
     })
 
