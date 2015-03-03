@@ -39,82 +39,122 @@ List of translation contributors
 Special thanks to all those who have contributed their valuable time and
 knowledge:
 
+- Kurei-Z
+- Haveson Florvil Alphanet
 - Susruthan Seran
+- Ignas Sklerius
+- Dani Álvarez
 - Mogens From
 - necklinux
-- Ignas Sklerius
+- Stefan Ionita
+- Lars Lillo Ulvestad
 - Max Boone
+- Eric Alexander
+- Rafael Leda
+- Daniel Antal
+- Emanuelis Adomaitis
 - Filippo
 - zaid
 - Manish Rastogi
 - cavit
-- Lars Lillo Ulvestad
+- Surit
 - Chengtao Hua
 - Josep Manel
+- Saman rajaei
 - patrik
 - Aadarsh
-- André Daniel
 - Kajcha
-- Morten
+- André Daniel
+- Andrey
 - Ismail Al Ahmad
+- Morten
+- Morteza
+- Max Sundström
 - Viktoria
 - David Marques
+- Warodom Phaenthong
+- Baris Sekerciler
 - Tolga Evcimen
-- Arthur
+- Will Martin
 - Manoel Junior
-- Vibhor Dubey
-- Gustaf
 - Krabbs
+- Vibhor Dubey
+- Nelson Macchi
+- M. Ammar
+- Gustaf
+- Hammad Tariq
 - Romaric FAVE
 - Peer Oliver Schmidt
+- javad katooli
+- dan
 - Gerry Galactic
+- Varshan BP
 - Frédéric Uhrweiller
+- Pengan Zhou
+- Arthur
 - Navina
+- Nicky Kouffeld, Dutchwebs
 - Sakara
-- Luis Fuentes
 - Bruno Nogueira
+- Mohammad Reza Golaghaee
+- Luis Fuentes
 - Marco Rubio
+- Rodrigo
+- Kasparas
 - Frederik
 - zanghel
 - Benoît Casanova
 - Gonzalo
-- Janberk Genç
+- Anirban Chatterjee
 - Christian Novrup
-- Terrence
-- daming_99
+- Janberk Genç
+- Mario Lopez
 - Dana Tierney
+- Terrence
 - Ahmed
-- Francesca
-- Sebastian Borg
+- daming_99
 - Steffie
+- Francesca
 - HM
 - Julien
+- Sebastian Borg
 - Ronald Philipsen
-- Gabriel
 - Rebeca Virgo
+- Ciprian
+- Gabriel
 - Salutlolo
-- Tori Arbaugh
-- Baris Kilic
 - Souhaïl BOUGRINE
-- Massimiliano CARNEMOLLA
+- Baris Kilic
+- Tori Arbaugh
+- Hamza Siddiqui
 - Thibaut
+- Alireza Keshavarz
 - Jannis A. K.
+- Miguel Maldonado
+- Daem0n
+- tommaso
+- Moe Ihab
+- Massimiliano CARNEMOLLA
+- Behzad
+- Mehmet Mallı
 - Buddha Burman
 - Zipper
-- Miguel Maldonado
-- Klara Milena Hirscher
-- Алексей
-- Andrew
-- Zakaria Bendali
-- Roman
-- Christoph Nebendahl
-- Siddharth Nair
-- Chase Burgess
-- Moayed Jaghoub
-- Slandgkearth
-- soukayna
-- ix
 - Sai Chakradhar Araveti
+- Klara Milena Hirscher
+- Andrew
+- soukayna
+- Zakaria Bendali
+- Siddharth Nair
+- Bruno
+- Francis
+- Roman
+- ix
+- Christoph Nebendahl
+- Алексей
+- behzad
+- Chase Burgess
+- Slandgkearth
+- DURAIRAJAA N
 
 Reporting bugs and feature requests
 ===================================
