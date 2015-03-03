@@ -5,232 +5,248 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: Librarian\n"
-"Language: ru\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);\n"
 
 #: librarian\app.py:189 librarian\views\base.tpl:8 librarian\views\base.tpl:50
 msgid "Librarian"
-msgstr "Библиотекарь"
+msgstr "Bibliotecar"
 
 #: librarian\views\base.tpl:29 librarian\views\dashboard.tpl:3
 #: librarian\views\dashboard.tpl:6
+#, fuzzy
 msgid "Dashboard"
-msgstr "Панель"
+msgstr "Panoul de control"
 
 #: librarian\views\favorites.tpl:2 librarian\views\favorites.tpl:4
 msgid "Favorites"
-msgstr "Любимые"
+msgstr "Favorite"
 
 #: librarian\views\base.tpl:27 librarian\views\downloads.tpl:2
 #: librarian\views\downloads.tpl:4
+#, fuzzy
 msgid "Updates"
-msgstr "Обновления"
+msgstr "Noutăţi"
 
 #: librarian\views\cleanup.tpl:13
+#, fuzzy
 msgid "%s more space should be freed."
-msgstr "Должно быть освобождено больше места"
+msgstr "Ar trebui sa se mai elibereze %s."
 
 #: librarian\views\cleanup.tpl:17
+#, fuzzy
 msgid "Remember that favorited content cannot be deleted."
-msgstr "Помните лучший контент не может быть удален"
+msgstr "Amintiți-va ca conținutul care a fost adăugat la favorite nu poate fi șters."
 
 #: librarian\views\cleanup.tpl:22
+#, fuzzy
 msgid "There is enough free space on storage"
-msgstr "Существует достаточно свободного места на хранение"
+msgstr "Este destul spatiu liber."
 
 #: librarian\views\cleanup.tpl:30
+#, fuzzy
 msgid "delete?"
-msgstr "удалить?"
+msgstr "stergeți?"
 
 #: librarian\views\cleanup.tpl:32 librarian\views\favorites.tpl:15
 msgid "date"
-msgstr "дата"
+msgstr "dată"
 
 #: librarian\views\cleanup.tpl:34 librarian\views\downloads.tpl:29
 #: librarian\views\favorites.tpl:17
 msgid "title"
-msgstr "название"
+msgstr "titru"
 
 #: librarian\views\cleanup.tpl:36
 msgid "size"
-msgstr "размер"
+msgstr "mărime"
 
 #: librarian\views\cleanup.tpl:52
+#, fuzzy
 msgid "There is enough free space. No clean-up needed."
-msgstr "Свободного места достаточно. Очистка не требуется."
+msgstr "Este destul spațiu liber. Nu e necesar un clean-up."
 
 #: librarian\views\cleanup.tpl:59
+#, fuzzy
 msgid "How much space does this free up?"
-msgstr "Сколько места освободится?"
+msgstr "Cât spațiu va elibera aceasta acțiune?"
 
 #: librarian\views\cleanup.tpl:61
+#, fuzzy
 msgid "Delete selected now"
-msgstr "Удалить выбранное сейчас"
+msgstr "Ștergeți ce e selectat acum"
 
 #: librarian\plugins\diskspace\views\diskspace.tpl:41
 msgid "used space"
-msgstr "использовать место"
+msgstr "spațiu folosit"
 
 #: librarian\views\dashboard.tpl:19
 msgid "last update"
-msgstr "последнее обновление"
+msgstr "ultima actualizare"
 
 #: librarian\plugins\diskspace\views\diskspace.tpl:24
 msgid "You are running low on disk space."
-msgstr "Вы испытываете нехватку дискового пространства."
+msgstr "Mai rămâne putin spațiu pe disc."
 
 #: librarian\plugins\diskspace\views\diskspace.tpl:26
 msgid "Free some space now"
-msgstr "Освободите место сейчас"
+msgstr "Eliberați niște spațiu acum"
 
 #: librarian\views\downloads.tpl:27
 msgid "select"
-msgstr "выберите"
+msgstr "selectați"
 
 #: librarian\views\downloads.tpl:56
+#, fuzzy
 msgid "There is no new content"
-msgstr "Это не новый контент"
+msgstr "Nu e nici un conținut nou."
 
 #: librarian\views\_list_controls.tpl:9
 msgid "Delete selected"
-msgstr "Удалить выбранное"
+msgstr "Ștergeți ce e selectat"
 
 #: librarian\views\favorites.tpl:26
 msgid "unfavorite"
-msgstr "Не любимый"
+msgstr "Scoateți de la favorite"
 
 #: librarian\views\base.tpl:21 librarian\views\content_list.tpl:4
 #: librarian\views\content_list.tpl:7
 msgid "Library"
-msgstr "Библиотека"
+msgstr "Bibliotecă"
 
 #: librarian\views\content_list.tpl:61
+#, fuzzy
 msgid "Content library is currently empty"
-msgstr "Библиотека публикаций пуста"
+msgstr "Conținutul din librărie e gol în acest moment"
 
 #: librarian\views\content_list.tpl:18
+#, fuzzy
 msgid "search titles"
-msgstr "Найти названия"
+msgstr "cautați în titruri"
 
 #: librarian\views\content_list.tpl:20 librarian\views\content_list.tpl:45
 #: librarian\views\file_list.tpl:14
 msgid "go"
-msgstr "перейти"
+msgstr "căutați"
 
 #: librarian\views\content_list.tpl:23
 msgid "clear"
-msgstr "ясно"
+msgstr "Ștergeți"
 
 #: librarian\views\dashboard.tpl:13
 msgid "update available"
 msgid_plural "updates available"
-msgstr[0] "доступно обновление"
-msgstr[1] "доступны обновления"
-msgstr[2] "доступны обновления"
+msgstr[0] "actualizare disponibilă"
+msgstr[1] "actualizari disponibile"
+msgstr[2] "actualizari disponibile"
 
 #: librarian\plugins\diskspace\plugin.py:88
 msgid "Content library stats"
-msgstr "Содержание Статистики библиотеки"
+msgstr "Statisticile librăriei de conținut"
 
 #: librarian\plugins\diskspace\views\diskspace.tpl:35
 msgid "item in the library"
 msgid_plural "items in the library"
-msgstr[0] "Элемент в библиотеке"
-msgstr[1] "Элементы в библиотеке"
-msgstr[2] "элементы в библиотеке"
+msgstr[0] "articol în librerie"
+msgstr[1] "articole în librerie"
+msgstr[2] "articole în librerie"
 
 #: librarian\plugins\logs\plugin.py:26
 msgid "Application logs"
-msgstr "Журналы программы"
+msgstr "Application logs"
 
 #: librarian\plugins\logs\views\logs.tpl:4
 msgid "Logs are shown in reverse chronological order"
-msgstr "Журналы показаны в обратном хронологическом порядке"
+msgstr "Intrările sunt prezentate în ordine invers cronologică."
 
 #: librarian\views\_list_controls.tpl:3
 msgid "Select all"
-msgstr "Выбрать все"
+msgstr "Selectați tot"
 
 #: librarian\views\_list_controls.tpl:5
 msgid "Select none"
-msgstr "Ничего не выбрать"
+msgstr "Anulați selecția"
 
+#. Is this the verb "broadcast" or the noun?
 #: librarian\views\downloads.tpl:31
 msgid "broadcast"
-msgstr "трансляции"
+msgstr "broadcast"
 
 #: librarian\views\downloads.tpl:33
 msgid "downloaded"
-msgstr "скачано"
+msgstr "descărcat"
 
 #: librarian\views\content_list.tpl:52
+#, fuzzy
 msgid "Showing search results for '%(terms)s'"
-msgstr "Показаны результаты поиска для '%(terns)s'"
+msgstr "Rezultate pentru '%(terms)s'"
 
 #: librarian\views\content_list.tpl:64
 msgid "There are no search results for '%(terms)s'"
-msgstr "Здесь нет результатов поиска по '%(terms)с'"
+msgstr "Nu s-a găsit nici un rezultat pentru '%(terms)s'"
 
 #. Translators, used in the pager
 #: librarian\views\_simple_pager.tpl:4
 msgid "previous"
-msgstr "предыдущий"
+msgstr "pagina precedentă"
 
 #. Translators, used in the pager
 #: librarian\views\_simple_pager.tpl:8
 msgid "next"
-msgstr "Следующий"
+msgstr "pagina unmătoare"
 
 #. Translators, used as page title
 #. Translators, used as page title on clean-up page
 #: librarian\views\cleanup.tpl:2 librarian\views\cleanup.tpl:4
+#, fuzzy
 msgid "Library clean-up"
-msgstr "Чистка библиотеки"
+msgstr "Curățarea libreriei"
 
 #. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
 #: librarian\views\content_list.tpl:29 librarian\views\downloads.tpl:10
 msgid "page"
-msgstr "страница"
+msgstr "pagina"
 
 #. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
 #: librarian\views\content_list.tpl:43 librarian\views\downloads.tpl:13
 msgid "per page"
-msgstr "на странице"
+msgstr "pe pagină"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: librarian\plugins\diskspace\views\diskspace.tpl:8
+#, fuzzy
 msgid "download directory (%s free)"
-msgstr "скачать каталог (%s свободного)"
+msgstr "directorul de descărcare (%s liber)"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: librarian\plugins\diskspace\views\diskspace.tpl:14
 msgid "content library (%s free)"
-msgstr "содержание библиотеки (%s свободного)"
+msgstr "librăria de conținut (%s liber)"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: librarian\plugins\diskspace\views\diskspace.tpl:19
 msgid "total space (%s free)"
-msgstr "Всего места (%s свободного)"
+msgstr "spațiu total (%s liber)"
 
 #. Translators, used as button label on updates page for adding marked content to library
 #: librarian\views\_list_controls.tpl:7
 msgid "Add selected to library"
-msgstr "Добавить выбранное в библиотеку"
+msgstr "Adaugați selecția la librărie"
 
 #. Translators, used as 'content belongs to core archive' badge
 #: librarian\lib\downloads.py:327
 msgid "core"
-msgstr "ядро"
+msgstr "core"
 
 #. Translators, used as 'partner content' badge
 #: librarian\lib\downloads.py:331
 msgid "partner"
-msgstr "партнер"
+msgstr "partner"
 
 #. Translators, used as 'sponsored content' badge
 #: librarian\lib\downloads.py:329
 msgid "sponsored"
-msgstr "спонсируемый"
+msgstr "sponsorizat"
 
 #. Translators, used as page title
 #. Translators, used as page heading
@@ -241,23 +257,23 @@ msgstr "спонсируемый"
 #: librarian\views\app_list.tpl:2 librarian\views\app_list.tpl:6
 #: librarian\views\base.tpl:25
 msgid "Apps"
-msgstr "Программы"
+msgstr "Aplicații"
 
 #. Translators, refers to app author
 #: librarian\views\app_list.tpl:18
 msgid "author:"
-msgstr "автор:"
+msgstr "autor:"
 
 #. Translators, refers to app version
 #: librarian\plugins\license\views\license.tpl:13
 #: librarian\views\app_list.tpl:20
 msgid "version:"
-msgstr "версия:"
+msgstr "versiune:"
 
 #. Translators, message show in app listing when no apps are present.
 #: librarian\views\app_list.tpl:29
 msgid "No apps found."
-msgstr "Программы не найдены."
+msgstr "Nici o aplicație a fost găsita."
 
 #. Translators, used main navigation menu
 #. Translators, used as page title
@@ -268,301 +284,307 @@ msgstr "Программы не найдены."
 #: librarian\views\base.tpl:23 librarian\views\file_list.tpl:2
 #: librarian\views\file_list.tpl:6
 msgid "Files"
-msgstr "Файлы"
+msgstr "Fișiere"
 
 #: librarian\views\downloads.tpl:14
 msgid "Reload"
-msgstr "Перезагружать"
+msgstr "Actualizare"
 
 #: librarian\views\downloads.tpl:46
 msgid "replaces:"
-msgstr "заменяет:"
+msgstr "înlocuiește:"
 
 #. Translators, used as note shown on favorites page when user has no favorites
 #: librarian\views\favorites.tpl:9
 msgid "You have not favorited any content yet"
-msgstr "Вы еще не выбрали любимый контент"
+msgstr "Inca nu ați adăugat continut la favorite"
 
 #. Translators, used as label for link that leads to parent directory in file listing
 #: librarian\views\file_list.tpl:23
+#, fuzzy
 msgid "(go up one level)"
-msgstr "(перейти на один уровень вверх)"
+msgstr "(sus un nivel)"
 
 #: librarian\views\file_list.tpl:44 librarian\views\file_list.tpl:63
 msgid "Rename"
-msgstr "Переименовать"
+msgstr "Redenumiți"
 
 #: librarian\views\file_list.tpl:49 librarian\views\file_list.tpl:68
 msgid "Delete"
-msgstr "Удалить"
+msgstr "Ștergeți"
 
 #: librarian\views\file_list.tpl:85
+#, fuzzy
 msgid "About this folder"
-msgstr "Об этой папке"
+msgstr "Despre acest dosar"
 
 #. Translators, used as page title for page that shows result of running a script
 #. Translators, used as page header for page that shows result of running a script
 #: librarian\views\exec_result.tpl:2 librarian\views\exec_result.tpl:5
+#, fuzzy
 msgid "Script output"
-msgstr "Вывод скрипта"
+msgstr "Rezultatul scriptului"
 
 #. Translators, return (result) code of the script executed via file browser
 #: librarian\views\exec_result.tpl:11
 msgid "return code:"
-msgstr "код возврата:"
+msgstr "return code:"
 
 #. Translators, shown when result code is good (0).
 #: librarian\views\exec_result.tpl:14
 msgid "OK"
-msgstr "OK"
+msgstr "Bun"
 
 #. Translators, shown when result code is not good (non-zero).
 #: librarian\views\exec_result.tpl:17
 msgid "error"
-msgstr "ошибка"
+msgstr "eroare"
 
 #. Translators, refers to standard output of script run from file browser (STDOUT)
 #: librarian\views\exec_result.tpl:22
 msgid "Output"
-msgstr "Выходные данные"
+msgstr "Output"
 
 #. Translators, shown if script returned no output
 #: librarian\views\exec_result.tpl:27
 msgid "no output"
-msgstr "Нет выходных данных"
+msgstr "no output"
 
 #. Translators, refers to standard errors of script run from file browser (STDERR)
 #: librarian\views\exec_result.tpl:32
 msgid "Errors"
-msgstr "Oшибки"
+msgstr "Erori"
 
 #. Translators, label for button in file listing that allows user to run a script
 #: librarian\views\file_list.tpl:75
 msgid "Run"
-msgstr "Исполнит"
+msgstr "Executați"
 
 #. Translators, this is used when app doesn't provide a description
 #: librarian\lib\apps.py:45
 msgid "No description provided"
-msgstr "Нет описания"
+msgstr "Nici o descriere a fost dată"
 
 #: librarian\lib\downloads.py:34
 msgid "Unknown license"
-msgstr "Неизвестная лицензия"
+msgstr "Licență necunoscută"
 
 #: librarian\lib\downloads.py:35
 msgid "Creative Commons Attribution"
-msgstr "Creative Commons Attribution "
+msgstr "Creative Commons Attribution"
 
 #: librarian\lib\downloads.py:36
 msgid "Creative Commons Attribution-NoDerivs"
-msgstr "Creative Commons Attribution-NoDerivs "
+msgstr "Creative Commons Attribution-NoDerivs"
 
 #: librarian\lib\downloads.py:37
 msgid "Creative Commons Attribution-NonCommercial"
-msgstr "Creative Commons Attribution-NonCommercial "
+msgstr "Creative Commons Attribution-NonCommercial"
 
 #: librarian\lib\downloads.py:38
 msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
-msgstr "Creative Commons Attribution-NonCommercial-NoDerivs "
+msgstr "Creative Commons Attribution-NonCommercial-NoDerivs"
 
 #: librarian\lib\downloads.py:40
 msgid "Creative Commons Attribution-ShareAlike"
-msgstr "Creative Commons Attribution-ShareAlike "
+msgstr "Creative Commons Attribution-ShareAlike"
 
 #: librarian\lib\downloads.py:41
 msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
-msgstr "Creative Commons Attribution-NonCommercial-ShareAlike "
+msgstr "Creative Commons Attribution-NonCommercial-ShareAlike"
 
 #: librarian\lib\downloads.py:43
 msgid "GNU Free Documentation License"
-msgstr "GNU Free Documentation License "
+msgstr "GNU Free Documentation License"
 
 #: librarian\lib\downloads.py:44
 msgid "Open Publication License"
-msgstr "Open Publication License "
+msgstr "Open Publication License"
 
 #: librarian\lib\downloads.py:45
 msgid "Open Content License"
-msgstr "Open Content License "
+msgstr "Open Content License"
 
 #: librarian\lib\downloads.py:46
 msgid "Against DRM License"
-msgstr "Against DRM License "
+msgstr "Against DRM License"
 
 #: librarian\lib\downloads.py:47
 msgid "Free Art License"
-msgstr "Лицензия Свободного Искусства (Free Art License)"
+msgstr "Free Art License"
 
 #: librarian\lib\downloads.py:48
 msgid "Public Domain"
-msgstr "Публичный домен"
+msgstr "Public Domain"
 
 #: librarian\lib\downloads.py:49
 msgid "Other free license"
-msgstr "Другие свободные лицензии"
+msgstr "Other free license"
 
 #: librarian\lib\downloads.py:50
 msgid "All rights reserved"
-msgstr "Все права защищены"
+msgstr "Toate drepturile rezervate"
 
 #: librarian\lib\downloads.py:51
 msgid "Other non-free license"
-msgstr "Другие не свободные лицензии"
+msgstr "Altă licență plătită"
 
 #. Translators, used as response to innvalid HTTP request
 #: librarian\plugins\diskspace\plugin.py:38 librarian\routes\favorites.py:35
 #: librarian\routes\favorites.py:38
 msgid "Invalid request"
-msgstr "Неверный запрос"
+msgstr "Cerere invalidă"
 
 #. Translators, used as message to user when clean-up is started
 #. without selecting any content
 #: librarian\plugins\diskspace\plugin.py:46
 msgid "No content selected"
-msgstr "Контент не выбран"
+msgstr "Nici un conținut selectat"
 
 #. Translators, used when user is previewing clean-up, %s is
 #. replaced by amount of content that can be freed in bytes,
 #. KB, MB, etc
 #: librarian\plugins\diskspace\plugin.py:53
 msgid "%s can be freed by removing selected content"
-msgstr "%s может быть освобождени путем удаления выбранного Контента"
+msgstr "%s pot fi eliberat prin ștergerea conținutului selectat"
 
 #. Translators, error message shown on clean-up page when some of
 #. the content could not be removed for unknown reasons
 #: librarian\plugins\diskspace\plugin.py:65
 msgid "Some files could not be removed"
-msgstr "Некоторые файлы не могут быть удалены"
+msgstr "Unele fișiere nu au putut fi șterse"
 
 #. Translators, error message shown on clean-up page when there was
 #. no deletable content
 #: librarian\plugins\diskspace\plugin.py:69
 msgid "Nothing to delete"
-msgstr "Ничего не удалять"
+msgstr "Nimic de șters"
 
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
 #: librarian\routes\downloads.py:68
 msgid "Invalid action, please use one of the form buttons."
-msgstr "Неправильное действие, пожалуйста, используйте одну из кнопок в форме."
+msgstr "Acțiune invalidă, va rugam sa folosiți un buton din formular"
 
 #: librarian\views\reader.tpl:14
 msgid "content partner"
-msgstr "контент-партнер"
+msgstr "conținut de la un partener"
 
 #: librarian\views\reader.tpl:19
 msgid "sponsored content"
-msgstr "спонсируемый контент"
+msgstr "conținut sponsorizat"
 
 #: librarian\views\reader.tpl:23
+#, fuzzy
 msgid "Outernet core archive"
-msgstr "Outernet основной архив"
+msgstr "Arhiva principala Outernet"
 
 #. Translators, used as placeholder while infinite scrolling content is being loaded
 #: librarian\views\content_list.tpl:84
+#, fuzzy
 msgid "Loading..."
-msgstr "Загружается..."
+msgstr "Încărcare..."
 
 #. Translators, shown when user reaches the end of the library
 #: librarian\views\content_list.tpl:91
+#, fuzzy
 msgid "You have reached the end of the library."
-msgstr "Вы достигли конца библиотеки."
+msgstr "Ați ajuns sfârșitul acestei librărie"
 
 #. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
 #: librarian\views\content_list.tpl:93 librarian\views\content_list.tpl:100
 msgid "Go to top"
-msgstr "В верх"
+msgstr "Go to top"
 
 #. Translators, used as section heading on dashboard above 'About' section
 #: librarian\plugins\license\plugin.py:26
 msgid "About"
-msgstr "Описание"
+msgstr "Despre"
 
 #. Translators, appears in copyright line in dashboard's 'About' section
 #: librarian\plugins\license\views\license.tpl:16
 msgid "Some rights reserved."
-msgstr "Некоторые права защищены."
+msgstr "Unele drepturi rezervate"
 
 #: librarian\routes\content.py:57
 msgid "Specified tag was not found"
-msgstr "Указанная метка не найдена"
+msgstr "Eticheta specificata nu a fost găsita"
 
 #. Translators, used as not on library page when there is no content for given tag
 #: librarian\views\content_list.tpl:67
 msgid "There are no results for '%(tag)s'"
-msgstr "Нет результатов для '%(tag)s'"
+msgstr "Nici un rezultat pentru '%(tag)s'"
 
 #. Translators, button label for a button that saves user tags for a piece of content
 #: librarian\views\_tags.tpl:8
 msgid "Save tags"
-msgstr "Сохранить метку"
+msgstr "Înregistrați etichetele"
 
 #. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
 #: librarian\views\_tags.tpl:12
 msgid "Separate tags with commas"
-msgstr "Отделить метки запятыми"
+msgstr "Separați etichetele cu virgule"
 
 #. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
 #: librarian\views\_tag_cloud.tpl:5
 msgid "everything"
-msgstr "все"
+msgstr "tot"
 
 #. Translators, used as label for button that appears next to tag list
 #: librarian\views\_tag_js_templates.tpl:3
 msgid "Edit tags"
-msgstr "Редактировать метки"
+msgstr "Modificați etichetele"
 
 #. Translators, used as label for button that appears in tag editing form
 #: librarian\views\_tag_js_templates.tpl:8
 msgid "Close"
-msgstr "Закрыть"
+msgstr "Închideți"
 
 #. Translators, error message shown when updating tags fails
 #: librarian\views\_tag_js_templates.tpl:13
 msgid "Tags could not be updated."
-msgstr "Mетки не могут быть обновлены."
+msgstr "Etichetele nu au putut fi actualizate"
 
 #. Translators, link that loads more content in infinite scrolling page
 #: librarian\views\content_list.tpl:76
 msgid "Load more content"
-msgstr "Загрузить больше контента"
+msgstr "Încărcați mai mult conținut"
 
 #. Translators, used as section heading on dashboard
 #: librarian\plugins\ondd\plugin.py:183
 #: librarian\plugins\tvheadend\plugin.py:24
 msgid "Tuner settings"
-msgstr "Настройки тюнера"
+msgstr "Tuner settings"
 
 #: librarian\plugins\tvheadend\views\tvheadend.tpl:4
 msgid "Access TVHeadend"
-msgstr "Доступ головной станции ТВ"
+msgstr "Accesați TVHeadend"
 
 #: librarian\views\file_list.tpl:35
 msgid "There are currently no files or folders here."
-msgstr "Здесь пока еще нет файлов или папок."
+msgstr "Nu sunt fișiere sau dosare aici în acest moment"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\remove_error.tpl:2 librarian\views\remove_error.tpl:5
 msgid "Content could not be removed"
-msgstr "Контент не может быть удален"
+msgstr "Conținutul nu a putut fi sters"
 
 #. Translators, message displayed when content cannot be deleted
 #: librarian\views\remove_error.tpl:9
 msgid "Please make sure the storage device is not write-protected and try again."
-msgstr "Пожалуйста, убедитесь, что устройства хранения данных не защищено от записи и повторите попытку."
+msgstr "Vă rugăm să vă asigurați că dispozitivul de stocare nu este protejat împotriva scrieri și încercați din nou."
 
 #. Translators, used as label on button for retrying content removal
 #: librarian\views\remove_error.tpl:13
 msgid "Retry"
-msgstr "Повторить"
+msgstr "Încercați din nou"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\tag_cloud.tpl:2 librarian\views\tag_cloud.tpl:5
 msgid "Tag cloud"
-msgstr "Облако меток"
+msgstr "Tag cloud"
 
 #. Translators, error message during database backup
 #. Translators, error message during database backup

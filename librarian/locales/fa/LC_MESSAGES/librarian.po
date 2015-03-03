@@ -5,232 +5,231 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: Librarian\n"
-"Language: ru\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: fa\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: librarian\app.py:189 librarian\views\base.tpl:8 librarian\views\base.tpl:50
 msgid "Librarian"
-msgstr "Библиотекарь"
+msgstr "کتابدار"
 
 #: librarian\views\base.tpl:29 librarian\views\dashboard.tpl:3
 #: librarian\views\dashboard.tpl:6
 msgid "Dashboard"
-msgstr "Панель"
+msgstr "پنل کنترل"
 
 #: librarian\views\favorites.tpl:2 librarian\views\favorites.tpl:4
 msgid "Favorites"
-msgstr "Любимые"
+msgstr "مورد علاقه ها"
 
 #: librarian\views\base.tpl:27 librarian\views\downloads.tpl:2
 #: librarian\views\downloads.tpl:4
 msgid "Updates"
-msgstr "Обновления"
+msgstr "به روز رسانی"
 
 #: librarian\views\cleanup.tpl:13
 msgid "%s more space should be freed."
-msgstr "Должно быть освобождено больше места"
+msgstr "% فضای بیشتر باید خالی گردد"
 
 #: librarian\views\cleanup.tpl:17
 msgid "Remember that favorited content cannot be deleted."
-msgstr "Помните лучший контент не может быть удален"
+msgstr "به یاد داشته باشید که محتوای مورد علاقه نمیتواند پاک شود"
 
 #: librarian\views\cleanup.tpl:22
+#, fuzzy
 msgid "There is enough free space on storage"
-msgstr "Существует достаточно свободного места на хранение"
+msgstr "فضای کافی در حافظه موجود است"
 
 #: librarian\views\cleanup.tpl:30
 msgid "delete?"
-msgstr "удалить?"
+msgstr "پاک شود؟"
 
 #: librarian\views\cleanup.tpl:32 librarian\views\favorites.tpl:15
 msgid "date"
-msgstr "дата"
+msgstr "تاریخ"
 
 #: librarian\views\cleanup.tpl:34 librarian\views\downloads.tpl:29
 #: librarian\views\favorites.tpl:17
 msgid "title"
-msgstr "название"
+msgstr "عنوان"
 
 #: librarian\views\cleanup.tpl:36
 msgid "size"
-msgstr "размер"
+msgstr "اندازه ,حجم"
 
 #: librarian\views\cleanup.tpl:52
 msgid "There is enough free space. No clean-up needed."
-msgstr "Свободного места достаточно. Очистка не требуется."
+msgstr "فضای کافی موجود است. پاک سازی لازم نیست."
 
 #: librarian\views\cleanup.tpl:59
 msgid "How much space does this free up?"
-msgstr "Сколько места освободится?"
+msgstr "چه مقدار از حافظه با این کار خالی میشود؟"
 
 #: librarian\views\cleanup.tpl:61
 msgid "Delete selected now"
-msgstr "Удалить выбранное сейчас"
+msgstr "موارد انتخاب شده پاک شود."
 
 #: librarian\plugins\diskspace\views\diskspace.tpl:41
 msgid "used space"
-msgstr "использовать место"
+msgstr "فضای استفاده شده"
 
 #: librarian\views\dashboard.tpl:19
 msgid "last update"
-msgstr "последнее обновление"
+msgstr "آخرین به روز رسانی "
 
 #: librarian\plugins\diskspace\views\diskspace.tpl:24
 msgid "You are running low on disk space."
-msgstr "Вы испытываете нехватку дискового пространства."
+msgstr "شما فضای زیادی بر روی دیسک ندارید"
 
 #: librarian\plugins\diskspace\views\diskspace.tpl:26
 msgid "Free some space now"
-msgstr "Освободите место сейчас"
+msgstr "اکنون مقداری از فضا را آزاد کنید"
 
 #: librarian\views\downloads.tpl:27
 msgid "select"
-msgstr "выберите"
+msgstr "انتخاب"
 
 #: librarian\views\downloads.tpl:56
 msgid "There is no new content"
-msgstr "Это не новый контент"
+msgstr "محتوای جدیدی موجود نیست"
 
 #: librarian\views\_list_controls.tpl:9
 msgid "Delete selected"
-msgstr "Удалить выбранное"
+msgstr "موارد انتخاب شده پاک گردد"
 
 #: librarian\views\favorites.tpl:26
 msgid "unfavorite"
-msgstr "Не любимый"
+msgstr "عدم علاقه"
 
 #: librarian\views\base.tpl:21 librarian\views\content_list.tpl:4
 #: librarian\views\content_list.tpl:7
 msgid "Library"
-msgstr "Библиотека"
+msgstr "کتابخانه"
 
 #: librarian\views\content_list.tpl:61
 msgid "Content library is currently empty"
-msgstr "Библиотека публикаций пуста"
+msgstr "مخزن محتوا در حال حاضر خالی است "
 
 #: librarian\views\content_list.tpl:18
 msgid "search titles"
-msgstr "Найти названия"
+msgstr "جستجو در بین ِ عناوین"
 
 #: librarian\views\content_list.tpl:20 librarian\views\content_list.tpl:45
 #: librarian\views\file_list.tpl:14
 msgid "go"
-msgstr "перейти"
+msgstr "برو"
 
 #: librarian\views\content_list.tpl:23
 msgid "clear"
-msgstr "ясно"
+msgstr "پاک کردن"
 
 #: librarian\views\dashboard.tpl:13
 msgid "update available"
 msgid_plural "updates available"
-msgstr[0] "доступно обновление"
-msgstr[1] "доступны обновления"
-msgstr[2] "доступны обновления"
+msgstr[0] "بروز رسانی موجود است\n"
+"جمع: چند بروز رسانی موجود است"
 
 #: librarian\plugins\diskspace\plugin.py:88
 msgid "Content library stats"
-msgstr "Содержание Статистики библиотеки"
+msgstr "وضعیت محتوای کتابخانه"
 
 #: librarian\plugins\diskspace\views\diskspace.tpl:35
 msgid "item in the library"
 msgid_plural "items in the library"
-msgstr[0] "Элемент в библиотеке"
-msgstr[1] "Элементы в библиотеке"
-msgstr[2] "элементы в библиотеке"
+msgstr[0] "ایتم  درون کتابخانه جمع: ایتم های درون کتابخانه"
 
 #: librarian\plugins\logs\plugin.py:26
 msgid "Application logs"
-msgstr "Журналы программы"
+msgstr "گزارشات برنامه"
 
 #: librarian\plugins\logs\views\logs.tpl:4
 msgid "Logs are shown in reverse chronological order"
-msgstr "Журналы показаны в обратном хронологическом порядке"
+msgstr "گزارش ها به ترتیب زمانی معکوس نشان داده شده است"
 
 #: librarian\views\_list_controls.tpl:3
 msgid "Select all"
-msgstr "Выбрать все"
+msgstr "انتخابِ همه"
 
 #: librarian\views\_list_controls.tpl:5
 msgid "Select none"
-msgstr "Ничего не выбрать"
+msgstr "انتخابِ هیچکدام"
 
 #: librarian\views\downloads.tpl:31
 msgid "broadcast"
-msgstr "трансляции"
+msgstr "پخش"
 
 #: librarian\views\downloads.tpl:33
 msgid "downloaded"
-msgstr "скачано"
+msgstr "دانلود شده"
 
 #: librarian\views\content_list.tpl:52
 msgid "Showing search results for '%(terms)s'"
-msgstr "Показаны результаты поиска для '%(terns)s'"
+msgstr "نشان دادنِ نتیجه یِ جستجوها برایِ '%(terms)s'"
 
 #: librarian\views\content_list.tpl:64
 msgid "There are no search results for '%(terms)s'"
-msgstr "Здесь нет результатов поиска по '%(terms)с'"
+msgstr "نتیجه ای برای  جستجو '%(terms)s'  یافت نشد"
 
 #. Translators, used in the pager
 #: librarian\views\_simple_pager.tpl:4
 msgid "previous"
-msgstr "предыдущий"
+msgstr "قبلی"
 
 #. Translators, used in the pager
 #: librarian\views\_simple_pager.tpl:8
 msgid "next"
-msgstr "Следующий"
+msgstr "بعدی"
 
 #. Translators, used as page title
 #. Translators, used as page title on clean-up page
 #: librarian\views\cleanup.tpl:2 librarian\views\cleanup.tpl:4
 msgid "Library clean-up"
-msgstr "Чистка библиотеки"
+msgstr "پاک سازی کتابخانه"
 
 #. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
 #: librarian\views\content_list.tpl:29 librarian\views\downloads.tpl:10
 msgid "page"
-msgstr "страница"
+msgstr "صفحه"
 
 #. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
 #: librarian\views\content_list.tpl:43 librarian\views\downloads.tpl:13
 msgid "per page"
-msgstr "на странице"
+msgstr "در هر صفحه"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: librarian\plugins\diskspace\views\diskspace.tpl:8
 msgid "download directory (%s free)"
-msgstr "скачать каталог (%s свободного)"
+msgstr "فهرست راهنما یِ دانلود"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: librarian\plugins\diskspace\views\diskspace.tpl:14
 msgid "content library (%s free)"
-msgstr "содержание библиотеки (%s свободного)"
+msgstr "محتوای کتابخانه (s% خالی)"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: librarian\plugins\diskspace\views\diskspace.tpl:19
 msgid "total space (%s free)"
-msgstr "Всего места (%s свободного)"
+msgstr "فضای کل (s% خالی)\n"
+""
 
 #. Translators, used as button label on updates page for adding marked content to library
 #: librarian\views\_list_controls.tpl:7
 msgid "Add selected to library"
-msgstr "Добавить выбранное в библиотеку"
+msgstr "اضافه کردن انتخاب شده به کتابخانه"
 
 #. Translators, used as 'content belongs to core archive' badge
 #: librarian\lib\downloads.py:327
 msgid "core"
-msgstr "ядро"
+msgstr "هسته"
 
 #. Translators, used as 'partner content' badge
 #: librarian\lib\downloads.py:331
 msgid "partner"
-msgstr "партнер"
+msgstr "شریک"
 
 #. Translators, used as 'sponsored content' badge
 #: librarian\lib\downloads.py:329
 msgid "sponsored"
-msgstr "спонсируемый"
+msgstr "تحت  حمایت"
 
 #. Translators, used as page title
 #. Translators, used as page heading
@@ -241,23 +240,23 @@ msgstr "спонсируемый"
 #: librarian\views\app_list.tpl:2 librarian\views\app_list.tpl:6
 #: librarian\views\base.tpl:25
 msgid "Apps"
-msgstr "Программы"
+msgstr "برنامه ها، اپلیکیشین ها"
 
 #. Translators, refers to app author
 #: librarian\views\app_list.tpl:18
 msgid "author:"
-msgstr "автор:"
+msgstr "نویسنده:"
 
 #. Translators, refers to app version
 #: librarian\plugins\license\views\license.tpl:13
 #: librarian\views\app_list.tpl:20
 msgid "version:"
-msgstr "версия:"
+msgstr "نسخه:"
 
 #. Translators, message show in app listing when no apps are present.
 #: librarian\views\app_list.tpl:29
 msgid "No apps found."
-msgstr "Программы не найдены."
+msgstr "اپلیکیشینی پیدا نشد."
 
 #. Translators, used main navigation menu
 #. Translators, used as page title
@@ -268,301 +267,359 @@ msgstr "Программы не найдены."
 #: librarian\views\base.tpl:23 librarian\views\file_list.tpl:2
 #: librarian\views\file_list.tpl:6
 msgid "Files"
-msgstr "Файлы"
+msgstr "پرونده ها، فایل ها"
 
 #: librarian\views\downloads.tpl:14
 msgid "Reload"
-msgstr "Перезагружать"
+msgstr "بارگذاری مجدد"
 
 #: librarian\views\downloads.tpl:46
 msgid "replaces:"
-msgstr "заменяет:"
+msgstr "جایگزین ها:"
 
 #. Translators, used as note shown on favorites page when user has no favorites
 #: librarian\views\favorites.tpl:9
 msgid "You have not favorited any content yet"
-msgstr "Вы еще не выбрали любимый контент"
+msgstr "شما هنوز محتوایی را موردِ علاقه یِ خود نکرده اید"
 
 #. Translators, used as label for link that leads to parent directory in file listing
 #: librarian\views\file_list.tpl:23
+#, fuzzy
 msgid "(go up one level)"
-msgstr "(перейти на один уровень вверх)"
+msgstr "(یک سطح برو بالا)"
 
 #: librarian\views\file_list.tpl:44 librarian\views\file_list.tpl:63
+#, fuzzy
 msgid "Rename"
-msgstr "Переименовать"
+msgstr "نامگذاری مجدد"
 
 #: librarian\views\file_list.tpl:49 librarian\views\file_list.tpl:68
+#, fuzzy
 msgid "Delete"
-msgstr "Удалить"
+msgstr "پاک کردن"
 
 #: librarian\views\file_list.tpl:85
+#, fuzzy
 msgid "About this folder"
-msgstr "Об этой папке"
+msgstr "درباره ی این پوشه"
 
 #. Translators, used as page title for page that shows result of running a script
 #. Translators, used as page header for page that shows result of running a script
 #: librarian\views\exec_result.tpl:2 librarian\views\exec_result.tpl:5
+#, fuzzy
 msgid "Script output"
-msgstr "Вывод скрипта"
+msgstr "خروجی اسکریپت"
 
 #. Translators, return (result) code of the script executed via file browser
 #: librarian\views\exec_result.tpl:11
 msgid "return code:"
-msgstr "код возврата:"
+msgstr "کد بازگشت:"
 
 #. Translators, shown when result code is good (0).
 #: librarian\views\exec_result.tpl:14
+#, fuzzy
 msgid "OK"
-msgstr "OK"
+msgstr "باشه"
 
 #. Translators, shown when result code is not good (non-zero).
 #: librarian\views\exec_result.tpl:17
+#, fuzzy
 msgid "error"
-msgstr "ошибка"
+msgstr "خطا"
 
 #. Translators, refers to standard output of script run from file browser (STDOUT)
 #: librarian\views\exec_result.tpl:22
+#, fuzzy
 msgid "Output"
-msgstr "Выходные данные"
+msgstr "خروجی"
 
 #. Translators, shown if script returned no output
 #: librarian\views\exec_result.tpl:27
+#, fuzzy
 msgid "no output"
-msgstr "Нет выходных данных"
+msgstr "خروجی وجود ندارد"
 
 #. Translators, refers to standard errors of script run from file browser (STDERR)
 #: librarian\views\exec_result.tpl:32
+#, fuzzy
 msgid "Errors"
-msgstr "Oшибки"
+msgstr "خطا ها"
 
 #. Translators, label for button in file listing that allows user to run a script
 #: librarian\views\file_list.tpl:75
+#, fuzzy
 msgid "Run"
-msgstr "Исполнит"
+msgstr "اِجرا"
 
 #. Translators, this is used when app doesn't provide a description
 #: librarian\lib\apps.py:45
+#, fuzzy
 msgid "No description provided"
-msgstr "Нет описания"
+msgstr "توضیحی ارائه نشده است"
 
 #: librarian\lib\downloads.py:34
+#, fuzzy
 msgid "Unknown license"
-msgstr "Неизвестная лицензия"
+msgstr "مجوز نامشخص"
 
 #: librarian\lib\downloads.py:35
+#, fuzzy
 msgid "Creative Commons Attribution"
-msgstr "Creative Commons Attribution "
+msgstr "تعیین مشخصه های معمول"
 
 #: librarian\lib\downloads.py:36
+#, fuzzy
 msgid "Creative Commons Attribution-NoDerivs"
-msgstr "Creative Commons Attribution-NoDerivs "
+msgstr "تعیین مشخصه های دیگر معمول غیر از منبع دریافت شده"
 
 #: librarian\lib\downloads.py:37
+#, fuzzy
 msgid "Creative Commons Attribution-NonCommercial"
-msgstr "Creative Commons Attribution-NonCommercial "
+msgstr "تعیین مشخصه های غیر تجاری معمول"
 
 #: librarian\lib\downloads.py:38
+#, fuzzy
 msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
-msgstr "Creative Commons Attribution-NonCommercial-NoDerivs "
+msgstr "تعیین مشخصه های غیر تجاری معمول غیر از منبع دریافت شده"
 
 #: librarian\lib\downloads.py:40
+#, fuzzy
 msgid "Creative Commons Attribution-ShareAlike"
-msgstr "Creative Commons Attribution-ShareAlike "
+msgstr "تعیین مشخصه های عمومی اشتراک گزاری شده"
 
 #: librarian\lib\downloads.py:41
+#, fuzzy
 msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
-msgstr "Creative Commons Attribution-NonCommercial-ShareAlike "
+msgstr "تعیین مشخصه های معمول -غیر تجاری -اشتراک گزاری شده"
 
 #: librarian\lib\downloads.py:43
+#, fuzzy
 msgid "GNU Free Documentation License"
-msgstr "GNU Free Documentation License "
+msgstr "مجوز مستندات آزاد GNU"
 
 #: librarian\lib\downloads.py:44
+#, fuzzy
 msgid "Open Publication License"
-msgstr "Open Publication License "
+msgstr "مجوز انتشار منابع آزاد"
 
 #: librarian\lib\downloads.py:45
+#, fuzzy
 msgid "Open Content License"
-msgstr "Open Content License "
+msgstr "مجوز  محنوای باز"
 
 #: librarian\lib\downloads.py:46
+#, fuzzy
 msgid "Against DRM License"
-msgstr "Against DRM License "
+msgstr "برخلاف مجوز DRM"
 
 #: librarian\lib\downloads.py:47
+#, fuzzy
 msgid "Free Art License"
-msgstr "Лицензия Свободного Искусства (Free Art License)"
+msgstr "مجوز هنر رایگان"
 
 #: librarian\lib\downloads.py:48
+#, fuzzy
 msgid "Public Domain"
-msgstr "Публичный домен"
+msgstr "دامنه های عمومی"
 
 #: librarian\lib\downloads.py:49
+#, fuzzy
 msgid "Other free license"
-msgstr "Другие свободные лицензии"
+msgstr "مجوز دیگر رایگان"
 
 #: librarian\lib\downloads.py:50
+#, fuzzy
 msgid "All rights reserved"
-msgstr "Все права защищены"
+msgstr "تمام حقوق محفوظ است"
 
 #: librarian\lib\downloads.py:51
+#, fuzzy
 msgid "Other non-free license"
-msgstr "Другие не свободные лицензии"
+msgstr "مجوز دیگرغیر رایگان"
 
 #. Translators, used as response to innvalid HTTP request
 #: librarian\plugins\diskspace\plugin.py:38 librarian\routes\favorites.py:35
 #: librarian\routes\favorites.py:38
+#, fuzzy
 msgid "Invalid request"
-msgstr "Неверный запрос"
+msgstr "درخواست نامعتبر"
 
 #. Translators, used as message to user when clean-up is started
 #. without selecting any content
 #: librarian\plugins\diskspace\plugin.py:46
+#, fuzzy
 msgid "No content selected"
-msgstr "Контент не выбран"
+msgstr "محتوایی انتخاب نشده است"
 
 #. Translators, used when user is previewing clean-up, %s is
 #. replaced by amount of content that can be freed in bytes,
 #. KB, MB, etc
 #: librarian\plugins\diskspace\plugin.py:53
+#, fuzzy
 msgid "%s can be freed by removing selected content"
-msgstr "%s может быть освобождени путем удаления выбранного Контента"
+msgstr "%s میتواند آزاد شود با حذف مطالب انتخاب شده"
 
 #. Translators, error message shown on clean-up page when some of
 #. the content could not be removed for unknown reasons
 #: librarian\plugins\diskspace\plugin.py:65
+#, fuzzy
 msgid "Some files could not be removed"
-msgstr "Некоторые файлы не могут быть удалены"
+msgstr "برخی از فایل ها نمی توانند حذف شوند"
 
 #. Translators, error message shown on clean-up page when there was
 #. no deletable content
 #: librarian\plugins\diskspace\plugin.py:69
+#, fuzzy
 msgid "Nothing to delete"
-msgstr "Ничего не удалять"
+msgstr "چیزی برای حذف شدن وجود ندارد"
 
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
 #: librarian\routes\downloads.py:68
+#, fuzzy
 msgid "Invalid action, please use one of the form buttons."
-msgstr "Неправильное действие, пожалуйста, используйте одну из кнопок в форме."
+msgstr "عملیات نامعتبر است، لطفا یکی از دکمه های فرم را استفاده کنید"
 
 #: librarian\views\reader.tpl:14
+#, fuzzy
 msgid "content partner"
-msgstr "контент-партнер"
+msgstr "شریک محتوا"
 
 #: librarian\views\reader.tpl:19
+#, fuzzy
 msgid "sponsored content"
-msgstr "спонсируемый контент"
+msgstr "محتوای اسپانسر"
 
 #: librarian\views\reader.tpl:23
+#, fuzzy
 msgid "Outernet core archive"
-msgstr "Outernet основной архив"
+msgstr " هسته بایگانی Outernet"
 
 #. Translators, used as placeholder while infinite scrolling content is being loaded
 #: librarian\views\content_list.tpl:84
+#, fuzzy
 msgid "Loading..."
-msgstr "Загружается..."
+msgstr "در حال بارگذاری ..."
 
 #. Translators, shown when user reaches the end of the library
 #: librarian\views\content_list.tpl:91
+#, fuzzy
 msgid "You have reached the end of the library."
-msgstr "Вы достигли конца библиотеки."
+msgstr "شما به پایان کتابخانه رسیده اید."
 
 #. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
 #: librarian\views\content_list.tpl:93 librarian\views\content_list.tpl:100
+#, fuzzy
 msgid "Go to top"
-msgstr "В верх"
+msgstr "برو بالا"
 
 #. Translators, used as section heading on dashboard above 'About' section
 #: librarian\plugins\license\plugin.py:26
+#, fuzzy
 msgid "About"
-msgstr "Описание"
+msgstr "درباره"
 
 #. Translators, appears in copyright line in dashboard's 'About' section
 #: librarian\plugins\license\views\license.tpl:16
+#, fuzzy
 msgid "Some rights reserved."
-msgstr "Некоторые права защищены."
+msgstr "برخی حقوق محفوظ است."
 
 #: librarian\routes\content.py:57
+#, fuzzy
 msgid "Specified tag was not found"
-msgstr "Указанная метка не найдена"
+msgstr "برچسب مشخص شده یافت نشد.\n"
+""
 
 #. Translators, used as not on library page when there is no content for given tag
 #: librarian\views\content_list.tpl:67
 msgid "There are no results for '%(tag)s'"
-msgstr "Нет результатов для '%(tag)s'"
+msgstr "هیچ نتیجه ای برای تگ  '%(tag)s'  یافت نشد"
 
 #. Translators, button label for a button that saves user tags for a piece of content
 #: librarian\views\_tags.tpl:8
+#, fuzzy
 msgid "Save tags"
-msgstr "Сохранить метку"
+msgstr "ذخیره برچسب ها"
 
 #. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
 #: librarian\views\_tags.tpl:12
+#, fuzzy
 msgid "Separate tags with commas"
-msgstr "Отделить метки запятыми"
+msgstr "جدا کردن برچسب ها با علامت ویرگول"
 
 #. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
 #: librarian\views\_tag_cloud.tpl:5
+#, fuzzy
 msgid "everything"
-msgstr "все"
+msgstr "تمام موارد"
 
 #. Translators, used as label for button that appears next to tag list
 #: librarian\views\_tag_js_templates.tpl:3
+#, fuzzy
 msgid "Edit tags"
-msgstr "Редактировать метки"
+msgstr "ویرایش برچسب ها"
 
 #. Translators, used as label for button that appears in tag editing form
 #: librarian\views\_tag_js_templates.tpl:8
+#, fuzzy
 msgid "Close"
-msgstr "Закрыть"
+msgstr "بستن"
 
 #. Translators, error message shown when updating tags fails
 #: librarian\views\_tag_js_templates.tpl:13
+#, fuzzy
 msgid "Tags could not be updated."
-msgstr "Mетки не могут быть обновлены."
+msgstr "برچسب ها از قابلیت بروز رسانی برخوردار نمی باشند"
 
 #. Translators, link that loads more content in infinite scrolling page
 #: librarian\views\content_list.tpl:76
+#, fuzzy
 msgid "Load more content"
-msgstr "Загрузить больше контента"
+msgstr "بارگزاری محتوای بیشتر"
 
 #. Translators, used as section heading on dashboard
 #: librarian\plugins\ondd\plugin.py:183
 #: librarian\plugins\tvheadend\plugin.py:24
+#, fuzzy
 msgid "Tuner settings"
-msgstr "Настройки тюнера"
+msgstr "تنظیمات تیونر"
 
 #: librarian\plugins\tvheadend\views\tvheadend.tpl:4
+#, fuzzy
 msgid "Access TVHeadend"
-msgstr "Доступ головной станции ТВ"
+msgstr "دسترسی به مهمترین موارد تلوزیون"
 
 #: librarian\views\file_list.tpl:35
+#, fuzzy
 msgid "There are currently no files or folders here."
-msgstr "Здесь пока еще нет файлов или папок."
+msgstr "در حال حاضر هیچ پرونده یا پوشه ای در اینجا وجود ندارد"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\remove_error.tpl:2 librarian\views\remove_error.tpl:5
+#, fuzzy
 msgid "Content could not be removed"
-msgstr "Контент не может быть удален"
+msgstr "محتوای مورد نظر نمی تواند حذف شود"
 
 #. Translators, message displayed when content cannot be deleted
 #: librarian\views\remove_error.tpl:9
+#, fuzzy
 msgid "Please make sure the storage device is not write-protected and try again."
-msgstr "Пожалуйста, убедитесь, что устройства хранения данных не защищено от записи и повторите попытку."
+msgstr "لطفا مطمئن شوید که دستگاه ذخیره سازی در برابر نوشتن محافظت نشده و دوباره سعی کنید."
 
 #. Translators, used as label on button for retrying content removal
 #: librarian\views\remove_error.tpl:13
+#, fuzzy
 msgid "Retry"
-msgstr "Повторить"
+msgstr "دوباره سعی کنید"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian\views\tag_cloud.tpl:2 librarian\views\tag_cloud.tpl:5
+#, fuzzy
 msgid "Tag cloud"
-msgstr "Облако меток"
+msgstr "ابر برچسب"
 
 #. Translators, error message during database backup
 #. Translators, error message during database backup
@@ -741,8 +798,6 @@ msgstr "Database backup has been completed successfully. You will be taken to th
 msgid "The operation took %s second"
 msgid_plural "The operation took %s seconds"
 msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
 
 #: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:14
 msgid "Database backup could not be completed. The following error occurred:"
