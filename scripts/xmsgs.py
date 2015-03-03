@@ -30,10 +30,6 @@ def make_args(localedir, domain, address=None, comment=None, name=None,
         args.append('--msgid-bugs-address=%s' % address)
     if comment:
         args.append('--add-comments=%s' % comment)
-    if name:
-        args.append('--package-name=%s' % name)
-    if version:
-        args.append('--package-version=%s' % version)
     args.append('-o')
     args.append(template_path)
     return args, template_path
@@ -98,7 +94,7 @@ def process_dir(path, extension, args, template_path):
     if out:
         print("xgettext failed with status code %s" % out,
               file=sys.stderr)
-        print("Command used was: '%s'" % ' '.join(args + fargs))
+        print("Command used was: '%s'" % ' '.join(args))
         sys.exit(1)
     else:
         print('\n'.join(["Processed '%s'" % p for p in processed]))
