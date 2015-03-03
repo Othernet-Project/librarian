@@ -386,7 +386,6 @@ class Meta(object):
             s += ' lang="%s"' % self.lang
         if self.rtl:
             s += ' dir="rtl"'
-        print(s)
         return s
 
     @property
