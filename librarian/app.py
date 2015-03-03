@@ -36,6 +36,7 @@ from librarian.lib.common import to_unicode
 from librarian.lib.system import ensure_dir
 from librarian.lib.lock import global_lock
 from librarian.plugins import install_plugins
+from librarian.utils.timer import request_timer
 from librarian.lib.downloads import get_zipballs
 from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
 from librarian.routes import (content, tags, downloads, apps, dashboard,
@@ -155,6 +156,7 @@ def start(logfile=None, profile=False):
     logging.debug("Finished running migrations")
     db.disconnect()
 
+    app.install(request_timer)
     app.install(squery.database_plugin)
 
     # Set some basic configuration
