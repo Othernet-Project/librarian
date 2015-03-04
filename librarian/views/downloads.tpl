@@ -22,15 +22,7 @@
 
 <div class="inner">
     <div class="controls">
-    % if pager.pages > 1:
-    {{! h.form(method='GET') }}
-        <label for="page">{{ _('page') }}</label>
-        {{! h.vselect('p', pager.pager_choices, vals, _id='page') }}
-        {{! h.vselect('pp', pager.per_page_choices, vals, id='per-page') }}
-        <label for="per-page">{{ _('per page') }}</label>
-        <button type="submit">{{ _('Reload') }}</button>
-    </form>
-    % end
+    % include('_simple_pager')
     </div>
 
     <form method="POST">

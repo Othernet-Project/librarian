@@ -41,7 +41,7 @@ def list_downloads():
         last_zip = None
         nzipballs = 0
         logging.debug('No updates found')
-    pager = Pager(zipballs)
+    pager = Pager(zipballs, pid='downloads')
     pager.get_paging_params()
     logging.info("Found %s zipfiles" % pager.get_total_count())
     metadata = []
@@ -60,8 +60,11 @@ def list_downloads():
             os.unlink(z)
         archive.get_replacements(metadata)
 
-    return dict(vals=request.params, metadata=metadata, selection=selection,
-                pager=pager, nzipballs=nzipballs, last_zip=last_zip)
+    vals = dict(request.params)
+    vals.update({'pp': pager.per_page})
+
+    return dict(vals=vals, metadata=metadata, selection=selection, pager=pager,
+                nzipballs=nzipballs, last_zip=last_zip)
 
 
 @view('downloads_error')  # TODO: Add this view

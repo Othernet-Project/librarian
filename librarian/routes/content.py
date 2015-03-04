@@ -20,11 +20,12 @@ from bottle import (
     request, view, abort, default_app, static_file, redirect, response,
     template)
 
+from ..lib import i18n
+from ..lib import files
 from ..lib import archive
 from ..lib import downloads
 from ..lib import send_file
-from ..lib import files
-from ..lib import i18n
+from ..lib.pager import Pager
 from ..lib.ajax import roca_view
 from ..lib.i18n import lazy_gettext as _, i18n_path
 
@@ -35,20 +36,18 @@ app = default_app()
 @roca_view('content_list', '_content_list')
 def content_list():
     """ Show list of content """
-    try:
-        f_per_page = int(request.params.get('c', 1))
-    except ValueError as e:
-        f_per_page = 1
-    f_per_page = max(1, min(4, f_per_page))
-    try:
-        page = int(request.params.get('p', 1))
-    except ValueError:
-        page = 1
+    query = request.params.getunicode('q', '').strip()
+
     try:
         tag = int(request.params.get('t'))
     except (TypeError, ValueError):
         tag = None
         tag_name = None
+
+    if query:
+        total_items = archive.get_search_count(query, tag=tag)
+    else:
+        total_items = archive.get_count(tag=tag)
 
     if tag:
         try:
@@ -56,31 +55,21 @@ def content_list():
         except (IndexError, KeyError):
             abort(404, _('Specified tag was not found'))
 
-    query = request.params.getunicode('q', '').strip()
-
-    per_page = f_per_page * 20
-
-    if query:
-        total_items = archive.get_search_count(query, tag=tag)
-    else:
-        total_items = archive.get_count(tag=tag)
-
-    total_pages = math.ceil(total_items / per_page)
-    page = max(1, min(total_pages, page))
-    offset = (page - 1) * per_page
+    # We will use a list of fake content (just a normal list of numbers) to
+    # trick the pager into calculating correct page numbers
+    pager = Pager(total_items, pid='content')
+    pager.get_paging_params()
 
     if query:
-        metadata = archive.search_content(query, offset, per_page, tag=tag)
+        metadata = archive.search_content(query, pager.offset, pager.per_page,
+                                          tag=tag)
     else:
-        metadata = archive.get_content(offset, per_page, tag=tag)
+        metadata = archive.get_content(pager.offset, pager.per_page, tag=tag)
 
     return {
         'metadata': [downloads.Meta(m) for m in metadata],
         'total_items': total_items,
-        'total_pages': total_pages,
-        'per_page': per_page,
-        'f_per_page': f_per_page,
-        'page': page,
+        'pager': pager,
         'vals': request.params.decode(),
         'query': query,
         'tag': tag_name,
