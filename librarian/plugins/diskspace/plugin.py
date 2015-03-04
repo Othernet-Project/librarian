@@ -21,6 +21,8 @@ from ...lib.i18n import lazy_gettext as _, i18n_path
 from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError
 
+from . import zipballs
+
 
 @view('cleanup', message=None, vals=MultiDict())
 def cleanup_list():
@@ -79,6 +81,8 @@ def install(app, route):
     except AttributeError:
         raise NotSupportedError(
             'Disk space information not available on this platform')
+    conf = app.config
+    zipballs.update_sizes(conf['database.path'], conf['content.contentdir'])
     route('/cleanup/', 'GET', callback=cleanup_list)
     route('/cleanup/', 'POST', callback=cleanup)
 
@@ -89,9 +93,7 @@ class Dashboard(DashboardPlugin):
     name = 'diskspace'
 
     def get_context(self):
-        spool, content, total = archive.free_space()
-        count = archive.zipball_count()
-        used = archive.archive_space_used()
-        last_updated = archive.last_update()
-        needed = archive.needed_space()
+        free, total = zipballs.free_space()
+        count, used = zipballs.used_space()
+        needed = zipballs.needed_space(free)
         return locals()
