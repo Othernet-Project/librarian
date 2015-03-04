@@ -117,6 +117,14 @@ def content_file(content_id, filename):
     return send_file.send_file(content, filename, size, timestamp)
 
 
+def content_zipball(content_id):
+    """ Serve zipball with specified id """
+    zippath = downloads.get_zip_path(content_id)
+    dirname = os.path.dirname(zippath)
+    filename = os.path.basename(zippath)
+    return static_file(filename, root=dirname, download=True)
+
+
 @view('reader')
 @archive.with_content
 def content_reader(meta):

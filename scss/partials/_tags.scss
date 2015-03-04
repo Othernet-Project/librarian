@@ -5,6 +5,17 @@
 
 .tag-cloud {
   margin-bottom: 0;
+  max-height: 1.8em;
+  padding: 0.2em 0.3em 0.3em;
+  border-top: 1px solid $light-grey;
+  border-bottom: 1px solid $dirt;
+  overflow: hidden;
+  background: $dirt;
+  @include box-shadow(inset 0 -4px 5px transparentize($grey, 0.8));
+
+  &:hover {
+    max-height: none; 
+  }
 }
 
 .tag-cloud .tag-count {

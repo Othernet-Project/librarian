@@ -174,7 +174,7 @@ GET_TAG_CLOUD = """
 SELECT name, tag_id, count(taggings.tag_id) as count
 FROM tags NATURAL JOIN taggings
 GROUP BY taggings.tag_id
-ORDER BY name ASC;
+ORDER BY count DESC, name ASC;
 """
 
 
@@ -448,7 +448,6 @@ def add_tags(meta, tags):
 
     # Create taggings
     pairs = [{'md5': meta.md5, 'tag_id': i} for i in ids]
-    print(pairs)
     tags_dict = {t['name']: t['tag_id'] for t in tags}
     meta.tags.update(tags_dict)
     with db.transaction() as cur:

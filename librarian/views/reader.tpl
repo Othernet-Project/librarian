@@ -11,18 +11,19 @@
                 {{ meta.timestamp.strftime('%Y-%m-%d') }}
                 % if meta.is_partner:
                 / {{ meta.partner }} 
-                / <span class="special">{{ _('content partner') }}</span>
+                / <span class="special">{{ _('partner') }}</span>
                 % end
 
                 % if meta.is_sponsored:
                 / {{ meta.partner }} 
-                / <span class="special">{{ _('sponsored content') }}</span>
+                / <span class="special">{{ _('sponsored') }}</span>
                 % end
 
                 % if meta.archive == 'core':
-                / <span class="special">{{ _('Outernet core archive') }}</span>
+                / <span class="special">{{ _('core') }}</span>
                 % end
             </strong>
+            <a class="button small" href="/pages/{{ meta.md5 }}.zip">{{ _('Download') }}</a>
             </p>
             <p class="licensing">{{ meta.human_license }}</p>
             % end
