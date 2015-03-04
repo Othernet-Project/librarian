@@ -4,7 +4,8 @@
   var fileList = $('#ondd-file-list');
   var filesUrl = fileList.data('url');
 
-  var refreshInterval = 1000;  // ms
+  var refreshDelay = 3000;  // ms
+  var refreshInterval = 3000;  // ms
   var satSelection = $(window.templates.satPresets);
   var satSelector = satSelection.find('select');
   var settingsForm = $('#settings-form');
@@ -19,14 +20,15 @@
   };
 
   fields.before(satSelection);
-  setInterval(doRefresh, refreshInterval);
+  $(function() {
+    setInterval(doRefresh, refreshInterval);
+  })
 
   satSelector.on('change', updateForm);
   updateForm();
 
   function doRefresh() {
     signalStatus.load(url);
-    fileList.load(filesUrl);
   }
 
   function updateForm(e) {
