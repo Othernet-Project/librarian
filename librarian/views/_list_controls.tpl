@@ -7,4 +7,6 @@
     <button type="submit" name="action" value="add" class="special small">{{ _('Add selected to library') }}</button>
     %# Translators, used as button label on updates page for permanently deleting all downloaded content
     <button type="submit" name="action" value="delete" class="danger small">{{ _('Delete selected') }}</button>
+    %# Translators, used as button label on updates page for permanently deleting all downloaded content
+    <button type="submit" name="action" value="deleteall" class="danger small">{{ _('Delete all') }}</button>
 </p>

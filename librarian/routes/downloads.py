@@ -82,5 +82,7 @@ def manage_downloads():
         archive.add_to_archive(file_list)
     if action == 'delete':
         downloads.remove_downloads(file_list)
+    if action == 'deleteall':
+        downloads.remove_downloads()
     redirect(i18n_path('/downloads/'))
 
