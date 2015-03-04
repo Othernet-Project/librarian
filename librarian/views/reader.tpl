@@ -23,6 +23,7 @@
                 / <span class="special">{{ _('Outernet core archive') }}</span>
                 % end
             </strong>
+            <a class="button small" href="/pages/{{ meta.md5 }}.zip">{{ _('Download') }}</a>
             </p>
             <p class="licensing">{{ meta.human_license }}</p>
             % end

@@ -57,12 +57,12 @@ app = bottle.default_app()
 # Content
 app.route('/', 'GET',
           callback=content.content_list)
-app.route('/pages/<content_id>/<filename:path>', 'GET', skip=['i18n'],
-          callback=content.content_file)
-app.route('/pages/<content_id>', 'GET',
-          callback=content.content_reader)
-app.route('/covers/<path:path>', 'GET',
-          callback=content.cover_image, skip=['i18n'])
+app.route('/pages/<content_id>/<filename:path>', 'GET', content.content_file,
+          no_i18n=True)
+app.route('/pages/<content_id>.zip', 'GET', content.content_zipball,
+          no_i18n=True, unlocked=True)
+app.route('/pages/<content_id>', 'GET', content.content_reader)
+app.route('/covers/<path:path>', 'GET', content.cover_image, no_i18n=True)
 app.route('/delete/<content_id>', 'POST',
           callback=content.remove_content)
 
