@@ -112,7 +112,7 @@ button, .button {
   }
 
   &.danger {
-    @include button-blue;
+    @include button-red;
   }
 
   &.small {
