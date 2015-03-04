@@ -110,7 +110,7 @@ def used_space():
              FROM zipballs;
              """)
     res = db.results
-    return res[0]['count'], res[0]['total']
+    return res[0]['count'], res[0]['total'] or 0
 
 
 def parse_size(size):
