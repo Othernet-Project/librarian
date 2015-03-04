@@ -37,9 +37,9 @@
         <div id="languages" class="languages">
             % for locale, lang in languages:
                 % if locale != request.locale:
-                <a href="{{ i18n_path(locale=locale) }}">{{ lang }}</a>
+                <a href="{{ i18n_path(locale=locale) }}" dir="{{! dir(locale) }}" lang="{{ locale }}">{{ lang }}</a>
                 % else:
-                <span class="current">{{ lang }}</span>
+                <span class="current" dir="{{! dir(locale) }}" lang="{{ locale }}">{{ lang }}</span>
                 % end
             % end
         </div>

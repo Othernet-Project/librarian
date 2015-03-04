@@ -8,12 +8,12 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: librarian\app.py:175 librarian\views\base.tpl:8 librarian\views\base.tpl:44
+#: librarian\app.py:189 librarian\views\base.tpl:8 librarian\views\base.tpl:50
 msgid "Librarian"
 msgstr "Библиотекарь"
 
-#: librarian\views\base.tpl:33 librarian\views\dashboard.tpl:2
-#: librarian\views\dashboard.tpl:5
+#: librarian\views\base.tpl:29 librarian\views\dashboard.tpl:3
+#: librarian\views\dashboard.tpl:6
 msgid "Dashboard"
 msgstr "Панель"
 
@@ -21,18 +21,18 @@ msgstr "Панель"
 msgid "Favorites"
 msgstr "Любимые"
 
-#: librarian\views\base.tpl:31 librarian\views\downloads.tpl:2
+#: librarian\views\base.tpl:27 librarian\views\downloads.tpl:2
 #: librarian\views\downloads.tpl:4
 msgid "Updates"
 msgstr "Обновления"
 
 #: librarian\views\cleanup.tpl:13
 msgid "%s more space should be freed."
-msgstr "%s больше места должны быть освобождены."
+msgstr "Должно быть освобождено больше места"
 
 #: librarian\views\cleanup.tpl:17
 msgid "Remember that favorited content cannot be deleted."
-msgstr "Помните, что любимы контент не может быть удален."
+msgstr "Помните лучший контент не может быть удален"
 
 #: librarian\views\cleanup.tpl:22
 msgid "There is enough free space on storage"
@@ -46,7 +46,7 @@ msgstr "удалить?"
 msgid "date"
 msgstr "дата"
 
-#: librarian\views\cleanup.tpl:34 librarian\views\downloads.tpl:38
+#: librarian\views\cleanup.tpl:34 librarian\views\downloads.tpl:29
 #: librarian\views\favorites.tpl:17
 msgid "title"
 msgstr "название"
@@ -61,127 +61,120 @@ msgstr "Свободного места достаточно. Очистка н�
 
 #: librarian\views\cleanup.tpl:59
 msgid "How much space does this free up?"
-msgstr "Сколько места это освободить?"
+msgstr "Сколько места освободится?"
 
 #: librarian\views\cleanup.tpl:61
 msgid "Delete selected now"
 msgstr "Удалить выбранное сейчас"
 
-#: librarian\views\dashboard.tpl:64
+#: librarian\plugins\diskspace\views\diskspace.tpl:41
 msgid "used space"
-msgstr "занятое пространство"
+msgstr "использовать место"
 
-#: librarian\views\dashboard.tpl:18
+#: librarian\views\dashboard.tpl:19
 msgid "last update"
 msgstr "последнее обновление"
 
-#: librarian\views\dashboard.tpl:47
+#: librarian\plugins\diskspace\views\diskspace.tpl:24
 msgid "You are running low on disk space."
 msgstr "Вы испытываете нехватку дискового пространства."
 
-#: librarian\views\dashboard.tpl:49
+#: librarian\plugins\diskspace\views\diskspace.tpl:26
 msgid "Free some space now"
-msgstr "Освободит место сейчас"
+msgstr "Освободите место сейчас"
 
-#: librarian\views\downloads.tpl:36
+#: librarian\views\downloads.tpl:27
 msgid "select"
 msgstr "выберите"
 
-#: librarian\views\downloads.tpl:72
+#: librarian\views\downloads.tpl:56
 msgid "There is no new content"
-msgstr "Нет нового контента"
+msgstr "Это не новый контент"
 
-#: librarian\views\downloads.tpl:28 librarian\views\downloads.tpl:87
+#: librarian\views\_list_controls.tpl:9
 msgid "Delete selected"
 msgstr "Удалить выбранное"
 
 #: librarian\views\favorites.tpl:26
 msgid "unfavorite"
-msgstr "не любимый"
+msgstr "Не любимый"
 
-#: librarian\views\base.tpl:25 librarian\views\content_list.tpl:2
-#: librarian\views\content_list.tpl:5
+#: librarian\views\base.tpl:21 librarian\views\content_list.tpl:4
+#: librarian\views\content_list.tpl:7
 msgid "Library"
 msgstr "Библиотека"
 
-#: librarian\views\content_list.tpl:66
+#: librarian\views\content_list.tpl:61
 msgid "Content library is currently empty"
-msgstr "Содержимое библиотеки - пусто."
+msgstr "Библиотека публикаций пуста"
 
-#: librarian\views\content_list.tpl:23
+#: librarian\views\content_list.tpl:18
 msgid "search titles"
-msgstr "поиск по названию"
+msgstr "Найти названия"
 
-#: librarian\views\content_list.tpl:26 librarian\views\content_list.tpl:51
+#: librarian\views\content_list.tpl:20 librarian\views\content_list.tpl:45
 #: librarian\views\file_list.tpl:14
 msgid "go"
 msgstr "перейти"
 
-#: librarian\views\content_list.tpl:29
+#: librarian\views\content_list.tpl:23
 msgid "clear"
 msgstr "ясно"
 
-#: librarian\views\dashboard.tpl:12
+#: librarian\views\dashboard.tpl:13
 msgid "update available"
 msgid_plural "updates available"
-msgstr[0] "обновление доступно"
-msgstr[1] "обновления доступны"
-msgstr[2] "обновления доступны"
+msgstr[0] "доступно обновление"
+msgstr[1] "доступны обновления"
+msgstr[2] "доступны обновления"
 
-#: librarian\views\dashboard.tpl:25
+#: librarian\plugins\diskspace\plugin.py:88
 msgid "Content library stats"
-msgstr "Содержание Статистика библиотеки"
+msgstr "Содержание Статистики библиотеки"
 
-#: librarian\views\dashboard.tpl:58
+#: librarian\plugins\diskspace\views\diskspace.tpl:35
 msgid "item in the library"
 msgid_plural "items in the library"
-msgstr[0] "элемент в библиотеке"
-msgstr[1] "элементы в библиотеке"
+msgstr[0] "Элемент в библиотеке"
+msgstr[1] "Элементы в библиотеке"
 msgstr[2] "элементы в библиотеке"
 
-#: librarian\views\dashboard.tpl:80
+#: librarian\plugins\logs\plugin.py:26
 msgid "Application logs"
 msgstr "Журналы программы"
 
-#: librarian\views\dashboard.tpl:82
+#: librarian\plugins\logs\views\logs.tpl:4
 msgid "Logs are shown in reverse chronological order"
 msgstr "Журналы показаны в обратном хронологическом порядке"
 
-#: librarian\views\downloads.tpl:22 librarian\views\downloads.tpl:81
+#: librarian\views\_list_controls.tpl:3
 msgid "Select all"
 msgstr "Выбрать все"
 
-#: librarian\views\downloads.tpl:24 librarian\views\downloads.tpl:83
+#: librarian\views\_list_controls.tpl:5
 msgid "Select none"
-msgstr "Выберите ничто"
+msgstr "Ничего не выбрать"
 
-#: librarian\views\downloads.tpl:40
+#: librarian\views\downloads.tpl:31
 msgid "broadcast"
-msgstr "вещания"
+msgstr "трансляции"
 
-#: librarian\views\downloads.tpl:42
+#: librarian\views\downloads.tpl:33
 msgid "downloaded"
 msgstr "скачано"
 
-#: librarian\views\content_list.tpl:8
+#: librarian\views\content_list.tpl:52
 msgid "Showing search results for '%(terms)s'"
 msgstr "Показаны результаты поиска для '%(terns)s'"
 
-#: librarian\views\content_list.tpl:11
-msgid "Showing %(count)s of %(total)s item"
-msgid_plural "Showing %(count)s of %(total)s items"
-msgstr[0] "Показан %(count)s из %(total)s элемента"
-msgstr[1] "Показаны %(count)s из %(total)s элементов"
-msgstr[2] "Показаны %(count)s из %(total)s элементов"
-
-#: librarian\views\content_list.tpl:69
+#: librarian\views\content_list.tpl:64
 msgid "There are no search results for '%(terms)s'"
 msgstr "Здесь нет результатов поиска по '%(terms)с'"
 
 #. Translators, used in the pager
 #: librarian\views\_simple_pager.tpl:4
 msgid "previous"
-msgstr "предыдущая"
+msgstr "предыдущий"
 
 #. Translators, used in the pager
 #: librarian\views\_simple_pager.tpl:8
@@ -195,54 +188,49 @@ msgid "Library clean-up"
 msgstr "Чистка библиотеки"
 
 #. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
-#: librarian\views\content_list.tpl:35 librarian\views\downloads.tpl:10
+#: librarian\views\content_list.tpl:29 librarian\views\downloads.tpl:10
 msgid "page"
 msgstr "страница"
 
 #. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
-#: librarian\views\content_list.tpl:49 librarian\views\downloads.tpl:13
+#: librarian\views\content_list.tpl:43 librarian\views\downloads.tpl:13
 msgid "per page"
 msgstr "на странице"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian\views\dashboard.tpl:31
+#: librarian\plugins\diskspace\views\diskspace.tpl:8
 msgid "download directory (%s free)"
 msgstr "скачать каталог (%s свободного)"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian\views\dashboard.tpl:37
+#: librarian\plugins\diskspace\views\diskspace.tpl:14
 msgid "content library (%s free)"
 msgstr "содержание библиотеки (%s свободного)"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian\views\dashboard.tpl:42
+#: librarian\plugins\diskspace\views\diskspace.tpl:19
 msgid "total space (%s free)"
-msgstr "Всего место (%s свободного)"
+msgstr "Всего места (%s свободного)"
 
 #. Translators, used as button label on updates page for adding marked content to library
-#: librarian\views\downloads.tpl:26 librarian\views\downloads.tpl:85
+#: librarian\views\_list_controls.tpl:7
 msgid "Add selected to library"
-msgstr "Добавить выбранное в библиотеке"
+msgstr "Добавить выбранное в библиотеку"
 
 #. Translators, used as 'content belongs to core archive' badge
-#: librarian\views\_badges.tpl:8
+#: librarian\lib\downloads.py:327
 msgid "core"
 msgstr "ядро"
 
 #. Translators, used as 'partner content' badge
-#: librarian\views\_badges.tpl:15
+#: librarian\lib\downloads.py:331
 msgid "partner"
 msgstr "партнер"
 
 #. Translators, used as 'sponsored content' badge
-#: librarian\views\_badges.tpl:22
+#: librarian\lib\downloads.py:329
 msgid "sponsored"
 msgstr "спонсируемый"
-
-#. Translators, appears next to content title when content is sponsored or is partner content, %s is replaced by person/company name; not part of sentence
-#: librarian\views\_badges.tpl:31
-msgid "from %s"
-msgstr "от %s"
 
 #. Translators, used as page title
 #. Translators, used as page heading
@@ -251,7 +239,7 @@ msgstr "от %s"
 #. Translators, used as page heading
 #. Translators, used main navigation menu
 #: librarian\views\app_list.tpl:2 librarian\views\app_list.tpl:6
-#: librarian\views\base.tpl:29
+#: librarian\views\base.tpl:25
 msgid "Apps"
 msgstr "Программы"
 
@@ -261,7 +249,8 @@ msgid "author:"
 msgstr "автор:"
 
 #. Translators, refers to app version
-#: librarian\views\app_list.tpl:20 librarian\views\dashboard.tpl:99
+#: librarian\plugins\license\views\license.tpl:13
+#: librarian\views\app_list.tpl:20
 msgid "version:"
 msgstr "версия:"
 
@@ -276,7 +265,7 @@ msgstr "Программы не найдены."
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
-#: librarian\views\base.tpl:27 librarian\views\file_list.tpl:2
+#: librarian\views\base.tpl:23 librarian\views\file_list.tpl:2
 #: librarian\views\file_list.tpl:6
 msgid "Files"
 msgstr "Файлы"
@@ -285,31 +274,31 @@ msgstr "Файлы"
 msgid "Reload"
 msgstr "Перезагружать"
 
-#: librarian\views\downloads.tpl:65
+#: librarian\views\downloads.tpl:46
 msgid "replaces:"
 msgstr "заменяет:"
 
 #. Translators, used as note shown on favorites page when user has no favorites
 #: librarian\views\favorites.tpl:9
 msgid "You have not favorited any content yet"
-msgstr "Вы еще не избрали любимы контент"
+msgstr "Вы еще не выбрали любимый контент"
 
 #. Translators, used as label for link that leads to parent directory in file listing
 #: librarian\views\file_list.tpl:23
 msgid "(go up one level)"
 msgstr "(перейти на один уровень вверх)"
 
-#: librarian\views\file_list.tpl:39 librarian\views\file_list.tpl:59
+#: librarian\views\file_list.tpl:44 librarian\views\file_list.tpl:63
 msgid "Rename"
 msgstr "Переименовать"
 
-#: librarian\views\file_list.tpl:44 librarian\views\file_list.tpl:64
+#: librarian\views\file_list.tpl:49 librarian\views\file_list.tpl:68
 msgid "Delete"
 msgstr "Удалить"
 
-#: librarian\views\file_list.tpl:81
+#: librarian\views\file_list.tpl:85
 msgid "About this folder"
-msgstr "О этой папке"
+msgstr "Об этой папке"
 
 #. Translators, used as page title for page that shows result of running a script
 #. Translators, used as page header for page that shows result of running a script
@@ -348,7 +337,7 @@ msgid "Errors"
 msgstr "Oшибки"
 
 #. Translators, label for button in file listing that allows user to run a script
-#: librarian\views\file_list.tpl:71
+#: librarian\views\file_list.tpl:75
 msgid "Run"
 msgstr "Исполнит"
 
@@ -407,7 +396,7 @@ msgstr "Лицензия Свободного Искусства (Free Art Licen
 
 #: librarian\lib\downloads.py:48
 msgid "Public Domain"
-msgstr "Публічний домен"
+msgstr "Публичный домен"
 
 #: librarian\lib\downloads.py:49
 msgid "Other free license"
@@ -419,38 +408,38 @@ msgstr "Все права защищены"
 
 #: librarian\lib\downloads.py:51
 msgid "Other non-free license"
-msgstr "Другие не-свободные лицензии"
+msgstr "Другие не свободные лицензии"
 
 #. Translators, used as response to innvalid HTTP request
-#: librarian\routes\dashboard.py:63 librarian\routes\favorites.py:35
+#: librarian\plugins\diskspace\plugin.py:38 librarian\routes\favorites.py:35
 #: librarian\routes\favorites.py:38
 msgid "Invalid request"
 msgstr "Неверный запрос"
 
 #. Translators, used as message to user when clean-up is started
 #. without selecting any content
-#: librarian\routes\dashboard.py:71
+#: librarian\plugins\diskspace\plugin.py:46
 msgid "No content selected"
 msgstr "Контент не выбран"
 
 #. Translators, used when user is previewing clean-up, %s is
 #. replaced by amount of content that can be freed in bytes,
 #. KB, MB, etc
-#: librarian\routes\dashboard.py:78
+#: librarian\plugins\diskspace\plugin.py:53
 msgid "%s can be freed by removing selected content"
 msgstr "%s может быть освобождени путем удаления выбранного Контента"
 
 #. Translators, error message shown on clean-up page when some of
 #. the content could not be removed for unknown reasons
-#: librarian\routes\dashboard.py:90
+#: librarian\plugins\diskspace\plugin.py:65
 msgid "Some files could not be removed"
 msgstr "Некоторые файлы не могут быть удалены"
 
 #. Translators, error message shown on clean-up page when there was
 #. no deletable content
-#: librarian\routes\dashboard.py:94
+#: librarian\plugins\diskspace\plugin.py:69
 msgid "Nothing to delete"
-msgstr "Ничего удалять"
+msgstr "Ничего не удалять"
 
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
@@ -471,38 +460,27 @@ msgid "Outernet core archive"
 msgstr "Outernet основной архив"
 
 #. Translators, used as placeholder while infinite scrolling content is being loaded
-#: librarian\views\content_list.tpl:89
+#: librarian\views\content_list.tpl:84
 msgid "Loading..."
 msgstr "Загружается..."
 
 #. Translators, shown when user reaches the end of the library
-#: librarian\views\content_list.tpl:96
+#: librarian\views\content_list.tpl:91
 msgid "You have reached the end of the library."
-msgstr "Вы достигли конец библиотеки."
+msgstr "Вы достигли конца библиотеки."
 
 #. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
-#: librarian\views\content_list.tpl:98 librarian\views\content_list.tpl:105
+#: librarian\views\content_list.tpl:93 librarian\views\content_list.tpl:100
 msgid "Go to top"
 msgstr "В верх"
 
 #. Translators, used as section heading on dashboard above 'About' section
-#: librarian\views\dashboard.tpl:88
+#: librarian\plugins\license\plugin.py:26
 msgid "About"
 msgstr "Описание"
 
-#: librarian\views\dashboard.tpl:91
-msgid "\n"
-"        This program is free software: you can redistribute it and/or modify it\n"
-"        under the terms of the GNU General Public License as published by the\n"
-"        Free Software Foundation, either version 3 of the License, or (at your\n"
-"        option) any later version.\n"
-"        "
-msgstr "Эта программа является свободным программным обеспечением: вы можете распространять и / или изменять его\n"
-"         в соответствии с условиями в GNU General Public License, опубликованной\n"
-"         Free Software Foundation, либо версии 3 лицензии, либо (на ваше усмотрение) любой более поздней версии."
-
 #. Translators, appears in copyright line in dashboard's 'About' section
-#: librarian\views\dashboard.tpl:102
+#: librarian\plugins\license\views\license.tpl:16
 msgid "Some rights reserved."
 msgstr "Некоторые права защищены."
 
@@ -511,19 +489,19 @@ msgid "Specified tag was not found"
 msgstr "Указанная метка не найдена"
 
 #. Translators, used as not on library page when there is no content for given tag
-#: librarian\views\content_list.tpl:72
+#: librarian\views\content_list.tpl:67
 msgid "There are no results for '%(tag)s'"
 msgstr "Нет результатов для '%(tag)s'"
 
 #. Translators, button label for a button that saves user tags for a piece of content
 #: librarian\views\_tags.tpl:8
 msgid "Save tags"
-msgstr "Сохранить mеткy"
+msgstr "Сохранить метку"
 
 #. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
 #: librarian\views\_tags.tpl:12
 msgid "Separate tags with commas"
-msgstr "Отделить mетки запятыми"
+msgstr "Отделить метки запятыми"
 
 #. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
 #: librarian\views\_tag_cloud.tpl:5
@@ -533,7 +511,7 @@ msgstr "все"
 #. Translators, used as label for button that appears next to tag list
 #: librarian\views\_tag_js_templates.tpl:3
 msgid "Edit tags"
-msgstr "Редактировать mетки"
+msgstr "Редактировать метки"
 
 #. Translators, used as label for button that appears in tag editing form
 #: librarian\views\_tag_js_templates.tpl:8
@@ -546,20 +524,21 @@ msgid "Tags could not be updated."
 msgstr "Mетки не могут быть обновлены."
 
 #. Translators, link that loads more content in infinite scrolling page
-#: librarian\views\content_list.tpl:81
+#: librarian\views\content_list.tpl:76
 msgid "Load more content"
 msgstr "Загрузить больше контента"
 
 #. Translators, used as section heading on dashboard
-#: librarian\views\dashboard.tpl:71
+#: librarian\plugins\ondd\plugin.py:183
+#: librarian\plugins\tvheadend\plugin.py:24
 msgid "Tuner settings"
 msgstr "Настройки тюнера"
 
-#: librarian\views\dashboard.tpl:74
+#: librarian\plugins\tvheadend\views\tvheadend.tpl:4
 msgid "Access TVHeadend"
 msgstr "Доступ головной станции ТВ"
 
-#: librarian\views\file_list.tpl:29
+#: librarian\views\file_list.tpl:35
 msgid "There are currently no files or folders here."
 msgstr "Здесь пока еще нет файлов или папок."
 
@@ -584,4 +563,322 @@ msgstr "Повторить"
 #: librarian\views\tag_cloud.tpl:2 librarian\views\tag_cloud.tpl:5
 msgid "Tag cloud"
 msgstr "Облако меток"
+
+#. Translators, error message during database backup
+#. Translators, error message during database backup
+#: librarian\plugins\dbmanage\backup.py:51
+#: librarian\plugins\dbmanage\backup.py:52
+msgid "Opening source database failed"
+msgstr "Opening source database failed"
+
+#. Translators, error message during database backup
+#. Translators, error message during database backup
+#: librarian\plugins\dbmanage\backup.py:60
+#: librarian\plugins\dbmanage\backup.py:61
+msgid "Opening backup database failed"
+msgstr "Opening backup database failed"
+
+#: librarian\plugins\dbmanage\backup.py:66
+msgid "Could not create database backup handler"
+msgstr "Could not create database backup handler"
+
+#. Translators, error message displayed when locking fails during
+#. database rebuild
+#. Translators, error message displayed when locking fails during
+#. database rebuild
+#: librarian\plugins\dbmanage\plugin.py:138
+msgid "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
+msgstr "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
+
+#. Translators, used as dashboard section title
+#. Translators, used as dashboard section title
+#: librarian\plugins\dbmanage\plugin.py:153
+msgid "Content database"
+msgstr "Content database"
+
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian\plugins\ondd\plugin.py:44
+msgid "None"
+msgstr "None"
+
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian\plugins\ondd\plugin.py:46
+msgid "Vertical"
+msgstr "Vertical"
+
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian\plugins\ondd\plugin.py:48
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#. Translators, this is a type of LNB
+#. Translators, this is a type of LNB
+#: librarian\plugins\ondd\plugin.py:59
+msgid "Universal"
+msgstr "Universal"
+
+#. Translators, this is a type of LNB
+#. Translators, this is a type of LNB
+#: librarian\plugins\ondd\plugin.py:61
+msgid "North America Ku band"
+msgstr "North America Ku band"
+
+#. Translators, error message when LNB type is incorrect
+#. Translators, error message when LNB type is incorrect
+#: librarian\plugins\ondd\plugin.py:111
+msgid "Invalid choice for LNB type"
+msgstr "Invalid choice for LNB type"
+
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when frequency value is
+#. wrong
+#: librarian\plugins\ondd\plugin.py:115
+msgid "Frequency must be a positive number"
+msgstr "Frequency must be a positive number"
+
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#: librarian\plugins\ondd\plugin.py:118 librarian\plugins\ondd\plugin.py:125
+msgid "Please type in a number"
+msgstr "Please type in a number"
+
+#. Translators, error message when symbolrate value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#: librarian\plugins\ondd\plugin.py:122
+msgid "Symbolrate must be a positive number"
+msgstr "Symbolrate must be a positive number"
+
+#. Translators, error message shown when wrong delivery
+#. system is selected
+#. Translators, error message shown when wrong delivery
+#. system is selected
+#: librarian\plugins\ondd\plugin.py:129
+msgid "Invalid choice for delivery system"
+msgstr "Invalid choice for delivery system"
+
+#. Translators, error message shown when wrong modulation
+#. mode is selected
+#. Translators, error message shown when wrong modulation
+#. mode is selected
+#: librarian\plugins\ondd\plugin.py:133
+msgid "Invalid choice for modulation mode"
+msgstr "Invalid choice for modulation mode"
+
+#. Translators, error message shown when wrong
+#. polarization is selected
+#. Translators, error message shown when wrong
+#. polarization is selected
+#: librarian\plugins\ondd\plugin.py:137
+msgid "Invalid choice for polarization"
+msgstr "Invalid choice for polarization"
+
+#. Translators, error message shown when setting transponder
+#. configuration is not successful
+#. Translators, error message shown when setting transponder
+#. configuration is not successful
+#: librarian\plugins\ondd\plugin.py:156
+msgid "Transponder configuration could not be set"
+msgstr "Transponder configuration could not be set"
+
+#: librarian\routes\content.py:159
+msgid "The files you were looking for could not be found"
+msgstr "The files you were looking for could not be found"
+
+#: librarian\routes\content.py:161
+msgid "This list represents the search results"
+msgstr "This list represents the search results"
+
+#: librarian\routes\content.py:172
+msgid "This folder does not exist"
+msgstr "This folder does not exist"
+
+#: librarian\plugins\dbmanage\views\dbmanage.tpl:4
+msgid "Database size"
+msgstr "Database size"
+
+#: librarian\plugins\dbmanage\views\dbmanage.tpl:5
+msgid "download"
+msgstr "download"
+
+#. Translators, refers to database backup
+#: librarian\plugins\dbmanage\views\dbmanage.tpl:11
+msgid "Backup"
+msgstr "Backup"
+
+#. Translators, refers to database rebuild feature
+#: librarian\plugins\dbmanage\views\dbmanage.tpl:16
+msgid "Rebuild"
+msgstr "Rebuild"
+
+#. Translators, note about database rebuild shown on dashboard
+#: librarian\plugins\dbmanage\views\dbmanage.tpl:22
+msgid "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
+msgstr "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
+
+#. Translators, used as page heading
+#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:4
+msgid "Database backup"
+msgstr "Database backup"
+
+#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:9
+msgid "Database backup has been completed successfully. You will be taken to the backup folder in 10 seconds."
+msgstr "Database backup has been completed successfully. You will be taken to the backup folder in 10 seconds."
+
+#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:11
+#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:11
+msgid "The operation took %s second"
+msgid_plural "The operation took %s seconds"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:14
+msgid "Database backup could not be completed. The following error occurred:"
+msgstr "Database backup could not be completed. The following error occurred:"
+
+#. Translators, used as page heading
+#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:4
+msgid "Database rebuild"
+msgstr "Database rebuild"
+
+#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:9
+msgid "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
+msgstr "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
+
+#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:14
+msgid "Database could not be rebuilt. The following error occurred:"
+msgstr "Database could not be rebuilt. The following error occurred:"
+
+#: librarian\plugins\license\views\license.tpl:5
+msgid "\n"
+"This program is free software: you can redistribute it and/or modify it\n"
+"under the terms of the GNU General Public License as published by the\n"
+"Free Software Foundation, either version 3 of the License, or (at your\n"
+"option) any later version.\n"
+""
+msgstr "\n"
+"This program is free software: you can redistribute it and/or modify it\n"
+"under the terms of the GNU General Public License as published by the\n"
+"Free Software Foundation, either version 3 of the License, or (at your\n"
+"option) any later version.\n"
+""
+
+#: librarian\plugins\logs\views\logs.tpl:6 librarian\views\500.tpl:15
+msgid "Download application log"
+msgstr "Download application log"
+
+#. Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
+#: librarian\plugins\ondd\views\ondd.tpl:12
+msgid "Downloads in progress"
+msgstr "Downloads in progress"
+
+#. Translators, label for select list that allows user to pick a satellite to tune into
+#: librarian\plugins\ondd\views\ondd.tpl:20
+msgid "Satellite:"
+msgstr "Satellite:"
+
+#. Translators, placeholder for satellite selection select list
+#: librarian\plugins\ondd\views\ondd.tpl:23
+msgid "Select a satellite"
+msgstr "Select a satellite"
+
+#. Translators, label for option that allows user to set custom transponder parameters
+#: librarian\plugins\ondd\views\ondd.tpl:28
+msgid "Custom..."
+msgstr "Custom..."
+
+#. Translators, shown on dashboard when no files are currently being downloaded
+#: librarian\plugins\ondd\views\ondd\_file_list.tpl:5
+msgid "No files are being downloadded"
+msgstr "No files are being downloadded"
+
+#. Translators, form label for LNB type selection
+#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:8
+msgid "LNB type"
+msgstr "LNB type"
+
+#. Translators, form label for transponder frequency
+#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:16
+msgid "Frequency:"
+msgstr "Frequency:"
+
+#. Translators, form label for transponder symbol rate
+#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:22
+msgid "Symbol rate:"
+msgstr "Symbol rate:"
+
+#. Translators, form label for transponder delivery system (DVB-S or DVB-S2)
+#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:28
+msgid "Delivery system:"
+msgstr "Delivery system:"
+
+#. Translators, form label for transponder modulation mode (QPSK, etc)
+#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:34
+msgid "Modulation:"
+msgstr "Modulation:"
+
+#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:40
+msgid "Polarization:"
+msgstr "Polarization:"
+
+#. Translators, button label that confirms tuner settings
+#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:48
+msgid "Tune in"
+msgstr "Tune in"
+
+#. Translators, whether tuner has a lock on the signal or not (note: technical term)
+#: librarian\plugins\ondd\views\ondd\_signal.tpl:3
+msgid "has lock"
+msgstr "has lock"
+
+#: librarian\plugins\ondd\views\ondd\_signal.tpl:3
+msgid "no lock"
+msgstr "no lock"
+
+#. Translators, short for 'signal/noise ratio'
+#: librarian\plugins\ondd\views\ondd\_signal.tpl:14
+msgid "SNR"
+msgstr "SNR"
+
+#. Translators, used as page title
+#. Translators, used as error page heading
+#: librarian\views\500.tpl:2 librarian\views\500.tpl:6
+msgid "Error"
+msgstr "Error"
+
+#: librarian\views\500.tpl:10
+msgid "Librarian has failed to fulfill your request due to unexpected error in the program. Details are provided below."
+msgstr "Librarian has failed to fulfill your request due to unexpected error in the program. Details are provided below."
+
+#. Translators, used as page title
+#. Translators, used as maintenance page heading
+#: librarian\views\503.tpl:2 librarian\views\503.tpl:6
+msgid "Under maintenance"
+msgstr "Under maintenance"
+
+#: librarian\views\503.tpl:11
+msgid "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
+msgstr "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
+
+#. Translators, used as label for link that leads to file list
+#: librarian\views\file_list.tpl:29
+msgid "(go to file list)"
+msgstr "(go to file list)"
+
+#. Translators, attribution (e.g., 'By Project Gutenberg')
+#: librarian\views\_content_list.tpl:28
+msgid "by %s"
+msgstr "by %s"
 

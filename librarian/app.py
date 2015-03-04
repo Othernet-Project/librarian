@@ -26,6 +26,7 @@ from bottle import request
 
 from librarian.lib import squery
 from librarian.exceptions import *
+from librarian.utils.lang import *
 from librarian.lib.lazy import Lazy
 from librarian.utils import migrations
 from librarian.lib import html as helpers
@@ -35,6 +36,7 @@ from librarian.lib.common import to_unicode
 from librarian.lib.system import ensure_dir
 from librarian.lib.lock import global_lock
 from librarian.plugins import install_plugins
+from librarian.utils.timer import request_timer
 from librarian.lib.downloads import get_zipballs
 from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
 from librarian.routes import (content, tags, downloads, apps, dashboard,
@@ -49,30 +51,6 @@ def in_pkg(*paths):
     return normpath(join(MODDIR, *paths))
 
 CONFPATH = in_pkg('librarian.ini')
-
-LOCALES = [
-    ('ar', 'اللغة العربية'),
-    ('da', 'Dansk'),
-    ('de', 'Deutsch'),
-    ('en', 'English'),
-    ('es', 'Español'),
-    ('fr', 'Français'),
-    ('hi', 'हिन्दी'),
-    ('it', 'Italiano'),
-    ('jp', '日本語'),
-    ('nb', 'Norsk'),
-    ('nl', 'Nederlands'),
-    ('pt', 'Português'),
-    ('ru', 'Русский'),
-    ('sr', 'Srpski'),
-    ('sv', 'Svensk'),
-    ('ta', 'தமிழ்'),
-    ('tr', 'Türkçe'),
-    ('zh', '中文'),
-]
-RTL_LANGS = ['ar', 'he', 'ur', 'yi', 'ji', 'iw', 'fa']
-DEFAULT_LOCALE = 'en'
-
 
 app = bottle.default_app()
 
@@ -178,6 +156,7 @@ def start(logfile=None, profile=False):
     logging.debug("Finished running migrations")
     db.disconnect()
 
+    app.install(request_timer)
     app.install(squery.database_plugin)
 
     # Set some basic configuration
@@ -192,13 +171,18 @@ def start(logfile=None, profile=False):
         'updates': Lazy(lambda: len(list(get_zipballs()))),
         'readable_license': lambda s: dict(LICENSES).get(s, LICENSES[0][1]),
         'is_rtl': Lazy(lambda: request.locale in RTL_LANGS),
+        'dir': lambda l: 'rtl' if l in RTL_LANGS else 'auto',
+        'LANGS': LANGS,
+        'UI_LANGS': UI_LANGS,
+        'SELECT_LANGS': SELECT_LANGS,
         'u': to_unicode,
     })
 
     # Add middlewares
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
-    wsgiapp = I18NPlugin(wsgiapp, langs=LOCALES, default_locale=DEFAULT_LOCALE,
-                         domain='librarian', locale_dir=in_pkg('locales'))
+    wsgiapp = I18NPlugin(wsgiapp, langs=UI_LANGS,
+                         default_locale=DEFAULT_LOCALE, domain='librarian',
+                         locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
 
     if profile:

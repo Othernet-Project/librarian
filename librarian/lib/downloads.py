@@ -20,6 +20,7 @@ from datetime import datetime, timedelta
 from bottle import request
 
 from .i18n import lazy_gettext as _
+from ..utils.lang import RTL_LANGS
 
 
 __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
@@ -369,6 +370,23 @@ class Meta(object):
             return os.path.basename(g[0])
         except IndexError:
             return None
+
+    @property
+    def lang(self):
+        return self.meta.get('language')
+
+    @property
+    def rtl(self):
+        return self.lang in RTL_LANGS
+
+    @property
+    def i18n_attrs(self):
+        s = ''
+        if self.lang:
+            s += ' lang="%s"' % self.lang
+        if self.rtl:
+            s += ' dir="rtl"'
+        return s
 
     @property
     def label(self):

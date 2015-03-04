@@ -3,6 +3,23 @@
 %# Translators, used as page heading
 <h1>{{ _('Updates') }}</h1>
 
+% if nzipballs:
+<div class="dash-updates content-archive dash-section">
+    <div class="stat count">
+    <span class="number">{{ nzipballs }}</span>
+    %# Translators, appears on updates page as a label, preceded by update count in big letter
+    <span class="label">{{ ngettext('update available', 'updates available', nzipballs) }}</span>
+    </div>
+
+    <div class="stat space">
+    <span class="number">{{ last_zip.strftime('%m-%d') }}</span>
+    %# Translators, appears on updates page as a label, preceded by date of update in big letter
+    <span class="label">{{ _('last update') }}</span>
+    </div>
+</div>
+% end
+
+
 <div class="inner">
     <div class="controls">
     % if pager.pages > 1:
@@ -15,6 +32,7 @@
     </form>
     % end
     </div>
+
     <form method="POST">
     % if metadata:
     % include('_list_controls')
@@ -41,7 +59,7 @@
                         <input id="check-{{ meta['md5'] }}" type="checkbox" name="selection" value="{{ meta['md5'] }}"{{ selection and ' checked' or ''}}>
                     </td>
                     <td class="downloads-title"{{ ' rowspan="3"' if meta.get('replaces_title') else '' }}>
-                        <p><label for="check-{{ meta['md5'] }}">{{ meta['title'] }}</label></p>
+                        <p><label for="check-{{ meta['md5'] }}"><span{{! meta.i18n_attrs }}>{{ meta['title'] }}</span></label></p>
                         % if meta.get('replaces_title'):
                         <p class="downloads-replaces">{{ _('replaces:') }} <a href="/pages/{{ meta['replaces'] }}/">{{ meta['replaces_title'] }}</a></p>
                         % end

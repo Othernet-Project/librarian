@@ -19,7 +19,7 @@
             {{ meta.timestamp.strftime('%Y-%m-%d') }}
             </span>
         </p>
-        <h2 class="title">
+        <h2 class="title"{{! meta.i18n_attrs }}>
             <a href="{{ i18n_path('/pages/%s' % meta.md5) }}">{{ meta.title }}</a>
         </h2>
         % if meta.partner:
