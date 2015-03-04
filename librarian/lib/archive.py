@@ -174,7 +174,7 @@ GET_TAG_CLOUD = """
 SELECT name, tag_id, count(taggings.tag_id) as count
 FROM tags NATURAL JOIN taggings
 GROUP BY taggings.tag_id
-ORDER BY name ASC;
+ORDER BY count DESC, name ASC;
 """
 
 
