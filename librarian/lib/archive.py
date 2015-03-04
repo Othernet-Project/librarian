@@ -92,10 +92,10 @@ ORDER BY updated ASC, views ASC;
 ADD_QUERY = """
 REPLACE INTO zipballs
 (md5, domain, url, title, images, timestamp, updated, keep_formatting,
-is_partner, is_sponsored, archive, partner, license, language)
+is_partner, is_sponsored, archive, partner, license, language, size)
 VALUES
 (:md5, :domain, :url, :title, :images, :timestamp, :updated, :keep_formatting,
-:is_partner, :is_sponsored, :archive, :partner, :license, :language);
+:is_partner, :is_sponsored, :archive, :partner, :license, :language, :size);
 """
 REMOVE_QUERY = """
 DELETE FROM zipballs
@@ -301,6 +301,7 @@ def prepare_metadata(md5, path):
     add_missing_keys(meta)
     meta['md5'] = md5
     meta['updated'] = datetime.now()
+    meta['size'] = os.stat(path).st_size
     return meta
 
 
