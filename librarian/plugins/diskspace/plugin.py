@@ -27,8 +27,9 @@ from . import zipballs
 @view('cleanup', message=None, vals=MultiDict())
 def cleanup_list():
     """ Render a list of items that can be deleted """
-    return {'metadata': archive.cleanup_list(),
-            'needed': archive.needed_space()}
+    free = zipballs.free_space()[0]
+    return {'metadata': zipballs.cleanup_list(free),
+            'needed': zipballs.needed_space(free)}
 
 
 @view('cleanup', message=None, vals=MultiDict())
@@ -38,8 +39,10 @@ def cleanup():
     if action not in ['check', 'delete']:
         # Translators, used as response to innvalid HTTP request
         abort(400, _('Invalid request'))
+    free = zipballs.free_space()[0]
+    cleanup = list(zipballs.cleanup_list(free))
     selected = forms.getall('selection')
-    metadata = list(archive.cleanup_list())
+    metadata = list(cleanup)
     selected = [z for z in metadata if z['md5'] in selected]
     if action == 'check':
         if not selected:
@@ -54,7 +57,7 @@ def cleanup():
                 # KB, MB, etc
                 _('%s can be freed by removing selected content')) % tot
         return {'vals': forms, 'metadata': metadata, 'message': message,
-                'needed': archive.needed_space()}
+                'needed': zipballs.needed_space(free)}
     else:
         success, errors = archive.remove_from_archive([z['md5']
                                                        for z in selected])
@@ -69,8 +72,7 @@ def cleanup():
             # Translators, error message shown on clean-up page when there was
             # no deletable content
             message = _('Nothing to delete')
-        metadata = archive.cleanup_list()
-        return {'vals': MultiDict(), 'metadata': metadata,
+        return {'vals': MultiDict(), 'metadata': cleanup,
                 'message': message, 'needed': archive.needed_space()}
 
 

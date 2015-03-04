@@ -142,3 +142,39 @@ def needed_space(free_space):
     """
     config = request.app.config
     return max([0, parse_size(config['storage.minfree']) - free_space])
+
+
+def get_old_content():
+    """ Return content ordered from oldest to newest
+
+    :returns:   list of content ordered from oldest to newest
+    """
+    db = request.db
+    db.query("""
+             SELECT md5, updated, title, views
+             FROM zipballs
+             ORDER BY updated ASC, views ASC;
+             """)
+    return db.results
+
+
+def cleanup_list(free_space):
+    """ Return a generator of zipball metadata necessary to free enough space
+
+    The generator will stop yielding as soon as enough zipballs have been
+    yielded to satisfy the minimum free space requirement set in the
+    configuration.
+    """
+    # TODO: tests
+    old = get_old_content()
+    config = request.app.config
+    cdir = config['content.contentdir']
+    zspace = lambda z: get_zip_space(z['md5'] + '.zip', cdir)
+    zipballs = map(lambda z: (z.setdefault('size', zspace(z)) and z), old)
+    space = needed_space(free_space)
+    while space > 0:
+        zipball = next(zipballs)
+        space -= zipball['size']
+        yield zipball
+
+
