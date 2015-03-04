@@ -139,9 +139,6 @@ def start(logfile=None, profile=False):
     # Srart the server
     logging.info('===== Starting Librarian v%s =====', __version__)
 
-    install_plugins(app)
-    logging.info('Installed all plugins')
-
     # Make sure all necessary directories are present
     ensure_dir(dirname(config['logging.output']))
     ensure_dir(dirname(config['database.path']))
@@ -156,6 +153,11 @@ def start(logfile=None, profile=False):
     logging.debug("Finished running migrations")
     db.disconnect()
 
+    # Install Librarian plugins
+    install_plugins(app)
+    logging.info('Installed all plugins')
+
+    # Install bottle plugins
     app.install(request_timer)
     app.install(squery.database_plugin)
 
