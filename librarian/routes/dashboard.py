@@ -31,14 +31,6 @@ app = default_app()
 @view('dashboard')
 def dashboard():
     """ Render the dashboard """
-    zipballs = downloads.get_zipballs()
-    zipballs = list(reversed(downloads.order_zipballs(zipballs)))
-    if zipballs:
-        last_zip = datetime.fromtimestamp(zipballs[0][1])
-        zipballs = len(zipballs)
-        logging.debug('Found %s updates' % zipballs)
-    else:
-        logging.debug('No updates found')
     plugins = DASHBOARD_PLUGINS
     return locals()
 

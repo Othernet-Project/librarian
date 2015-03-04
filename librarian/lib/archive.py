@@ -83,19 +83,13 @@ ORDER BY date(updated) DESC, views DESC
 LIMIT :limit
 OFFSET :offset;
 """
-LIST_DELETABLE = """
-SELECT md5, updated, title, views
-FROM zipballs
-WHERE favorite = 0
-ORDER BY updated ASC, views ASC;
-"""
 ADD_QUERY = """
 REPLACE INTO zipballs
 (md5, domain, url, title, images, timestamp, updated, keep_formatting,
-is_partner, is_sponsored, archive, partner, license, language)
+is_partner, is_sponsored, archive, partner, license, language, size)
 VALUES
 (:md5, :domain, :url, :title, :images, :timestamp, :updated, :keep_formatting,
-:is_partner, :is_sponsored, :archive, :partner, :license, :language);
+:is_partner, :is_sponsored, :archive, :partner, :license, :language, :size);
 """
 REMOVE_QUERY = """
 DELETE FROM zipballs
@@ -269,13 +263,6 @@ def search_content(terms, offset=0, limit=0, tag=None):
     return db.results
 
 
-def get_old_content():
-    # TODO: tests
-    db = request.db
-    db.query(LIST_DELETABLE)
-    return db.results
-
-
 def parse_size(size):
     """ Parses size with B, K, M, or G suffix and returns in size bytes
 
@@ -301,6 +288,7 @@ def prepare_metadata(md5, path):
     add_missing_keys(meta)
     meta['md5'] = md5
     meta['updated'] = datetime.now()
+    meta['size'] = os.stat(path).st_size
     return meta
 
 
@@ -420,73 +408,6 @@ def zipball_count():
     return db.cursor.fetchone()['count']
 
 
-def path_space(path):
-    """ Return device number and free space in bytes for given path
-
-    :param path:    path for which to return the data
-    :returns:       three-tuple containing drive number, free space, total
-                    space
-    """
-    dev = os.stat(path).st_dev
-    stat = os.statvfs(path)
-    free = stat.f_frsize * stat.f_bavail
-    total = stat.f_blocks * stat.f_frsize
-    return dev, free, total
-
-
-def free_space():
-    """ Returns free space information about spool and content dirs and totals
-
-    In case the spool directory and content directory are on the same drive,
-    the space information is the same for both directories and totals.
-
-    :returns:   three-tuple of two-tuples containing free and total spaces for
-                spool directory, content directory, and totals respectively
-    """
-    if not hasattr(os, 'statvfs'):
-        return (None, None), (None, None), (None, None)
-    config = request.app.config
-    sdir = config['content.spooldir']
-    cdir = config['content.contentdir']
-    sdev, sfree, stot = path_space(sdir)
-    cdev, cfree, ctot = path_space(cdir)
-    if sdev == cdev:
-        total_free = sfree
-        total = stot
-    else:
-        total_free = sfree + cfree
-        total = stot + ctot
-    return (sfree, stot), (cfree, ctot), (total_free, total)
-
-
-def get_zip_space(filename, directory=None):
-    """ Return space taken up by a file in content directory
-
-    Directory can be overridden by a custom path supplied as ``directory``
-    argument. This is useful if we want to prevent multiple lookups of the
-    directory path.
-
-    :param filename:    name of the zipfile
-    :param directory:   directory of the file
-    :returns:           space taken in bytes
-    """
-    directory = directory or request.app.config['content.contentdir']
-    return os.stat(os.path.join(directory, filename)).st_size
-
-
-def archive_space_used():
-    """ Return the space used by zipballs in content directory
-
-    :returns:   used space in bytes
-    """
-    config = request.app.config
-    cdir = config['content.contentdir']
-    zipballs = os.listdir(cdir)
-    return sum([get_zip_space(f, cdir)
-                for f in zipballs
-                if f.endswith('.zip')])
-
-
 def last_update():
     """ Get timestamp of the last updated zipball
 
@@ -508,38 +429,6 @@ def add_view(md5):
     db.query(VIEWCOUNT_QUERY, md5)
     db.commit()
     return db.cursor.rowcount
-
-
-def needed_space():
-    """ Returns amount of space that needs to be freed in content directory
-
-    :returns:   space in bytes
-    """
-    # TODO: tests
-    if not hasattr(os, 'statvfs'):
-        return None
-    config = request.app.config
-    return max([0, parse_size(config['storage.minfree']) - free_space()[1][0]])
-
-
-def cleanup_list():
-    """ Return a generator of zipball metadata necessary to free enough space
-
-    The generator will stop yielding as soon as enough zipballs have been
-    yielded to satisfy the minimum free space requirement set in the
-    configuration.
-    """
-    # TODO: tests
-    old = get_old_content()
-    config = request.app.config
-    cdir = config['content.contentdir']
-    zspace = lambda z: get_zip_space(z['md5'] + '.zip', cdir)
-    zipballs = map(lambda z: (z.setdefault('size', zspace(z)) and z), old)
-    space = needed_space()
-    while space > 0:
-        zipball = next(zipballs)
-        space -= zipball['size']
-        yield zipball
 
 
 def add_tags(meta, tags):
