@@ -358,7 +358,7 @@ class Meta(object):
 
     def cache_cover(self, cover_path, content):
         config = request.app.config
-        covers = config['content.covers']
+        covers = os.path.normpath(config['content.covers'])
         ext = os.path.splitext(cover_path)[1]
         cover_path = os.path.join(covers, '%s%s' % (self.md5, ext))
         with open(cover_path, 'wb') as f:
@@ -367,7 +367,7 @@ class Meta(object):
 
     def get_cover_path(self):
         config = request.app.config
-        covers = config['content.covers']
+        covers = os.path.normpath(config['content.covers'])
         cover_path = os.path.join(covers, '%s.*' % self.md5)
         g = glob.glob(cover_path)
         try:
