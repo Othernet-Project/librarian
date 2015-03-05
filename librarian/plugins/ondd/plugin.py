@@ -173,9 +173,14 @@ def install(app, route):
     except Exception as err:
         logging.error('ONDD: connection failed: %s', err)
         raise NotSupportedError('ONDD socket refused connection')
-    route('/status', 'GET', get_signal_stats)
-    route('/settings', 'POST', set_settings)
-    route('/files', 'GET', show_file_list)
+    route(
+        ('status', get_signal_status,
+         'GET', '/status', dict(unlocked=True)),
+        ('settings', set_settings,
+         'POST', '/settings', dict(unlocked=True)),
+        ('files', show_file_list,
+         'GET', '/files', dict(unlocked=True)),
+    )
 
 
 class Dashboard(DashboardPlugin):

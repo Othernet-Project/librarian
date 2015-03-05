@@ -2,7 +2,7 @@
 
 <div class="reader">
     <div class="reader-frame">
-        <iframe id="reader-main" class="reader-main" src="/pages/{{ meta.md5 }}/index.html"></iframe>
+        <iframe id="reader-main" class="reader-main" src="{{ i18n_path(url('content:file', content_id=meta.md5, filename='index.html')) }}"></iframe>
     </div>
     <div class="reader-meta data">
         <div class="inner">
@@ -23,7 +23,7 @@
                 / <span class="special">{{ _('core') }}</span>
                 % end
             </strong>
-            <a class="button small" href="/pages/{{ meta.md5 }}.zip">{{ _('Download') }}</a>
+            <a class="button small" href="{{ i18n_path(url('content:zipball', content_id=meta.md5)) }}.zip">{{ _('Download') }}</a>
             </p>
             <p class="licensing">{{ meta.human_license }}</p>
             % end

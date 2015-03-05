@@ -59,7 +59,7 @@ def get_backup_path():
 
 def get_file_url():
     suburl = request.app.config['dbmanage.backups'].replace('\\', '/')
-    return i18n_path('/files/%s' % suburl)
+    return i18n_path(request.app.get_url('files:path', path=suburl))
 
 
 def serve_dbfile():
@@ -139,13 +139,17 @@ def perform_rebuild():
                             'database rebuild was cancelled. Please make '
                             'sure noone else is using Librarian and '
                             'try again.'))
-    return dict(path=i18n_path('/'), time=rtime, fpath=get_file_url())
+    return dict(path=i18n_path(request.app.get_url('content:list')),
+                time=rtime, fpath=get_file_url())
 
 
 def install(app, route):
-    route('/librarian.sqlite', 'GET', callback=serve_dbfile, no_i18n=True)
-    route('/backup', 'POST', callback=perform_backup)
-    route('/rebuild', 'POST', callback=perform_rebuild)
+    route(
+        ('download', serve_dbfile, 'GET', '/librarian.sqlite',
+         dict(no_i18n=True)),
+        ('backup', perform_backup, 'POST', '/backup', {}),
+        ('rebuild', perform_rebuild, 'POST', '/rebuild', {}),
+    )
 
 
 class Dashboard(DashboardPlugin):

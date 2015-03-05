@@ -39,7 +39,7 @@ def content_list():
     query = request.params.getunicode('q', '').strip()
 
     try:
-        tag = int(request.params.get('t'))
+        tag = int(request.params.get('tag'))
     except (TypeError, ValueError):
         tag = None
         tag_name = None

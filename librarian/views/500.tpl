@@ -12,6 +12,6 @@
     <pre class="trace"><code>{{ trace }}</code></pre>
 
     <p>
-    <a class="button" href="/librarian.log">{{ _('Download application log') }}</a>
+    <a class="button" href="{{ url('sys:logs') }}">{{ _('Download application log') }}</a>
     </p>
 </div>

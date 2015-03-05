@@ -1,9 +1,9 @@
 % for meta in metadata:
 <li class="data {{ meta.get('archive', 'unknown') }} {{ 'partner' if meta.is_partner else '' }} {{ 'sponsored' if meta.is_sponsored else '' }}" data-id="{{ meta.md5 }}">
     <p class="thumbnail">
-    <a href="{{ i18n_path('/pages/%s' % meta.md5) }}">
+    <a href="{{ i18n_path(url('content:reader', content_id=meta.md5)) }}">
     % if meta.images > 0 and meta.image:
-        <img class="thumb-image" src="/covers/{{ meta.image }}">
+        <img class="thumb-image" src="{{ url('content:cover', path=meta.image) }}">
     % else:
         <span class="thumb-image thumb-placeholder"></span>
     % end
@@ -20,7 +20,7 @@
             </span>
         </p>
         <h2 class="title"{{! meta.i18n_attrs }}>
-            <a href="{{ i18n_path('/pages/%s' % meta.md5) }}">{{ meta.title }}</a>
+            <a href="{{ i18n_path(url('content:reader', content_id=meta.md5)) }}">{{ meta.title }}</a>
         </h2>
         % if meta.partner:
         <p class="attrib">

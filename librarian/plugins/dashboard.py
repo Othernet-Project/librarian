@@ -72,6 +72,9 @@ class DashboardPlugin(object):
     def get_classes(self):
         return self.classes
 
+    def get_formatted_classes(self):
+        return ' '.join([('dash-%s' % c) for c in self.get_classes()])
+
     def get_javascript(self):
         return self.javascript
 
@@ -81,7 +84,7 @@ class DashboardPlugin(object):
             'plugin': self,
             'name': self.get_name(),
             'heading': self.get_heading(),
-            'classes': self.get_classes(),
+            'classes': self.get_formatted_classes(),
         }
         context.update(self.get_context())
         return bottle.template(self.get_template(), **context)

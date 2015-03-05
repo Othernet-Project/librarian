@@ -1,8 +1,8 @@
 % rebase('_dashboard_section')
 
-<style>@import "/s/ondd/ondd.css";</style>
+<style>@import "{{ url('plugins:ondd:static', path='ondd.css') }}";</style>
 
-<p id="signal-status" class="signal-status" data-url="{{ i18n_path('/p/ondd/status') }}">
+<p id="signal-status" class="signal-status" data-url="{{ i18n_path(url('plugins:ondd:status')) }}">
     % include('ondd/_signal')
 </p>
 
@@ -10,7 +10,7 @@
 
 %# Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
 <h3>{{ _('Downloads in progress') }}</h3>
-<div id="ondd-file-list" data-url="{{ i18n_path('/p/ondd/files') }}">
+<div id="ondd-file-list" data-url="{{ i18n_path(url('plugins:ondd:files')) }}">
     % include('ondd/_file_list')
 </div>
 

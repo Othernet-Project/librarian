@@ -36,6 +36,7 @@ from librarian.lib.common import to_unicode
 from librarian.lib.system import ensure_dir
 from librarian.lib.lock import global_lock
 from librarian.plugins import install_plugins
+from librarian.utils.routing import add_routes
 from librarian.utils.timer import request_timer
 from librarian.lib.downloads import get_zipballs
 from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
@@ -52,58 +53,77 @@ def in_pkg(*paths):
 
 CONFPATH = in_pkg('librarian.ini')
 
+# Routing table
+#
+# Each route is in following format::
+#
+#     (name, callback,
+#      method, path, route_config_dict),
+#
+ROUTES = (
+
+    # Content
+
+    ('content:list', content.content_list,
+     'GET', '/', {}),
+    ('content:file', content.content_file,
+     'GET', '/pages/<content_id>/<filename:path>', dict(no_i18n=True)),
+    ('content:zipball', content.content_zipball,
+     'GET', '/pages/<content_id>.zip', dict(no_i18n=True, unlocked=True)),
+    ('content:reader', content.content_reader,
+     'GET', '/pages/<content_id>', {}),
+    ('content:cover', content.cover_image,
+     'GET', '/covers/<path>', dict(no_i18n=True)),
+    ('content:delete', content.remove_content,
+     'POST', '/delete/<content_id>', {}),
+
+    # Files
+
+    ('files:list', content.show_file_list,
+     'GET', '/files/', dict(unlocked=True)),
+    ('files:path', content.show_file_list,
+     'GET', '/files/<path:path>', dict(unlocked=True)),
+    ('files:action', content.handle_file_action,
+     'POST', '/files/<path:path>', dict(unlocked=True)),
+
+    # Tags
+
+    ('tags:list', tags.tag_cloud,
+     'GET', '/tags/', {}),
+    ('tags:edit', tags.edit_tags,
+     'POST', '/tags/<content_id>', {}),
+
+    # Downloads (Updates)
+
+    ('downloads:list', downloads.list_downloads,
+     'GET', '/downloads/', {}),
+    ('downloads:action', downloads.manage_downloads,
+     'POST', '/downloads/', {}),
+
+    # Dashboard
+
+    ('dashboard:main', dashboard.dashboard,
+     'GET', '/dashboard/', {}),
+
+    # Apps
+
+    ('apps:list', apps.show_apps,
+     'GET', '/apps/', dict(unlocked=True)),
+    ('apps:app', apps.send_app_file,
+     'GET', '/apps/<appid>/', dict(unlocked=True)),
+    ('apps:asset', apps.send_app_file,
+     'GET', '/apps/<appid>/<path:path>', dict(unlocked=True)),
+
+    # System
+
+    ('sys:static', system.send_static,
+     'GET', '/static/<path:path>', dict(no_i18n=True, unlocked=True)),
+    ('sys:logs', system.send_logfile,
+     'GET', '/librarian.log', dict(no_i18n=True, unlocked=True)),
+)
+
 app = bottle.default_app()
-
-# Content
-app.route('/', 'GET',
-          callback=content.content_list)
-app.route('/pages/<content_id>/<filename:path>', 'GET', content.content_file,
-          no_i18n=True)
-app.route('/pages/<content_id>.zip', 'GET', content.content_zipball,
-          no_i18n=True, unlocked=True)
-app.route('/pages/<content_id>', 'GET', content.content_reader)
-app.route('/covers/<path:path>', 'GET', content.cover_image, no_i18n=True)
-app.route('/delete/<content_id>', 'POST',
-          callback=content.remove_content)
-
-# Files
-app.route('/files/', 'GET',
-          callback=content.show_file_list, unlocked=True)
-app.route('/files/<path:path>', 'GET',
-          callback=content.show_file_list, unlocked=True)
-app.route('/files/<path:path>', 'POST',
-          callback=content.handle_file_action, unlocked=True)
-
-# Tags
-app.route('/tags/', 'GET',
-          callback=tags.tag_cloud)
-app.route('/tags/<content_id>', 'POST',
-          callback=tags.edit_tags)
-
-# Updates
-app.route('/downloads/', 'GET',
-          callback=downloads.list_downloads)
-app.route('/downloads/', 'POST',
-          callback=downloads.manage_downloads)
-
-# Dashboard
-app.route('/dashboard/', 'GET',
-          callback=dashboard.dashboard)
-
-# Apps
-app.route('/apps/', 'GET',
-          callback=apps.show_apps, unlocked=True)
-app.route('/apps/<appid>/', 'GET',
-          callback=apps.send_app_file, unlocked=True)
-app.route('/apps/<appid>/<path:path>', 'GET',
-          callback=apps.send_app_file, unlocked=True)
-
-
-# System routes and error handlers
-app.route('/static/<path:path>', 'GET',
-          callback=system.send_static, no_i18n=True, unlocked=True)
-app.route('/librarian.log', 'GET',
-          callback=system.send_logfile, no_i18n=True, unlocked=True)
+add_routes(app, ROUTES)
 app.error(500)(system.show_error_page)
 app.error(503)(system.show_maint_page)
 
@@ -178,6 +198,7 @@ def start(logfile=None, profile=False):
         'UI_LANGS': UI_LANGS,
         'SELECT_LANGS': SELECT_LANGS,
         'u': to_unicode,
+        'url': app.get_url,
     })
 
     # Add middlewares
