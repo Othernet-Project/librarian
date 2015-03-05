@@ -360,7 +360,7 @@ class Meta(object):
         config = request.app.config
         covers = config['content.covers']
         ext = os.path.splitext(cover_path)[1]
-        cover_path = os.path.join(covers, '%s.%s' % (self.md5, ext))
+        cover_path = os.path.join(covers, '%s%s' % (self.md5, ext))
         with open(cover_path, 'wb') as f:
             f.write(content)
         return os.path.basename(cover_path)
