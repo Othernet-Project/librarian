@@ -7,8 +7,7 @@
 
   function expandCollapse(e) {
     e.preventDefault();
-    dashCollapsibles.addClass('dash-collapsed');
-    $(e.target).parent('.dash-collapsible').removeClass('dash-collapsed');
+    $(e.target).parent('.dash-collapsible').toggleClass('dash-collapsed');
   }
 
   function addIcon(hdr) {

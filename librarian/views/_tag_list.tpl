@@ -1,5 +1,10 @@
+% setdefault('tag_id', None)
 % if meta.tags:
-    % for name, tag_id in meta.tags.iteritems():
-    <a class="tag button small" href="{{ i18n_path('/?t=%s' % tag_id) }}">{{ name }}</a>
+    % for name, content_tag_id in meta.tags.iteritems():
+    % if content_tag_id != tag_id:
+        <a class="tag button small" href="{{ i18n_path(h.set_qparam(tag=content_tag_id)) }}">{{ name }}</a>
+    % else:
+        <span class="tag tag-current button small">{{ name }}</span>
+    % end
     % end
 % end

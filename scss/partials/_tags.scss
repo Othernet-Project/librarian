@@ -1,6 +1,15 @@
 .data .tag,
 .tag-cloud .tag {
   @include button-color($light-grey, $black, $light-grey, $black, $white, $black);
+
+  &.special {
+    @include button-blue;
+  }
+
+  &.tag-current {
+    @include button-color($grey, $light-grey, $grey, $grey, $light-grey, $grey);
+    cursor: default;
+  }
 }
 
 .tag-cloud {
@@ -36,10 +45,6 @@
   margin-right: 0.5em;
   margin-bottom: 0.5em;
   font-weight: bold;
-}
-
-.tag-cloud .tag-current {
-  @include button-color($light-grey, $grey, $light-grey, $light-grey, $grey, $light-grey);
 }
 
 .tag-button {

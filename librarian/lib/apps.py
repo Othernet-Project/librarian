@@ -35,7 +35,7 @@ class AppInfo(object):
         self.author = author
         self.version = version
         self.descriptions = descriptions
-        self.url = i18n_path('/apps/%s/' % appid)
+        self.url = i18n_path(request.app.get_url('apps:app', appid=appid))
         self.icon_behavior = behavior
 
     @property
@@ -44,6 +44,10 @@ class AppInfo(object):
             # Translators, this is used when app doesn't provide a description
             request.default_locale, _('No description provided'))
         return self.descriptions.get(request.locale, default_desc)
+
+    def asset_url(self, path):
+        return i18n_path(request.app.get_url('apps:asset', appid=self.appid,
+                                             path=path))
 
 
 def get_app_info(path):

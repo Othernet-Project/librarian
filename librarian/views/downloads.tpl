@@ -22,15 +22,7 @@
 
 <div class="inner">
     <div class="controls">
-    % if pager.pages > 1:
-    {{! h.form(method='GET') }}
-        <label for="page">{{ _('page') }}</label>
-        {{! h.vselect('p', pager.pager_choices, vals, _id='page') }}
-        {{! h.vselect('pp', pager.per_page_choices, vals, id='per-page') }}
-        <label for="per-page">{{ _('per page') }}</label>
-        <button type="submit">{{ _('Reload') }}</button>
-    </form>
-    % end
+    % include('_simple_pager')
     </div>
 
     <form method="POST">
@@ -61,7 +53,7 @@
                     <td class="downloads-title"{{ ' rowspan="3"' if meta.get('replaces_title') else '' }}>
                         <p><label for="check-{{ meta['md5'] }}"><span{{! meta.i18n_attrs }}>{{ meta['title'] }}</span></label></p>
                         % if meta.get('replaces_title'):
-                        <p class="downloads-replaces">{{ _('replaces:') }} <a href="/pages/{{ meta['replaces'] }}/">{{ meta['replaces_title'] }}</a></p>
+                        <p class="downloads-replaces">{{ _('replaces:') }} <a href="{{ i18n_path(url('content:reader', content_id=meta['replaces'])) }}/">{{ meta['replaces_title'] }}</a></p>
                         % end
                     </td>
                     <td class="downloads-timestamp do">{{ h.strft(meta['timestamp'], '%m-%d') }}</td>

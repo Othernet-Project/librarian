@@ -27,8 +27,10 @@
   function openTagForm(e) {
     var el = $(this);
     var tags = el.parent();
+    var tagForm = tags.next('.tag-form');
     tags.hide();
-    tags.next('.tag-form').show();
+    tagForm.show();
+    tagForm.find('input').focus();
     if (contentList != null && contentList.masonry != null) {
       contentList.masonry();
     }

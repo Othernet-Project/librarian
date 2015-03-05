@@ -2,16 +2,16 @@
 
 <p>
 {{ _('Database size') }}: {{ h.hsize(dbsize) }}
-<a href="/p/dbmanage/librarian.sqlite">{{ _('download') }}</a>
+<a href="{{ url('plugins:dbmanage:download') }}">{{ _('download') }}</a>
 </p>
 
 <div class="inline-form-wrapper">
-    <form action="{{ i18n_path('/p/dbmanage/backup') }}" method="POST" class="inline">
+    <form action="{{ i18n_path(url('plugins:dbmanage:backup')) }}" method="POST" class="inline">
         %# Translators, refers to database backup
         <button>{{ _('Backup') }}</button>
     </form>
 
-    <form action="{{ i18n_path('/p/dbmanage/rebuild') }}" method="POST" class="inline">
+    <form action="{{ i18n_path(url('plugins:dbmanage:rebuild')) }}" method="POST" class="inline">
         %# Translators, refers to database rebuild feature
         <button>{{ _('Rebuild') }}</button>
     </form>

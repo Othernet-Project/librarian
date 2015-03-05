@@ -281,7 +281,7 @@ def get_spool_zip_path(md5):
     return get_zip_path_in(md5, spooldir)
 
 
-def remove_downloads(md5s):
+def remove_downloads(md5s=None):
     """ Remove all downloads matching provided MD5 hexdigests
 
     Removal will fail silently. No exceptions are raised and no errors are
@@ -290,9 +290,13 @@ def remove_downloads(md5s):
 
     :param md5s:    iterable containing MD5 hexdigests
     """
-    logging.debug("Removing %s items from spool directory" % len(md5s))
-    for md5 in md5s:
-        path = get_spool_zip_path(md5)
+    if not md5s:
+        paths = get_zipballs()
+        logging.debug("Removing all items from spool directory")
+    else:
+        paths = (get_spool_zip_path(md5) for md5 in md5s)
+        logging.debug("Removing %s items from spool directory" % len(md5s))
+    for path in paths:
         if not path:
             logging.debug("<%s> not found on disk" % path)
             continue  # Ignoring non-existent paths
@@ -354,16 +358,16 @@ class Meta(object):
 
     def cache_cover(self, cover_path, content):
         config = request.app.config
-        covers = config['content.covers']
+        covers = os.path.normpath(config['content.covers'])
         ext = os.path.splitext(cover_path)[1]
-        cover_path = os.path.join(covers, '%s.%s' % (self.md5, ext))
+        cover_path = os.path.join(covers, '%s%s' % (self.md5, ext))
         with open(cover_path, 'wb') as f:
             f.write(content)
         return os.path.basename(cover_path)
 
     def get_cover_path(self):
         config = request.app.config
-        covers = config['content.covers']
+        covers = os.path.normpath(config['content.covers'])
         cover_path = os.path.join(covers, '%s.*' % self.md5)
         g = glob.glob(cover_path)
         try:

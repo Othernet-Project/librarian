@@ -689,53 +689,54 @@ def to_qs(mapping):
         ['%s=%s' % (k, quote(v.encode('utf8'))) for k, v in pairs])
 
 
-def add_qparam(param, value):
+def add_qparam(**new_params):
     """
     Add query string parameter on current path in request context.
 
-    The return value of this function is current request path with parameter
+    The return value of this function is current request path with parameters
     appended.
 
-    :param param:   parameter name
-    :param value:   value for the parameter
-    :returns:       path with query string parameter added
+    :param new_params:  key-value pairs to add
+    :returns:           path with query string parameter added
     """
     params = request.query.decode()
-    params.append(param, unicode(value))
+    for param, value in new_params.items():
+        params.append(param, unicode(value))
     return to_qs(params)
 
 
-def set_qparam(param, value):
+def set_qparam(**new_params):
     """
     Replace query string parameter on current path in request context.
 
-    The return value of this function is current request path with parameter
+    The return value of this function is current request path with parameters
     replaced.
 
-    :param param:   parameter name
-    :param value:   value for the parameter
-    :returns:       path with query string parameter replaced
+    :param new_params:  key-value pairs to set
+    :returns:           path with query string parameter replaced
     """
     params = request.query.decode()
-    params.replace(param, unicode(value))
+    for param, value in new_params.items():
+        params.replace(param, unicode(value))
     return to_qs(params)
 
 
-def del_qparam(param):
+def del_qparam(delete_params):
     """
     Remove query string parameter on current path in request context.
 
-    The return value of this function is current request path with parameter
-    appended.
+    The return value of this function is current request path with parameters
+    removed.
 
-    :param param:   parameter name
+    :param params:  parameter names to delete
     :returns:       path with query string parameter removed
     """
     params = request.query.decode()
-    try:
-        del params[param]
-    except KeyError:
-        pass
+    for param in delete_params:
+        try:
+            del params[param]
+        except KeyError:
+            pass
     return to_qs(params)
 
 

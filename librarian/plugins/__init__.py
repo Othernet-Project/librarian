@@ -37,10 +37,32 @@ def list_plugins():
     return plugins
 
 
-def route_plugin(app, name):
-    def _route_plugin(path, *args, **kwargs):
-        path = ('/p/%s/' % name) + path.lstrip('/')
-        app.route(path, *args, **kwargs)
+def route_plugin(app, mod):
+    """ Return a function for routing plugin routes
+
+    The route information must be in the following format::
+
+        (name, callback,
+         method, path, route_configuration)
+
+    The path is always prefixed with ``/p/module_name/``. For instance, if your
+    route has a path of ``/bar``, and is called ``foo``, it will be remapped to
+    ``/p/foo/bar``.
+
+    Similarily to paths, names are also modified. The ``plugins:`` prefix. For
+    a plugin module ``foo`` and route name of ``bar``, we therefore get a full
+    route name that spells ``plugins:foo:bar``.
+
+    :param app:     app for which to create the routing function
+    :param mod:     name of the plugin module
+    :returns:       routing function
+    """
+    def _route_plugin(*routes):
+        for route in routes:
+            name, callback, method, path, kw = route
+            name = 'plugins:%s:%s' % (mod, name)
+            path = ('/p/%s/' % mod) + path.lstrip('/')
+            app.route(path, method, callback, name=name, **kw)
     return _route_plugin
 
 
@@ -58,6 +80,14 @@ def install_views(mod):
 def install_static(app, mod):
     """ Add routes for plugin static if plugin contains a static directory
 
+    All routes are mapped to urls that start with ``/s/`` prefix followed by
+    module name. So, for a plugin called ``foo``, we get ``js/main.js`` asset
+    by using the following path: ``/s/foo/js/main.js``.
+
+    Each route is also given a name with ``plugins:`` prefix and ``:static``
+    suffix added to the module name. Fof a module called ``foo``, the route
+    name is ``plugins:foo:static``.
+
     :param app:  application object
     :param mod:  module name
     """
@@ -69,8 +99,8 @@ def install_static(app, mod):
         return static_file(path, static_path)
     _route_plugin_static.__name__ = '_route_%s_static' % mod
 
-    app.route('/s/%s/<path:path>' % mod, 'GET',
-              callback=_route_plugin_static, no_i18n=True)
+    app.route('/s/%s/<path:path>' % mod, 'GET', _route_plugin_static,
+              name='plugins:%s:static' % mod, no_i18n=True)
 
 
 def install_plugins(app):

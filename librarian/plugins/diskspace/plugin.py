@@ -62,7 +62,7 @@ def cleanup():
         success, errors = archive.remove_from_archive([z['md5']
                                                        for z in selected])
         if selected and not errors:
-            redirect(i18n_path('/'))
+            redirect(i18n_path(request.app.get_url('content:list')))
 
         if errors:
             # Translators, error message shown on clean-up page when some of
@@ -85,8 +85,10 @@ def install(app, route):
             'Disk space information not available on this platform')
     conf = app.config
     zipballs.update_sizes(conf['database.path'], conf['content.contentdir'])
-    route('/cleanup/', 'GET', callback=cleanup_list)
-    route('/cleanup/', 'POST', callback=cleanup)
+    route(
+        ('list', cleanup_list, 'GET', '/cleanup/', {}),
+        ('cleanup', cleanup, 'POST', '/cleanup/', {}),
+    )
 
 
 class Dashboard(DashboardPlugin):

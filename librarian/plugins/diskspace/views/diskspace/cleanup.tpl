@@ -23,7 +23,7 @@
 </p>
 % end
 
-<form action="{{ i18n_path('/cleanup/') }}" method="POST">
+<form action="{{ i18n_path(url('plugins:diskspace:cleanup')) }}" method="POST">
 <table>
     <tr class="header">
     %# Translators, in table header on clean-up page, above checkboxes for marking deletion candidates
@@ -42,7 +42,7 @@
         {{! h.checkbox('selection', meta['md5'], vals, default=True) }}
         </td>
         <td>{{ meta['updated'].strftime('%m-%d') }}</td>
-        <td><a href="{{ i18n_path('/content/%s/' % meta['md5']) }}">{{ meta['title'] }}</a></td>
+        <td><a href="{{ i18n_path(url('content:reader', content_id=meta['md5'])) }}">{{ meta['title'] }}</a></td>
         <td>{{ h.hsize(meta['size']) }}</td>
         </tr>
         % end
