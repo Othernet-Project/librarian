@@ -10,8 +10,10 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
         sqlite3 build-essential python-dev python-pip libev-dev
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes remove \
+        chef puppet
     sudo pip install -r /vagrant/conf/requirements.txt
-    sudo pip install bjoern==1.4.2
+    sudo pip install repoze
     ln -s /vagrant/tmp/zipballs /srv/zipballs
     ln -s /vagrant/tmp/downloads /var/spool/downloads
   SHELL
