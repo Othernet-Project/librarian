@@ -38,7 +38,8 @@ def request_timer(callback):
     def wrapper(*args, **kwargs):
         start = time.time()
         res = callback(*args, **kwargs)
-        response.headers['X-Exec-Time'] = str(time.time() - start)
+        delta = time.time() - start
+        response.headers['X-Exec-Time'] = str(round(delta * 1000, 4)) + 'ms'
         response.headers['X-Mem'] = str(get_mem())
         return res
     return wrapper
