@@ -76,6 +76,9 @@ class Database(object):
         spawn(self.cursor.execute, qry, params or kwparams).join()
         return self.cursor
 
+    def execute(self, qry, params):
+        spawn(self.cursor.execute, qry, params).join()
+
     def executemany(self, qry, params):
         spawn(self.cursor.executemany, qry, params).join()
 
