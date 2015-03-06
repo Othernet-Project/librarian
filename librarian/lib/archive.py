@@ -197,7 +197,7 @@ def get_count(tag=None):
         db.query(TAG_COUNT_QUERY, tag)
     else:
         db.query(COUNT_QUERY)
-    return db.results[0]['count']
+    return db.result['count']
 
 
 def get_search_count(terms, tag=None):
@@ -208,7 +208,7 @@ def get_search_count(terms, tag=None):
         db.query(TAG_SEARCH_COUNT_QUERY, terms=terms, tag_id=tag)
     else:
         db.query(SEARCH_COUNT_QUERY, terms=terms)
-    return db.results[0]['count']
+    return db.result['count']
 
 
 def get_content(offset=0, limit=0, tag=None):
@@ -225,7 +225,7 @@ def get_single(md5):
     # TODO: tests
     db = request.db
     db.query(GET_SINGLE, md5)
-    return db.results[0]
+    return db.result
 
 
 def get_titles(ids):
@@ -297,10 +297,10 @@ def add_meta_to_db(db, metadata, replaced):
     q = multiarg(REMOVE_MULTI_QUERY, nreplaced)
     with db.transaction() as cur:
         logging.debug("Adding new content to archive database")
-        cur.executemany(ADD_QUERY, metadata)
+        db.executemany(ADD_QUERY, metadata)
         rowcount = cur.rowcount
         logging.debug("Removing replaced content from archive database")
-        cur.execute(q, replaced)
+        db.executemany(q, replaced)
     return rowcount
 
 
@@ -391,9 +391,9 @@ def remove_from_archive(hashes):
         success.append(md5)
     with db.transaction() as cur:
         logging.debug("Removing %s items from archive database" % len(success))
-        cur.executemany(REMOVE_QUERY, [(s,) for s in success])
-        cur.executemany(REMOVE_ALL_TAGS, [(s,) for s in success])
+        db.executemany(REMOVE_QUERY, [(s,) for s in success])
         rowcount = cur.rowcount
+        db.executemany(REMOVE_ALL_TAGS, [(s,) for s in success])
     logging.debug("%s items removed from database" % rowcount)
     return success, failed
 
@@ -405,7 +405,7 @@ def zipball_count():
     """
     db = request.db
     db.query(COUNT_QUERY)
-    return db.cursor.fetchone()['count']
+    return db.result['count']
 
 
 def last_update():
@@ -415,7 +415,7 @@ def last_update():
     """
     db = request.db
     db.query(LAST_DATE_QUERY)
-    res = db.cursor.fetchone()
+    res = db.result
     return res and res.updated
 
 
@@ -439,7 +439,7 @@ def add_tags(meta, tags):
 
     # First ensure all tags exist
     with db.transaction() as cur:
-        cur.executemany(CREATE_TAGS, [{'name': t} for t in tags])
+        db.executemany(CREATE_TAGS, [{'name': t} for t in tags])
 
     # Get the IDs of the tags
     db.query(multiarg(GET_TAGS_BY_NAME, len(tags)), *tags)
@@ -451,8 +451,8 @@ def add_tags(meta, tags):
     tags_dict = {t['name']: t['tag_id'] for t in tags}
     meta.tags.update(tags_dict)
     with db.transaction() as cur:
-        cur.executemany(ADD_TAGS, pairs)
-        cur.execute(CACHE_TAGS, dict(md5=meta.md5, tags=json.dumps(meta.tags)))
+        db.executemany(ADD_TAGS, pairs)
+        db.execute(CACHE_TAGS, dict(md5=meta.md5, tags=json.dumps(meta.tags)))
     return tags
 
 
@@ -471,7 +471,7 @@ def remove_tags(meta, tags):
 def get_tag_name(tag_id):
     db = request.db
     db.query(GET_TAG_BY_ID, tag_id)
-    return db.results[0]
+    return db.result
 
 
 def get_tag_cloud():
