@@ -12,6 +12,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from __future__ import unicode_literals, print_function
 
+import gevent.monkey
+gevent.monkey.patch_all(aggressive=True)
+
 import os
 import sys
 import pprint
@@ -224,7 +227,9 @@ def start(logfile=None, profile=False):
 
     bottle.debug(config['librarian.debug'] == 'yes')
     bottle.run(app=wsgiapp,
-               server=config['librarian.server'],
+               server='gevent', # config['librarian.server'],
+               quiet=True,
+               fast=True,
                host=config['librarian.bind'],
                reloader=config['librarian.server'] == 'wsgiref',
                port=int(config['librarian.port']))
