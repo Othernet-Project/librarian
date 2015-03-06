@@ -76,6 +76,12 @@ class Database(object):
         spawn(self.cursor.execute, qry, params or kwparams).join()
         return self.cursor
 
+    def executemany(self, qry, params):
+        spawn(self.cursor.executemany, qry, params).join()
+
+    def executescript(self, sql):
+        spawn(self.cursor.executescript, sql).join()
+
     def commit(self):
         spawn(self.db.commit).join()
 
