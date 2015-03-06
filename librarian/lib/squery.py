@@ -12,6 +12,7 @@ import sqlite3
 from functools import wraps
 from contextlib import contextmanager
 
+from gevent import spawn
 from dateutil.parser import parse
 
 from bottle import request
@@ -59,8 +60,8 @@ class Database(object):
     def connect(self):
         # TODO: Add unit test for row_factory override
         if self.db is None:
-            self.db = sqlite3.connect(self.dbpath,
-                                      detect_types=sqlite3.PARSE_DECLTYPES)
+            self.db = spawn(sqlite3.connect, self.dbpath,
+                            detect_types=sqlite3.PARSE_DECLTYPES).get()
             self.db.row_factory = dbdict_factory
 
             # Use atuocommit mode so we can do manual transactions
@@ -68,19 +69,18 @@ class Database(object):
 
     def disconnect(self):
         if self.db is not None:
-            self.db.close()
+            spawn(self.db.close).join()
             self.db = None
 
     def query(self, qry, *params, **kwparams):
-        cursor = self.cursor
-        cursor.execute(qry, kwparams or params)
-        return cursor
+        spawn(self.cursor.execute, qry, params or kwparams).join()
+        return self.cursor
 
     def commit(self):
-        self.db.commit()
+        spawn(self.db.commit).join()
 
     def rollback(self):
-        self.db.rollback()
+        spawn(self.db.rollback).join()
 
     @property
     def cursor(self):
@@ -91,7 +91,11 @@ class Database(object):
 
     @property
     def results(self):
-        return self.cursor.fetchall()
+        return spawn(self.cursor.fetchall).get()
+
+    @property
+    def result(self):
+        return spawn(self.cursor.fetchone).get()
 
     @contextmanager
     def transaction(self, silent=False):
@@ -118,8 +122,7 @@ def database_plugin(callback):
     def plugin(*args, **kwargs):
         config = request.app.config
         request.db = db = Database(config['database.path'])
-        body = callback(*args, **kwargs)
-        db.disconnect()
-        return body
+        yield callback(*args, **kwargs)
+        spawn(db.disconnect).join()
     return plugin
 
