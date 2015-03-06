@@ -231,7 +231,7 @@ def start(logfile=None, profile=False):
                quiet=True,
                fast=True,
                host=config['librarian.bind'],
-               reloader=config['librarian.server'] == 'wsgiref',
+               reloader=config['librarian.reloader'] == 'yes',
                port=int(config['librarian.port']))
 
 
