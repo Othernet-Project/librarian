@@ -23,7 +23,7 @@
                 / <span class="special">{{ _('core') }}</span>
                 % end
             </strong>
-            <a class="button small" href="{{ i18n_path(url('content:zipball', content_id=meta.md5)) }}.zip">{{ _('Download') }}</a>
+            <a class="button small" href="{{ i18n_path(url('content:zipball', content_id=meta.md5)) }}">{{ _('Download') }}</a>
             </p>
             <p class="licensing">{{ meta.human_license }}</p>
             % end
