@@ -181,7 +181,7 @@ def start(logfile=None, profile=False):
     logging.info('Installed all plugins')
 
     # Install bottle plugins
-    app.install(request_timer)
+    app.install(request_timer('Handler'))
     app.install(squery.database_plugin)
 
     # Set some basic configuration
@@ -210,6 +210,7 @@ def start(logfile=None, profile=False):
                          default_locale=DEFAULT_LOCALE, domain='librarian',
                          locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
+    app.install(request_timer('Total'))
 
     if profile:
         # Instrument the app to perform profiling
