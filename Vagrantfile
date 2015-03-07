@@ -17,6 +17,7 @@ Vagrant.configure(2) do |config|
         chef puppet
     sudo pip install -r /vagrant/conf/requirements.txt
     sudo pip install repoze
+    sudo pip install bjoern==1.4.2
     ln -s /vagrant/tmp/zipballs /srv/zipballs
     ln -s /vagrant/tmp/downloads /var/spool/downloads
   SHELL

@@ -27,9 +27,6 @@ from os.path import join, dirname, abspath, normpath
 import bottle
 from bottle import request
 
-from librarian.lib.send_file import patch_static_file
-patch_static_file()
-
 from librarian.lib import squery
 from librarian.exceptions import *
 from librarian.utils.lang import *
@@ -230,8 +227,12 @@ def start(logfile=None, profile=False):
         )
 
     bottle.debug(config['librarian.debug'] == 'yes')
+    print('Starting %s server <http://%s:%s/>' % (
+        config['librarian.server'],
+        config['librarian.bind'],
+        config['librarian.port']))
     bottle.run(app=wsgiapp,
-               server='gevent',
+               server=config['librarian.server'],
                quiet=config['librarian.log'] != 'yes',
                host=config['librarian.bind'],
                reloader=config['librarian.reloader'] == 'yes',
