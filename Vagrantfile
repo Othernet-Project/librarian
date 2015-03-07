@@ -6,6 +6,9 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "256"
+    vb.cpus = 1
+    vb.customize ["modifyvm", :id, "--cpuexecutioncap", "30"]
+    vb.name = "Librarian VM"
   end
   config.vm.provision "shell", inline: <<-SHELL
     sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
