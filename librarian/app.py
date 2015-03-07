@@ -27,6 +27,9 @@ from os.path import join, dirname, abspath, normpath
 import bottle
 from bottle import request
 
+from librarian.lib.send_file import patch_static_file
+patch_static_file()
+
 from librarian.lib import squery
 from librarian.exceptions import *
 from librarian.utils.lang import *
