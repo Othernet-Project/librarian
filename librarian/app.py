@@ -229,8 +229,7 @@ def start(logfile=None, profile=False):
     bottle.debug(config['librarian.debug'] == 'yes')
     bottle.run(app=wsgiapp,
                server='gevent',
-               quiet=True,
-               fast=True,
+               quiet=config['librarian.log'] != 'yes',
                host=config['librarian.bind'],
                reloader=config['librarian.reloader'] == 'yes',
                port=int(config['librarian.port']))
