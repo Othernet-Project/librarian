@@ -157,23 +157,54 @@ On other platforms, type the following command::
 
     pip install -r conf/requirements.txt\
 
-Running Librarian
-=================
+Preparation
+===========
 
 If you opted to use virtualenv, make sure it's activated. Simply type::
 
     workon librarian
 
+Now set the development environment up::
+    
+    # On windows
+    setup develop
+
+    # On other platforms
+    python setup.py develop
+
+If this command fails, you migth be missing gettext_, so make sure it's
+installed.
+
+Running tests
+=============
+
+Before you run tests, you need to install development requirements. Make sure
+your virtualenv is active and use the following command::
+
+    # On Windows
+    pip install -r conf\dev_requirements.txt
+
+    # On other platforms
+    pip install -r conf/dev_requirements.txt
+
+Now you can run the tests with the following command::
+
+    py.test
+
+Running Librarian
+=================
+
 To run Librarian, open your terminal, navigate to the directory (folder) where
 the source code is located, and run the following command::
 
-    python run.py
+    python -m librarian.app --conf local.ini
 
-This should start a development server running at `0.0.0.0:8080`_.
+This should start a development server running at `127.0.0.1:8080`_.
 
 .. _forums: https://discuss.outernet.is/
 .. _issue tracker: https://github.com/Outernet-Project/librarian/issues
 .. _Python download page: https://www.python.org/downloads/
 .. _instructions in Git book: http://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 .. _install instructions: http://virtualenvwrapper.readthedocs.org/en/latest/install.html
-.. _`0.0.0.0:8080`: http://0.0.0.0:8080
+.. _`127.0.0.1:8080`: http://127.0.0.1:8080/
+.. _gettext: https://www.gnu.org/software/gettext/
