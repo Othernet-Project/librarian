@@ -3,6 +3,7 @@ __pycache__/
 *.sw[op]
 *.mo
 /.vagrant
+/.ropeproject
 /tmp
 .sass-cache
 /dist
