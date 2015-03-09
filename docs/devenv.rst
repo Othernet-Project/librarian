@@ -189,7 +189,7 @@ your virtualenv is active and use the following command::
 
 Now you can run the tests with the following command::
 
-    py.test
+    setup test
 
 Running Librarian
 =================
