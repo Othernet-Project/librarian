@@ -5,6 +5,7 @@ import sys
 import platform
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
+from setuptools.command.develop import develop as DevelopCommand
 
 import librarian
 
@@ -60,6 +61,16 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 
+class Develop(DevelopCommand):
+    def run(self):
+        import subprocess
+        import platform
+        needs_shell = platform.system = 'Windows'
+        DevelopCommand.run(self)
+        subprocess.call('python scripts/cmpmsgs.py librarian/locales',
+                        shell=needs_shell)
+
+
 setup(
     name = 'librarian',
     version = librarian.__version__,
@@ -83,5 +94,8 @@ setup(
     ],
     tests_require=read_reqs(DREQPATH),
     install_requires=DEPS,
-    cmdclass={'test': PyTest},
+    cmdclass={
+        'test': PyTest,
+        'develop': Develop,
+    },
 )
