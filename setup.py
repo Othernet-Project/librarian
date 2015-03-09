@@ -2,14 +2,16 @@
 
 import os
 import sys
+import shutil
 import platform
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 from setuptools.command.develop import develop as DevelopCommand
+from setuptools.command.sdist import sdist as SdistCommand
 
 import librarian
 
-SCRIPTDIR = os.path.dirname(__file__)
+SCRIPTDIR = os.path.dirname(__file__) or '.'
 PY3 = sys.version_info >= (3, 0, 0)
 
 def read(fname):
@@ -43,6 +45,29 @@ DREQPATH = in_scriptdir('conf/dev_requirements.txt')
 DEPS = read_reqs(REQPATH) + PROD_DEPS
 
 
+def rebuild_catalogs():
+    import subprocess
+    import platform
+    needs_shell = platform.system = 'Windows'
+    subprocess.call('python scripts/cmpmsgs.py librarian/locales',
+                    shell=needs_shell)
+
+
+def clean_pyc():
+    print("cleaning up cached files in '%s'" % SCRIPTDIR)
+    for root, dirs, files in os.walk(SCRIPTDIR):
+        for f in files:
+            if os.path.splitext(f)[1] == '.pyc':
+                path = os.path.join(root, f)
+                print("removing '%s'" % path)
+                os.unlink(path)
+        for d in dirs:
+            if d == '__pycache__':
+                path = os.path.join(root, d)
+                print("removing '%s'" % path)
+                shutil.rmtree(path)
+
+
 class PyTest(TestCommand):
     user_options = [('pytest-args=', 'a', 'Arguments for py.test')]
 
@@ -63,12 +88,15 @@ class PyTest(TestCommand):
 
 class Develop(DevelopCommand):
     def run(self):
-        import subprocess
-        import platform
-        needs_shell = platform.system = 'Windows'
         DevelopCommand.run(self)
-        subprocess.call('python scripts/cmpmsgs.py librarian/locales',
-                        shell=needs_shell)
+        rebuild_catalogs()
+
+
+class Package(SdistCommand):
+    def run(self):
+        rebuild_catalogs()
+        clean_pyc()
+        SdistCommand.run(self)
 
 
 setup(
@@ -97,5 +125,6 @@ setup(
     cmdclass={
         'test': PyTest,
         'develop': Develop,
+        'sdist': Package,
     },
 )
