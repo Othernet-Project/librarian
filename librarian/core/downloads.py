@@ -1,7 +1,7 @@
 """
 downloads.py: Download handling
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -16,16 +16,6 @@ from datetime import datetime, timedelta
 from bottle import request
 
 from .metadata import convert_json, DecodeError, FormatError
-
-
-__all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
-           'get_zipballs', 'get_timestamp', 'get_timestamp_as_datetime',
-           'get_md5_from_path', 'get_zip_path_in', 'get_zip_path',
-           'remove_downloads', 'get_spool_zip_path', 'get_file',
-           'get_metadata', 'patch_html',)
-
-
-STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
 
 
 class ContentError(BaseException):
@@ -278,17 +268,4 @@ def remove_downloads(md5s=None):
             logging.debug("<%s> removed" % path)
         except OSError as err:
             logging.error("<%s> cound not remove: %s" % (path, err))
-
-
-def patch_html(content):
-    """ Patches HTML and adds a link tag for stylesheet
-
-    :param content:     file-like object
-    :returns:           tuple of new size and HTML bytestring
-    """
-    html = content.decode('utf8')
-    html = html.replace('</head>', STYLE_LINK + '</head>')
-    html_bytes = html.encode('utf8')
-    size = len(html_bytes)
-    return size, html_bytes
 

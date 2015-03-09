@@ -30,6 +30,8 @@ from ..lib.pager import Pager
 from ..lib.ajax import roca_view
 from ..lib.i18n import lazy_gettext as _, i18n_path
 
+from ..utils import patch_content
+
 
 app = default_app()
 
@@ -108,7 +110,7 @@ def content_file(content_id, filename):
         logging.debug("Patching HTML file '%s' with Librarian stylesheet" % (
                       filename))
         # Patch HTML with link to stylesheet
-        size, content = downloads.patch_html(content)
+        size, content = patch_content.patch(content)
     return send_file.send_file(content, filename, size, timestamp)
 
 
@@ -218,7 +220,6 @@ def delete_path(path):
 
 
 def rename_path(path):
-    filedir= files.get_file_dir()
     new_name = request.forms.get('name')
     if not new_name:
         go_to_parent(path)
