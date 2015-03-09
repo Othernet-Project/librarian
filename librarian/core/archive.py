@@ -17,10 +17,9 @@ from datetime import datetime
 
 from bottle import request, abort
 
-from .downloads import (
-    get_spool_zip_path, get_zip_path, get_metadata, LICENSES, Meta)
+from .metadata import add_missing_keys, Meta
+from .downloads import get_spool_zip_path, get_zip_path, get_metadata
 
-from .i18n import lazy_gettext as _
 
 FACTORS = {
     'b': 1,
@@ -28,10 +27,6 @@ FACTORS = {
     'm': 1024 * 1024,
     'g': 1024 * 1024 * 1024,
 }
-
-METADATA_KEYS = (
-    'domain', 'url', 'title', 'images', 'timestamp', 'keep_formatting',
-    'is_partner', 'is_sponsored', 'archive', 'partner', 'license', 'language')
 
 COUNT_QUERY = """
 SELECT COUNT(*) AS count
@@ -178,21 +173,14 @@ ORDER BY count DESC, name ASC;
 """
 
 
-def add_missing_keys(meta):
-    """ Make sure metadata contains all required keys """
-    for key in METADATA_KEYS:
-        if key not in meta:
-            meta[key] = None
-
-
 def multiarg(query, n):
     """ Returns version of query where '??' is replaced by n placeholders """
     return query.replace('??', ', '.join('?' * n))
 
 
 def get_count(tag=None):
-    # TODO: tests
     db = request.db
+    # TODO: tests
     if tag:
         db.query(TAG_COUNT_QUERY, tag)
     else:
@@ -375,8 +363,6 @@ def add_to_archive(hashes):
 
 def remove_from_archive(hashes):
     # TODO: tests
-    config = request.app.config
-    target_dir = config['content.contentdir']
     db = request.db
     success = []
     failed = []
@@ -427,7 +413,6 @@ def add_view(md5):
     """
     db = request.db
     db.query(VIEWCOUNT_QUERY, md5)
-    db.commit()
     return db.cursor.rowcount
 
 
@@ -438,7 +423,7 @@ def add_tags(meta, tags):
     db = request.db
 
     # First ensure all tags exist
-    with db.transaction() as cur:
+    with db.transaction():
         db.executemany(CREATE_TAGS, [{'name': t} for t in tags])
 
     # Get the IDs of the tags
@@ -450,7 +435,7 @@ def add_tags(meta, tags):
     pairs = [{'md5': meta.md5, 'tag_id': i} for i in ids]
     tags_dict = {t['name']: t['tag_id'] for t in tags}
     meta.tags.update(tags_dict)
-    with db.transaction() as cur:
+    with db.transaction():
         db.executemany(ADD_TAGS, pairs)
         db.execute(CACHE_TAGS, dict(md5=meta.md5, tags=json.dumps(meta.tags)))
     return tags
@@ -483,11 +468,15 @@ def get_tag_cloud():
 def with_content(func):
     @wraps(func)
     def wrapper(content_id, **kwargs):
+        conf = request.app.config
         try:
             content = get_single(content_id)
         except IndexError:
             abort(404)
         if not content:
             abort(404)
-        return func(meta=Meta(content), **kwargs)
+        zip_path = get_zip_path(content_id)
+        assert zip_path is not None, 'Expected zipball to exist'
+        meta = Meta(content, conf['content.covers'], zip_path)
+        return func(meta=meta, **kwargs)
     return wrapper

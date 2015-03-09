@@ -10,7 +10,6 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 import stat
-import math
 import json
 import shutil
 import logging
@@ -20,10 +19,12 @@ from bottle import (
     request, view, abort, default_app, static_file, redirect, response,
     template)
 
+from ..core import files
+from ..core import archive
+from ..core import downloads
+from ..core import metadata
+
 from ..lib import i18n
-from ..lib import files
-from ..lib import archive
-from ..lib import downloads
 from ..lib import send_file
 from ..lib.pager import Pager
 from ..lib.ajax import roca_view
@@ -36,6 +37,7 @@ app = default_app()
 @roca_view('content_list', '_content_list')
 def content_list():
     """ Show list of content """
+    conf = request.app.config
     query = request.params.getunicode('q', '').strip()
 
     try:
@@ -61,21 +63,25 @@ def content_list():
     pager.get_paging_params()
 
     if query:
-        metadata = archive.search_content(query, pager.offset, pager.per_page,
+        metas = archive.search_content(query, pager.offset, pager.per_page,
                                           tag=tag)
     else:
-        metadata = archive.get_content(pager.offset, pager.per_page, tag=tag)
+        metas = archive.get_content(pager.offset, pager.per_page, tag=tag)
 
-    return {
-        'metadata': [downloads.Meta(m) for m in metadata],
-        'total_items': total_items,
-        'pager': pager,
-        'vals': request.params.decode(),
-        'query': query,
-        'tag': tag_name,
-        'tag_id': tag,
-        'tag_cloud': archive.get_tag_cloud()
-    }
+    cover_dir = conf['content.covers']
+
+    metas = [metadata.Meta(m, cover_dir, downloads.get_zip_path(m['md5']))
+             for m in metas]
+
+    return dict(
+        metadata=metas,
+        total_items=total_items,
+        pager=pager,
+        vals=request.params.decode(),
+        query=query,
+        tag=tag_name,
+        tag_id=tag,
+        tag_cloud=archive.get_tag_cloud())
 
 
 @view('remove_error')

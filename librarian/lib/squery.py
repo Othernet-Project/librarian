@@ -13,9 +13,8 @@ from functools import wraps
 from contextlib import contextmanager
 
 from gevent import spawn
-from dateutil.parser import parse
-
 from bottle import request
+from dateutil.parser import parse
 
 
 __all__ = ('dbdict', 'Database', 'database_plugin',)
@@ -91,6 +90,9 @@ class Database(object):
     def rollback(self):
         spawn(self.db.rollback).join()
 
+    def refresh_table_stats(self):
+        self.query('ANALYZE sqlite_master;')
+
     @property
     def cursor(self):
         self.connect()
@@ -112,7 +114,7 @@ class Database(object):
         try:
             yield self.cursor
             self.db.commit()
-        except Exception as err:
+        except Exception:
             self.db.rollback()
             if silent:
                 return
@@ -131,7 +133,7 @@ def database_plugin(callback):
     def plugin(*args, **kwargs):
         config = request.app.config
         request.db = db = Database(config['database.path'])
-        yield callback(*args, **kwargs)
+        res = callback(*args, **kwargs)
         spawn(db.disconnect).join()
+        return res
     return plugin
-

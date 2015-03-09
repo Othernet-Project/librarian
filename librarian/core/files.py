@@ -9,7 +9,6 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
-import logging
 from collections import namedtuple
 
 from bottle import request

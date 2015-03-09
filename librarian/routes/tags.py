@@ -1,12 +1,18 @@
 import re
 
-from bottle import default_app, request, view, redirect, template
+from bottle import request, redirect, template
 
-from ..lib import archive
+from ..core import archive
+
 from ..lib.ajax import roca_view
 
 
 WS = re.compile(r'\s', re.M)
+
+
+def split_tags(tags):
+    tags = (t.strip() for t in tags.split(','))
+    return set([WS.sub(' ', t) for t in tags if t])
 
 
 @roca_view('tag_cloud', '_tag_cloud')
@@ -22,7 +28,7 @@ def tag_cloud():
 @archive.with_content
 def edit_tags(meta):
     tags = request.forms.getunicode('tags', '')
-    tags = set([WS.sub(' ', t).strip() for t in tags.split(',') if t.strip()])
+    tags = split_tags(tags)
     existing_tags = set(meta.tags.keys())
     new = tags - existing_tags
     removed = existing_tags - tags

@@ -15,44 +15,45 @@ from __future__ import unicode_literals, print_function
 import gevent.monkey
 gevent.monkey.patch_all(aggressive=True)
 
-import os
 import sys
 import pprint
 import logging
-import datetime
-from warnings import warn
 from logging.config import dictConfig as log_config
 from os.path import join, dirname, abspath, normpath
 
 import bottle
 from bottle import request
 
+from librarian.core.metadata import LICENSES
+from librarian.core.downloads import get_zipballs
+
 from librarian.lib import squery
-from librarian.exceptions import *
-from librarian.utils.lang import *
 from librarian.lib.lazy import Lazy
-from librarian.utils import migrations
 from librarian.lib import html as helpers
-from librarian.lib.archive import LICENSES
 from librarian.lib.lock import lock_plugin
 from librarian.lib.common import to_unicode
-from librarian.lib.system import ensure_dir
-from librarian.lib.lock import global_lock
-from librarian.plugins import install_plugins
+from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
+
+from librarian.utils import lang
+from librarian.utils import migrations
+from librarian.utils.system import ensure_dir
 from librarian.utils.routing import add_routes
 from librarian.utils.timer import request_timer
-from librarian.lib.downloads import get_zipballs
-from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
+
+from librarian.plugins import install_plugins
+
 from librarian.routes import (content, tags, downloads, apps, dashboard,
                               system)
 
-from librarian import __version__, __author__
+from librarian import __version__
 
 MODDIR = dirname(abspath(__file__))
+
 
 def in_pkg(*paths):
     """ Return path relative to module directory """
     return normpath(join(MODDIR, *paths))
+
 
 CONFPATH = in_pkg('librarian.ini')
 
@@ -144,7 +145,7 @@ def start(logfile=None, profile=False):
         },
         'handlers': {
             'file': {
-                'class' : 'logging.handlers.RotatingFileHandler',
+                'class': 'logging.handlers.RotatingFileHandler',
                 'formatter': 'default',
                 'filename': logfile or config['logging.output'],
                 'maxBytes': int(config['logging.size']),
@@ -153,8 +154,8 @@ def start(logfile=None, profile=False):
         },
         'formatters': {
             'default': {
-                'format' : config['logging.format'],
-                'datefmt' : config['logging.date_format']
+                'format': config['logging.format'],
+                'datefmt': config['logging.date_format']
             },
         },
     })
@@ -172,6 +173,7 @@ def start(logfile=None, profile=False):
 
     # Run database migrations
     db = squery.Database(config['database.path'])
+    db.query('PRAGMA journal_mode=WAL;')
     migrations.migrate(db, in_pkg('migrations'))
     logging.debug("Finished running migrations")
     db.disconnect()
@@ -195,20 +197,20 @@ def start(logfile=None, profile=False):
         'h': helpers,
         'updates': Lazy(lambda: len(list(get_zipballs()))),
         'readable_license': lambda s: dict(LICENSES).get(s, LICENSES[0][1]),
-        'is_rtl': Lazy(lambda: request.locale in RTL_LANGS),
-        'dir': lambda l: 'rtl' if l in RTL_LANGS else 'auto',
-        'LANGS': LANGS,
-        'UI_LANGS': UI_LANGS,
-        'SELECT_LANGS': SELECT_LANGS,
+        'is_rtl': Lazy(lambda: request.locale in lang.RTL_LANGS),
+        'dir': lambda l: 'rtl' if l in lang.RTL_LANGS else 'auto',
+        'LANGS': lang.LANGS,
+        'UI_LANGS': lang.UI_LANGS,
+        'SELECT_LANGS': lang.SELECT_LANGS,
         'u': to_unicode,
         'url': app.get_url,
     })
 
     # Add middlewares
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
-    wsgiapp = I18NPlugin(wsgiapp, langs=UI_LANGS,
-                         default_locale=DEFAULT_LOCALE, domain='librarian',
-                         locale_dir=in_pkg('locales'))
+    wsgiapp = I18NPlugin(wsgiapp, langs=lang.UI_LANGS,
+                         default_locale=lang.DEFAULT_LOCALE,
+                         domain='librarian', locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
     app.install(request_timer('Total'))
 
@@ -217,13 +219,13 @@ def start(logfile=None, profile=False):
         print('Profiling enabled')
         from repoze.profile import ProfileMiddleware
         wsgiapp = ProfileMiddleware(
-                   wsgiapp,
-                   log_filename=config['profiling.logfile'],
-                   cachegrind_filename=config['profiling.outfile'],
-                   discard_first_request=True,
-                   flush_at_shutdown=True,
-                   path='/__profile__',
-                   unwind=False,
+            wsgiapp,
+            log_filename=config['profiling.logfile'],
+            cachegrind_filename=config['profiling.outfile'],
+            discard_first_request=True,
+            flush_at_shutdown=True,
+            path='/__profile__',
+            unwind=False,
         )
 
     bottle.debug(config['librarian.debug'] == 'yes')

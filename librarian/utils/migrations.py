@@ -88,3 +88,4 @@ def migrate(db, path):
         run_migration(db, path, version)
         logging.debug("Finished migrating to %s",
                       os.path.splitext(os.path.basename(path))[0])
+    db.refresh_table_stats();

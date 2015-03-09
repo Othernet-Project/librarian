@@ -9,18 +9,13 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
-import json
-import glob
 import zipfile
 import logging
-from contextlib import closing
-from functools import partial
 from datetime import datetime, timedelta
 
 from bottle import request
 
-from .i18n import lazy_gettext as _
-from ..utils.lang import RTL_LANGS
+from .metadata import convert_json, DecodeError, FormatError
 
 
 __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
@@ -31,26 +26,6 @@ __all__ = ('ContentError', 'find_signed', 'is_expired', 'cleanup',
 
 
 STYLE_LINK = '<link rel="stylesheet" href="/static/css/content.css">'
-LICENSES = (
-    (None, _('Unknown license')),
-    ('CC-BY', _('Creative Commons Attribution')),
-    ('CC-BY-ND', _('Creative Commons Attribution-NoDerivs')),
-    ('CC-BY-NC', _('Creative Commons Attribution-NonCommercial')),
-    ('CC-BY-ND-NC', _('Creative Commons '
-                      'Attribution-NonCommercial-NoDerivs')),
-    ('CC-BY-SA', _('Creative Commons Attribution-ShareAlike')),
-    ('CC-BY-NC-SA', _('Creative Commons '
-                      'Attribution-NonCommercial-ShareAlike')),
-    ('GFDL', _('GNU Free Documentation License')),
-    ('OPL', _('Open Publication License')),
-    ('OCL', _('Open Content License')),
-    ('ADL', _('Against DRM License')),
-    ('FAL', _('Free Art License')),
-    ('PD', _('Public Domain')),
-    ('OF', _('Other free license')),
-    ('ARL', _('All rights reserved')),
-    ('ON', _('Other non-free license')),
-)
 
 
 class ContentError(BaseException):
@@ -117,7 +92,7 @@ def get_zipballs():
     :returns:   iterable containing full paths to zipballs
     """
     config = request.app.config
-    spooldir = config['content.spooldir']
+    spooldir = os.path.normpath(config['content.spooldir'])
     output_ext = config['content.output_ext']
     zipfiles = (f for f in os.listdir(spooldir) if f.endswith(output_ext))
     return (os.path.join(spooldir, f) for f in zipfiles)
@@ -238,12 +213,10 @@ def get_metadata(path):
     meta_filename = config['content.metadata']
     metadata, content = get_file(path, meta_filename)
     try:
-        content = str(content.decode('utf-8'))
-    except UnicodeDecodeError as err:
+        return convert_json(content)
+    except DecodeError as err:
         raise ContentError("Failed to decode metadata: '%s'" % err)
-    try:
-        return json.loads(content)
-    except ValueError as err:
+    except FormatError:
         raise ContentError("Bad metadata for '%s'" % path, path)
 
 
@@ -319,122 +292,3 @@ def patch_html(content):
     size = len(html_bytes)
     return size, html_bytes
 
-
-class Meta(object):
-    """ Metadata wrapper """
-
-    # FIXME: Move this to lib.archive
-
-    IMAGE_EXTENSIONS = ['.png', '.gif', '.jpg', '.jpeg']
-
-    LABEL_TITLES = {
-        # Translators, used as label, meaning content belogs to core
-        'core': _('core'),
-        # Translators, used as label, meaning content was sponsored by someone
-        'sponsored': _('sponsored'),
-        # Translators, used as label, meaning content is from a partner
-        'partner': _('partner')
-    }
-
-    def __init__(self, meta):
-        self.meta = meta
-        self.tags = json.loads(meta.get('tags') or '{}')
-        self._image = None
-
-    def __getattr__(self, attr):
-        try:
-            return self.meta[attr]
-        except KeyError:
-            raise AttributeError("Attribute or key '%s' not found" % attr)
-
-    def __getitem__(self, key):
-        return self.meta[key]
-
-    def __setitem__(self, key, value):
-        self.meta[key] = value
-
-    def get(self, key, default=None):
-        return self.meta.get(key, default)
-
-    def cache_cover(self, cover_path, content):
-        config = request.app.config
-        covers = os.path.normpath(config['content.covers'])
-        ext = os.path.splitext(cover_path)[1]
-        cover_path = os.path.join(covers, '%s%s' % (self.md5, ext))
-        with open(cover_path, 'wb') as f:
-            f.write(content)
-        return os.path.basename(cover_path)
-
-    def get_cover_path(self):
-        config = request.app.config
-        covers = os.path.normpath(config['content.covers'])
-        cover_path = os.path.join(covers, '%s.*' % self.md5)
-        g = glob.glob(cover_path)
-        try:
-            return os.path.basename(g[0])
-        except IndexError:
-            return None
-
-    @property
-    def lang(self):
-        return self.meta.get('language')
-
-    @property
-    def rtl(self):
-        return self.lang in RTL_LANGS
-
-    @property
-    def i18n_attrs(self):
-        s = ''
-        if self.lang:
-            s += ' lang="%s"' % self.lang
-        if self.rtl:
-            s += ' dir="rtl"'
-        return s
-
-    @property
-    def label(self):
-        if self.archive == 'core':
-            return 'core'
-        elif self.is_sponsored:
-            return 'sponsored'
-        elif self.is_partner:
-            return 'partner'
-        return 'core'
-
-    @property
-    def human_label(self):
-        return self.LABEL_TITLES[self.label]
-
-    @property
-    def free_license(self):
-        return self.license not in ['ARL', 'ON']
-
-    @property
-    def human_license(self):
-        try:
-            return dict(LICENSES)[self.license]
-        except (KeyError, AttributeError):
-            return LICENSES[0][1]
-
-    @property
-    def image(self):
-        if self._image is not None:
-            return self._image
-        cover = self.get_cover_path()
-        if cover:
-            self._image = cover
-            return self._image
-        zip_path = get_zip_path(self.md5)
-        try:
-            with open(zip_path, 'rb') as f:
-                z = zipfile.ZipFile(f)
-                for name in z.namelist():
-                    if os.path.splitext(name)[1].lower() in self.IMAGE_EXTENSIONS:
-                        self._image = self.cache_cover(name,
-                                                       z.open(name, 'r').read())
-                        return self._image
-        except TypeError:
-            # Could not find the zip file
-            logging.error("Could not find zip file '%s.zip'" % self.md5)
-            return None
