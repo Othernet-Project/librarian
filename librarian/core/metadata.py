@@ -1,7 +1,7 @@
 """
 metadata.py: Handling metadata
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -276,7 +276,6 @@ class Meta(object):
             return self._image
         cover = self.get_cover_path()
         if cover:
-            print("self._image")
             self._image = cover
             return self._image
         if not self.zip_path:
