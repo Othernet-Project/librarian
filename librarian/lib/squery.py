@@ -8,96 +8,85 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import re
 import sqlite3
 from functools import wraps
 from contextlib import contextmanager
 
+import dateutil.parser
 from gevent import spawn
 from bottle import request
-from dateutil.parser import parse
 
 
-__all__ = ('dbdict', 'Database', 'database_plugin',)
+SLASH = re.compile(r'\\')
 
 
-class dbdict(dict):
-    """ Dictionary subclass that allows attribute access to items """
-    def __init__(self, *args, **kwargs):
-        if args:
-            super(dbdict, self).__init__(args[0])
-        else:
-            super(dbdict, self).__init__(kwargs)
-
-    def __getattr__(self, attr):
-        return self[attr]
+sqlite3.register_converter('timestamp', dateutil.parser.parse)
 
 
-def dbdict_factory(cursor, row):
-    """ Convert a row returned from a query into ``dbdict`` objects
-
-    :param cursor:  cursor object
-    :param row:     row tuple
-    :returns:       row as ``dbdict`` object
-    """
-    # TODO: Unit tests
-    colnames = [d[0] for d in cursor.description]
-    return dbdict(dict(zip(colnames, row)))
+def normurl(url):
+    return SLASH.sub('/', url)
 
 
-def convert_timestamp(ts):
-    # TODO: Unit tests
-    return parse(ts)
-sqlite3.register_converter('timestamp', convert_timestamp)
+class Row(sqlite3.Row):
+    """ sqlite.Row subclass that allows attribute access to items """
+    def __getattr__(self, key):
+        return self[key]
+
+    def get(self, key, default=None):
+        try:
+            return self[key]
+        except IndexError:
+            return default
 
 
 class Database(object):
-    def __init__(self, dbpath):
-        self.dbpath = dbpath
-        self.db = None
+    def __init__(self, conn):
+        self.conn = conn
         self._cursor = None
 
-    def connect(self):
-        # TODO: Add unit test for row_factory override
-        if self.db is None:
-            self.db = spawn(sqlite3.connect, self.dbpath,
-                            detect_types=sqlite3.PARSE_DECLTYPES).get()
-            self.db.row_factory = dbdict_factory
+    def _convert_query(self, qry):
+        """ Ensure any SQLExpression instances are serialized
 
-            # Use atuocommit mode so we can do manual transactions
-            self.db.isolation_level = None
-
-    def disconnect(self):
-        if self.db is not None:
-            spawn(self.db.close).join()
-            self.db = None
+        :param qry:     raw SQL string or SQLExpression instance
+        :returns:       raw SQL string
+        """
+        if hasattr(qry, '__sqlrepr__'):
+            return qry.__sqlrepr__(qry)
+        assert isinstance(qry, basestring), 'Expected qry to be string'
+        return qry
 
     def query(self, qry, *params, **kwparams):
+        qry = self._convert_query(qry)
         spawn(self.cursor.execute, qry, params or kwparams).join()
         return self.cursor
 
-    def execute(self, qry, params):
-        spawn(self.cursor.execute, qry, params).join()
+    def execute(self, qry, *args, **kwargs):
+        spawn(self.cursor.execute, qry, *args, **kwargs).join()
 
-    def executemany(self, qry, params):
-        spawn(self.cursor.executemany, qry, params).join()
+    def executemany(self, qry, *args, **kwargs):
+        spawn(self.cursor.executemany, qry, *args, **kwargs).join()
 
     def executescript(self, sql):
         spawn(self.cursor.executescript, sql).join()
 
     def commit(self):
-        spawn(self.db.commit).join()
+        spawn(self.conn.commit).join()
 
     def rollback(self):
-        spawn(self.db.rollback).join()
+        spawn(self.conn.rollback).join()
 
     def refresh_table_stats(self):
-        self.query('ANALYZE sqlite_master;')
+        self.execute('ANALYZE sqlite_master;')
+
+    def acquire_lock(self):
+        self.conn.interrupt()
+        self.execute('BEGIN EXCLUSIVE')
 
     @property
     def cursor(self):
-        self.connect()
         if self._cursor is None:
-            self._cursor = self.db.cursor()
+            self._cursor = self.conn.cursor()
         return self._cursor
 
     @property
@@ -110,30 +99,41 @@ class Database(object):
 
     @contextmanager
     def transaction(self, silent=False):
-        self.cursor.execute('BEGIN')
+        self.execute('BEGIN')
         try:
             yield self.cursor
-            self.db.commit()
+            self.commit()
         except Exception:
-            self.db.rollback()
+            self.rollback()
             if silent:
                 return
             raise
 
-    def acquire_lock(self):
-        self.cursor.execute('BEGIN EXCLUSIVE')
-        return self.cursor
+    @classmethod
+    def connect(cls, dbpath):
+        db = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES)
+        db.row_factory = Row
+        # Allow manual transaction handling, see http://bit.ly/1C7E7EQ
+        db.isolation_level = None
+        # More on WAL: https://www.sqlite.org/isolation.html
+        # Requires SQLite >= 3.7.0
+        cur = db.cursor()
+        cur.execute('PRAGMA journal_mode=WAL')
+        return db
 
     def __repr__(self):
-        return "<Database dbpath='%s'>" % self.dbpath
+        return "<Database connection='%s'>" % self.conn
 
 
-def database_plugin(callback):
-    @wraps(callback)
-    def plugin(*args, **kwargs):
-        config = request.app.config
-        request.db = db = Database(config['database.path'])
-        res = callback(*args, **kwargs)
-        spawn(db.disconnect).join()
-        return res
+def database_plugin(dbpath):
+    if hasattr(dbpath, 'cursor'):
+        conn = dbpath
+    else:
+        conn = Database.connect(dbpath)
+    def plugin(callback):
+        @wraps(callback)
+        def wrapper(*args, **kwargs):
+            request.db = Database(conn)
+            return callback(*args, **kwargs)
+        return wrapper
     return plugin

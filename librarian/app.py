@@ -172,11 +172,10 @@ def start(logfile=None, profile=False):
     ensure_dir(config['content.covers'])
 
     # Run database migrations
-    db = squery.Database(config['database.path'])
-    db.query('PRAGMA journal_mode=WAL;')
+    conn = squery.Database.connect(config['database.path'])
+    db = squery.Database(conn)
     migrations.migrate(db, in_pkg('migrations'))
     logging.debug("Finished running migrations")
-    db.disconnect()
 
     # Install Librarian plugins
     install_plugins(app)
@@ -184,7 +183,7 @@ def start(logfile=None, profile=False):
 
     # Install bottle plugins
     app.install(request_timer('Handler'))
-    app.install(squery.database_plugin)
+    app.install(squery.database_plugin(conn))
 
     # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))
