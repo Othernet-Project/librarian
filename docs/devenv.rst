@@ -196,6 +196,11 @@ it using the ``-a`` switch. For example, to test a single module::
 
     setup test -a path/to/module
 
+.. note::
+
+    Note that Windows uses should always use forward slashes when passing
+    arguments using the ``-a`` switch.
+
 Running Librarian
 =================
 
