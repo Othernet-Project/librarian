@@ -33,12 +33,18 @@ def get_mem():
     return round(rss / 1024, 3)
 
 
-def request_timer(callback):
-    @wraps(callback)
-    def wrapper(*args, **kwargs):
-        start = time.time()
-        res = callback(*args, **kwargs)
-        response.headers['X-Exec-Time'] = str(time.time() - start)
-        response.headers['X-Mem'] = str(get_mem())
-        return res
-    return wrapper
+def request_timer(label):
+    t_header = str('X-%s-Time' % label)
+    m_header = str('X-%s-Mem' % label)
+    def _timer(callback):
+        @wraps(callback)
+        def wrapper(*args, **kwargs):
+            start = time.time()
+            res = callback(*args, **kwargs)
+            delta = time.time() - start
+            response.headers[t_header] = str(
+                round(delta * 1000, 4)) + 'ms'
+            response.headers[m_header] = str(get_mem())
+            return res
+        return wrapper
+    return _timer

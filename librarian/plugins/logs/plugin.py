@@ -17,6 +17,11 @@ from ...lib.i18n import lazy_gettext as _
 from ..dashboard import DashboardPlugin
 
 
+def iter_lines(lines):
+    while lines:
+        yield lines.pop()
+
+
 def install(app, route):
     pass
 
@@ -27,7 +32,8 @@ class Dashboard(DashboardPlugin):
     name = 'logs'
 
     def get_context(self):
-        with open(request.app.config['logging.output'], 'rt') as log:
-            logs = ''.join(reversed(list(log)))
+        logpath = request.app.config['logging.output']
+        with open(logpath, 'rt') as log:
+            logs = iter_lines(list(log)[-100:])
         return dict(logs=logs)
 

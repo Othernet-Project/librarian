@@ -10,7 +10,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 import time
+import mimetypes
 
+from gevent import spawn
 from bottle import (HTTPResponse, HTTPError, parse_date, parse_range_header,
                     request)
 
@@ -108,6 +110,7 @@ def iter_read_range(fd, offset, length, chunksize=1024*1024):
             break
         length -= len(chunk)
         yield chunk
+    fd.close()
 
 
 def send_file(content, filename, size, timestamp):
@@ -144,7 +147,6 @@ def send_file(content, filename, size, timestamp):
         # Request is a HEAD, so remove any content body
         content = ''
 
-
     headers['Accept-Ranges'] = 'bytes'
     ranges = request.environ.get('HTTP_RANGE')
     if ranges:
@@ -156,3 +158,4 @@ def send_file(content, filename, size, timestamp):
         headers['Content-Length'] = str(end - start)
         content = iter_read_range(content, start, end - start)
     return HTTPResponse(content, **headers)
+

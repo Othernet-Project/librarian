@@ -16,6 +16,7 @@ import logging
 import datetime
 from os.path import dirname, join
 
+from gevent import spawn
 from bottle import view, request, static_file
 
 from ...lib import squery
@@ -103,7 +104,7 @@ def rebuild():
         # Now that we have a global lock, we can release the database lock
         cur.execute('ROLLBACK')
         db.disconnect()
-        backup(dbpath, bpath)
+        spawn(backup, dbpath, bpath).join()
         remove_dbfile()
         logging.debug('Removed database')
         db = request.db = run_migrations()

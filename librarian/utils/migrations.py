@@ -68,7 +68,7 @@ def run_migration(db, path, version):
         sql = script.read()
     with db.transaction() as cur:
         rowcount = cur.rowcount
-        cur.executescript(sql)
+        db.executescript(sql)
         qry = 'replace into %s (id, version) values (?, ?)' % MTABLE
         db.query(qry, 0, version)
 

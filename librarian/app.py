@@ -12,6 +12,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from __future__ import unicode_literals, print_function
 
+import gevent.monkey
+gevent.monkey.patch_all(aggressive=True)
+
 import os
 import sys
 import pprint
@@ -178,7 +181,7 @@ def start(logfile=None, profile=False):
     logging.info('Installed all plugins')
 
     # Install bottle plugins
-    app.install(request_timer)
+    app.install(request_timer('Handler'))
     app.install(squery.database_plugin)
 
     # Set some basic configuration
@@ -207,6 +210,7 @@ def start(logfile=None, profile=False):
                          default_locale=DEFAULT_LOCALE, domain='librarian',
                          locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
+    app.install(request_timer('Total'))
 
     if profile:
         # Instrument the app to perform profiling
@@ -223,10 +227,15 @@ def start(logfile=None, profile=False):
         )
 
     bottle.debug(config['librarian.debug'] == 'yes')
+    print('Starting %s server <http://%s:%s/>' % (
+        config['librarian.server'],
+        config['librarian.bind'],
+        config['librarian.port']))
     bottle.run(app=wsgiapp,
                server=config['librarian.server'],
+               quiet=config['librarian.log'] != 'yes',
                host=config['librarian.bind'],
-               reloader=config['librarian.server'] == 'wsgiref',
+               reloader=config['librarian.reloader'] == 'yes',
                port=int(config['librarian.port']))
 
 
