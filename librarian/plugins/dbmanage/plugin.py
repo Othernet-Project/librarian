@@ -24,7 +24,7 @@ from ...utils import migrations
 from ...lib.archive import process
 from ...lib.downloads import get_md5_from_path
 from ...lib.i18n import lazy_gettext as _, i18n_path
-from ...lib.lock import global_lock, LockFailureError, UnlockFailureError
+from ...lib.lock import global_lock, LockFailureError
 
 from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError
@@ -77,7 +77,8 @@ def remove_dbfile():
 
 
 def run_migrations():
-    db = squery.Database(request.app.config['database.path'])
+    conn = squery.Database.connect(request.app.config['database.path'])
+    db = suqery.Database(conn)
     migrations.migrate(db, MDIR)
     logging.debug("Finished running migrations")
     return db
@@ -98,12 +99,12 @@ def rebuild():
     start = time.time()
     db = request.db
     logging.debug('Locking database')
-    cur = db.acquire_lock()  # should block until everyone else finishes
+    db.acquire_lock()  # This causes all current queries to fail
     logging.debug('Acquiring global lock')
     with global_lock(always_release=True):
         # Now that we have a global lock, we can release the database lock
-        cur.execute('ROLLBACK')
-        db.disconnect()
+        db.rollback()
+        db.conn.close()
         spawn(backup, dbpath, bpath).join()
         remove_dbfile()
         logging.debug('Removed database')
