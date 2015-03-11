@@ -149,12 +149,12 @@ If you created a virtualenv for Librarian, make sure it's active::
 
     workon librarian
 
-On Windows, use the following command to install the libraries::
+Use the following command to install the libraries::
 
+    # On Windows
     pip install -r conf\requirements.txt
 
-On other platforms, type the following command::
-
+    # On other platforms
     pip install -r conf/requirements.txt\
 
 Preparation
@@ -191,6 +191,11 @@ Now you can run the tests with the following command::
 
     setup test
 
+Test runner used by setup module is `py.test`_. You can pass any arguments to
+it using the ``-a`` switch. For example, to test a single module::
+
+    setup test -a path/to/module
+
 Running Librarian
 =================
 
@@ -206,5 +211,6 @@ This should start a development server running at `127.0.0.1:8080`_.
 .. _Python download page: https://www.python.org/downloads/
 .. _instructions in Git book: http://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 .. _install instructions: http://virtualenvwrapper.readthedocs.org/en/latest/install.html
-.. _`127.0.0.1:8080`: http://127.0.0.1:8080/
+.. _127.0.0.1:8080: http://127.0.0.1:8080/
 .. _gettext: https://www.gnu.org/software/gettext/
+.. _py.test: http://pytest.org/latest/
