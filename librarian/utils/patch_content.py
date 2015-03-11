@@ -30,4 +30,4 @@ def patch(html):
     if not re.search(r'<head>[\s\S\n\r]*</head>', html, re.M):
         html = html.replace('<html>', '<html><head></head>')
     html = html.replace('</head>', STYLE_LINK + '</head>')
-    return html
+    return len(html), html

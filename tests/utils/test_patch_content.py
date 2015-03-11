@@ -1,4 +1,4 @@
-from librarian.utils import patch_content
+from librarian.utils import patch_content as mod
 
 
 def test_patch_adds_style_link():
@@ -7,11 +7,12 @@ def test_patch_adds_style_link():
     <head></head>
     <body>foo</body>
     </html>"""
-    patched = patch_content.patch(html)
+    size, patched = mod.patch(html)
     assert patched == """<html>
     <head>%s</head>
     <body>foo</body>
-    </html>""" % patch_content.STYLE_LINK
+    </html>""" % mod.STYLE_LINK
+    assert size == len(patched)
 
 
 def test_add_head_if_missing():
@@ -19,16 +20,16 @@ def test_add_head_if_missing():
     html = """<html>
     <body>foo</body>
     </html>"""
-    patched = patch_content.patch(html)
+    patched = mod.patch(html)[1]
     assert patched == """<html><head>%s</head>
     <body>foo</body>
-    </html>""" % patch_content.STYLE_LINK
+    </html>""" % mod.STYLE_LINK
 
 
 def test_add_html_if_missing():
     """ When <html> tag is missing, add it """
     html = "<body>foo</body>"
-    patched = patch_content.patch(html)
+    patched = mod.patch(html)[1]
     assert patched == "<html><head>%s</head><body>foo</body></html>" % (
-        patch_content.STYLE_LINK)
+        mod.STYLE_LINK)
 
