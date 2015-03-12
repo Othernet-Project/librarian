@@ -183,7 +183,7 @@ def start(logfile=None, profile=False):
 
     # Install bottle plugins
     app.install(request_timer('Handler'))
-    app.install(squery.database_plugin(conn))
+    app.install(squery.database_plugin(conn, debug=True))
 
     # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))
