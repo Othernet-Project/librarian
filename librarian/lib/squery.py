@@ -8,6 +8,8 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+from __future__ import print_function
+
 import re
 import sqlite3
 from functools import wraps
@@ -46,8 +48,9 @@ class Row(sqlite3.Row):
 
 
 class Database(object):
-    def __init__(self, conn):
+    def __init__(self, conn, debug=False):
         self.conn = conn
+        self.debug = debug
         self._cursor = None
 
     def _convert_query(self, qry):
@@ -59,6 +62,8 @@ class Database(object):
         if hasattr(qry, '__sqlrepr__'):
             return qry.__sqlrepr__(qry)
         assert isinstance(qry, basestring), 'Expected qry to be string'
+        if self.debug:
+            print('SQL:', qry)
         return qry
 
     def query(self, qry, *params, **kwparams):

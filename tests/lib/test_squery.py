@@ -254,3 +254,13 @@ def test_row_factory():
     assert 'bar' in res
 
 
+@mock.patch(MOD + '.sqlite3')
+@mock.patch(MOD + '.print', create=True)
+def test_debug_printing(mock_print, *ignored):
+    db = mod.Database(mock.Mock(), debug=False)
+    db.query('SELECT * FROM foo;')
+    assert mock_print.called is False
+    db.debug = True
+    db.query('SELECT * FROM foo;')
+    mock_print.assert_called_once_with('SQL:', 'SELECT * FROM foo;')
+
