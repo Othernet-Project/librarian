@@ -19,12 +19,14 @@ from os.path import dirname, join
 from gevent import spawn
 from bottle import view, request, static_file
 
+from ...core.archive import process
+from ...core.downloads import get_md5_from_path
+
 from ...lib import squery
-from ...utils import migrations
-from ...lib.archive import process
-from ...lib.downloads import get_md5_from_path
 from ...lib.i18n import lazy_gettext as _, i18n_path
 from ...lib.lock import global_lock, LockFailureError
+
+from ...utils import migrations
 
 from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError
@@ -78,7 +80,7 @@ def remove_dbfile():
 
 def run_migrations():
     conn = squery.Database.connect(request.app.config['database.path'])
-    db = suqery.Database(conn)
+    db = squery.Database(conn)
     migrations.migrate(db, MDIR)
     logging.debug("Finished running migrations")
     return db
@@ -99,11 +101,9 @@ def rebuild():
     start = time.time()
     db = request.db
     logging.debug('Locking database')
-    db.acquire_lock()  # This causes all current queries to fail
+    db.acquire_lock()
     logging.debug('Acquiring global lock')
     with global_lock(always_release=True):
-        # Now that we have a global lock, we can release the database lock
-        db.rollback()
         db.conn.close()
         spawn(backup, dbpath, bpath).join()
         remove_dbfile()
@@ -112,6 +112,7 @@ def rebuild():
         logging.debug('Prepared new database')
         rows = reload_data(db)
         logging.info('Restored metadata for %s pieces of content', rows)
+        request.db_connection.reconnect()
     logging.debug('Released global lock')
     end = time.time()
     return end - start
