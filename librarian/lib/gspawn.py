@@ -39,7 +39,7 @@ def call(_callable, *args, **kwargs):
     except KeyError:
         timeout = None
     print(timeout)
-    g = gevent.Greenlet.spawn(_callable, *args, **kwargs)
+    g = gevent.spawn(_callable, *args, **kwargs)
     g.join(timeout=timeout)
     if timeout is not None and not g.successful():
         raise TimeoutError
