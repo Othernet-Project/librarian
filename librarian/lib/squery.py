@@ -147,7 +147,7 @@ class Database(object):
         return "<Database connection='%s'>" % self.conn
 
 
-def database_plugin(dbpath):
+def database_plugin(dbpath, debug=False):
     if hasattr(dbpath, 'cursor'):
         conn = dbpath
     else:
@@ -155,7 +155,7 @@ def database_plugin(dbpath):
     def plugin(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):
-            request.db = Database(conn)
+            request.db = Database(conn, debug=debug)
             return callback(*args, **kwargs)
         return wrapper
     return plugin
