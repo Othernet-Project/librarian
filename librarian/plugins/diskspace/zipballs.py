@@ -30,7 +30,8 @@ def get_database(dbpath):
     :param dbpath:  database path
     :returns:       `squery.Database` object
     """
-    return squery.Database(dbpath)
+    conn = squery.Database.connect(dbpath)
+    return squery.Database(conn)
 
 
 def get_zipballs_without_size(db):
@@ -62,8 +63,8 @@ def update_rows(hashpaths, db):
     logging.debug('DISKSPACE: updating size information for %s items',
                   len(hashpaths))
     sizes = ((os.stat(p).st_size, h) for h, p in hashpaths)
-    with db.transaction() as cur:
-        cur.executemany("UPDATE zipballs SET size = ? WHERE md5 = ?", sizes)
+    with db.transaction():
+        db.executemany("UPDATE zipballs SET size = ? WHERE md5 = ?", sizes)
 
 
 def update_sizes(dbpath, contentdir):
