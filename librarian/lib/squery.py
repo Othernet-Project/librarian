@@ -49,20 +49,27 @@ class Row(sqlite3.Row):
 
 class Connection(object):
     """ Wrapper for sqlite3.Connection object """
-    def __init__(self, path=':memory:', *args, **kwargs):
+    def __init__(self, path=':memory:',):
         self.path = path
-        self._args = args
-        self._kwargs = kwargs
-        self._conn = sqlite3.connect(path, *args, **kwargs)
+        self.connect()
 
-    def reconnect(self):
-        self._conn = sqlite3.connect(self.path, *self._args, **self._kwargs)
+    def connect(self):
+        self._conn = sqlite3.connect(self.path,
+                                     detect_types=sqlite3.PARSE_DECLTYPES)
+        self._conn.row_factory = Row
+
+        # Allow manual transaction handling, see http://bit.ly/1C7E7EQ
+        self._conn.isolation_level = None
+        # More on WAL: https://www.sqlite.org/isolation.html
+        # Requires SQLite >= 3.7.0
+        cur = self._conn.cursor()
+        cur.execute('PRAGMA journal_mode=WAL;')
 
     def __getattr__(self, attr):
         return getattr(self._conn, attr)
 
     def __setattr__(self, attr, value):
-        if not hasattr(self, attr):
+        if not hasattr(self, attr) or attr == '_conn':
             object.__setattr__(self, attr, value)
         else:
             setattr(self._conn, attr, value)
@@ -156,14 +163,7 @@ class Database(object):
 
     @classmethod
     def connect(cls, dbpath):
-        db = Connection(dbpath, detect_types=sqlite3.PARSE_DECLTYPES)
-        db.row_factory = Row
-        # Allow manual transaction handling, see http://bit.ly/1C7E7EQ
-        db.isolation_level = None
-        # More on WAL: https://www.sqlite.org/isolation.html
-        # Requires SQLite >= 3.7.0
-        cur = db.cursor()
-        cur.execute('PRAGMA journal_mode=WAL')
+        db = Connection(dbpath)
         return db
 
     def __repr__(self):
