@@ -125,7 +125,6 @@ class Database(object):
         self.execute('ANALYZE sqlite_master;')
 
     def acquire_lock(self):
-        self.conn.interrupt()
         self.execute('BEGIN EXCLUSIVE')
 
     @property

@@ -225,7 +225,6 @@ def test_acquire_lock(*ignored):
     """ Instance has a method for acquiring exclusive lock """
     db = mod.Database(mock.Mock())
     db.acquire_lock()
-    assert db.conn.interrupt.called
     db.cursor.execute.assert_called_once_with('BEGIN EXCLUSIVE')
 
 
