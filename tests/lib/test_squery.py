@@ -17,6 +17,49 @@ def test_normalize_url_with_forw_slashes():
     assert mod.normurl(p) == '/foo/bar/baz.sqlite'
 
 
+
+@mock.patch(MOD + '.sqlite3', autospec=True)
+def test_connection_object_connects(sqlite3):
+    """ Connection object starts a connection """
+    mod.Connection('foo.db')
+    sqlite3.Connection.assert_called_once_with('foo.db')
+
+
+@mock.patch(MOD + '.sqlite3', autospec=True)
+def test_connection_object_remebers_dbpath(sqlite3):
+    """ Connection object can remember the database path """
+    conn = mod.Connection('foo.db')
+    assert conn.path == 'foo.db'
+
+
+@mock.patch(MOD + '.sqlite3', autospec=True)
+def test_connection_has_sqlite3_connection_api(sqlite3):
+    """ Connection object exposes sqlite3.Connection methods and props """
+    conn = mod.Connection('foo.db')
+    assert conn.close == sqlite3.Connection().close
+    assert conn.cursor == sqlite3.Connection().cursor
+    assert conn.isolation_level == sqlite3.Connection().isolation_level
+
+
+@mock.patch(MOD + '.sqlite3', autospec=True)
+def test_can_set_attributes_on_underlying_connection(sqlite3):
+    """ Attributes set on the Connection instance are mirrored correctly """
+    conn = mod.Connection('foo.db')
+    conn.isolation_level = None
+    assert conn.isolation_level == conn._conn.isolation_level
+    conn.isolation_level = 'EXCLUSIVE'
+    assert conn.isolation_level == conn._conn.isolation_level
+
+
+@mock.patch(MOD + '.sqlite3', autospec=True)
+def test_reconnection(sqlite3):
+    conn = mod.Connection('foo.db')
+    conn.close()
+    conn.reconnect()
+    assert sqlite3.Connection.call_count == 2
+    assert sqlite3.Connection().close.called
+
+
 @mock.patch(MOD + '.sqlite3')
 def test_db_connect(sqlite3):
     mod.Database.connect('foo.db')

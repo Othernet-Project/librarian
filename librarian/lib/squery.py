@@ -47,6 +47,29 @@ class Row(sqlite3.Row):
         return key in self.keys()
 
 
+class Connection(object):
+    """ Wrapper for sqlite3.Connection object """
+    def __init__(self, path=':memory:'):
+        self.path = path
+        self._conn = sqlite3.Connection(path)
+
+    def reconnect(self):
+        self._conn.close()
+        self._conn = sqlite3.Connection(self.path)
+
+    def __getattr__(self, attr):
+        return getattr(self._conn, attr)
+
+    def __setattr__(self, attr, value):
+        if not hasattr(self, attr):
+            object.__setattr__(self, attr, value)
+        else:
+            setattr(self._conn, attr, value)
+
+    def __repr__(self):
+        return "<Connection path='%s'>" % self.path
+
+
 class Database(object):
     def __init__(self, conn, debug=False):
         self.conn = conn
@@ -151,7 +174,7 @@ def database_plugin(dbpath, debug=False):
     if hasattr(dbpath, 'cursor'):
         conn = dbpath
     else:
-        conn = Database.connect(dbpath)
+        conn = Connection(dbpath)
     def plugin(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):
