@@ -38,7 +38,6 @@ def call(_callable, *args, **kwargs):
         timeout = kwargs.pop('_timeout')
     except KeyError:
         timeout = None
-    print(timeout)
     g = gevent.spawn(_callable, *args, **kwargs)
     g.join(timeout=timeout)
     if timeout is not None and not g.successful():
