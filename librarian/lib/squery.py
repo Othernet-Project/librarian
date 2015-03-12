@@ -49,13 +49,14 @@ class Row(sqlite3.Row):
 
 class Connection(object):
     """ Wrapper for sqlite3.Connection object """
-    def __init__(self, path=':memory:'):
+    def __init__(self, path=':memory:', *args, **kwargs):
         self.path = path
-        self._conn = sqlite3.Connection(path)
+        self._args = args
+        self._kwargs = kwargs
+        self._conn = sqlite3.connect(path, *args, **kwargs)
 
     def reconnect(self):
-        self._conn.close()
-        self._conn = sqlite3.Connection(self.path)
+        self._conn = sqlite3.connect(self.path, *self._args, **self._kwargs)
 
     def __getattr__(self, attr):
         return getattr(self._conn, attr)
@@ -155,7 +156,7 @@ class Database(object):
 
     @classmethod
     def connect(cls, dbpath):
-        db = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES)
+        db = Connection(dbpath, detect_types=sqlite3.PARSE_DECLTYPES)
         db.row_factory = Row
         # Allow manual transaction handling, see http://bit.ly/1C7E7EQ
         db.isolation_level = None
@@ -173,10 +174,11 @@ def database_plugin(dbpath, debug=False):
     if hasattr(dbpath, 'cursor'):
         conn = dbpath
     else:
-        conn = Connection(dbpath)
+        conn = Database.connect(dbpath)
     def plugin(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):
+            request.db_connection = conn
             request.db = Database(conn, debug=debug)
             return callback(*args, **kwargs)
         return wrapper
