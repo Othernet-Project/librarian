@@ -159,6 +159,11 @@ def get_old_content():
     return db.results
 
 
+def get_zip_space():
+    # FIXME: Implement this function
+    raise NotImplementedError('Woah!')
+
+
 def cleanup_list(free_space):
     """ Return a generator of zipball metadata necessary to free enough space
 
