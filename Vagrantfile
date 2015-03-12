@@ -6,8 +6,6 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "256"
-    vb.cpus = 1
-    vb.customize ["modifyvm", :id, "--cpuexecutioncap", "30"]
     vb.name = "Librarian VM"
   end
   config.vm.provision "shell", inline: <<-SHELL
@@ -15,10 +13,11 @@ Vagrant.configure(2) do |config|
   
     set -e
     # Install/remove packages
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
         sqlite3 build-essential python-dev python-pip libev-dev gettext
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes remove \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes remove \
         chef puppet
+    DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes autoremove
 
     # Make sure setuptools is latest version
     easy_install -U setuptools
@@ -32,7 +31,7 @@ Vagrant.configure(2) do |config|
 
     # Install Librarian and dependencies
     python setup.py develop
-    sudo pip install repoze
-    sudo pip install -r /vagrant/conf/dev_requirements.txt
+    pip install -r /vagrant/conf/dev_requirements.txt
+    pip install repoze.profile
   SHELL
 end
