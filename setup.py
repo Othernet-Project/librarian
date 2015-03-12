@@ -5,9 +5,11 @@ import sys
 import shutil
 import platform
 from setuptools import setup, find_packages
+from distutils.cmd import Command
 from setuptools.command.test import test as TestCommand
 from setuptools.command.develop import develop as DevelopCommand
 from setuptools.command.sdist import sdist as SdistCommand
+from setuptools.command.setopt import option_base as Command
 
 import librarian
 
@@ -99,6 +101,11 @@ class Package(SdistCommand):
         SdistCommand.run(self)
 
 
+class Clean(Command):
+    def run(self):
+        clean_pyc()
+
+
 setup(
     name = 'librarian',
     version = librarian.__version__,
@@ -126,5 +133,6 @@ setup(
         'test': PyTest,
         'develop': Develop,
         'sdist': Package,
+        'uncache': Clean,
     },
 )
