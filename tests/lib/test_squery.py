@@ -17,14 +17,6 @@ def test_normalize_url_with_forw_slashes():
     assert mod.normurl(p) == '/foo/bar/baz.sqlite'
 
 
-def test_row_factory():
-    """ Factory should create a dict out of a row """
-    # XXX: This must be tested in integration test, because it is a subclass
-    # of ``sqlite3.Row``, which is written in C and not very friendly to mock
-    # objects.
-    pass
-
-
 @mock.patch(MOD + '.sqlite3')
 def test_db_connect(sqlite3):
     mod.Database.connect('foo.db')
@@ -244,3 +236,21 @@ def test_transaction_silent_rollback(*ignored):
         assert db.conn.rollback.called
     except RuntimeError:
         assert False, 'Expected not to raise'
+
+
+def test_row_factory():
+    """ Factory should create a tuple w/ subscript and attr access """
+    # We are doing this test without mocking because of the squery.Row subclass
+    # of sqlite3.Row, which is implemented in C and not particularly friendly
+    # to mock objects.
+    conn = mod.Database.connect(':memory:')
+    db = mod.Database(conn)
+    db.query('create table foo (bar integer);')
+    db.query('insert into foo values (1);')
+    db.query('select * from foo;')
+    res = db.result
+    assert res.get('bar') == res.bar == res[0] == res['bar'] == 1
+    assert res.keys() == ['bar']
+    assert 'bar' in res
+
+

@@ -39,6 +39,9 @@ class Row(sqlite3.Row):
         except IndexError:
             return default
 
+    def __contains__(self, key):
+        return key in self.keys()
+
 
 class Database(object):
     def __init__(self, conn):
