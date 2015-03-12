@@ -1,7 +1,7 @@
 """
 sqery.py: Helpers for working with databases
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -14,8 +14,9 @@ from functools import wraps
 from contextlib import contextmanager
 
 import dateutil.parser
-from gevent import spawn
 from bottle import request
+
+from .gspawn import call
 
 
 SLASH = re.compile(r'\\')
@@ -25,6 +26,7 @@ sqlite3.register_converter('timestamp', dateutil.parser.parse)
 
 
 def normurl(url):
+    """ Replace backslashes with forward slashes """
     return SLASH.sub('/', url)
 
 
@@ -60,24 +62,36 @@ class Database(object):
         return qry
 
     def query(self, qry, *params, **kwparams):
+        """ Perform a query
+
+        Any positional arguments are converted to a list of arguments for the
+        query, and are used to populate any '?' placeholders. The keyword
+        arguments are converted to a mapping which provides values to ':name'
+        placeholders. These do not apply to SQLExpression instances.
+
+        :param qry:     raw SQL or SQLExpression instance
+        :returns:       cursor object
+        """
         qry = self._convert_query(qry)
-        spawn(self.cursor.execute, qry, params or kwparams).join()
+        call(self.cursor.execute, qry, params or kwparams)
         return self.cursor
 
     def execute(self, qry, *args, **kwargs):
-        spawn(self.cursor.execute, qry, *args, **kwargs).join()
+        qry = self._convert_query(qry)
+        call(self.cursor.execute, qry, *args, **kwargs)
 
     def executemany(self, qry, *args, **kwargs):
-        spawn(self.cursor.executemany, qry, *args, **kwargs).join()
+        qry = self._convert_query(qry)
+        call(self.cursor.executemany, qry, *args, **kwargs)
 
     def executescript(self, sql):
-        spawn(self.cursor.executescript, sql).join()
+        call(self.cursor.executescript, sql)
 
     def commit(self):
-        spawn(self.conn.commit).join()
+        call(self.conn.commit)
 
     def rollback(self):
-        spawn(self.conn.rollback).join()
+        call(self.conn.rollback)
 
     def refresh_table_stats(self):
         self.execute('ANALYZE sqlite_master;')
@@ -94,11 +108,11 @@ class Database(object):
 
     @property
     def results(self):
-        return spawn(self.cursor.fetchall).get()
+        return call(self.cursor.fetchall)
 
     @property
     def result(self):
-        return spawn(self.cursor.fetchone).get()
+        return call(self.cursor.fetchone)
 
     @contextmanager
     def transaction(self, silent=False):
