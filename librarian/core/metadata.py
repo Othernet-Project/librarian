@@ -93,6 +93,20 @@ def add_missing_keys(meta):
             meta[key] = None
 
 
+def clean_keys(meta):
+    """ Make sure metadta dict does not have any non-standard keys
+
+    This function modifies the metadata dict in-place, and always returns
+    ``None``.
+
+    :param meta:    metadta dict
+    """
+    keys = meta.keys()
+    for key in keys:
+        if key not in KEYS:
+            del meta[key]
+
+
 def convert_json(meta):
     """ Convert metadata JSON to a dictionary and add missing keys
 

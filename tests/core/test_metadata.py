@@ -98,6 +98,13 @@ def test_add_missing_keys_has_return():
     assert ret == None
 
 
+def test_clean_keys():
+    """ Removes invalid keys """
+    d = {'foo': 'bar', 'title': 'title'}
+    mod.clean_keys(d)
+    assert d == {'title': 'title'}
+
+
 @mock.patch(MOD + '.REQUIRED_KEYS')
 @mock.patch(MOD + '.json', autospec=True)
 def test_convert_returns__added_keys(json, *ignored):
