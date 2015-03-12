@@ -14,7 +14,8 @@ import os
 
 from bottle import request, view, redirect, MultiDict, abort
 
-from ...lib import archive
+from ...core import archive
+
 from ...lib.html import hsize
 from ...lib.i18n import lazy_gettext as _, i18n_path
 
