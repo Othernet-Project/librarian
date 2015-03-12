@@ -17,7 +17,7 @@ from datetime import datetime
 
 from bottle import request, abort
 
-from .metadata import add_missing_keys, Meta
+from .metadata import add_missing_keys, clean_keys, Meta
 from .downloads import get_spool_zip_path, get_zip_path, get_metadata
 
 
@@ -274,6 +274,7 @@ def parse_size(size):
 def prepare_metadata(md5, path):
     meta = get_metadata(path)
     add_missing_keys(meta)
+    clean_keys(meta)
     meta['md5'] = md5
     meta['updated'] = datetime.now()
     meta['size'] = os.stat(path).st_size
