@@ -1,5 +1,4 @@
-begin transaction;
-
+SQL = """
 alter table zipballs rename to tmp;
 
 create table zipballs
@@ -15,12 +14,15 @@ create table zipballs
     views integer not null default 0
 );
 
-replace into zipballs 
+replace into zipballs
 (md5, domain, url, title, images, timestamp, updated, favorite)
 select
 md5, domain, url, title, images, timestamp, updated, views
 from tmp;
 
 drop table tmp;
+"""
 
-commit transaction;
+
+def up(db, conf):
+    db.executescript(SQL)

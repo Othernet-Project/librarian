@@ -1,5 +1,4 @@
-begin transaction;
-
+SQL = """
 create table tags
 (
     tag_id integer primary key asc,
@@ -15,5 +14,8 @@ create table taggings
 
 -- Add a column that will hold cached tag values
 alter table zipballs add column tags varchar;
+"""
 
-commit transaction;
+
+def up(db, conf):
+    db.executescript(SQL)

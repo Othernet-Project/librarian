@@ -178,7 +178,8 @@ def start(logfile=None, profile=False):
     # Run database migrations
     conn = squery.Database.connect(config['database.path'])
     db = squery.Database(conn)
-    migrations.migrate(db, in_pkg('migrations'))
+    migrations.migrate(db, in_pkg('migrations'), 'librarian.migrations',
+                       config)
     logging.debug("Finished running migrations")
 
     # Install Librarian plugins
