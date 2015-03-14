@@ -29,6 +29,13 @@ def test_connection_object_connects(sqlite3):
 
 
 @mock.patch(MOD + '.sqlite3', autospec=True)
+def test_connection_repr(*ignored):
+    """ Connection object has human-readable repr """
+    conn = mod.Connection('foo.db')
+    assert repr(conn) == "<Connection path='foo.db'>"
+
+
+@mock.patch(MOD + '.sqlite3', autospec=True)
 def test_connection_object_remebers_dbpath(sqlite3):
     """ Connection object can remember the database path """
     conn = mod.Connection('foo.db')
@@ -259,6 +266,15 @@ def test_transaction_silent_rollback(*ignored):
         assert False, 'Expected not to raise'
 
 
+@mock.patch(MOD + '.sqlite3')
+def test_database_repr(*ignored):
+    """ Transaction has a human-readable repr """
+    conn = mock.Mock()
+    conn.path = 'foo.db'
+    db = mod.Database(conn)
+    assert repr(db) == "<Database connection='foo.db'>"
+
+
 def test_row_factory():
     """ Factory should create a tuple w/ subscript and attr access """
     # We are doing this test without mocking because of the squery.Row subclass
@@ -273,6 +289,7 @@ def test_row_factory():
     assert res.get('bar') == res.bar == res[0] == res['bar'] == 1
     assert res.keys() == ['bar']
     assert 'bar' in res
+    assert res.get('missing', 'def') == 'def'
 
 
 @mock.patch(MOD + '.sqlite3')
@@ -285,3 +302,16 @@ def test_debug_printing(mock_print, *ignored):
     db.query('SELECT * FROM foo;')
     mock_print.assert_called_once_with('SQL:', 'SELECT * FROM foo;')
 
+
+@mock.patch(MOD + '.Database')
+def test_database_plugins_connects(Database):
+    """ When database name is passed as string, connection is made """
+    mod.database_plugin('foo.db')
+    Database.connect.assert_called_once_with('foo.db')
+
+
+@mock.patch(MOD + '.Database')
+def test_database_plugin_does_not_connect_if_connection_is_passed(Database):
+    """ When connection object is passed, connection is not made """
+    mod.database_plugin(mock.Mock())
+    assert not Database.connect.called

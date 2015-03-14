@@ -163,11 +163,10 @@ class Database(object):
 
     @classmethod
     def connect(cls, dbpath):
-        db = Connection(dbpath)
-        return db
+        return Connection(dbpath)
 
     def __repr__(self):
-        return "<Database connection='%s'>" % self.conn
+        return "<Database connection='%s'>" % self.conn.path
 
 
 def database_plugin(dbpath, debug=False):
