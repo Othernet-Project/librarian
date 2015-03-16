@@ -32,8 +32,14 @@
 
   // Get a directory listing or basic file metadata
   $.librarian.files.list = function (path, cb) {
-    if (path == null || path == '') { path = '.'; }
-    var res = $.get($.librarian.lang.prefix('/files/'), {p: path, f: 'json'}, 'json');
+    if (!path || path == '/') { path = '.'; }
+    if (path.startsWith('/')) {
+      path = path.slice(1);
+    }
+    var res = $.getJSON(
+      $.librarian.lang.prefix('/files/' + path), 
+      {f: 'json'}
+    );
     res.done(function (data) { cb(data); });
     res.fail(function () { cb(null); });
   };
