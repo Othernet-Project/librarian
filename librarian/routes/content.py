@@ -28,6 +28,7 @@ from ..lib import i18n
 from ..lib import send_file
 from ..lib.pager import Pager
 from ..lib.ajax import roca_view
+from ..lib.common import to_unicode
 from ..lib.i18n import lazy_gettext as _, i18n_path
 
 from ..utils import patch_content
@@ -191,7 +192,7 @@ def show_file_list(path='.'):
         return json.dumps(dict(
             dirs=dirs,
             files=dictify_file_list(file_list),
-            readme=readme,
+            readme=to_unicode(readme),
             is_missing=is_missing,
             is_search=is_search,
         ))
