@@ -12,10 +12,26 @@ If you are an experienced Python developer, though, you probably don't need to
 go through this. Skip to straight to `Running Librarian`_. The requirements
 file is in the ``conf`` directory.
 
-There are two ways to set up your development envioronment. In either case, you
-will need to install Python 3.4 or Python 2.7. Obtain your preferred version of
-Python (if you don't know which, use 3.4) from `Python download page`_, or
-through your package manager.
+There are two ways to set up your development envioronment. You can either
+create a local development environment (Python 2.7.x) or use Vagrant_ and
+VirtualBox_.
+
+Using Vagrant/Virtualbox
+------------------------
+
+Using a virtual machine is generally simpler as the script supplied with
+Librarian's source code will perform all necessary setup. If you have both
+Vagrant and Virtualbox installed, you can simply do::
+
+    vagrant up
+
+You can then SSH into the virtual machine using this command::
+
+    vagrant ssh
+
+Once inside, you can start Librarian by typing::
+
+    sudo python -m librarian.app
 
 Installing Python
 -----------------
@@ -33,8 +49,29 @@ pacman::
 
     sudo pacman -S python
 
+Installing build tools
+----------------------
+
+Librarian requires some binary dependencies to be compiled (namely, gevent,
+and, on Unix and Linux, also bjoern). These dependencies rely on libev_ on Unix
+and Linux.
+
+You will need to have build tools installed. On Mac OSX, you may install XCode
+and GNU compilers. On Linux, you need to find instructions for your
+distribution. On Windows, install the `Visual C++ Compiler for Python 2.7`_.
+
+On Unix and Linux systems, you will also need the headers for libev. In some
+Linux distribution, the package may be called ``libev-dev` or ``libev-devel``.
+You may also need to install Python source code if it is not included with the
+Python distribution. The Python sources are usually found in packages that are
+called ``python-dev`` or ``python-devel``. In any case, refer to your
+distribution's documentation for more information.
+
 Installing pip
 --------------
+
+Windows users may skip this section as pip is included with Windows
+distributions of Python.
 
 Pip is Python's package manager, which is used to install Python libraries
 necessary to run Librarian. While you can install packages manually if you
@@ -219,3 +256,7 @@ This should start a development server running at `127.0.0.1:8080`_.
 .. _127.0.0.1:8080: http://127.0.0.1:8080/
 .. _gettext: https://www.gnu.org/software/gettext/
 .. _py.test: http://pytest.org/latest/
+.. _Visual C++ Compiler for Python 2.7: http://www.microsoft.com/en-us/download/details.aspx?id=44266
+.. _Vagrant: https://www.vagrantup.com/
+.. _VirtualBox: https://www.virtualbox.org/
+.. _libev: http://freecode.com/projects/libev
