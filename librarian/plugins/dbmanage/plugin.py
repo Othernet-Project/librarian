@@ -16,13 +16,13 @@ import logging
 import datetime
 from os.path import dirname, join
 
-from gevent import spawn
 from bottle import view, request, static_file
 
 from ...core.archive import process
 from ...core.downloads import get_md5_from_path
 
 from ...lib import squery
+from ...lib.gspawn import call
 from ...lib.i18n import lazy_gettext as _, i18n_path
 from ...lib.lock import global_lock, LockFailureError
 
@@ -105,7 +105,7 @@ def rebuild():
     logging.debug('Acquiring global lock')
     with global_lock(always_release=True):
         db.conn.close()
-        spawn(backup, dbpath, bpath).join()
+        call(backup, dbpath, bpath)
         remove_dbfile()
         logging.debug('Removed database')
         db = request.db = run_migrations()
