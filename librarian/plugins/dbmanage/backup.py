@@ -19,8 +19,6 @@ import ctypes
 import logging
 from ctypes.util import find_library
 
-from ...lib.i18n import lazy_gettext as _
-
 SQLITE_OK = 0
 SQLITE_ERROR = 1
 SQLITE_BUSY = 5
@@ -48,8 +46,8 @@ def backup(src, dst):
     ret = sqlite.sqlite3_open_v2(str(src), ctypes.byref(p_src_db),
                                  SQLITE_OPEN_READONLY, null_ptr)
     # Translators, error message during database backup
-    assert ret == SQLITE_OK, _('Opening source database failed')
-    assert p_src_db.value is not None, _('Opening source database failed')
+    assert ret == SQLITE_OK, 'Opening source database failed'
+    assert p_src_db.value is not None, 'Opening source database failed'
     logging.debug("DBMANAGE: opened '%s' as source database", src)
 
     # Open target
@@ -57,13 +55,13 @@ def backup(src, dst):
                                  SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
                                  null_ptr)
     # Translators, error message during database backup
-    assert ret == SQLITE_OK, _('Opening backup database failed')
-    assert p_dst_db.value is not None, _('Opening backup database failed')
+    assert ret == SQLITE_OK, 'Opening backup database failed'
+    assert p_dst_db.value is not None, 'Opening backup database failed'
     logging.debug("DBMANAGE: opened '%s' as target database", dst)
 
     # Create backup handler
     p_backup = sqlite.sqlite3_backup_init(p_dst_db, 'main', p_src_db, 'main')
-    assert p_backup is not None, _('Could not create database backup handler')
+    assert p_backup is not None, 'Could not create database backup handler'
 
     # Perform backup
     start = time.time()
