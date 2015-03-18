@@ -104,6 +104,7 @@ def get_version(db):
     except sqlite3.OperationalError as err:
         if 'no such table' in str(err):
             db.query(MIGRATION_TABLE_SQL)
+            db.query(REPLACE_SQL, 0)
             return 0
         raise
     return db.result.version
