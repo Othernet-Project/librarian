@@ -34,10 +34,7 @@ def call(_callable, *args, **kwargs):
     :param _timeout:    optional timeout in seconds
     :returns:           value returned from the greenlet
     """
-    try:
-        timeout = kwargs.pop('_timeout')
-    except KeyError:
-        timeout = None
+    timeout = kwargs.pop('_timeout', None)
     g = gevent.spawn(_callable, *args, **kwargs)
     g.join(timeout=timeout)
     if timeout is not None and not g.successful():
