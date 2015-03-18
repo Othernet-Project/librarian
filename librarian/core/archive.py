@@ -1,7 +1,7 @@
 """
 archive.py: Download handling
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -17,6 +17,8 @@ from datetime import datetime
 
 from bottle import request, abort
 
+from ..lib.squery import sqlin
+
 from .metadata import add_missing_keys, clean_keys, Meta
 from .downloads import get_spool_zip_path, get_zip_path, get_metadata
 
@@ -28,56 +30,6 @@ FACTORS = {
     'g': 1024 * 1024 * 1024,
 }
 
-COUNT_QUERY = """
-SELECT COUNT(*) AS count
-FROM zipballs;
-"""
-TAG_COUNT_QUERY = """
-SELECT COUNT(*) AS count
-FROM zipballs NATURAL JOIN taggings
-WHERE tag_id = ?;
-"""
-PAGE_QUERY = """
-SELECT *
-FROM zipballs
-ORDER BY datetime(updated) DESC, views DESC
-LIMIT :limit
-OFFSET :offset;
-"""
-TAG_PAGE_QUERY = """
-SELECT *
-FROM zipballs NATURAL JOIN taggings
-WHERE tag_id = :tag_id
-ORDER BY datetime(updated) DESC, views DESC
-LIMIT :limit
-OFFSET :offset;
-"""
-SEARCH_COUNT_QUERY = """
-SELECT COUNT(*) AS count
-FROM zipballs
-WHERE title LIKE :terms;
-"""
-TAG_SEARCH_COUNT_QUERY = """
-SELECT COUNT(*) AS count
-FROM zipballs NATURAL JOIN taggings
-WHERE title LIKE :terms AND tag_id = :tag_id;
-"""
-SEARCH_QUERY = """
-SELECT *
-FROM zipballs
-WHERE title LIKE :terms
-ORDER BY date(updated) DESC, views DESC
-LIMIT :limit
-OFFSET :offset;
-"""
-TAG_SEARCH_QUERY = """
-SELECT *
-FROM zipballs NATURAL JOIN taggings
-WHERE title LIKE :terms AND tag_id = :tag_id
-ORDER BY date(updated) DESC, views DESC
-LIMIT :limit
-OFFSET :offset;
-"""
 ADD_QUERY = """
 REPLACE INTO zipballs
 (md5, domain, url, title, images, timestamp, updated, keep_formatting,
@@ -94,45 +46,10 @@ REMOVE_MULTI_QUERY = """
 DELETE FROM zipballs
 WHERE md5 IN (??);
 """
-LAST_DATE_QUERY = """
-SELECT updated
-FROM zipballs
-ORDER BY updated DESC
-LIMIT 1;
-"""
 VIEWCOUNT_QUERY = """
 UPDATE zipballs
 SET views = views + 1
 WHERE md5 = ?;
-"""
-TITLES_QUERY = """
-SELECT title, md5
-FROM zipballs
-WHERE md5 IN (??);
-"""
-GET_SINGLE = """
-SELECT *
-FROM zipballs
-WHERE md5 = ?;
-"""
-GET_TAGS = """
-SELECT *
-FROM tags;
-"""
-GET_TAG_BY_ID = """
-SELECT name
-FROM tags
-WHERE tag_id = ?;
-"""
-GET_CONTENT_TAGS = """
-SELECT tags.*
-FROM tags NATURAL JOIN taggings
-WHERE taggings.md5 = ?;
-"""
-GET_TAG_CONTENTS = """
-SELECT zipballs.*
-FROM zipballs NATURAL JOIN taggings
-WHERE taggings.tag_id IN (??);
 """
 GET_TAGS_BY_NAME = """
 SELECT *
@@ -165,12 +82,8 @@ UPDATE zipballs
 SET tags = :tags
 WHERE md5 = :md5;
 """
-GET_TAG_CLOUD = """
-SELECT name, tag_id, count(taggings.tag_id) as count
-FROM tags NATURAL JOIN taggings
-GROUP BY taggings.tag_id
-ORDER BY count DESC, name ASC;
-"""
+
+CONTENT_ORDER = ['-date(updated)', '-views']
 
 
 def multiarg(query, n):
@@ -178,47 +91,52 @@ def multiarg(query, n):
     return query.replace('??', ', '.join('?' * n))
 
 
+def with_tag(q):
+    q.sets.natural_join('taggings')
+    q.where += 'tag_id = :tag_id'
+
+
 def get_count(tag=None):
     db = request.db
-    # TODO: tests
+    q = db.Select('COUNT(*) as count', sets='zipballs')
     if tag:
-        db.query(TAG_COUNT_QUERY, tag)
-    else:
-        db.query(COUNT_QUERY)
-    return db.result['count']
+        q.where += 'tag_id == :tag'
+        q.sets.natural_join('taggings')
+    db.query(q, tag=tag)
+    return db.result.count
 
 
 def get_search_count(terms, tag=None):
-    # TODO: tests
     terms = '%' + terms.lower() + '%'
     db = request.db
+    q = db.Select('COUNT(*) as count', sets='zipballs',
+                  where='title LIKE :terms')
     if tag:
-        db.query(TAG_SEARCH_COUNT_QUERY, terms=terms, tag_id=tag)
-    else:
-        db.query(SEARCH_COUNT_QUERY, terms=terms)
-    return db.result['count']
+        with_tag(q)
+    db.query(q, terms=terms, tag_id=tag)
+    return db.result.count
 
 
 def get_content(offset=0, limit=0, tag=None):
-    # TODO: tests
     db = request.db
+    q = db.Select(sets='zipballs', order=['-datetime(updated)', '-views'],
+                  limit=limit, offset=offset)
     if tag:
-        db.query(TAG_PAGE_QUERY, offset=offset, limit=limit, tag_id=tag)
-    else:
-        db.query(PAGE_QUERY, offset=offset, limit=limit)
+        with_tag(q)
+    db.query(q, tag_id=tag)
     return db.results
 
 
 def get_single(md5):
-    # TODO: tests
     db = request.db
-    db.query(GET_SINGLE, md5)
+    q = db.Select(sets='zipballs', where='md5 = ?')
+    db.query(q, md5)
     return db.result
 
 
 def get_titles(ids):
-    q = multiarg(TITLES_QUERY, len(ids))
     db = request.db
+    q = db.Select(['title', 'md5'], sets='zipballs', where=sqlin('md5', ids))
     db.query(q, *ids)
     return db.results
 
@@ -243,11 +161,11 @@ def search_content(terms, offset=0, limit=0, tag=None):
     # TODO: tests
     terms = '%' + terms.lower() + '%'
     db = request.db
+    q = db.Select(sets='zipballs', where='title LIKE :terms',
+                  order=CONTENT_ORDER, limit=limit, offset=offset)
     if tag:
-        db.query(TAG_SEARCH_QUERY, terms=terms, offset=offset, limit=limit,
-                 tag_id=tag)
-    else:
-        db.query(SEARCH_QUERY, terms=terms, offset=offset, limit=limit)
+        with_tag(q)
+    db.query(q, terms=terms, tag_id=tag)
     return db.results
 
 
@@ -391,8 +309,9 @@ def zipball_count():
     :returns:   integer count
     """
     db = request.db
-    db.query(COUNT_QUERY)
-    return db.result['count']
+    q = db.Select('COUNT(*) as count', 'zipballs')
+    db.query(q)
+    return db.result.count
 
 
 def last_update():
@@ -401,7 +320,8 @@ def last_update():
     :returns:   datetime object of the last updated zipball
     """
     db = request.db
-    db.query(LAST_DATE_QUERY)
+    q = db.Select('updated', sets='zipballs', order='-updated', limit=1)
+    db.query(q)
     res = db.result
     return res and res.updated
 
@@ -428,7 +348,7 @@ def add_tags(meta, tags):
         db.executemany(CREATE_TAGS, [{'name': t} for t in tags])
 
     # Get the IDs of the tags
-    db.query(multiarg(GET_TAGS_BY_NAME, len(tags)), *tags)
+    db.query(db.Select(sets='tags', where=sqlin('name', tags)), *tags)
     tags = db.results
     ids = [i['tag_id'] for i in tags]
 
@@ -449,20 +369,25 @@ def remove_tags(meta, tags):
     tag_ids = [meta.tags[name] for name in tags]
     meta.tags = dict((n, i) for n, i in meta.tags.items() if n not in tags)
     db = request.db
-    with db.transaction() as cur:
-        cur.execute(multiarg(REMOVE_TAGS, len(tag_ids)), [meta.md5] + tag_ids)
-        cur.execute(CACHE_TAGS, dict(md5=meta.md5, tags=json.dumps(meta.tags)))
+    with db.transaction():
+        db.execute(multiarg(REMOVE_TAGS, len(tag_ids)), [meta.md5] + tag_ids)
+        db.execute(CACHE_TAGS, dict(md5=meta.md5, tags=json.dumps(meta.tags)))
 
 
 def get_tag_name(tag_id):
     db = request.db
-    db.query(GET_TAG_BY_ID, tag_id)
+    q = db.Select('name', sets='tags', where='tag_id = ?')
+    db.query(q, tag_id)
     return db.result
 
 
 def get_tag_cloud():
     db = request.db
-    db.query(GET_TAG_CLOUD)
+    q = db.Select(['name', 'tag_id', 'COUNT(taggings.tag_id) as count'],
+                  sets=db.From('tags', 'taggings', join='NATURAL'),
+                  group='taggings.tag_id',
+                  order=['-count', 'name'])
+    db.query(q)
     return db.results
 
 
