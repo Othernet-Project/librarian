@@ -672,6 +672,17 @@ def test_row_factory():
     assert res.get('missing', 'def') == 'def'
 
 
+def test_row_factory_unicode_key():
+    """ Factory should handle unicode keys correctly when using .get() """
+    conn = mod.Database.connect(':memory:')
+    db = mod.Database(conn)
+    db.query('create table foo (bar integer);')
+    db.query('insert into foo values (1);')
+    db.query('select * from foo;')
+    res = db.result
+    assert res.get(u'bar', 'def') == 1
+
+
 @mock.patch(MOD + '.sqlite3')
 @mock.patch(MOD + '.print', create=True)
 def test_debug_printing(mock_print, *ignored):

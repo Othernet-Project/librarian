@@ -311,7 +311,11 @@ class Row(sqlite3.Row):
         return self[key]
 
     def get(self, key, default=None):
-        return getattr(self, key, default)
+        key = str(key)
+        try:
+            return self[key]
+        except IndexError:
+            return default
 
     def __contains__(self, key):
         return key in self.keys()
