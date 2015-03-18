@@ -225,7 +225,7 @@ def test_meta_class_init_with_no_tags(*ignored):
     # Empty strig should not cause ``json.loads()`` to trip
     try:
         meta = mod.Meta({'tags': ''}, 'foo')
-        assert meta.tags == []
+        assert meta.tags == {}
     except ValueError:
         assert False, 'Excepted not to raise'
 

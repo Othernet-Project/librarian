@@ -166,7 +166,7 @@ class Meta(object):
         self.meta = meta
         # We use ``or`` in the following line because 'tags' can be an empty
         # string, which is treated as invalid JSON
-        self.tags = json.loads(meta.get('tags') or '[]')
+        self.tags = json.loads(meta.get('tags') or '{}')
         self._image = None
         self.cover_dir = os.path.normpath(cover_dir)
         self.zip_path = zip_path
