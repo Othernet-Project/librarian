@@ -128,6 +128,11 @@ def test_where_and_with_first_condition():
     assert str(sql) == 'WHERE foo = ?'
 
 
+def test_where_with_empty_str():
+    sql = mod.Where('')
+    assert str(sql) == ''
+
+
 def test_and_alias():
     sql = mod.Where('foo = ?')
     sql += 'bar = ?'
@@ -418,6 +423,70 @@ def test_update_where_attr():
     assert str(sql) == 'UPDATE foo SET foo = ? WHERE bar = ? AND baz = ?;'
 
 
+def test_delete():
+    sql = mod.Delete('foo')
+    assert str(sql) == 'DELETE FROM foo;'
+
+
+def test_delete_where():
+    sql = mod.Delete('foo', where='foo = ?')
+    assert str(sql) == 'DELETE FROM foo WHERE foo = ?;'
+
+
+def test_delete_where_multi():
+    sql = mod.Delete('foo', where=['foo = ?', 'bar = ?'])
+    assert str(sql) == 'DELETE FROM foo WHERE foo = ? AND bar = ?;'
+
+
+def test_delete_where_attrib():
+    sql = mod.Delete('foo', where='foo = ?')
+    sql.where += 'bar = ?'
+    assert str(sql) == 'DELETE FROM foo WHERE foo = ? AND bar = ?;'
+
+
+def test_delete_empty_where():
+    sql = mod.Delete('foo', where='')
+    assert str(sql) == 'DELETE FROM foo;'
+
+
+def test_insert():
+    sql = mod.Insert('foo', vals=mod.sqlarray(3))
+    assert str(sql) == 'INSERT INTO foo VALUES (?, ?, ?);'
+
+
+def test_insert_list():
+    sql = mod.Insert('foo', vals=[':foo', ':bar', ':baz'])
+    assert str(sql) == 'INSERT INTO foo VALUES (:foo, :bar, :baz);'
+
+
+def test_insert_naked_vals():
+    sql = mod.Insert('foo', vals=':foo, :bar, :baz')
+    assert str(sql) == 'INSERT INTO foo VALUES (:foo, :bar, :baz);'
+
+
+def test_insert_with_cols():
+    sql = mod.Insert('foo', cols=['foo', 'bar'], vals=':foo, :bar')
+    assert str(sql) == 'INSERT INTO foo (foo, bar) VALUES (:foo, :bar);'
+
+
+def test_inset_without_vals():
+    sql = mod.Insert('foo', cols=['foo', 'bar'])
+    assert str(sql) == 'INSERT INTO foo (foo, bar) VALUES (:foo, :bar);'
+
+
+def test_insert_withot_vals_and_cols():
+    try:
+        mod.Insert('foo')
+        assert False, 'Expected to raise'
+    except ValueError:
+        pass
+
+
+def test_replace():
+    sql = mod.Replace('foo', ':foo, :bar')
+    assert str(sql) == 'REPLACE INTO foo VALUES (:foo, :bar);'
+
+
 @mock.patch(MOD + '.sqlite3', autospec=True)
 def test_connection_object_connects(sqlite3):
     """ Connection object starts a connection """
@@ -612,7 +681,7 @@ def test_acquire_lock(*ignored):
     """ Instance has a method for acquiring exclusive lock """
     db = mod.Database(mock.Mock())
     db.acquire_lock()
-    db.cursor.execute.assert_called_once_with('BEGIN EXCLUSIVE')
+    db.cursor.execute.assert_called_once_with('BEGIN EXCLUSIVE;')
 
 
 @mock.patch(MOD + '.sqlite3')
@@ -638,7 +707,7 @@ def test_transaction(*ignored):
     """ Instance has a transaction context manager """
     db = mod.Database(mock.Mock())
     with db.transaction() as cur:
-        db.cursor.execute.assert_called_once_with('BEGIN')
+        db.cursor.execute.assert_called_once_with('BEGIN;')
         assert cur == db.cursor
     assert db.conn.commit.called
 
@@ -727,4 +796,5 @@ def test_database_plugin_does_not_connect_if_connection_is_passed(Database):
     """ When connection object is passed, connection is not made """
     mod.database_plugin(mock.Mock())
     assert not Database.connect.called
+
 

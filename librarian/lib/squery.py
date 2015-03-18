@@ -70,6 +70,7 @@ class Clause(BaseClause):
     def __init__(self, *parts, **kwargs):
         connector = kwargs.pop('connector', self.default_connector)
         self.parts = []
+        parts = [p for p in parts if p]
         try:
             self.parts.append((None, parts[0]))
         except IndexError:
@@ -327,6 +328,22 @@ class Update(Statement):
         return sql + ';'
 
 
+class Delete(Statement):
+    def __init__(self, table, where=None):
+        self.table = table
+        self.where = self._get_clause(where, Where)
+
+    def serialize(self):
+        sql = 'DELETE FROM {}'.format(self.table)
+        if self.where:
+            sql += ' {}'.format(self._where)
+        return sql + ';'
+
+    @property
+    def _where(self):
+        return self._get_clause(self.where, Where)
+
+
 class Row(sqlite3.Row):
     """ sqlite.Row subclass that allows attribute access to items """
     def __getattr__(self, key):
@@ -374,6 +391,47 @@ class Connection(object):
         return "<Connection path='%s'>" % self.path
 
 
+class Insert(Statement):
+    keyword = 'INSERT INTO'
+
+    def __init__(self, table, vals=None, cols=None):
+        self.table = table
+        self.vals = vals
+        self.cols = cols
+        if not any([vals, cols]):
+            raise ValueError('Either vals or cols must be specified')
+
+    def serialize(self):
+        sql = '{} {}'.format(self.keyword, self.table)
+        if self.cols:
+            sql += ' {}'.format(self._cols)
+        sql+= ' VALUES {}'.format(self._vals)
+        return sql + ';'
+
+    @property
+    def _vals(self):
+        if not self.vals:
+            return self._get_sqlarray((':' + c for c in self.cols))
+        return self._get_sqlarray(self.vals)
+
+    @property
+    def _cols(self):
+        return self._get_sqlarray(self.cols)
+
+    @staticmethod
+    def _get_sqlarray(vals):
+        if hasattr(vals, '__iter__'):
+            return '({})'.format(', '.join(vals))
+        if vals.startswith('(') and vals.endswith(')'):
+            return vals
+        return '({})'.format(vals)
+
+
+class Replace(Insert):
+    keyword = 'REPLACE INTO'
+
+
+
 class Database(object):
 
     # Provide access to query classes for easier access
@@ -384,6 +442,9 @@ class Database(object):
     Limit = Limit
     Select = Select
     Update = Update
+    Delete = Delete
+    Insert = Insert
+    Replace = Replace
 
     def __init__(self, conn, debug=False):
         self.conn = conn
@@ -439,7 +500,7 @@ class Database(object):
         self.execute('ANALYZE sqlite_master;')
 
     def acquire_lock(self):
-        self.execute('BEGIN EXCLUSIVE')
+        self.execute('BEGIN EXCLUSIVE;')
 
     @property
     def cursor(self):
@@ -457,7 +518,7 @@ class Database(object):
 
     @contextmanager
     def transaction(self, silent=False):
-        self.execute('BEGIN')
+        self.execute('BEGIN;')
         try:
             yield self.cursor
             self.commit()
