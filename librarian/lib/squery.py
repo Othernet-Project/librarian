@@ -27,9 +27,282 @@ SLASH = re.compile(r'\\')
 sqlite3.register_converter('timestamp', dateutil.parser.parse)
 
 
-def normurl(url):
-    """ Replace backslashes with forward slashes """
-    return SLASH.sub('/', url)
+def sqlarray(n):
+    if not n:
+        return ''
+    if hasattr(n, '__iter__'):
+        n = len(n)
+    return '({})'.format(', '.join('?' * n))
+
+
+def sqlin(col, n):
+    if not n:
+        return ''
+    return '{} IN {}'.format(col, sqlarray(n))
+
+
+class SQL(object):
+    def serialize(self):
+        raise NotImplementedError('Must be implemented by expression')
+
+    def __repr__(self):
+        return self.serialize()
+
+
+class BaseClause(SQL):
+    keyword = None
+
+    def __init__(self, *parts, **kwargs):
+        self.parts = list(parts)
+
+    def __len__(self):
+        return len(self.parts)
+
+    def __nonzero__(self):
+        return len(self.parts) > 0
+
+
+class Clause(BaseClause):
+    keyword = None
+    default_connector = None
+    null_connector = None
+
+    def __init__(self, *parts, **kwargs):
+        connector = kwargs.pop('connector', self.default_connector)
+        self.parts = []
+        try:
+            self.parts.append((None, parts[0]))
+        except IndexError:
+            return
+        for p in parts[1:]:
+            self.parts.append((connector, p))
+
+    def serialize_part(self, connector, part):
+        if connector:
+            part = '{} {}'.format(connector, part)
+        return part + ' '
+
+    def serialize(self):
+        if not self.parts:
+            return ''
+        sql = self.keyword + ' '
+        for connector, part in self.parts:
+            sql += self.serialize_part(connector, part)
+        return sql.rstrip()
+
+
+class From(Clause):
+    keyword = 'FROM'
+    default_connector = ','
+
+    NATURAL = 'NATURAL'
+    INNER = 'INNER'
+    CROSS = 'CROSS'
+    OUTER = 'OUTER'
+    LEFT_OUTER = 'LEFT OUTER'
+    JOIN = 'JOIN'
+
+    def __init__(self, *args, **kwargs):
+        join = kwargs.pop('join', None)
+        if join:
+            kwargs['connector'] = '{} JOIN'.format(join)
+        super(From, self).__init__(*args, **kwargs)
+
+    def join(self, table, kind=None, natural=False, on=None, using=[]):
+        j = []
+        if natural:
+            j.append(self.NATURAL)
+        if kind:
+            j.append(kind)
+        j.append(self.JOIN)
+        if on:
+            table += ' ON {}'.format(on)
+        elif using:
+            if hasattr(using, '__iter__'):
+                using = ', '.join(using)
+            table += ' USING ({})'.format(using)
+        self.parts.append((' '.join(j), table))
+        return self
+
+    def inner_join(self, table, natural=False):
+        return self.join(table, self.INNER, natural)
+
+    def outer_join(self, table, natural=False):
+        return self.join(table, self.OUTER, natural)
+
+    def natural_join(self, table):
+        return self.join(table, None, True)
+
+
+class Where(Clause):
+    keyword = 'WHERE'
+    default_connector = 'AND'
+
+    AND = 'AND'
+    OR = 'OR'
+
+    def __init__(self, *args, **kwargs):
+        if kwargs.pop('use_or', False):
+            kwargs['connector'] = self.OR
+        super(Where, self).__init__(*args, **kwargs)
+
+    def and_(self, condition):
+        if not self.parts:
+            self.parts.append((None, condition))
+        else:
+            self.parts.append((self.AND, condition))
+        return self
+
+    def or_(self, condition):
+        if not self.parts:
+            self.parts.append((None, condition))
+        else:
+            self.parts.append((self.OR, condition))
+        return self
+
+    __iand__ = and_
+    __iadd__ = and_
+    __ior__ = or_
+
+
+class Group(BaseClause):
+    keyword = 'GROUP BY'
+
+    def __init__(self, *parts, **kwargs):
+        self.having = kwargs.pop('having', None)
+        self.parts = parts
+
+    def serialize(self):
+        if not self.parts:
+            return ''
+        sql = self.keyword + ' '
+        sql += ', '.join(self.parts)
+        if self.having:
+            sql += ' HAVING {}'.format(self.having)
+        return sql
+
+
+class Order(BaseClause):
+    keyword = 'ORDER BY'
+
+    def __init__(self, *parts):
+        self.parts = list(parts)
+
+    def asc(self, term):
+        self.parts.append('+{}'.format(term))
+        return self
+
+    def desc(self, term):
+        self.parts.append('-{}'.format(term))
+        return self
+
+    def __iadd__(self, term):
+        return self.asc(term)
+
+    def __isub__(self, term):
+        return self.desc(term)
+
+    def _convert_term(self, term):
+        if term.startswith('-'):
+            return '{} DESC'.format(term[1:])
+        elif term.startswith('+'):
+            return '{} ASC'.format(term[1:])
+        return '{} ASC'.format(term)
+
+    def serialize(self):
+        if not self.parts:
+            return ''
+        sql = self.keyword + ' '
+        sql += ', '.join((self._convert_term(t) for t in self.parts))
+        return sql
+
+
+class Limit(SQL):
+    def __init__(self, limit=None, offset=None):
+        self.limit = limit
+        self.offset = offset
+
+    def serialize(self):
+        if not self.limit:
+            return ''
+        sql = 'LIMIT {}'.format(self.limit)
+        if not self.offset:
+            return sql
+        sql += ' OFFSET {}'.format(self.offset)
+        return sql
+
+    def __len__(self):
+        return self.limit
+
+    def __nonzero__(self):
+        return self.limit > 0
+
+
+class Select(SQL):
+    def __init__(self, what=['*'], sets=None, where=None, group=None,
+                 order=None, limit=None, offset=None):
+        self.what = self._get_list(what)
+        self.sets = self._get_clause(sets, From)
+        self.where = self._get_clause(where, Where)
+        self.group = self._get_clause(group, Group)
+        self.order = self._get_clause(order, Order)
+        self.limit = limit
+        self.offset = offset
+
+    def serialize(self):
+        sql = 'SELECT '
+        sql += ', '.join(self._what)
+        if self.sets:
+            sql += ' {}'.format(self._from)
+        if self.where:
+            sql += ' {}'.format(self._where)
+        if self.group:
+            sql += ' {}'.format(self._group)
+        if self.order:
+            sql += ' {}'.format(self._order)
+        if self.limit:
+            sql += ' {}'.format(self._limit)
+        return sql + ';'
+
+    @property
+    def _what(self):
+        return self._get_list(self.what)
+
+    @property
+    def _from(self):
+        return self._get_clause(self.sets, From)
+
+    @property
+    def _where(self):
+        return self._get_clause(self.where, Where)
+
+    @property
+    def _group(self):
+        return self._get_clause(self.group, Group)
+
+    @property
+    def _order(self):
+        return self._get_clause(self.order, Order)
+
+    @property
+    def _limit(self):
+        return Limit(self.limit, self.offset)
+
+    @staticmethod
+    def _get_clause(val, sql_class):
+        if hasattr(val, 'serialize'):
+            return val
+        if val is None:
+            return sql_class()
+        if hasattr(val, '__iter__'):
+            return sql_class(*val)
+        return sql_class(val)
+
+    @staticmethod
+    def _get_list(val):
+        if not hasattr(val, '__iter__'):
+            return [val]
+        return list(val)
 
 
 class Row(sqlite3.Row):
@@ -38,10 +311,7 @@ class Row(sqlite3.Row):
         return self[key]
 
     def get(self, key, default=None):
-        try:
-            return self[key]
-        except IndexError:
-            return default
+        return getattr(self, key, default)
 
     def __contains__(self, key):
         return key in self.keys()
@@ -79,6 +349,15 @@ class Connection(object):
 
 
 class Database(object):
+
+    # Provide access to query classes for easier access
+    From = From
+    Where = Where
+    Group = Group
+    Order = Order
+    Limit = Limit
+    Select = Select
+
     def __init__(self, conn, debug=False):
         self.conn = conn
         self.debug = debug
@@ -90,8 +369,8 @@ class Database(object):
         :param qry:     raw SQL string or SQLExpression instance
         :returns:       raw SQL string
         """
-        if hasattr(qry, '__sqlrepr__'):
-            return qry.__sqlrepr__(qry)
+        if hasattr(qry, 'serialize'):
+            qry = qry.serialize()
         assert isinstance(qry, basestring), 'Expected qry to be string'
         if self.debug:
             print('SQL:', qry)
@@ -182,3 +461,5 @@ def database_plugin(dbpath, debug=False):
             return callback(*args, **kwargs)
         return wrapper
     return plugin
+
+

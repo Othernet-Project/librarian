@@ -5,16 +5,396 @@ from librarian.lib import squery as mod
 MOD = mod.__name__
 
 
-def test_normalize_url():
-    """ URLs with backslashes should be converted to forward slashes """
-    p = r'C:\Temp\foo.sqlite'
-    assert mod.normurl(p) == 'C:/Temp/foo.sqlite'
+def test_sqlarray():
+    assert mod.sqlarray(2) == '(?, ?)'
 
 
-def test_normalize_url_with_forw_slashes():
-    """ Forward slashes should be intact """
-    p = '/foo/bar/baz.sqlite'
-    assert mod.normurl(p) == '/foo/bar/baz.sqlite'
+def test_sqlarray_zero():
+    assert mod.sqlarray(0) == ''
+
+
+def test_sqlarray_list():
+    assert mod.sqlarray(['foo', 'bar', 'baz']) == '(?, ?, ?)'
+
+
+def test_sqlin():
+    assert mod.sqlin('foo', 4) == 'foo IN (?, ?, ?, ?)'
+
+
+def test_sqlin_zero():
+    assert mod.sqlin('foo', 0) == ''
+
+
+def test_from():
+    sql = mod.From('foo')
+    assert str(sql) == 'FROM foo'
+
+
+def test_from_table_list():
+    sql = mod.From('foo', 'bar')
+    assert str(sql) == 'FROM foo , bar'
+
+
+def test_from_joins():
+    sql = mod.From('foo', 'bar', join=mod.From.INNER)
+    assert str(sql) == 'FROM foo INNER JOIN bar'
+
+
+def test_form_add_join():
+    sql = mod.From('foo')
+    sql.join('bar')
+    assert str(sql) == 'FROM foo JOIN bar'
+
+
+def test_from_add_join_kind():
+    sql = mod.From('foo')
+    sql.join('bar', mod.From.OUTER)
+    assert str(sql) == 'FROM foo OUTER JOIN bar'
+
+
+def test_from_add_join_natural():
+    sql = mod.From('foo')
+    sql.join('bar', natural=True)
+    assert str(sql) == 'FROM foo NATURAL JOIN bar'
+
+
+def test_from_add_join_natural_kind():
+    sql = mod.From('foo')
+    sql.join('bar', mod.From.CROSS, natural=True)
+    assert str(sql) == 'FROM foo NATURAL CROSS JOIN bar'
+
+
+def test_from_add_join_on():
+    sql = mod.From('foo')
+    sql.join('bar', on='foo.test = bar.footest')
+    assert str(sql) == 'FROM foo JOIN bar ON foo.test = bar.footest'
+
+
+def test_from_add_join_using():
+    sql = mod.From('foo')
+    sql.join('bar', using='test_id')
+    assert str(sql) == 'FROM foo JOIN bar USING (test_id)'
+
+
+def test_from_add_join_using_multiple():
+    sql = mod.From('foo')
+    sql.join('bar', using=['test_id', 'something'])
+    assert str(sql) == 'FROM foo JOIN bar USING (test_id, something)'
+
+
+def test_from_add_join_on_and_using():
+    sql = mod.From('foo')
+    sql.join('bar', on='foo.bar_id = bar.id', using='bar_id')
+    assert str(sql) == 'FROM foo JOIN bar ON foo.bar_id = bar.id'
+
+
+def test_empty_from():
+    sql = mod.From()
+    assert str(sql) == ''
+
+
+def test_from_bool():
+    sql = mod.From()
+    assert not sql
+    sql = mod.From('foo')
+    assert sql
+
+
+def test_where():
+    sql = mod.Where('foo = ?', 'bar = ?')
+    assert str(sql) == 'WHERE foo = ? AND bar = ?'
+
+
+def test_where_or():
+    sql = mod.Where('foo = ?', 'bar = ?', use_or=True)
+    assert str(sql) == 'WHERE foo = ? OR bar = ?'
+
+
+def test_where_and_method():
+    sql = mod.Where('foo = ?')
+    sql.and_('bar = ?')
+    assert str(sql) == 'WHERE foo = ? AND bar = ?'
+
+
+def test_where_and_operator():
+    sql = mod.Where('foo = ?')
+    sql &= 'bar = ?'
+    assert str(sql) == 'WHERE foo = ? AND bar = ?'
+
+
+def test_where_and_with_first_condition():
+    sql = mod.Where()
+    sql &= 'foo = ?'
+    assert str(sql) == 'WHERE foo = ?'
+
+
+def test_and_alias():
+    sql = mod.Where('foo = ?')
+    sql += 'bar = ?'
+    assert str(sql) == 'WHERE foo = ? AND bar = ?'
+
+
+def test_where_or_method():
+    sql = mod.Where('foo = ?')
+    sql.or_('bar = ?')
+    assert str(sql) == 'WHERE foo = ? OR bar = ?'
+
+
+def test_where_or_operator():
+    sql = mod.Where('foo = ?')
+    sql |= 'bar = ?'
+    assert str(sql) == 'WHERE foo = ? OR bar = ?'
+
+
+def test_where_or_with_first_condition():
+    sql = mod.Where()
+    sql |= 'foo = ?'
+    assert str(sql) == 'WHERE foo = ?'
+
+
+def test_empty_where():
+    sql = mod.Where()
+    assert str(sql) == ''
+
+
+def test_where_bool():
+    sql = mod.Where()
+    assert not sql
+    sql = mod.Where('foo = ?')
+    assert sql
+
+
+def test_group_by():
+    sql = mod.Group('foo')
+    assert str(sql) == 'GROUP BY foo'
+
+
+def test_group_by_multi():
+    sql = mod.Group('foo', 'bar')
+    assert str(sql) == 'GROUP BY foo, bar'
+
+
+def test_group_by_having():
+    sql = mod.Group('foo', having='bar > 12')
+    assert str(sql) == 'GROUP BY foo HAVING bar > 12'
+
+
+def test_group_by_empty():
+    sql = mod.Group()
+    assert str(sql) == ''
+
+
+def test_group_by_bool():
+    sql = mod.Group()
+    assert not sql
+    sql = mod.Group('foo')
+    assert sql
+
+
+def test_order():
+    sql = mod.Order('foo')
+    assert str(sql) == 'ORDER BY foo ASC'
+
+
+def test_order_asc_alias():
+    sql = mod.Order('+foo')
+    assert str(sql) == 'ORDER BY foo ASC'
+
+
+def test_order_desc():
+    sql = mod.Order('-foo')
+    assert str(sql) == 'ORDER BY foo DESC'
+
+
+def test_order_multi():
+    sql = mod.Order('foo', '-bar')
+    assert str(sql) == 'ORDER BY foo ASC, bar DESC'
+
+
+def test_order_add_asc():
+    sql = mod.Order('foo')
+    sql.asc('bar')
+    assert str(sql) == 'ORDER BY foo ASC, bar ASC'
+
+
+def test_order_add_desc():
+    sql = mod.Order('foo')
+    sql.desc('bar')
+    assert str(sql) == 'ORDER BY foo ASC, bar DESC'
+
+
+def test_order_asc_operator():
+    sql = mod.Order('foo')
+    sql += 'bar'
+    assert str(sql) == 'ORDER BY foo ASC, bar ASC'
+
+
+def test_order_desc_operator():
+    sql = mod.Order('foo')
+    sql -= 'bar'
+    assert str(sql) == 'ORDER BY foo ASC, bar DESC'
+
+
+def test_order_empty():
+    sql = mod.Order()
+    assert str(sql) == ''
+
+
+def test_order_bool():
+    sql = mod.Order()
+    assert not sql
+    sql = mod.Order('foo')
+    assert sql
+
+
+def test_limit():
+    sql = mod.Limit(1)
+    assert str(sql) == 'LIMIT 1'
+
+
+def test_limit_offset():
+    sql = mod.Limit(1, 2)
+    assert str(sql) == 'LIMIT 1 OFFSET 2'
+
+
+def test_offset_only():
+    sql = mod.Limit(offset=2)
+    assert str(sql) == ''
+
+
+def test_empty_limit():
+    sql = mod.Limit()
+    assert str(sql) == ''
+
+
+def test_limit_bool():
+    sql = mod.Limit()
+    assert not sql
+    sql = mod.Limit(1)
+    assert sql
+    sql = mod.Limit(offset=2)
+    assert not sql
+
+
+def test_select():
+    sql = mod.Select()
+    assert str(sql) == 'SELECT *;'
+
+
+def test_select_what_iter():
+    sql = mod.Select(['foo', 'bar'])
+    assert str(sql) == 'SELECT foo, bar;'
+
+
+def test_select_from():
+    sql = mod.Select('*', 'foo')
+    assert str(sql) == 'SELECT * FROM foo;'
+
+
+def test_select_from_multiple():
+    sql = mod.Select('*', ['foo', 'bar'])
+    assert str(sql) == 'SELECT * FROM foo , bar;'
+
+
+def test_select_from_with_cls():
+    sql = mod.Select('*', mod.From('foo', 'bar', join='CROSS'))
+    assert str(sql) == 'SELECT * FROM foo CROSS JOIN bar;'
+
+
+def test_select_tables_attrib():
+    sql = mod.Select(sets='foo')
+    sql.sets.join('bar', mod.From.CROSS)
+    assert str(sql) == 'SELECT * FROM foo CROSS JOIN bar;'
+
+
+def test_select_where():
+    sql = mod.Select('*', where='a = b')
+    assert str(sql) == 'SELECT * WHERE a = b;'
+
+
+def test_select_where_multiple():
+    sql = mod.Select('*', where=['a = b', 'c = d'])
+    assert str(sql) == 'SELECT * WHERE a = b AND c = d;'
+
+
+def test_select_where_cls():
+    sql = mod.Select('*', where=mod.Where('a = b', 'c = d', use_or=True))
+    assert str(sql) == 'SELECT * WHERE a = b OR c = d;'
+
+
+def test_select_where_attrib():
+    sql = mod.Select(where='a = b')
+    sql.where |= 'c = d'
+    assert str(sql) == 'SELECT * WHERE a = b OR c = d;'
+
+
+def test_select_group_by():
+    sql = mod.Select('COUNT(*) AS count', group='foo')
+    assert str(sql) == 'SELECT COUNT(*) AS count GROUP BY foo;'
+
+
+def test_select_group_by_multiple():
+    sql = mod.Select('COUNT(*) AS count', group=['foo', 'bar'])
+    assert str(sql) == 'SELECT COUNT(*) AS count GROUP BY foo, bar;'
+
+
+def test_select_group_by_cls():
+    sql = mod.Select('COUNT(*) AS count', group=mod.Group('foo'))
+    assert str(sql) == 'SELECT COUNT(*) AS count GROUP BY foo;'
+
+
+def test_select_group_attr():
+    sql = mod.Select('COUNT(*) AS count', group='foo')
+    sql.group.having = 'bar > 12'
+    assert str(sql) == 'SELECT COUNT(*) AS count GROUP BY foo HAVING bar > 12;'
+
+
+def test_select_order():
+    sql = mod.Select(order='foo')
+    assert str(sql) == 'SELECT * ORDER BY foo ASC;'
+
+
+def test_select_order_multiple():
+    sql = mod.Select(order=['foo', '-bar'])
+    assert str(sql) == 'SELECT * ORDER BY foo ASC, bar DESC;'
+
+
+def test_select_order_cls():
+    sql = mod.Select(order=mod.Order('foo'))
+    assert str(sql) == 'SELECT * ORDER BY foo ASC;'
+
+
+def test_select_order_attr():
+    sql = mod.Select(order='foo')
+    sql.order.desc('bar')
+    assert str(sql) == 'SELECT * ORDER BY foo ASC, bar DESC;'
+
+
+def test_select_limit():
+    sql = mod.Select(limit=1)
+    assert str(sql) == 'SELECT * LIMIT 1;'
+
+
+def test_select_limit_offset():
+    sql = mod.Select(limit=1, offset=20)
+    assert str(sql) == 'SELECT * LIMIT 1 OFFSET 20;'
+
+
+def test_select_offset_without_limit():
+    sql = mod.Select(offset=20)
+    assert str(sql) == 'SELECT *;'
+
+
+def test_select_limit_attr():
+    sql = mod.Select()
+    sql.limit = 1
+    assert str(sql) == 'SELECT * LIMIT 1;'
+
+
+def test_select_offset_attr():
+    sql = mod.Select(limit=1)
+    sql.offset = 20
+    assert str(sql) == 'SELECT * LIMIT 1 OFFSET 20;'
 
 
 @mock.patch(MOD + '.sqlite3', autospec=True)
@@ -103,11 +483,11 @@ def test_get_curor_only_retrieved_once(sqlite3):
 @mock.patch(MOD + '.sqlite3')
 def test_convert_sqlbuilder_class_to_repr(*ignored):
     """ When sqlbuilder object is passed as query, it's converted to repr """
-    from sqlobject import sqlbuilder
     db = mod.Database(mock.Mock())
-    select = mock.Mock(spec=sqlbuilder.Select)
+    select = mock.Mock(spec=mod.Select)
+    select.serialize.return_value = 'SELECT * FROM foo;'
     sql = db._convert_query(select)
-    assert sql == select.__sqlrepr__.return_value
+    assert sql == select.serialize.return_value
 
 
 @mock.patch(MOD + '.sqlite3')
@@ -315,3 +695,4 @@ def test_database_plugin_does_not_connect_if_connection_is_passed(Database):
     """ When connection object is passed, connection is not made """
     mod.database_plugin(mock.Mock())
     assert not Database.connect.called
+
