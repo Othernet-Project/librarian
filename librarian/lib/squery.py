@@ -238,7 +238,20 @@ class Limit(SQL):
         return self.limit > 0
 
 
-class Select(SQL):
+class Statement(SQL):
+    @staticmethod
+    def _get_clause(val, sql_class):
+        if hasattr(val, 'serialize'):
+            return val
+        if val is None:
+            return sql_class()
+        if hasattr(val, '__iter__'):
+            return sql_class(*val)
+        return sql_class(val)
+
+
+
+class Select(Statement):
     def __init__(self, what=['*'], sets=None, where=None, group=None,
                  order=None, limit=None, offset=None):
         self.what = self._get_list(what)
@@ -289,20 +302,29 @@ class Select(SQL):
         return Limit(self.limit, self.offset)
 
     @staticmethod
-    def _get_clause(val, sql_class):
-        if hasattr(val, 'serialize'):
-            return val
-        if val is None:
-            return sql_class()
-        if hasattr(val, '__iter__'):
-            return sql_class(*val)
-        return sql_class(val)
-
-    @staticmethod
     def _get_list(val):
         if not hasattr(val, '__iter__'):
             return [val]
         return list(val)
+
+
+class Update(Statement):
+    def __init__(self, table, where=None, **kwargs):
+        self.table = table
+        self.set_args = kwargs
+        self.where = self._get_clause(where, Where)
+
+    @property
+    def _where(self):
+        return self._get_clause(self.where, Where)
+
+    def serialize(self):
+        sql = 'UPDATE {} SET '.format(self.table)
+        sql += ', '.join(('{} = {}'.format(col, p)
+                          for col, p in self.set_args.items()))
+        if self.where:
+            sql += ' {}'.format(self._where)
+        return sql + ';'
 
 
 class Row(sqlite3.Row):
@@ -361,6 +383,7 @@ class Database(object):
     Order = Order
     Limit = Limit
     Select = Select
+    Update = Update
 
     def __init__(self, conn, debug=False):
         self.conn = conn

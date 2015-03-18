@@ -397,6 +397,27 @@ def test_select_offset_attr():
     assert str(sql) == 'SELECT * LIMIT 1 OFFSET 20;'
 
 
+def test_update():
+    sql = mod.Update('foo', foo='?', bar='?')
+    assert str(sql) == 'UPDATE foo SET foo = ?, bar = ?;'
+
+
+def test_update_where():
+    sql = mod.Update('foo', foo='?', where='bar = ?')
+    assert str(sql) == 'UPDATE foo SET foo = ? WHERE bar = ?;'
+
+
+def test_update_where_multi():
+    sql = mod.Update('foo', foo='?', where=['bar = ?', 'baz = ?'])
+    assert str(sql) == 'UPDATE foo SET foo = ? WHERE bar = ? AND baz = ?;'
+
+
+def test_update_where_attr():
+    sql = mod.Update('foo', foo='?', where='bar = ?')
+    sql.where += 'baz = ?'
+    assert str(sql) == 'UPDATE foo SET foo = ? WHERE bar = ? AND baz = ?;'
+
+
 @mock.patch(MOD + '.sqlite3', autospec=True)
 def test_connection_object_connects(sqlite3):
     """ Connection object starts a connection """
