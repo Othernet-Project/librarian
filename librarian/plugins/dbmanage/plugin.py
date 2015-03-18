@@ -81,7 +81,8 @@ def remove_dbfile():
 def run_migrations():
     conn = squery.Database.connect(request.app.config['database.path'])
     db = squery.Database(conn)
-    migrations.migrate(db, MDIR)
+    conf = request.app.config
+    migrations.migrate(db, MDIR, 'librarian.migrations', conf)
     logging.debug("Finished running migrations")
     return db
 
