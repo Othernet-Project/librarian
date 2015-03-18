@@ -43,7 +43,6 @@ else:
 
 
 REQPATH = in_scriptdir('conf/requirements.txt')
-DREQPATH = in_scriptdir('conf/dev_requirements.txt')
 DEPS = read_reqs(REQPATH) + PROD_DEPS
 
 
@@ -127,7 +126,6 @@ setup(
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Programming Language :: Python :: 2.7',
     ],
-    tests_require=read_reqs(DREQPATH),
     install_requires=DEPS,
     cmdclass={
         'test': PyTest,
