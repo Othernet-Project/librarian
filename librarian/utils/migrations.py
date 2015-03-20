@@ -14,7 +14,6 @@ import sys
 import imp
 import sqlite3
 import logging
-from itertools import groupby
 
 
 MTABLE = 'migrations'   # SQL table in which migration data is stored
@@ -140,4 +139,4 @@ def migrate(db, path, package_prefix=None, conf={}):
         mod = load_mod(name, path, package_prefix)
         run_migration(version, db, mod, conf)
         logging.debug("Finished migrating to %s", name)
-    db.refresh_table_stats();
+    db.refresh_table_stats()
