@@ -40,8 +40,8 @@ def get_mods(path):
     :param path:    directory to search in
     :returns:       generator containing file names without extension
     """
-    return (os.path.splitext(f)[0] for f in os.listdir(path)
-            if PYMOD_RE.match(f))
+    return set(os.path.splitext(f)[0] for f in os.listdir(path)
+               if PYMOD_RE.match(f))
 
 
 def get_new(modules, min_ver=0):
@@ -53,7 +53,7 @@ def get_new(modules, min_ver=0):
                     are >= min_ver
     """
     int_first_two = lambda s: int(s[:2])
-    modules = ((f, int_first_two(f)) for f in set(modules))
+    modules = ((f, int_first_two(f)) for f in modules)
     modules = sorted(modules, key=lambda x: x[1])
     for mod in modules:
         if mod[1] < min_ver:

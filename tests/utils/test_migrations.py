@@ -24,7 +24,7 @@ def test_list_modules(listdir):
     """ Can list Python modules from specified directory """
     listdir.return_value = ['01_test.py', '02_test.py']
     m = mod.get_mods('foo')
-    assert list(m) == ['01_test', '02_test']
+    assert sorted(list(m)) == ['01_test', '02_test']
 
 
 @mock.patch(MOD + '.os.listdir', autospec=True)
@@ -32,7 +32,7 @@ def test_list_modules_no_dupes(listdir):
     """ Listing modules does not return duplicates """
     listdir.return_value = ['01_test.py', '01_test.pyc', '02_test.py']
     m = mod.get_mods('foo')
-    assert list(m) == ['01_test', '02_test']
+    assert sorted(list(m)) == ['01_test', '02_test']
 
 
 @mock.patch(MOD + '.os.listdir', autospec=True)
@@ -41,7 +41,7 @@ def test_list_modules_ignores_non_migration_files(listdir):
     listdir.return_value = ['__init__.py', 'foo.py', '01_test.py',
                             '02_test.py']
     m = mod.get_mods('foo')
-    assert list(m) == ['01_test', '02_test']
+    assert sorted(list(m)) == ['01_test', '02_test']
 
 
 @mock.patch(MOD + '.os.listdir', autospec=True)
