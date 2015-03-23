@@ -64,7 +64,6 @@ def test_adding_missing_keys():
     d = {}
     mod.add_missing_keys(d)
     _has_key(d, 'url' )
-    _has_key(d, 'domain' )
     _has_key(d, 'title' )
     _has_key(d, 'images' )
     _has_key(d, 'timestamp' )
@@ -113,7 +112,6 @@ def test_convert_returns__added_keys(json, *ignored):
     out = mod.convert_json('')
     assert out == {
         'url': None,
-        'domain': None,
         'title': None,
         'images': None,
         'timestamp': None,
@@ -188,7 +186,6 @@ def test_convert_correct_keys(json, *ignored):
     s = mock.Mock()
     json.loads.return_value = {
         'url': 'foo',
-        'domain': 'foo',
         'title': 'foo',
         'timestamp': 'foo',
         'license': 'foo',
