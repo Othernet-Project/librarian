@@ -143,12 +143,7 @@ def test_convert_decodes_string(*ignored):
 def test_convert_decoding_fails(*ignored):
     """ DecodeError must be raised when string decoding fails """
     s = mock.Mock()
-
-    class MockError(UnicodeDecodeError):
-        def __init__(self, *args, **kwargs):
-            pass
-
-    s.decode.side_effect = MockError
+    s.decode.side_effect = UnicodeDecodeError('utf-8', b"", 0, 1, 'mock str')
     try:
         mod.convert_json(s)
         assert False, 'Expected to raise'
@@ -595,4 +590,3 @@ def test_no_zip_path(get_cover_path, cache_cover, extract_image, *ignored):
     get_cover_path.return_value = 'foobar.jpg'
     meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
     assert meta.image == 'foobar.jpg'
-
