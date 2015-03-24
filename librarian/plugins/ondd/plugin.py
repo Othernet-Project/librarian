@@ -190,7 +190,5 @@ class Dashboard(DashboardPlugin):
     javascript = ['ondd.js']
 
     def get_context(self):
-        print('here')
-        settings = ipc.get_settings()
         return dict(status=ipc.get_status(), vals={}, errors={},
                     files=get_file_list(), **CONST)
