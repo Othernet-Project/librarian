@@ -171,6 +171,10 @@ def get_file_list():
     except ET.ParseError:
         logging.error('ONDD: Could not parse XML data')
         return []
+
+    if root is None:
+        return []
+
     out = []
     flist = root.find('files')
     for f in flist:
