@@ -33,7 +33,6 @@ FACTORS = {
 CONTENT_ORDER = ['-date(updated)', '-views']
 INSERT_KEYS = (
     'md5',
-    'domain',
     'url',
     'title',
     'images',

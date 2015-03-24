@@ -98,7 +98,7 @@ def get_file_list():
 
 
 @view('ondd/_signal')
-def get_signal_stats():
+def get_signal_status():
     return dict(status=ipc.get_status())
 
 

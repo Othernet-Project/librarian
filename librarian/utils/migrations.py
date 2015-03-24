@@ -14,7 +14,6 @@ import sys
 import imp
 import sqlite3
 import logging
-from itertools import groupby
 
 
 MTABLE = 'migrations'   # SQL table in which migration data is stored
@@ -41,9 +40,8 @@ def get_mods(path):
     :param path:    directory to search in
     :returns:       generator containing file names without extension
     """
-    mods = (os.path.splitext(f)[0] for f in os.listdir(path)
-            if PYMOD_RE.match(f))
-    return (g[0] for g in groupby(mods))
+    return set(os.path.splitext(f)[0] for f in os.listdir(path)
+               if PYMOD_RE.match(f))
 
 
 def get_new(modules, min_ver=0):
@@ -141,4 +139,4 @@ def migrate(db, path, package_prefix=None, conf={}):
         mod = load_mod(name, path, package_prefix)
         run_migration(version, db, mod, conf)
         logging.debug("Finished migrating to %s", name)
-    db.refresh_table_stats();
+    db.refresh_table_stats()

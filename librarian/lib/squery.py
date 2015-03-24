@@ -18,6 +18,8 @@ from contextlib import contextmanager
 import dateutil.parser
 from bottle import request
 
+from .gspawn import call
+
 
 SLASH = re.compile(r'\\')
 
@@ -474,25 +476,25 @@ class Database(object):
         :returns:       cursor object
         """
         qry = self._convert_query(qry)
-        self.cursor.execute(qry, params or kwparams)
+        call(self.cursor.execute, qry, params or kwparams)
         return self.cursor
 
     def execute(self, qry, *args, **kwargs):
         qry = self._convert_query(qry)
-        self.cursor.execute(qry, *args, **kwargs)
+        call(self.cursor.execute, qry, *args, **kwargs)
 
     def executemany(self, qry, *args, **kwargs):
         qry = self._convert_query(qry)
-        self.cursor.executemany(qry, *args, **kwargs)
+        call(self.cursor.executemany, qry, *args, **kwargs)
 
     def executescript(self, sql):
-        self.cursor.executescript(sql)
+        call(self.cursor.executescript, sql)
 
     def commit(self):
-        self.conn.commit()
+        call(self.conn.commit)
 
     def rollback(self):
-        self.conn.rollback()
+        call(self.conn.rollback)
 
     def refresh_table_stats(self):
         self.execute('ANALYZE sqlite_master;')
@@ -508,11 +510,11 @@ class Database(object):
 
     @property
     def results(self):
-        return self.cursor.fetchall()
+        return call(self.cursor.fetchall)
 
     @property
     def result(self):
-        return self.cursor.fetchone()
+        return call(self.cursor.fetchone)
 
     @contextmanager
     def transaction(self, silent=False):

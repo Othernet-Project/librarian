@@ -43,7 +43,6 @@ LICENSES = (
 
 KEYS = (
     'url',
-    'domain',
     'title',
     'images',
     'timestamp',
@@ -58,7 +57,6 @@ KEYS = (
 
 REQUIRED_KEYS = (
     'url',
-    'domain',
     'title',
     'timestamp',
     'license',

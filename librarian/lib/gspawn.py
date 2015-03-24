@@ -36,11 +36,12 @@ def call(_callable, *args, **kwargs):
     """
     timeout = kwargs.pop('_timeout', None)
     g = gevent.spawn(_callable, *args, **kwargs)
-    g.join(timeout=timeout)
-    if timeout is not None and not g.successful():
-        raise TimeoutError
+    gevent.sleep(0.0)  # force context switch
+
     if g.exception:
         raise g.exception
-    return g.value
 
-
+    try:
+        return g.get(timeout=timeout)
+    except gevent.Timeout:
+        raise TimeoutError()

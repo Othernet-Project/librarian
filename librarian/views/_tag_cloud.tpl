@@ -6,7 +6,7 @@
     % end
     % for t in tag_cloud:
         % if tag != t['name']:
-            <a href="{{ i18n_path(h.set_qparam(tag=t['tag_id'])) }}" class="tag button small">{{ t['name'] }} <span class="tag-count">{{ t['count'] }}</span></a>
+            <a href="{{ i18n_path(url('content:list')) }}?tag={{ t['tag_id'] }}" class="tag button small">{{ t['name'] }} <span class="tag-count">{{ t['count'] }}</span></a>
         % else:
             <span class="tag tag-current button small">{{ t['name'] }} <span class="tag-count">{{ t['count'] }}</span></span>
         % end

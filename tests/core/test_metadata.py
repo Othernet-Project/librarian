@@ -64,7 +64,6 @@ def test_adding_missing_keys():
     d = {}
     mod.add_missing_keys(d)
     _has_key(d, 'url' )
-    _has_key(d, 'domain' )
     _has_key(d, 'title' )
     _has_key(d, 'images' )
     _has_key(d, 'timestamp' )
@@ -113,7 +112,6 @@ def test_convert_returns__added_keys(json, *ignored):
     out = mod.convert_json('')
     assert out == {
         'url': None,
-        'domain': None,
         'title': None,
         'images': None,
         'timestamp': None,
@@ -143,12 +141,7 @@ def test_convert_decodes_string(*ignored):
 def test_convert_decoding_fails(*ignored):
     """ DecodeError must be raised when string decoding fails """
     s = mock.Mock()
-
-    class MockError(UnicodeDecodeError):
-        def __init__(self, *args, **kwargs):
-            pass
-
-    s.decode.side_effect = MockError
+    s.decode.side_effect = UnicodeDecodeError('utf-8', b"", 0, 1, 'mock str')
     try:
         mod.convert_json(s)
         assert False, 'Expected to raise'
@@ -193,7 +186,6 @@ def test_convert_correct_keys(json, *ignored):
     s = mock.Mock()
     json.loads.return_value = {
         'url': 'foo',
-        'domain': 'foo',
         'title': 'foo',
         'timestamp': 'foo',
         'license': 'foo',
@@ -595,4 +587,3 @@ def test_no_zip_path(get_cover_path, cache_cover, extract_image, *ignored):
     get_cover_path.return_value = 'foobar.jpg'
     meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
     assert meta.image == 'foobar.jpg'
-
