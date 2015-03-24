@@ -11,8 +11,7 @@ SOCK_FILE_PATH = '/tmp/test_server.sock'
 
 
 def get_config(key):
-    config = {'ondd.socket': SOCK_FILE_PATH,
-              'ondd.timeout': 1}
+    config = {'ondd.socket': SOCK_FILE_PATH}
     return config[key]
 
 
@@ -50,10 +49,24 @@ class TestServer(multiprocessing.Process):
         os.remove(self._socket_file_path)
 
 
-@mock.patch('bottle.request')
-def test_read_timeout(bottle_request):
-    from librarian.plugins.ondd import ipc
+def patch_ipc(func):
+    def _patch_ipc(*args, **kwargs):
+        from librarian.plugins.ondd import ipc
 
+        original_timeout = ipc.ONDD_SOCKET_TIMEOUT
+        setattr(ipc, 'ONDD_SOCKET_TIMEOUT', 1)
+
+        result = func(ipc, *args, **kwargs)
+
+        setattr(ipc, 'ONDD_SOCKET_TIMEOUT', original_timeout)
+
+        return result
+    return _patch_ipc
+
+
+@mock.patch('bottle.request')
+@patch_ipc
+def test_read_timeout(ipc, bottle_request):
     test_server = TestServer(SOCK_FILE_PATH, delay=2)
     test_server.start()
 
@@ -72,9 +85,8 @@ def test_read_timeout(bottle_request):
 
 
 @mock.patch('bottle.request')
-def test_send_timeout(bottle_request):
-    from librarian.plugins.ondd import ipc
-
+@patch_ipc
+def test_send_timeout(ipc, bottle_request):
     test_server = TestServer(SOCK_FILE_PATH, delay=2)
     test_server.start()
 
@@ -88,9 +100,8 @@ def test_send_timeout(bottle_request):
 
 
 @mock.patch('bottle.request')
-def test_send_success(bottle_request):
-    from librarian.plugins.ondd import ipc
-
+@patch_ipc
+def test_send_success(ipc, bottle_request):
     test_server = TestServer(SOCK_FILE_PATH)
     test_server.start()
 
@@ -104,9 +115,8 @@ def test_send_success(bottle_request):
 
 
 @mock.patch('bottle.request')
-def test_read_success(bottle_request):
-    from librarian.plugins.ondd import ipc
-
+@patch_ipc
+def test_read_success(ipc, bottle_request):
     test_server = TestServer(SOCK_FILE_PATH, response='test data\0')
     test_server.start()
 

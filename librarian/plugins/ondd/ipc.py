@@ -28,11 +28,12 @@ UN_HI_OFF = 10600  # High band offset
 UN_HI_SW = 11700  # Transponder frequency at which we switch to high band
 
 ONDD_BAD_RESPONSE_CODE = 400
+ONDD_SOCKET_TIMEOUT = 20
 
 
 def connect(path):
     sock = socket.socket(socket.AF_UNIX)
-    sock.settimeout(request.app.config['ondd.timeout'])
+    sock.settimeout(ONDD_SOCKET_TIMEOUT)
     sock.connect(path)
     return sock
 
