@@ -34,23 +34,15 @@ class TestServer(multiprocessing.Process):
         self.exit = multiprocessing.Event()
 
     def run(self):
-        f = open('ondd.log', 'w')
         while not self.exit.is_set():
             time.sleep(self._delay)
-            f.write('listen\n')
             conn, addr = self.server.accept()
-            f.write('accepted\n')
             while not self.exit.is_set():
-                f.write('recving\n')
                 data = conn.recv(1024)
-                f.write('recved\n')
                 if not data:
                     break
                 else:
-                    f.write('sending\n')
                     conn.send(self._response or data)
-                    f.write('sent\n')
-        f.write('exit\n')
 
     def shutdown(self):
         self.exit.set()
