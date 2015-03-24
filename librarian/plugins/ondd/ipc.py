@@ -27,7 +27,7 @@ UN_LO_OFF = 9750  # Low band offset
 UN_HI_OFF = 10600  # High band offset
 UN_HI_SW = 11700  # Transponder frequency at which we switch to high band
 
-ONDD_BAD_RESPONSE_CODE = 400
+ONDD_BAD_RESPONSE_CODE = '400'
 ONDD_SOCKET_TIMEOUT = 20
 
 
