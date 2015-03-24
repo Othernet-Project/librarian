@@ -30,6 +30,7 @@ UN_HI_SW = 11700  # Transponder frequency at which we switch to high band
 
 def connect(path):
     sock = socket.socket(socket.AF_UNIX)
+    sock.settimeout(request.app.config['ondd.timeout'])
     sock.connect(path)
     return sock
 
@@ -79,12 +80,17 @@ def send(payload):
     """
     if not payload[-1] == '\0':
         payload = payload.encode(OUT_ENCODING) + '\0'
-    with open_socket() as sock:
-        logging.debug('ONDD: sending payload: %s', payload)
-        sock.send(payload)
-        data = read(sock)
-        logging.debug('ONDD: received data: %s', data[:-1])
-    return parse(data)
+
+    try:
+        with open_socket() as sock:
+            logging.debug('ONDD: sending payload: %s', payload)
+            sock.send(payload)
+            data = read(sock)
+            logging.debug('ONDD: received data: %s', data[:-1])
+    except (socket.error, socket.timeout):
+        return None
+    else:
+        return parse(data)
 
 
 def xml_get_path(path):
@@ -133,6 +139,14 @@ def get_status():
     """ Get ONDD status """
     payload = xml_get_path('/status')
     root = send(payload)
+    if root is None:
+        return {
+            'has_lock': False,
+            'signal': 0,
+            'snr': 0.0,
+            'streams': []
+        }
+
     tuner = root.find('tuner')
     net = root.find('network')
     return {
@@ -200,6 +214,16 @@ def get_settings():
     """ Get ONDD tuner settings """
     payload = xml_get_path('/settings')
     root = send(payload)
+    if root is None:
+        return {
+            'frequency': 0,
+            'delivery': '',
+            'modulation': '',
+            'polarization': '',
+            'tone': False,
+            'azimuth': 0
+        }
+
     tuner = root.find('tuner')
     return {
         'frequency': int(tuner.find('frequency').text),
@@ -216,6 +240,9 @@ def set_settings(frequency, symbolrate, delivery='dvb-s', modulation='qpsk',
     tone = yesno(tone)
     payload = xml_put_path('/settings', kw2xml(**locals()))
     resp = send(payload)
+    if resp is None:
+        return None
+
     resp_code = resp.get('code')
     logging.debug('ONDD: received response code %s', resp_code)
     return resp_code
