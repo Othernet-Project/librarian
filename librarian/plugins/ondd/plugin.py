@@ -154,7 +154,7 @@ def set_settings():
         # Translators, error message shown when setting transponder
         # configuration is not successful
         errors['_'] = _('Transponder configuration could not be set')
-        return dict(errors=errors, vals=request.form)
+        return dict(errors=errors, vals=request.forms)
 
     logging.info('ONDD: tuner settings updated')
 
