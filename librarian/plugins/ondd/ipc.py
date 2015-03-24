@@ -27,6 +27,8 @@ UN_LO_OFF = 9750  # Low band offset
 UN_HI_OFF = 10600  # High band offset
 UN_HI_SW = 11700  # Transponder frequency at which we switch to high band
 
+ONDD_BAD_RESPONSE_CODE = 400
+
 
 def connect(path):
     sock = socket.socket(socket.AF_UNIX)
@@ -241,7 +243,7 @@ def set_settings(frequency, symbolrate, delivery='dvb-s', modulation='qpsk',
     payload = xml_put_path('/settings', kw2xml(**locals()))
     resp = send(payload)
     if resp is None:
-        return None
+        return ONDD_BAD_RESPONSE_CODE
 
     resp_code = resp.get('code')
     logging.debug('ONDD: received response code %s', resp_code)
