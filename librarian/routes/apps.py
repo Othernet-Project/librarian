@@ -12,9 +12,10 @@ import os
 import stat
 import logging
 
-from bottle import request, view, abort, default_app, static_file, redirect
+from bottle import request, view, abort, default_app
 
-from ..lib import apps
+from ..core import apps
+
 from ..lib import send_file
 
 PREFIX = '/apps'

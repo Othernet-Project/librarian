@@ -16,15 +16,17 @@ import logging
 import datetime
 from os.path import dirname, join
 
-from gevent import spawn
 from bottle import view, request, static_file
 
+from ...core.archive import process
+from ...core.downloads import get_md5_from_path
+
 from ...lib import squery
-from ...utils import migrations
-from ...lib.archive import process
-from ...lib.downloads import get_md5_from_path
+from ...lib.gspawn import call
 from ...lib.i18n import lazy_gettext as _, i18n_path
-from ...lib.lock import global_lock, LockFailureError, UnlockFailureError
+from ...lib.lock import global_lock, LockFailureError
+
+from ...utils import migrations
 
 from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError
@@ -77,8 +79,10 @@ def remove_dbfile():
 
 
 def run_migrations():
-    db = squery.Database(request.app.config['database.path'])
-    migrations.migrate(db, MDIR)
+    conn = squery.Database.connect(request.app.config['database.path'])
+    db = squery.Database(conn)
+    conf = request.app.config
+    migrations.migrate(db, MDIR, 'librarian.migrations', conf)
     logging.debug("Finished running migrations")
     return db
 
@@ -98,19 +102,18 @@ def rebuild():
     start = time.time()
     db = request.db
     logging.debug('Locking database')
-    cur = db.acquire_lock()  # should block until everyone else finishes
+    db.acquire_lock()
     logging.debug('Acquiring global lock')
     with global_lock(always_release=True):
-        # Now that we have a global lock, we can release the database lock
-        cur.execute('ROLLBACK')
-        db.disconnect()
-        spawn(backup, dbpath, bpath).join()
+        db.conn.close()
+        call(backup, dbpath, bpath)
         remove_dbfile()
         logging.debug('Removed database')
         db = request.db = run_migrations()
         logging.debug('Prepared new database')
         rows = reload_data(db)
         logging.info('Restored metadata for %s pieces of content', rows)
+        request.db_connection.connect()
     logging.debug('Released global lock')
     end = time.time()
     return end - start

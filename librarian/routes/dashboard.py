@@ -8,18 +8,8 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import logging
+from bottle import view, default_app
 
-from datetime import datetime
-
-import bottle
-from bottle import request, view, abort, redirect, default_app, MultiDict
-
-from ..lib import downloads
-from ..lib import archive
-from ..lib.i18n import lazy_gettext as _, i18n_path
-from ..lib.favorites import favorite_content
-from ..utils.helpers import hsize
 from ..plugins import DASHBOARD as DASHBOARD_PLUGINS
 
 __all__ = ('app', 'dashboard',)

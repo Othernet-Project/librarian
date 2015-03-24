@@ -1,7 +1,7 @@
 """
 send_file.py: functions for sending static files
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -10,15 +10,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 import time
-import mimetypes
 
-from gevent import spawn
 from bottle import (HTTPResponse, HTTPError, parse_date, parse_range_header,
                     request)
-
-
-__all__ = ('MIME_TYPES', 'EXTENSIONS', 'DEFAULT_TYPE', 'get_mimetype',
-           'format_ts', 'iter_read_range', 'send_file',)
 
 
 # We only neeed MIME types for files Outernet will broadcast
@@ -61,12 +55,50 @@ MIME_TYPES = {
     # Other
     'zip': 'application/zip',
     'gz': 'application/gzip',
-
 }
 EXTENSIONS = MIME_TYPES.keys()
 DEFAULT_TYPE = MIME_TYPES['txt']
 CHARSET = 'UTF-8'
 TIMESTAMP_FMT = '%a, %d %b %Y %H:%M:%S GMT'
+
+
+class FileRangeWrapper(object):
+    """ Wrapper around file-like object to provide reading within range
+
+    This class is specifically crafted to take advantage of
+    ``wsgi.file_wrapper`` feature which is available in some WSGI wervers. The
+    class mimics the file objects and internally adjusts the reads for a
+    specified range.
+    """
+    def __init__(self, fd, offset, length):
+        assert hasattr(fd, 'read'), 'Expected fd to be file-like object'
+        self.fd = fd
+        self.offset = offset
+        self.remaining = length
+        if offset:
+            try:
+                self.fd.seek(offset)
+            except AttributeError:
+                # File handles for zip file content have no seek() so we simply
+                # read and discard the data immediately.
+                self.fd.read(offset)
+
+    def read(self, size=None):
+        if not self.fd:
+            raise ValueError('I/O on closed file')
+        if not size:
+            size = self.remaining
+        size = min([self.remaining, size])
+        if not size:
+            return ''
+        data = self.fd.read(size)
+        self.remaining -= size
+        return data
+
+    def close(self):
+        self.fd.close()
+        self.fd = None
+
 
 
 def get_mimetype(filename):
@@ -90,35 +122,12 @@ def format_ts(seconds=None):
     return time.strftime(TIMESTAMP_FMT, time.gmtime(seconds))
 
 
-def iter_read_range(fd, offset, length, chunksize=1024*1024):
-    """ Version of ``bottle._file_iter_range`` that supports zipfile API
-
-    :param fd:          file-like object that may or may not support ``seek()``
-    :param offset:      offset from the beginning in bytes
-    :param length:      number of bytes to read
-    :param chunksize:   maximum size of the chunk
-    """
-    try:
-        fd.seek(offset)
-    except AttributeError:
-        # this object does not support ``seek()`` so simply discard the first
-        # ``offset - 1`` bytes
-        fd.read(offset - 1)
-    while length > 0:
-        chunk = fd.read(min(length, chinksize))
-        if not chink:
-            break
-        length -= len(chunk)
-        yield chunk
-    fd.close()
-
-
-def send_file(content, filename, size, timestamp):
+def send_file(fd, filename, size, timestamp):
     """ Send a file represented by file object
 
     The code is partly based on ``bottle.static_file``.
 
-    :param content:     file-like object
+    :param fd:          file-like object
     :param filename:    filename to use
     :param size:        file size in bytes
     :param timestamp:   file's timestamp seconds since epoch
@@ -144,8 +153,8 @@ def send_file(content, filename, size, timestamp):
         return HTTPResponse(status=304, **headers)
 
     if request.method == 'HEAD':
-        # Request is a HEAD, so remove any content body
-        content = ''
+        # Request is a HEAD, so remove any fd body
+        fd = ''
 
     headers['Accept-Ranges'] = 'bytes'
     ranges = request.environ.get('HTTP_RANGE')
@@ -156,6 +165,6 @@ def send_file(content, filename, size, timestamp):
         start, end = ranges[0]
         headers['Content-Range'] = 'bytes %d-%d/%d' % (start, end - 1, size)
         headers['Content-Length'] = str(end - start)
-        content = iter_read_range(content, start, end - start)
-    return HTTPResponse(content, **headers)
+        fd = FileRangeWrapper(fd, start, end - start)
+    return HTTPResponse(fd, **headers)
 

@@ -1,5 +1,4 @@
-begin transaction;
-
+SQL = """
 alter table zipballs rename to tmp;
 
 create table zipballs
@@ -22,10 +21,10 @@ create table zipballs
 );
 
 replace into zipballs
-(md5, domain, url, title, images, timestamp, updated, favorite, views, 
+(md5, domain, url, title, images, timestamp, updated, favorite, views,
     keep_formatting, is_partner, is_sponsored, partner, license)
 select
-md5, domain, url, title, images, timestamp, updated, favorite, views, 
+md5, domain, url, title, images, timestamp, updated, favorite, views,
 keep_formatting, is_partner, is_sponsored, partner, license
 from tmp;
 
@@ -34,5 +33,9 @@ set archive = 'core'
 where (select is_core from tmp where md5 = tmp.md5) == 1;
 
 drop table tmp;
+"""
 
-commit transaction;
+
+def up(db, conf):
+    db.executescript(SQL)
+

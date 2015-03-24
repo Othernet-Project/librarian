@@ -14,7 +14,8 @@ import os
 
 from bottle import request, view, redirect, MultiDict, abort
 
-from ...lib import archive
+from ...core import archive
+
 from ...lib.html import hsize
 from ...lib.i18n import lazy_gettext as _, i18n_path
 
@@ -76,15 +77,12 @@ def cleanup():
                 'message': message, 'needed': archive.needed_space()}
 
 
-
 def install(app, route):
     try:
         os.statvfs
     except AttributeError:
         raise NotSupportedError(
             'Disk space information not available on this platform')
-    conf = app.config
-    zipballs.update_sizes(conf['database.path'], conf['content.contentdir'])
     route(
         ('list', cleanup_list, 'GET', '/cleanup/', {}),
         ('cleanup', cleanup, 'POST', '/cleanup/', {}),

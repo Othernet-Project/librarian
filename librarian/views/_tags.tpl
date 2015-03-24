@@ -3,7 +3,7 @@
 </p>
 <form action="{{ i18n_path(url('tags:edit', content_id=meta.md5)) }}" method="POST" class="tag-form">
     <p>
-    <input type="text" name="tags" value="{{ ', '.join(meta.tags.keys()) }}">
+    <input type="text" name="tags" value="{{ ', '.join(meta.tags) }}">
     %# Translators, button label for a button that saves user tags for a piece of content
     <button class="small">{{ _('Save tags') }}</button>
     </p>

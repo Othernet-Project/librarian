@@ -8,14 +8,13 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import os
 import json
-import zipfile
 
 from bottle import request
 
+from ..lib.i18n import i18n_path, lazy_gettext as _
+
 from .downloads import ContentError, extract_file
-from .i18n import i18n_path, lazy_gettext as _
 
 
 class AppError(Exception):
@@ -57,11 +56,11 @@ def get_app_info(path):
         raise MetadataError('Could not extract metadata')
     try:
         info = str(info.decode('utf8'))
-    except UnicodeDecodeError as err:
+    except UnicodeDecodeError:
         raise MetadataError('Could not read metadata')
     try:
         meta = json.loads(info)
-    except ValueError as err:
+    except ValueError:
         raise MetadataError('Could not decode metadata')
     try:
         return AppInfo(

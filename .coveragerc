@@ -1,0 +1,10 @@
+[run]
+branch = True
+concurrency = gevent
+source = librarian
+
+[report]
+# Some mock modules are missing, but that's OK
+ignore_errors = True
+show_missing = True
+
