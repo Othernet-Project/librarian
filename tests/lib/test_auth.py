@@ -49,6 +49,31 @@ def test_create_user():
     assert auth.is_valid_password(password, user.password)
 
 
+@transaction_test
+def test_create_user_already_exists():
+    username = 'mike'
+    password = 'mikepassword'
+
+    auth.create_user(username, password)
+    with pytest.raises(auth.UserAlreadyExists):
+        auth.create_user(username, password)
+
+
+@transaction_test
+def test_create_user_invalid_credentials():
+    with pytest.raises(auth.InvalidUserCredentials):
+        auth.create_user('', '')
+
+    with pytest.raises(auth.InvalidUserCredentials):
+        auth.create_user(None, None)
+
+    with pytest.raises(auth.InvalidUserCredentials):
+        auth.create_user('mike', '')
+
+    with pytest.raises(auth.InvalidUserCredentials):
+        auth.create_user('', 'somepassword')
+
+
 @mock.patch('bottle.redirect')
 @mock.patch('bottle.request')
 def test_login_required_not_logged_in(bottle_request, bottle_redirect):

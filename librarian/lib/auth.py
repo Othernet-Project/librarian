@@ -1,6 +1,7 @@
 import datetime
 import functools
 import json
+import sqlite3
 import uuid
 
 import bottle
@@ -19,6 +20,14 @@ class SessionInvalid(SessionError):
 
 
 class SessionExpired(SessionError):
+    pass
+
+
+class UserAlreadyExists(Exception):
+    pass
+
+
+class InvalidUserCredentials(Exception):
     pass
 
 
@@ -114,6 +123,9 @@ def is_valid_password(password, encrypted_password):
 
 
 def create_user(username, password, is_superuser=False):
+    if not username or not password:
+        raise InvalidUserCredentials()
+
     encrypted = encrypt_password(password)
 
     user_data = {'username': username,
@@ -126,4 +138,7 @@ def create_user(username, password, is_superuser=False):
                                      'password',
                                      'created',
                                      'is_superuser'))
-    db.execute(query, user_data)
+    try:
+        db.execute(query, user_data)
+    except sqlite3.IntegrityError:
+        raise UserAlreadyExists()
