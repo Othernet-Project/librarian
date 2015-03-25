@@ -65,7 +65,7 @@ class Lazy(object):
         return repr(self._eval())
 
     def __str__(self):
-        return to_unicode(self.eval())
+        return to_unicode(self._eval())
 
     def __bytes__(self):
         return to_bytes(self._eval())
