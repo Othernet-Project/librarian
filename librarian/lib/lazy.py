@@ -7,6 +7,7 @@
 
 from functools import wraps
 
+from .common import to_unicode, to_bytes
 
 __all__ = ('Lazy', 'CachingLazy', 'lazy', 'caching_lazy')
 
@@ -61,13 +62,13 @@ class Lazy(object):
         return self._eval().__class__
 
     def __repr__(self):
-        return '<Lazy {}>'.format(self._func)
+        return repr(self._eval())
 
     def __str__(self):
-        return str(self._eval())
+        return to_unicode(self.eval())
 
     def __bytes__(self):
-        return bytes(self._eval())
+        return to_bytes(self._eval())
 
     def __call__(self):
         return self._eval()()
