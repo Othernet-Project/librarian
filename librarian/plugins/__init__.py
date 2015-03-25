@@ -10,7 +10,6 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 import logging
-import importlib
 
 import bottle
 from bottle import static_file
