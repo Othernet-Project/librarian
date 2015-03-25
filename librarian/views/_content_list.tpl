@@ -25,7 +25,7 @@
         % if meta.partner:
         <p class="attrib">
             %# Translators, attribution (e.g., 'By Project Gutenberg')
-            {{ u(_('by %s')) % meta.partner }}
+            {{ _('by %s') % meta.partner }}
         </p>
         % end
         <p class="badges">

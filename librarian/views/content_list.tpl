@@ -30,7 +30,7 @@
     </form>
     % if query:
     %# Translators, used as note on library page when showing search results, %(term)s represents the text typed in by user
-    <p class="search-keyword">{{ u(_("Showing search results for '%(terms)s'")) % {'terms': query} }}</p>
+    <p class="search-keyword">{{ _("Showing search results for '%(terms)s'") % {'terms': query} }}</p>
     % end
     <ul id="content-list" class="content-list" data-total="{{ int(pager.pages) }}">
         % include('_content_list')
@@ -42,10 +42,10 @@
         {{ _('Content library is currently empty') }}
         % elif query:
         %# Translators, used as note on library page when search does not return anything
-        {{ u(_("There are no search results for '%(terms)s'")) % {'terms': query} }}
+        {{ _("There are no search results for '%(terms)s'") % {'terms': query} }}
         % elif tag:
         %# Translators, used as not on library page when there is no content for given tag
-        {{ u(_("There are no results for '%(tag)s'")) % {'tag': tag} }}
+        {{ _("There are no results for '%(tag)s'") % {'tag': tag} }}
         % end
         </p>
     % end
