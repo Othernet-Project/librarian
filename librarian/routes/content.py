@@ -107,7 +107,7 @@ def content_file(content_id, filename):
         abort(404, 'Not found')
     size = metadata.file_size
     timestamp = os.stat(zippath)[stat.ST_MTIME]
-    if filename.endswith('.html') and not metadata.keep_formatting:
+    if filename.endswith('.html'):
         logging.debug("Patching HTML file '%s' with Librarian stylesheet" % (
                       filename))
         # Patch HTML with link to stylesheet
