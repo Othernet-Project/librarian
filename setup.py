@@ -3,13 +3,11 @@
 import os
 import sys
 import shutil
-import platform
 from setuptools import setup, find_packages
 from distutils.cmd import Command
 from setuptools.command.test import test as TestCommand
 from setuptools.command.develop import develop as DevelopCommand
 from setuptools.command.sdist import sdist as SdistCommand
-from setuptools.command.setopt import option_base as Command
 
 import librarian
 
@@ -35,15 +33,8 @@ def in_scriptdir(path):
     return os.path.join(SCRIPTDIR, os.path.normpath(path))
 
 
-# Production requirement, not needed during development
-if platform.system() == 'Windows':
-    PROD_DEPS = []
-else:
-    PROD_DEPS = ['bjoern==1.4.2']
-
-
 REQPATH = in_scriptdir('conf/requirements.txt')
-DEPS = read_reqs(REQPATH) + PROD_DEPS
+DEPS = read_reqs(REQPATH)
 
 
 def rebuild_catalogs():
