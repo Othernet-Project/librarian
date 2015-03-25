@@ -7,7 +7,6 @@
 
 from __future__ import unicode_literals
 
-import types
 import functools
 
 try:
@@ -659,14 +658,14 @@ def form_errors(errors):
     :param errors:  dictionary or dictionary-like object containing field
                     name-error mappings
     """
-    try:
-        return UL(LI(html_escape(errors['_']), _class=FERR_ONE_CLS),
-                  _class=FERR_CLS)
-    except KeyError:
+    if not '_' in errors:
         return ''
-    except TypeError:
-        return P(SPAN(html_escape(errors['_']), _class=FERR_ONE_CLS),
-                 _class=FERR_CLS)
+    if hasattr(errors, '__iter__'):
+        msgs = (html_escape(to_unicode(m)) for m in errors['_'])
+        return UL(LI(msgs, _class=FERR_ONE_CLS), _class=FERR_CLS)
+    else:
+        msg = html_escape(to_unicode(errors['_']))
+        return P(SPAN(msg, _class=FERR_ONE_CLS), _class=FERR_CLS)
 
 
 def to_qs(mapping):
