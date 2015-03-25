@@ -5,14 +5,13 @@
 .. moduleauthor:: Outernet Inc <hello@outernet.is>
 """
 
-import re
 import gettext
 import functools
 from warnings import warn
 
 from bottle import request, redirect, BaseTemplate, template, DictMixin
 
-from .lazy import lazy, caching_lazy
+from .lazy import lazy
 from .common import unicode
 
 
@@ -396,7 +395,7 @@ class I18NPlugin(object):
                 if locale not in self.locales:
                     # If no locale had been specified, redirect to default one
                     path = request.original_path
-                    redirect(unicode(i18n_path(path, self.default_locale)))
+                    redirect(i18n_path(path, self.default_locale))
                 else:
                     request.gettext = self.gettext_apis[locale]
             else:
