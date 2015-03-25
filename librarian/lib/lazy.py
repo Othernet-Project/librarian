@@ -76,6 +76,9 @@ class Lazy(object):
     def __format__(self, format_spec):
         return self._eval().__format__(format_spec)
 
+    def __mod__(self, other):
+        return self._eval().__mod__(other)
+
     # Being explicit about all comparison methods to avoid double-calls
 
     def __lt__(self, other):
