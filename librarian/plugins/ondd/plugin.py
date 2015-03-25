@@ -102,7 +102,7 @@ def get_signal_status():
     return dict(status=ipc.get_status())
 
 
-@view('ondd/settings', vals={}, err={}, **CONST)
+@view('ondd/settings', vals={}, errors={}, **CONST)
 def set_settings():
     errors = {}
     original_route = request.forms.get('backto', i18n_path('/dashboard/'))
