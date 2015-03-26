@@ -80,11 +80,13 @@ def test_login_required_not_logged_in(bottle_request, bottle_redirect):
     mock_controller = mock.Mock(__name__='controller')
     protected = auth.login_required()(mock_controller)
 
+    bottle_request.fullpath = '/somewhere/'
+    bottle_request.query_string = ''
     bottle_request.session.get.return_value = None
 
     protected()
 
-    bottle_redirect.assert_called_once_with('/login/')
+    bottle_redirect.assert_called_once_with('/login/?next=%2Fsomewhere%2F')
     assert mock_controller.called is False
 
 
@@ -94,6 +96,8 @@ def test_login_required_forbidden(bottle_request, bottle_template):
     mock_controller = mock.Mock(__name__='controller')
     protected = auth.login_required(superuser_only=True)(mock_controller)
 
+    bottle_request.fullpath = '/somewhere/'
+    bottle_request.query_string = ''
     bottle_request.session.get.return_value = {'is_superuser': False}
 
     protected()
@@ -107,6 +111,8 @@ def test_login_required_success_superuser(bottle_request):
     mock_controller = mock.Mock(__name__='controller')
     protected = auth.login_required(superuser_only=True)(mock_controller)
 
+    bottle_request.fullpath = '/somewhere/'
+    bottle_request.query_string = ''
     bottle_request.session.get.return_value = {'is_superuser': True}
 
     protected('test')
@@ -119,6 +125,8 @@ def test_login_required_success_normaluser(bottle_request):
     mock_controller = mock.Mock(__name__='controller')
     protected = auth.login_required()(mock_controller)
 
+    bottle_request.fullpath = '/somewhere/'
+    bottle_request.query_string = ''
     bottle_request.session.get.return_value = {'is_superuser': False}
 
     protected('test')
@@ -295,3 +303,16 @@ def test_login_user_invalid_username():
     auth.create_user(username, password)
     assert auth.login_user('missing', 'invalid') is False
     assert bottle.request.session.get('user') is None
+
+
+def test_get_redirect_path():
+    result = auth.get_redirect_path('/login/', '/original/')
+    assert result == '/login/?next=%2Foriginal%2F'
+
+    result = auth.get_redirect_path('/login/',
+                                    '/original/',
+                                    next_param_name='go')
+    assert result == '/login/?go=%2Foriginal%2F'
+
+    result = auth.get_redirect_path('/login/?abc=123', '/original/?imok=1')
+    assert result == '/login/?abc=123&next=%2Foriginal%2F%3Fimok%3D1'

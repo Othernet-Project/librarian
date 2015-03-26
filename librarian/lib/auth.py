@@ -2,6 +2,8 @@ import datetime
 import functools
 import json
 import sqlite3
+import urllib
+import urlparse
 import uuid
 
 import bottle
@@ -203,11 +205,33 @@ def session_plugin(cookie_name, lifetime, secret):
     return plugin
 
 
+def get_redirect_path(base_path, next_path, next_param_name='next'):
+    QUERY_PARAM_IDX = 4
+
+    next_encoded = urllib.urlencode({next_param_name: next_path})
+
+    parsed = urlparse.urlparse(base_path)
+    new_path = list(parsed)
+
+    if parsed.query:
+        new_path[QUERY_PARAM_IDX] = '&'.join([new_path[QUERY_PARAM_IDX],
+                                              next_encoded])
+    else:
+        new_path[QUERY_PARAM_IDX] = next_encoded
+
+    return urlparse.urlunparse(new_path)
+
+
 def login_required(redirect_to='/login/', superuser_only=False,
                    forbidden_template='403'):
     def _login_required(func):
         @functools.wraps(func)
         def __login_required(*args, **kwargs):
+            next_path = bottle.request.fullpath
+            if bottle.request.query_string:
+                next_path = '?'.join([bottle.request.fullpath,
+                                      bottle.request.query_string])
+
             user = bottle.request.session.get('user')
             if user:
                 is_superuser = user['is_superuser']
@@ -216,7 +240,8 @@ def login_required(redirect_to='/login/', superuser_only=False,
 
                 return bottle.template(forbidden_template)
 
-            return bottle.redirect(redirect_to)
+            redirect_path = get_redirect_path(redirect_to, next_path)
+            return bottle.redirect(redirect_path)
 
         return __login_required
     return _login_required
