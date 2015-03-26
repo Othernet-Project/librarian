@@ -183,6 +183,11 @@ class Session(object):
         return self.data.values()
 
 
+@bottle.hook('after_request')
+def save_session():
+    bottle.request.session.save()
+
+
 def session_plugin(cookie_name, lifetime, secret):
     def plugin(callback):
         @functools.wraps(callback)
@@ -198,10 +203,7 @@ def session_plugin(cookie_name, lifetime, secret):
                                        path='/',
                                        secret=secret,
                                        max_age=lifetime)
-
-            result = callback(*args, **kwargs)
-            bottle.request.session.save()
-            return result
+            return callback(*args, **kwargs)
 
         return wrapper
     return plugin
