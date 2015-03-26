@@ -390,6 +390,11 @@ class I18NPlugin(object):
         def wrapper(*args, **kwargs):
             request.original_path = request.environ.get('ORIGINAL_PATH',
                                                         request.fullpath)
+            query_string = request.environ.get('QUERY_STRING')
+            if query_string:
+                request.original_path = '{0}?{1}'.format(request.original_path,
+                                                         query_string)
+
             if not ignored:
                 request.default_locale = self.default_locale
                 request.locale = locale = request.environ.get('LOCALE')
