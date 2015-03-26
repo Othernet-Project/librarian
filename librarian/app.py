@@ -19,6 +19,7 @@ gevent.monkey.patch_all(aggressive=True)
 import gevent.hub
 gevent.hub.Hub.NOT_ERROR=(Exception,)
 
+import getpass
 import sys
 import pprint
 import logging
@@ -32,6 +33,7 @@ from librarian.core.metadata import LICENSES
 from librarian.core.downloads import get_zipballs
 
 from librarian.lib import squery
+from librarian.lib import auth
 from librarian.lib.lazy import Lazy
 from librarian.lib import html as helpers
 from librarian.lib.lock import lock_plugin
@@ -47,7 +49,7 @@ from librarian.utils.timer import request_timer
 from librarian.plugins import install_plugins
 
 from librarian.routes import (content, tags, downloads, apps, dashboard,
-                              system)
+                              system, auth as auth_route)
 
 from librarian import __version__
 
@@ -69,6 +71,10 @@ CONFPATH = in_pkg('librarian.ini')
 #      method, path, route_config_dict),
 #
 ROUTES = (
+
+    # Authentication
+    ('auth:login', auth_route.login,
+     ['GET', 'POST'], '/login/', {}),
 
     # Content
 
@@ -189,6 +195,9 @@ def start(logfile=None, profile=False):
     # Install bottle plugins
     app.install(request_timer('Handler'))
     app.install(squery.database_plugin(conn, debug=True))
+    app.install(auth.session_plugin(cookie_name=config['session.cookie_name'],
+                                    lifetime=int(config['session.lifetime']),
+                                    secret=config['session.secret']))
 
     # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))
@@ -257,6 +266,43 @@ def configure_argparse(parser):
     parser.add_argument('--profile', action='store_true', help='instrument '
                         'the application to perform profiling (default: '
                         'disabled)', default=False)
+    parser.add_argument('--su', action='store_true',
+                        help='create superuser and exit')
+
+
+def setup_database(conf):
+    app.config.load_config(conf)
+    # Run database migrations
+    conn = squery.Database.connect(app.config['database.path'])
+    db = squery.Database(conn)
+    migrations.migrate(db, in_pkg('migrations'), 'librarian.migrations',
+                       app.config)
+    logging.debug("Finished running migrations")
+    bottle.request.db = db
+
+
+def create_superuser():
+    print("Press ctrl-c to abort")
+    try:
+        username = raw_input('Username: ')
+        password = getpass.getpass()
+    except KeyboardInterrupt:
+        print("Aborted")
+        sys.exit(1)
+
+    try:
+        auth.create_user(username=username,
+                         password=password,
+                         is_superuser=True)
+        print("User created.")
+    except auth.UserAlreadyExists:
+        print("User already exists, please try a different username.")
+        create_superuser()
+    except auth.InvalidUserCredentials:
+        print("Invalid user credentials, please try again.")
+        create_superuser()
+
+    sys.exit(0)
 
 
 def main(conf, debug=False, logpath=None, profile=False):
@@ -280,5 +326,9 @@ if __name__ == '__main__':
     if args.version:
         print('v%s' % __version__)
         sys.exit(0)
+
+    if args.su:
+        setup_database(args.conf)
+        create_superuser()
 
     main(args.conf, args.debug_conf, args.log, args.profile)

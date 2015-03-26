@@ -10,7 +10,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from bottle import view, default_app
 
+from ..lib import auth
 from ..plugins import DASHBOARD as DASHBOARD_PLUGINS
+
 
 __all__ = ('app', 'dashboard',)
 
@@ -18,9 +20,9 @@ __all__ = ('app', 'dashboard',)
 app = default_app()
 
 
+@auth.login_required()
 @view('dashboard')
 def dashboard():
     """ Render the dashboard """
     plugins = DASHBOARD_PLUGINS
     return locals()
-
