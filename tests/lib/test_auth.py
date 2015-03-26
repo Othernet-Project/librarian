@@ -84,7 +84,7 @@ def test_login_required_not_logged_in(bottle_request, bottle_redirect):
 
     protected()
 
-    bottle_redirect.assert_called_once_with('/login')
+    bottle_redirect.assert_called_once_with('/login/')
     assert mock_controller.called is False
 
 
@@ -262,3 +262,36 @@ def test_save_session():
     session = auth.Session.fetch(session_id)
     assert session.id == session_id
     assert session.data == {'some': 'thing', 'second': 'new'}
+
+
+@transaction_test
+def test_login_user_success():
+    bottle.request.session = auth.Session.create(300)
+
+    username = 'mike'
+    password = 'ekim'
+    auth.create_user(username, password)
+    assert auth.login_user(username, password)
+    assert bottle.request.session['user']['username'] == username
+
+
+@transaction_test
+def test_login_user_invalid_password():
+    bottle.request.session = auth.Session.create(300)
+
+    username = 'mike'
+    password = 'ekim'
+    auth.create_user(username, password)
+    assert auth.login_user(username, 'invalid') is False
+    assert bottle.request.session.get('user') is None
+
+
+@transaction_test
+def test_login_user_invalid_username():
+    bottle.request.session = auth.Session.create(300)
+
+    username = 'mike'
+    password = 'ekim'
+    auth.create_user(username, password)
+    assert auth.login_user('missing', 'invalid') is False
+    assert bottle.request.session.get('user') is None

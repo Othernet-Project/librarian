@@ -250,3 +250,16 @@ def create_user(username, password, is_superuser=False):
         db.execute(query, user_data)
     except sqlite3.IntegrityError:
         raise UserAlreadyExists()
+
+
+def login_user(username, password):
+    db = bottle.request.db
+    query = db.Select(sets='users', where='username = ?')
+    db.query(query, username)
+    user = db.result
+
+    if user and is_valid_password(password, user.password):
+        bottle.request.session['user'] = user
+        return True
+
+    return False
