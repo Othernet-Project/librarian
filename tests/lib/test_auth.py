@@ -214,10 +214,10 @@ def test_use_existing_session(set_cookie):
 @transaction_test
 def test_session_invalid():
     with pytest.raises(auth.SessionInvalid):
-        auth.Session.get(None)
+        auth.Session.fetch(None)
 
     with pytest.raises(auth.SessionInvalid):
-        auth.Session.get('not valid')
+        auth.Session.fetch('not valid')
 
 
 @transaction_test
@@ -234,4 +234,31 @@ def test_session_expired():
     db.execute(query, session_data)
 
     with pytest.raises(auth.SessionExpired):
-        auth.Session.get(session_id)
+        auth.Session.fetch(session_id)
+
+
+@transaction_test
+def test_save_session():
+    session_id = 'some_session_id'
+    data = {'some': 'thing'}
+    expires = datetime.datetime.utcnow() + datetime.timedelta(seconds=100)
+    session_data = {'session_id': session_id,
+                    'data': json.dumps(data),
+                    'expires': expires}
+
+    db = bottle.request.db
+    query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
+    db.execute(query, session_data)
+
+    session = auth.Session.fetch(session_id)
+    assert session.id == session_id
+    assert session.data == data
+
+    session['second'] = 'new'
+    session.save()
+
+    assert_session_count_is(1)
+
+    session = auth.Session.fetch(session_id)
+    assert session.id == session_id
+    assert session.data == {'some': 'thing', 'second': 'new'}

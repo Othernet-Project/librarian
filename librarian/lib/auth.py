@@ -39,7 +39,12 @@ class Session(object):
         self.expires = expires
 
     @classmethod
-    def get(cls, session_id):
+    def fetch(cls, session_id):
+        """Fetch an existing session by it ID.
+
+        :param session_id:  Unique session ID
+        :returns:           Valid `Session` instance.
+        """
         db = bottle.request.db
         query = db.Select(sets='sessions', where='session_id = ?')
         db.query(query, session_id)
@@ -59,6 +64,11 @@ class Session(object):
 
     @classmethod
     def create(cls, lifetime):
+        """Create a new session.
+
+        :param lifetime:  Session lifetime in seconds.
+        :returns:         Valid `Session` instance.
+        """
         session_id = cls.generate_session_id()
         data = {}
         expires_in = datetime.timedelta(seconds=lifetime)
@@ -73,6 +83,101 @@ class Session(object):
         db.execute(query, session_data)
         return cls(**session_data)
 
+    def save(self):
+        """Store current session in database."""
+        session_data = {'session_id': self.id,
+                        'data': json.dumps(self.data),
+                        'expires': self.expires}
+        db = bottle.request.db
+        query = db.Replace('sessions', cols=('session_id', 'data', 'expires'))
+        db.execute(query, session_data)
+
+    def __contains__(self, key):
+        """Check if a key is in the session dictionary.
+
+        :param key:  The dictionary key.
+        :returns:    bool
+        """
+        return key in self.data
+
+    def __delitem__(self, key):
+        """Delete an item from the session dictionary.
+
+        param key:  The dictionary key.
+        """
+        del self.data[key]
+
+    def __getitem__(self, key):
+        """Return a value associated with a key from the session dictionary.
+
+        :param key:  The dictionary key.
+        :returns:    The value associated with that key in the dictionary.
+        """
+        return self.data[key]
+
+    def __setitem__(self, key, value):
+        """Set a key-value association.
+
+        :param key:    The dictionary key.
+        :param value:  The dictionary value
+        """
+        self.data[key] = value
+
+    def __len__(self):
+        """Get the number of key-value pairs in the session dictionary.
+
+        :returns:  Number of key value pairs in the dictionary.
+        """
+        return len(self.data)
+
+    def __iter__(self):
+        """Iterate over the dictionary keys.
+
+        :yields:  Dictionary keys
+        """
+        for key in self.data.items():
+            yield key
+
+    def get(self, key, default=None):
+        """Get a value from the dictionary.
+
+        :param key:      The dictionary key.
+        :param default:  The default to return if the key is not in the
+                          dictionary. Defaults to None.
+        :returns:         The dictionary value or the default if the key is not
+                          in the dictionary.
+        """
+        return self.data.get(key, default)
+
+    def has_key(self, key):
+        """Check if the dictionary contains a key.
+
+        :param key:  The dictionary key.
+        :returns:     bool
+        """
+        return self.__contains__(key)
+
+    def items(self):
+        """Return a list of all the key-value pair tuples in the session dict.
+
+        :returns:  list of tuples
+        """
+        return self.data.items()
+
+    def keys(self):
+        """Return a list of all keys in the session dictionary.
+
+        :returns:  list of str
+        """
+        return self.data.keys()
+
+    def values(self):
+        """Returns a list of all values in the session dictionary.
+
+        :returns:  list of values
+        """
+        return self.data.values()
+
 
 def session_plugin(cookie_name, lifetime, secret):
     def plugin(callback):
@@ -80,7 +185,7 @@ def session_plugin(cookie_name, lifetime, secret):
         def wrapper(*args, **kwargs):
             session_id = bottle.request.get_cookie(cookie_name, secret=secret)
             try:
-                bottle.request.session = Session.get(session_id)
+                bottle.request.session = Session.fetch(session_id)
             except (SessionExpired, SessionInvalid):
                 bottle.request.session = Session.create(lifetime)
 
@@ -90,7 +195,10 @@ def session_plugin(cookie_name, lifetime, secret):
                                        secret=secret,
                                        max_age=lifetime)
 
-            return callback(*args, **kwargs)
+            result = callback(*args, **kwargs)
+            bottle.request.session.save()
+            return result
+
         return wrapper
     return plugin
 
