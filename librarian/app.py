@@ -49,7 +49,7 @@ from librarian.utils.timer import request_timer
 from librarian.plugins import install_plugins
 
 from librarian.routes import (content, tags, downloads, apps, dashboard,
-                              system)
+                              system, auth as auth_route)
 
 from librarian import __version__
 
@@ -71,6 +71,10 @@ CONFPATH = in_pkg('librarian.ini')
 #      method, path, route_config_dict),
 #
 ROUTES = (
+
+    # Authentication
+    ('auth:login', auth_route.login,
+     ['GET', 'POST'], '/login/', {}),
 
     # Content
 
