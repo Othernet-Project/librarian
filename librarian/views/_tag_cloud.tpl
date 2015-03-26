@@ -1,14 +1,17 @@
-% setdefault('tag', None)
+<%def name="cloud(tag_cloud, tag_id, tag=None)">
 <p class="tag-cloud">
     % if tag:
-    %# Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
-    <a href="{{ i18n_path(url('content:list')) }}" class="tag button small special">{{ _('everything') }}</a>
-    % end
+    ## Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
+    <a href="${i18n_path(url('content:list'))}" class="tag button small special">${_('everything')}</a>
+    % endif
     % for t in tag_cloud:
         % if tag != t['name']:
-            <a href="{{ i18n_path(url('content:list')) }}?tag={{ t['tag_id'] }}" class="tag button small">{{ t['name'] }} <span class="tag-count">{{ t['count'] }}</span></a>
+            <a href="${i18n_path(url('content:list'))}?tag=${t['tag_id']}" class="tag button small">${t['name']} <span class="tag-count">${t['count']}</span></a>
         % else:
-            <span class="tag tag-current button small">{{ t['name'] }} <span class="tag-count">{{ t['count'] }}</span></span>
-        % end
-    % end
+            <span class="tag tag-current button small">${t['name']} <span class="tag-count">${t['count']}</span></span>
+        % endif
+    % endfor
 </p>
+</%def>
+
+${cloud(tag_cloud, tag_id, tag)}

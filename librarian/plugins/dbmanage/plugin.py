@@ -119,7 +119,7 @@ def rebuild():
     return end - start
 
 
-@view('dbmanage/backup_results', error=None, path=None, time=None)
+@view('dbmanage/backup_results', error=None, redirect=None, time=None)
 def perform_backup():
     dbpath = get_dbpath()
     bpath = get_backup_path()
@@ -128,10 +128,11 @@ def perform_backup():
         logging.debug('Database backup took %s seconds', btime)
     except AssertionError as err:
         return dict(error=err.message)
-    return dict(path=get_file_url(), time=btime)
+    return dict(redirect=get_file_url(), time=btime)
 
 
-@view('dbmanage/rebuild_results', error=None, path=None, time=None, fpath=None)
+@view('dbmanage/rebuild_results', error=None, redirect=None, time=None,
+      fpath=None)
 def perform_rebuild():
     try:
         rtime = rebuild()
@@ -143,7 +144,7 @@ def perform_rebuild():
                             'database rebuild was cancelled. Please make '
                             'sure noone else is using Librarian and '
                             'try again.'))
-    return dict(path=i18n_path(request.app.get_url('content:list')),
+    return dict(redirect=i18n_path(request.app.get_url('content:list')),
                 time=rtime, fpath=get_file_url())
 
 

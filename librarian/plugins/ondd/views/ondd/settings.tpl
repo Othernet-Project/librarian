@@ -1,14 +1,19 @@
-% extra_scripts = '<script src="%s"></script>' % url('plugins:ondd:static', path='ondd.js')
+<%inherit file="base.tpl"/>
+<%namespace name="settings_form" file="ondd/_settings_form.tpl"/>
 
-%# Translators, used as page title
-% rebase('base', title=_('Tuner settings'), extra_scripts=extra_scripts)
+<%block name="title">
+## Translators, used as page title
+${_('Tuner settings')}
+</%block>
 
-<h1>
-%# Translators, used as page heading
-{{ _('Tuner settings') }}
-</h1>
+<%block name="heading">
+## Translators, used as page heading
+${_('Tuner settings')}
+</%block>
 
-<div class="inner">
-    % include('ondd/_settings_for')
-</div>
+${settings_form.body()}
+
+<%block name="extra_scripts">
+<script src="${url('plugins:ondd:static', path='ondd.js')}"></script>
+</%block>
 

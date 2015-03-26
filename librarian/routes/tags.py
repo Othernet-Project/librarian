@@ -1,6 +1,6 @@
 import re
 
-from bottle import request, redirect, template
+from bottle import request, redirect, mako_template as template
 
 from ..core import archive
 
@@ -15,7 +15,7 @@ def split_tags(tags):
     return set([WS.sub(' ', t) for t in tags if t])
 
 
-@roca_view('tag_cloud', '_tag_cloud')
+@roca_view('tag_cloud', '_tag_cloud', template_func=template)
 def tag_cloud():
     try:
         current = request.params.get('tag')
@@ -35,6 +35,7 @@ def edit_tags(meta):
     archive.add_tags(meta, new)
     archive.remove_tags(meta, removed)
     if request.is_xhr:
+        print('Rendering XHR template with meta', meta)
         return template('_tag_list', meta=meta)
     redirect('/')
 

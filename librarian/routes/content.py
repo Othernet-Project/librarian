@@ -16,8 +16,8 @@ import logging
 import subprocess
 
 from bottle import (
-    request, view, abort, default_app, static_file, redirect, response,
-    template)
+    request, mako_view as view, abort, default_app, static_file, redirect,
+    response, mako_template as template)
 
 from ..core import files
 from ..core import archive
@@ -37,7 +37,7 @@ from ..utils import patch_content
 app = default_app()
 
 
-@roca_view('content_list', '_content_list')
+@roca_view('content_list', '_content_list', template_func=template)
 def content_list():
     """ Show list of content """
     conf = request.app.config

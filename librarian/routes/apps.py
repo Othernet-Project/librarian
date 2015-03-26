@@ -1,7 +1,7 @@
 """
 apps.py: routes related to apps
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -12,15 +12,13 @@ import os
 import stat
 import logging
 
-from bottle import request, view, abort, default_app
+from bottle import request, mako_view as view, abort
 
 from ..core import apps
 
 from ..lib import send_file
 
 PREFIX = '/apps'
-
-app = default_app()
 
 
 @view('app_list')

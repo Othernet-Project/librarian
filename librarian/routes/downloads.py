@@ -12,7 +12,7 @@ import os
 import logging
 from datetime import datetime
 
-from bottle import request, view, redirect, default_app
+from bottle import request, mako_view as view, redirect
 
 from ..core import archive
 from ..core import metadata
@@ -21,12 +21,7 @@ from ..core import downloads
 from ..lib.i18n import i18n_path, lazy_gettext as _
 from ..lib.pager import Pager
 
-__all__ = ('app', 'list_downloads', 'manage_downloads',)
-
 PER_PAGE = 20
-
-
-app = default_app()
 
 
 @view('downloads', vals={})

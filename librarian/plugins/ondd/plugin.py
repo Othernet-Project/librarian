@@ -3,7 +3,7 @@ plugin.py: ONDD plugin
 
 Allows Librarian to communicate with ONDD.
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -12,7 +12,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import logging
 
-from bottle import view, request, redirect
+from bottle import mako_view as view, request, redirect
 
 from ...lib.i18n import lazy_gettext as _, i18n_path
 from ...lib.validate import posint, keyof

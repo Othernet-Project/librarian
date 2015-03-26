@@ -36,7 +36,7 @@ from librarian.lib.lazy import Lazy
 from librarian.lib import html as helpers
 from librarian.lib.lock import lock_plugin
 from librarian.lib.common import to_unicode
-from librarian.lib.i18n import lazy_gettext as _, I18NPlugin
+from librarian.lib.i18n import I18NPlugin
 
 from librarian.utils import lang
 from librarian.utils import migrations
@@ -195,8 +195,6 @@ def start(logfile=None, profile=False):
     bottle.BaseTemplate.defaults.update({
         'app_version': __version__,
         'request': request,
-        # Translators, used as default page title
-        'title': _('Librarian'),
         'style': 'screen',  # Default stylesheet
         'h': helpers,
         'updates': Lazy(lambda: len(list(get_zipballs()))),

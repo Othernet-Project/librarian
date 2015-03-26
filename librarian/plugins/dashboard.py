@@ -87,7 +87,7 @@ class DashboardPlugin(object):
             'classes': self.get_formatted_classes(),
         }
         context.update(self.get_context())
-        return bottle.template(self.get_template(), **context)
+        return bottle.mako_template(self.get_template(), **context)
 
     def render_javascript(self):
         html = ''

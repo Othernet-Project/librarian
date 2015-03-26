@@ -12,7 +12,7 @@ import logging
 import datetime
 from os.path import dirname, join, basename
 
-from bottle import view, request, static_file
+from bottle import mako_view as view, request, static_file
 
 from librarian import __version__
 

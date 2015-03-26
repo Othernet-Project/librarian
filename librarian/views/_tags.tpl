@@ -1,14 +1,20 @@
-<p class="tags" data-has-tags="{{ bool(meta.tags) }}">
-% include('_tag_list')
+<%namespace name="tag_list" file="_tag_list.tpl"/>
+
+<%def name="tags(meta)">
+<p class="tags" data-has-tags="${bool(meta.tags)}">
+${tag_list.list(meta=meta)}
 </p>
-<form action="{{ i18n_path(url('tags:edit', content_id=meta.md5)) }}" method="POST" class="tag-form">
+<form action="${i18n_path(url('tags:edit', content_id=meta.md5))}" method="POST" class="tag-form">
     <p>
-    <input type="text" name="tags" value="{{ ', '.join(meta.tags) }}">
-    %# Translators, button label for a button that saves user tags for a piece of content
-    <button class="small">{{ _('Save tags') }}</button>
+    <input type="text" name="tags" value="${', '.join(meta.tags)}">
+    ## Translators, button label for a button that saves user tags for a piece of content
+    <button class="small">${_('Save tags')}</button>
     </p>
     <p class="help">
-    %# Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
-    {{ _('Separate tags with commas') }}<br>
+    ## Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
+    ${_('Separate tags with commas')}<br>
     </p>
 </form>
+</%def>
+
+${tags(meta)}

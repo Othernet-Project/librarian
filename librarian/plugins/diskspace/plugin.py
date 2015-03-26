@@ -3,7 +3,7 @@ plugin.py: Diskspace plugin
 
 Display application log on dashboard.
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -12,7 +12,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 
-from bottle import request, view, redirect, MultiDict, abort
+from bottle import request, mako_view as view, redirect, MultiDict, abort
 
 from ...core import archive
 
