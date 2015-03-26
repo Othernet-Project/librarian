@@ -56,6 +56,8 @@ class Session(object):
             raise SessionInvalid(session_id)
 
         if session_data.expires < datetime.datetime.utcnow():
+            query = db.Delete('sessions', where='session_id = ?')
+            db.query(query, session_id)
             raise SessionExpired(session_id)
 
         return cls(**session_data)

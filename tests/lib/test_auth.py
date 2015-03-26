@@ -244,6 +244,8 @@ def test_session_expired():
     with pytest.raises(auth.SessionExpired):
         auth.Session.fetch(session_id)
 
+    assert_session_count_is(0)
+
 
 @transaction_test
 def test_save_session():
