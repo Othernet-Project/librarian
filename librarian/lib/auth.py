@@ -288,7 +288,8 @@ def login_user(username, password):
     user = db.result
 
     if user and is_valid_password(password, user.password):
-        bottle.request.session['user'] = user
+        bottle.request.session['user'] = {'username': user.username,
+                                          'is_superuser': user.is_superuser}
         return True
 
     return False
