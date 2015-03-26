@@ -203,7 +203,7 @@ def session_plugin(cookie_name, lifetime, secret):
     return plugin
 
 
-def login_required(redirect_to='/login', superuser_only=False,
+def login_required(redirect_to='/login/', superuser_only=False,
                    forbidden_template='403'):
     def _login_required(func):
         @functools.wraps(func)
