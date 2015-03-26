@@ -34,6 +34,7 @@ from librarian.core.downloads import get_zipballs
 
 from librarian.lib import squery
 from librarian.lib import auth
+from librarian.lib import session
 from librarian.lib.lazy import Lazy
 from librarian.lib import html as helpers
 from librarian.lib.lock import lock_plugin
@@ -195,9 +196,11 @@ def start(logfile=None, profile=False):
     # Install bottle plugins
     app.install(request_timer('Handler'))
     app.install(squery.database_plugin(conn, debug=True))
-    app.install(auth.session_plugin(cookie_name=config['session.cookie_name'],
-                                    lifetime=int(config['session.lifetime']),
-                                    secret=config['session.secret']))
+    app.install(session.session_plugin(
+        cookie_name=config['session.cookie_name'],
+        lifetime=int(config['session.lifetime']),
+        secret=config['session.secret'])
+    )
 
     # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))

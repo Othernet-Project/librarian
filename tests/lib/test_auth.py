@@ -1,30 +1,10 @@
-import datetime
-import json
-
 import bottle
 import mock
 import pytest
 
-from librarian.app import in_pkg
-from librarian.lib import auth, squery
-from librarian.utils import migrations
+from librarian.lib import auth, session
 
-
-def transaction_test(func):
-    def _transaction_test(*args, **kwargs):
-        with mock.patch('bottle.request') as bottle_request:
-            conn = squery.Connection()
-            db = squery.Database(conn)
-            config = {'content.contentdir': '/tmp'}
-            migrations.migrate(db,
-                               in_pkg('migrations'),
-                               'librarian.migrations',
-                               config)
-            bottle_request.db = db
-
-            return func(*args, **kwargs)
-
-    return _transaction_test
+from .base import transaction_test
 
 
 def test_password_encryption():
@@ -134,149 +114,9 @@ def test_login_required_success_normaluser(bottle_request):
     mock_controller.assert_called_once_with('test')
 
 
-@mock.patch('bottle.response.set_cookie')
-@transaction_test
-def test_create_new_session(set_cookie):
-    bottle.request.get_cookie.return_value = None
-
-    cookie_name = 'session_cookie'
-    lifetime = 10
-    secret = 'mischief managed'
-
-    callback = mock.Mock(__name__='callback')
-    plugin = auth.session_plugin(cookie_name=cookie_name,
-                                 lifetime=10,
-                                 secret=secret)
-    wrapped = plugin(callback)
-    wrapped('test')
-
-    db = bottle.request.db
-    query = db.Select(sets='sessions', where='session_id = ?')
-    db.query(query, bottle.request.session.id)
-    session_data = db.result
-
-    assert session_data['data'] == '{}'
-    assert session_data['session_id'] == bottle.request.session.id
-    assert isinstance(session_data['expires'], datetime.datetime)
-
-    callback.assert_called_once_with('test')
-
-    set_cookie.assert_called_once_with(cookie_name,
-                                       bottle.request.session.id,
-                                       path='/',
-                                       secret=secret,
-                                       max_age=lifetime)
-
-
-def assert_session_count_is(expected):
-    db = bottle.request.db
-    query = db.Select('COUNT(*) as count', sets='sessions')
-    db.query(query)
-    session_count = db.result.count
-    assert session_count == expected
-
-
-@mock.patch('bottle.response.set_cookie')
-@transaction_test
-def test_use_existing_session(set_cookie):
-    cookie_name = 'session_cookie'
-    lifetime = 10
-    secret = 'mischief managed'
-
-    session_id = 'some_session_id'
-    data = {'some': 'thing'}
-    expires_in = datetime.timedelta(seconds=lifetime)
-    expires = datetime.datetime.utcnow() + expires_in
-    session_data = {'session_id': session_id,
-                    'data': json.dumps(data),
-                    'expires': expires}
-
-    db = bottle.request.db
-    query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
-    db.execute(query, session_data)
-
-    bottle.request.get_cookie.return_value = session_id
-
-    callback = mock.Mock(__name__='callback')
-    plugin = auth.session_plugin(cookie_name=cookie_name,
-                                 lifetime=10,
-                                 secret=secret)
-    wrapped = plugin(callback)
-    wrapped('test')
-
-    assert_session_count_is(1)
-
-    assert bottle.request.session.data == data
-    assert bottle.request.session.id == session_id
-    assert bottle.request.session.expires == expires
-
-    callback.assert_called_once_with('test')
-
-    set_cookie.assert_called_once_with(cookie_name,
-                                       bottle.request.session.id,
-                                       path='/',
-                                       secret=secret,
-                                       max_age=lifetime)
-
-
-@transaction_test
-def test_session_invalid():
-    with pytest.raises(auth.SessionInvalid):
-        auth.Session.fetch(None)
-
-    with pytest.raises(auth.SessionInvalid):
-        auth.Session.fetch('not valid')
-
-
-@transaction_test
-def test_session_expired():
-    session_id = 'some_session_id'
-    data = {'some': 'thing'}
-    expires = datetime.datetime.utcnow() - datetime.timedelta(seconds=10)
-    session_data = {'session_id': session_id,
-                    'data': json.dumps(data),
-                    'expires': expires}
-
-    db = bottle.request.db
-    query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
-    db.execute(query, session_data)
-
-    with pytest.raises(auth.SessionExpired):
-        auth.Session.fetch(session_id)
-
-    assert_session_count_is(0)
-
-
-@transaction_test
-def test_save_session():
-    session_id = 'some_session_id'
-    data = {'some': 'thing'}
-    expires = datetime.datetime.utcnow() + datetime.timedelta(seconds=100)
-    session_data = {'session_id': session_id,
-                    'data': json.dumps(data),
-                    'expires': expires}
-
-    db = bottle.request.db
-    query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
-    db.execute(query, session_data)
-
-    session = auth.Session.fetch(session_id)
-    assert session.id == session_id
-    assert session.data == data
-
-    session['second'] = 'new'
-    session.save()
-
-    assert_session_count_is(1)
-
-    session = auth.Session.fetch(session_id)
-    assert session.id == session_id
-    assert session.data == {'some': 'thing', 'second': 'new'}
-
-
 @transaction_test
 def test_login_user_success():
-    bottle.request.session = auth.Session.create(300)
+    bottle.request.session = session.Session.create(300)
 
     username = 'mike'
     password = 'ekim'
@@ -287,7 +127,7 @@ def test_login_user_success():
 
 @transaction_test
 def test_login_user_invalid_password():
-    bottle.request.session = auth.Session.create(300)
+    bottle.request.session = session.Session.create(300)
 
     username = 'mike'
     password = 'ekim'
@@ -298,7 +138,7 @@ def test_login_user_invalid_password():
 
 @transaction_test
 def test_login_user_invalid_username():
-    bottle.request.session = auth.Session.create(300)
+    bottle.request.session = session.Session.create(300)
 
     username = 'mike'
     password = 'ekim'
