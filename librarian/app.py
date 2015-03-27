@@ -136,6 +136,8 @@ ROUTES = (
 
     ('sys:static', system.send_static,
      'GET', '/static/<path:path>', dict(no_i18n=True, unlocked=True)),
+    ('sys:favicon', system.send_favicon,
+     'GET', '/favicon.ico', dict(no_i18n=True, unlocked=True)),
     ('sys:logs', system.send_logfile,
      'GET', '/librarian.log', dict(no_i18n=True, unlocked=True)),
 )

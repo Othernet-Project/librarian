@@ -24,6 +24,10 @@ def send_static(path):
     return static_file(path, root=STATICDIR)
 
 
+def send_favicon():
+    return send_static('img/favicon.ico')
+
+
 def send_logfile():
     conf = request.app.config
     log_path = conf['logging.output']
