@@ -74,6 +74,7 @@ CONFPATH = in_pkg('librarian.ini')
 ROUTES = (
 
     # Authentication
+
     ('auth:login', auth_route.login,
      ['GET', 'POST'], '/login/', {}),
 
