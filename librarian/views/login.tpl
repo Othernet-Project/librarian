@@ -11,19 +11,27 @@ ${_('Login')}
 </%block>
 
 ${h.form('post')}
-    <p>
-        ## Translators, used as placeholder in the login field
-        <input type="text" name="username" placeholder="${_('username')}" value="${username}" />
-    </p>
-    <p>
-        ## Translators, used as placeholder in the password field
-        <input type="password" placeholder="${_('password')}" name="password" />
-    </p>
-    % if error:
-    <p class="error">${error}</p>
+    % if errors:
+    ${h.form_errors(errors)}
     % endif
+
+    <input type="hidden" name="next" value="${next_path}">
+
     <p>
-        <input type="hidden" name="next" value="${next}" />
-        <button type="submit"><span class="icon">${_('Login')}</span></button>
+        ## Translators, used as label for a login field
+        <label for="username">${_('Username:')}</label>
+        ## Translators, used as placeholder in the login field
+        ${h.vinput('username', vals, _type='text', placeholder=_('username'))}
+        ${h.field_error('username', errors)}
+    </p>
+    <p>
+        ## Translators, used as label for a login field
+        <label for="password">${_('Password:')}</label>
+        ## Translators, used as placeholder in the password field
+        ${h.vinput('password', vals, _type='password', placeholder=_('password'))}
+        ${h.field_error('password', errors)}
+    </p>
+    <p>
+        <button type="submit"><span class="icon"></span> ${_('Login')}</button>
     </p>
 </form>

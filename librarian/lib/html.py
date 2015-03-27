@@ -660,7 +660,7 @@ def form_errors(errors):
     """
     if not '_' in errors:
         return ''
-    if hasattr(errors, '__iter__'):
+    if hasattr(errors['_'], '__iter__'):
         msgs = (html_escape(to_unicode(m)) for m in errors['_'])
         return UL(LI(msgs, _class=FERR_ONE_CLS), _class=FERR_CLS)
     else:
