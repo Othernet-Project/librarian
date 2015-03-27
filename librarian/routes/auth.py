@@ -29,12 +29,12 @@ def login():
     username = nonempty('username', _('Type in your username'), errors, True)
 
     # Translators, error message shown when user does not supply password
-    password = nonempty('password', _('Type in your password'), errors, True)
+    password = nonempty('password', _('Type in your password'), errors)
 
     if errors:
         return dict(next_path=next_path, errors=errors, vals=request.forms)
 
-    if auth.login_user(username, password):
+    if not auth.login_user(username, password):
         errors['_'] = _("Please enter the correct username and password.")
         return dict(next_path=next_path, errors=errors, vals=request.forms)
 
