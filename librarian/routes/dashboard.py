@@ -10,12 +10,12 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from bottle import mako_view as view
 
+from ..lib import auth
 from ..plugins import DASHBOARD as DASHBOARD_PLUGINS
 
-
+@auth.login_required()
 @view('dashboard')
 def dashboard():
     """ Render the dashboard """
     plugins = DASHBOARD_PLUGINS
     return locals()
-

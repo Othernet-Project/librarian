@@ -1,9 +1,9 @@
 /**
  * screen.scss: Master stylesheet for screens
- * 
+ *
  * Copyright 2014, Outernet Inc.
  * Some rights reserved.
- * 
+ *
  * This software is free software licensed under the terms of GPLv3. See
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
@@ -31,6 +31,7 @@ $content-gap: 1em;
 @import "partials/languages";
 
 // Sections
+@import "partials/auth";
 @import "partials/dash";
 @import "partials/content_list";
 @import "partials/reader";
