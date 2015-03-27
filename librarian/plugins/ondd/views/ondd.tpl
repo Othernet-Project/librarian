@@ -1,7 +1,6 @@
 <%inherit file="_dashboard_section.tpl"/>
 <%namespace name="settings_form" file="ondd/_settings_form.tpl"/>
 <%namespace name="signal" file="ondd/_signal.tpl"/>
-<%namespace name="preset_option" file="ondd/_preset.tpl"/>
 <%namespace name="file_list" file="ondd/_file_list.tpl"/>
 
 <style>@import "${url('plugins:ondd:static', path='ondd.css')}";</style>
@@ -26,12 +25,12 @@ ${settings_form.body()}
         ## Translators, placeholder for satellite selection select list
         <option value="0">${_('Select a satellite')}</option>
         % for pname, index, preset in PRESETS:
-        <option value="{{ index }}"
-            data-frequency="{{ preset['frequency'] }}"
-            data-symbolrate="{{ preset['symbolrate'] }}"
-            data-polarization="{{ preset['polarization'] }}"
-            data-delivery="{{ preset['delivery'] }}"
-            data-modulation="{{ preset['modulation'] }}">{{ pname }}</option>
+        <option value="${index}"
+            data-frequency="${preset['frequency']}"
+            data-symbolrate="${preset['symbolrate']}"
+            data-polarization="${preset['polarization']}"
+            data-delivery="${preset['delivery']}"
+            data-modulation="${preset['modulation']}">${pname}</option>
         % endfor
         ## Translators, label for option that allows user to set custom transponder parameters
         <option value="-1">${_('Custom...')}</option>
