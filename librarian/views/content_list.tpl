@@ -91,5 +91,5 @@ ${_('Library')}
     </div>
 </script>
 
-${tag_js_templates.templates()}
+${tag_js_templates.body()}
 </%block>
