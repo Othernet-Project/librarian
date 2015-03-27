@@ -62,7 +62,7 @@ def test_login_required_not_logged_in(bottle_request, bottle_redirect):
 
     bottle_request.fullpath = '/somewhere/'
     bottle_request.query_string = ''
-    bottle_request.session.get.return_value = None
+    bottle_request.user.is_authenticated = False
 
     protected()
 
@@ -78,7 +78,8 @@ def test_login_required_forbidden(bottle_request, bottle_template):
 
     bottle_request.fullpath = '/somewhere/'
     bottle_request.query_string = ''
-    bottle_request.session.get.return_value = {'is_superuser': False}
+    bottle_request.user.is_authenticated = True
+    bottle_request.user.is_superuser = False
 
     protected()
 
@@ -93,7 +94,8 @@ def test_login_required_success_superuser(bottle_request):
 
     bottle_request.fullpath = '/somewhere/'
     bottle_request.query_string = ''
-    bottle_request.session.get.return_value = {'is_superuser': True}
+    bottle_request.user.is_authenticated = True
+    bottle_request.user.is_superuser = True
 
     protected('test')
 

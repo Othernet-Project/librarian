@@ -60,9 +60,8 @@ def login_required(redirect_to='/login/', superuser_only=False,
                 next_path = '?'.join([bottle.request.fullpath,
                                       bottle.request.query_string])
 
-            user = bottle.request.session.get('user')
-            if user:
-                is_superuser = user['is_superuser']
+            if bottle.request.user.is_authenticated:
+                is_superuser = bottle.request.user.is_superuser
                 if not superuser_only or (superuser_only and is_superuser):
                     return func(*args, **kwargs)
 
