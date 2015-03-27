@@ -19,10 +19,6 @@ ${_('Library clean-up')}
 ## Translators, %s represents the amount of space in bytes, KB, MB, etc
 ${_('%s more space should be freed.') % h.hsize(needed)}
 </p>
-<p class="note">
-## Translators, used as note that appears on clean-up page
-${_('Remember that favorited content cannot be deleted.')}
-</p>
 % else:
 <p class="note">
 ## Translators, note that appears on clean-up page when user goes to it even though there is enough space
