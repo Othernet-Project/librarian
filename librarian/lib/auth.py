@@ -16,6 +16,23 @@ class InvalidUserCredentials(Exception):
     pass
 
 
+class User(object):
+
+    def __init__(self, username=None, is_superuser=None, created=None):
+        self.username = username
+        self.is_superuser = is_superuser
+        self.created = created
+
+    @property
+    def is_authenticated(self):
+        return self.username is not None
+
+    def logout(self):
+        if self.is_authenticated:
+            bottle.request.session.destroy()
+            bottle.request.user = User()
+
+
 def get_redirect_path(base_path, next_path, next_param_name='next'):
     QUERY_PARAM_IDX = 4
 
@@ -88,15 +105,36 @@ def create_user(username, password, is_superuser=False):
         raise UserAlreadyExists()
 
 
-def login_user(username, password):
+def get_user(username):
     db = bottle.request.db
     query = db.Select(sets='users', where='username = ?')
     db.query(query, username)
-    user = db.result
+    return db.result
 
+
+def login_user(username, password):
+    user = get_user(username)
     if user and is_valid_password(password, user.password):
         bottle.request.session['user'] = {'username': user.username,
                                           'is_superuser': user.is_superuser}
         return True
 
     return False
+
+
+def user_plugin():
+    def plugin(callback):
+        @functools.wraps(callback)
+        def wrapper(*args, **kwargs):
+            user_data = bottle.request.session.get('user') or {}
+            if user_data:
+                user = get_user(user_data.get('username'))
+                user_data = dict(username=user.username,
+                                 is_superuser=user.is_superuser,
+                                 created=user.created) if user else {}
+
+            bottle.request.user = User(**user_data)
+            return callback(*args, **kwargs)
+
+        return wrapper
+    return plugin
