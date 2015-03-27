@@ -117,6 +117,7 @@ def login_user(username, password):
     if user and is_valid_password(password, user.password):
         bottle.request.session['user'] = {'username': user.username,
                                           'is_superuser': user.is_superuser}
+        bottle.request.session.regenerate()
         return True
 
     return False
