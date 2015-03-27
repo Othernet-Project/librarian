@@ -3,7 +3,7 @@ plugin.py: DB management plugin
 
 Backup and rebuild the database.
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -16,7 +16,7 @@ import logging
 import datetime
 from os.path import dirname, join
 
-from bottle import view, request, static_file
+from bottle import mako_view as view, request, static_file
 
 from ...core.archive import process
 from ...core.downloads import get_md5_from_path
@@ -169,4 +169,4 @@ class Dashboard(DashboardPlugin):
     def get_context(self):
         dbpath = self.dbpath
         dbsize = os.stat(dbpath).st_size
-        return locals()
+        return dict(dbpath=dbpath, dbsize=dbsize)

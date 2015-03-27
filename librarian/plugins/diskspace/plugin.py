@@ -98,4 +98,5 @@ class Dashboard(DashboardPlugin):
         free, total = zipballs.free_space()
         count, used = zipballs.used_space()
         needed = zipballs.needed_space(free)
-        return locals()
+        return dict(free=free, total=total, count=count, used=used,
+                    needed=needed)
