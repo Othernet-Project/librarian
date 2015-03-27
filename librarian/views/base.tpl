@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="${url('sys:static', path="css/%s.css" %  style)}">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
         % if redirect is not UNDEFINED:
-        <meta http-equiv="refresh" content="5; url="${redirect}">
+        <meta http-equiv="refresh" content="5; url=${redirect}">
         % endif
     </head>
     <body>
