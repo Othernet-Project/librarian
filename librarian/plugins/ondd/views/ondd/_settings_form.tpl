@@ -5,7 +5,7 @@ ${h.form('post', action=i18n_path(url('plugins:ondd:settings')), _class='setting
     <div class="lnb-settings">
         <p class="lnb">
             ## Translators, form label for LNB type selection
-            <label for="lnb">${_('LNB type')}</label>
+            <label for="lnb">${_('LNB type:')}</label>
             ${h.vselect('lnb', LNB_TYPES, vals)}
             ${h.field_error('lnb', errors)}
         </p>
