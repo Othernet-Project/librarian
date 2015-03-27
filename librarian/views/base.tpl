@@ -27,7 +27,7 @@
                 ## Translators, used main navigation menu
                 ${h.link_other(icon + _('Dashboard'), i18n_path(url('dashboard:main')), request.original_path, h.SPAN, _class="dashboard navicon")}
                 ## Translators, used main navigation menu
-                % if request.user.is_authenticated:
+                % if hasattr(request, 'user') and request.user.is_authenticated:
                 ${h.link_other(icon + _('Log out'), i18n_path(url('auth:logout')) + '?next=' + request.fullpath, request.original_path, h.SPAN, _class="exit navicon")}
                 % endif
             </div>

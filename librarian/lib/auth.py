@@ -55,6 +55,9 @@ def login_required(redirect_to='/login/', superuser_only=False,
     def _login_required(func):
         @functools.wraps(func)
         def __login_required(*args, **kwargs):
+            if not hasattr(bottle.request, 'user'):
+                return func(*args, **kwargs)
+
             next_path = bottle.request.fullpath
             if bottle.request.query_string:
                 next_path = '?'.join([bottle.request.fullpath,

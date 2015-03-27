@@ -150,7 +150,7 @@ app.error(500)(system.show_error_page)
 app.error(503)(system.show_maint_page)
 
 
-def start(logfile=None, profile=False):
+def start(logfile=None, profile=False, no_auth=False):
     """ Start the application """
 
     config = app.config
@@ -208,7 +208,8 @@ def start(logfile=None, profile=False):
         lifetime=int(config['session.lifetime']),
         secret=config['session.secret'])
     )
-    app.install(auth.user_plugin())
+    if not no_auth:
+        app.install(auth.user_plugin())
 
     # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))
@@ -277,6 +278,8 @@ def configure_argparse(parser):
                         'disabled)', default=False)
     parser.add_argument('--su', action='store_true',
                         help='create superuser and exit')
+    parser.add_argument('--no-auth', action='store_true',
+                        help='disable authentication')
 
 
 def setup_database(conf):
@@ -314,7 +317,7 @@ def create_superuser():
     sys.exit(0)
 
 
-def main(conf, debug=False, logpath=None, profile=False):
+def main(conf, debug=False, logpath=None, profile=False, no_auth=False):
     app.config.load_config(conf)
 
     if debug:
@@ -322,7 +325,7 @@ def main(conf, debug=False, logpath=None, profile=False):
         pprint.pprint(app.config, indent=4)
         sys.exit(0)
 
-    start(logpath, profile)
+    start(logpath, profile, no_auth)
 
 
 if __name__ == '__main__':
@@ -340,4 +343,4 @@ if __name__ == '__main__':
         setup_database(args.conf)
         create_superuser()
 
-    main(args.conf, args.debug_conf, args.log, args.profile)
+    main(args.conf, args.debug_conf, args.log, args.profile, args.no_auth)
