@@ -79,6 +79,8 @@ ROUTES = (
      'GET', '/login/', {}),
     ('auth:login', auth_route.login,
      'POST', '/login/', {}),
+    ('auth:logout', auth_route.logout,
+     'GET', '/logout/', {}),
 
     # Content
 

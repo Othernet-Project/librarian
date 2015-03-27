@@ -26,6 +26,10 @@
                 ${h.link_other(icon + _('Updates') + (' (%s)' % updates if updates > 0 else ''), i18n_path(url('downloads:list')), request.original_path, h.SPAN, _class="updates navicon" + (updates > 0 and ' notice' or ''))}
                 ## Translators, used main navigation menu
                 ${h.link_other(icon + _('Dashboard'), i18n_path(url('dashboard:main')), request.original_path, h.SPAN, _class="dashboard navicon")}
+                ## Translators, used main navigation menu
+                % if request.user.is_authenticated:
+                ${h.link_other(icon + _('Log out'), i18n_path(url('auth:logout')) + '?next=' + request.fullpath, request.original_path, h.SPAN, _class="exit navicon")}
+                % endif
             </div>
         </header>
 
