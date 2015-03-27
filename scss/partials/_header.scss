@@ -76,6 +76,10 @@ header {
     .notice .icon {
       @include icon('antenna_yellow');
     }
+
+    .exit .icon {
+      @include icon('exit');
+    }
   }
 }
 
