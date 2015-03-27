@@ -206,6 +206,7 @@ def start(logfile=None, profile=False):
         lifetime=int(config['session.lifetime']),
         secret=config['session.secret'])
     )
+    app.install(auth.user_plugin())
 
     # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))
