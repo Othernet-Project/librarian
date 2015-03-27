@@ -75,8 +75,10 @@ ROUTES = (
 
     # Authentication
 
+    ('auth:login_form', auth_route.show_login_form,
+     'GET', '/login/', {}),
     ('auth:login', auth_route.login,
-     ['GET', 'POST'], '/login/', {}),
+     'POST', '/login/', {}),
 
     # Content
 

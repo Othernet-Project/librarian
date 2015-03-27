@@ -12,7 +12,6 @@ from warnings import warn
 from bottle import request, redirect, BaseTemplate, template, DictMixin
 
 from .lazy import lazy
-from .common import unicode
 
 
 CONTEXT_SEPARATOR = '\x04'

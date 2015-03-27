@@ -11,22 +11,31 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from bottle import mako_view as view, request, redirect
 
 from ..lib import auth
-from ..lib.i18n import lazy_gettext as _
+from ..lib.validate import nonempty
+from ..lib.i18n import lazy_gettext as _, i18n_path
+
+
+@view('login', vals={}, errors={})
+def show_login_form():
+    return dict(next_path=request.params.get('next', '/'))
 
 
 @view('login')
 def login():
-    if request.method == 'POST':
-        next_path = request.forms.get('next', '/')
-        username = request.forms.get('username', '')
-        password = request.forms.get('password', '')
-        if auth.login_user(username, password):
-            redirect(next_path)
+    errors = {}
+    next_path = request.forms.get('next', '/')
 
-        return {'username': username,
-                'next': next_path,
-                # Translators, error message shown on failed login attempt
-                'error': _("Please enter the correct username and password.")}
+    # Translators, error message shown when user does not supply username
+    username = nonempty('username', _('Type in your username'), errors, True)
 
-    next_path = request.query.get('next', '/')
-    return {'username': '', 'next': next_path, 'error': None}
+    # Translators, error message shown when user does not supply password
+    password = nonempty('password', _('Type in your password'), errors, True)
+
+    if errors:
+        return dict(next_path=next_path, errors=errors, vals=request.forms)
+
+    if auth.login_user(username, password):
+        errors['_'] = _("Please enter the correct username and password.")
+        return dict(next_path=next_path, errors=errors, vals=request.forms)
+
+    redirect(i18n_path(next_path))
