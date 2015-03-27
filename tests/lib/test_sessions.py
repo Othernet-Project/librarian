@@ -5,7 +5,7 @@ import bottle
 import mock
 import pytest
 
-from librarian.lib import session
+from librarian.lib import sessions
 
 from .base import transaction_test
 
@@ -20,9 +20,9 @@ def test_create_new_session(set_cookie):
     secret = 'mischief managed'
 
     callback = mock.Mock(__name__='callback')
-    plugin = session.session_plugin(cookie_name=cookie_name,
-                                    lifetime=10,
-                                    secret=secret)
+    plugin = sessions.session_plugin(cookie_name=cookie_name,
+                                     lifetime=10,
+                                     secret=secret)
     wrapped = plugin(callback)
     wrapped('test')
 
@@ -74,9 +74,9 @@ def test_use_existing_session(set_cookie):
     bottle.request.get_cookie.return_value = session_id
 
     callback = mock.Mock(__name__='callback')
-    plugin = session.session_plugin(cookie_name=cookie_name,
-                                    lifetime=10,
-                                    secret=secret)
+    plugin = sessions.session_plugin(cookie_name=cookie_name,
+                                     lifetime=10,
+                                     secret=secret)
     wrapped = plugin(callback)
     wrapped('test')
 
@@ -97,11 +97,11 @@ def test_use_existing_session(set_cookie):
 
 @transaction_test
 def test_session_invalid():
-    with pytest.raises(session.SessionInvalid):
-        session.Session.fetch(None)
+    with pytest.raises(sessions.SessionInvalid):
+        sessions.Session.fetch(None)
 
-    with pytest.raises(session.SessionInvalid):
-        session.Session.fetch('not valid')
+    with pytest.raises(sessions.SessionInvalid):
+        sessions.Session.fetch('not valid')
 
 
 @transaction_test
@@ -117,8 +117,8 @@ def test_session_expired():
     query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
     db.execute(query, session_data)
 
-    with pytest.raises(session.SessionExpired):
-        session.Session.fetch(session_id)
+    with pytest.raises(sessions.SessionExpired):
+        sessions.Session.fetch(session_id)
 
     assert_session_count_is(0)
 
@@ -136,7 +136,7 @@ def test_save_session():
     query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
     db.execute(query, session_data)
 
-    s = session.Session.fetch(session_id)
+    s = sessions.Session.fetch(session_id)
     assert s.id == session_id
     assert s.data == data
 
@@ -145,6 +145,6 @@ def test_save_session():
 
     assert_session_count_is(1)
 
-    s = session.Session.fetch(session_id)
+    s = sessions.Session.fetch(session_id)
     assert s.id == session_id
     assert s.data == {'some': 'thing', 'second': 'new'}
