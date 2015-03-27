@@ -91,6 +91,17 @@ class Session(object):
         query = db.Replace('sessions', cols=('session_id', 'data', 'expires'))
         db.execute(query, session_data)
 
+    def regenerate(self):
+        """Regenerate the session id."""
+        old_id = self.id
+        self.id = self.generate_session_id()
+
+        db = bottle.request.db
+        query = db.Update('sessions',
+                          session_id=':new_session_id',
+                          where='session_id = :old_session_id')
+        db.query(query, old_session_id=old_id, new_session_id=self.id)
+
     def __contains__(self, key):
         """Check if a key is in the session dictionary.
 

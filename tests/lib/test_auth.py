@@ -2,7 +2,7 @@ import bottle
 import mock
 import pytest
 
-from librarian.lib import auth, session
+from librarian.lib import auth, sessions
 
 from .base import transaction_test
 
@@ -116,18 +116,20 @@ def test_login_required_success_normaluser(bottle_request):
 
 @transaction_test
 def test_login_user_success():
-    bottle.request.session = session.Session.create(300)
+    bottle.request.session = sessions.Session.create(300)
 
+    old_session_id = bottle.request.session.id
     username = 'mike'
     password = 'ekim'
     auth.create_user(username, password)
     assert auth.login_user(username, password)
     assert bottle.request.session['user']['username'] == username
+    assert bottle.request.session.id != old_session_id
 
 
 @transaction_test
 def test_login_user_invalid_password():
-    bottle.request.session = session.Session.create(300)
+    bottle.request.session = sessions.Session.create(300)
 
     username = 'mike'
     password = 'ekim'
@@ -138,7 +140,7 @@ def test_login_user_invalid_password():
 
 @transaction_test
 def test_login_user_invalid_username():
-    bottle.request.session = session.Session.create(300)
+    bottle.request.session = sessions.Session.create(300)
 
     username = 'mike'
     password = 'ekim'

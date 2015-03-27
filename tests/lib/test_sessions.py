@@ -149,3 +149,18 @@ def test_save_session():
     s = sessions.Session.fetch(session_id)
     assert s.id == session_id
     assert s.data == {'some': 'thing', 'second': 'new'}
+
+
+@transaction_test
+def test_regenerate_session():
+    s = sessions.Session.create(100)
+    s['test'] = 123
+    s.save()
+
+    old_session_id = s.id
+    old_data = s.data.copy()
+
+    s.regenerate()
+    assert s.id != old_session_id
+    assert s.data == old_data
+    assert_session_count_is(1)
