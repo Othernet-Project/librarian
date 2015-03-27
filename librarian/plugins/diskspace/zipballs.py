@@ -106,10 +106,9 @@ def used_space():
     """
 
     db = request.db
-    db.query("""
-             SELECT COUNT(*) AS count, SUM(size) AS total
-             FROM zipballs;
-             """)
+    q = db.Select(['COUNT(*) AS count', 'SUM(size) AS total'],
+                  sets='zipballs')
+    db.query(q)
     res = db.results
     return res[0]['count'], res[0]['total'] or 0
 
