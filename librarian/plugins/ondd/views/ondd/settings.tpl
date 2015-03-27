@@ -1,4 +1,4 @@
-<%inherit file="base.tpl"/>
+<%inherit file="../base.tpl"/>
 <%namespace name="settings_form" file="ondd/_settings_form.tpl"/>
 
 <%block name="title">

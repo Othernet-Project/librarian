@@ -1,4 +1,4 @@
-<%inherit file="base">
+<%inherit file="../base.tpl"/>
 
 <%block name="title">
 ## Translators, used as page title
@@ -10,7 +10,7 @@ ${_('Database backup')}
 ${_('Database backup')}
 </%block>
 
-% if path:
+% if redirect:
     <p>${_('Database backup has been completed successfully. You will be taken to the backup folder in 10 seconds.')}</p>
     % if time:
         <p>${ngettext('The operation took %s second', 'The operation took %s seconds', time) % round(time, 2)}</p>
