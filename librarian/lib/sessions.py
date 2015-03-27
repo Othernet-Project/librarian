@@ -189,12 +189,17 @@ class Session(object):
         return self.data.values()
 
 
-@bottle.hook('after_request')
-def save_session():
-    bottle.request.session.save()
-
-
 def session_plugin(cookie_name, lifetime, secret):
+
+    @bottle.hook('after_request')
+    def save_session():
+        bottle.request.session.save()
+        bottle.response.set_cookie(cookie_name,
+                                   bottle.request.session.id,
+                                   path='/',
+                                   secret=secret,
+                                   max_age=lifetime)
+
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
@@ -204,11 +209,6 @@ def session_plugin(cookie_name, lifetime, secret):
             except (SessionExpired, SessionInvalid):
                 bottle.request.session = Session.create(lifetime)
 
-            bottle.response.set_cookie(cookie_name,
-                                       bottle.request.session.id,
-                                       path='/',
-                                       secret=secret,
-                                       max_age=lifetime)
             return callback(*args, **kwargs)
 
         return wrapper

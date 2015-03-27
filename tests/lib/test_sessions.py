@@ -37,12 +37,6 @@ def test_create_new_session(set_cookie):
 
     callback.assert_called_once_with('test')
 
-    set_cookie.assert_called_once_with(cookie_name,
-                                       bottle.request.session.id,
-                                       path='/',
-                                       secret=secret,
-                                       max_age=lifetime)
-
 
 def assert_session_count_is(expected):
     db = bottle.request.db
@@ -87,12 +81,6 @@ def test_use_existing_session(set_cookie):
     assert bottle.request.session.expires == expires
 
     callback.assert_called_once_with('test')
-
-    set_cookie.assert_called_once_with(cookie_name,
-                                       bottle.request.session.id,
-                                       path='/',
-                                       secret=secret,
-                                       max_age=lifetime)
 
 
 @transaction_test
