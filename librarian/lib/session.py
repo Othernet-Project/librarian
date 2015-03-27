@@ -44,8 +44,7 @@ class Session(object):
             raise SessionInvalid(session_id)
 
         if session_data.expires < datetime.datetime.utcnow():
-            query = db.Delete('sessions', where='session_id = ?')
-            db.query(query, session_id)
+            cls(**session_data).destroy()
             raise SessionExpired(session_id)
 
         return cls(**session_data)
@@ -74,6 +73,12 @@ class Session(object):
         query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
         db.execute(query, session_data)
         return cls(**session_data)
+
+    def destroy(self):
+        """Delete current session from database."""
+        db = bottle.request.db
+        query = db.Delete('sessions', where='session_id = ?')
+        db.query(query, self.id)
 
     def save(self):
         """Store current session in database."""
