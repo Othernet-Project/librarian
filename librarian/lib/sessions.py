@@ -79,6 +79,8 @@ class Session(object):
         db = bottle.request.db
         query = db.Delete('sessions', where='session_id = ?')
         db.query(query, self.id)
+        lifetime = int(bottle.request.app.config['session.lifetime'])
+        bottle.request.session = Session.create(lifetime)
 
     def save(self):
         """Store current session in database."""

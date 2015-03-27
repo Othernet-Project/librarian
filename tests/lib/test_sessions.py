@@ -120,7 +120,8 @@ def test_session_expired():
     with pytest.raises(sessions.SessionExpired):
         sessions.Session.fetch(session_id)
 
-    assert_session_count_is(0)
+    assert_session_count_is(1)
+    assert bottle.request.session.id != session_id
 
 
 @transaction_test
