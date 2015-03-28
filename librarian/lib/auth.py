@@ -51,9 +51,9 @@ def get_redirect_path(base_path, next_path, next_param_name='next'):
 
 
 def login_required(redirect_to='/login/', superuser_only=False):
-    def _login_required(func):
+    def decorator(func):
         @functools.wraps(func)
-        def __login_required(*args, **kwargs):
+        def wrapper(*args, **kwargs):
             if not hasattr(request, 'user'):
                 return func(*args, **kwargs)
 
@@ -70,9 +70,8 @@ def login_required(redirect_to='/login/', superuser_only=False):
 
             redirect_path = get_redirect_path(redirect_to, next_path)
             return redirect(redirect_path)
-
-        return __login_required
-    return _login_required
+        return wrapper
+    return decorator
 
 
 def encrypt_password(password):
