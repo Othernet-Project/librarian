@@ -9,11 +9,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import uuid
-import sqlite3
+import json
 import datetime
 import functools
-import cPickle as pickle
-from cStringIO import StringIO
 
 from bottle import request, response, hook
 
@@ -42,17 +40,12 @@ class Session(object):
 
     # Serialization
 
-    def _load(self, buff):
+    def _load(self, s):
         """ Load data from buffer """
-        if isinstance(buff, buffer):
-            buff = pickle.load(StringIO(buff))
-        return buff
+        return json.loads(s)
 
     def _dump(self):
-        f = StringIO()
-        pickle.dump(self.data, f, pickle.HIGHEST_PROTOCOL)
-        f.seek(0)
-        return sqlite3.Binary(f.read())
+        return json.dumps(self.data)
 
     # Session management
 
