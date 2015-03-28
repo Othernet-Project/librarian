@@ -15,7 +15,7 @@ import functools
 import cPickle as pickle
 from cStringIO import StringIO
 
-from bottle import request, response
+from bottle import request, response, hook
 
 
 class SessionError(Exception):
@@ -209,6 +209,8 @@ class Session(object):
         request.session.delete
         request.session = cls.create()
 
+    # Utility methods
+
     @staticmethod
     def generate_session_id():
         return uuid.uuid4().hex
@@ -220,6 +222,13 @@ class Session(object):
 
 
 def session_plugin(cookie_name, secret):
+    # Set up a hook, so handlers that raise cannot escape session-saving
+    @hook('after_request')
+    def save_session():
+        # FIXME: Find a way to avoid this if session wasn't modified
+        request.session.save()
+        request.session.set_cookie(cookie_name, secret)
+
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
@@ -228,11 +237,7 @@ def session_plugin(cookie_name, secret):
                 request.session = Session.fetch(session_id)
             except (SessionExpired, SessionInvalid):
                 request.session = Session.create()
-            resp = callback(*args, **kwargs)
-            request.session.save()
-            request.session.set_cookie(cookie_name, secret)
-            return resp
-
+            return callback(*args, **kwargs)
         return wrapper
     return plugin
 
