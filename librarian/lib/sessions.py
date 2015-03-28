@@ -1,13 +1,25 @@
+"""
+sessions.py: Tools for dealing with server-side sessions
+
+Copyright 2014-2015, Outernet Inc.
+Some rights reserved.
+
+This software is free software licensed under the terms of GPLv3. See COPYING
+file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
+"""
+
+import uuid
+import sqlite3
 import datetime
 import functools
-import json
-import uuid
+import cPickle as pickle
+from cStringIO import StringIO
 
-import bottle
+from bottle import request, response
 
 
 class SessionError(Exception):
-
+    """ Exception raised when there is an error with sessions """
     def __init__(self, session_id):
         super(SessionError, self).__init__()
         self.session_id = session_id
@@ -22,85 +34,98 @@ class SessionExpired(SessionError):
 
 
 class Session(object):
-
+    """ Represents a user session """
     def __init__(self, session_id, data, expires):
         self.id = session_id
-        self.data = json.loads(data)
         self.expires = expires
+        self.data = self._load(data)
 
-    @classmethod
-    def fetch(cls, session_id):
-        """Fetch an existing session by it ID.
+    # Serialization
 
-        :param session_id:  Unique session ID
-        :returns:           Valid `Session` instance.
-        """
-        db = bottle.request.db
-        query = db.Select(sets='sessions', where='session_id = ?')
-        db.query(query, session_id)
-        session_data = db.result
+    def _load(self, buff):
+        """ Load data from buffer """
+        if isinstance(buff, buffer):
+            buff = pickle.load(StringIO(buff))
+        return buff
 
-        if not session_data:
-            raise SessionInvalid(session_id)
+    def _dump(self):
+        f = StringIO()
+        pickle.dump(self.data, f, pickle.HIGHEST_PROTOCOL)
+        f.seek(0)
+        return sqlite3.Binary(f.read())
 
-        if session_data.expires < datetime.datetime.utcnow():
-            cls(**session_data).destroy()
-            raise SessionExpired(session_id)
-
-        return cls(**session_data)
-
-    @classmethod
-    def generate_session_id(cls):
-        return uuid.uuid4().hex
-
-    @classmethod
-    def create(cls, lifetime):
-        """Create a new session.
-
-        :param lifetime:  Session lifetime in seconds.
-        :returns:         Valid `Session` instance.
-        """
-        session_id = cls.generate_session_id()
-        data = {}
-        expires_in = datetime.timedelta(seconds=lifetime)
-        expires = datetime.datetime.utcnow() + expires_in
-
-        session_data = {'session_id': session_id,
-                        'data': json.dumps(data),
-                        'expires': expires}
-
-        db = bottle.request.db
-        query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
-        db.execute(query, session_data)
-        return cls(**session_data)
-
-    def destroy(self):
-        """Delete current session from database."""
-        db = bottle.request.db
-        query = db.Delete('sessions', where='session_id = ?')
-        db.query(query, self.id)
-        lifetime = int(bottle.request.app.config['session.lifetime'])
-        bottle.request.session = Session.create(lifetime)
+    # Session management
 
     def save(self):
-        """Store current session in database."""
-        session_data = {'session_id': self.id,
-                        'data': json.dumps(self.data),
-                        'expires': self.expires}
-        db = bottle.request.db
-        query = db.Replace('sessions', cols=('session_id', 'data', 'expires'))
-        db.execute(query, session_data)
+        db = request.db
+        q = db.Replace('sessions', cols=['session_id', 'data', 'expires'])
+        db.query(q, session_id=self.id, data=self._dump(),
+                 expires=self.expires)
+        return self
 
-    def regenerate(self):
-        """Regenerate the session id."""
-        old_id = self.id
+    def delete(self):
+        db = request.db
+        q = db.Delete('sessions', where='session_id = ?')
+        db.query(q, self.id)
+        return self
+
+    def rotate(self):
+        self.delete()
         self.id = self.generate_session_id()
+        return self.save()
 
-        db = bottle.request.db
-        query = db.Update('sessions',
-                          session_id=':new_session_id',
-                          where='session_id = :old_session_id')
-        db.query(query, old_session_id=old_id, new_session_id=self.id)
+    def expire(self):
+        if self.expires >= datetime.datetime.utcnow():
+            return self
+        self.delete()
+        raise SessionExpired(self.id)
+
+    def set_cookie(self, name, secret):
+        max_age = (self.expires - datetime.datetime.now()).seconds
+        response.set_cookie(name, self.id, path='/', secret=secret,
+                            max_age=max_age)
+
+    # Session data manipulation
+
+    def get(self, key, default=None):
+        """Get a value from the dictionary.
+
+        :param key:      The dictionary key.
+        :param default:  The default to return if the key is not in the
+                          dictionary. Defaults to None.
+        :returns:         The dictionary value or the default if the key is not
+                          in the dictionary.
+        """
+        return self.data.get(key, default)
+
+    def has_key(self, key):
+        """Check if the dictionary contains a key.
+
+        :param key:  The dictionary key.
+        :returns:     bool
+        """
+        return self.__contains__(key)
+
+    def items(self):
+        """Return a list of all the key-value pair tuples in the session dict.
+
+        :returns:  list of tuples
+        """
+        return self.data.items()
+
+    def keys(self):
+        """Return a list of all keys in the session dictionary.
+
+        :returns:  list of str
+        """
+        return self.data.keys()
+
+    def values(self):
+        """Returns a list of all values in the session dictionary.
+
+        :returns:  list of values
+        """
+        return self.data.values()
 
     def __contains__(self, key):
         """Check if a key is in the session dictionary.
@@ -148,68 +173,66 @@ class Session(object):
         for key in self.data.items():
             yield key
 
-    def get(self, key, default=None):
-        """Get a value from the dictionary.
+    # Request session management
 
-        :param key:      The dictionary key.
-        :param default:  The default to return if the key is not in the
-                          dictionary. Defaults to None.
-        :returns:         The dictionary value or the default if the key is not
-                          in the dictionary.
+    @classmethod
+    def fetch(cls, session_id):
+        """Fetch an existing session by it ID.
+
+        :param session_id:  unique session ID
+        :returns:           valid `Session` instance.
         """
-        return self.data.get(key, default)
+        db = request.db
+        q = db.Select(sets='sessions', where='session_id = ?')
+        db.query(q, session_id)
+        session_data = db.result
+        if not session_data:
+            raise SessionInvalid(session_id)
+        sess = cls(**session_data)
+        return sess.expire()  # deletes and raises if session has expired
 
-    def has_key(self, key):
-        """Check if the dictionary contains a key.
+    @classmethod
+    def create(cls):
+        """Create a new session.
 
-        :param key:  The dictionary key.
-        :returns:     bool
+        :returns:         Valid `Session` instance.
         """
-        return self.__contains__(key)
+        session_id = cls.generate_session_id()
+        data = {}
+        expires = cls.get_expiry()
+        sess = cls(session_id, data, expires).save()
+        return sess
 
-    def items(self):
-        """Return a list of all the key-value pair tuples in the session dict.
+    @classmethod
+    def destroy(cls):
+        """Delete current session from database."""
+        request.session.delete
+        request.session = cls.create()
 
-        :returns:  list of tuples
-        """
-        return self.data.items()
+    @staticmethod
+    def generate_session_id():
+        return uuid.uuid4().hex
 
-    def keys(self):
-        """Return a list of all keys in the session dictionary.
-
-        :returns:  list of str
-        """
-        return self.data.keys()
-
-    def values(self):
-        """Returns a list of all values in the session dictionary.
-
-        :returns:  list of values
-        """
-        return self.data.values()
+    @staticmethod
+    def get_expiry():
+        life = int(request.app.config['session.lifetime'])
+        return datetime.datetime.utcnow() + datetime.timedelta(life)
 
 
-def session_plugin(cookie_name, lifetime, secret):
-
-    @bottle.hook('after_request')
-    def save_session():
-        bottle.request.session.save()
-        bottle.response.set_cookie(cookie_name,
-                                   bottle.request.session.id,
-                                   path='/',
-                                   secret=secret,
-                                   max_age=lifetime)
-
+def session_plugin(cookie_name, secret):
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
-            session_id = bottle.request.get_cookie(cookie_name, secret=secret)
+            session_id = request.get_cookie(cookie_name, secret=secret)
             try:
-                bottle.request.session = Session.fetch(session_id)
+                request.session = Session.fetch(session_id)
             except (SessionExpired, SessionInvalid):
-                bottle.request.session = Session.create(lifetime)
-
-            return callback(*args, **kwargs)
+                request.session = Session.create()
+            resp = callback(*args, **kwargs)
+            request.session.save()
+            request.session.set_cookie(cookie_name, secret)
+            return resp
 
         return wrapper
     return plugin
+
