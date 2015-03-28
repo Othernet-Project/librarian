@@ -219,8 +219,9 @@ def session_plugin(cookie_name, secret):
     @hook('after_request')
     def save_session():
         # FIXME: Find a way to avoid this if session wasn't modified
-        request.session.save()
-        request.session.set_cookie(cookie_name, secret)
+        if hasattr(request, 'session'):
+            request.session.save()
+            request.session.set_cookie(cookie_name, secret)
 
     def plugin(callback):
         @functools.wraps(callback)
