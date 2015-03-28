@@ -148,6 +148,7 @@ app = bottle.default_app()
 add_routes(app, ROUTES)
 app.error(500)(system.show_error_page)
 app.error(503)(system.show_maint_page)
+app.error(403)(system.show_access_denied_page)
 
 
 def start(logfile=None, profile=False, no_auth=False):
@@ -200,17 +201,6 @@ def start(logfile=None, profile=False, no_auth=False):
     install_plugins(app)
     logging.info('Installed all plugins')
 
-    # Install bottle plugins
-    app.install(request_timer('Handler'))
-    app.install(squery.database_plugin(conn, debug=True))
-    app.install(sessions.session_plugin(
-        cookie_name=config['session.cookie_name'],
-        lifetime=int(config['session.lifetime']),
-        secret=config['session.secret'])
-    )
-    if not no_auth:
-        app.install(auth.user_plugin())
-
     # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))
     bottle.BaseTemplate.defaults.update({
@@ -229,13 +219,23 @@ def start(logfile=None, profile=False, no_auth=False):
         'url': app.get_url,
     })
 
-    # Add middlewares
+    # Install bottle plugins
+    app.install(request_timer('Total'))
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
     wsgiapp = I18NPlugin(wsgiapp, langs=lang.UI_LANGS,
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
+    app.install(squery.database_plugin(conn, debug=True))
+    app.install(sessions.session_plugin(
+        cookie_name=config['session.cookie_name'],
+        secret=config['session.secret'])
+    )
+    if not no_auth:
+        app.install(auth.user_plugin())
+
+    # Add middlewares
     app.install(lock_plugin)
-    app.install(request_timer('Total'))
+    app.install(request_timer('Handler'))
 
     if profile:
         # Instrument the app to perform profiling

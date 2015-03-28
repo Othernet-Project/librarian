@@ -1,13 +1,16 @@
-%# Translators, used as page title
-% rebase('base', title=_('Forbidden'))
+<%inherit file="base.tpl">
 
-<h1>
-%# Translators, used as maintenance page heading
-403: {{ _('Forbidden') }}
-</h1>
+<%block>
+## Translators, used as page title
+${_('Forbidden')}
+</%block>
 
-<div class="inner">
-    <p>
-    {{ _('You are not authorized to access this feature.') }}
-    </p>
-</div>
+<%block>
+## Translators, used as access denied page heading
+403: ${_('Forbidden')}
+</%block>
+
+<p>
+## Translators, shown when user is denied access to a page
+${_('You are not authorized to access this page.')}
+</p>
