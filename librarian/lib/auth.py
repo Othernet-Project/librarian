@@ -4,8 +4,8 @@ import sqlite3
 import urllib
 import urlparse
 
-import bottle
 import pbkdf2
+from bottle import request, abort, redirect
 
 
 class UserAlreadyExists(Exception):
@@ -29,8 +29,8 @@ class User(object):
 
     def logout(self):
         if self.is_authenticated:
-            bottle.request.session.destroy()
-            bottle.request.user = User()
+            request.session.destroy()
+            request.user = User()
 
 
 def get_redirect_path(base_path, next_path, next_param_name='next'):
@@ -50,28 +50,26 @@ def get_redirect_path(base_path, next_path, next_param_name='next'):
     return urlparse.urlunparse(new_path)
 
 
-def login_required(redirect_to='/login/', superuser_only=False,
-                   forbidden_template='403'):
+def login_required(redirect_to='/login/', superuser_only=False):
     def _login_required(func):
         @functools.wraps(func)
         def __login_required(*args, **kwargs):
-            if not hasattr(bottle.request, 'user'):
+            if not hasattr(request, 'user'):
                 return func(*args, **kwargs)
 
-            next_path = bottle.request.fullpath
-            if bottle.request.query_string:
-                next_path = '?'.join([bottle.request.fullpath,
-                                      bottle.request.query_string])
+            next_path = request.fullpath
+            if request.query_string:
+                next_path = '?'.join([request.fullpath,
+                                      request.query_string])
 
-            if bottle.request.user.is_authenticated:
-                is_superuser = bottle.request.user.is_superuser
+            if request.user.is_authenticated:
+                is_superuser = request.user.is_superuser
                 if not superuser_only or (superuser_only and is_superuser):
                     return func(*args, **kwargs)
-
-                return bottle.template(forbidden_template)
+                abort(403)
 
             redirect_path = get_redirect_path(redirect_to, next_path)
-            return bottle.redirect(redirect_path)
+            return redirect(redirect_path)
 
         return __login_required
     return _login_required
@@ -96,7 +94,7 @@ def create_user(username, password, is_superuser=False):
                  'created': datetime.datetime.utcnow(),
                  'is_superuser': is_superuser}
 
-    db = bottle.request.db
+    db = request.db
     query = db.Insert('users', cols=('username',
                                      'password',
                                      'created',
@@ -108,7 +106,7 @@ def create_user(username, password, is_superuser=False):
 
 
 def get_user(username):
-    db = bottle.request.db
+    db = request.db
     query = db.Select(sets='users', where='username = ?')
     db.query(query, username)
     return db.result
@@ -117,9 +115,9 @@ def get_user(username):
 def login_user(username, password):
     user = get_user(username)
     if user and is_valid_password(password, user.password):
-        bottle.request.session['user'] = {'username': user.username,
+        request.session['user'] = {'username': user.username,
                                           'is_superuser': user.is_superuser}
-        bottle.request.session.regenerate()
+        request.session.rotate()
         return True
 
     return False
@@ -129,14 +127,14 @@ def user_plugin():
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
-            user_data = bottle.request.session.get('user') or {}
+            user_data = request.session.get('user') or {}
             if user_data:
                 user = get_user(user_data.get('username'))
                 user_data = dict(username=user.username,
                                  is_superuser=user.is_superuser,
                                  created=user.created) if user else {}
 
-            bottle.request.user = User(**user_data)
+            request.user = User(**user_data)
             return callback(*args, **kwargs)
 
         return wrapper
