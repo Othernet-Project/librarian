@@ -15,6 +15,8 @@ import functools
 
 from bottle import request, response, hook
 
+from .common import basestring
+
 
 class SessionError(Exception):
     """ Exception raised when there is an error with sessions """
@@ -42,7 +44,11 @@ class Session(object):
 
     def _load(self, s):
         """ Load data from buffer """
-        return json.loads(s)
+        if not s:
+            return {}
+        if isinstance(s, basestring):
+            return json.loads(s)
+        return s
 
     def _dump(self):
         return json.dumps(self.data)
