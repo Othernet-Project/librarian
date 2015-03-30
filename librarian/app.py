@@ -154,6 +154,7 @@ def start(logfile=None, profile=False, no_auth=False):
     """ Start the application """
 
     config = app.config
+    debug = config['librarian.debug'] == 'yes'
 
     log_config({
         'version': 1,
@@ -202,7 +203,7 @@ def start(logfile=None, profile=False, no_auth=False):
 
     # Install bottle plugins
     app.install(request_timer('Handler'))
-    app.install(squery.database_plugin(conn, debug=True))
+    app.install(squery.database_plugin(conn, debug=debug))
     app.install(sessions.session_plugin(
         cookie_name=config['session.cookie_name'],
         lifetime=int(config['session.lifetime']),
@@ -251,7 +252,7 @@ def start(logfile=None, profile=False, no_auth=False):
             unwind=False,
         )
 
-    bottle.debug(config['librarian.debug'] == 'yes')
+    bottle.debug(debug)
     print('Starting %s server <http://%s:%s/>' % (
         config['librarian.server'],
         config['librarian.bind'],
