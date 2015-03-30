@@ -40,6 +40,7 @@ from librarian.lib import html as helpers
 from librarian.lib.lock import lock_plugin
 from librarian.lib.common import to_unicode
 from librarian.lib.i18n import I18NPlugin
+from librarian.lib.template_helpers import template_helper
 
 from librarian.utils import lang
 from librarian.utils import migrations
@@ -219,6 +220,7 @@ def start(logfile=None, profile=False, no_auth=False):
         'request': request,
         'style': 'screen',  # Default stylesheet
         'h': helpers,
+        'th': template_helper,
         'updates': Lazy(lambda: len(list(get_zipballs()))),
         'readable_license': lambda s: dict(LICENSES).get(s, LICENSES[0][1]),
         'is_rtl': Lazy(lambda: request.locale in lang.RTL_LANGS),
