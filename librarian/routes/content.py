@@ -24,6 +24,7 @@ from ..core import archive
 from ..core import downloads
 from ..core import metadata
 
+from ..lib import auth
 from ..lib import i18n
 from ..lib import send_file
 from ..lib.pager import Pager
@@ -87,6 +88,7 @@ def content_list():
         tag_cloud=archive.get_tag_cloud())
 
 
+#@auth.login_required()
 @view('remove_error')
 def remove_content(content_id):
     """ Delete a single piece of content from archive """

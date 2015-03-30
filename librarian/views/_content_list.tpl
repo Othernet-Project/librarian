@@ -33,7 +33,9 @@
         % endif
         <p class="badges"></p>
         ${tags.tags(meta)}
+        % if th.is_authenticated():
         ${delete_button.button(meta=meta)}
+        % endif
     </div>
 </li>
 % endfor
