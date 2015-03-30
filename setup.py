@@ -14,6 +14,7 @@ import librarian
 SCRIPTDIR = os.path.dirname(__file__) or '.'
 PY3 = sys.version_info >= (3, 0, 0)
 
+
 def read(fname):
     """ Return content of specified file """
     path = os.path.join(SCRIPTDIR, fname)
@@ -24,6 +25,7 @@ def read(fname):
     content = f.read()
     f.close()
     return content
+
 
 def read_reqs(fname):
     return read(fname).strip().split('\n')
@@ -97,15 +99,15 @@ class Clean(Command):
 
 
 setup(
-    name = 'librarian',
-    version = librarian.__version__,
-    author = 'Outernet Inc',
-    author_email = 'branko@outernet.is',
-    description = ('Web-based UI for managing local Outernet broadcast '
-                   'content'),
-    license = 'GPLv3',
-    keywords = 'outernet content archive library',
-    url = 'https://github.com/Outernet-Project/librarian',
+    name='librarian',
+    version=librarian.__version__,
+    author='Outernet Inc',
+    author_email='branko@outernet.is',
+    description=('Web-based UI for managing local Outernet broadcast '
+                 'content'),
+    license='GPLv3',
+    keywords='outernet content archive library',
+    url='https://github.com/Outernet-Project/librarian',
     packages=find_packages(),
     include_package_data=True,
     long_description=read('README.rst'),
