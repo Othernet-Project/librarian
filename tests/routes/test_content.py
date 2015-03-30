@@ -13,19 +13,21 @@ MOD = 'librarian.routes.content'
 @mock.patch(MOD + '.i18n')
 @mock.patch('librarian.core.archive.remove_from_archive')
 def test_remove(remove_from_archive, i18n, redirect):
-    remove_from_archive.return_value = (['foo'], [])
+    i18n.i18n_path.side_effect = lambda x: x
+    remove_from_archive.return_value = []
     ret = mod.remove_content('foo')
     remove_from_archive.assert_called_once_with(['foo'])
     assert ret is None
-    assert redirect.called
+    redirect.assert_called_once_with('/')
 
 
 @mock.patch(MOD + '.redirect')
 @mock.patch(MOD + '.i18n')
 @mock.patch('librarian.core.archive.remove_from_archive')
 def test_remove_failed(remove_from_archive, i18n, redirect):
-    remove_from_archive.return_value = ([], ['foo'])
+    i18n.i18n_path.side_effect = lambda x: x
+    remove_from_archive.return_value = ['foo']
     ret = mod.remove_content('foo')
-    assert ret == {}
+    assert ret == {'redirect': '/'}
     assert not redirect.called
 
