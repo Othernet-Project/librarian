@@ -3,7 +3,7 @@
 """
 app.py: main web UI module
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -17,9 +17,8 @@ gevent.monkey.patch_all(aggressive=True)
 
 # For more details on the below see: http://bit.ly/18fP1uo
 import gevent.hub
-gevent.hub.Hub.NOT_ERROR=(Exception,)
+gevent.hub.Hub.NOT_ERROR = (Exception,)
 
-import getpass
 import sys
 import pprint
 import logging
@@ -43,6 +42,7 @@ from librarian.lib.i18n import I18NPlugin
 from librarian.lib.template_helpers import template_helper
 
 from librarian.utils import lang
+from librarian.utils import commands
 from librarian.utils import migrations
 from librarian.utils.system import ensure_dir
 from librarian.utils.routing import add_routes
@@ -152,12 +152,7 @@ app.error(503)(system.show_maint_page)
 app.error(403)(system.show_access_denied_page)
 
 
-def start(logfile=None, profile=False, no_auth=False):
-    """ Start the application """
-
-    config = app.config
-    debug = config['librarian.debug'] == 'yes'
-
+def prestart(config, logfile=None, profile=False):
     log_config({
         'version': 1,
         'root': {
@@ -181,8 +176,7 @@ def start(logfile=None, profile=False, no_auth=False):
         },
     })
 
-    # Srart the server
-    logging.info('===== Starting Librarian v%s =====', __version__)
+    logging.info('Configuring Librarian environment')
 
     # Make sure all necessary directories are present
     ensure_dir(dirname(config['logging.output']))
@@ -198,6 +192,19 @@ def start(logfile=None, profile=False, no_auth=False):
     migrations.migrate(db, in_pkg('migrations'), 'librarian.migrations',
                        config)
     logging.debug("Finished running migrations")
+    return db
+
+
+def start(config, db, logfile=None, profile=False, no_auth=False):
+    """ Start the application """
+
+    debug = config['librarian.debug'] == 'yes'
+
+    config = app.config
+    debug = config['librarian.debug'] == 'yes'
+
+    # Srart the server
+    logging.info('===== Starting Librarian v%s =====', __version__)
 
     # Install Librarian plugins
     install_plugins(app)
@@ -205,7 +212,7 @@ def start(logfile=None, profile=False, no_auth=False):
 
     # Install bottle plugins
     app.install(request_timer('Handler'))
-    app.install(squery.database_plugin(conn, debug=debug))
+    app.install(squery.database_plugin(db, debug=debug))
     app.install(sessions.session_plugin(
         cookie_name=config['session.cookie_name'],
         secret=config['session.secret'])
@@ -280,10 +287,9 @@ def configure_argparse(parser):
     parser.add_argument('--profile', action='store_true', help='instrument '
                         'the application to perform profiling (default: '
                         'disabled)', default=False)
-    parser.add_argument('--su', action='store_true',
-                        help='create superuser and exit')
     parser.add_argument('--no-auth', action='store_true',
                         help='disable authentication')
+    commands.add_command_switches(parser)
 
 
 def setup_database(conf):
@@ -297,39 +303,18 @@ def setup_database(conf):
     bottle.request.db = db
 
 
-def create_superuser():
-    print("Press ctrl-c to abort")
-    try:
-        username = raw_input('Username: ')
-        password = getpass.getpass()
-    except KeyboardInterrupt:
-        print("Aborted")
-        sys.exit(1)
+def main(args):
+    app.config.load_config(args.conf)
+    conf = app.config
 
-    try:
-        auth.create_user(username=username,
-                         password=password,
-                         is_superuser=True)
-        print("User created.")
-    except auth.UserAlreadyExists:
-        print("User already exists, please try a different username.")
-        create_superuser()
-    except auth.InvalidUserCredentials:
-        print("Invalid user credentials, please try again.")
-        create_superuser()
-
-    sys.exit(0)
-
-
-def main(conf, debug=False, logpath=None, profile=False, no_auth=False):
-    app.config.load_config(conf)
-
-    if debug:
-        print('Configuration file path: %s' % conf)
+    if args.debug_conf:
+        print('Configuration file path: %s' % args.conf)
         pprint.pprint(app.config, indent=4)
         sys.exit(0)
 
-    start(logpath, profile, no_auth)
+    db = prestart(conf, args.log, args.profile)
+    commands.select_command(args, db, conf)
+    start(db.conn, conf, args.no_auth)
 
 
 if __name__ == '__main__':
@@ -343,8 +328,4 @@ if __name__ == '__main__':
         print('v%s' % __version__)
         sys.exit(0)
 
-    if args.su:
-        setup_database(args.conf)
-        create_superuser()
-
-    main(args.conf, args.debug_conf, args.log, args.profile, args.no_auth)
+    main(args)

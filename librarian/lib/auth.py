@@ -128,7 +128,7 @@ def is_valid_password(password, encrypted_password):
     return encrypted_password == pbkdf2.crypt(password, encrypted_password)
 
 
-def create_user(username, password, is_superuser=False):
+def create_user(username, password, is_superuser=False, db=None):
     if not username or not password:
         raise InvalidUserCredentials()
 
@@ -139,7 +139,7 @@ def create_user(username, password, is_superuser=False):
                  'created': datetime.datetime.utcnow(),
                  'is_superuser': is_superuser}
 
-    db = request.db
+    db = db or request.db
     query = db.Insert('users', cols=('username',
                                      'password',
                                      'created',
