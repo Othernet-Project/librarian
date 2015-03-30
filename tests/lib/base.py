@@ -1,4 +1,6 @@
 import mock
+import shutil
+import tempfile
 
 from librarian.app import in_pkg
 from librarian.lib import squery
@@ -14,7 +16,7 @@ def transaction_test(bottle_request_paths):
 
             conn = squery.Connection()
             db = squery.Database(conn)
-            config = {'content.contentdir': '/tmp'}
+            config = {'content.contentdir': tempfile.mkdtemp()}
             migrations.migrate(db,
                                in_pkg('migrations'),
                                'librarian.migrations',
@@ -31,6 +33,7 @@ def transaction_test(bottle_request_paths):
 
             [p.stop() for p in patchers]
 
+            shutil.rmtree(config['content.contentdir'])
             return result
 
         return __transaction_test
