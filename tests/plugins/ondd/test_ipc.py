@@ -1,7 +1,6 @@
 import os
 import time
 import socket
-import functools
 import multiprocessing
 import xml.etree.ElementTree as ET
 
@@ -13,11 +12,9 @@ SOCK_FILE_PATH = '/tmp/test_server.sock'
 
 def if_supported(fn):
     """ Only run function if socket support is available """
-    @functools.wraps(fn)
-    def wrapper(*args, **kwargs):
-        if hasattr(socket, 'AF_UNIX'):
-            return fn(*args, **kwargs)
-    return wrapper
+    if hasattr(socket, 'AF_UNIX'):
+        return fn
+    return lambda *a, **kw: None
 
 
 def get_config(key):
