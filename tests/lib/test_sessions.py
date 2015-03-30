@@ -1,131 +1,126 @@
 import datetime
 import json
 
-import bottle
 import mock
 import pytest
 
-from librarian.lib import sessions
+from librarian.lib import sessions as mod
 
 from .base import transaction_test
 
 
-@mock.patch('bottle.response.set_cookie')
-@transaction_test
-def test_create_new_session(set_cookie):
-    bottle.request.get_cookie.return_value = None
+MOD = mod.__name__
 
-    cookie_name = 'session_cookie'
-    lifetime = 10
-    secret = 'mischief managed'
 
-    callback = mock.Mock(__name__='callback')
-    plugin = sessions.session_plugin(cookie_name=cookie_name,
-                                     lifetime=10,
-                                     secret=secret)
-    wrapped = plugin(callback)
-    wrapped('test')
-
-    db = bottle.request.db
+def get_session(session_id):
+    db = mod.request.db
     query = db.Select(sets='sessions', where='session_id = ?')
-    db.query(query, bottle.request.session.id)
-    session_data = db.result
+    db.query(query, session_id)
+    return db.result
 
-    assert session_data['data'] == '{}'
-    assert session_data['session_id'] == bottle.request.session.id
-    assert isinstance(session_data['expires'], datetime.datetime)
 
-    callback.assert_called_once_with('test')
+def add_session(session_data):
+    db = mod.request.db
+    query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
+    db.execute(query, session_data)
 
 
 def assert_session_count_is(expected):
-    db = bottle.request.db
+    db = mod.request.db
     query = db.Select('COUNT(*) as count', sets='sessions')
     db.query(query)
     session_count = db.result.count
     assert session_count == expected
 
 
-@mock.patch('bottle.response.set_cookie')
-@transaction_test
-def test_use_existing_session(set_cookie):
+@transaction_test(MOD + '.request')
+def test_session_plugin_create():
+    mod.request.get_cookie.return_value = None
+
     cookie_name = 'session_cookie'
-    lifetime = 10
     secret = 'mischief managed'
 
-    session_id = 'some_session_id'
-    data = {'some': 'thing'}
-    expires_in = datetime.timedelta(seconds=lifetime)
-    expires = datetime.datetime.utcnow() + expires_in
-    session_data = {'session_id': session_id,
-                    'data': json.dumps(data),
-                    'expires': expires}
-
-    db = bottle.request.db
-    query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
-    db.execute(query, session_data)
-
-    bottle.request.get_cookie.return_value = session_id
-
     callback = mock.Mock(__name__='callback')
-    plugin = sessions.session_plugin(cookie_name=cookie_name,
-                                     lifetime=10,
-                                     secret=secret)
+    plugin = mod.session_plugin(cookie_name=cookie_name, secret=secret)
     wrapped = plugin(callback)
     wrapped('test')
 
     assert_session_count_is(1)
 
-    assert bottle.request.session.data == data
-    assert bottle.request.session.id == session_id
-    assert bottle.request.session.expires == expires
+    sess = get_session(mod.request.session.id)
+    assert sess['data'] == '{}'
+    assert sess['session_id'] == mod.request.session.id
+    assert isinstance(sess['expires'], datetime.datetime)
 
     callback.assert_called_once_with('test')
 
 
-@transaction_test
+@transaction_test(MOD + '.request')
+def test_use_existing_session():
+    cookie_name = 'session_cookie'
+    secret = 'mischief managed'
+
+    session_id = 'some_session_id'
+    data = {'some': 'thing'}
+    expires = datetime.datetime.utcnow() + datetime.timedelta(seconds=10)
+    add_session({'session_id': session_id,
+                 'data': json.dumps(data),
+                 'expires': expires})
+
+    mod.request.get_cookie.return_value = session_id
+
+    callback = mock.Mock(__name__='callback')
+    plugin = mod.session_plugin(cookie_name=cookie_name, secret=secret)
+    wrapped = plugin(callback)
+    wrapped('test')
+
+    assert_session_count_is(1)
+
+    assert mod.request.session.data == data
+    assert mod.request.session.id == session_id
+    assert mod.request.session.expires == expires
+
+    callback.assert_called_once_with('test')
+
+
+@transaction_test(MOD + '.request')
 def test_session_invalid():
-    with pytest.raises(sessions.SessionInvalid):
-        sessions.Session.fetch(None)
+    with pytest.raises(mod.SessionInvalid):
+        mod.Session.fetch(None)
 
-    with pytest.raises(sessions.SessionInvalid):
-        sessions.Session.fetch('not valid')
+    with pytest.raises(mod.SessionInvalid):
+        mod.Session.fetch('not valid')
 
 
-@transaction_test
+@transaction_test(MOD + '.request')
 def test_session_expired():
     session_id = 'some_session_id'
     data = {'some': 'thing'}
     expires = datetime.datetime.utcnow() - datetime.timedelta(seconds=10)
-    session_data = {'session_id': session_id,
-                    'data': json.dumps(data),
-                    'expires': expires}
-
-    db = bottle.request.db
-    query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
-    db.execute(query, session_data)
-
-    with pytest.raises(sessions.SessionExpired):
-        sessions.Session.fetch(session_id)
+    add_session({'session_id': session_id,
+                 'data': json.dumps(data),
+                 'expires': expires})
 
     assert_session_count_is(1)
-    assert bottle.request.session.id != session_id
+
+    with pytest.raises(mod.SessionExpired):
+        mod.Session.fetch(session_id)
+
+    assert_session_count_is(0)
 
 
-@transaction_test
+@transaction_test(MOD + '.request')
 def test_save_session():
     session_id = 'some_session_id'
     data = {'some': 'thing'}
     expires = datetime.datetime.utcnow() + datetime.timedelta(seconds=100)
-    session_data = {'session_id': session_id,
-                    'data': json.dumps(data),
-                    'expires': expires}
+    add_session({'session_id': session_id,
+                 'data': json.dumps(data),
+                 'expires': expires})
 
-    db = bottle.request.db
-    query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
-    db.execute(query, session_data)
+    assert_session_count_is(1)
 
-    s = sessions.Session.fetch(session_id)
+    s = mod.Session.fetch(session_id)
     assert s.id == session_id
     assert s.data == data
 
@@ -134,21 +129,58 @@ def test_save_session():
 
     assert_session_count_is(1)
 
-    s = sessions.Session.fetch(session_id)
+    s = mod.Session.fetch(session_id)
     assert s.id == session_id
     assert s.data == {'some': 'thing', 'second': 'new'}
 
 
-@transaction_test
-def test_regenerate_session():
-    s = sessions.Session.create(100)
+@transaction_test(MOD + '.request')
+def test_rotate_session():
+    s = mod.Session.create()
     s['test'] = 123
     s.save()
+
+    assert_session_count_is(1)
 
     old_session_id = s.id
     old_data = s.data.copy()
 
-    s.regenerate()
+    s.rotate()
     assert s.id != old_session_id
     assert s.data == old_data
+
     assert_session_count_is(1)
+
+
+@transaction_test(MOD + '.request')
+def test_modified():
+    s = mod.Session.create()
+    assert not s.modified
+
+    s.expires = datetime.datetime.utcnow() - datetime.timedelta(seconds=10)
+    assert s.modified
+
+    s.save()
+    assert not s.modified
+
+    s['a'] = 1
+    assert s.modified
+
+    s.save()
+    assert not s.modified
+
+    del s['a']
+    assert s.modified
+
+    s.save()
+    assert not s.modified
+
+    s.rotate()
+    assert not s.modified
+
+    with pytest.raises(mod.SessionExpired):
+        s.expire()
+    assert not s.modified
+
+    s.delete()
+    assert not s.modified
