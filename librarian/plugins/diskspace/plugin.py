@@ -60,16 +60,10 @@ def cleanup():
         return {'vals': forms, 'metadata': metadata, 'message': message,
                 'needed': zipballs.needed_space(free)}
     else:
-        success, errors = archive.remove_from_archive([z['md5']
-                                                       for z in selected])
-        if selected and not errors:
+        if selected:
+            archive.remove_from_archive([z['md5'] for z in selected])
             redirect(i18n_path(request.app.get_url('content:list')))
-
-        if errors:
-            # Translators, error message shown on clean-up page when some of
-            # the content could not be removed for unknown reasons
-            message = _('Some files could not be removed')
-        elif not selected:
+        else:
             # Translators, error message shown on clean-up page when there was
             # no deletable content
             message = _('Nothing to delete')
