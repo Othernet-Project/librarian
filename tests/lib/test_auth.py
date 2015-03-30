@@ -102,6 +102,22 @@ def test_login_required_not_logged_in(bottle_request, bottle_redirect):
     assert mock_controller.called is False
 
 
+@mock.patch(MOD + '.redirect')
+@mock.patch(MOD + '.request')
+def test_login_required_not_logged_in(bottle_request, bottle_redirect):
+    mock_controller = mock.Mock(__name__='controller')
+    protected = mod.login_required(next_to='/go-here/')(mock_controller)
+
+    bottle_request.fullpath = '/somewhere/'
+    bottle_request.query_string = ''
+    bottle_request.user.is_authenticated = False
+
+    protected()
+
+    bottle_redirect.assert_called_once_with('/login/?next=%2Fgo-here%2F')
+    assert mock_controller.called is False
+
+
 @mock.patch(MOD + '.abort')
 @mock.patch(MOD + '.request')
 def test_login_required_forbidden(bottle_request, bottle_abort):

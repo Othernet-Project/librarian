@@ -88,17 +88,20 @@ def get_redirect_path(base_path, next_path, next_param_name='next'):
     return urlparse.urlunparse(new_path)
 
 
-def login_required(redirect_to='/login/', superuser_only=False):
+def login_required(redirect_to='/login/', superuser_only=False, next_to=None):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             if not hasattr(request, 'user'):
                 return func(*args, **kwargs)
 
-            next_path = request.fullpath
-            if request.query_string:
-                next_path = '?'.join([request.fullpath,
-                                      request.query_string])
+            if next_to is None:
+                next_path = request.fullpath
+                if request.query_string:
+                    next_path = '?'.join([request.fullpath,
+                                          request.query_string])
+            else:
+                next_path = next_to
 
             if request.user.is_authenticated:
                 is_superuser = request.user.is_superuser
