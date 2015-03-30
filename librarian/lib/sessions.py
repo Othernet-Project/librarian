@@ -33,12 +33,26 @@ class SessionExpired(SessionError):
     pass
 
 
+def modifier(func):
+    """Decorator for setting the `modified` flag for operations that modify
+    the state of the session object."""
+    @functools.wraps(func)
+    def wrapper(self, *args, **kwargs):
+        result = func(self, *args, **kwargs)
+        self.modified = True
+        return result
+    return wrapper
+
+
 class Session(object):
     """ Represents a user session """
-    def __init__(self, session_id, data, expires):
+    modifiable_attributes = ('id', 'expires', 'data')
+
+    def __init__(self, session_id, data, expires, modified=False):
         self.id = session_id
         self.expires = expires
         self.data = self._load(data)
+        self.modified = modified
 
     # Serialization
 
@@ -60,6 +74,7 @@ class Session(object):
         q = db.Replace('sessions', cols=['session_id', 'data', 'expires'])
         db.query(q, session_id=self.id, data=self._dump(),
                  expires=self.expires)
+        self.modified = False
         return self
 
     def delete(self):
@@ -134,6 +149,7 @@ class Session(object):
         """
         return key in self.data
 
+    @modifier
     def __delitem__(self, key):
         """Delete an item from the session dictionary.
 
@@ -149,6 +165,7 @@ class Session(object):
         """
         return self.data[key]
 
+    @modifier
     def __setitem__(self, key, value):
         """Set a key-value association.
 
@@ -171,6 +188,13 @@ class Session(object):
         """
         for key in self.data.items():
             yield key
+
+    def __setattr__(self, name, value):
+        """Set the `modifed` flag in case of direct attribute assignments."""
+        if name in self.modifiable_attributes:
+            self.modified = True
+
+        super(Session, self).__setattr__(name, value)
 
     # Request session management
 
@@ -199,7 +223,7 @@ class Session(object):
         session_id = cls.generate_session_id()
         data = {}
         expires = cls.get_expiry()
-        sess = cls(session_id, data, expires).save()
+        sess = cls(session_id, data, expires, modified=True).save()
         return sess
 
     # Utility methods
@@ -218,9 +242,10 @@ def session_plugin(cookie_name, secret):
     # Set up a hook, so handlers that raise cannot escape session-saving
     @hook('after_request')
     def save_session():
-        # FIXME: Find a way to avoid this if session wasn't modified
         if hasattr(request, 'session'):
-            request.session.save()
+            if request.session.modified:
+                request.session.save()
+
             request.session.set_cookie(cookie_name, secret)
 
     def plugin(callback):
