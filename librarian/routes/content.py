@@ -88,12 +88,12 @@ def content_list():
 
 
 @view('remove_error')
-@archive.with_content
-def remove_content(meta):
+def remove_content(content_id):
     """ Delete a single piece of content from archive """
-    success, failed = archive.remove_from_archive([meta.md5])
+    success, failed = archive.remove_from_archive([content_id])
     if failed:
-        return dict(meta=meta)
+        assert len(failed) == 1, 'Expected only one failure'
+        return dict()
     redirect(i18n.i18n_path('/'))
 
 
