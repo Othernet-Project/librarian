@@ -117,13 +117,15 @@ def test_create_table_if_no_version_table():
     """ Version-tracking table is crated if it doesn't exist """
     import sqlite3
     db = mock.Mock()
-    db.query.side_effect = [sqlite3.OperationalError('no such table'), None]
+    db.query.side_effect = [sqlite3.OperationalError('no such table'), None,
+                            None]
     try:
         ret = mod.get_version(db)
     except Exception:
         assert False, 'Expected not to raise'
     assert ret == 0
-    db.query.assert_called_with(mod.MIGRATION_TABLE_SQL)
+    db.query.assert_any_call(mod.MIGRATION_TABLE_SQL)
+    db.query.assert_any_call(mod.REPLACE_SQL, 0)
 
 
 def test_run_migration():
