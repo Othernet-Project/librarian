@@ -88,7 +88,7 @@ def content_list():
         tag_cloud=archive.get_tag_cloud())
 
 
-#@auth.login_required()
+@auth.login_required(next_to='/')
 @view('remove_error')
 def remove_content(content_id):
     """ Delete a single piece of content from archive """
