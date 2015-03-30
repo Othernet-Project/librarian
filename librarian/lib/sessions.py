@@ -202,12 +202,6 @@ class Session(object):
         sess = cls(session_id, data, expires).save()
         return sess
 
-    @classmethod
-    def destroy(cls):
-        """Delete current session from database."""
-        request.session.delete
-        request.session = cls.create()
-
     # Utility methods
 
     @staticmethod
