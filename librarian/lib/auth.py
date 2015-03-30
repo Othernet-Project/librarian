@@ -66,7 +66,7 @@ def login_required(redirect_to='/login/', superuser_only=False):
                 is_superuser = request.user.is_superuser
                 if not superuser_only or (superuser_only and is_superuser):
                     return func(*args, **kwargs)
-                abort(403)
+                return abort(403)
 
             redirect_path = get_redirect_path(redirect_to, next_path)
             return redirect(redirect_path)
