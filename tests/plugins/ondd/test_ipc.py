@@ -17,7 +17,7 @@ def get_config(key):
 
 class TestServer(multiprocessing.Process):
 
-    def __init__(self, socket_file_path, delay=0, response=None):
+    def __init__(self, socket_file_path, delay=0, response=None, is_blocking=1):  # NOQA
         multiprocessing.Process.__init__(self)
 
         self._response = response
@@ -29,24 +29,34 @@ class TestServer(multiprocessing.Process):
         self.server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         self.server.bind(self._socket_file_path)
         self.server.listen(5)
-        self.server.setblocking(0)
+        self.server.setblocking(is_blocking)
+        self.started = multiprocessing.Event()
         self.exit = multiprocessing.Event()
 
     def run(self):
         while not self.exit.is_set():
             time.sleep(self._delay)
+            self.started.set()
             conn, addr = self.server.accept()
-            while not self.exit.is_set():
+            if self._response:
+                conn.send(self._response)
+            else:
                 data = conn.recv(1024)
                 if not data:
                     break
                 else:
                     conn.send(self._response or data)
+            conn.close()
 
     def shutdown(self):
         self.exit.set()
+        self.server.shutdown(socket.SHUT_RDWR)
         self.server.close()
         os.remove(self._socket_file_path)
+
+    def wait_until_started(self):
+        while not self.started.is_set():
+            time.sleep(0.1)
 
 
 def patch_ipc(func):
@@ -67,8 +77,9 @@ def patch_ipc(func):
 @mock.patch('bottle.request')
 @patch_ipc
 def test_read_timeout(ipc, bottle_request):
-    test_server = TestServer(SOCK_FILE_PATH, delay=2)
+    test_server = TestServer(SOCK_FILE_PATH, delay=2, is_blocking=0)
     test_server.start()
+    test_server.wait_until_started()
 
     bottle_request.app.config.__getitem__.side_effect = get_config
 
@@ -87,8 +98,9 @@ def test_read_timeout(ipc, bottle_request):
 @mock.patch('bottle.request')
 @patch_ipc
 def test_send_timeout(ipc, bottle_request):
-    test_server = TestServer(SOCK_FILE_PATH, delay=2)
+    test_server = TestServer(SOCK_FILE_PATH, delay=2, is_blocking=0)
     test_server.start()
+    test_server.wait_until_started()
 
     bottle_request.app.config.__getitem__.side_effect = get_config
 
@@ -104,6 +116,7 @@ def test_send_timeout(ipc, bottle_request):
 def test_send_success(ipc, bottle_request):
     test_server = TestServer(SOCK_FILE_PATH)
     test_server.start()
+    test_server.wait_until_started()
 
     bottle_request.app.config.__getitem__.side_effect = get_config
 
@@ -119,11 +132,11 @@ def test_send_success(ipc, bottle_request):
 def test_read_success(ipc, bottle_request):
     test_server = TestServer(SOCK_FILE_PATH, response='test data\0')
     test_server.start()
+    test_server.wait_until_started()
 
     bottle_request.app.config.__getitem__.side_effect = get_config
 
     sock = ipc.connect(SOCK_FILE_PATH)
-    sock.send('ignored')
     response = ipc.read(sock)
 
     assert response == 'test data'
