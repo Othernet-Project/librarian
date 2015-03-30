@@ -246,9 +246,7 @@ def add_to_archive(hashes):
 
 
 def remove_from_archive(hashes):
-    # TODO: tests
     db = request.db
-    success = []
     failed = []
     for md5, path in ((h, get_zip_path(h)) for h in hashes):
         logging.debug("<%s> removing from archive (#%s)" % (path, md5))
@@ -258,17 +256,16 @@ def remove_from_archive(hashes):
             logging.error("<%s> cannot delete: %s" % (path, err))
             failed.append(md5)
             continue
-        success.append(md5)
     with db.transaction() as cur:
-        in_md5s = sqlin('md5', success)
-        logging.debug("Removing %s items from archive database" % len(success))
+        in_md5s = sqlin('md5', hashes)
+        logging.debug("Removing %s items from archive database" % len(hashes))
         q = db.Delete('zipballs', where=in_md5s)
-        db.query(q, *success)
+        db.query(q, *hashes)
         rowcount = cur.rowcount
         q = db.Delete('taggings', where=in_md5s)
-        db.query(q, *success)
+        db.query(q, *hashes)
     logging.debug("%s items removed from database" % rowcount)
-    return success, failed
+    return failed
 
 
 def zipball_count():
