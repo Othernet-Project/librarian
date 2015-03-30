@@ -58,11 +58,13 @@ class Session(object):
 
     def _load(self, s):
         """ Load data from buffer """
-        if not s:
-            return {}
         if isinstance(s, basestring):
             return json.loads(s)
-        return s
+
+        if isinstance(s, dict):
+            return s
+
+        return {}
 
     def _dump(self):
         return json.dumps(self.data)
