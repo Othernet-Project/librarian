@@ -1,13 +1,24 @@
-import multiprocessing
 import os
-import socket
 import time
+import socket
+import functools
+import multiprocessing
 import xml.etree.ElementTree as ET
 
 import mock
 
 
 SOCK_FILE_PATH = '/tmp/test_server.sock'
+
+
+def if_supported(fn):
+    """ Only run function if socket support is available """
+    @functools.wraps(fn)
+    def wrapper(*args, **kwargs):
+        if hasattr(socket, 'AF_UNIX'):
+            return fn(*args, **kwargs)
+    return wrapper
+
 
 
 def get_config(key):
@@ -74,6 +85,7 @@ def patch_ipc(func):
     return _patch_ipc
 
 
+@if_supported
 @mock.patch('bottle.request')
 @patch_ipc
 def test_read_timeout(ipc, bottle_request):
@@ -95,6 +107,7 @@ def test_read_timeout(ipc, bottle_request):
     test_server.join()
 
 
+@if_supported
 @mock.patch('bottle.request')
 @patch_ipc
 def test_send_timeout(ipc, bottle_request):
@@ -111,6 +124,7 @@ def test_send_timeout(ipc, bottle_request):
     test_server.join()
 
 
+@if_supported
 @mock.patch('bottle.request')
 @patch_ipc
 def test_send_success(ipc, bottle_request):
@@ -127,6 +141,7 @@ def test_send_success(ipc, bottle_request):
     test_server.join()
 
 
+@if_supported
 @mock.patch('bottle.request')
 @patch_ipc
 def test_read_success(ipc, bottle_request):
