@@ -20,7 +20,6 @@ def if_supported(fn):
     return wrapper
 
 
-
 def get_config(key):
     config = {'ondd.socket': SOCK_FILE_PATH}
     return config[key]
