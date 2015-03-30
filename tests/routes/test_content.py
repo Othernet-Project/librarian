@@ -31,3 +31,17 @@ def test_remove_failed(remove_from_archive, i18n, redirect):
     assert ret == {'redirect': '/'}
     assert not redirect.called
 
+
+@mock.patch(MOD + '.downloads')
+@mock.patch(MOD + '.abort')
+def test_content_file_404_on_missing_zipfile_content(abort, downloads):
+    from librarian.core.downloads import ContentError
+    downloads.get_file.side_effect = ContentError('foo', 'bar')
+    downloads.ContentError = ContentError
+    abort.side_effect = ValueError  # this is just there to simulate real abort
+    try:
+        mod.content_file('foo', 'bar')
+    except ValueError:
+        abort.assert_called_once_with(404)
+    except Exception:
+        assert False, 'Expected not to raise'

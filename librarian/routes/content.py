@@ -103,9 +103,9 @@ def content_file(content_id, filename):
     zippath = downloads.get_zip_path(content_id)
     try:
         metadata, content = downloads.get_file(zippath, filename)
-    except KeyError:
-        logging.debug("File '%s' not found in '%s'" % (filename, zippath))
-        abort(404, 'Not found')
+    except downloads.ContentError as err:
+        logging.error(err)
+        abort(404)
     size = metadata.file_size
     timestamp = os.stat(zippath)[stat.ST_MTIME]
     if filename.endswith('.html'):
