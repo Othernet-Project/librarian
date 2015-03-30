@@ -51,3 +51,8 @@ def show_error_page(exc):
 @view('503')
 def show_maint_page(exc):
     return dict()
+
+
+@view('403')
+def show_access_denied_page():
+    return dict()

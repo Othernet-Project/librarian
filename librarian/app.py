@@ -148,6 +148,7 @@ app = bottle.default_app()
 add_routes(app, ROUTES)
 app.error(500)(system.show_error_page)
 app.error(503)(system.show_maint_page)
+app.error(403)(system.show_access_denied_page)
 
 
 def start(logfile=None, profile=False, no_auth=False):
@@ -206,7 +207,6 @@ def start(logfile=None, profile=False, no_auth=False):
     app.install(squery.database_plugin(conn, debug=debug))
     app.install(sessions.session_plugin(
         cookie_name=config['session.cookie_name'],
-        lifetime=int(config['session.lifetime']),
         secret=config['session.secret'])
     )
     if not no_auth:
@@ -230,11 +230,12 @@ def start(logfile=None, profile=False, no_auth=False):
         'url': app.get_url,
     })
 
-    # Add middlewares
+    # Install bottle plugins
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
     wsgiapp = I18NPlugin(wsgiapp, langs=lang.UI_LANGS,
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
+    # Add middlewares
     app.install(lock_plugin)
     app.install(request_timer('Total'))
 
