@@ -1,5 +1,6 @@
 import datetime
 import functools
+import json
 import sqlite3
 import urllib
 import urlparse
@@ -14,6 +15,34 @@ class UserAlreadyExists(Exception):
 
 class InvalidUserCredentials(Exception):
     pass
+
+
+class DateTimeEncoder(json.JSONEncoder):
+
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+
+        return super(DateTimeEncoder, self).default(obj)
+
+
+class DateTimeDecoder(json.JSONDecoder):
+
+    def __init__(self, *args, **kargs):
+        super(DateTimeDecoder, self).__init__(object_hook=self.object_hook,
+                                              *args,
+                                              **kargs)
+
+    def object_hook(self, obj):
+        if '__type__' not in obj:
+            return obj
+
+        obj_type = obj.pop('__type__')
+        try:
+            return datetime(**obj)
+        except Exception:
+            obj['__type__'] = obj_type
+            return obj
 
 
 class User(object):
@@ -31,6 +60,13 @@ class User(object):
         if self.is_authenticated:
             request.session.delete().reset()
             request.user = User()
+
+    def to_json(self):
+        return json.dumps(self.__dict__, cls=DateTimeEncoder)
+
+    @classmethod
+    def from_json(cls, data):
+        return cls(**json.loads(data, cls=DateTimeDecoder))
 
 
 def get_redirect_path(base_path, next_path, next_param_name='next'):
@@ -114,8 +150,10 @@ def get_user(username):
 def login_user(username, password):
     user = get_user(username)
     if user and is_valid_password(password, user.password):
-        request.session['user'] = {'username': user.username,
-                                          'is_superuser': user.is_superuser}
+        request.user = User(username=user.username,
+                            is_superuser=user.is_superuser,
+                            created=user.created)
+        request.session['user'] = request.user.to_json()
         request.session.rotate()
         return True
 
@@ -126,14 +164,8 @@ def user_plugin():
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
-            user_data = request.session.get('user') or {}
-            if user_data:
-                user = get_user(user_data.get('username'))
-                user_data = dict(username=user.username,
-                                 is_superuser=user.is_superuser,
-                                 created=user.created) if user else {}
-
-            request.user = User(**user_data)
+            user_data = request.session.get('user', '{}')
+            request.user = User.from_json(user_data)
             return callback(*args, **kwargs)
 
         return wrapper
