@@ -29,7 +29,7 @@ class User(object):
 
     def logout(self):
         if self.is_authenticated:
-            request.session.delete()
+            request.session.delete().reset()
             request.user = User()
 
 
