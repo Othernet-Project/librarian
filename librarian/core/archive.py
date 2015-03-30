@@ -250,6 +250,9 @@ def remove_from_archive(hashes):
     failed = []
     for md5, path in ((h, get_zip_path(h)) for h in hashes):
         logging.debug("<%s> removing from archive (#%s)" % (path, md5))
+        if path is None:
+            failed.append(md5)
+            continue
         try:
             os.unlink(path)
         except OSError as err:
