@@ -96,6 +96,12 @@ class Session(object):
         self.delete()
         raise SessionExpired(self.id)
 
+    def reset(self):
+        self.id = self.generate_session_id()
+        self.data = {}
+        self.expires = self.get_expiry()
+        return self
+
     def set_cookie(self, name, secret):
         max_age = (self.expires - datetime.datetime.now()).seconds
         response.set_cookie(name, self.id, path='/', secret=secret,
