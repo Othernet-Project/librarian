@@ -240,4 +240,3 @@ def session_plugin(cookie_name, secret):
             return callback(*args, **kwargs)
         return wrapper
     return plugin
-
