@@ -18,5 +18,3 @@ def up(db, conf):
              if p.endswith('.zip')]
 
     db.executemany(SQL, ((get_size(p), get_hash(p)) for p in paths))
-
-

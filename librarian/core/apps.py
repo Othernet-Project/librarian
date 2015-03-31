@@ -27,7 +27,9 @@ class MetadataError(AppError):
 
 class AppInfo(object):
     """ Class that wraps application metadata """
-    def __init__(self, appid, title, author, version, descriptions={}, behavior=False):
+    # XXX: Could this be a subclass of ``librarian.core.metadata.Meta?
+    def __init__(self, appid, title, author, version, descriptions={},
+                 behavior=False):
         self.appid = appid
         self.title = title
         self.author = author
@@ -70,4 +72,3 @@ def get_app_info(path):
             behavior=meta['icon_behavior'])
     except KeyError:
         raise MetadataError('Incomplete metadata')
-

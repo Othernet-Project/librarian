@@ -1,7 +1,7 @@
 """
 content.py: routes related to content
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -67,7 +67,7 @@ def content_list():
 
     if query:
         metas = archive.search_content(query, pager.offset, pager.per_page,
-                                          tag=tag)
+                                       tag=tag)
     else:
         metas = archive.get_content(pager.offset, pager.per_page, tag=tag)
 

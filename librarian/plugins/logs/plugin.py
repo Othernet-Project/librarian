@@ -35,4 +35,3 @@ class Dashboard(DashboardPlugin):
         with open(logpath, 'rt') as log:
             logs = iter_lines(list(log)[-100:])
         return dict(logs=logs)
-
