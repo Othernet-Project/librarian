@@ -12,14 +12,21 @@ Vagrant.configure(2) do |config|
     #!/usr/bin/env bash
   
     set -e
-    sudo su
-    # System upgrade
-    pacman -Syu --noconfirm
-    # Install/remove packages
-    pacman -S --noconfirm python2-pip
+
+    PACMAN="pacman --noconfirm --noprogress"
+
+    # Install reflector to sort mirrors
+    $PACMAN -Sy
+    $PACMAN -S reflector
+    reflector --verbose -l 5 --sort rate --save /etc/pacman.d/mirrorlist
+
+    # Update system and install system pkgs
+    $PACMAN -Syu
+    $PACMAN -S python2-pip libev
 
     # Make sure setuptools is latest version
     easy_install -U setuptools
+    easy_install -U pip
 
     # Set up directories
     mkdir -p /vagrant/tmp/zipballs
