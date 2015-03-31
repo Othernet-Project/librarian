@@ -28,17 +28,18 @@ from os.path import join, dirname, abspath, normpath
 import bottle
 from bottle import request
 
+from bottle_utils.lazy import Lazy
+from bottle_utils import html as helpers
+from bottle_utils.i18n import I18NPlugin
+from bottle_utils.common import to_unicode
+
 from librarian.core.metadata import LICENSES
 from librarian.core.downloads import get_zipballs
 
 from librarian.lib import squery
 from librarian.lib import auth
 from librarian.lib import sessions
-from librarian.lib.lazy import Lazy
-from librarian.lib import html as helpers
 from librarian.lib.lock import lock_plugin
-from librarian.lib.common import to_unicode
-from librarian.lib.i18n import I18NPlugin
 from librarian.lib.template_helpers import template_helper
 
 from librarian.utils import lang

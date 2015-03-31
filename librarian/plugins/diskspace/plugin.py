@@ -16,8 +16,8 @@ from bottle import request, mako_view as view, redirect, MultiDict, abort
 
 from ...core import archive
 
-from ...lib.html import hsize
-from ...lib.i18n import lazy_gettext as _, i18n_path
+from bottle_utils.html import hsize
+from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError
@@ -62,7 +62,7 @@ def cleanup():
     else:
         if selected:
             archive.remove_from_archive([z['md5'] for z in selected])
-            redirect(i18n_path(request.app.get_url('content:list')))
+            redirect(i18n_url('content:list'))
         else:
             # Translators, error message shown on clean-up page when there was
             # no deletable content

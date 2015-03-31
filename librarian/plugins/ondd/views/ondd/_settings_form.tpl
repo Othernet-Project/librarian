@@ -1,4 +1,4 @@
-${h.form('post', action=i18n_path(url('plugins:ondd:settings')), _class='settings-form', _id='settings-form')}
+${h.form('post', action=i18n_url('plugins:ondd:settings'), _class='settings-form', _id='settings-form')}
     ${h.form_errors(errors)}
     <input type="hidden" name="backto" value="${request.original_path}">
     <input type="hidden" name="preset">

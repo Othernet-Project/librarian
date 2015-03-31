@@ -17,13 +17,13 @@ import datetime
 from os.path import dirname, join
 
 from bottle import mako_view as view, request, static_file
+from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ...core.archive import process
 from ...core.downloads import get_md5_from_path
 
 from ...lib import squery
 from ...lib.gspawn import call
-from ...lib.i18n import lazy_gettext as _, i18n_path
 from ...lib.lock import global_lock, LockFailureError
 
 from ...utils import migrations
@@ -62,7 +62,7 @@ def get_backup_path():
 
 def get_file_url():
     suburl = request.app.config['dbmanage.backups'].replace('\\', '/')
-    return i18n_path(request.app.get_url('files:path', path=suburl))
+    return i18n_url('files:path', path=suburl)
 
 
 def serve_dbfile():
@@ -144,7 +144,7 @@ def perform_rebuild():
                             'database rebuild was cancelled. Please make '
                             'sure noone else is using Librarian and '
                             'try again.'))
-    return dict(redirect=i18n_path(request.app.get_url('content:list')),
+    return dict(redirect=i18n_url('content:list'),
                 time=rtime, fpath=get_file_url())
 
 

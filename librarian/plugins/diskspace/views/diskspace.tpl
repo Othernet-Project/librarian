@@ -10,7 +10,7 @@ ${space_info.space(free, total)}
 ## Translators, this is a warning message appearing when disk space is below minimum
 ${_('You are running low on disk space.')}
 ## Translators, this is a button label that leads to page for library cleanup
-<a href="${i18n_path(url('plugins:diskspace:cleanup'))}">${_('Free some space now')}</a>
+<a href="${i18n_url('plugins:diskspace:cleanup')}">${_('Free some space now')}</a>
 </p>
 % endif
 

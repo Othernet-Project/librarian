@@ -26,7 +26,7 @@ ${_('There is enough free space on storage')}
 </p>
 % endif
 
-<form action="${i18n_path(url('plugins:diskspace:cleanup'))}" method="POST">
+<form action="${i18n_url('plugins:diskspace:cleanup')}" method="POST">
     <table>
         <tr class="header">
         ## Translators, in table header on clean-up page, above checkboxes for marking deletion candidates
@@ -45,7 +45,7 @@ ${_('There is enough free space on storage')}
             ${h.checkbox('selection', meta['md5'], vals, default=True)}
             </td>
             <td>${meta['updated'].strftime('%m-%d')}</td>
-            <td><a href="${i18n_path(url('content:reader', content_id=meta['md5']))}">${meta['title']}</a></td>
+            <td><a href="${i18n_url('content:reader', content_id=meta['md5'])}">${meta['title']}</a></td>
             <td>${h.hsize(meta['size'])}</td>
             </tr>
             % endfor

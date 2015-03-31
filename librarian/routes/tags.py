@@ -1,10 +1,9 @@
 import re
 
 from bottle import request, redirect, mako_template as template
+from bottle_utils.ajax import roca_view
 
 from ..core import archive
-
-from ..lib.ajax import roca_view
 
 
 WS = re.compile(r'\s', re.M)
