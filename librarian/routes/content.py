@@ -109,10 +109,9 @@ def content_file(content_id, filename):
         abort(404)
     size = metadata.file_size
     timestamp = os.stat(zippath)[stat.ST_MTIME]
-    if filename.endswith('.html'):
+    if filename.endswith('.html') and archive.needs_formatting(content_id):
         logging.debug("Patching HTML file '%s' with Librarian stylesheet" % (
                       filename))
-        # Patch HTML with link to stylesheet
         size, content = patch_content.patch(content)
     return send_file.send_file(content, filename, size, timestamp)
 

@@ -45,3 +45,31 @@ def test_content_file_404_on_missing_zipfile_content(abort, downloads):
         abort.assert_called_once_with(404)
     except Exception:
         assert False, 'Expected not to raise'
+
+
+@mock.patch(MOD + '.patch_content')
+@mock.patch(MOD + '.send_file')
+@mock.patch(MOD + '.archive')
+@mock.patch(MOD + '.downloads')
+@mock.patch(MOD + '.os')
+def test_content_file_patching(os, downloads, archive, send_file,
+                               patch_content):
+    downloads.get_file.return_value = (mock.Mock(), 'bar')
+    patch_content.patch.return_value = (200, 'bar')
+    archive.needs_formatting.return_value = True
+    mod.content_file('foo', 'bar.html')
+    assert patch_content.patch.called
+
+
+@mock.patch(MOD + '.patch_content')
+@mock.patch(MOD + '.send_file')
+@mock.patch(MOD + '.archive')
+@mock.patch(MOD + '.downloads')
+@mock.patch(MOD + '.os')
+def test_content_file_pathcing_not_needed(os, downloads, archive, send_file,
+                                          patch_content):
+    downloads.get_file.return_value = (mock.Mock(), 'bar')
+    patch_content.patch.return_value = (200, 'bar')
+    archive.needs_formatting.return_value = False
+    mod.content_file('foo', 'bar.html')
+    assert not patch_content.patch.called
