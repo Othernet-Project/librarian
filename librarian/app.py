@@ -153,7 +153,7 @@ app.error(503)(system.show_maint_page)
 app.error(403)(system.show_access_denied_page)
 
 
-def prestart(config, logfile=None, profile=False):
+def prestart(config, logfile=None):
     log_config({
         'version': 1,
         'root': {
@@ -196,7 +196,7 @@ def prestart(config, logfile=None, profile=False):
     return db
 
 
-def start(db, config, logfile=None, profile=False, no_auth=False):
+def start(db, config, no_auth=False):
     """ Start the application """
 
     debug = config['librarian.debug'] == 'yes'
@@ -249,20 +249,6 @@ def start(db, config, logfile=None, profile=False, no_auth=False):
     app.install(lock_plugin)
     app.install(request_timer('Total'))
 
-    if profile:
-        # Instrument the app to perform profiling
-        print('Profiling enabled')
-        from repoze.profile import ProfileMiddleware
-        wsgiapp = ProfileMiddleware(
-            wsgiapp,
-            log_filename=config['profiling.logfile'],
-            cachegrind_filename=config['profiling.outfile'],
-            discard_first_request=True,
-            flush_at_shutdown=True,
-            path='/__profile__',
-            unwind=False,
-        )
-
     bottle.debug(debug)
     print('Starting %s server <http://%s:%s/>' % (
         config['librarian.server'],
@@ -285,9 +271,6 @@ def configure_argparse(parser):
                         'version number and exit')
     parser.add_argument('--log', metavar='PATH', help='path to log file '
                         '(default: as configured in .ini file)', default=None)
-    parser.add_argument('--profile', action='store_true', help='instrument '
-                        'the application to perform profiling (default: '
-                        'disabled)', default=False)
     parser.add_argument('--no-auth', action='store_true',
                         help='disable authentication')
     commands.add_command_switches(parser)
@@ -302,9 +285,9 @@ def main(args):
         pprint.pprint(app.config, indent=4)
         sys.exit(0)
 
-    db = prestart(conf, args.log, args.profile)
+    db = prestart(conf, args.log)
     commands.select_command(args, db, conf)
-    start(db.conn, conf, no_auth=args.no_auth)
+    start(db.conn, conf, args.no_auth)
 
 
 if __name__ == '__main__':
