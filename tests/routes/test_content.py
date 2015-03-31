@@ -12,7 +12,7 @@ MOD = 'librarian.routes.content'
 @mock.patch('librarian.core.archive.remove_from_archive')
 def test_remove(remove_from_archive, i18n_url, redirect):
     remove_content = strip_wrappers(mod.remove_content)
-    i18n_url.side_effect = lambda *x, **y: x
+    i18n_url.side_effect = lambda x, **y: x
     remove_from_archive.return_value = []
     ret = remove_content('foo')
     remove_from_archive.assert_called_once_with(['foo'])
@@ -25,7 +25,7 @@ def test_remove(remove_from_archive, i18n_url, redirect):
 @mock.patch('librarian.core.archive.remove_from_archive')
 def test_remove_failed(remove_from_archive, i18n_url, redirect):
     remove_content = strip_wrappers(mod.remove_content)
-    i18n_url.side_effect = lambda *x, **y: x
+    i18n_url.side_effect = lambda x, **y: x
     remove_from_archive.return_value = ['foo']
     ret = remove_content('foo')
     assert ret == {'redirect': 'content:list'}
