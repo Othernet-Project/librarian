@@ -105,7 +105,7 @@ def rebuild():
     db.acquire_lock()
     logging.debug('Acquiring global lock')
     with global_lock(always_release=True):
-        db.rollback()
+        db.commit()
         db.conn.close()
         call(backup, dbpath, bpath)
         remove_dbfile()
