@@ -195,7 +195,7 @@ def prestart(config, logfile=None, profile=False):
     return db
 
 
-def start(config, db, logfile=None, profile=False, no_auth=False):
+def start(db, config, logfile=None, profile=False, no_auth=False):
     """ Start the application """
 
     debug = config['librarian.debug'] == 'yes'
@@ -290,17 +290,6 @@ def configure_argparse(parser):
     parser.add_argument('--no-auth', action='store_true',
                         help='disable authentication')
     commands.add_command_switches(parser)
-
-
-def setup_database(conf):
-    app.config.load_config(conf)
-    # Run database migrations
-    conn = squery.Database.connect(app.config['database.path'])
-    db = squery.Database(conn)
-    migrations.migrate(db, in_pkg('migrations'), 'librarian.migrations',
-                       app.config)
-    logging.debug("Finished running migrations")
-    bottle.request.db = db
 
 
 def main(args):

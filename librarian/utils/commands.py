@@ -20,13 +20,16 @@ PARSER_ARGS = []
 def command(name, *args, **kwargs):
     def registrator(fn):
         COMMANDS[name] = fn
+        if fn.__doc__:
+            kwargs.setdefault('help', fn.__doc__.strip())
         PARSER_ARGS.append((args, kwargs))
         return fn
     return registrator
 
 
-@command('su', '--su', action='store_true', help='create superuser and quit')
+@command('su', '--su', action='store_true')
 def create_superuser(arg, db, config):
+    """ create superuser and quit """
     print("Press ctrl-c to abort")
     try:
         username = raw_input('Username: ')
@@ -51,14 +54,26 @@ def create_superuser(arg, db, config):
     sys.exit(0)
 
 
+@command('dump_tables', '--dump-tables', action='store_true')
+def dump_tables(arg, db, config):
+    """ dump table schema as SQL """
+    schema = []
+    db.query(db.Select('*', sets='sqlite_master'))
+    for r in db.results:
+        if r.type == 'table':
+            schema.append(r.sql)
+    print('\n'.join(schema))
+    sys.exit(0)
+
+
 def add_command_switches(parser):
     for args, kwargs in PARSER_ARGS:
         parser.add_argument(*args, **kwargs)
 
 
-def select_command(cmdargs, db, config):
+def select_command(args, db, config):
+    """ Select one of the registered commands and execute it """
     for cmd, fn in COMMANDS.items():
-        if cmd not in cmdargs:
-            continue
-        arg = getattr(cmdargs, cmd)
-        fn(arg, db, config)
+        arg = getattr(args, cmd, None)
+        if arg:
+            fn(arg, db, config)
