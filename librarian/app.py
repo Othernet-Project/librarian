@@ -304,7 +304,7 @@ def main(args):
 
     db = prestart(conf, args.log, args.profile)
     commands.select_command(args, db, conf)
-    start(db.conn, conf, args.no_auth)
+    start(db.conn, conf, no_auth=args.no_auth)
 
 
 if __name__ == '__main__':
