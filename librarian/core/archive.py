@@ -367,6 +367,14 @@ def get_tag_cloud():
     return db.results
 
 
+def needs_formatting(md5):
+    """ Whether content needs formatting patch """
+    db = request.db
+    q = db.Select('keep_formatting', sets='zipballs', where='md5 = ?')
+    db.query(q, md5)
+    return not db.result.keep_formatting
+
+
 def with_content(func):
     @wraps(func)
     def wrapper(content_id, **kwargs):
