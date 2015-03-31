@@ -14,8 +14,7 @@ import datetime
 import functools
 
 from bottle import request, response, hook
-
-from .common import basestring
+from bottle_utils.common import basestring
 
 
 class SessionError(Exception):
