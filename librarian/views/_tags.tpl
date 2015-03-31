@@ -4,7 +4,7 @@
 <p class="tags" data-has-tags="${bool(meta.tags)}">
 ${tag_list.list(meta=meta)}
 </p>
-<form action="${i18n_path(url('tags:edit', content_id=meta.md5))}" method="POST" class="tag-form">
+<form action="${i18n_url('tags:edit', content_id=meta.md5)}" method="POST" class="tag-form">
     <p>
     <input type="text" name="tags" value="${', '.join(meta.tags)}">
     ## Translators, button label for a button that saves user tags for a piece of content

@@ -12,11 +12,11 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from __future__ import unicode_literals
 
 import babel
-
-from ..lib.i18n import lazy_gettext as _
+from bottle_utils.i18n import lazy_gettext as _
 
 # Helper functions are defined above the constants because we used them to
 # generate runtime constants.
+
 
 def to_locale(code):
     """ Return `babel.locale` instance matching the locale code """
