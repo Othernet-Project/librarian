@@ -1,20 +1,13 @@
-import os
-import time
 import socket
-import multiprocessing
 import xml.etree.ElementTree as ET
 
 import mock
 
+from librarian.plugins.ondd import ipc as mod
 
+
+MOD = mod.__name__
 SOCK_FILE_PATH = '/tmp/test_server.sock'
-
-
-def if_supported(fn):
-    """ Only run function if socket support is available """
-    if hasattr(socket, 'AF_UNIX'):
-        return fn
-    return lambda *a, **kw: None
 
 
 def get_config(key):
@@ -22,135 +15,85 @@ def get_config(key):
     return config[key]
 
 
-class TestServer(multiprocessing.Process):
+def test_connect_timeout():
+    with mock.patch(MOD + '.socket.socket') as ipc_socket:
+        mocked_socket = mock.Mock()
+        mocked_socket.connect.side_effect = mod.socket.timeout
+        ipc_socket.return_value = mocked_socket
 
-    def __init__(self, socket_file_path, delay=0, response=None, is_blocking=1):  # NOQA
-        multiprocessing.Process.__init__(self)
-
-        self._response = response
-        self._delay = delay
-        self._socket_file_path = socket_file_path
-        if os.path.exists(self._socket_file_path):
-            os.remove(self._socket_file_path)
-
-        self.server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        self.server.bind(self._socket_file_path)
-        self.server.listen(5)
-        self.server.setblocking(is_blocking)
-        self.started = multiprocessing.Event()
-        self.exit = multiprocessing.Event()
-
-    def run(self):
-        while not self.exit.is_set():
-            time.sleep(self._delay)
-            self.started.set()
-            conn, addr = self.server.accept()
-            if self._response:
-                conn.send(self._response)
-            else:
-                data = conn.recv(1024)
-                if not data:
-                    break
-                else:
-                    conn.send(self._response or data)
-            conn.close()
-
-    def shutdown(self):
-        self.exit.set()
-        self.server.shutdown(socket.SHUT_RDWR)
-        self.server.close()
-        os.remove(self._socket_file_path)
-
-    def wait_until_started(self):
-        while not self.started.is_set():
-            time.sleep(0.1)
+        try:
+            mod.connect(SOCK_FILE_PATH)
+            assert False, 'Timeout was expected'
+        except socket.timeout:
+            pass
 
 
-def patch_ipc(func):
-    def _patch_ipc(*args, **kwargs):
-        from librarian.plugins.ondd import ipc
-
-        original_timeout = ipc.ONDD_SOCKET_TIMEOUT
-        setattr(ipc, 'ONDD_SOCKET_TIMEOUT', 1)
-
-        result = func(ipc, *args, **kwargs)
-
-        setattr(ipc, 'ONDD_SOCKET_TIMEOUT', original_timeout)
-
-        return result
-    return _patch_ipc
-
-
-@if_supported
-@mock.patch('bottle.request')
-@patch_ipc
-def test_read_timeout(ipc, bottle_request):
-    test_server = TestServer(SOCK_FILE_PATH, delay=2, is_blocking=0)
-    test_server.start()
-    test_server.wait_until_started()
-
+@mock.patch(MOD + '.request')
+def test_read_timeout(bottle_request):
     bottle_request.app.config.__getitem__.side_effect = get_config
 
-    sock = ipc.connect(SOCK_FILE_PATH)
+    with mock.patch(MOD + '.socket.socket') as ipc_socket:
+        mocked_socket = mock.Mock()
+        mocked_socket.recv.side_effect = mod.socket.timeout
+        ipc_socket.return_value = mocked_socket
 
-    try:
-        ipc.read(sock)
-        assert False, 'Timeout was expected'
-    except socket.timeout:
-        pass
-
-    test_server.shutdown()
-    test_server.join()
+        try:
+            mod.read(mocked_socket)
+            assert False, 'Timeout was expected'
+        except socket.timeout:
+            pass
 
 
-@if_supported
-@mock.patch('bottle.request')
-@patch_ipc
-def test_send_timeout(ipc, bottle_request):
-    test_server = TestServer(SOCK_FILE_PATH, delay=2, is_blocking=0)
-    test_server.start()
-    test_server.wait_until_started()
-
+@mock.patch(MOD + '.request')
+def test_send_timeout(bottle_request):
     bottle_request.app.config.__getitem__.side_effect = get_config
 
-    result = ipc.send('some data')
-    assert result is None
+    with mock.patch(MOD + '.socket.socket') as ipc_socket:
+        mocked_socket = mock.Mock()
+        mocked_socket.send.side_effect = mod.socket.timeout
+        ipc_socket.return_value = mocked_socket
 
-    test_server.shutdown()
-    test_server.join()
+        result = mod.send('some data')
+        assert result is None
 
 
-@if_supported
-@mock.patch('bottle.request')
-@patch_ipc
-def test_send_success(ipc, bottle_request):
-    test_server = TestServer(SOCK_FILE_PATH)
-    test_server.start()
-    test_server.wait_until_started()
-
+@mock.patch(MOD + '.request')
+def test_send_success(bottle_request):
     bottle_request.app.config.__getitem__.side_effect = get_config
+    data = '<xml />'
 
-    response = ipc.send('<xml />')
-    assert ET.tostring(response) == '<xml />'
+    def mocked_recv(size):
+        if hasattr(mocked_recv, 'called'):
+            return '\0'
 
-    test_server.shutdown()
-    test_server.join()
+        mocked_recv.called = True
+        return data
+
+    with mock.patch(MOD + '.socket.socket') as ipc_socket:
+        mocked_socket = mock.Mock()
+        mocked_socket.recv.side_effect = mocked_recv
+        ipc_socket.return_value = mocked_socket
+
+        result = mod.send(data)
+        assert ET.tostring(result) == data
 
 
-@if_supported
-@mock.patch('bottle.request')
-@patch_ipc
-def test_read_success(ipc, bottle_request):
-    test_server = TestServer(SOCK_FILE_PATH, response='test data\0')
-    test_server.start()
-    test_server.wait_until_started()
-
+@mock.patch(MOD + '.request')
+def test_read_success(bottle_request):
     bottle_request.app.config.__getitem__.side_effect = get_config
+    data = 'something'
 
-    sock = ipc.connect(SOCK_FILE_PATH)
-    response = ipc.read(sock)
+    def mocked_recv(size):
+        if hasattr(mocked_recv, 'called'):
+            return '\0'
 
-    assert response == 'test data'
+        mocked_recv.called = True
+        return data
 
-    test_server.shutdown()
-    test_server.join()
+    with mock.patch(MOD + '.socket.socket') as ipc_socket:
+        mocked_socket = mock.Mock()
+        mocked_socket.recv.side_effect = mocked_recv
+        ipc_socket.return_value = mocked_socket
+
+        result = mod.read(mocked_socket)
+        assert result == data
