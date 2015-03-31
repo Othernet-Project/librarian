@@ -69,8 +69,12 @@ def backup(src, dst):
         ret = sqlite.sqlite3_backup_step(p_backup, 20)
         remaining = sqlite.sqlite3_backup_remaining(p_backup)
         pagecount = sqlite.sqlite3_backup_pagecount(p_backup)
-        logging.debug('DBMANAGE: backup progress %0.2f%%',
-                      (pagecount - remaining) / float(pagecount) * 100)
+        try:
+            progress = (pagecount - remaining) / float(pagecount) * 100
+        except ZeroDivisionError:
+            progress = 0
+
+        logging.debug('DBMANAGE: backup progress %0.2f%%', progress)
         if remaining == 0:
             break
         if ret in (SQLITE_OK, SQLITE_BUSY, SQLITE_LOCKED):
