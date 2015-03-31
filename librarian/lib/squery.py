@@ -493,6 +493,7 @@ class Database(object):
 
     def rollback(self):
         call(self.conn.rollback)
+        call(self.conn.commit)
 
     def refresh_table_stats(self):
         self.execute('ANALYZE sqlite_master;')

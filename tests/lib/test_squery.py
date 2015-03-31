@@ -666,6 +666,7 @@ def test_rollback_alias(sqlite3):
     db = mod.Database(mock.Mock())
     db.rollback()
     assert db.conn.rollback.called
+    assert db.conn.commit.called
 
 
 @mock.patch(MOD + '.sqlite3')
