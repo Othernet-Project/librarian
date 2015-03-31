@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "terrywang/archlinux"
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "256"
@@ -12,12 +12,11 @@ Vagrant.configure(2) do |config|
     #!/usr/bin/env bash
   
     set -e
+    sudo su
+    # System upgrade
+    pacman -Syu --noconfirm
     # Install/remove packages
-    DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
-        sqlite3 build-essential python-dev python-pip libev-dev gettext
-    DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes remove \
-        chef puppet
-    DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes autoremove
+    pacman -S --noconfirm python2-pip
 
     # Make sure setuptools is latest version
     easy_install -U setuptools
@@ -30,8 +29,7 @@ Vagrant.configure(2) do |config|
     cd /vagrant
 
     # Install Librarian and dependencies
-    python setup.py develop
-    pip install -r /vagrant/conf/dev_requirements.txt
-    pip install repoze.profile
+    pip2 install -e .
+    pip2 install -r /vagrant/conf/dev_requirements.txt
   SHELL
 end
