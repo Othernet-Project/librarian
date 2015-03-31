@@ -5,7 +5,7 @@
 
 <style>@import "${url('plugins:ondd:static', path='ondd.css')}";</style>
 
-<p id="signal-status" class="signal-status" data-url="${i18n_path(url('plugins:ondd:status'))}">
+<p id="signal-status" class="signal-status" data-url="${i18n_url('plugins:ondd:status')}">
     ${signal.body()}
 </p>
 
@@ -13,7 +13,7 @@ ${settings_form.body()}
 
 ## Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
 <h3>${_('Downloads in progress')}</h3>
-<div id="ondd-file-list" data-url="${i18n_path(url('plugins:ondd:files'))}">
+<div id="ondd-file-list" data-url="${i18n_url('plugins:ondd:files')}">
     ${file_list.body()}
 </div>
 

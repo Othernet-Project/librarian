@@ -38,4 +38,3 @@ drop table tmp;
 
 def up(db, conf):
     db.executescript(SQL)
-

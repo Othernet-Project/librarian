@@ -15,7 +15,7 @@ ${_('Library')}
 </%block>
 
 <div class="inner">
-    <div id="tag-cloud-container" class="tag-cloud-container" data-url="${i18n_path(url('tags:list'))}" data-current="${tag}">
+    <div id="tag-cloud-container" class="tag-cloud-container" data-url="${i18n_url('tags:list')}" data-current="${tag}">
         ${tloud.cloud(tag_cloud, tag_id, tag)}
     </div>
     <form id="pager" class="pager controls">
@@ -27,7 +27,7 @@ ${_('Library')}
             class="fake-go"><span class="icon">${_('go')}</span></button>
         % if query:
         ## Translators, used as label for button that clears search results
-        <a href="${i18n_path(request.path)}" class="button">${_('clear')}</a>
+        <a href="${i18n_path()}" class="button">${_('clear')}</a>
         % endif
         <span class="paging">${simple_pager.body()}</span>
         </p>

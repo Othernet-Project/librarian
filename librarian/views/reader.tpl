@@ -9,7 +9,7 @@ ${meta.title}
 <%block name="main">
 <div class="reader">
     <div class="reader-frame">
-        <iframe id="reader-main" class="reader-main" src="${i18n_path(url('content:file', content_id=meta.md5, filename='index.html'))}"></iframe>
+        <iframe id="reader-main" class="reader-main" src="${i18n_url('content:file', content_id=meta.md5, filename='index.html')}"></iframe>
     </div>
     <div class="reader-meta data">
         <div class="inner">
@@ -30,7 +30,7 @@ ${meta.title}
                 / <span class="special">${_('core')}</span>
                 % endif
             </strong>
-            <a class="button small" href="${i18n_path(url('content:zipball', content_id=meta.md5))}">${_('Download')}</a>
+            <a class="button small" href="${i18n_url('content:zipball', content_id=meta.md5)}">${_('Download')}</a>
             </p>
             <p class="licensing">${meta.human_license}</p>
             ${tags.tags(meta)}

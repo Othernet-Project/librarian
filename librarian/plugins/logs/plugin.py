@@ -11,8 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 from bottle import request
-
-from ...lib.i18n import lazy_gettext as _
+from bottle_utils.i18n import lazy_gettext as _
 
 from ..dashboard import DashboardPlugin
 
@@ -36,4 +35,3 @@ class Dashboard(DashboardPlugin):
         with open(logpath, 'rt') as log:
             logs = iter_lines(list(log)[-100:])
         return dict(logs=logs)
-

@@ -5,7 +5,7 @@ Code is based on `script by Joongi Kim`_.
 
 .. script by Joongi Kim: https://gist.github.com/achimnol/3021995
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING

@@ -251,7 +251,6 @@ class Statement(SQL):
         return sql_class(val)
 
 
-
 class Select(Statement):
     def __init__(self, what=['*'], sets=None, where=None, group=None,
                  order=None, limit=None, offset=None):
@@ -405,7 +404,7 @@ class Insert(Statement):
         sql = '{} {}'.format(self.keyword, self.table)
         if self.cols:
             sql += ' {}'.format(self._cols)
-        sql+= ' VALUES {}'.format(self._vals)
+        sql += ' VALUES {}'.format(self._vals)
         return sql + ';'
 
     @property
@@ -429,7 +428,6 @@ class Insert(Statement):
 
 class Replace(Insert):
     keyword = 'REPLACE INTO'
-
 
 
 class Database(object):
@@ -541,6 +539,7 @@ def database_plugin(dbpath, debug=False):
         conn = dbpath
     else:
         conn = Database.connect(dbpath)
+
     def plugin(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):
@@ -549,5 +548,3 @@ def database_plugin(dbpath, debug=False):
             return callback(*args, **kwargs)
         return wrapper
     return plugin
-
-

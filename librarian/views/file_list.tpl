@@ -22,16 +22,16 @@ ${_('Files')}
     <table class="file-list-listing">
         % if path != '.':
         <tr class="up">
-            <% uppath = i18n_path(url('files:path', path=up)) %>
+            <% uppath = i18n_url('files:path', path=up) %>
             <td class="icon"><a href="${uppath}"><span class="icon"></span></a></td>
             ## Translators, used as label for link that leads to parent directory in file listing
             <td colspan="4"><a href="${uppath}">${_('(go up one level)')}<a></td>
         </tr>
         % elif is_missing or is_search:
         <tr class="up">
-            <td class="icon"><a href="${i18n_path(url('files:list'))}"><span class="icon"></span></a></td>
+            <td class="icon"><a href="${i18n_url('files:list')}"><span class="icon"></span></a></td>
             ## Translators, used as label for link that leads to file list
-            <td colspan="4"><a href="${i18n_path(url('files:list'))}">${_('(go to file list)')}<a></td>
+            <td colspan="4"><a href="${i18n_url('files:list')}">${_('(go to file list)')}<a></td>
         </tr>
         % endif
         % if (not dirs) and (not files):
@@ -42,7 +42,7 @@ ${_('Files')}
         % else:
             % for d in dirs:
             <tr class="dir">
-                <% dpath = i18n_path(url('files:path', path=d.path)) %>
+                <% dpath = i18n_url('files:path', path=d.path) %>
                 <td class="icon"><a href="${dpath}"><span class="icon"></span></td>
                 <td class="name" colspan="2"><a href="${dpath}">${d.name}</a></td>
                 <td class="rename">
@@ -61,7 +61,7 @@ ${_('Files')}
             % endfor
             % for f in files:
             <tr class="file">
-                <% fpath = i18n_path(url('files:path', path=f.path)) %>
+                <% fpath = i18n_url('files:path', path=f.path) %>
                 <td class="icon"><a href="${fpath}"><span class="icon"></span></a>
                 <td class="name"><a href="${fpath}">${f.name}</a></td>
                 <td class="size">${h.hsize(f.size)}</td>

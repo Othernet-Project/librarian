@@ -1,7 +1,7 @@
 """
 system.py: System routes such as static files and error handlers
 
-Copyright 2015, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING

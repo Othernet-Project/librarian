@@ -1,7 +1,7 @@
 """
 content.py: routes related to content
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -18,6 +18,9 @@ import subprocess
 from bottle import (
     request, mako_view as view, abort, default_app, static_file, redirect,
     response, mako_template as template)
+from bottle_utils.ajax import roca_view
+from bottle_utils.common import to_unicode
+from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ..core import files
 from ..core import archive
@@ -25,12 +28,8 @@ from ..core import downloads
 from ..core import metadata
 
 from ..lib import auth
-from ..lib import i18n
 from ..lib import send_file
 from ..lib.pager import Pager
-from ..lib.ajax import roca_view
-from ..lib.common import to_unicode
-from ..lib.i18n import lazy_gettext as _, i18n_path
 
 from ..utils import patch_content
 
@@ -68,7 +67,7 @@ def content_list():
 
     if query:
         metas = archive.search_content(query, pager.offset, pager.per_page,
-                                          tag=tag)
+                                       tag=tag)
     else:
         metas = archive.get_content(pager.offset, pager.per_page, tag=tag)
 
@@ -92,7 +91,7 @@ def content_list():
 @view('remove_error')
 def remove_content(content_id):
     """ Delete a single piece of content from archive """
-    redir_path = i18n.i18n_path('/')
+    redir_path = i18n_url('content:list')
     failed = archive.remove_from_archive([content_id])
     if failed:
         assert len(failed) == 1, 'Expected only one failure'
@@ -162,7 +161,8 @@ def show_file_list(path='.'):
         dirs, file_list = files.get_search_results(search)
         is_search = True
         if not len(file_list) and len(dirs) == 1:
-            redirect(i18n_path('/files/%s' % dirs[0].path.replace('\\', '/')))
+            redirect(i18n_url('files:path',
+                              path=dirs[0].path.replace('\\', '/')))
         if not dirs and not file_list:
             is_missing = True
             readme = _('The files you were looking for could not be found')
@@ -204,13 +204,13 @@ def show_file_list(path='.'):
 
 
 def go_to_parent(path):
-    filedir= files.get_file_dir()
-    redirect(i18n.i18n_path('/files/') + os.path.relpath(
-        os.path.dirname(path), filedir))
+    filedir = files.get_file_dir()
+    redirect(i18n_url('files:path', path=os.path.relpath(
+        os.path.dirname(path), filedir)))
 
 
 def delete_path(path):
-    filedir= files.get_file_dir()
+    filedir = files.get_file_dir()
     if not os.path.exists(path):
         abort(404)
     if os.path.isdir(path):
@@ -228,7 +228,7 @@ def rename_path(path):
     if not new_name:
         go_to_parent(path)
     new_name = os.path.normpath(new_name)
-    new_path =  os.path.join(os.path.dirname(path), new_name)
+    new_path = os.path.join(os.path.dirname(path), new_name)
     os.rename(path, new_path)
     go_to_parent(path)
 

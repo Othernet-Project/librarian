@@ -62,7 +62,7 @@ ${_('Updates')}
                         % if meta.get('replaces_title'):
                         <p class="downloads-replaces">
                         ${_('replaces:')} 
-                        <a href="${i18n_path(url('content:reader', content_id=meta['replaces']))}/">
+                        <a href="${i18n_url('content:reader', content_id=meta['replaces'])}/">
                             ${meta['replaces_title'] | h}
                         </a>
                         </p>

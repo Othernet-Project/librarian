@@ -13,6 +13,7 @@ from bottle import mako_view as view
 from ..lib import auth
 from ..plugins import DASHBOARD as DASHBOARD_PLUGINS
 
+
 @auth.login_required()
 @view('dashboard')
 def dashboard():

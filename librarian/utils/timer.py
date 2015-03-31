@@ -23,8 +23,6 @@ except ImportError:
 
 from bottle import response
 
-from ..lib.html import hsize
-
 
 def get_mem():
     if not resource:
@@ -36,6 +34,7 @@ def get_mem():
 def request_timer(label):
     t_header = str('X-%s-Time' % label)
     m_header = str('X-%s-Mem' % label)
+
     def _timer(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):

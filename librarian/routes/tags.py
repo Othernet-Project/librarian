@@ -1,10 +1,19 @@
+"""
+tags.py: Routes related to tags and tagging
+
+Copyright 2014-2015, Outernet Inc.
+Some rights reserved.
+
+This software is free software licensed under the terms of GPLv3. See COPYING
+file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
+"""
+
 import re
 
 from bottle import request, redirect, mako_template as template
+from bottle_utils.ajax import roca_view
 
 from ..core import archive
-
-from ..lib.ajax import roca_view
 
 
 WS = re.compile(r'\s', re.M)
@@ -38,5 +47,3 @@ def edit_tags(meta):
         print('Rendering XHR template with meta', meta)
         return template('_tag_list', meta=meta)
     redirect('/')
-
-

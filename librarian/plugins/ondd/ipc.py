@@ -16,8 +16,7 @@ import xml.etree.ElementTree as ET
 from contextlib import contextmanager
 
 from bottle import request
-
-from ...lib.html import yesno
+from bottle_utils.html import yesno
 
 OUT_ENCODING = 'ascii'
 IN_ENCODING = 'utf8'

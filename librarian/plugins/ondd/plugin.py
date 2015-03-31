@@ -13,8 +13,8 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import logging
 
 from bottle import mako_view as view, request, redirect
+from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
-from ...lib.i18n import lazy_gettext as _, i18n_path
 from ...lib.validate import posint, keyof
 
 from ..exceptions import NotSupportedError
@@ -105,7 +105,7 @@ def get_signal_status():
 @view('ondd/settings', vals={}, errors={}, **CONST)
 def set_settings():
     errors = {}
-    original_route = request.forms.get('backto', i18n_path('/dashboard/'))
+    original_route = request.forms.get('backto', i18n_url('dashboard:main'))
     lnb_type = keyof('lnb', LNB_TYPES,
                      # Translators, error message when LNB type is incorrect
                      _('Invalid choice for LNB type'), errors)
