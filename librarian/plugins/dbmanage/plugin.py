@@ -124,8 +124,9 @@ def perform_backup():
     dbpath = get_dbpath()
     bpath = get_backup_path()
     try:
-        btime = backup(dbpath, bpath)
-        logging.debug('Database backup took %s seconds', btime)
+        with global_lock(always_release=True):
+            btime = backup(dbpath, bpath)
+            logging.debug('Database backup took %s seconds', btime)
     except AssertionError as err:
         return dict(error=err.message)
     return dict(redirect=get_file_url(), time=btime)
