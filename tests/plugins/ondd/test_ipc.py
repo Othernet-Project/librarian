@@ -7,59 +7,33 @@ from librarian.plugins.ondd import ipc as mod
 
 
 MOD = mod.__name__
-SOCK_FILE_PATH = '/tmp/test_server.sock'
 
 
-def get_config(key):
-    config = {'ondd.socket': SOCK_FILE_PATH}
-    return config[key]
+def test_read_timeout():
+    mocked_socket = mock.Mock()
+    mocked_socket.recv.side_effect = mod.socket.timeout
+
+    try:
+        mod.read(mocked_socket)
+        assert False, 'Timeout was expected'
+    except socket.timeout:
+        pass
 
 
-def test_connect_timeout():
-    with mock.patch(MOD + '.socket.socket') as ipc_socket:
-        mocked_socket = mock.Mock()
-        mocked_socket.connect.side_effect = mod.socket.timeout
-        ipc_socket.return_value = mocked_socket
+@mock.patch(MOD + '.open_socket')
+def test_send_timeout(open_socket):
+    mocked_socket = mock.Mock()
+    mocked_socket.send.side_effect = mod.socket.timeout
+    ctx_manager = mock.MagicMock()
+    ctx_manager.__enter__.return_value = mocked_socket
+    open_socket.return_value = ctx_manager
 
-        try:
-            mod.connect(SOCK_FILE_PATH)
-            assert False, 'Timeout was expected'
-        except socket.timeout:
-            pass
-
-
-@mock.patch(MOD + '.request')
-def test_read_timeout(bottle_request):
-    bottle_request.app.config.__getitem__.side_effect = get_config
-
-    with mock.patch(MOD + '.socket.socket') as ipc_socket:
-        mocked_socket = mock.Mock()
-        mocked_socket.recv.side_effect = mod.socket.timeout
-        ipc_socket.return_value = mocked_socket
-
-        try:
-            mod.read(mocked_socket)
-            assert False, 'Timeout was expected'
-        except socket.timeout:
-            pass
+    result = mod.send('some data')
+    assert result is None
 
 
-@mock.patch(MOD + '.request')
-def test_send_timeout(bottle_request):
-    bottle_request.app.config.__getitem__.side_effect = get_config
-
-    with mock.patch(MOD + '.socket.socket') as ipc_socket:
-        mocked_socket = mock.Mock()
-        mocked_socket.send.side_effect = mod.socket.timeout
-        ipc_socket.return_value = mocked_socket
-
-        result = mod.send('some data')
-        assert result is None
-
-
-@mock.patch(MOD + '.request')
-def test_send_success(bottle_request):
-    bottle_request.app.config.__getitem__.side_effect = get_config
+@mock.patch(MOD + '.open_socket')
+def test_send_success(open_socket):
     data = '<xml />'
 
     def mocked_recv(size):
@@ -69,18 +43,17 @@ def test_send_success(bottle_request):
         mocked_recv.called = True
         return data
 
-    with mock.patch(MOD + '.socket.socket') as ipc_socket:
-        mocked_socket = mock.Mock()
-        mocked_socket.recv.side_effect = mocked_recv
-        ipc_socket.return_value = mocked_socket
+    mocked_socket = mock.Mock()
+    mocked_socket.recv.side_effect = mocked_recv
+    ctx_manager = mock.MagicMock()
+    ctx_manager.__enter__.return_value = mocked_socket
+    open_socket.return_value = ctx_manager
 
-        result = mod.send(data)
-        assert ET.tostring(result) == data
+    result = mod.send(data)
+    assert ET.tostring(result) == data
 
 
-@mock.patch(MOD + '.request')
-def test_read_success(bottle_request):
-    bottle_request.app.config.__getitem__.side_effect = get_config
+def test_read_success():
     data = 'something'
 
     def mocked_recv(size):
@@ -90,10 +63,9 @@ def test_read_success(bottle_request):
         mocked_recv.called = True
         return data
 
-    with mock.patch(MOD + '.socket.socket') as ipc_socket:
-        mocked_socket = mock.Mock()
-        mocked_socket.recv.side_effect = mocked_recv
-        ipc_socket.return_value = mocked_socket
+    mocked_socket = mock.Mock()
+    mocked_socket.recv.side_effect = mocked_recv
 
-        result = mod.read(mocked_socket)
-        assert result == data
+    result = mod.read(mocked_socket)
+    assert result == data
+
