@@ -44,6 +44,5 @@ def edit_tags(meta):
     archive.add_tags(meta, new)
     archive.remove_tags(meta, removed)
     if request.is_xhr:
-        print('Rendering XHR template with meta', meta)
         return template('_tag_list', meta=meta)
     redirect('/')

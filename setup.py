@@ -112,12 +112,14 @@ setup(
     include_package_data=True,
     long_description=read('README.rst'),
     classifiers=[
-        'Development Status :: 3 - Alpha',
-        'Topic :: Utilities',
+        'Development Status :: 4 - Beta',
+        'Topic :: Utilties',
+        'Topic :: Communications :: File Sharing'
         'Framework :: Bottle',
         'Environment :: Web Environment',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
     ],
     install_requires=DEPS,
     cmdclass={
