@@ -502,6 +502,10 @@ class Database(object):
         self.execute('BEGIN EXCLUSIVE;')
 
     @property
+    def connection(self):
+        return self.conn
+
+    @property
     def cursor(self):
         if self._cursor is None:
             self._cursor = self.conn.cursor()
@@ -535,17 +539,44 @@ class Database(object):
         return "<Database connection='%s'>" % self.conn.path
 
 
-def database_plugin(dbpath, debug=False):
-    if hasattr(dbpath, 'cursor'):
-        conn = dbpath
-    else:
-        conn = Database.connect(dbpath)
+class DatabaseContainer(dict):
 
+    def __init__(self, *args, **kwargs):
+        super(DatabaseContainer, self).__init__(*args, **kwargs)
+        self.__dict__ = self
+
+
+def get_database_configs(conf):
+    databases = dict()
+    names = conf['database.names']
+    for name in names.split(','):
+        db_name = name.strip().lower()
+        db_path = conf['database.{0}'.format(db_name)]
+        databases[db_name] = db_path
+    return databases
+
+
+def init_databases(database_configs, debug=False):
+    databases = DatabaseContainer()
+    for db_name, db_path in database_configs.items():
+        if isinstance(db_path, Database):
+            db = db_path
+        else:
+            if hasattr(db_path, 'cursor'):
+                conn = db_path
+            else:
+                conn = Database.connect(db_path)
+            db = Database(conn, debug=debug)
+
+        databases[db_name] = db
+    return databases
+
+
+def database_plugin(database_configs, debug=False):
     def plugin(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):
-            request.db_connection = conn
-            request.db = Database(conn, debug=debug)
+            request.db = init_databases(database_configs, debug=debug)
             return callback(*args, **kwargs)
         return wrapper
     return plugin
