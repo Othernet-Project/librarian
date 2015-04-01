@@ -542,9 +542,10 @@ class Database(object):
 
 class DatabaseContainer(dict):
     def __init__(self, connections, debug=False):
-        for name, conn in connections.items():
-            self[name] = CachingLazy(Database, conn, debug=debug)
-        self.__dict__ = self  # allows attribute access
+        super(DatabaseContainer, self).__init__(
+            {n: CachingLazy(Database, c, debug=debug)
+             for n, c in connections.items()})
+        self.__dict__ = self
 
 
 def get_connection(db_name, db_path):
@@ -565,7 +566,7 @@ def get_connections(db_confs):
 
 def get_databases(db_confs, debug=False):
     conns = get_connections(db_confs)
-    return {n: Database(c, debug=debug) for n, c in conns.items()}
+    return DatabaseContainer(conns, debug=debug)
 
 
 def database_plugin(db_confs, debug=False):
