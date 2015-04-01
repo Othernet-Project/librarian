@@ -22,7 +22,7 @@ Vagrant.configure(2) do |config|
 
     # Update system and install system pkgs
     $PACMAN -Syu
-    $PACMAN -S python2-pip libev
+    $PACMAN -S --needed python2-pip libev
 
     # Make sure setuptools is latest version
     easy_install -U setuptools
@@ -31,11 +31,15 @@ Vagrant.configure(2) do |config|
     # Set up directories
     mkdir -p /vagrant/tmp/zipballs
     mkdir -p /vagrant/tmp/downloads
-    ln -s /vagrant/tmp/zipballs /srv/zipballs
-    ln -s /vagrant/tmp/downloads /var/spool/downloads
-    cd /vagrant
+    mkdir -p /var/lib/outernet
+    chmod 755 /var/lib/outernet
+    if ![-e /srv/zipballs]; then
+        ln -s /vagrant/tmp/zipballs /srv/zipballs
+        ln -s /vagrant/tmp/downloads /var/spool/downloads
+    fi
 
     # Install Librarian and dependencies
+    cd /vagrant
     pip2 install -e .
     pip2 install -r /vagrant/conf/dev_requirements.txt
   SHELL
