@@ -201,9 +201,6 @@ def start(db, config, no_auth=False):
 
     debug = config['librarian.debug'] == 'yes'
 
-    config = app.config
-    debug = config['librarian.debug'] == 'yes'
-
     # Srart the server
     logging.info('===== Starting Librarian v%s =====', __version__)
 
