@@ -75,8 +75,14 @@ def serve_dbfile():
 
 def remove_dbfile():
     dbpath = get_dbpath()
-    os.unlink(dbpath)
-    assert not os.path.exists(dbpath), 'Expected db file to be gone'
+    paths = [dbpath, dbpath + '-wal', dbpath + '-shm']
+    for p in paths:
+        try:
+            os.unlink(p)
+        except OSError:
+            pass
+        finally:
+            assert not os.path.exists(p), 'Expected db file to be gone'
 
 
 def run_migrations():
