@@ -28,7 +28,7 @@ def command(name, *args, **kwargs):
 
 
 @command('su', '--su', action='store_true')
-def create_superuser(arg, db, config):
+def create_superuser(arg, databases, config):
     """ create superuser and quit """
     print("Press ctrl-c to abort")
     try:
@@ -42,7 +42,7 @@ def create_superuser(arg, db, config):
         auth.create_user(username=username,
                          password=password,
                          is_superuser=True,
-                         db=db)
+                         db=databases.sessions)
         print("User created.")
     except auth.UserAlreadyExists:
         print("User already exists, please try a different username.")
@@ -55,14 +55,15 @@ def create_superuser(arg, db, config):
 
 
 @command('dump_tables', '--dump-tables', action='store_true')
-def dump_tables(arg, db, config):
+def dump_tables(arg, databases, config):
     """ dump table schema as SQL """
     schema = []
-    db.query(db.Select('*', sets='sqlite_master'))
-    for r in db.results:
-        if r.type == 'table':
-            schema.append(r.sql)
-    print('\n'.join(schema))
+    for db in databases.values():
+        db.query(db.Select('*', sets='sqlite_master'))
+        for r in db.results:
+            if r.type == 'table':
+                schema.append(r.sql)
+        print('\n'.join(schema))
     sys.exit(0)
 
 
@@ -71,9 +72,9 @@ def add_command_switches(parser):
         parser.add_argument(*args, **kwargs)
 
 
-def select_command(args, db, config):
+def select_command(args, databases, config):
     """ Select one of the registered commands and execute it """
     for cmd, fn in COMMANDS.items():
         arg = getattr(args, cmd, None)
         if arg:
-            fn(arg, db, config)
+            fn(arg, databases, config)

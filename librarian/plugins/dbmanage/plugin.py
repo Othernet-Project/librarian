@@ -37,11 +37,12 @@ except RuntimeError:
     raise NotSupportedError('Sqlite3 library not found')
 
 
-MDIR = join(dirname(dirname(dirname(__file__))), 'migrations')
+DB_NAME = 'main'
+MDIR = join(dirname(dirname(dirname(__file__))), 'migrations', DB_NAME)
 
 
 def get_dbpath():
-    return request.app.config['database.path']
+    return request.app.config['database.{0}'.format(DB_NAME)]
 
 
 def get_backup_dir():
@@ -79,10 +80,13 @@ def remove_dbfile():
 
 
 def run_migrations():
-    conn = squery.Database.connect(request.app.config['database.path'])
+    conn = squery.Database.connect(get_dbpath())
     db = squery.Database(conn)
     conf = request.app.config
-    migrations.migrate(db, MDIR, 'librarian.migrations', conf)
+    migrations.migrate(db,
+                       MDIR,
+                       'librarian.migrations.{0}'.format(DB_NAME),
+                       conf)
     logging.debug("Finished running migrations")
     return db
 
@@ -100,21 +104,21 @@ def rebuild():
     dbpath = get_dbpath()
     bpath = get_backup_path()
     start = time.time()
-    db = request.db
+    db = request.db.main
     logging.debug('Locking database')
     db.acquire_lock()
     logging.debug('Acquiring global lock')
     with global_lock(always_release=True):
         db.commit()
-        db.conn.close()
+        db.connection.close()
         call(backup, dbpath, bpath)
         remove_dbfile()
         logging.debug('Removed database')
-        db = request.db = run_migrations()
+        db = request.db.main = run_migrations()
         logging.debug('Prepared new database')
         rows = reload_data(db)
         logging.info('Restored metadata for %s pieces of content', rows)
-        request.db_connection.connect()
+        request.db.conn.connect()
     logging.debug('Released global lock')
     end = time.time()
     return end - start

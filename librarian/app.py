@@ -176,27 +176,34 @@ def prestart(config, logfile=None):
             },
         },
     })
-
+    debug = config['librarian.debug'] == 'yes'
     logging.info('Configuring Librarian environment')
+
+    database_configs = squery.get_database_configs(config)
 
     # Make sure all necessary directories are present
     ensure_dir(dirname(config['logging.output']))
-    ensure_dir(dirname(config['database.path']))
+    for db_path in database_configs.values():
+        ensure_dir(dirname(db_path))
+
     ensure_dir(config['content.spooldir'])
     ensure_dir(config['content.appdir'])
     ensure_dir(config['content.contentdir'])
     ensure_dir(config['content.covers'])
 
     # Run database migrations
-    conn = squery.Database.connect(config['database.path'])
-    db = squery.Database(conn)
-    migrations.migrate(db, in_pkg('migrations'), 'librarian.migrations',
-                       config)
+    databases = squery.init_databases(database_configs, debug=debug)
+    for db_name, db in databases.items():
+        migrations.migrate(db,
+                           in_pkg('migrations', db_name),
+                           'librarian.migrations.{0}'.format(db_name),
+                           config)
+
     logging.debug("Finished running migrations")
-    return db
+    return databases
 
 
-def start(db, config, no_auth=False):
+def start(databases, config, no_auth=False):
     """ Start the application """
 
     debug = config['librarian.debug'] == 'yes'
@@ -210,7 +217,7 @@ def start(db, config, no_auth=False):
 
     # Install bottle plugins
     app.install(request_timer('Handler'))
-    app.install(squery.database_plugin(db, debug=debug))
+    app.install(squery.database_plugin(databases, debug=debug))
     app.install(sessions.session_plugin(
         cookie_name=config['session.cookie_name'],
         secret=config['session.secret'])
@@ -282,9 +289,9 @@ def main(args):
         pprint.pprint(app.config, indent=4)
         sys.exit(0)
 
-    db = prestart(conf, args.log)
-    commands.select_command(args, db, conf)
-    start(db.conn, conf, args.no_auth)
+    databases = prestart(conf, args.log)
+    commands.select_command(args, databases, conf)
+    start(databases, conf, args.no_auth)
 
 
 if __name__ == '__main__':
