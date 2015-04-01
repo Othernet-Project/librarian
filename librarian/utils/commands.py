@@ -34,7 +34,7 @@ def create_superuser(arg, databases, config):
     try:
         username = raw_input('Username: ')
         password = getpass.getpass()
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, EOFError):
         print("Aborted")
         sys.exit(1)
 
@@ -46,10 +46,10 @@ def create_superuser(arg, databases, config):
         print("User created.")
     except auth.UserAlreadyExists:
         print("User already exists, please try a different username.")
-        create_superuser()
+        create_superuser(arg, databases, config)
     except auth.InvalidUserCredentials:
         print("Invalid user credentials, please try again.")
-        create_superuser()
+        create_superuser(arg, databases, config)
 
     sys.exit(0)
 
