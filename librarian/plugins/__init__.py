@@ -14,7 +14,7 @@ import logging
 import bottle
 from bottle import static_file
 
-from .exceptions import *
+from .exceptions import NotSupportedError
 
 PLUGINS_PATH = os.path.dirname(__file__)
 INSTALLED = {}

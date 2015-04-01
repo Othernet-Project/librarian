@@ -1,16 +1,28 @@
-%# Translators, used as page title
-% scripts = ('<script src="%s"></script>' % url('sys:static', path='js/dashboard.js')) + ''.join([p.render_javascript() for p in plugins])
-% rebase('base.tpl', title=_('Dashboard'), extra_scripts=scripts)
+<%inherit file="base.tpl"/>
 
-%# Translators, used as page heading
-<h1>{{ _('Dashboard') }}</h1>
+<%block name="title">
+## Translators, used as page title
+${_('Dashboard')}
+</%block>
 
-<div class="inner">
-    % for plugin in plugins:
-    {{! plugin.render() }}
-    % end
-</div>
+<%block name="heading">
+## Translators, used as page heading
+${_('Dashboard')}
+</%block>
 
+% for plugin in plugins:
+    ${plugin.render()}
+% endfor
+
+<%block name="javascript_templates">
 <script id="collapseIcon" type="text/template">
     <a href="javascript:void(0)" class="dash-expand-icon"></a>
 </script>
+</%block>
+
+<%block name="extra_scripts">
+<script src="${url('sys:static', path='js/dashboard.js')}"></script>
+% for p in plugins:
+    ${p.render_javascript()}
+% endfor
+</%block>

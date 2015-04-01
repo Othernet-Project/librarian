@@ -1,4 +1,5 @@
-<form class="delete-button" action="{{ i18n_path('/delete/%s' % meta.md5) }}" method="POST">
+<%def name="button(meta)">
+<form class="delete-button" action="${i18n_url('content:delete', content_id=meta.md5)}" method="POST">
     <button>
         <span class="icon">
             <span class="altlabel"></span> 
@@ -6,3 +7,4 @@
         </span>
     </button>
 </form>
+</%def>

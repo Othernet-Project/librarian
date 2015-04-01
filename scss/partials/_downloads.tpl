@@ -1,4 +1,0 @@
-tr.selected {
-  color: $green;
-}
-

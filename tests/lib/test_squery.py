@@ -666,6 +666,7 @@ def test_rollback_alias(sqlite3):
     db = mod.Database(mock.Mock())
     db.rollback()
     assert db.conn.rollback.called
+    assert db.conn.commit.called
 
 
 @mock.patch(MOD + '.sqlite3')
@@ -784,17 +785,19 @@ def test_debug_printing(mock_print, *ignored):
     mock_print.assert_called_once_with('SQL:', 'SELECT * FROM foo;')
 
 
-@mock.patch(MOD + '.Database')
-def test_database_plugins_connects(Database):
+@mock.patch(MOD + '.Database.connect')
+def test_database_plugins_connects(db_connect):
     """ When database name is passed as string, connection is made """
-    mod.database_plugin('foo.db')
-    Database.connect.assert_called_once_with('foo.db')
+    plugin = mod.database_plugin({'foo': 'foo.db'})
+    callback = mock.MagicMock(__name__='callback')
+    plugin(callback)()
+    db_connect.assert_called_once_with('foo.db')
 
 
 @mock.patch(MOD + '.Database')
 def test_database_plugin_does_not_connect_if_connection_is_passed(Database):
     """ When connection object is passed, connection is not made """
-    mod.database_plugin(mock.Mock())
+    plugin = mod.database_plugin({})
+    callback = mock.MagicMock(__name__='callback')
+    plugin(callback)()
     assert not Database.connect.called
-
-

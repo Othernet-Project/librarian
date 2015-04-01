@@ -1,7 +1,7 @@
 """
 downloads.py: routes related to downloads
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -12,21 +12,16 @@ import os
 import logging
 from datetime import datetime
 
-from bottle import request, view, redirect, default_app
+from bottle import request, mako_view as view, redirect
+from bottle_utils.i18n import i18n_url, lazy_gettext as _
 
 from ..core import archive
 from ..core import metadata
 from ..core import downloads
 
-from ..lib.i18n import i18n_path, lazy_gettext as _
 from ..lib.pager import Pager
 
-__all__ = ('app', 'list_downloads', 'manage_downloads',)
-
 PER_PAGE = 20
-
-
-app = default_app()
 
 
 @view('downloads', vals={})
@@ -88,5 +83,4 @@ def manage_downloads():
         downloads.remove_downloads(file_list)
     if action == 'deleteall':
         downloads.remove_downloads()
-    redirect(i18n_path('/downloads/'))
-
+    redirect(i18n_url('downloads:list'))

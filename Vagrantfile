@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "terrywang/archlinux"
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "256"
@@ -12,26 +12,35 @@ Vagrant.configure(2) do |config|
     #!/usr/bin/env bash
   
     set -e
-    # Install/remove packages
-    DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
-        sqlite3 build-essential python-dev python-pip libev-dev gettext
-    DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes remove \
-        chef puppet
-    DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes autoremove
+
+    PACMAN="pacman --noconfirm --noprogress"
+
+    # Install reflector to sort mirrors
+    $PACMAN -Sy
+    $PACMAN -S reflector
+    reflector --verbose -l 5 --sort rate --save /etc/pacman.d/mirrorlist
+
+    # Update system and install system pkgs
+    $PACMAN -Syu
+    $PACMAN -S --needed python2-pip libev
 
     # Make sure setuptools is latest version
     easy_install -U setuptools
+    easy_install -U pip
 
     # Set up directories
     mkdir -p /vagrant/tmp/zipballs
     mkdir -p /vagrant/tmp/downloads
-    ln -s /vagrant/tmp/zipballs /srv/zipballs
-    ln -s /vagrant/tmp/downloads /var/spool/downloads
-    cd /vagrant
+    mkdir -p /var/lib/outernet
+    chmod 755 /var/lib/outernet
+    if ![-e /srv/zipballs]; then
+        ln -s /vagrant/tmp/zipballs /srv/zipballs
+        ln -s /vagrant/tmp/downloads /var/spool/downloads
+    fi
 
     # Install Librarian and dependencies
-    python setup.py develop
-    pip install -r /vagrant/conf/dev_requirements.txt
-    pip install repoze.profile
+    cd /vagrant
+    pip2 install -e .
+    pip2 install -r /vagrant/conf/dev_requirements.txt
   SHELL
 end

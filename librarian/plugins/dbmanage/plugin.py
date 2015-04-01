@@ -3,7 +3,7 @@ plugin.py: DB management plugin
 
 Backup and rebuild the database.
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -16,14 +16,13 @@ import logging
 import datetime
 from os.path import dirname, join
 
-from bottle import view, request, static_file
+from bottle import mako_view as view, request, static_file
+from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ...core.archive import process
 from ...core.downloads import get_md5_from_path
 
 from ...lib import squery
-from ...lib.gspawn import call
-from ...lib.i18n import lazy_gettext as _, i18n_path
 from ...lib.lock import global_lock, LockFailureError
 
 from ...utils import migrations
@@ -37,11 +36,12 @@ except RuntimeError:
     raise NotSupportedError('Sqlite3 library not found')
 
 
-MDIR = join(dirname(dirname(dirname(__file__))), 'migrations')
+DB_NAME = 'main'
+MDIR = join(dirname(dirname(dirname(__file__))), 'migrations', DB_NAME)
 
 
 def get_dbpath():
-    return request.app.config['database.path']
+    return request.app.config['database.{0}'.format(DB_NAME)]
 
 
 def get_backup_dir():
@@ -62,7 +62,7 @@ def get_backup_path():
 
 def get_file_url():
     suburl = request.app.config['dbmanage.backups'].replace('\\', '/')
-    return i18n_path(request.app.get_url('files:path', path=suburl))
+    return i18n_url('files:path', path=suburl)
 
 
 def serve_dbfile():
@@ -74,15 +74,24 @@ def serve_dbfile():
 
 def remove_dbfile():
     dbpath = get_dbpath()
-    os.unlink(dbpath)
-    assert not os.path.exists(dbpath), 'Expected db file to be gone'
+    paths = [dbpath, dbpath + '-wal', dbpath + '-shm']
+    for p in paths:
+        try:
+            os.unlink(p)
+        except OSError:
+            pass
+        finally:
+            assert not os.path.exists(p), 'Expected db file to be gone'
 
 
 def run_migrations():
-    conn = squery.Database.connect(request.app.config['database.path'])
+    conn = squery.Database.connect(get_dbpath())
     db = squery.Database(conn)
     conf = request.app.config
-    migrations.migrate(db, MDIR, 'librarian.migrations', conf)
+    migrations.migrate(db,
+                       MDIR,
+                       'librarian.migrations.{0}'.format(DB_NAME),
+                       conf)
     logging.debug("Finished running migrations")
     return db
 
@@ -100,26 +109,28 @@ def rebuild():
     dbpath = get_dbpath()
     bpath = get_backup_path()
     start = time.time()
-    db = request.db
+    db = request.db.main
     logging.debug('Locking database')
     db.acquire_lock()
     logging.debug('Acquiring global lock')
     with global_lock(always_release=True):
-        db.conn.close()
-        call(backup, dbpath, bpath)
+        db.commit()
+        db.connection.close()
+        backup(dbpath, bpath)
         remove_dbfile()
         logging.debug('Removed database')
-        db = request.db = run_migrations()
+        db = request.db.main = run_migrations()
         logging.debug('Prepared new database')
         rows = reload_data(db)
+        db.conn.close()
         logging.info('Restored metadata for %s pieces of content', rows)
-        request.db_connection.connect()
+        request.db_connections['main'].connect()
     logging.debug('Released global lock')
     end = time.time()
     return end - start
 
 
-@view('dbmanage/backup_results', error=None, path=None, time=None)
+@view('dbmanage/backup_results', error=None, redirect=None, time=None)
 def perform_backup():
     dbpath = get_dbpath()
     bpath = get_backup_path()
@@ -128,10 +139,11 @@ def perform_backup():
         logging.debug('Database backup took %s seconds', btime)
     except AssertionError as err:
         return dict(error=err.message)
-    return dict(path=get_file_url(), time=btime)
+    return dict(redirect=get_file_url(), time=btime)
 
 
-@view('dbmanage/rebuild_results', error=None, path=None, time=None, fpath=None)
+@view('dbmanage/rebuild_results', error=None, redirect=None, time=None,
+      fpath=None)
 def perform_rebuild():
     try:
         rtime = rebuild()
@@ -143,7 +155,7 @@ def perform_rebuild():
                             'database rebuild was cancelled. Please make '
                             'sure noone else is using Librarian and '
                             'try again.'))
-    return dict(path=i18n_path(request.app.get_url('content:list')),
+    return dict(redirect=i18n_url('content:list'),
                 time=rtime, fpath=get_file_url())
 
 
@@ -168,4 +180,4 @@ class Dashboard(DashboardPlugin):
     def get_context(self):
         dbpath = self.dbpath
         dbsize = os.stat(dbpath).st_size
-        return locals()
+        return dict(dbpath=dbpath, dbsize=dbsize)

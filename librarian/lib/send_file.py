@@ -100,7 +100,6 @@ class FileRangeWrapper(object):
         self.fd = None
 
 
-
 def get_mimetype(filename):
     """ Guess mime-type based on file's extension
 
@@ -167,4 +166,3 @@ def send_file(fd, filename, size, timestamp):
         headers['Content-Length'] = str(end - start)
         fd = FileRangeWrapper(fd, start, end - start)
     return HTTPResponse(fd, **headers)
-

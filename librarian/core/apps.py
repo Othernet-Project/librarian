@@ -1,7 +1,7 @@
 """
 apps.py: helper functions for dealing with apps
 
-Copyright 2014, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -11,8 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import json
 
 from bottle import request
-
-from ..lib.i18n import i18n_path, lazy_gettext as _
+from bottle_utils.i18n import i18n_url, lazy_gettext as _
 
 from .downloads import ContentError, extract_file
 
@@ -28,13 +27,15 @@ class MetadataError(AppError):
 
 class AppInfo(object):
     """ Class that wraps application metadata """
-    def __init__(self, appid, title, author, version, descriptions={}, behavior=False):
+    # XXX: Could this be a subclass of ``librarian.core.metadata.Meta?
+    def __init__(self, appid, title, author, version, descriptions={},
+                 behavior=False):
         self.appid = appid
         self.title = title
         self.author = author
         self.version = version
         self.descriptions = descriptions
-        self.url = i18n_path(request.app.get_url('apps:app', appid=appid))
+        self.url = i18n_url('apps:app', appid=appid)
         self.icon_behavior = behavior
 
     @property
@@ -45,8 +46,7 @@ class AppInfo(object):
         return self.descriptions.get(request.locale, default_desc)
 
     def asset_url(self, path):
-        return i18n_path(request.app.get_url('apps:asset', appid=self.appid,
-                                             path=path))
+        return i18n_url('apps:asset', appid=self.appid, path=path)
 
 
 def get_app_info(path):
@@ -72,4 +72,3 @@ def get_app_info(path):
             behavior=meta['icon_behavior'])
     except KeyError:
         raise MetadataError('Incomplete metadata')
-

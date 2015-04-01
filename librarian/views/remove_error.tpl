@@ -1,15 +1,15 @@
-%# Translators, used as page title
-% rebase('base', title=_('Content could not be removed'))
+<%inherit file="base.tpl"/>
 
-%# Translators, used as page heading
-<h1>{{ _('Content could not be removed') }}</h1>
+<%block name="title">
+## Translators, used as page title
+${_('Content file missing')}
+</%block>
 
-<div class="inner">
-    %# Translators, message displayed when content cannot be deleted
-    <p>{{ _('Please make sure the storage device is not write-protected and try again.') }}</p>
+<%block name="heading">
+## Translators, used as page heading
+${_('Content file missing')}
+</%block>
 
-    <form method="POST">
-        %# Translators, used as label on button for retrying content removal
-        <button type="submit">{{ _('Retry') }}</button>
-    </form>
-</div>
+## Translators, message displayed when content file is missing, but database record was successfully removed
+<p>${_('The content file was not found, but has been removed from the database. You will be redirected to the content list shortly.')}</p>
+

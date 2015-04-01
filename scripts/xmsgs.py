@@ -115,8 +115,8 @@ if __name__ == '__main__':
                         dest='locales', help='locales directory (defaults to '
                         '"locales" within the specified path, relative to '
                         'specified path)')
-    parser.add_argument('-m', metavar='MODULE', default='main', dest='main',
-                        help='name of the main module (defaults to "main")')
+    parser.add_argument('-m', metavar='MODULEPATH', default='main', dest='main',
+                        help='path of the main module (defaults to "main")')
     parser.add_argument('-i', metavar='PATH', dest='include',
                         help='include PATH in PYTHONPATH')
     parser.add_argument('-d', metavar='NAME', default='messages',
@@ -145,16 +145,21 @@ if __name__ == '__main__':
 
     # Import main module
     try:
-        mod = getattr(__import__(modname), mainmod)
+        mod = __import__(modname)
+        for mod_name in [mn for mn in modname.split('.')
+                         if mn != package_name]:
+            mod = getattr(mod, mod_name)
     except Exception as err:
         print('Error: could not import main module %s' % modname,
               file=sys.stderr)
         print('Error message was: %s' % err, file=sys.stderr)
         sys.exit(1)
 
-    if not hasattr(mod, 'LOCALES'):
-        print('Error: no LOCALES defined in main module', file=sys.stderr)
+    if not hasattr(mod, 'UI_LOCALES'):
+        print('Error: no UI_LOCALES defined in main module', file=sys.stderr)
         sys.exit(1)
+
+    locales = mod.UI_LOCALES
 
     if not hasattr(mod, '__version__'):
         version = None
@@ -168,7 +173,6 @@ if __name__ == '__main__':
     print("Using localedir: %s" % localedir)
 
     # Get list of locales
-    locales = [l[0] for l in mod.LOCALES]
     print("Using locales: %s" % ', '.join(locales))
 
     # Get list of extensions

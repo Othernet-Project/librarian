@@ -1,7 +1,7 @@
 """
 system.py: System routes such as static files and error handlers
 
-Copyright 2015, Outernet Inc.
+Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
 
 This software is free software licensed under the terms of GPLv3. See COPYING
@@ -12,7 +12,7 @@ import logging
 import datetime
 from os.path import dirname, join, basename
 
-from bottle import view, request, static_file
+from bottle import mako_view as view, request, static_file
 
 from librarian import __version__
 
@@ -22,6 +22,10 @@ STATICDIR = join(dirname(dirname(__file__)), 'static')
 
 def send_static(path):
     return static_file(path, root=STATICDIR)
+
+
+def send_favicon():
+    return send_static('img/favicon.ico')
 
 
 def send_logfile():
@@ -46,4 +50,9 @@ def show_error_page(exc):
 
 @view('503')
 def show_maint_page(exc):
+    return dict()
+
+
+@view('403')
+def show_access_denied_page():
     return dict()

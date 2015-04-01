@@ -1,19 +1,23 @@
-% rebase('base', redirect=path)
-<h1>
-%# Translators, used as page heading
-{{ _('Database rebuild') }}
-</h1>
+<%inherit file="../base.tpl"/>
 
-<div class="inner">
-% if path:
-    <p>{{ _('Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section.') }}</p>
+<%block name="title">
+## Translators, used as page title
+${_('Database rebuild')}
+</%block>
+
+<%block name="heading">
+## Translators, used as page heading
+${_('Database rebuild')}
+</%block>
+
+% if redirect:
+    <p>${_('Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section.')}</p>
     % if time:
-        <p>{{ u(ngettext('The operation took %s second', 'The operation took %s seconds', time)) % round(time, 2) }}</p>
-    % end
+        <p>${ngettext('The operation took %s second', 'The operation took %s seconds', time) % round(time, 2)}</p>
+    % endif
 % elif error:
-    <p>{{ _('Database could not be rebuilt. The following error occurred:') }}</p>
-    <p>{{ error }}</p>
-% end
-</div>
+    <p>${_('Database could not be rebuilt. The following error occurred:')}</p>
+    <p>${error}</p>
+% endif
 
 

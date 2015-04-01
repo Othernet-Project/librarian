@@ -60,7 +60,7 @@ def with_tag(q):
 
 
 def get_count(tag=None):
-    db = request.db
+    db = request.db.main
     q = db.Select('COUNT(*) as count', sets='zipballs')
     if tag:
         q.where += 'tag_id == :tag'
@@ -71,7 +71,7 @@ def get_count(tag=None):
 
 def get_search_count(terms, tag=None):
     terms = '%' + terms.lower() + '%'
-    db = request.db
+    db = request.db.main
     q = db.Select('COUNT(*) as count', sets='zipballs',
                   where='title LIKE :terms')
     if tag:
@@ -81,7 +81,7 @@ def get_search_count(terms, tag=None):
 
 
 def get_content(offset=0, limit=0, tag=None):
-    db = request.db
+    db = request.db.main
     q = db.Select(sets='zipballs', order=['-datetime(updated)', '-views'],
                   limit=limit, offset=offset)
     if tag:
@@ -91,14 +91,14 @@ def get_content(offset=0, limit=0, tag=None):
 
 
 def get_single(md5):
-    db = request.db
+    db = request.db.main
     q = db.Select(sets='zipballs', where='md5 = ?')
     db.query(q, md5)
     return db.result
 
 
 def get_titles(ids):
-    db = request.db
+    db = request.db.main
     q = db.Select(['title', 'md5'], sets='zipballs', where=sqlin('md5', ids))
     db.query(q, *ids)
     return db.results
@@ -123,7 +123,7 @@ def get_replacements(metadata):
 def search_content(terms, offset=0, limit=0, tag=None):
     # TODO: tests
     terms = '%' + terms.lower() + '%'
-    db = request.db
+    db = request.db.main
     q = db.Select(sets='zipballs', where='title LIKE :terms',
                   order=CONTENT_ORDER, limit=limit, offset=offset)
     if tag:
@@ -236,7 +236,7 @@ def process(db, content, no_file_ops=False):
 
 
 def add_to_archive(hashes):
-    db = request.db
+    db = request.db.main
     content = ((h, get_spool_zip_path(h)) for h in hashes)
     rows, deleted, copied = process(db, content)
     logging.debug("%s items added to database", rows)
@@ -246,29 +246,29 @@ def add_to_archive(hashes):
 
 
 def remove_from_archive(hashes):
-    # TODO: tests
-    db = request.db
-    success = []
+    db = request.db.main
     failed = []
     for md5, path in ((h, get_zip_path(h)) for h in hashes):
         logging.debug("<%s> removing from archive (#%s)" % (path, md5))
+        if path is None:
+            failed.append(md5)
+            continue
         try:
             os.unlink(path)
         except OSError as err:
             logging.error("<%s> cannot delete: %s" % (path, err))
             failed.append(md5)
             continue
-        success.append(md5)
     with db.transaction() as cur:
-        in_md5s = sqlin('md5', success)
-        logging.debug("Removing %s items from archive database" % len(success))
+        in_md5s = sqlin('md5', hashes)
+        logging.debug("Removing %s items from archive database" % len(hashes))
         q = db.Delete('zipballs', where=in_md5s)
-        db.query(q, *success)
+        db.query(q, *hashes)
         rowcount = cur.rowcount
         q = db.Delete('taggings', where=in_md5s)
-        db.query(q, *success)
+        db.query(q, *hashes)
     logging.debug("%s items removed from database" % rowcount)
-    return success, failed
+    return failed
 
 
 def zipball_count():
@@ -276,7 +276,7 @@ def zipball_count():
 
     :returns:   integer count
     """
-    db = request.db
+    db = request.db.main
     q = db.Select('COUNT(*) as count', 'zipballs')
     db.query(q)
     return db.result.count
@@ -287,7 +287,7 @@ def last_update():
 
     :returns:   datetime object of the last updated zipball
     """
-    db = request.db
+    db = request.db.main
     q = db.Select('updated', sets='zipballs', order='-updated', limit=1)
     db.query(q)
     res = db.result
@@ -300,7 +300,7 @@ def add_view(md5):
     :param md5:     MD5 of the zipball
     :returns:       ``True`` if successful, ``False`` otherwise
     """
-    db = request.db
+    db = request.db.main
     q = db.Update('zipballs', views='views + 1', where='md5 = ?')
     db.query(q, md5)
     assert db.cursor.rowcount == 1, 'Updated more than one row'
@@ -311,7 +311,7 @@ def add_tags(meta, tags):
     """ Take content data and comma-separated tags and add the taggings """
     if not tags:
         return
-    db = request.db
+    db = request.db.main
 
     # First ensure all tags exist
     with db.transaction():
@@ -341,7 +341,7 @@ def remove_tags(meta, tags):
         return
     tag_ids = [meta.tags[name] for name in tags]
     meta.tags = dict((n, i) for n, i in meta.tags.items() if n not in tags)
-    db = request.db
+    db = request.db.main
     with db.transaction():
         q = db.Delete('taggings',
                       where=['md5 = ?', sqlin('tag_id', tag_ids)])
@@ -351,20 +351,28 @@ def remove_tags(meta, tags):
 
 
 def get_tag_name(tag_id):
-    db = request.db
+    db = request.db.main
     q = db.Select('name', sets='tags', where='tag_id = ?')
     db.query(q, tag_id)
     return db.result
 
 
 def get_tag_cloud():
-    db = request.db
+    db = request.db.main
     q = db.Select(['name', 'tag_id', 'COUNT(taggings.tag_id) as count'],
                   sets=db.From('tags', 'taggings', join='NATURAL'),
                   group='taggings.tag_id',
                   order=['-count', 'name'])
     db.query(q)
     return db.results
+
+
+def needs_formatting(md5):
+    """ Whether content needs formatting patch """
+    db = request.db.main
+    q = db.Select('keep_formatting', sets='zipballs', where='md5 = ?')
+    db.query(q, md5)
+    return not db.result.keep_formatting
 
 
 def with_content(func):

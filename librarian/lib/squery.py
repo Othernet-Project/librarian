@@ -17,8 +17,7 @@ from contextlib import contextmanager
 
 import dateutil.parser
 from bottle import request
-
-from .gspawn import call
+from bottle_utils.lazy import CachingLazy
 
 
 SLASH = re.compile(r'\\')
@@ -251,7 +250,6 @@ class Statement(SQL):
         return sql_class(val)
 
 
-
 class Select(Statement):
     def __init__(self, what=['*'], sets=None, where=None, group=None,
                  order=None, limit=None, offset=None):
@@ -405,7 +403,7 @@ class Insert(Statement):
         sql = '{} {}'.format(self.keyword, self.table)
         if self.cols:
             sql += ' {}'.format(self._cols)
-        sql+= ' VALUES {}'.format(self._vals)
+        sql += ' VALUES {}'.format(self._vals)
         return sql + ';'
 
     @property
@@ -429,7 +427,6 @@ class Insert(Statement):
 
 class Replace(Insert):
     keyword = 'REPLACE INTO'
-
 
 
 class Database(object):
@@ -476,31 +473,36 @@ class Database(object):
         :returns:       cursor object
         """
         qry = self._convert_query(qry)
-        call(self.cursor.execute, qry, params or kwparams)
+        self.cursor.execute(qry, params or kwparams)
         return self.cursor
 
     def execute(self, qry, *args, **kwargs):
         qry = self._convert_query(qry)
-        call(self.cursor.execute, qry, *args, **kwargs)
+        self.cursor.execute(qry, *args, **kwargs)
 
     def executemany(self, qry, *args, **kwargs):
         qry = self._convert_query(qry)
-        call(self.cursor.executemany, qry, *args, **kwargs)
+        self.cursor.executemany(qry, *args, **kwargs)
 
     def executescript(self, sql):
-        call(self.cursor.executescript, sql)
+        self.cursor.executescript(sql)
 
     def commit(self):
-        call(self.conn.commit)
+        self.conn.commit()
 
     def rollback(self):
-        call(self.conn.rollback)
+        self.conn.rollback()
+        self.conn.commit()
 
     def refresh_table_stats(self):
         self.execute('ANALYZE sqlite_master;')
 
     def acquire_lock(self):
         self.execute('BEGIN EXCLUSIVE;')
+
+    @property
+    def connection(self):
+        return self.conn
 
     @property
     def cursor(self):
@@ -510,11 +512,11 @@ class Database(object):
 
     @property
     def results(self):
-        return call(self.cursor.fetchall)
+        return self.cursor.fetchall()
 
     @property
     def result(self):
-        return call(self.cursor.fetchone)
+        return self.cursor.fetchone()
 
     @contextmanager
     def transaction(self, silent=False):
@@ -536,18 +538,46 @@ class Database(object):
         return "<Database connection='%s'>" % self.conn.path
 
 
-def database_plugin(dbpath, debug=False):
-    if hasattr(dbpath, 'cursor'):
-        conn = dbpath
+class DatabaseContainer(dict):
+    def __init__(self, connections, debug=False):
+        super(DatabaseContainer, self).__init__(
+            {n: CachingLazy(Database, c, debug=debug)
+             for n, c in connections.items()})
+        self.__dict__ = self
+
+
+def get_connection(db_name, db_path):
+    # FIXME: Add unit tests
+    if isinstance(db_path, Database):
+        conn = db_path.conn
     else:
-        conn = Database.connect(dbpath)
+        if hasattr(db_path, 'cursor'):
+            conn = db_path
+        else:
+            conn = Database.connect(db_path)
+    return conn
+
+
+def get_connections(db_confs):
+    return {n: get_connection(n, p) for n, p in db_confs.items()}
+
+
+def get_databases(db_confs, debug=False):
+    conns = get_connections(db_confs)
+    return DatabaseContainer(conns, debug=debug)
+
+
+def database_plugin(db_confs, debug=False):
+    # Connection objects are held in this closure in a semi-global variable
+    # (``connections``) in order to allow reconnection in cases where we need
+    # to disconnect temporarily (e.g., when perofrming rebuilds)
+    connections = get_connections(db_confs)
+
     def plugin(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):
-            request.db_connection = conn
-            request.db = Database(conn, debug=debug)
+            request.db = DatabaseContainer(connections, debug)
+            request.db_connections = connections
             return callback(*args, **kwargs)
         return wrapper
     return plugin
-
-

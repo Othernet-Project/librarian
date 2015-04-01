@@ -16,7 +16,8 @@ import glob
 import logging
 import zipfile
 
-from ..lib.i18n import lazy_gettext as _
+from bottle_utils.i18n import lazy_gettext as _
+
 from ..utils.lang import RTL_LANGS
 
 
