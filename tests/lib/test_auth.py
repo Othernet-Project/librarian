@@ -13,7 +13,7 @@ MOD = mod.__name__
 
 
 def assert_session_count_is(expected):
-    db = mod.request.db
+    db = mod.request.db.sessions
     query = db.Select('COUNT(*) as count', sets='sessions')
     db.query(query)
     session_count = db.result.count
@@ -26,7 +26,7 @@ def prepare_session(func):
         data = {'some': 'thing'}
         expires = datetime.datetime.utcnow() + datetime.timedelta(seconds=10)
 
-        db = mod.request.db
+        db = mod.request.db.sessions
         query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
         db.execute(query, {'session_id': session_id,
                            'data': json.dumps(data),
@@ -51,7 +51,7 @@ def test_create_user():
 
     mod.create_user(username, password)
 
-    db = mod.request.db
+    db = mod.request.db.sessions
     query = db.Select(sets='users', where='username = ?')
     db.query(query, username)
     user = db.result
@@ -104,7 +104,7 @@ def test_login_required_not_logged_in(bottle_request, bottle_redirect):
 
 @mock.patch(MOD + '.redirect')
 @mock.patch(MOD + '.request')
-def test_login_required_not_logged_in(bottle_request, bottle_redirect):
+def test_login_required_not_logged_in_next_to(bottle_request, bottle_redirect):
     mock_controller = mock.Mock(__name__='controller')
     protected = mod.login_required(next_to='/go-here/')(mock_controller)
 

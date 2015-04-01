@@ -13,20 +13,20 @@ MOD = mod.__name__
 
 
 def get_session(session_id):
-    db = mod.request.db
+    db = mod.request.db.sessions
     query = db.Select(sets='sessions', where='session_id = ?')
     db.query(query, session_id)
     return db.result
 
 
 def add_session(session_data):
-    db = mod.request.db
+    db = mod.request.db.sessions
     query = db.Insert('sessions', cols=('session_id', 'data', 'expires'))
     db.execute(query, session_data)
 
 
 def assert_session_count_is(expected):
-    db = mod.request.db
+    db = mod.request.db.sessions
     query = db.Select('COUNT(*) as count', sets='sessions')
     db.query(query)
     session_count = db.result.count
