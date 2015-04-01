@@ -17,6 +17,7 @@ from contextlib import contextmanager
 
 import dateutil.parser
 from bottle import request
+from bottle_utils.lazy import CachingLazy
 
 from .gspawn import call
 
@@ -540,40 +541,43 @@ class Database(object):
 
 
 class DatabaseContainer(dict):
+    def __init__(self, connections, debug=False):
+        for name, conn in connections.items():
+            self[name] = CachingLazy(Database, conn, debug=debug)
+        self.__dict__ = self  # allows attribute access
 
-    def __init__(self, *args, **kwargs):
-        super(DatabaseContainer, self).__init__(*args, **kwargs)
-        self.__dict__ = self
 
-
-def init_databases(database_configs, debug=False):
-    databases = DatabaseContainer()
-    connections = dict()
-    for db_name, db_path in database_configs.items():
-        if isinstance(db_path, Database):
-            db = db_path
-            conn = db.connection
+def get_connection(db_name, db_path):
+    # FIXME: Add unit tests
+    if isinstance(db_path, Database):
+        conn = db_path.conn
+    else:
+        if hasattr(db_path, 'cursor'):
+            conn = db_path
         else:
-            if hasattr(db_path, 'cursor'):
-                conn = db_path
-            else:
-                conn = Database.connect(db_path)
-            db = Database(conn, debug=debug)
-        connections[db_name] = conn
-        databases[db_name] = db
-    return databases, connections
+            conn = Database.connect(db_path)
+    return conn
 
 
-def database_plugin(database_configs, debug=False):
-    databases, connections = init_databases(database_configs, debug=debug)
+def get_connections(db_confs):
+    return {n: get_connection(n, p) for n, p in db_confs.items()}
+
+
+def get_databases(db_confs, debug=False):
+    conns = get_connections(db_confs)
+    return {n: Database(c, debug=debug) for n, c in conns.items()}
+
+
+def database_plugin(db_confs, debug=False):
+    # Connection objects are held in this closure in a semi-global variable
+    # (``connections``) in order to allow reconnection in cases where we need
+    # to disconnect temporarily (e.g., when perofrming rebuilds)
+    connections = get_connections(db_confs)
 
     def plugin(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):
-            request.db = databases
-            # Database connections must be stored separately, because for some
-            # unknown reasons accessing them through the database object and
-            # trying to reconnect that way will fail.
+            request.db = DatabaseContainer(connections, debug)
             request.db_connections = connections
             return callback(*args, **kwargs)
         return wrapper
