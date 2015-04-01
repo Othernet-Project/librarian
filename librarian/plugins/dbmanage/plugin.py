@@ -23,7 +23,6 @@ from ...core.archive import process
 from ...core.downloads import get_md5_from_path
 
 from ...lib import squery
-from ...lib.gspawn import call
 from ...lib.lock import global_lock, LockFailureError
 
 from ...utils import migrations
@@ -117,12 +116,13 @@ def rebuild():
     with global_lock(always_release=True):
         db.commit()
         db.connection.close()
-        call(backup, dbpath, bpath)
+        backup(dbpath, bpath)
         remove_dbfile()
         logging.debug('Removed database')
         db = request.db.main = run_migrations()
         logging.debug('Prepared new database')
         rows = reload_data(db)
+        db.conn.close()
         logging.info('Restored metadata for %s pieces of content', rows)
         request.db_connections['main'].connect()
     logging.debug('Released global lock')
@@ -135,9 +135,8 @@ def perform_backup():
     dbpath = get_dbpath()
     bpath = get_backup_path()
     try:
-        with global_lock(always_release=True):
-            btime = backup(dbpath, bpath)
-            logging.debug('Database backup took %s seconds', btime)
+        btime = backup(dbpath, bpath)
+        logging.debug('Database backup took %s seconds', btime)
     except AssertionError as err:
         return dict(error=err.message)
     return dict(redirect=get_file_url(), time=btime)
