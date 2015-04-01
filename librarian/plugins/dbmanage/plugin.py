@@ -118,7 +118,7 @@ def rebuild():
         logging.debug('Prepared new database')
         rows = reload_data(db)
         logging.info('Restored metadata for %s pieces of content', rows)
-        request.db.main.conn.connect()
+        request.db_connections['main'].connect()
     logging.debug('Released global lock')
     end = time.time()
     return end - start

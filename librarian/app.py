@@ -193,7 +193,7 @@ def prestart(config, logfile=None):
     ensure_dir(config['content.covers'])
 
     # Run database migrations
-    databases = squery.init_databases(database_configs, debug=debug)
+    databases, _ = squery.init_databases(database_configs, debug=debug)
     for db_name, db in databases.items():
         migrations.migrate(db,
                            in_pkg('migrations', db_name),

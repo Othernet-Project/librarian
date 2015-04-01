@@ -548,25 +548,33 @@ class DatabaseContainer(dict):
 
 def init_databases(database_configs, debug=False):
     databases = DatabaseContainer()
+    connections = dict()
     for db_name, db_path in database_configs.items():
         if isinstance(db_path, Database):
             db = db_path
+            conn = db.connection
         else:
             if hasattr(db_path, 'cursor'):
                 conn = db_path
             else:
                 conn = Database.connect(db_path)
             db = Database(conn, debug=debug)
-
+        connections[db_name] = conn
         databases[db_name] = db
-    return databases
+    return databases, connections
 
 
 def database_plugin(database_configs, debug=False):
+    databases, connections = init_databases(database_configs, debug=debug)
+
     def plugin(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):
-            request.db = init_databases(database_configs, debug=debug)
+            request.db = databases
+            # Database connections must be stored separately, because for some
+            # unknown reasons accessing them through the database object and
+            # trying to reconnect that way will fail.
+            request.db_connections = connections
             return callback(*args, **kwargs)
         return wrapper
     return plugin
