@@ -149,7 +149,7 @@ def create_user(username, password, is_superuser=False, db=None):
                  'created': datetime.datetime.utcnow(),
                  'is_superuser': is_superuser}
 
-    db = db or request.db
+    db = db or request.db.sessions
     query = db.Insert('users', cols=('username',
                                      'password',
                                      'created',
@@ -161,7 +161,7 @@ def create_user(username, password, is_superuser=False, db=None):
 
 
 def get_user(username):
-    db = request.db
+    db = request.db.sessions
     query = db.Select(sets='users', where='username = ?')
     db.query(query, username)
     return db.result

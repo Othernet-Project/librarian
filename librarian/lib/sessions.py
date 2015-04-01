@@ -71,7 +71,7 @@ class Session(object):
     # Session management
 
     def save(self):
-        db = request.db
+        db = request.db.sessions
         q = db.Replace('sessions', cols=['session_id', 'data', 'expires'])
         db.query(q, session_id=self.id, data=self._dump(),
                  expires=self.expires)
@@ -79,7 +79,7 @@ class Session(object):
         return self
 
     def delete(self):
-        db = request.db
+        db = request.db.sessions
         q = db.Delete('sessions', where='session_id = ?')
         db.query(q, self.id)
         return self
@@ -212,7 +212,7 @@ class Session(object):
         :param session_id:  unique session ID
         :returns:           valid `Session` instance.
         """
-        db = request.db
+        db = request.db.sessions
         q = db.Select(sets='sessions', where='session_id = ?')
         db.query(q, session_id)
         session_data = db.result

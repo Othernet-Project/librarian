@@ -105,7 +105,7 @@ def used_space():
     :returns:   two-tuple of zipballs count and space used by them
     """
 
-    db = request.db
+    db = request.db.main
     q = db.Select(['COUNT(*) AS count', 'SUM(size) AS total'],
                   sets='zipballs')
     db.query(q)
@@ -149,7 +149,7 @@ def get_old_content():
 
     :returns:   list of content ordered from oldest to newest
     """
-    db = request.db
+    db = request.db.main
     db.query("""
              SELECT md5, updated, title, views
              FROM zipballs
@@ -181,5 +181,3 @@ def cleanup_list(free_space):
         zipball = next(zipballs)
         space -= zipball['size']
         yield zipball
-
-
