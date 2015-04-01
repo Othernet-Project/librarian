@@ -546,16 +546,6 @@ class DatabaseContainer(dict):
         self.__dict__ = self
 
 
-def get_database_configs(conf):
-    databases = dict()
-    names = conf['database.names']
-    for name in names.split(','):
-        db_name = name.strip().lower()
-        db_path = conf['database.{0}'.format(db_name)]
-        databases[db_name] = db_path
-    return databases
-
-
 def init_databases(database_configs, debug=False):
     databases = DatabaseContainer()
     for db_name, db_path in database_configs.items():

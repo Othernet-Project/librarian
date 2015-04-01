@@ -44,6 +44,7 @@ from librarian.lib.template_helpers import template_helper
 
 from librarian.utils import lang
 from librarian.utils import commands
+from librarian.utils import databases as database_utils
 from librarian.utils import migrations
 from librarian.utils.system import ensure_dir
 from librarian.utils.routing import add_routes
@@ -179,7 +180,7 @@ def prestart(config, logfile=None):
     debug = config['librarian.debug'] == 'yes'
     logging.info('Configuring Librarian environment')
 
-    database_configs = squery.get_database_configs(config)
+    database_configs = database_utils.get_database_configs(config)
 
     # Make sure all necessary directories are present
     ensure_dir(dirname(config['logging.output']))
