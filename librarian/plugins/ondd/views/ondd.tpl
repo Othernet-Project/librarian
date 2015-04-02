@@ -11,11 +11,15 @@
 
 ${settings_form.body()}
 
+% if files:
+<h3>
 ## Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
-<h3>${_('Downloads in progress')}</h3>
+${_('Downloads in progress')}
+</h3>
 <div id="ondd-file-list" data-url="${i18n_url('plugins:ondd:files')}">
     ${file_list.body()}
 </div>
+% endif
 
 <script type="text/template" id="satPresets">
     <p class="transponder-selection">

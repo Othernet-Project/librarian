@@ -86,6 +86,14 @@ PRESETS = [
         'modulation': 'QPSK',
         'azimuth': 0,
     }),
+    ('Intelsat 10 (47.5E)', 4, {
+        'frequency': '12602',
+        'symbolrate': '10110',
+        'polarization': 'v',
+        'delivery': 'DVB-S2',
+        'modulation': 'QPSK',
+        'azimuth': 0,
+    }),
 ]
 
 # For easier consumption as view default ctx
@@ -94,7 +102,7 @@ CONST = dict(DELIVERY=DELIVERY, MODULATION=MODULATION,
 
 
 def get_file_list():
-    return (f for f in ipc.get_file_list() if 0 < f['progress'] < 100)
+    return ipc.get_file_list()
 
 
 @view('ondd/_signal')
