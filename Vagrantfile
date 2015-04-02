@@ -32,15 +32,14 @@ Vagrant.configure(2) do |config|
     mkdir -p /vagrant/tmp/zipballs
     mkdir -p /vagrant/tmp/downloads
     mkdir -p /var/lib/outernet
+    ln -f -s /vagrant/tmp/zipballs /srv/zipballs
+    ln -f -s /vagrant/tmp/downloads /var/spool/downloads
     chmod 755 /var/lib/outernet
-    if ![-e /srv/zipballs]; then
-        ln -s /vagrant/tmp/zipballs /srv/zipballs
-        ln -s /vagrant/tmp/downloads /var/spool/downloads
-    fi
+    chmod 755 /srv/zipballs
+    chmod 755 /var/spool/downloads
 
     # Install Librarian and dependencies
-    cd /vagrant
-    pip2 install -e .
+    pip2 install -e /vagrant
     pip2 install -r /vagrant/conf/dev_requirements.txt
   SHELL
 end
