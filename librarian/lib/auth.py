@@ -17,7 +17,7 @@ import urllib
 import urlparse
 
 import pbkdf2
-from bottle import request, abort, redirect
+from bottle import request, abort, redirect, hook
 
 from .template_helpers import template_helper
 
@@ -101,14 +101,30 @@ class Options(object):
 
 class User(object):
 
-    def __init__(self, username=None, is_superuser=None, created=None):
+    def __init__(self, username=None, is_superuser=None, created=None,
+                 options=None):
         self.username = username
         self.is_superuser = is_superuser
         self.created = created
+        if isinstance(options, dict):
+            self.options = Options(options, onchange=self.save_options)
+        else:
+            self.options = Options.from_json(options or '{}',
+                                             onchange=self.save_options)
 
     @property
     def is_authenticated(self):
         return self.username is not None
+
+    def save_options(self):
+        if self.is_authenticated:
+            db = request.db.sessions
+            query = db.Update('users',
+                              options=':options',
+                              where='username = :username')
+            db.query(query,
+                     username=self.username,
+                     options=self.options.to_json())
 
     def logout(self):
         if self.is_authenticated:
@@ -116,7 +132,11 @@ class User(object):
             request.user = User()
 
     def to_json(self):
-        return json.dumps(self.__dict__, cls=DateTimeEncoder)
+        data = dict(username=self.username,
+                    is_superuser=self.is_superuser,
+                    created=self.created,
+                    options=self.options.to_native())
+        return json.dumps(data, cls=DateTimeEncoder)
 
     @classmethod
     def from_json(cls, data):
@@ -214,8 +234,8 @@ def login_user(username, password):
     if user and is_valid_password(password, user.password):
         request.user = User(username=user.username,
                             is_superuser=user.is_superuser,
-                            created=user.created)
-        request.session['user'] = request.user.to_json()
+                            created=user.created,
+                            options=user.options)
         request.session.rotate()
         return True
 
@@ -223,6 +243,11 @@ def login_user(username, password):
 
 
 def user_plugin():
+    # Set up a hook, so handlers that raise cannot escape session-saving
+    @hook('after_request')
+    def store_options():
+        request.session['user'] = request.user.to_json()
+
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):

@@ -175,6 +175,7 @@ def test_login_user_success():
     assert mod.request.session.id != old_session_id
     assert mod.request.user.is_authenticated
     assert mod.request.user.username == username
+    assert mod.request.user.options.to_native() == {}
 
 
 @transaction_test(MOD + '.request')
@@ -184,7 +185,6 @@ def test_login_user_invalid_password():
     password = 'ekim'
     mod.create_user(username, password)
     assert mod.login_user(username, 'invalid') is False
-    assert mod.request.session.get('user') is None
     assert not mod.request.user.is_authenticated
 
 
@@ -195,7 +195,6 @@ def test_login_user_invalid_username():
     password = 'ekim'
     mod.create_user(username, password)
     assert mod.login_user('missing', 'invalid') is False
-    assert mod.request.session.get('user') is None
     assert not mod.request.user.is_authenticated
 
 
