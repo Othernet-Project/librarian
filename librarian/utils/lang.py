@@ -82,7 +82,7 @@ UI_LOCALES = (
 )
 
 LANGS = list(sorted(lang_list(LOCALES), key=lang_name_getter))
-SELECT_LANGS = [(None, _('any language'))] + LANGS
+SELECT_LANGS = [('', _('any language'))] + LANGS
 UI_LANGS = list(sorted(lang_list(UI_LOCALES), key=lang_name_getter))
 RTL_LANGS = ['ar', 'he', 'ur', 'yi', 'ji', 'iw', 'fa']
 DEFAULT_LOCALE = 'en'
