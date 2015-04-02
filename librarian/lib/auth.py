@@ -159,7 +159,7 @@ def login_required(redirect_to='/login/', superuser_only=False, next_to=None):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            if not hasattr(request, 'user'):
+            if request.no_auth:
                 return func(*args, **kwargs)
 
             if next_to is None:
@@ -184,7 +184,7 @@ def login_required(redirect_to='/login/', superuser_only=False, next_to=None):
 
 @template_helper
 def is_authenticated():
-    return hasattr(request, 'user') and request.user.is_authenticated
+    return not request.no_auth and request.user.is_authenticated
 
 
 def encrypt_password(password):
@@ -237,7 +237,7 @@ def login_user(username, password):
     return False
 
 
-def user_plugin():
+def user_plugin(no_auth):
     # Set up a hook, so handlers that raise cannot escape session-saving
     @hook('after_request')
     def store_options():
@@ -246,6 +246,7 @@ def user_plugin():
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
+            request.no_auth = no_auth
             user_data = request.session.get('user', '{}')
             request.user = User.from_json(user_data)
             return callback(*args, **kwargs)

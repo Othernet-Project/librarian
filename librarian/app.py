@@ -223,8 +223,7 @@ def start(databases, config, no_auth=False):
         cookie_name=config['session.cookie_name'],
         secret=config['session.secret'])
     )
-    if not no_auth:
-        app.install(auth.user_plugin())
+    app.install(auth.user_plugin(no_auth))
 
     # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))

@@ -88,10 +88,27 @@ def test_create_user_invalid_credentials():
 
 @mock.patch(MOD + '.redirect')
 @mock.patch(MOD + '.request')
+def test_login_required_no_auth(bottle_request, bottle_redirect):
+    mock_controller = mock.Mock(__name__='controller')
+    protected = mod.login_required()(mock_controller)
+
+    bottle_request.no_auth = True
+    bottle_request.fullpath = '/somewhere/'
+    bottle_request.query_string = ''
+    bottle_request.user.is_authenticated = False
+
+    protected('test')
+
+    mock_controller.assert_called_once_with('test')
+
+
+@mock.patch(MOD + '.redirect')
+@mock.patch(MOD + '.request')
 def test_login_required_not_logged_in(bottle_request, bottle_redirect):
     mock_controller = mock.Mock(__name__='controller')
     protected = mod.login_required()(mock_controller)
 
+    bottle_request.no_auth = False
     bottle_request.fullpath = '/somewhere/'
     bottle_request.query_string = ''
     bottle_request.user.is_authenticated = False
@@ -108,6 +125,7 @@ def test_login_required_not_logged_in_next_to(bottle_request, bottle_redirect):
     mock_controller = mock.Mock(__name__='controller')
     protected = mod.login_required(next_to='/go-here/')(mock_controller)
 
+    bottle_request.no_auth = False
     bottle_request.fullpath = '/somewhere/'
     bottle_request.query_string = ''
     bottle_request.user.is_authenticated = False
@@ -124,6 +142,7 @@ def test_login_required_forbidden(bottle_request, bottle_abort):
     mock_controller = mock.Mock(__name__='controller')
     protected = mod.login_required(superuser_only=True)(mock_controller)
 
+    bottle_request.no_auth = False
     bottle_request.fullpath = '/somewhere/'
     bottle_request.query_string = ''
     bottle_request.user.is_authenticated = True
@@ -140,6 +159,7 @@ def test_login_required_success_superuser(bottle_request):
     mock_controller = mock.Mock(__name__='controller')
     protected = mod.login_required(superuser_only=True)(mock_controller)
 
+    bottle_request.no_auth = False
     bottle_request.fullpath = '/somewhere/'
     bottle_request.query_string = ''
     bottle_request.user.is_authenticated = True
