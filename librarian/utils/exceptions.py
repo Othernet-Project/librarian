@@ -17,3 +17,22 @@ class AppWarning(RuntimeWarning):
 class AppStartupWarning(AppWarning):
     """ Warnings related to startup configuration """
     pass
+
+
+class ConfigurationError(Exception):
+    """ Raised when application is not configured correctly """
+    pass
+
+
+class ConfigurationFormatError(ConfigurationError):
+    """ Raised when configuration file is malformed """
+    def __init__(self, keyerr):
+        key = keyerr.args[0]
+        if '.' in key:
+            self.section, self.subsection = key.split('.')
+        else:
+            self.section = 'GLOBAL'
+            self.subsection = key
+        super(ConfigurationFormatError, self).__init__(
+            "Configuration error in section [{}]: missing '{}' setting".format(
+                self.section, self.subsection))
