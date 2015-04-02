@@ -29,6 +29,9 @@ ${_('Library')}
         ## Translators, used as label for button that clears search results
         <a href="${i18n_path(request.path)}" class="button">${_('clear')}</a>
         % endif
+        ${h.vselect('lang', SELECT_LANGS, lang)}<button ## NOTE: keep together
+        ## Translators, used as label for language filter button
+            class="fake-go">${_('filter')}</button>
         <span class="paging">${simple_pager.body()}</span>
         </p>
     </form>

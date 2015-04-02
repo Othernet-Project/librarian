@@ -59,34 +59,40 @@ def with_tag(q):
     q.where += 'tag_id = :tag_id'
 
 
-def get_count(tag=None):
+def get_count(tag=None, lang=None):
     db = request.db.main
     q = db.Select('COUNT(*) as count', sets='zipballs')
     if tag:
         q.where += 'tag_id == :tag'
         q.sets.natural_join('taggings')
-    db.query(q, tag=tag)
+    if lang:
+        q.where += 'language = :lang'
+    db.query(q, tag=tag, lang=lang)
     return db.result.count
 
 
-def get_search_count(terms, tag=None):
+def get_search_count(terms, tag=None, lang=None):
     terms = '%' + terms.lower() + '%'
     db = request.db.main
     q = db.Select('COUNT(*) as count', sets='zipballs',
                   where='title LIKE :terms')
     if tag:
         with_tag(q)
-    db.query(q, terms=terms, tag_id=tag)
+    if lang:
+        q.where += 'language = :lang'
+    db.query(q, terms=terms, tag_id=tag, lang=lang)
     return db.result.count
 
 
-def get_content(offset=0, limit=0, tag=None):
+def get_content(offset=0, limit=0, tag=None, lang=None):
     db = request.db.main
     q = db.Select(sets='zipballs', order=['-datetime(updated)', '-views'],
                   limit=limit, offset=offset)
     if tag:
         with_tag(q)
-    db.query(q, tag_id=tag)
+    if lang:
+        q.where += 'language = :lang'
+    db.query(q, tag_id=tag, lang=lang)
     return db.results
 
 
@@ -120,7 +126,7 @@ def get_replacements(metadata):
     return metadata
 
 
-def search_content(terms, offset=0, limit=0, tag=None):
+def search_content(terms, offset=0, limit=0, tag=None, lang=None):
     # TODO: tests
     terms = '%' + terms.lower() + '%'
     db = request.db.main
@@ -128,7 +134,9 @@ def search_content(terms, offset=0, limit=0, tag=None):
                   order=CONTENT_ORDER, limit=limit, offset=offset)
     if tag:
         with_tag(q)
-    db.query(q, terms=terms, tag_id=tag)
+    if lang:
+        q.where += 'language = :lang'
+    db.query(q, terms=terms, tag_id=tag, lang=lang)
     return db.results
 
 

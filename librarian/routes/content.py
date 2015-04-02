@@ -43,6 +43,10 @@ def content_list():
     conf = request.app.config
     query = request.params.getunicode('q', '').strip()
 
+    default_lang = request.user.options.get('content_language', None)
+    lang = request.params.get('lang', default_lang)
+    request.user.options['content_language'] = lang
+
     try:
         tag = int(request.params.get('tag'))
     except (TypeError, ValueError):
@@ -50,9 +54,9 @@ def content_list():
         tag_name = None
 
     if query:
-        total_items = archive.get_search_count(query, tag=tag)
+        total_items = archive.get_search_count(query, tag=tag, lang=lang)
     else:
-        total_items = archive.get_count(tag=tag)
+        total_items = archive.get_count(tag=tag, lang=lang)
 
     if tag:
         try:
@@ -66,10 +70,16 @@ def content_list():
     pager.get_paging_params()
 
     if query:
-        metas = archive.search_content(query, pager.offset, pager.per_page,
-                                       tag=tag)
+        metas = archive.search_content(query,
+                                       pager.offset,
+                                       pager.per_page,
+                                       tag=tag,
+                                       lang=lang)
     else:
-        metas = archive.get_content(pager.offset, pager.per_page, tag=tag)
+        metas = archive.get_content(pager.offset,
+                                    pager.per_page,
+                                    tag=tag,
+                                    lang=lang)
 
     cover_dir = conf['content.covers']
 
@@ -82,6 +92,7 @@ def content_list():
         pager=pager,
         vals=request.params.decode(),
         query=query,
+        lang=dict(lang=lang),
         tag=tag_name,
         tag_id=tag,
         tag_cloud=archive.get_tag_cloud())
