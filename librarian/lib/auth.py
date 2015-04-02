@@ -8,6 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import copy
 import datetime
 import functools
 import json
@@ -55,6 +56,47 @@ class DateTimeDecoder(json.JSONDecoder):
         except Exception:
             obj['__type__'] = obj_type
             return obj
+
+
+class Options(object):
+    """A dict-like object with a callback that is invoked when changes are made
+    to the object's state."""
+    def __init__(self, data, onchange):
+        self.__data = data
+        self.onchange = onchange
+
+    def get(self, key, default=None):
+        return self.__data.get(key, default)
+
+    def items(self):
+        return self.__data.items()
+
+    def __getitem__(self, key):
+        return self.__data[key]
+
+    def __setitem__(self, key, value):
+        self.__data[key] = value
+        self.onchange()
+
+    def __contains__(self, key):
+        return key in self.__data
+
+    def __delitem__(self, key):
+        del self.__data[key]
+        self.onchange()
+
+    def __len__(self):
+        return len(self.__data)
+
+    def to_json(self):
+        return json.dumps(self.__data)
+
+    def to_native(self):
+        return copy.copy(self.__data)
+
+    @classmethod
+    def from_json(cls, json_data, onchange):
+        return cls(json.loads(json_data), onchange)
 
 
 class User(object):
