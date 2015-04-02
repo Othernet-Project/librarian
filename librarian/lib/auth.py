@@ -62,8 +62,11 @@ class Options(object):
     """A dict-like object with a callback that is invoked when changes are made
     to the object's state."""
     def __init__(self, data, onchange):
-        self.__data = data
         self.onchange = onchange
+        if isinstance(data, dict):
+            self.__data = data
+        else:
+            self.__data = json.loads(data or '{}')
 
     def get(self, key, default=None):
         return self.__data.get(key, default)
@@ -94,10 +97,6 @@ class Options(object):
     def to_native(self):
         return copy.copy(self.__data)
 
-    @classmethod
-    def from_json(cls, json_data, onchange):
-        return cls(json.loads(json_data), onchange)
-
 
 class User(object):
 
@@ -106,11 +105,7 @@ class User(object):
         self.username = username
         self.is_superuser = is_superuser
         self.created = created
-        if isinstance(options, dict):
-            self.options = Options(options, onchange=self.save_options)
-        else:
-            self.options = Options.from_json(options or '{}',
-                                             onchange=self.save_options)
+        self.options = Options(options, onchange=self.save_options)
 
     @property
     def is_authenticated(self):
