@@ -34,9 +34,17 @@ def test_connection_object_remebers_dbpath(sqlite3):
 def test_connection_has_sqlite3_connection_api(sqlite3):
     """ Connection object exposes sqlite3.Connection methods and props """
     conn = mod.Connection('foo.db')
-    assert conn.close == sqlite3.connect().close
     assert conn.cursor == sqlite3.connect().cursor
     assert conn.isolation_level == sqlite3.connect().isolation_level
+
+
+@mock.patch(MOD + '.sqlite3', autospec=True)
+def test_connection_close(sqlite3):
+    """ Connection object commits before closing """
+    conn = mod.Connection('foo.db')
+    conn.close()
+    assert sqlite3.connect().commit.called
+    assert sqlite3.connect().close.called
 
 
 @mock.patch(MOD + '.sqlite3', autospec=True)
