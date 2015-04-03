@@ -211,7 +211,7 @@ def prestart(config, logfile=None):
     return databases
 
 
-def start(databases, config, no_auth=False):
+def start(databases, config, no_auth=False, repl=False):
     """ Start the application """
 
     debug = config['librarian.debug']
@@ -275,10 +275,11 @@ def start(databases, config, no_auth=False):
         print('Bye!')
 
     on_interrupt(shutdown)
-    print('Press Ctrl-C to shut down Librarian.')
+    if not repl:
+        print('Press Ctrl-C to shut down Librarian.')
     try:
         while True:
-            if debug:
+            if repl:
                 code.interact('Entering Librarian REPL (type exit() to stop):',
                               local=locals())
                 return shutdown()
@@ -300,6 +301,8 @@ def configure_argparse(parser):
                         '(default: as configured in .ini file)', default=None)
     parser.add_argument('--no-auth', action='store_true',
                         help='disable authentication')
+    parser.add_argument('--repl', action='store_true',
+                        help='start interactive shell after servers start')
     commands.add_command_switches(parser)
 
 
@@ -314,7 +317,7 @@ def main(args):
 
     databases = prestart(conf, args.log)
     commands.select_command(args, databases, conf)
-    return start(databases, conf, args.no_auth)
+    return start(databases, conf, args.no_auth, args.repl)
 
 
 if __name__ == '__main__':
