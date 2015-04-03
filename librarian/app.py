@@ -13,7 +13,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from __future__ import unicode_literals, print_function
 
 import gevent.monkey
-gevent.monkey.patch_all(aggressive=True)
+gevent.monkey.patch_all(aggressive=True, thread=False)
 
 # For more details on the below see: http://bit.ly/18fP1uo
 import gevent.hub
@@ -21,7 +21,6 @@ gevent.hub.Hub.NOT_ERROR = (Exception,)
 
 import sys
 import time
-import code
 import pprint
 import logging
 from logging.config import dictConfig as log_config
@@ -47,12 +46,13 @@ from librarian.lib.template_helpers import template_helper
 
 from librarian.utils import lang
 from librarian.utils import commands
-from librarian.utils import databases as database_utils
 from librarian.utils import migrations
+from librarian.utils.repl import start_repl
 from librarian.utils.system import ensure_dir
 from librarian.utils.routing import add_routes
 from librarian.utils.timer import request_timer
 from librarian.utils.gserver import ServerManager
+from librarian.utils import databases as database_utils
 from librarian.utils.signal_handlers import on_interrupt
 
 from librarian.plugins import install_plugins
@@ -246,7 +246,7 @@ def start(databases, config, no_auth=False, repl=False):
 
     # Install bottle plugins and WSGI middleware
     app.install(request_timer('Total'))
-    app.install(squery.database_plugin(databases, debug=debug))
+    app.install(squery.database_plugin(databases, debug=debug and not repl))
     app.install(sessions.session_plugin(
         cookie_name=config['session.cookie_name'],
         secret=config['session.secret'])
@@ -265,9 +265,17 @@ def start(databases, config, no_auth=False, repl=False):
     servers.start_server('librarian', config, wsgiapp)
     dbconns = [db.conn for name, db in databases.items()]
 
+    if repl:
+        repl_thread = start_repl(locals())
+    else:
+        repl_thread = None
+        print('Press Ctrl-C to shut down Librarian.')
+
     def shutdown(*args, **kwargs):
         """ Cleanly shut down the server """
         logging.info('Librarian is going down.')
+        if repl_thread:
+            repl_thread.join()
         servers.stop_all(5)
         for conn in dbconns:
             conn.close()
@@ -275,18 +283,10 @@ def start(databases, config, no_auth=False, repl=False):
         print('Bye!')
 
     on_interrupt(shutdown)
-    if not repl:
-        print('Press Ctrl-C to shut down Librarian.')
-    else:
-        print('Librarian has started. Exit REPL to shut down.')
+
     try:
         while True:
-            if repl:
-                code.interact('Entering Librarian REPL (type exit() to stop):',
-                              local=locals())
-                return shutdown()
-            else:
-                time.sleep(10)
+            time.sleep(10)
     except KeyboardInterrupt:
         logging.debug('Keyboard interrupt received')
     return shutdown()
