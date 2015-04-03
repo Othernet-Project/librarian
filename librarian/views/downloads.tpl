@@ -30,7 +30,14 @@ ${_('Updates')}
 
 
 <div class="inner">
-    <div class="controls">${simple_pager.body()}</div>
+    <div class="controls">
+        <form id="pager" class="pager controls">
+            ${h.vselect('lang', SELECT_LANGS, lang)}<button ## NOTE: keep together
+            ## Translators, used as label for language filter button
+                class="fake-go">${_('filter')}</button>
+            ${simple_pager.body()}
+        </form>
+    </div>
 
     <form method="POST">
     % if metadata:
@@ -61,7 +68,7 @@ ${_('Updates')}
                         <p><label for="check-${meta['md5']}"><span${meta.i18n_attrs}>${meta['title'] | h}</span></label></p>
                         % if meta.get('replaces_title'):
                         <p class="downloads-replaces">
-                        ${_('replaces:')} 
+                        ${_('replaces:')}
                         <a href="${i18n_url('content:reader', content_id=meta['replaces'])}/">
                             ${meta['replaces_title'] | h}
                         </a>
