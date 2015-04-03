@@ -79,7 +79,7 @@ ${_('Updates')}
                     </td>
                     <td class="downloads-timestamp do">${h.strft(meta['timestamp'], '%m-%d')}</td>
                     <td class="downloads-ftimestamp do">${meta['ftimestamp'].strftime('%m-%d')}</td>
-                    <td class="downloads-language do">${meta.get('language') or ''}</td>
+                    <td class="downloads-language do">${th.lang_name_safe(meta.get('language'))}</td>
                 </tr>
                 % endfor
             % else:

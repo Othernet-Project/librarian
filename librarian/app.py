@@ -226,6 +226,8 @@ def start(databases, config, no_auth=False, repl=False):
     logging.info('Installed all plugins')
 
     # Set some basic configuration
+    # add `lang_name_safe` to template helpers
+    template_helper(lang.lang_name_safe)
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))
     bottle.BaseTemplate.defaults.update({
         'app_version': __version__,
