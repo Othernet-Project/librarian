@@ -78,7 +78,6 @@ class FormatError(MetadataError):
     pass
 
 
-
 def add_missing_keys(meta):
     """ Make sure metadata dict contains all required keys
 
