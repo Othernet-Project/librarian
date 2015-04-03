@@ -30,6 +30,11 @@ def list_downloads():
     conf = request.app.config
     cover_dir = conf['content.covers']
     selection = request.params.get('sel', '1') != '0'
+
+    default_lang = request.user.options.get('content_language', None)
+    lang = request.params.get('lang', default_lang)
+    request.user.options['content_language'] = lang
+
     zipballs = downloads.get_zipballs()
     zipballs = list(reversed(downloads.order_zipballs(zipballs)))
     if zipballs:
@@ -40,13 +45,16 @@ def list_downloads():
         last_zip = None
         nzipballs = 0
         logging.info('No updates found')
-    pager = Pager(zipballs, pid='downloads')
-    pager.get_paging_params()
+    # Collect metadata of valid zipballs. If a language filter is specified
+    # filter the list based on that.
     metas = []
-    for z, ts in pager.get_items():
+    for z, ts in zipballs:
         logging.debug("<%s> getting metas" % z)
         try:
             meta = downloads.get_metadata(z)
+            if lang and meta['language'] != lang:
+                continue
+
             meta['md5'] = downloads.get_md5_from_path(z)
             meta['ftimestamp'] = datetime.fromtimestamp(ts)
             metas.append(metadata.Meta(meta, cover_dir, zip_path=z))
@@ -57,13 +65,23 @@ def list_downloads():
             logging.error("<%s> error unpacking: %s" % (z, err))
             os.unlink(z)
             continue
-    archive.get_replacements(metas)
+
+    pager = Pager(metas, pid='downloads')
+    pager.get_paging_params()
+    metas_on_page = pager.get_items()
+
+    archive.get_replacements(metas_on_page)
 
     vals = dict(request.params)
     vals.update({'pp': pager.per_page})
 
-    return dict(vals=vals, metadata=metas, selection=selection, pager=pager,
-                nzipballs=nzipballs, last_zip=last_zip)
+    return dict(vals=vals,
+                metadata=metas_on_page,
+                selection=selection,
+                lang=dict(lang=lang),
+                pager=pager,
+                nzipballs=nzipballs,
+                last_zip=last_zip)
 
 
 @view('downloads_error')  # TODO: Add this view
