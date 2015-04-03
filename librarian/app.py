@@ -21,6 +21,7 @@ gevent.hub.Hub.NOT_ERROR = (Exception,)
 
 import sys
 import time
+import code
 import pprint
 import logging
 from logging.config import dictConfig as log_config
@@ -277,7 +278,10 @@ def start(databases, config, no_auth=False):
     print('Press Ctrl-C to shut down Librarian.')
     try:
         while True:
-            time.sleep(10)
+            if debug:
+                code.interact('Entering Librarian REPL:', local=locals())
+            else:
+                time.sleep(10)
     except KeyboardInterrupt:
         logging.debug('Keyboard interrupt received')
     return shutdown()
