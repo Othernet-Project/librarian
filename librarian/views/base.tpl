@@ -11,6 +11,7 @@
         % if redirect is not UNDEFINED:
         <meta http-equiv="refresh" content="5; url=${redirect}">
         % endif
+        <%block name="extra_head"/>
     </head>
     <body>
         <header>
