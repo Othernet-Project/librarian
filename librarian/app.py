@@ -279,7 +279,9 @@ def start(databases, config, no_auth=False):
     try:
         while True:
             if debug:
-                code.interact('Entering Librarian REPL:', local=locals())
+                code.interact('Entering Librarian REPL (type exit() to stop):',
+                              local=locals())
+                return shutdown()
             else:
                 time.sleep(10)
     except KeyboardInterrupt:
