@@ -10,19 +10,14 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 
-from .exceptions import ConfigurationFormatError
+
+def get_database_path(conf, name):
+    return os.path.join(conf['database.path'], name + '.sqlite')
 
 
 def get_database_configs(conf):
     databases = dict()
-    try:
-        names = conf['database.names']
-        path = conf['database.path']
-    except KeyError as err:
-        raise ConfigurationFormatError(err)
-
-    for name in names.split(','):
-        db_name = name.strip().lower()
-        db_path = os.path.join(os.path.normpath(path), db_name)
-        databases[db_name] = db_path
+    names = conf['database.names']
+    for db_name in names:
+        databases[db_name] = get_database_path(conf, db_name)
     return databases

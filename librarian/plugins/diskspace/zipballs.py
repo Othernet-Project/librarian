@@ -16,14 +16,6 @@ from bottle import request
 from ...lib import squery
 
 
-FACTORS = {
-    'b': 1,
-    'k': 1024,
-    'm': 1024 * 1024,
-    'g': 1024 * 1024 * 1024,
-}
-
-
 def get_database(dbpath):
     """ Return database object given database path
 
@@ -113,26 +105,6 @@ def used_space():
     return res[0]['count'], res[0]['total'] or 0
 
 
-def parse_size(size):
-    """ Parses size with B, K, M, or G suffix and returns in size bytes
-
-    :param size:    human-readable size with suffix
-    :returns:       size in bytes or 0 if source string is using invalid
-                    notation
-    """
-    size = size.strip().lower()
-    if size[-1] not in 'bkmg':
-        suffix = 'b'
-    else:
-        suffix = size[-1]
-        size = size[:-1]
-    try:
-        size = float(size)
-    except ValueError:
-        return 0
-    return size * FACTORS[suffix]
-
-
 def needed_space(free_space):
     """ Returns the amount of space that needs to be freed, given free space
 
@@ -141,7 +113,7 @@ def needed_space(free_space):
 
     """
     config = request.app.config
-    return max([0, parse_size(config['storage.minfree']) - free_space])
+    return max([0, config['storage.minfree'] - free_space])
 
 
 def get_old_content():

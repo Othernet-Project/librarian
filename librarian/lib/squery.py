@@ -12,6 +12,7 @@ from __future__ import print_function
 
 import re
 import sqlite3
+import logging
 from functools import wraps
 from contextlib import contextmanager
 
@@ -61,6 +62,7 @@ class Connection(object):
         # Requires SQLite >= 3.7.0
         cur = self._conn.cursor()
         cur.execute('PRAGMA journal_mode=WAL;')
+        logging.debug('Connected to database {}'.format(self.path))
 
     def __getattr__(self, attr):
         return getattr(self._conn, attr)

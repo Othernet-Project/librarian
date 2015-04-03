@@ -25,7 +25,7 @@ from ...core.downloads import get_md5_from_path
 from ...lib import squery
 from ...lib.lock import global_lock, LockFailureError
 
-from ...utils import migrations
+from ...utils import migrations, databases
 
 from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError
@@ -41,7 +41,7 @@ MDIR = join(dirname(dirname(dirname(__file__))), 'migrations', DB_NAME)
 
 
 def get_dbpath():
-    return request.app.config['database.{0}'.format(DB_NAME)]
+    return databases.get_database_path(request.app.config, 'main')
 
 
 def get_backup_dir():

@@ -241,7 +241,7 @@ class Session(object):
 
     @staticmethod
     def get_expiry():
-        life = int(request.app.config['session.lifetime'])
+        life = request.app.config['session.lifetime']
         return datetime.datetime.utcnow() + datetime.timedelta(life)
 
 

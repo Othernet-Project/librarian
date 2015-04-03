@@ -105,9 +105,8 @@ def install_static(app, mod):
 def install_plugins(app):
     plugins = list_plugins()
     conf = app.config
-    to_install = [p for p in plugins if conf.get('plugins.%s' % p) == 'yes']
-    dashboard = [p.strip().lower()
-                 for p in conf.get('dashboard.plugins', '').split(',')]
+    to_install = [p for p in plugins if conf.get('plugins.%s' % p, False)]
+    dashboard = conf['dashboard.plugins']
 
     # Import each plugin module and initialize it
     for mod in to_install:

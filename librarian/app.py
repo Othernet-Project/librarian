@@ -40,6 +40,7 @@ from librarian.lib import squery
 from librarian.lib import auth
 from librarian.lib import sessions
 from librarian.lib.lock import lock_plugin
+from librarian.lib.confloader import ConfDict
 from librarian.lib.template_helpers import template_helper
 
 from librarian.utils import lang
@@ -166,21 +167,23 @@ def prestart(config, logfile=None):
                 'class': 'logging.handlers.RotatingFileHandler',
                 'formatter': 'default',
                 'filename': logfile or config['logging.output'],
-                'maxBytes': int(config['logging.size']),
-                'backupCount': int(config['logging.backups'])
+                'maxBytes': config['logging.size'],
+                'backupCount': config['logging.backups'],
             },
         },
         'formatters': {
             'default': {
                 'format': config['logging.format'],
-                'datefmt': config['logging.date_format']
+                'datefmt': config['logging.date_format'],
             },
         },
     })
-    debug = config['librarian.debug'] == 'yes'
+    debug = config['librarian.debug']
     logging.info('Configuring Librarian environment')
 
     database_configs = database_utils.get_database_configs(config)
+    for db_name, db_path in database_configs.items():
+        logging.debug('Using database {}'.format(db_path))
 
     # Make sure all necessary directories are present
     ensure_dir(dirname(config['logging.output']))
@@ -207,7 +210,7 @@ def prestart(config, logfile=None):
 def start(databases, config, no_auth=False):
     """ Start the application """
 
-    debug = config['librarian.debug'] == 'yes'
+    debug = config['librarian.debug']
 
     # Srart the server
     logging.info('===== Starting Librarian v%s =====', __version__)
@@ -260,10 +263,10 @@ def start(databases, config, no_auth=False):
         config['librarian.port']))
     bottle.run(app=wsgiapp,
                server=config['librarian.server'],
-               quiet=config['librarian.log'] != 'yes',
+               quiet=config['librarian.log'],
                host=config['librarian.bind'],
-               reloader=config['librarian.reloader'] == 'yes',
-               port=int(config['librarian.port']))
+               reloader=config['librarian.reloader'],
+               port=config['librarian.port'])
 
 
 def configure_argparse(parser):
@@ -281,7 +284,7 @@ def configure_argparse(parser):
 
 
 def main(args):
-    app.config.load_config(args.conf)
+    app.config = ConfDict.from_file(args.conf)
     conf = app.config
 
     if args.debug_conf:

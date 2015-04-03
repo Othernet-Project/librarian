@@ -46,7 +46,7 @@ def is_expired(secs):
     :returns:       whether file has expired
     """
     config = request.app.config
-    maxage = timedelta(days=int(config['content.keep']))
+    maxage = timedelta(days=config['content.keep'])
     filetime = datetime.fromtimestamp(secs)
     now = datetime.now()
     return now - filetime >= maxage
@@ -268,4 +268,3 @@ def remove_downloads(md5s=None):
             logging.debug("<%s> removed" % path)
         except OSError as err:
             logging.error("<%s> cound not remove: %s" % (path, err))
-
