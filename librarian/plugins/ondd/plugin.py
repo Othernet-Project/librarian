@@ -102,7 +102,8 @@ CONST = dict(DELIVERY=DELIVERY, MODULATION=MODULATION,
 
 
 def get_file_list():
-    return ipc.get_file_list()
+    return list(reversed(sorted(
+        ipc.get_file_list(), key=lambda x: x['progress'])))
 
 
 @view('ondd/_signal')
