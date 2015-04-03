@@ -268,7 +268,8 @@ def start(databases, config, no_auth=False, repl=False):
     dbconns = [db.conn for name, db in databases.items()]
 
     if repl:
-        repl_thread = start_repl(locals())
+        repl_thread = start_repl(
+            locals(), 'Press Ctrl-C to shut down Librarian.')
     else:
         repl_thread = None
         print('Press Ctrl-C to shut down Librarian.')
@@ -282,7 +283,7 @@ def start(databases, config, no_auth=False, repl=False):
         for conn in dbconns:
             conn.close()
         logging.info('Clean shutdown completed')
-        print('Bye!')
+        print('Bye! Have a nice day! Those books are due Tuesday, by the way!')
 
     on_interrupt(shutdown)
 
