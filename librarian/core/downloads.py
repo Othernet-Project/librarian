@@ -16,6 +16,7 @@ from datetime import datetime, timedelta
 from bottle import request
 
 from .metadata import convert_json, DecodeError, FormatError
+from ..utils.cache import cached
 
 
 class ContentError(BaseException):
@@ -189,6 +190,7 @@ def get_file(path, filename):
     return extract_file(path, filename)
 
 
+@cached()
 def get_metadata(path):
     """ Extract metadata file from zipball and return its content
 
