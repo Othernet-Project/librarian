@@ -62,6 +62,18 @@ class ServerManager(object):
         assert not server.started, 'Expected server to be stopped'
         return True
 
+    def get(self, label):
+        server_conf = self.servers.get(label)
+        if not server_conf:
+            return None
+        return server_conf['server']
+
+    def status(self, label):
+        server_conf = self.servers.get(label)
+        if not server_conf:
+            return ('not running', None, None)
+        return ('running', server_conf['host'], server_conf['port'])
+
     @property
     def server_data(self):
         for label, conf in self.servers.items():
