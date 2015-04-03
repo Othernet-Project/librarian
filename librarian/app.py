@@ -20,6 +20,7 @@ import gevent.hub
 gevent.hub.Hub.NOT_ERROR = (Exception,)
 
 import sys
+import time
 import pprint
 import logging
 from logging.config import dictConfig as log_config
@@ -50,6 +51,8 @@ from librarian.utils import migrations
 from librarian.utils.system import ensure_dir
 from librarian.utils.routing import add_routes
 from librarian.utils.timer import request_timer
+from librarian.utils.gserver import ServerManager
+from librarian.utils.signal_handlers import on_interrupt
 
 from librarian.plugins import install_plugins
 
@@ -212,6 +215,8 @@ def start(databases, config, no_auth=False):
 
     debug = config['librarian.debug']
 
+    servers = ServerManager()
+
     # Srart the server
     logging.info('===== Starting Librarian v%s =====', __version__)
 
@@ -255,16 +260,27 @@ def start(databases, config, no_auth=False):
 
     # Prepare to start
     bottle.debug(debug)
-    print('Starting %s server <http://%s:%s/>' % (
-        config['librarian.server'],
-        config['librarian.bind'],
-        config['librarian.port']))
-    bottle.run(app=wsgiapp,
-               server=config['librarian.server'],
-               quiet=config['librarian.log'],
-               host=config['librarian.bind'],
-               reloader=config['librarian.reloader'],
-               port=config['librarian.port'])
+
+    servers.start_server('librarian', config, wsgiapp)
+    dbconns = [db.conn for name, db in databases.items()]
+
+    def shutdown(*args, **kwargs):
+        """ Cleanly shut down the server """
+        logging.info('Librarian is going down.')
+        servers.stop_all(5)
+        for conn in dbconns:
+            conn.close()
+        logging.info('Clean shutdown completed')
+        print('Bye!')
+
+    on_interrupt(shutdown)
+    print('Press Ctrl-C to shut down Librarian.')
+    try:
+        while True:
+            time.sleep(10)
+    except KeyboardInterrupt:
+        logging.debug('Keyboard interrupt received')
+    return shutdown()
 
 
 def configure_argparse(parser):
@@ -292,7 +308,7 @@ def main(args):
 
     databases = prestart(conf, args.log)
     commands.select_command(args, databases, conf)
-    start(databases, conf, args.no_auth)
+    return start(databases, conf, args.no_auth)
 
 
 if __name__ == '__main__':
@@ -304,6 +320,6 @@ if __name__ == '__main__':
 
     if args.version:
         print('v%s' % __version__)
-        sys.exit(0)
+        sys.exit()
 
-    main(args)
+    sys.exit(main(args))

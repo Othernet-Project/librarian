@@ -64,6 +64,10 @@ class Connection(object):
         cur.execute('PRAGMA journal_mode=WAL;')
         logging.debug('Connected to database {}'.format(self.path))
 
+    def close(self):
+        self._conn.commit()
+        self._conn.close()
+
     def __getattr__(self, attr):
         return getattr(self._conn, attr)
 
