@@ -29,6 +29,7 @@ def transaction_test(bottle_request_paths):
                 bottle_request.db.sessions = db
                 patchers.append(patcher)
 
+            bottle_request.app.config = {'session.lifetime': 1}
             result = func(*args, **kwargs)
 
             [p.stop() for p in patchers]
