@@ -12,7 +12,7 @@ import logging
 import datetime
 from os.path import dirname, join, basename
 
-from bottle import mako_view as view, request, static_file
+from bottle import mako_view as view, request, static_file, abort
 
 from librarian import __version__
 
@@ -63,3 +63,7 @@ def show_page_missing(exc):
 @view('403')
 def show_access_denied_page():
     return dict()
+
+
+def all_404(path):
+    abort(404)
