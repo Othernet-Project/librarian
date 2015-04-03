@@ -53,6 +53,13 @@ def show_maint_page(exc):
     return dict()
 
 
+@view('404')
+def show_page_missing(exc):
+    print(exc)
+    print(dir(request))
+    return dict()
+
+
 @view('403')
 def show_access_denied_page():
     return dict()

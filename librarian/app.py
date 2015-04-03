@@ -154,12 +154,13 @@ ROUTES = (
 
 app = bottle.default_app()
 add_routes(app, ROUTES)
+app.error(403)(system.show_access_denied_page)
+app.error(404)(system.show_page_missing)
 app.error(500)(system.show_error_page)
 app.error(503)(system.show_maint_page)
-app.error(403)(system.show_access_denied_page)
 
 
-def prestart(config, logfile=None):
+def prestart(config, logfile=None, debug=False):
     log_config({
         'version': 1,
         'root': {
@@ -182,7 +183,7 @@ def prestart(config, logfile=None):
             },
         },
     })
-    debug = config['librarian.debug']
+    debug = debug or config['librarian.debug']
     logging.info('Configuring Librarian environment')
 
     database_configs = database_utils.get_database_configs(config)
@@ -211,10 +212,10 @@ def prestart(config, logfile=None):
     return databases
 
 
-def start(databases, config, no_auth=False, repl=False):
+def start(databases, config, no_auth=False, repl=False, debug=False):
     """ Start the application """
 
-    debug = config['librarian.debug']
+    debug = debug or config['librarian.debug']
 
     servers = ServerManager()
 
@@ -254,8 +255,7 @@ def start(databases, config, no_auth=False, repl=False):
         secret=config['session.secret'])
     )
     app.install(auth.user_plugin(no_auth))
-    wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
-    wsgiapp = I18NPlugin(wsgiapp, langs=lang.UI_LANGS,
+    wsgiapp = I18NPlugin(app, langs=lang.UI_LANGS,
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
@@ -264,6 +264,9 @@ def start(databases, config, no_auth=False, repl=False):
     # Prepare to start
     bottle.debug(debug)
 
+    # We are passing the ``wsgiapp`` object here because that's the one that
+    # contains the I18N middleware. If we pass ``app`` object, then we won't
+    # have the I18N middleware active at all.
     servers.start_server('librarian', config, wsgiapp)
     dbconns = [db.conn for name, db in databases.items()]
 
@@ -300,6 +303,8 @@ def configure_argparse(parser):
                         'file', default=CONFPATH)
     parser.add_argument('--debug-conf', action='store_true', help='print out '
                         'the configuration in use and exit')
+    parser.add_argument('--debug', action='store_true', help='enable '
+                        'debugging')
     parser.add_argument('--version', action='store_true', help='print out '
                         'version number and exit')
     parser.add_argument('--log', metavar='PATH', help='path to log file '
@@ -320,9 +325,9 @@ def main(args):
         pprint.pprint(app.config, indent=4)
         sys.exit(0)
 
-    databases = prestart(conf, args.log)
+    databases = prestart(conf, args.log, args.debug)
     commands.select_command(args, databases, conf)
-    return start(databases, conf, args.no_auth, args.repl)
+    return start(databases, conf, args.no_auth, args.repl, args.debug)
 
 
 if __name__ == '__main__':
