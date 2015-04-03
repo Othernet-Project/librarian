@@ -29,18 +29,19 @@ To exit the REPL, type exit() or Ctrl-D (Ctrl-Z followed by Enter on Windows).
 """
 
 
-def repl_factory(local):
+def repl_factory(local, exit_message):
     def repl_starter():
         code.interact(banner=BANNER, local=local)
+        print(exit_message)
     return repl_starter
 
 
-def start_repl(local={}):
+def start_repl(local={}, exit_message='Exiting'):
     """ Start Librarian REPL interface in a separate thread
 
     :param local:   dictionary representing local context for the REPL
     :returns:       ``threading.Thread`` object
     """
-    thread = threading.Thread(target=repl_factory(local))
+    thread = threading.Thread(target=repl_factory(local, exit_message))
     thread.start()
     return thread
