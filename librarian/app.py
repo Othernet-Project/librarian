@@ -219,15 +219,6 @@ def start(databases, config, no_auth=False):
     install_plugins(app)
     logging.info('Installed all plugins')
 
-    # Install bottle plugins
-    app.install(request_timer('Handler'))
-    app.install(squery.database_plugin(databases, debug=debug))
-    app.install(sessions.session_plugin(
-        cookie_name=config['session.cookie_name'],
-        secret=config['session.secret'])
-    )
-    app.install(auth.user_plugin(no_auth))
-
     # Set some basic configuration
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))
     bottle.BaseTemplate.defaults.update({
@@ -247,15 +238,22 @@ def start(databases, config, no_auth=False):
         'url': app.get_url,
     })
 
-    # Install bottle plugins
+    # Install bottle plugins and WSGI middleware
+    app.install(request_timer('Total'))
+    app.install(squery.database_plugin(databases, debug=debug))
+    app.install(sessions.session_plugin(
+        cookie_name=config['session.cookie_name'],
+        secret=config['session.secret'])
+    )
+    app.install(auth.user_plugin(no_auth))
     wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
     wsgiapp = I18NPlugin(wsgiapp, langs=lang.UI_LANGS,
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
-    # Add middlewares
     app.install(lock_plugin)
-    app.install(request_timer('Total'))
+    app.install(request_timer('Handler'))
 
+    # Prepare to start
     bottle.debug(debug)
     print('Starting %s server <http://%s:%s/>' % (
         config['librarian.server'],
