@@ -277,6 +277,8 @@ def start(databases, config, no_auth=False, repl=False):
     on_interrupt(shutdown)
     if not repl:
         print('Press Ctrl-C to shut down Librarian.')
+    else:
+        print('Librarian has started. Exit REPL to shut down.')
     try:
         while True:
             if repl:
