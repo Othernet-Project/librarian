@@ -55,6 +55,8 @@ ${_('Updates')}
             <th class="do">${_('broadcast')}</th>
             ## Translators, used as table header, download date
             <th class="do">${_('downloaded')}</th>
+            ## Translators, used as table header, download language
+            <th class="do">${_('language')}</th>
             </tr>
         </thead>
         <tbody>
@@ -77,6 +79,7 @@ ${_('Updates')}
                     </td>
                     <td class="downloads-timestamp do">${h.strft(meta['timestamp'], '%m-%d')}</td>
                     <td class="downloads-ftimestamp do">${meta['ftimestamp'].strftime('%m-%d')}</td>
+                    <td class="downloads-language do">${meta.get('language') or ''}</td>
                 </tr>
                 % endfor
             % else:
