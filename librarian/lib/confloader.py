@@ -74,8 +74,9 @@ class ConfDict(dict):
             raise ConfigurationFormatError(err)
 
     @classmethod
-    def from_file(cls, path, skip_clean=False):
+    def from_file(cls, path, skip_clean=False, **defaults):
         self = cls()
+        self.update(defaults)
         parser = ConfigParser()
         parser.read(path)
         sections = parser.sections()

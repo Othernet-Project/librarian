@@ -312,7 +312,7 @@ def configure_argparse(parser):
 
 
 def main(args):
-    app.config = ConfDict.from_file(args.conf)
+    app.config = ConfDict.from_file(args.conf, catchall=True, autojson=True)
     conf = app.config
 
     if args.debug_conf:
