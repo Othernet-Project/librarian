@@ -27,5 +27,7 @@ class Dashboard(DashboardPlugin):
     name = 'netinterfaces'
 
     def get_context(self):
-        interfaces = sorted(get_network_interfaces(), key=lambda x: x.index)
-        return dict(interfaces=interfaces)
+        interfaces = [iface for iface in get_network_interfaces()
+                      if not iface.is_loopback]
+        sorted_interfaces = sorted(interfaces, key=lambda x: x.index)
+        return dict(interfaces=sorted_interfaces)
