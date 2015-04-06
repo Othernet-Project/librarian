@@ -9,7 +9,7 @@ ${meta.title}
 <%block name="main">
 <div class="reader">
     <div class="reader-frame">
-        <iframe id="reader-main" class="reader-main" src="${i18n_url('content:file', content_id=meta.md5, filename='index.html')}"></iframe>
+        <iframe id="reader-main" class="reader-main" src="${i18n_url('content:file', content_id=meta.md5, filename=meta.entry_point)}"></iframe>
     </div>
     <div class="reader-meta data">
         <div class="inner">
@@ -17,12 +17,12 @@ ${meta.title}
             <strong>
                 ${meta.timestamp.strftime('%Y-%m-%d')}
                 % if meta.is_partner:
-                / ${meta.partner} 
+                / ${meta.partner}
                 / <span class="special">${_('partner')}</span>
                 % endif
 
                 % if meta.is_sponsored:
-                / ${meta.partner} 
+                / ${meta.partner}
                 / <span class="special">${_('sponsored')}</span>
                 % endif
 

@@ -26,16 +26,18 @@ def split_tags(tags):
 
 @roca_view('tag_cloud', '_tag_cloud', template_func=template)
 def tag_cloud():
+    base_path = request.params.get('base_path')
     try:
         current = request.params.get('tag')
     except (ValueError, TypeError):
         current = None
     tags = archive.get_tag_cloud()
-    return dict(tag_cloud=tags, tag=current)
+    return dict(tag_cloud=tags, tag=current, base_path=base_path)
 
 
 @archive.with_content
 def edit_tags(meta):
+    base_path = request.params.get('base_path')
     tags = request.forms.getunicode('tags', '')
     tags = split_tags(tags)
     existing_tags = set(meta.tags.keys())
@@ -44,5 +46,5 @@ def edit_tags(meta):
     archive.add_tags(meta, new)
     archive.remove_tags(meta, removed)
     if request.is_xhr:
-        return template('_tag_list', meta=meta)
+        return template('_tag_list', meta=meta, base_path=base_path)
     redirect('/')

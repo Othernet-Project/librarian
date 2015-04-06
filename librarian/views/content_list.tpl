@@ -15,7 +15,7 @@ ${_('Library')}
 </%block>
 
 <div class="inner">
-    <div id="tag-cloud-container" class="tag-cloud-container" data-url="${i18n_url('tags:list')}" data-current="${tag}">
+    <div id="tag-cloud-container" class="tag-cloud-container" data-url="${i18n_url('tags:list')}" data-current="${tag}" data-base-path="${base_path}">
         ${tloud.cloud(tag_cloud, tag_id, tag)}
     </div>
     <form id="pager" class="pager controls">

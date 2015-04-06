@@ -22,6 +22,8 @@
                 ## Translators, used main navigation menu
                 ${h.link_other(icon + _('Files'), i18n_url('files:list'), request.original_path, h.SPAN, _class="files navicon")}
                 ## Translators, used main navigation menu
+                ${h.link_other(icon + _('Sites'), i18n_url('content:sites_list'), request.original_path, h.SPAN, _class="sites navicon")}
+                ## Translators, used main navigation menu
                 ${h.link_other(icon + _('Apps'), i18n_url('apps:list'), request.original_path, h.SPAN, _class="apps navicon")}
                 ## Translators, used main navigation menu
                 ${h.link_other(icon + _('Updates') + (' (%s)' % updates if updates > 0 else ''), i18n_url('downloads:list'), request.original_path, h.SPAN, _class="updates navicon" + (updates > 0 and ' notice' or ''))}

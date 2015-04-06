@@ -37,9 +37,7 @@ from ..utils import patch_content
 app = default_app()
 
 
-@roca_view('content_list', '_content_list', template_func=template)
-def content_list():
-    """ Show list of content """
+def filter_content(multipage=None):
     conf = request.app.config
     query = request.params.getunicode('q', '').strip()
 
@@ -54,9 +52,14 @@ def content_list():
         tag_name = None
 
     if query:
-        total_items = archive.get_search_count(query, tag=tag, lang=lang)
+        total_items = archive.get_search_count(query,
+                                               tag=tag,
+                                               lang=lang,
+                                               multipage=multipage)
     else:
-        total_items = archive.get_count(tag=tag, lang=lang)
+        total_items = archive.get_count(tag=tag,
+                                        lang=lang,
+                                        multipage=multipage)
 
     if tag:
         try:
@@ -74,12 +77,14 @@ def content_list():
                                        pager.offset,
                                        pager.per_page,
                                        tag=tag,
-                                       lang=lang)
+                                       lang=lang,
+                                       multipage=multipage)
     else:
         metas = archive.get_content(pager.offset,
                                     pager.per_page,
                                     tag=tag,
-                                    lang=lang)
+                                    lang=lang,
+                                    multipage=multipage)
 
     cover_dir = conf['content.covers']
 
@@ -95,7 +100,24 @@ def content_list():
         lang=dict(lang=lang),
         tag=tag_name,
         tag_id=tag,
-        tag_cloud=archive.get_tag_cloud())
+        tag_cloud=archive.get_tag_cloud()
+    )
+
+
+@roca_view('content_list', '_content_list', template_func=template)
+def content_list():
+    """ Show list of content """
+    result = filter_content()
+    result['base_path'] = i18n_url('content:list')
+    return result
+
+
+@roca_view('content_list', '_content_list', template_func=template)
+def content_sites_list():
+    """ Show list of multipage content only """
+    result = filter_content(multipage=True)
+    result['base_path'] = i18n_url('content:sites_list')
+    return result
 
 
 @auth.login_required(next_to='/')
@@ -140,7 +162,8 @@ def content_zipball(content_id):
 def content_reader(meta):
     """ Loads the reader interface """
     archive.add_view(meta.md5)
-    return dict(meta=meta)
+    base_path = i18n_url('content:list')
+    return dict(meta=meta, base_path=base_path)
 
 
 def cover_image(path):
