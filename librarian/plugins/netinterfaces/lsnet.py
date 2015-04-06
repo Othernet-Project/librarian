@@ -1,7 +1,13 @@
-#!/usr/bin/python
+"""
+lsnet.py: Tool for retrieving all network interfaces, based on:
+  http://programmaticallyspeaking.com/getting-network-interfaces-in-python.html
 
-# Based on getifaddrs.py from pydlnadms [http://code.google.com/p/pydlnadms/].
-# Only tested on Linux!
+Copyright 2014-2015, Outernet Inc.
+Some rights reserved.
+
+This software is free software licensed under the terms of GPLv3. See COPYING
+file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
+"""
 
 from socket import AF_INET, AF_INET6, inet_ntop
 from ctypes import (Structure,
