@@ -9,7 +9,6 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from socket import AF_INET, AF_INET6, inet_ntop
 from ctypes import (Structure,
                     Union,
                     POINTER,
@@ -24,6 +23,13 @@ from ctypes import (Structure,
                     c_uint16,
                     c_uint32)
 import ctypes.util
+import array
+import fcntl
+import socket
+
+
+IFF_LOOPBACK = 0x8
+SIOCGIWNAME = 0x8B01
 
 
 class struct_sockaddr(Structure):
@@ -87,12 +93,12 @@ def ifap_iter(ifap):
 def getfamaddr(sa):
     family = sa.sa_family
     addr = None
-    if family == AF_INET:
+    if family == socket.AF_INET:
         sa = cast(pointer(sa), POINTER(struct_sockaddr_in)).contents
-        addr = inet_ntop(family, sa.sin_addr)
-    elif family == AF_INET6:
+        addr = socket.inet_ntop(family, sa.sin_addr)
+    elif family == socket.AF_INET6:
         sa = cast(pointer(sa), POINTER(struct_sockaddr_in6)).contents
-        addr = inet_ntop(family, sa.sin6_addr)
+        addr = socket.inet_ntop(family, sa.sin6_addr)
     return family, addr
 
 
@@ -102,14 +108,43 @@ class NetworkInterface(object):
         self.name = name
         self.index = libc.if_nametoindex(name)
         self.addresses = {}
+        self.is_wireless = False
+        self.is_loopback = False
 
     @property
     def ipv4(self):
-        return self.addresses.get(AF_INET)
+        return self.addresses.get(socket.AF_INET)
 
     @property
     def ipv6(self):
-        return self.addresses.get(AF_INET6)
+        return self.addresses.get(socket.AF_INET6)
+
+    @property
+    def is_ethernet(self):
+        return not self.is_loopback and not self.is_wireless
+
+    @property
+    def interface_type(self):
+        if self.is_ethernet:
+            return 'ethernet'
+        if self.is_wireless:
+            return 'wireless'
+        return 'loopback'
+
+
+def is_wireless(ifa_name):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
+    buf = array.array('c', ifa_name)
+    try:
+        fcntl.ioctl(sock, SIOCGIWNAME, buf, 1)
+    except IOError:
+        return False
+
+    return True
+
+
+def is_loopback(ifa_flags):
+    return bool(ifa_flags & IFF_LOOPBACK)
 
 
 def get_network_interfaces():
@@ -128,6 +163,8 @@ def get_network_interfaces():
             family, addr = getfamaddr(ifa.ifa_addr.contents)
             if addr:
                 i.addresses[family] = addr
+            i.is_wireless = is_wireless(name)
+            i.is_loopback = is_loopback(ifa.ifa_flags)
         return retval.values()
     finally:
         libc.freeifaddrs(ifap)
