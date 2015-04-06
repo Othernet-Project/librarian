@@ -16,7 +16,15 @@
         <td>${iface.name}</td>
         <td>${iface.ipv4}</td>
         <td>${iface.ipv6}</td>
-        <td class="${iface.interface_type}"></td>
+        <%
+        if iface.is_ethernet:
+            interface_type = 'ethernet'
+        elif iface.is_wireless:
+            interface_type = 'wireless'
+        else:
+            interface_type = 'loopback'
+        %>
+        <td class="${interface_type}"></td>
     </tr>
     % endfor
 </table>

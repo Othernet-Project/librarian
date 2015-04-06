@@ -112,14 +112,6 @@ class NetworkInterface(object):
     def is_ethernet(self):
         return not self.is_loopback and not self.is_wireless
 
-    @property
-    def interface_type(self):
-        if self.is_ethernet:
-            return 'ethernet'
-        if self.is_wireless:
-            return 'wireless'
-        return 'loopback'
-
 
 def is_wireless(ifa_name):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
