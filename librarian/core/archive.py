@@ -46,6 +46,8 @@ INSERT_KEYS = (
     'license',
     'language',
     'size',
+    'multipage',
+    'entry_point',
 )
 
 
@@ -59,7 +61,7 @@ def with_tag(q):
     q.where += 'tag_id = :tag_id'
 
 
-def get_count(tag=None, lang=None):
+def get_count(tag=None, lang=None, multipage=None):
     db = request.db.main
     q = db.Select('COUNT(*) as count', sets='zipballs')
     if tag:
@@ -67,11 +69,13 @@ def get_count(tag=None, lang=None):
         q.sets.natural_join('taggings')
     if lang:
         q.where += 'language = :lang'
-    db.query(q, tag=tag, lang=lang)
+    if multipage is not None:
+        q.where += 'multipage = :multipage'
+    db.query(q, tag=tag, lang=lang, multipage=multipage)
     return db.result.count
 
 
-def get_search_count(terms, tag=None, lang=None):
+def get_search_count(terms, tag=None, lang=None, multipage=None):
     terms = '%' + terms.lower() + '%'
     db = request.db.main
     q = db.Select('COUNT(*) as count', sets='zipballs',
@@ -80,11 +84,13 @@ def get_search_count(terms, tag=None, lang=None):
         with_tag(q)
     if lang:
         q.where += 'language = :lang'
-    db.query(q, terms=terms, tag_id=tag, lang=lang)
+    if multipage is not None:
+        q.where += 'multipage = :multipage'
+    db.query(q, terms=terms, tag_id=tag, lang=lang, multipage=multipage)
     return db.result.count
 
 
-def get_content(offset=0, limit=0, tag=None, lang=None):
+def get_content(offset=0, limit=0, tag=None, lang=None, multipage=None):
     db = request.db.main
     q = db.Select(sets='zipballs', order=['-datetime(updated)', '-views'],
                   limit=limit, offset=offset)
@@ -92,7 +98,9 @@ def get_content(offset=0, limit=0, tag=None, lang=None):
         with_tag(q)
     if lang:
         q.where += 'language = :lang'
-    db.query(q, tag_id=tag, lang=lang)
+    if multipage is not None:
+        q.where += 'multipage = :multipage'
+    db.query(q, tag_id=tag, lang=lang, multipage=multipage)
     return db.results
 
 
@@ -126,7 +134,8 @@ def get_replacements(metadata):
     return metadata
 
 
-def search_content(terms, offset=0, limit=0, tag=None, lang=None):
+def search_content(terms, offset=0, limit=0, tag=None, lang=None,
+                   multipage=None):
     # TODO: tests
     terms = '%' + terms.lower() + '%'
     db = request.db.main
@@ -136,7 +145,9 @@ def search_content(terms, offset=0, limit=0, tag=None, lang=None):
         with_tag(q)
     if lang:
         q.where += 'language = :lang'
-    db.query(q, terms=terms, tag_id=tag, lang=lang)
+    if multipage is not None:
+        q.where += 'multipage = :multipage'
+    db.query(q, terms=terms, tag_id=tag, lang=lang, multipage=multipage)
     return db.results
 
 
