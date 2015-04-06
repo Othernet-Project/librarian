@@ -42,19 +42,21 @@ LICENSES = (
     ('ON', _('Other non-free license')),
 )
 
-KEYS = (
-    'url',
-    'title',
-    'images',
-    'timestamp',
-    'keep_formatting',
-    'is_partner',
-    'is_sponsored',
-    'archive',
-    'partner',
-    'license',
-    'language'
-)
+DEFAULTS = {
+    'url': None,
+    'title': None,
+    'images': None,
+    'timestamp': None,
+    'keep_formatting': False,
+    'is_partner': False,
+    'is_sponsored': False,
+    'archive': None,
+    'partner': None,
+    'license': None,
+    'language': None,
+    'multipage': False,
+    'entry_point': 'index.html',
+}
 
 REQUIRED_KEYS = (
     'url',
@@ -86,9 +88,9 @@ def add_missing_keys(meta):
 
     :param meta:    metadata dict
     """
-    for key in KEYS:
+    for key, default in DEFAULTS.items():
         if key not in meta:
-            meta[key] = None
+            meta[key] = default
 
 
 def clean_keys(meta):
@@ -101,7 +103,7 @@ def clean_keys(meta):
     """
     keys = meta.keys()
     for key in keys:
-        if key not in KEYS:
+        if key not in DEFAULTS:
             del meta[key]
 
 
