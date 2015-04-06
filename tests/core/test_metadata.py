@@ -115,13 +115,15 @@ def test_convert_returns__added_keys(json, *ignored):
         'title': None,
         'images': None,
         'timestamp': None,
-        'keep_formatting': None,
-        'is_partner': None,
-        'is_sponsored': None,
+        'keep_formatting': False,
+        'is_partner': False,
+        'is_sponsored': False,
         'archive': None,
         'partner': None,
         'license': None,
         'language': None,
+        'multipage': False,
+        'entry_point': 'index.html'
     }
 
 
