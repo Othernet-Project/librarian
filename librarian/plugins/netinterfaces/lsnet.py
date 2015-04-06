@@ -9,72 +9,59 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from ctypes import (Structure,
-                    Union,
-                    POINTER,
-                    pointer,
-                    get_errno,
-                    cast,
-                    c_ushort,
-                    c_byte,
-                    c_void_p,
-                    c_char_p,
-                    c_uint,
-                    c_uint16,
-                    c_uint32)
-import ctypes.util
 import array
 import fcntl
 import socket
+import ctypes.util
 
 
 IFF_LOOPBACK = 0x8
 SIOCGIWNAME = 0x8B01
 
 
-class struct_sockaddr(Structure):
+class struct_sockaddr(ctypes.Structure):
     _fields_ = [
-        ('sa_family', c_ushort),
-        ('sa_data', c_byte * 14),
+        ('sa_family', ctypes.c_ushort),
+        ('sa_data', ctypes.c_byte * 14),
     ]
 
 
-class struct_sockaddr_in(Structure):
+class struct_sockaddr_in(ctypes.Structure):
     _fields_ = [
-        ('sin_family', c_ushort),
-        ('sin_port', c_uint16),
-        ('sin_addr', c_byte * 4),
+        ('sin_family', ctypes.c_ushort),
+        ('sin_port', ctypes.c_uint16),
+        ('sin_addr', ctypes.c_byte * 4),
     ]
 
 
-class struct_sockaddr_in6(Structure):
+class struct_sockaddr_in6(ctypes.Structure):
     _fields_ = [
-        ('sin6_family', c_ushort),
-        ('sin6_port', c_uint16),
-        ('sin6_flowinfo', c_uint32),
-        ('sin6_addr', c_byte * 16),
-        ('sin6_scope_id', c_uint32),
+        ('sin6_family', ctypes.c_ushort),
+        ('sin6_port', ctypes.c_uint16),
+        ('sin6_flowinfo', ctypes.c_uint32),
+        ('sin6_addr', ctypes.c_byte * 16),
+        ('sin6_scope_id', ctypes.c_uint32),
     ]
 
 
-class union_ifa_ifu(Union):
+class union_ifa_ifu(ctypes.Union):
     _fields_ = [
-        ('ifu_broadaddr', POINTER(struct_sockaddr)),
-        ('ifu_dstaddr', POINTER(struct_sockaddr)),
+        ('ifu_broadaddr', ctypes.POINTER(struct_sockaddr)),
+        ('ifu_dstaddr', ctypes.POINTER(struct_sockaddr)),
     ]
 
 
-class struct_ifaddrs(Structure):
+class struct_ifaddrs(ctypes.Structure):
     pass
 
 struct_ifaddrs._fields_ = [
-    ('ifa_next', POINTER(struct_ifaddrs)),
-    ('ifa_name', c_char_p),
-    ('ifa_flags', c_uint),
-    ('ifa_addr', POINTER(struct_sockaddr)),
-    ('ifa_netmask', POINTER(struct_sockaddr)),
+    ('ifa_next', ctypes.POINTER(struct_ifaddrs)),
+    ('ifa_name', ctypes.c_char_p),
+    ('ifa_flags', ctypes.c_uint),
+    ('ifa_addr', ctypes.POINTER(struct_sockaddr)),
+    ('ifa_netmask', ctypes.POINTER(struct_sockaddr)),
     ('ifa_ifu', union_ifa_ifu),
-    ('ifa_data', c_void_p),
+    ('ifa_data', ctypes.c_void_p),
 ]
 
 
@@ -94,10 +81,12 @@ def getfamaddr(sa):
     family = sa.sa_family
     addr = None
     if family == socket.AF_INET:
-        sa = cast(pointer(sa), POINTER(struct_sockaddr_in)).contents
+        sa = ctypes.cast(ctypes.pointer(sa),
+                         ctypes.POINTER(struct_sockaddr_in)).contents
         addr = socket.inet_ntop(family, sa.sin_addr)
     elif family == socket.AF_INET6:
-        sa = cast(pointer(sa), POINTER(struct_sockaddr_in6)).contents
+        sa = ctypes.cast(ctypes.pointer(sa),
+                         ctypes.POINTER(struct_sockaddr_in6)).contents
         addr = socket.inet_ntop(family, sa.sin6_addr)
     return family, addr
 
@@ -148,10 +137,10 @@ def is_loopback(ifa_flags):
 
 
 def get_network_interfaces():
-    ifap = POINTER(struct_ifaddrs)()
-    result = libc.getifaddrs(pointer(ifap))
+    ifap = ctypes.POINTER(struct_ifaddrs)()
+    result = libc.getifaddrs(ctypes.pointer(ifap))
     if result != 0:
-        raise OSError(get_errno())
+        raise OSError(ctypes.get_errno())
     del result
     try:
         retval = {}
