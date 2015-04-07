@@ -6,7 +6,7 @@
     % endif
     % for t in tag_cloud:
         % if tag != t['name']:
-            <a href="${base_path + h.del_qparam('base_path').set_qparam(tag=t['tag_id']).to_qs()}" class="tag button small">${t['name']} <span class="tag-count">${t['count']}</span></a>
+            <a href="${base_path + h.set_qparam(tag=t['tag_id']).del_qparam('base_path').to_qs()}" class="tag button small">${t['name']} <span class="tag-count">${t['count']}</span></a>
         % else:
             <span class="tag tag-current button small">${t['name']} <span class="tag-count">${t['count']}</span></span>
         % endif
