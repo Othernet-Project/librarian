@@ -6,12 +6,12 @@
 
 <%block name="title">
 ## Translators, used as page title
-${_('Library')}
+${page_title}
 </%block>
 
 <%block name="heading">
 ## Translators, used as page heading
-${_('Library')}
+${page_title}
 </%block>
 
 <div class="inner">

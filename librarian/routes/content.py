@@ -108,7 +108,8 @@ def filter_content(multipage=None):
 def content_list():
     """ Show list of content """
     result = filter_content()
-    result['base_path'] = i18n_url('content:list')
+    result.update({'base_path': i18n_url('content:list'),
+                   'page_title': _('Library')})
     return result
 
 
@@ -116,7 +117,8 @@ def content_list():
 def content_sites_list():
     """ Show list of multipage content only """
     result = filter_content(multipage=True)
-    result['base_path'] = i18n_url('content:sites_list')
+    result.update({'base_path': i18n_url('content:sites_list'),
+                   'page_title': _('Sites')})
     return result
 
 
