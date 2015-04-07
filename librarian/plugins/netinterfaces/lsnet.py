@@ -115,7 +115,7 @@ class NetworkInterface(object):
 
 def is_wireless(ifa_name):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
-    buf = array.array('c', ifa_name)
+    buf = array.array('b', ifa_name)
     try:
         fcntl.ioctl(sock, SIOCGIWNAME, buf, 1)
     except IOError:
