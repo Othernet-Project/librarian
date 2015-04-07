@@ -151,6 +151,17 @@ def search_content(terms, offset=0, limit=0, tag=None, lang=None,
     return db.results
 
 
+def content_for_domain(domain):
+    # TODO: tests
+    db = request.db.main
+    q = db.Select(sets='zipballs',
+                  where='url LIKE :domain',
+                  order=CONTENT_ORDER)
+    domain = '%' + domain.lower() + '%'
+    db.query(q, domain=domain)
+    return db.results
+
+
 def parse_size(size):
     """ Parses size with B, K, M, or G suffix and returns in size bytes
 

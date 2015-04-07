@@ -13,6 +13,8 @@ import stat
 import json
 import shutil
 import logging
+import urlparse
+import functools
 import subprocess
 
 from bottle import (
@@ -32,6 +34,7 @@ from ..lib import send_file
 from ..lib.pager import Pager
 
 from ..utils import patch_content
+from ..utils import netutils
 
 
 app = default_app()
@@ -298,3 +301,31 @@ def handle_file_action(path):
         return template('exec_result', ret=ret, out=out, err=err)
     else:
         abort(400)
+
+
+def get_content_url(root_url, domain):
+    matched_contents = archive.content_for_domain(domain)
+    try:
+        # as multiple matches are possible, pick the first one
+        meta = matched_contents[0]
+    except IndexError:
+        # invalid content domain, redirect to list
+        return urlparse.urljoin(root_url, i18n_url('content:list'))
+    else:
+        return urlparse.urljoin(root_url, i18n_url('content:reader',
+                                                   content_id=meta.md5))
+
+
+def content_resolver_plugin(root_url, reserved_hostnames):
+    def decorator(callback):
+        @functools.wraps(callback)
+        def wrapper(*args, **kwargs):
+            host = netutils.get_current_host()
+            if netutils.is_ip_address(host) or host in reserved_hostnames:
+                # regular librarian access
+                return callback(*args, **kwargs)
+            # a content domain was entered(most likely), try to load it
+            content_url = get_content_url(root_url, host)
+            return redirect(content_url)
+        return wrapper
+    return decorator
