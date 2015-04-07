@@ -310,10 +310,11 @@ def get_content_url(root_url, domain):
         meta = matched_contents[0]
     except IndexError:
         # invalid content domain, redirect to list
-        return urlparse.urljoin(root_url, i18n_url('content:list'))
+        path = i18n_url('content:list')
     else:
-        return urlparse.urljoin(root_url, i18n_url('content:reader',
-                                                   content_id=meta.md5))
+        path = i18n_url('content:reader', content_id=meta.md5)
+
+    return urlparse.urljoin(root_url, path)
 
 
 def content_resolver_plugin(root_url, reserved_hostnames):
