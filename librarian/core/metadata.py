@@ -42,28 +42,34 @@ LICENSES = (
     ('ON', _('Other non-free license')),
 )
 
-DEFAULTS = {
-    'url': None,
-    'title': None,
-    'images': None,
-    'timestamp': None,
-    'keep_formatting': False,
-    'is_partner': False,
-    'is_sponsored': False,
-    'archive': None,
-    'partner': None,
-    'license': None,
-    'language': None,
-    'multipage': False,
-    'entry_point': 'index.html',
+# `default` defaults to `None`
+# `aliases` defaults to `[]`
+# `required` defaults to `False`
+META_SPECIFICATION = {
+    'url': {'required': True},
+    'title': {'required': True},
+    'images': {},
+    'timestamp': {'required': True},
+    'keep_formatting': {'default': False},
+    'is_publisher': {
+        'default': False,
+        'aliases': ['is_partner']
+    },
+    'is_sponsored': {'default': False},
+    'archive': {},
+    'publisher': {
+        'aliases': ['partner']
+    },
+    'license': {
+        'required': True
+    },
+    'language': {},
+    'multipage': {'default': False},
+    'entry_point': {
+        'default': 'index.html',
+        'aliases': ['index']
+    },
 }
-
-REQUIRED_KEYS = (
-    'url',
-    'title',
-    'timestamp',
-    'license',
-)
 
 
 class MetadataError(Exception):
@@ -80,6 +86,18 @@ class FormatError(MetadataError):
     pass
 
 
+def get_default_value(key):
+    return META_SPECIFICATION[key].get('default', None)
+
+
+def get_aliases_for(key):
+    return META_SPECIFICATION[key].get('aliases', [])
+
+
+def is_required(key):
+    return META_SPECIFICATION[key].get('required', False)
+
+
 def add_missing_keys(meta):
     """ Make sure metadata dict contains all required keys
 
@@ -88,9 +106,24 @@ def add_missing_keys(meta):
 
     :param meta:    metadata dict
     """
-    for key, default in DEFAULTS.items():
+    for key in META_SPECIFICATION:
         if key not in meta:
-            meta[key] = default
+            meta[key] = get_default_value(key)
+
+
+def replace_aliases(meta):
+    """ Replace deprecated aliases with their current substitution.
+
+    This function modifies the metadata dict in-place, and has no useful return
+    value.
+
+    :param meta:    metadata dict
+    """
+    for key in META_SPECIFICATION:
+        if key not in meta:
+            for alias in get_aliases_for(key):
+                if alias in meta:
+                    meta[key] = meta.pop(alias)
 
 
 def clean_keys(meta):
@@ -101,9 +134,9 @@ def clean_keys(meta):
 
     :param meta:    metadta dict
     """
-    keys = meta.keys()
-    for key in keys:
-        if key not in DEFAULTS:
+    valid_keys = META_SPECIFICATION.keys()
+    for key in meta.keys():
+        if key not in valid_keys:
             del meta[key]
 
 
@@ -121,8 +154,9 @@ def convert_json(meta):
         meta = json.loads(meta)
     except ValueError as err:
         raise DecodeError("Invalid JSON")
-    for key in REQUIRED_KEYS:
-        if key not in meta:
+    replace_aliases(meta)
+    for key in META_SPECIFICATION:
+        if key not in meta and is_required(key):
             raise FormatError("Mandatory key '%s' missing" % key)
     add_missing_keys(meta)
     return meta
