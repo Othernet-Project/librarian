@@ -193,8 +193,8 @@ class Meta(object):
         'core': _('core'),
         # Translators, used as label, meaning content was sponsored by someone
         'sponsored': _('sponsored'),
-        # Translators, used as label, meaning content is from a partner
-        'partner': _('partner')
+        # Translators, used as label, meaning content is from a publisher
+        'publisher': _('publisher')
     }
 
     def __init__(self, meta, cover_dir, zip_path=None):
@@ -310,8 +310,8 @@ class Meta(object):
             return 'core'
         elif self.meta.get('is_sponsored'):
             return 'sponsored'
-        elif self.meta.get('is_partner'):
-            return 'partner'
+        elif self.meta.get('is_publisher'):
+            return 'publisher'
         return 'core'
 
     @property

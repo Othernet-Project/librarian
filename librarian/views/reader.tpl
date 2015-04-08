@@ -16,13 +16,13 @@ ${meta.title}
             <p class="date">
             <strong>
                 ${meta.timestamp.strftime('%Y-%m-%d')}
-                % if meta.is_partner:
-                / ${meta.partner}
-                / <span class="special">${_('partner')}</span>
+                % if meta.is_publisher:
+                / ${meta.publisher}
+                / <span class="special">${_('publisher')}</span>
                 % endif
 
                 % if meta.is_sponsored:
-                / ${meta.partner}
+                / ${meta.publisher}
                 / <span class="special">${_('sponsored')}</span>
                 % endif
 

@@ -470,8 +470,8 @@ def test_label_property_with_keys(*ignored):
         assert meta.label == 'core'
     with key_overrides(meta, is_sponsored=True):
         assert meta.label == 'sponsored'
-    with key_overrides(meta, is_partner=True):
-        assert meta.label == 'partner'
+    with key_overrides(meta, is_publisher=True):
+        assert meta.label == 'publisher'
 
 
 @mock.patch(MOD + '.json', autospec=True)
@@ -483,10 +483,10 @@ def test_label_property_with_key_combinations(*ignored):
         assert meta.label == 'core'
     with key_overrides(meta, archive='ephem', is_sponsored=True):
         assert meta.label == 'sponsored'
-    with key_overrides(meta, archive='core', is_partner=True):
+    with key_overrides(meta, archive='core', is_publisher=True):
         assert meta.label == 'core'
-    with key_overrides(meta, archive='ephem', is_partner=True):
-        assert meta.label == 'partner'
+    with key_overrides(meta, archive='ephem', is_publisher=True):
+        assert meta.label == 'publisher'
 
 
 @mock.patch(MOD + '.json', autospec=True)
@@ -496,7 +496,7 @@ def test_human_label_property(*ignored):
     faux_labels = {
         'core': 'core translated',
         'sponsored': 'sponsored translated',
-        'partner': 'partner translated'
+        'publisher': 'publisher translated'
     }
     meta = mod.Meta({}, 'covers_dir')
     with attr_overrides(meta, LABEL_TITLES=faux_labels):
