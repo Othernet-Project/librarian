@@ -19,7 +19,7 @@ from bottle import request, abort
 
 from ..lib.squery import sqlin
 
-from .metadata import add_missing_keys, clean_keys, Meta
+from .metadata import clean_keys, Meta, META_SPECIFICATION
 from .downloads import get_spool_zip_path, get_zip_path, get_metadata
 
 
@@ -31,22 +31,7 @@ FACTORS = {
 }
 
 CONTENT_ORDER = ['-date(updated)', '-views']
-INSERT_KEYS = (
-    'md5',
-    'url',
-    'title',
-    'images',
-    'timestamp',
-    'updated',
-    'keep_formatting',
-    'is_partner',
-    'is_sponsored',
-    'archive',
-    'partner',
-    'license',
-    'language',
-    'size',
-)
+INSERT_KEYS = META_SPECIFICATION.keys()
 
 
 def multiarg(query, n):
@@ -59,34 +44,46 @@ def with_tag(q):
     q.where += 'tag_id = :tag_id'
 
 
-def get_count(tag=None):
+def get_count(tag=None, lang=None, multipage=None):
     db = request.db.main
     q = db.Select('COUNT(*) as count', sets='zipballs')
     if tag:
         q.where += 'tag_id == :tag'
         q.sets.natural_join('taggings')
-    db.query(q, tag=tag)
+    if lang:
+        q.where += 'language = :lang'
+    if multipage is not None:
+        q.where += 'multipage = :multipage'
+    db.query(q, tag=tag, lang=lang, multipage=multipage)
     return db.result.count
 
 
-def get_search_count(terms, tag=None):
+def get_search_count(terms, tag=None, lang=None, multipage=None):
     terms = '%' + terms.lower() + '%'
     db = request.db.main
     q = db.Select('COUNT(*) as count', sets='zipballs',
                   where='title LIKE :terms')
     if tag:
         with_tag(q)
-    db.query(q, terms=terms, tag_id=tag)
+    if lang:
+        q.where += 'language = :lang'
+    if multipage is not None:
+        q.where += 'multipage = :multipage'
+    db.query(q, terms=terms, tag_id=tag, lang=lang, multipage=multipage)
     return db.result.count
 
 
-def get_content(offset=0, limit=0, tag=None):
+def get_content(offset=0, limit=0, tag=None, lang=None, multipage=None):
     db = request.db.main
     q = db.Select(sets='zipballs', order=['-datetime(updated)', '-views'],
                   limit=limit, offset=offset)
     if tag:
         with_tag(q)
-    db.query(q, tag_id=tag)
+    if lang:
+        q.where += 'language = :lang'
+    if multipage is not None:
+        q.where += 'multipage = :multipage'
+    db.query(q, tag_id=tag, lang=lang, multipage=multipage)
     return db.results
 
 
@@ -120,7 +117,8 @@ def get_replacements(metadata):
     return metadata
 
 
-def search_content(terms, offset=0, limit=0, tag=None):
+def search_content(terms, offset=0, limit=0, tag=None, lang=None,
+                   multipage=None):
     # TODO: tests
     terms = '%' + terms.lower() + '%'
     db = request.db.main
@@ -128,7 +126,22 @@ def search_content(terms, offset=0, limit=0, tag=None):
                   order=CONTENT_ORDER, limit=limit, offset=offset)
     if tag:
         with_tag(q)
-    db.query(q, terms=terms, tag_id=tag)
+    if lang:
+        q.where += 'language = :lang'
+    if multipage is not None:
+        q.where += 'multipage = :multipage'
+    db.query(q, terms=terms, tag_id=tag, lang=lang, multipage=multipage)
+    return db.results
+
+
+def content_for_domain(domain):
+    # TODO: tests
+    db = request.db.main
+    q = db.Select(sets='zipballs',
+                  where='url LIKE :domain',
+                  order=CONTENT_ORDER)
+    domain = '%' + domain.lower() + '%'
+    db.query(q, domain=domain)
     return db.results
 
 
@@ -154,7 +167,6 @@ def parse_size(size):
 
 def prepare_metadata(md5, path):
     meta = get_metadata(path)
-    add_missing_keys(meta)
     clean_keys(meta)
     meta['md5'] = md5
     meta['updated'] = datetime.now()

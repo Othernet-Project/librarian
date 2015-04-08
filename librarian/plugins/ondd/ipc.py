@@ -27,7 +27,7 @@ UN_HI_OFF = 10600  # High band offset
 UN_HI_SW = 11700  # Transponder frequency at which we switch to high band
 
 ONDD_BAD_RESPONSE_CODE = '400'
-ONDD_SOCKET_TIMEOUT = 20
+ONDD_SOCKET_TIMEOUT = 20.0
 
 
 def connect(path):
@@ -48,11 +48,11 @@ def open_socket():
         sock.close()
 
 
-def read(sock, buffsize=2014):
+def read(sock, buffsize=2048):
     """ Read the data from a socket until exhausted or NULL byte
 
     :param sock:        socket object
-    :param buffsize:    size of the buffer (1024 by default)
+    :param buffsize:    size of the buffer in bytes (2048 by default)
     """
     idata = data = sock.recv(buffsize)
     while idata and '\0' not in idata:
@@ -88,7 +88,7 @@ def send(payload):
             logging.debug('ONDD: sending payload: %s', payload)
             sock.send(payload)
             data = read(sock)
-            logging.debug('ONDD: received data: %s', data[:-1])
+            logging.debug('ONDD: received data: %s', data)
     except (socket.error, socket.timeout):
         return None
     else:

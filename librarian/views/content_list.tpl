@@ -6,16 +6,16 @@
 
 <%block name="title">
 ## Translators, used as page title
-${_('Library')}
+${page_title}
 </%block>
 
 <%block name="heading">
 ## Translators, used as page heading
-${_('Library')}
+${page_title}
 </%block>
 
 <div class="inner">
-    <div id="tag-cloud-container" class="tag-cloud-container" data-url="${i18n_url('tags:list')}" data-current="${tag}">
+    <div id="tag-cloud-container" class="tag-cloud-container" data-url="${i18n_url('tags:list')}" data-current="${tag}" data-base-path="${base_path}">
         ${tloud.cloud(tag_cloud, tag_id, tag)}
     </div>
     <form id="pager" class="pager controls">
@@ -29,6 +29,9 @@ ${_('Library')}
         ## Translators, used as label for button that clears search results
         <a href="${i18n_path(request.path)}" class="button">${_('clear')}</a>
         % endif
+        ${h.vselect('lang', SELECT_LANGS, lang)}<button ## NOTE: keep together
+        ## Translators, used as label for language filter button
+            class="fake-go">${_('filter')}</button>
         <span class="paging">${simple_pager.body()}</span>
         </p>
     </form>

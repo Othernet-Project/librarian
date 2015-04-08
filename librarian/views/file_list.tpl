@@ -13,7 +13,7 @@ ${_('Files')}
 <div class="file-list">
     ${h.form('get', _class='location-bar')}
         <p class="path">
-        <input type="text" name="p" class="search" value="${path if path != '.' else ''}"><button 
+        <input type="text" name="p" class="search" value="${path if path != '.' else ''}"><button
         ## Translators, used as button in file view address bar
             type="submit" class="fake-go"><span class="icon">${_('go')}</span></button>
         </p>
@@ -43,7 +43,7 @@ ${_('Files')}
             % for d in dirs:
             <tr class="dir">
                 <% dpath = i18n_url('files:path', path=d.path) %>
-                <td class="icon"><a href="${dpath}"><span class="icon"></span></td>
+                <td class="icon"><a href="${dpath}"><span class="icon"></span></a></td>
                 <td class="name" colspan="2"><a href="${dpath}">${d.name}</a></td>
                 <td class="rename">
                     ${h.form('post', action=dpath)}
@@ -62,8 +62,8 @@ ${_('Files')}
             % for f in files:
             <tr class="file">
                 <% fpath = i18n_url('files:path', path=f.path) %>
-                <td class="icon"><a href="${fpath}"><span class="icon"></span></a>
-                <td class="name"><a href="${fpath}">${f.name}</a></td>
+                <td class="icon"><a href="${fpath}?filename=${f.name}"><span class="icon"></span></a></td>
+                <td class="name"><a href="${fpath}?filename=${f.name}">${f.name}</a></td>
                 <td class="size">${h.hsize(f.size)}</td>
                 <td class="rename">
                     ${h.form('post', action=fpath)}

@@ -28,6 +28,13 @@ def lang_name(code):
     return to_locale(code).get_display_name()
 
 
+def lang_name_safe(code):
+    """ Return native language name for locale code """
+    if not code:
+        return _('unknown')
+    return lang_name(code)
+
+
 def lang_list(locales):
     """ Return a list of locale-language two-tuples given list of locales """
     return [(l, lang_name(l)) for l in locales]
@@ -82,7 +89,7 @@ UI_LOCALES = (
 )
 
 LANGS = list(sorted(lang_list(LOCALES), key=lang_name_getter))
-SELECT_LANGS = [(None, _('any language'))] + LANGS
+SELECT_LANGS = [('', _('any language'))] + LANGS
 UI_LANGS = list(sorted(lang_list(UI_LOCALES), key=lang_name_getter))
 RTL_LANGS = ['ar', 'he', 'ur', 'yi', 'ji', 'iw', 'fa']
 DEFAULT_LOCALE = 'en'

@@ -30,7 +30,14 @@ ${_('Updates')}
 
 
 <div class="inner">
-    <div class="controls">${simple_pager.body()}</div>
+    <div class="controls">
+        <form id="pager" class="pager controls">
+            ${h.vselect('lang', SELECT_LANGS, lang)}<button ## NOTE: keep together
+            ## Translators, used as label for language filter button
+                class="fake-go">${_('filter')}</button>
+            ${simple_pager.body()}
+        </form>
+    </div>
 
     <form method="POST">
     % if metadata:
@@ -48,6 +55,8 @@ ${_('Updates')}
             <th class="do">${_('broadcast')}</th>
             ## Translators, used as table header, download date
             <th class="do">${_('downloaded')}</th>
+            ## Translators, used as table header, download language
+            <th class="do">${_('language')}</th>
             </tr>
         </thead>
         <tbody>
@@ -61,7 +70,7 @@ ${_('Updates')}
                         <p><label for="check-${meta['md5']}"><span${meta.i18n_attrs}>${meta['title'] | h}</span></label></p>
                         % if meta.get('replaces_title'):
                         <p class="downloads-replaces">
-                        ${_('replaces:')} 
+                        ${_('replaces:')}
                         <a href="${i18n_url('content:reader', content_id=meta['replaces'])}/">
                             ${meta['replaces_title'] | h}
                         </a>
@@ -70,12 +79,13 @@ ${_('Updates')}
                     </td>
                     <td class="downloads-timestamp do">${h.strft(meta['timestamp'], '%m-%d')}</td>
                     <td class="downloads-ftimestamp do">${meta['ftimestamp'].strftime('%m-%d')}</td>
+                    <td class="downloads-language do">${th.lang_name_safe(meta.get('language'))}</td>
                 </tr>
                 % endfor
             % else:
                 <tr>
                 ## Translators, note that appears in table on updates page when there is no new downloaded content
-                <td class="empty" colspan="4">${_('There is no new content')}</td>
+                <td class="empty" colspan="5">${_('There is no new content')}</td>
                 </tr>
             % endif
         </tbody>

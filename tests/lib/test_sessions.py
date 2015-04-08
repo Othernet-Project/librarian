@@ -36,6 +36,7 @@ def assert_session_count_is(expected):
 @transaction_test(MOD + '.request')
 def test_session_plugin_create():
     mod.request.get_cookie.return_value = None
+    mod.request.app.config = {'session.lifetime': 1}
 
     cookie_name = 'session_cookie'
     secret = 'mischief managed'
@@ -136,6 +137,7 @@ def test_save_session():
 
 @transaction_test(MOD + '.request')
 def test_rotate_session():
+    mod.request.app.config = {'session.lifetime': 1}
     s = mod.Session.create()
     s['test'] = 123
     s.save()
@@ -154,6 +156,7 @@ def test_rotate_session():
 
 @transaction_test(MOD + '.request')
 def test_modified():
+    mod.request.app.config = {'session.lifetime': 1}
     s = mod.Session.create()
     assert not s.modified
 

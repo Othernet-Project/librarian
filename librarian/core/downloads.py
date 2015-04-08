@@ -16,6 +16,7 @@ from datetime import datetime, timedelta
 from bottle import request
 
 from .metadata import convert_json, DecodeError, FormatError
+from ..utils.cache import cached
 
 
 class ContentError(BaseException):
@@ -46,7 +47,7 @@ def is_expired(secs):
     :returns:       whether file has expired
     """
     config = request.app.config
-    maxage = timedelta(days=int(config['content.keep']))
+    maxage = timedelta(days=config['content.keep'])
     filetime = datetime.fromtimestamp(secs)
     now = datetime.now()
     return now - filetime >= maxage
@@ -189,6 +190,7 @@ def get_file(path, filename):
     return extract_file(path, filename)
 
 
+@cached()
 def get_metadata(path):
     """ Extract metadata file from zipball and return its content
 
@@ -268,4 +270,3 @@ def remove_downloads(md5s=None):
             logging.debug("<%s> removed" % path)
         except OSError as err:
             logging.error("<%s> cound not remove: %s" % (path, err))
-

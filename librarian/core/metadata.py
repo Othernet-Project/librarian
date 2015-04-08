@@ -42,26 +42,41 @@ LICENSES = (
     ('ON', _('Other non-free license')),
 )
 
-KEYS = (
-    'url',
-    'title',
-    'images',
-    'timestamp',
-    'keep_formatting',
-    'is_partner',
-    'is_sponsored',
-    'archive',
-    'partner',
-    'license',
-    'language'
-)
+# `default` defaults to `None`
+# `aliases` defaults to `[]`
+# `required` defaults to `False`
+# `auto` defaults to `False`
+META_SPECIFICATION = {
+    'url': {'required': True},
+    'title': {'required': True},
+    'images': {},
+    'timestamp': {'required': True},
+    'keep_formatting': {'default': False},
+    'is_publisher': {
+        'default': False,
+        'aliases': ['is_partner']
+    },
+    'is_sponsored': {'default': False},
+    'archive': {},
+    'publisher': {
+        'aliases': ['partner']
+    },
+    'license': {
+        'required': True
+    },
+    'language': {},
+    'multipage': {'default': False},
+    'entry_point': {
+        'default': 'index.html',
+        'aliases': ['index']
+    },
+    'md5': {'auto': True},
+    'size': {'auto': True},
+    'updated': {'auto': True}
+}
 
-REQUIRED_KEYS = (
-    'url',
-    'title',
-    'timestamp',
-    'license',
-)
+STANDARD_FIELDS = dict((k, v) for k, v in META_SPECIFICATION.items()
+                       if not v.get('auto', False))
 
 
 class MetadataError(Exception):
@@ -78,6 +93,17 @@ class FormatError(MetadataError):
     pass
 
 
+def get_default_value(key):
+    return STANDARD_FIELDS[key].get('default', None)
+
+
+def get_aliases_for(key):
+    return STANDARD_FIELDS[key].get('aliases', [])
+
+
+def is_required(key):
+    return STANDARD_FIELDS[key].get('required', False)
+
 
 def add_missing_keys(meta):
     """ Make sure metadata dict contains all required keys
@@ -87,9 +113,24 @@ def add_missing_keys(meta):
 
     :param meta:    metadata dict
     """
-    for key in KEYS:
+    for key in STANDARD_FIELDS:
         if key not in meta:
-            meta[key] = None
+            meta[key] = get_default_value(key)
+
+
+def replace_aliases(meta):
+    """ Replace deprecated aliases with their current substitution.
+
+    This function modifies the metadata dict in-place, and has no useful return
+    value.
+
+    :param meta:    metadata dict
+    """
+    for key in STANDARD_FIELDS:
+        if key not in meta:
+            for alias in get_aliases_for(key):
+                if alias in meta:
+                    meta[key] = meta.pop(alias)
 
 
 def clean_keys(meta):
@@ -100,9 +141,9 @@ def clean_keys(meta):
 
     :param meta:    metadta dict
     """
-    keys = meta.keys()
-    for key in keys:
-        if key not in KEYS:
+    valid_keys = STANDARD_FIELDS.keys()
+    for key in meta.keys():
+        if key not in valid_keys:
             del meta[key]
 
 
@@ -120,8 +161,9 @@ def convert_json(meta):
         meta = json.loads(meta)
     except ValueError as err:
         raise DecodeError("Invalid JSON")
-    for key in REQUIRED_KEYS:
-        if key not in meta:
+    replace_aliases(meta)
+    for key in STANDARD_FIELDS:
+        if key not in meta and is_required(key):
             raise FormatError("Mandatory key '%s' missing" % key)
     add_missing_keys(meta)
     return meta
@@ -147,8 +189,8 @@ class Meta(object):
         'core': _('core'),
         # Translators, used as label, meaning content was sponsored by someone
         'sponsored': _('sponsored'),
-        # Translators, used as label, meaning content is from a partner
-        'partner': _('partner')
+        # Translators, used as label, meaning content is from a publisher
+        'publisher': _('publisher')
     }
 
     def __init__(self, meta, cover_dir, zip_path=None):
@@ -264,8 +306,8 @@ class Meta(object):
             return 'core'
         elif self.meta.get('is_sponsored'):
             return 'sponsored'
-        elif self.meta.get('is_partner'):
-            return 'partner'
+        elif self.meta.get('is_publisher'):
+            return 'publisher'
         return 'core'
 
     @property

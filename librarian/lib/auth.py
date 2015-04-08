@@ -8,6 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import copy
 import datetime
 import functools
 import json
@@ -16,7 +17,7 @@ import urllib
 import urlparse
 
 import pbkdf2
-from bottle import request, abort, redirect
+from bottle import request, abort, redirect, hook
 
 from .template_helpers import template_helper
 
@@ -57,16 +58,68 @@ class DateTimeDecoder(json.JSONDecoder):
             return obj
 
 
+class Options(object):
+    """A dict-like object with a callback that is invoked when changes are made
+    to the object's state."""
+    def __init__(self, data, onchange):
+        self.onchange = onchange
+        if isinstance(data, dict):
+            self.__data = data
+        else:
+            self.__data = json.loads(data or '{}')
+
+    def get(self, key, default=None):
+        return self.__data.get(key, default)
+
+    def items(self):
+        return self.__data.items()
+
+    def __getitem__(self, key):
+        return self.__data[key]
+
+    def __setitem__(self, key, value):
+        self.__data[key] = value
+        self.onchange()
+
+    def __contains__(self, key):
+        return key in self.__data
+
+    def __delitem__(self, key):
+        del self.__data[key]
+        self.onchange()
+
+    def __len__(self):
+        return len(self.__data)
+
+    def to_json(self):
+        return json.dumps(self.__data)
+
+    def to_native(self):
+        return copy.copy(self.__data)
+
+
 class User(object):
 
-    def __init__(self, username=None, is_superuser=None, created=None):
+    def __init__(self, username=None, is_superuser=None, created=None,
+                 options=None):
         self.username = username
         self.is_superuser = is_superuser
         self.created = created
+        self.options = Options(options, onchange=self.save_options)
 
     @property
     def is_authenticated(self):
         return self.username is not None
+
+    def save_options(self):
+        if self.is_authenticated:
+            db = request.db.sessions
+            query = db.Update('users',
+                              options=':options',
+                              where='username = :username')
+            db.query(query,
+                     username=self.username,
+                     options=self.options.to_json())
 
     def logout(self):
         if self.is_authenticated:
@@ -74,7 +127,11 @@ class User(object):
             request.user = User()
 
     def to_json(self):
-        return json.dumps(self.__dict__, cls=DateTimeEncoder)
+        data = dict(username=self.username,
+                    is_superuser=self.is_superuser,
+                    created=self.created,
+                    options=self.options.to_native())
+        return json.dumps(data, cls=DateTimeEncoder)
 
     @classmethod
     def from_json(cls, data):
@@ -102,7 +159,7 @@ def login_required(redirect_to='/login/', superuser_only=False, next_to=None):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            if not hasattr(request, 'user'):
+            if request.no_auth:
                 return func(*args, **kwargs)
 
             if next_to is None:
@@ -127,7 +184,7 @@ def login_required(redirect_to='/login/', superuser_only=False, next_to=None):
 
 @template_helper
 def is_authenticated():
-    return hasattr(request, 'user') and request.user.is_authenticated
+    return not request.no_auth and request.user.is_authenticated
 
 
 def encrypt_password(password):
@@ -172,18 +229,24 @@ def login_user(username, password):
     if user and is_valid_password(password, user.password):
         request.user = User(username=user.username,
                             is_superuser=user.is_superuser,
-                            created=user.created)
-        request.session['user'] = request.user.to_json()
+                            created=user.created,
+                            options=user.options)
         request.session.rotate()
         return True
 
     return False
 
 
-def user_plugin():
+def user_plugin(no_auth):
+    # Set up a hook, so handlers that raise cannot escape session-saving
+    @hook('after_request')
+    def store_options():
+        request.session['user'] = request.user.to_json()
+
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
+            request.no_auth = no_auth
             user_data = request.session.get('user', '{}')
             request.user = User.from_json(user_data)
             return callback(*args, **kwargs)

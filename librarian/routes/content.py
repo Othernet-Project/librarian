@@ -13,6 +13,8 @@ import stat
 import json
 import shutil
 import logging
+import urlparse
+import functools
 import subprocess
 
 from bottle import (
@@ -32,16 +34,19 @@ from ..lib import send_file
 from ..lib.pager import Pager
 
 from ..utils import patch_content
+from ..utils import netutils
 
 
 app = default_app()
 
 
-@roca_view('content_list', '_content_list', template_func=template)
-def content_list():
-    """ Show list of content """
+def filter_content(multipage=None):
     conf = request.app.config
     query = request.params.getunicode('q', '').strip()
+
+    default_lang = request.user.options.get('content_language', None)
+    lang = request.params.get('lang', default_lang)
+    request.user.options['content_language'] = lang
 
     try:
         tag = int(request.params.get('tag'))
@@ -50,9 +55,14 @@ def content_list():
         tag_name = None
 
     if query:
-        total_items = archive.get_search_count(query, tag=tag)
+        total_items = archive.get_search_count(query,
+                                               tag=tag,
+                                               lang=lang,
+                                               multipage=multipage)
     else:
-        total_items = archive.get_count(tag=tag)
+        total_items = archive.get_count(tag=tag,
+                                        lang=lang,
+                                        multipage=multipage)
 
     if tag:
         try:
@@ -66,10 +76,18 @@ def content_list():
     pager.get_paging_params()
 
     if query:
-        metas = archive.search_content(query, pager.offset, pager.per_page,
-                                       tag=tag)
+        metas = archive.search_content(query,
+                                       pager.offset,
+                                       pager.per_page,
+                                       tag=tag,
+                                       lang=lang,
+                                       multipage=multipage)
     else:
-        metas = archive.get_content(pager.offset, pager.per_page, tag=tag)
+        metas = archive.get_content(pager.offset,
+                                    pager.per_page,
+                                    tag=tag,
+                                    lang=lang,
+                                    multipage=multipage)
 
     cover_dir = conf['content.covers']
 
@@ -82,9 +100,29 @@ def content_list():
         pager=pager,
         vals=request.params.decode(),
         query=query,
+        lang=dict(lang=lang),
         tag=tag_name,
         tag_id=tag,
-        tag_cloud=archive.get_tag_cloud())
+        tag_cloud=archive.get_tag_cloud()
+    )
+
+
+@roca_view('content_list', '_content_list', template_func=template)
+def content_list():
+    """ Show list of content """
+    result = filter_content()
+    result.update({'base_path': i18n_url('content:list'),
+                   'page_title': _('Library')})
+    return result
+
+
+@roca_view('content_list', '_content_list', template_func=template)
+def content_sites_list():
+    """ Show list of multipage content only """
+    result = filter_content(multipage=True)
+    result.update({'base_path': i18n_url('content:sites_list'),
+                   'page_title': _('Sites')})
+    return result
 
 
 @auth.login_required(next_to='/')
@@ -129,7 +167,11 @@ def content_zipball(content_id):
 def content_reader(meta):
     """ Loads the reader interface """
     archive.add_view(meta.md5)
-    return dict(meta=meta)
+    referer = request.headers.get('Referer', '')
+    base_path = i18n_url('content:sites_list')
+    if str(base_path) not in referer:
+        base_path = i18n_url('content:list')
+    return dict(meta=meta, base_path=base_path)
 
 
 def cover_image(path):
@@ -186,7 +228,8 @@ def show_file_list(path='.'):
                     name=os.path.basename(path),
                     size=fstat[stat.ST_SIZE],
                 ))
-            return static_file(err.path, root=files.get_file_dir())
+            options = {'download': request.params.get('filename', False)}
+            return static_file(err.path, root=files.get_file_dir(), **options)
     up = os.path.normpath(os.path.join(path, '..'))
     up = os.path.relpath(up, conf['content.filedir'])
     if resp_format == 'json':
@@ -259,3 +302,32 @@ def handle_file_action(path):
         return template('exec_result', ret=ret, out=out, err=err)
     else:
         abort(400)
+
+
+def get_content_url(root_url, domain):
+    matched_contents = archive.content_for_domain(domain)
+    try:
+        # as multiple matches are possible, pick the first one
+        meta = matched_contents[0]
+    except IndexError:
+        # invalid content domain, redirect to list
+        path = i18n_url('content:list')
+    else:
+        path = i18n_url('content:reader', content_id=meta.md5)
+
+    return urlparse.urljoin(root_url, path)
+
+
+def content_resolver_plugin(root_url, reserved_hostnames):
+    def decorator(callback):
+        @functools.wraps(callback)
+        def wrapper(*args, **kwargs):
+            host = netutils.get_current_host()
+            if netutils.is_ip_address(host) or host in reserved_hostnames:
+                # regular librarian access
+                return callback(*args, **kwargs)
+            # a content domain was entered(most likely), try to load it
+            content_url = get_content_url(root_url, host)
+            return redirect(content_url)
+        return wrapper
+    return decorator

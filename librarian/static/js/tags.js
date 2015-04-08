@@ -59,7 +59,7 @@
     e.preventDefault();
     buttons.prop('disabled', true);
 
-    xhr = $.post(url, {tags: tags});
+    xhr = $.post(url, {tags: tags, base_path: tagCloud.data('base-path')});
     xhr.done(function (res) {
       tagList.html(res + templates.tagButton);
       form.data('original', getTags(tagList));
@@ -71,8 +71,16 @@
   }
 
   function updateTagCloud() {
-    if (!tagCloud.length) { return; }
-    tagCloud.load(tagCloud.data('url') + '?tag=' + tagCloud.data('current'));
+    if (!tagCloud.length) {
+        return;
+    }
+    tagCloud.load(
+        tagCloud.data('url') +
+        '?tag=' +
+        tagCloud.data('current') +
+        '&base_path=' +
+        tagCloud.data('base-path')
+    );
   }
 
   function updateError() {

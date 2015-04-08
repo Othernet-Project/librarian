@@ -11,6 +11,7 @@
         % if redirect is not UNDEFINED:
         <meta http-equiv="refresh" content="5; url=${redirect}">
         % endif
+        <%block name="extra_head"/>
     </head>
     <body>
         <header>
@@ -20,6 +21,8 @@
                 ${h.link_other(icon + _('Library'), i18n_url('content:list'), request.original_path, h.SPAN, _class="archive navicon")}
                 ## Translators, used main navigation menu
                 ${h.link_other(icon + _('Files'), i18n_url('files:list'), request.original_path, h.SPAN, _class="files navicon")}
+                ## Translators, used main navigation menu
+                ${h.link_other(icon + _('Sites'), i18n_url('content:sites_list'), request.original_path, h.SPAN, _class="sites navicon")}
                 ## Translators, used main navigation menu
                 ${h.link_other(icon + _('Apps'), i18n_url('apps:list'), request.original_path, h.SPAN, _class="apps navicon")}
                 ## Translators, used main navigation menu

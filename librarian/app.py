@@ -13,13 +13,14 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from __future__ import unicode_literals, print_function
 
 import gevent.monkey
-gevent.monkey.patch_all(aggressive=True)
+gevent.monkey.patch_all(aggressive=True, thread=False)
 
 # For more details on the below see: http://bit.ly/18fP1uo
 import gevent.hub
 gevent.hub.Hub.NOT_ERROR = (Exception,)
 
 import sys
+import time
 import pprint
 import logging
 from logging.config import dictConfig as log_config
@@ -40,15 +41,19 @@ from librarian.lib import squery
 from librarian.lib import auth
 from librarian.lib import sessions
 from librarian.lib.lock import lock_plugin
+from librarian.lib.confloader import ConfDict
 from librarian.lib.template_helpers import template_helper
 
 from librarian.utils import lang
 from librarian.utils import commands
-from librarian.utils import databases as database_utils
 from librarian.utils import migrations
+from librarian.utils.repl import start_repl
 from librarian.utils.system import ensure_dir
 from librarian.utils.routing import add_routes
 from librarian.utils.timer import request_timer
+from librarian.utils.gserver import ServerManager
+from librarian.utils import databases as database_utils
+from librarian.utils.signal_handlers import on_interrupt
 
 from librarian.plugins import install_plugins
 
@@ -89,6 +94,8 @@ ROUTES = (
 
     ('content:list', content.content_list,
      'GET', '/', {}),
+    ('content:sites_list', content.content_sites_list,
+     'GET', '/sites', {}),
     ('content:file', content.content_file,
      'GET', '/pages/<content_id>/<filename:path>', dict(no_i18n=True)),
     ('content:zipball', content.content_zipball,
@@ -145,16 +152,18 @@ ROUTES = (
      'GET', '/favicon.ico', dict(no_i18n=True, unlocked=True)),
     ('sys:logs', system.send_logfile,
      'GET', '/librarian.log', dict(no_i18n=True, unlocked=True)),
+
+    # This route handler is added because unhandled missing pages cause bottle
+    # to _not_ install any plugins, and some are essential to rendering of the
+    # 404 page (e.g., i18n, sessions, auth).
+    ('sys:all404', system.all_404,
+     ['GET', 'POST'], '/<path:path>', dict()),
 )
 
 app = bottle.default_app()
-add_routes(app, ROUTES)
-app.error(500)(system.show_error_page)
-app.error(503)(system.show_maint_page)
-app.error(403)(system.show_access_denied_page)
 
 
-def prestart(config, logfile=None):
+def prestart(config, logfile=None, debug=False):
     log_config({
         'version': 1,
         'root': {
@@ -166,21 +175,23 @@ def prestart(config, logfile=None):
                 'class': 'logging.handlers.RotatingFileHandler',
                 'formatter': 'default',
                 'filename': logfile or config['logging.output'],
-                'maxBytes': int(config['logging.size']),
-                'backupCount': int(config['logging.backups'])
+                'maxBytes': config['logging.size'],
+                'backupCount': config['logging.backups'],
             },
         },
         'formatters': {
             'default': {
                 'format': config['logging.format'],
-                'datefmt': config['logging.date_format']
+                'datefmt': config['logging.date_format'],
             },
         },
     })
-    debug = config['librarian.debug'] == 'yes'
+    debug = debug or config['librarian.debug']
     logging.info('Configuring Librarian environment')
 
     database_configs = database_utils.get_database_configs(config)
+    for db_name, db_path in database_configs.items():
+        logging.debug('Using database {}'.format(db_path))
 
     # Make sure all necessary directories are present
     ensure_dir(dirname(config['logging.output']))
@@ -204,10 +215,12 @@ def prestart(config, logfile=None):
     return databases
 
 
-def start(databases, config, no_auth=False):
+def start(databases, config, no_auth=False, repl=False, debug=False):
     """ Start the application """
 
-    debug = config['librarian.debug'] == 'yes'
+    debug = debug or config['librarian.debug']
+
+    servers = ServerManager()
 
     # Srart the server
     logging.info('===== Starting Librarian v%s =====', __version__)
@@ -216,17 +229,9 @@ def start(databases, config, no_auth=False):
     install_plugins(app)
     logging.info('Installed all plugins')
 
-    # Install bottle plugins
-    app.install(request_timer('Handler'))
-    app.install(squery.database_plugin(databases, debug=debug))
-    app.install(sessions.session_plugin(
-        cookie_name=config['session.cookie_name'],
-        secret=config['session.secret'])
-    )
-    if not no_auth:
-        app.install(auth.user_plugin())
-
     # Set some basic configuration
+    # add `lang_name_safe` to template helpers
+    template_helper(lang.lang_name_safe)
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))
     bottle.BaseTemplate.defaults.update({
         'app_version': __version__,
@@ -245,26 +250,66 @@ def start(databases, config, no_auth=False):
         'url': app.get_url,
     })
 
-    # Install bottle plugins
-    wsgiapp = app  # Pass this variable to WSGI middlewares instead of ``app``
-    wsgiapp = I18NPlugin(wsgiapp, langs=lang.UI_LANGS,
+    # Install bottle plugins and WSGI middleware
+    app.install(request_timer('Total'))
+    app.install(squery.database_plugin(databases, debug=debug and not repl))
+    app.install(sessions.session_plugin(
+        cookie_name=config['session.cookie_name'],
+        secret=config['session.secret'])
+    )
+    app.install(auth.user_plugin(no_auth))
+    wsgiapp = I18NPlugin(app, langs=lang.UI_LANGS,
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
-    # Add middlewares
     app.install(lock_plugin)
-    app.install(request_timer('Total'))
+    app.install(content.content_resolver_plugin(
+        root_url=config['librarian.root_url'],
+        reserved_hostnames=config['librarian.hostnames']
+    ))
+    app.install(request_timer('Handler'))
 
+    # Install routes
+    add_routes(app, ROUTES)
+    app.error(403)(system.show_access_denied_page)
+    app.error(404)(system.show_page_missing)
+    app.error(500)(system.show_error_page)
+    app.error(503)(system.show_maint_page)
+
+    # Prepare to start
     bottle.debug(debug)
-    print('Starting %s server <http://%s:%s/>' % (
-        config['librarian.server'],
-        config['librarian.bind'],
-        config['librarian.port']))
-    bottle.run(app=wsgiapp,
-               server=config['librarian.server'],
-               quiet=config['librarian.log'] != 'yes',
-               host=config['librarian.bind'],
-               reloader=config['librarian.reloader'] == 'yes',
-               port=int(config['librarian.port']))
+
+    # We are passing the ``wsgiapp`` object here because that's the one that
+    # contains the I18N middleware. If we pass ``app`` object, then we won't
+    # have the I18N middleware active at all.
+    servers.start_server('librarian', config, wsgiapp)
+    dbconns = [db.conn for name, db in databases.items()]
+
+    if repl:
+        repl_thread = start_repl(
+            locals(), 'Press Ctrl-C to shut down Librarian.')
+    else:
+        repl_thread = None
+        print('Press Ctrl-C to shut down Librarian.')
+
+    def shutdown(*args, **kwargs):
+        """ Cleanly shut down the server """
+        logging.info('Librarian is going down.')
+        if repl_thread:
+            repl_thread.join()
+        servers.stop_all(5)
+        for conn in dbconns:
+            conn.close()
+        logging.info('Clean shutdown completed')
+        print('Bye! Have a nice day! Those books are due Tuesday, by the way!')
+
+    on_interrupt(shutdown)
+
+    try:
+        while True:
+            time.sleep(10)
+    except KeyboardInterrupt:
+        logging.debug('Keyboard interrupt received')
+    return shutdown()
 
 
 def configure_argparse(parser):
@@ -272,17 +317,21 @@ def configure_argparse(parser):
                         'file', default=CONFPATH)
     parser.add_argument('--debug-conf', action='store_true', help='print out '
                         'the configuration in use and exit')
+    parser.add_argument('--debug', action='store_true', help='enable '
+                        'debugging')
     parser.add_argument('--version', action='store_true', help='print out '
                         'version number and exit')
     parser.add_argument('--log', metavar='PATH', help='path to log file '
                         '(default: as configured in .ini file)', default=None)
     parser.add_argument('--no-auth', action='store_true',
                         help='disable authentication')
+    parser.add_argument('--repl', action='store_true',
+                        help='start interactive shell after servers start')
     commands.add_command_switches(parser)
 
 
 def main(args):
-    app.config.load_config(args.conf)
+    app.config = ConfDict.from_file(args.conf, catchall=True, autojson=True)
     conf = app.config
 
     if args.debug_conf:
@@ -290,9 +339,9 @@ def main(args):
         pprint.pprint(app.config, indent=4)
         sys.exit(0)
 
-    databases = prestart(conf, args.log)
+    databases = prestart(conf, args.log, args.debug)
     commands.select_command(args, databases, conf)
-    start(databases, conf, args.no_auth)
+    return start(databases, conf, args.no_auth, args.repl, args.debug)
 
 
 if __name__ == '__main__':
@@ -304,6 +353,6 @@ if __name__ == '__main__':
 
     if args.version:
         print('v%s' % __version__)
-        sys.exit(0)
+        sys.exit()
 
-    main(args)
+    sys.exit(main(args))

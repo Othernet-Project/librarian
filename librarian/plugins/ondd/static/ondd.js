@@ -6,6 +6,7 @@
 
   var refreshDelay = 3000;  // ms
   var refreshInterval = 3000;  // ms
+  var fileRefreshInterval = 30000;  // ms
   var satSelection = $(window.templates.satPresets);
   var satSelector = satSelection.find('select');
   var settingsForm = $('#settings-form');
@@ -22,6 +23,7 @@
   fields.before(satSelection);
   $(function() {
     setInterval(doRefresh, refreshInterval);
+    setInterval(doRefreshFileList, fileRefreshInterval);
   })
 
   satSelector.on('change', updateForm);
@@ -29,6 +31,10 @@
 
   function doRefresh() {
     signalStatus.load(url);
+  }
+
+  function doRefreshFileList() {
+    fileList.load(filesUrl);
   }
 
   function updateForm(e) {

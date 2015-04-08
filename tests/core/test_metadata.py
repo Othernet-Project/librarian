@@ -2,6 +2,7 @@ from functools import wraps
 from contextlib import contextmanager
 
 import mock
+import pytest
 
 from librarian.core import metadata as mod
 
@@ -59,21 +60,62 @@ def attr_overrides(obj, **kwargs):
         setattr(obj, key, value)
 
 
+def test_get_default_value():
+    with pytest.raises(KeyError):
+        mod.get_default_value('invalid')
+
+    assert mod.get_default_value('url') is None
+    assert mod.get_default_value('keep_formatting') is False
+
+
+def test_get_aliases_for():
+    with pytest.raises(KeyError):
+        mod.get_aliases_for('invalid')
+
+    assert mod.get_aliases_for('url') == []
+    assert mod.get_aliases_for('is_publisher') == ['is_partner']
+
+
+def test_is_required():
+    with pytest.raises(KeyError):
+        mod.is_required('invalid')
+
+    assert mod.is_required('url') is True
+    assert mod.is_required('images') is False
+
+
+def test_replace_aliases():
+    meta = {'url': 'test',
+            'title': 'again',
+            'is_partner': True,
+            'partner': 'Partner',
+            'index': 'some.html'}
+    expected = {'url': 'test',
+                'title': 'again',
+                'is_publisher': True,
+                'publisher': 'Partner',
+                'entry_point': 'some.html'}
+    mod.replace_aliases(meta)
+    assert meta == expected
+
+
 def test_adding_missing_keys():
     """ Metadata keys that are not in ``d`` will be added """
     d = {}
     mod.add_missing_keys(d)
-    _has_key(d, 'url' )
-    _has_key(d, 'title' )
-    _has_key(d, 'images' )
-    _has_key(d, 'timestamp' )
-    _has_key(d, 'keep_formatting' )
-    _has_key(d, 'is_partner' )
-    _has_key(d, 'is_sponsored' )
-    _has_key(d, 'archive' )
-    _has_key(d, 'partner' )
-    _has_key(d, 'license' )
-    _has_key(d, 'language' )
+    _has_key(d, 'url')
+    _has_key(d, 'title')
+    _has_key(d, 'images')
+    _has_key(d, 'timestamp')
+    _has_key(d, 'keep_formatting')
+    _has_key(d, 'is_publisher')
+    _has_key(d, 'is_sponsored')
+    _has_key(d, 'archive')
+    _has_key(d, 'publisher')
+    _has_key(d, 'license')
+    _has_key(d, 'language')
+    _has_key(d, 'multipage')
+    _has_key(d, 'entry_point')
 
 
 def test_adding_missing_key_doesnt_remove_existing():
@@ -94,7 +136,7 @@ def test_add_missing_keys_has_return():
     """ Add missing key mutates the supplies dict, but has no return value """
     d = {}
     ret = mod.add_missing_keys(d)
-    assert ret == None
+    assert ret is None
 
 
 def test_clean_keys():
@@ -104,40 +146,44 @@ def test_clean_keys():
     assert d == {'title': 'title'}
 
 
-@mock.patch(MOD + '.REQUIRED_KEYS')
+@mock.patch(MOD + '.is_required')
 @mock.patch(MOD + '.json', autospec=True)
-def test_convert_returns__added_keys(json, *ignored):
+def test_convert_returns__added_keys(json, is_required):
     """ Conversion to json calls ``add_missing_keys()`` on converted value """
     json.loads.return_value = {}
+    is_required.return_value = False
     out = mod.convert_json('')
     assert out == {
         'url': None,
         'title': None,
         'images': None,
         'timestamp': None,
-        'keep_formatting': None,
-        'is_partner': None,
-        'is_sponsored': None,
+        'keep_formatting': False,
+        'is_publisher': False,
+        'is_sponsored': False,
         'archive': None,
-        'partner': None,
+        'publisher': None,
         'license': None,
         'language': None,
+        'multipage': False,
+        'entry_point': 'index.html'
     }
 
 
 @mock.patch(MOD + '.json', autospec=True)
 @mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.REQUIRED_KEYS')
-def test_convert_decodes_string(*ignored):
+@mock.patch(MOD + '.is_required')
+def test_convert_decodes_string(is_required, *ignored):
     """ During conversion, strings are decoded as UTF8 """
     s = mock.Mock()
+    is_required.return_value = False
     mod.convert_json(s)
     s.decode.assert_called_once_with('utf8')
 
 
 @mock.patch(MOD + '.json', autospec=True)
 @mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.REQUIRED_KEYS')
+@mock.patch(MOD + '.is_required')
 def test_convert_decoding_fails(*ignored):
     """ DecodeError must be raised when string decoding fails """
     s = mock.Mock()
@@ -150,7 +196,7 @@ def test_convert_decoding_fails(*ignored):
 
 
 @mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.REQUIRED_KEYS')
+@mock.patch(MOD + '.is_required')
 @mock.patch(MOD + '.json', autospec=True)
 def test_convert_json_fails(json, *ignored):
     """ DecodeError must be raised when JSON cannot be decoded """
@@ -208,7 +254,7 @@ def test_meta_class_init(json, os):
     json.loads.assert_called_once_with(data.get.return_value)
     assert meta.tags == json.loads.return_value
     assert meta.cover_dir == 'foo'
-    assert meta.zip_path == None
+    assert meta.zip_path is None
 
 
 @mock.patch(MOD + '.os', autospec=True)
@@ -424,8 +470,8 @@ def test_label_property_with_keys(*ignored):
         assert meta.label == 'core'
     with key_overrides(meta, is_sponsored=True):
         assert meta.label == 'sponsored'
-    with key_overrides(meta, is_partner=True):
-        assert meta.label == 'partner'
+    with key_overrides(meta, is_publisher=True):
+        assert meta.label == 'publisher'
 
 
 @mock.patch(MOD + '.json', autospec=True)
@@ -437,10 +483,10 @@ def test_label_property_with_key_combinations(*ignored):
         assert meta.label == 'core'
     with key_overrides(meta, archive='ephem', is_sponsored=True):
         assert meta.label == 'sponsored'
-    with key_overrides(meta, archive='core', is_partner=True):
+    with key_overrides(meta, archive='core', is_publisher=True):
         assert meta.label == 'core'
-    with key_overrides(meta, archive='ephem', is_partner=True):
-        assert meta.label == 'partner'
+    with key_overrides(meta, archive='ephem', is_publisher=True):
+        assert meta.label == 'publisher'
 
 
 @mock.patch(MOD + '.json', autospec=True)
@@ -450,7 +496,7 @@ def test_human_label_property(*ignored):
     faux_labels = {
         'core': 'core translated',
         'sponsored': 'sponsored translated',
-        'partner': 'partner translated'
+        'publisher': 'publisher translated'
     }
     meta = mod.Meta({}, 'covers_dir')
     with attr_overrides(meta, LABEL_TITLES=faux_labels):
@@ -557,7 +603,6 @@ def test_cache_error(get_cover_path, cache_cover, extract_image, *ignored):
     meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
     cache_cover.side_effect = OSError
     assert meta.image is None
-
 
 
 @mock.patch(MOD + '.json', autospec=True)

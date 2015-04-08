@@ -1,4 +1,4 @@
-<%inherit file="base.tpl">
+<%inherit file="_noframe.tpl">
 
 <%block>
 ## Translators, used as page title

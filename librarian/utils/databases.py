@@ -8,12 +8,16 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import os
+
+
+def get_database_path(conf, name):
+    return os.path.join(conf['database.path'], name + '.sqlite')
+
 
 def get_database_configs(conf):
     databases = dict()
     names = conf['database.names']
-    for name in names.split(','):
-        db_name = name.strip().lower()
-        db_path = conf['database.{0}'.format(db_name)]
-        databases[db_name] = db_path
+    for db_name in names:
+        databases[db_name] = get_database_path(conf, db_name)
     return databases
