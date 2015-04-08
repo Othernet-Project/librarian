@@ -157,16 +157,19 @@ def extract_file(path, filename, no_read=False):
                         ``zipfile.ZipInfo`` object and file content
                         respectively
     """
-    # TODO: Add caching
     try:
-        with open(path, 'rb') as f:
-            with zipfile.ZipFile(f) as content:
-                metadata = content.getinfo(filename)
-                fd = content.open(filename, 'r')
-                if no_read:
-                    content = fd
-                else:
-                    content = fd.read()
+        # Note that we do NOT close the file handle if ``no_read`` is used.
+        # This is intentional. If file handle is closed, the file handle we
+        # return will be no good to the caller.
+        f = open(path, 'rb')
+        content = zipfile.ZipFile(f)
+        metadata = content.getinfo(filename)
+        fd = content.open(filename, 'r')
+        if no_read:
+            content = fd
+        else:
+            content = fd.read()
+            f.close()  # We've read the content, so it's safe to close
     except zipfile.BadZipfile:
         raise ContentError("'%s' is not a valid zipfile" % path, path)
     except Exception as err:
