@@ -45,6 +45,7 @@ LICENSES = (
 # `default` defaults to `None`
 # `aliases` defaults to `[]`
 # `required` defaults to `False`
+# `auto` defaults to `False`
 META_SPECIFICATION = {
     'url': {'required': True},
     'title': {'required': True},
@@ -69,7 +70,13 @@ META_SPECIFICATION = {
         'default': 'index.html',
         'aliases': ['index']
     },
+    'md5': {'auto': True},
+    'size': {'auto': True},
+    'updated': {'auto': True}
 }
+
+STANDARD_FIELDS = dict((k, v) for k, v in META_SPECIFICATION.items()
+                       if not v.get('auto', False))
 
 
 class MetadataError(Exception):
@@ -86,16 +93,20 @@ class FormatError(MetadataError):
     pass
 
 
+def get_standard_fields():
+    return
+
+
 def get_default_value(key):
-    return META_SPECIFICATION[key].get('default', None)
+    return STANDARD_FIELDS[key].get('default', None)
 
 
 def get_aliases_for(key):
-    return META_SPECIFICATION[key].get('aliases', [])
+    return STANDARD_FIELDS[key].get('aliases', [])
 
 
 def is_required(key):
-    return META_SPECIFICATION[key].get('required', False)
+    return STANDARD_FIELDS[key].get('required', False)
 
 
 def add_missing_keys(meta):
@@ -106,7 +117,7 @@ def add_missing_keys(meta):
 
     :param meta:    metadata dict
     """
-    for key in META_SPECIFICATION:
+    for key in STANDARD_FIELDS:
         if key not in meta:
             meta[key] = get_default_value(key)
 
@@ -119,7 +130,7 @@ def replace_aliases(meta):
 
     :param meta:    metadata dict
     """
-    for key in META_SPECIFICATION:
+    for key in STANDARD_FIELDS:
         if key not in meta:
             for alias in get_aliases_for(key):
                 if alias in meta:
@@ -134,7 +145,7 @@ def clean_keys(meta):
 
     :param meta:    metadta dict
     """
-    valid_keys = META_SPECIFICATION.keys()
+    valid_keys = STANDARD_FIELDS.keys()
     for key in meta.keys():
         if key not in valid_keys:
             del meta[key]
@@ -155,7 +166,7 @@ def convert_json(meta):
     except ValueError as err:
         raise DecodeError("Invalid JSON")
     replace_aliases(meta)
-    for key in META_SPECIFICATION:
+    for key in STANDARD_FIELDS:
         if key not in meta and is_required(key):
             raise FormatError("Mandatory key '%s' missing" % key)
     add_missing_keys(meta)
