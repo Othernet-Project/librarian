@@ -17,6 +17,7 @@ import subprocess
 from locale import getpreferredencoding
 
 CHARSET_RE = re.compile(r'("Content-Type: text/plain; charset=).+(\\n")')
+BLACKLIST = ['ht']
 
 
 def make_args(localedir, domain, address=None, comment=None, name=None,
@@ -155,12 +156,6 @@ if __name__ == '__main__':
         print('Error message was: %s' % err, file=sys.stderr)
         sys.exit(1)
 
-    if not hasattr(mod, 'UI_LOCALES'):
-        print('Error: no UI_LOCALES defined in main module', file=sys.stderr)
-        sys.exit(1)
-
-    locales = mod.UI_LOCALES
-
     if not hasattr(mod, '__version__'):
         version = None
     else:
@@ -173,6 +168,7 @@ if __name__ == '__main__':
     print("Using localedir: %s" % localedir)
 
     # Get list of locales
+    locales = [l for l in os.listdir(localedir) if not l.endswith('.pot')]
     print("Using locales: %s" % ', '.join(locales))
 
     # Get list of extensions

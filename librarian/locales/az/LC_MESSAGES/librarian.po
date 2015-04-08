@@ -5,202 +5,205 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: Librarian\n"
-"Language: ta\n"
+"Language: az\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: librarian/views/base.tpl:8 librarian/views/base.tpl:63
 msgid "Librarian"
-msgstr "நூலகர்"
+msgstr "Kitabxana"
 
 #: librarian/views/base.tpl:31 librarian/views/dashboard.tpl:5
 #: librarian/views/dashboard.tpl:10
+#, fuzzy
 msgid "Dashboard"
-msgstr "கட்டுப்பாட்டறை/"
+msgstr "kontrol paneli"
 
 #: librarian/views/base.tpl:29 librarian/views/downloads.tpl:7
 #: librarian/views/downloads.tpl:12
 msgid "Updates"
-msgstr "மேம்படுத்தல்கள்"
+msgstr "yeniliklər"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:20
 msgid "%s more space should be freed."
-msgstr "%s அதிக இடைவெளி தேவைப்படுகிறது."
+msgstr "% dək daha çox yer azad edilməlidir.\n"
+""
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:25
 msgid "There is enough free space on storage"
-msgstr "சேமிப்பில் போதுமான இடம் உள்ளது"
+msgstr "Saxlanması üzrə kifayət qədər boş yer var"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:33
 msgid "delete?"
-msgstr "நீக்க?"
+msgstr "silmək?"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:35
 msgid "date"
-msgstr "திகதி"
+msgstr "tarix"
 
 #: librarian/views/downloads.tpl:53
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:37
 msgid "title"
-msgstr "தலைப்பு"
+msgstr "başlıq"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:39
 msgid "size"
-msgstr "அளவு"
+msgstr "həcmi"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:55
+#, fuzzy
 msgid "There is enough free space. No clean-up needed."
-msgstr "சேமிப்பில் போதுமான இடம் உள்ளது. சுத்தப்படுத்தல் அவசியமற்றது."
+msgstr "Kifayət qədər boş yer var.amma lazim olan yoxdu"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:62
 msgid "How much space does this free up?"
-msgstr "இது எவ்வளவு சேமிப்பு இடத்தை விடுவிக்கும்?"
+msgstr "Bu kosmik nə qədər  pulsuz deyil?"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:64
 msgid "Delete selected now"
-msgstr "தேர்வு  செய்யப்பட்டவற்றை உடனடியாக நீக்கு"
+msgstr "indi seçilmişi Sil "
 
 #: librarian/plugins/diskspace/views/diskspace.tpl:27
 msgid "used space"
-msgstr "பயன்படுத்தப்பட்ட இடைவெளி"
+msgstr "istifadə edilən kosmik"
 
 #: librarian/views/downloads.tpl:26
 msgid "last update"
-msgstr "கடைசியாக மேம்படுத்தப்பட்டது"
+msgstr "son yeniləmə"
 
 #: librarian/plugins/diskspace/views/diskspace.tpl:11
 msgid "You are running low on disk space."
-msgstr "சேமிப்பில் குறைந்த இடம் மீதம் உள்ளது."
+msgstr "You are running low on disk space."
 
 #: librarian/plugins/diskspace/views/diskspace.tpl:13
 msgid "Free some space now"
-msgstr "சேமிப்பை உடனடியாக சுத்தப்படுத்தவும்"
+msgstr "indi bəzi kosmik azad"
 
 #: librarian/views/downloads.tpl:51
 msgid "select"
-msgstr "தெரிவு"
+msgstr "seçmək"
 
 #: librarian/views/downloads.tpl:88
 msgid "There is no new content"
-msgstr "புதிய உள்ளடக்கம் எதுவும் இல்லை"
+msgstr "Yeni məzmun yoxdur"
 
 #: librarian/views/_list_controls.tpl:9
 msgid "Delete selected"
-msgstr "தெரிவு செய்யப்பட்டவற்றை நீக்கு"
+msgstr "Delete selected"
 
 #: librarian/routes/content.py:119 librarian/views/base.tpl:21
 msgid "Library"
-msgstr "நூலகம்"
+msgstr "Library"
 
 #: librarian/views/content_list.tpl:49
 msgid "Content library is currently empty"
-msgstr "உள்ளடக்க நூலகம் தற்போது காலியாக உள்ளது"
+msgstr "Content library is currently empty"
 
 #: librarian/views/content_list.tpl:25
 msgid "search titles"
-msgstr "தேடல் தலைப்புகள்"
+msgstr "search titles"
 
 #: librarian/views/file_list.tpl:18 librarian/views/content_list.tpl:27
 msgid "go"
-msgstr "செல்"
+msgstr "go"
 
 #: librarian/views/content_list.tpl:30
 msgid "clear"
-msgstr "தெளிவாக்கு"
+msgstr "clear"
 
 #: librarian/views/downloads.tpl:20
 msgid "update available"
 msgid_plural "updates available"
-msgstr[0] "மேம்படுத்தல் கிடைக்கப்பட்டுள்ளது"
-msgstr[1] "மேம்படுத்தல்கள்  கிடைக்கப்பட்டுள்ளது"
+msgstr[0] ""
+msgstr[1] ""
 
 #: librarian/plugins/diskspace/plugin.py:88
 msgid "Content library stats"
-msgstr "உள்ளடக்க நூலக புள்ளிவிவரங்கள்"
+msgstr "Content library stats"
 
 #: librarian/plugins/diskspace/views/diskspace.tpl:21
 msgid "item in the library"
 msgid_plural "items in the library"
-msgstr[0] "நூலகத்தில் உள்ள உள்ள உருப்படி"
-msgstr[1] "நூலகத்தில் உள்ள உள்ள உருப்படிகள்"
+msgstr[0] ""
+msgstr[1] ""
 
 #: librarian/plugins/logs/plugin.py:30
 msgid "Application logs"
-msgstr "பயன்பாட்டுப் பதிவுகள்"
+msgstr "Application logs"
 
 #: librarian/plugins/logs/views/logs.tpl:4
 msgid "Logs are shown in reverse chronological order"
-msgstr "பதிவுகள் தலைகீழ் வரிசையாக காட்டப்படுகின்றன"
+msgstr "Logs are shown in reverse chronological order"
 
 #: librarian/views/_list_controls.tpl:3
 msgid "Select all"
-msgstr "அனைத்தையும் தேர்ந்தெடு"
+msgstr "Select all"
 
 #: librarian/views/_list_controls.tpl:5
 msgid "Select none"
-msgstr "ஒன்றையும் தெரிவு செய்யாதே"
+msgstr "Select none"
 
 #: librarian/views/downloads.tpl:55
 msgid "broadcast"
-msgstr "ஒளிபரப்பு"
+msgstr "broadcast"
 
 #: librarian/views/downloads.tpl:57
 msgid "downloaded"
-msgstr "பதிவிறக்கப்பட்டது"
+msgstr "downloaded"
 
 #: librarian/views/content_list.tpl:40
 msgid "Showing search results for '%(terms)s'"
-msgstr "'%(terms)s' க்கான தேடல் முடிவுகள் காட்டப்படுகின்றன"
+msgstr "Showing search results for '%(terms)s'"
 
 #: librarian/views/content_list.tpl:52
 msgid "There are no search results for '%(terms)s'"
-msgstr "'%(terms)s' க்கான தேடல் முடிவுகள் இல்லை"
+msgstr "There are no search results for '%(terms)s'"
 
 #. Translators, used in the pager
 #: librarian/views/_simple_pager.tpl:4
 msgid "previous"
-msgstr "முந்தைய"
+msgstr "previous"
 
 #. Translators, used in the pager
 #: librarian/views/_simple_pager.tpl:19
 msgid "next"
-msgstr "அடுத்த"
+msgstr "next"
 
 #. Translators, used as page title
 #. Translators, used as page title on clean-up page
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:5
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:10
 msgid "Library clean-up"
-msgstr "நூலக சுத்தப்படுத்தல்"
+msgstr "Library clean-up"
 
 #. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
 #: librarian/views/_simple_pager.tpl:9
 msgid "page"
-msgstr "பக்கம்"
+msgstr "page"
 
 #. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
 #: librarian/views/_simple_pager.tpl:13
 msgid "per page"
-msgstr "பக்கம் ஒன்றுக்கு"
+msgstr "per page"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
 #: librarian/plugins/diskspace/views/diskspace/_space_info.tpl:4
 msgid "total space (%s free)"
-msgstr "மொத்த சேமிப்பில் (%s இலவச) இடம் உள்ளது"
+msgstr "total space (%s free)"
 
 #. Translators, used as button label on updates page for adding marked content to library
 #: librarian/views/_list_controls.tpl:7
 msgid "Add selected to library"
-msgstr "தெரிவு செய்தவற்றை நூலகத்தில் சேர்"
+msgstr "Add selected to library"
 
 #. Translators, used as 'content belongs to core archive' badge
 #: librarian/core/metadata.py:189 librarian/views/reader.tpl:30
 msgid "core"
-msgstr "மையம்"
+msgstr "core"
 
 #. Translators, used as 'sponsored content' badge
 #: librarian/core/metadata.py:191 librarian/views/reader.tpl:26
 msgid "sponsored"
-msgstr "ஆதரவளிக்கப்பட்ட"
+msgstr "sponsored"
 
 #. Translators, used as page title
 #. Translators, used as page heading
@@ -211,23 +214,23 @@ msgstr "ஆதரவளிக்கப்பட்ட"
 #: librarian/views/base.tpl:27 librarian/views/app_list.tpl:5
 #: librarian/views/app_list.tpl:10
 msgid "Apps"
-msgstr "ஆப்ஸ்"
+msgstr "Apps"
 
 #. Translators, refers to app author
 #: librarian/views/app_list.tpl:22
 msgid "author:"
-msgstr "ஆசிரியர்:"
+msgstr "author:"
 
 #. Translators, refers to app version
 #: librarian/views/app_list.tpl:24
 #: librarian/plugins/license/views/license.tpl:13
 msgid "version:"
-msgstr "பதிப்பு:"
+msgstr "version:"
 
 #. Translators, message show in app listing when no apps are present.
 #: librarian/views/app_list.tpl:33
 msgid "No apps found."
-msgstr "ஆப்ஸ் எதுவும் இல்லை"
+msgstr "No apps found."
 
 #. Translators, used main navigation menu
 #. Translators, used as page title
@@ -238,241 +241,241 @@ msgstr "ஆப்ஸ் எதுவும் இல்லை"
 #: librarian/views/base.tpl:23 librarian/views/file_list.tpl:5
 #: librarian/views/file_list.tpl:10
 msgid "Files"
-msgstr "கோப்புகள்"
+msgstr "Files"
 
 #: librarian/views/_simple_pager.tpl:14
 msgid "Reload"
-msgstr "மீள் ஏற்றவும்"
+msgstr "Reload"
 
 #: librarian/views/downloads.tpl:73
 msgid "replaces:"
-msgstr "பதிலாக:"
+msgstr "replaces:"
 
 #. Translators, used as label for link that leads to parent directory in file listing
 #: librarian/views/file_list.tpl:28
 msgid "(go up one level)"
-msgstr "(முதல் அளவு வரை செல்ல)"
+msgstr "(go up one level)"
 
 #: librarian/views/file_list.tpl:50 librarian/views/file_list.tpl:70
 msgid "Rename"
-msgstr "மறுபெயரிடு"
+msgstr "Rename"
 
 #: librarian/views/file_list.tpl:55 librarian/views/file_list.tpl:75
 msgid "Delete"
-msgstr "நீக்கு"
+msgstr "delete?"
 
 #: librarian/views/file_list.tpl:92
 msgid "About this folder"
-msgstr "இந்த அடைவை பற்றி"
+msgstr "About this folder"
 
 #. Translators, used as page title for page that shows result of running a script
 #. Translators, used as page header for page that shows result of running a script
 #: librarian/views/exec_result.tpl:2 librarian/views/exec_result.tpl:5
 msgid "Script output"
-msgstr "படிவ நிரலாக்க வெளியீடு"
+msgstr "Script output"
 
 #. Translators, return (result) code of the script executed via file browser
 #: librarian/views/exec_result.tpl:11
 msgid "return code:"
-msgstr "திரும்பிய குறியீடு:"
+msgstr "return code:"
 
 #. Translators, shown when result code is good (0).
 #: librarian/views/exec_result.tpl:14
 msgid "OK"
-msgstr "ஆம்"
+msgstr "OK"
 
 #. Translators, shown when result code is not good (non-zero).
 #: librarian/views/exec_result.tpl:17
 msgid "error"
-msgstr "பிழை"
+msgstr "error"
 
 #. Translators, refers to standard output of script run from file browser (STDOUT)
 #: librarian/views/exec_result.tpl:22
 msgid "Output"
-msgstr "வெளியீடு"
+msgstr "Output"
 
 #. Translators, shown if script returned no output
 #: librarian/views/exec_result.tpl:27
 msgid "no output"
-msgstr "எந்த வெளியீடும் இல்லை"
+msgstr "no output"
 
 #. Translators, refers to standard errors of script run from file browser (STDERR)
 #: librarian/views/exec_result.tpl:32
 msgid "Errors"
-msgstr "பிழைகள்"
+msgstr "Errors"
 
 #. Translators, label for button in file listing that allows user to run a script
 #: librarian/views/file_list.tpl:82
 msgid "Run"
-msgstr "தொடங்கு"
+msgstr "Run"
 
 #. Translators, this is used when app doesn't provide a description
 #: librarian/core/apps.py:45
 msgid "No description provided"
-msgstr "விளக்கம் எதுவும் வழங்கப்படவில்லை "
+msgstr "No description provided"
 
 #: librarian/core/metadata.py:25
 msgid "Unknown license"
-msgstr "தெரியாத உரிமம்"
+msgstr "Unknown license"
 
 #: librarian/core/metadata.py:26
 msgid "Creative Commons Attribution"
-msgstr "படைப்பாக்கப் பொதுமங்களின் உரிமங்கள்"
+msgstr "Creative Commons Attribution"
 
 #: librarian/core/metadata.py:27
 msgid "Creative Commons Attribution-NoDerivs"
-msgstr "படைப்பாக்கப் பொதுமங்களின் உரிமங்கள்-வழிப்பொருளற்ற"
+msgstr "Creative Commons Attribution-NoDerivs"
 
 #: librarian/core/metadata.py:28
 msgid "Creative Commons Attribution-NonCommercial"
-msgstr "படைப்பாக்கப் பொதுமங்களின் உரிமங்கள்-வர்த்தகநோக்கமற்ற"
+msgstr "Creative Commons Attribution-NonCommercial"
 
 #: librarian/core/metadata.py:29
 msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
-msgstr "படைப்பாக்கப் பொதுமங்களின் உரிமங்கள்-வர்த்தகநோக்கமற்ற-வழிப்பொருளற்ற"
+msgstr "Creative Commons Attribution-NonCommercial-NoDerivs"
 
 #: librarian/core/metadata.py:31
 msgid "Creative Commons Attribution-ShareAlike"
-msgstr "படைப்பாக்கப் பொதுமங்களின் உரிமங்கள்-அதே மாதிரிப் பகிர்தல்"
+msgstr "Creative Commons Attribution-ShareAlike"
 
 #: librarian/core/metadata.py:32
 msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
-msgstr "படைப்பாக்கப் பொதுமங்களின் உரிமங்கள்-வர்த்தகநோக்கமற்ற-அதே மாதிரிப் பகிர்தல்"
+msgstr "Creative Commons Attribution-NonCommercial-ShareAlike"
 
 #: librarian/core/metadata.py:34
 msgid "GNU Free Documentation License"
-msgstr "GNU தளையறு ஆவண உரிமம்"
+msgstr "GNU Free Documentation License"
 
 #: librarian/core/metadata.py:35
 msgid "Open Publication License"
-msgstr "திறந்த வெளியீட்டு உரிமம்"
+msgstr "Open Publication License"
 
 #: librarian/core/metadata.py:36
 msgid "Open Content License"
-msgstr "திறந்த உள்ளடக்க உரிமம்"
+msgstr "Open Content License"
 
 #: librarian/core/metadata.py:37
 msgid "Against DRM License"
-msgstr "எதிரான DRM உரிமம்"
+msgstr "Against DRM License"
 
 #: librarian/core/metadata.py:38
 msgid "Free Art License"
-msgstr "இலவச கலை உரிமம்"
+msgstr "Free Art License"
 
 #: librarian/core/metadata.py:39
 msgid "Public Domain"
-msgstr "பொது அதிகார வரம்பு எல்லை"
+msgstr "Public Domain"
 
 #: librarian/core/metadata.py:40
 msgid "Other free license"
-msgstr "வேறு இலவச உரிமம்"
+msgstr "Other free license"
 
 #: librarian/core/metadata.py:41
 msgid "All rights reserved"
-msgstr "அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை"
+msgstr "All rights reserved"
 
 #: librarian/core/metadata.py:42
 msgid "Other non-free license"
-msgstr "வேறு இலவசம் அல்லாத உரிமம்"
+msgstr "Other non-free license"
 
 #. Translators, used as response to innvalid HTTP request
 #: librarian/plugins/diskspace/plugin.py:42
 msgid "Invalid request"
-msgstr "செல்லாத கோரிக்கை"
+msgstr "Invalid request"
 
 #. Translators, used as message to user when clean-up is started
 #. without selecting any content
 #: librarian/plugins/diskspace/plugin.py:52
 msgid "No content selected"
-msgstr "உள்ளடக்கம் எதுவும் தெரிவு செய்யப்படவில்லை"
+msgstr "No content selected"
 
 #. Translators, used when user is previewing clean-up, %s is
 #. replaced by amount of content that can be freed in bytes,
 #. KB, MB, etc
 #: librarian/plugins/diskspace/plugin.py:59
 msgid "%s can be freed by removing selected content"
-msgstr "தெரிவு செய்தவற்றை நீக்குவதன் மூலம் %s இலவச இடம் பெறப்படும்"
+msgstr "%s can be freed by removing selected content"
 
 #. Translators, error message shown on clean-up page when there was
 #. no deletable content
 #: librarian/plugins/diskspace/plugin.py:69
 msgid "Nothing to delete"
-msgstr "நீக்க எதுவுமில்லை"
+msgstr "Nothing to delete"
 
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
 #: librarian/routes/downloads.py:96
 msgid "Invalid action, please use one of the form buttons."
-msgstr "தவறான நடவடிக்கை, தயவு செய்து வடிவத்தில் உள்ள பொத்தான்களை பயன்படுத்தவும்."
+msgstr "Invalid action, please use one of the available buttons."
 
 #. Translators, used as placeholder while infinite scrolling content is being loaded
 #: librarian/views/content_list.tpl:77
 msgid "Loading..."
-msgstr "ஏற்றப்படுகின்றது..."
+msgstr "Loading..."
 
 #. Translators, shown when user reaches the end of the library
 #: librarian/views/content_list.tpl:84
 msgid "You have reached the end of the library."
-msgstr "நீங்கள் நூலகத்தின்  இறுதி பகுதியை அடைந்து உள்ளீர்கள்."
+msgstr "You have reached the end of the library."
 
 #. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
 #: librarian/views/content_list.tpl:86 librarian/views/content_list.tpl:93
 msgid "Go to top"
-msgstr "மேலே செல்"
+msgstr "Go to top"
 
 #. Translators, used as section heading on dashboard above 'About' section
 #: librarian/plugins/license/plugin.py:24
 msgid "About"
-msgstr "எம்மை பற்றி"
+msgstr "About"
 
 #. Translators, appears in copyright line in dashboard's 'About' section
 #: librarian/plugins/license/views/license.tpl:16
 msgid "Some rights reserved."
-msgstr "சில உரிமைகள் ஒதுக்கப்பட்டுள்ளன."
+msgstr "Some rights reserved."
 
 #: librarian/routes/content.py:75
 msgid "Specified tag was not found"
-msgstr "குறித்த குறிச்சொல்லைக் காணவில்லை"
+msgstr "Specified tag was not found"
 
 #. Translators, used as not on library page when there is no content for given tag
 #: librarian/views/content_list.tpl:55
 msgid "There are no results for '%(tag)s'"
-msgstr "'% (tag)s' க்கான எந்த முடிவுகளும் இல்லை"
+msgstr "There are no results for '%(tag)s'"
 
 #. Translators, button label for a button that saves user tags for a piece of content
 #: librarian/views/_tags.tpl:11
 msgid "Save tags"
-msgstr "குறிச்சொற்களை சேமிக்கவும்"
+msgstr "Save tags"
 
 #. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
 #: librarian/views/_tags.tpl:15
 msgid "Separate tags with commas"
-msgstr "குறிச்சொற்களை அரைப்புள்ளியால் பிரிக்கவும்"
+msgstr "Separate tags with commas"
 
 #. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
 #: librarian/views/_tag_cloud.tpl:5
 msgid "everything"
-msgstr "எல்லாம்"
+msgstr "everything"
 
 #. Translators, used as label for button that appears next to tag list
 #: librarian/views/_tag_js_templates.tpl:3
 msgid "Edit tags"
-msgstr "குறிச்சொற்களை திருத்த"
+msgstr "Edit tags"
 
 #. Translators, used as label for button that appears in tag editing form
 #: librarian/views/_tag_js_templates.tpl:8
 msgid "Close"
-msgstr "மூடு"
+msgstr "Close"
 
 #. Translators, error message shown when updating tags fails
 #: librarian/views/_tag_js_templates.tpl:13
 msgid "Tags could not be updated."
-msgstr "குறிச்சொற்களை மேம்படுத்த முடியாது."
+msgstr "Tags could not be updated."
 
 #. Translators, link that loads more content in infinite scrolling page
 #: librarian/views/content_list.tpl:69
 msgid "Load more content"
-msgstr "மேலும் உள்ளடக்கம் ஏற்று"
+msgstr "Load more content"
 
 #. Translators, used as section heading on dashboard
 #: librarian/plugins/ondd/plugin.py:197
@@ -480,21 +483,21 @@ msgstr "மேலும் உள்ளடக்கம் ஏற்று"
 #: librarian/plugins/ondd/views/ondd/settings.tpl:6
 #: librarian/plugins/ondd/views/ondd/settings.tpl:11
 msgid "Tuner settings"
-msgstr "ட்யூனர் அமைப்புகள்"
+msgstr "Tuner settings"
 
 #: librarian/plugins/tvheadend/views/tvheadend.tpl:4
 msgid "Access TVHeadend"
-msgstr "TVHeadend ஐ அணுகு."
+msgstr "Access TVHeadend"
 
 #: librarian/views/file_list.tpl:40
 msgid "There are currently no files or folders here."
-msgstr "இங்கே எந்த கோப்புக்களோ அல்லது கோப்பறைகளோ தற்போது இல்லாது உள்ளது."
+msgstr "There are currently no files or folders here."
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian/views/tag_cloud.tpl:2 librarian/views/tag_cloud.tpl:5
 msgid "Tag cloud"
-msgstr "குறிச்சொல் மேகம்"
+msgstr "Tag cloud"
 
 #. Translators, error message displayed when locking fails during
 #. database rebuild
@@ -502,49 +505,49 @@ msgstr "குறிச்சொல் மேகம்"
 #. database rebuild
 #: librarian/plugins/dbmanage/plugin.py:154
 msgid "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
-msgstr "Librarian இனால் பராமரிப்பு முறையை நுழைய முடியவில்லை மற்றும் தரவுத்தள மீள் கட்டியெழுப்பல் ரத்து செய்யப்பட்டது. Librarian ஐ வேறு யாரும் பயன்படுத்தவில்லை என்பதை உறுதி செய்து, மீண்டும் முயற்சிக்கவும்."
+msgstr "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
 
 #. Translators, used as dashboard section title
 #. Translators, used as dashboard section title
 #: librarian/plugins/dbmanage/plugin.py:173
 msgid "Content database"
-msgstr "உள்ளடக்க தரவுத்தளம்"
+msgstr "Content database"
 
 #. Translators, refers to transponder polarization
 #. Translators, refers to transponder polarization
 #: librarian/plugins/ondd/plugin.py:44
 msgid "None"
-msgstr "எதுவும் இல்லை"
+msgstr "None"
 
 #. Translators, refers to transponder polarization
 #. Translators, refers to transponder polarization
 #: librarian/plugins/ondd/plugin.py:46
 msgid "Vertical"
-msgstr "செங்குத்து"
+msgstr "Vertical"
 
 #. Translators, refers to transponder polarization
 #. Translators, refers to transponder polarization
 #: librarian/plugins/ondd/plugin.py:48
 msgid "Horizontal"
-msgstr "கிடையான"
+msgstr "Horizontal"
 
 #. Translators, this is a type of LNB
 #. Translators, this is a type of LNB
 #: librarian/plugins/ondd/plugin.py:59
 msgid "Universal"
-msgstr "உலகளாவிய"
+msgstr "Universal"
 
 #. Translators, this is a type of LNB
 #. Translators, this is a type of LNB
 #: librarian/plugins/ondd/plugin.py:61
 msgid "North America Ku band"
-msgstr "வட அமெரிக்க Ku அலைக்கற்றை"
+msgstr "North America Ku band"
 
 #. Translators, error message when LNB type is incorrect
 #. Translators, error message when LNB type is incorrect
 #: librarian/plugins/ondd/plugin.py:120
 msgid "Invalid choice for LNB type"
-msgstr "LNB வகை தெரிவு தவறானது"
+msgstr "Invalid choice for LNB type"
 
 #. Translators, error message when frequency value is
 #. wrong
@@ -552,7 +555,7 @@ msgstr "LNB வகை தெரிவு தவறானது"
 #. wrong
 #: librarian/plugins/ondd/plugin.py:124
 msgid "Frequency must be a positive number"
-msgstr "அதிர்வெண் ஒரு நேர்மறை எண்ணாக இருக்க வேண்டும்"
+msgstr "Frequency must be a positive number"
 
 #. Translators, error message when frequency value is
 #. wrong
@@ -564,7 +567,7 @@ msgstr "அதிர்வெண் ஒரு நேர்மறை எண்ண
 #. wrong
 #: librarian/plugins/ondd/plugin.py:127 librarian/plugins/ondd/plugin.py:134
 msgid "Please type in a number"
-msgstr "தயவு செய்து ஒரு எண்ணை தட்டச்சு செய்க"
+msgstr "Please type in a number"
 
 #. Translators, error message when symbolrate value is
 #. wrong
@@ -572,7 +575,7 @@ msgstr "தயவு செய்து ஒரு எண்ணை தட்ட�
 #. wrong
 #: librarian/plugins/ondd/plugin.py:131
 msgid "Symbolrate must be a positive number"
-msgstr "குறியீட்டு விகிதம் ஒரு நேர்மறை எண்ணாக இருக்க வேண்டும்"
+msgstr "Symbolrate must be a positive number"
 
 #. Translators, error message shown when wrong delivery
 #. system is selected
@@ -580,7 +583,7 @@ msgstr "குறியீட்டு விகிதம் ஒரு நேர
 #. system is selected
 #: librarian/plugins/ondd/plugin.py:138
 msgid "Invalid choice for delivery system"
-msgstr "விநியோக அமைப்பின் தேர்வு தவறானது"
+msgstr "Invalid choice for delivery system"
 
 #. Translators, error message shown when wrong modulation
 #. mode is selected
@@ -588,7 +591,7 @@ msgstr "விநியோக அமைப்பின் தேர்வு 
 #. mode is selected
 #: librarian/plugins/ondd/plugin.py:142
 msgid "Invalid choice for modulation mode"
-msgstr "பண்பேற்ற முறையின் தேர்வு தவறானது"
+msgstr "Invalid choice for modulation mode"
 
 #. Translators, error message shown when wrong
 #. polarization is selected
@@ -596,7 +599,7 @@ msgstr "பண்பேற்ற முறையின் தேர்வு த
 #. polarization is selected
 #: librarian/plugins/ondd/plugin.py:146
 msgid "Invalid choice for polarization"
-msgstr "முனைவாக்க தேர்வு தவறானது"
+msgstr "Invalid choice for polarization"
 
 #. Translators, error message shown when setting transponder
 #. configuration is not successful
@@ -604,77 +607,77 @@ msgstr "முனைவாக்க தேர்வு தவறானது"
 #. configuration is not successful
 #: librarian/plugins/ondd/plugin.py:165
 msgid "Transponder configuration could not be set"
-msgstr "அலைவாங்கிச் கட்டமைப்பை அமைக்க கூடாது"
+msgstr "Transponder configuration could not be set"
 
 #: librarian/routes/content.py:214
 msgid "The files you were looking for could not be found"
-msgstr "நீங்கள் தேடும் கோப்புக்களைக் காணவில்லை"
+msgstr "The files you were looking for could not be found"
 
 #: librarian/routes/content.py:216
 msgid "This list represents the search results"
-msgstr "இந்த பட்டியலில் தேடல் முடிவுகளை பிரதிபலிக்கிறது"
+msgstr "Bu siyahı axtarış nəticələri təqdim edir"
 
 #: librarian/routes/content.py:227
 msgid "This folder does not exist"
-msgstr "இந்த அடைவு இருப்பில் இல்லை"
+msgstr "Bu qovluq yoxdur"
 
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:4
 msgid "Database size"
-msgstr "தரவுத்தள அளவு"
+msgstr "Database ölçüsü"
 
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:5
 msgid "download"
-msgstr "பதிவிறக்கம்"
+msgstr "yuklemek"
 
 #. Translators, refers to database backup
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:11
 msgid "Backup"
-msgstr "காப்பு"
+msgstr "Backup"
 
 #. Translators, refers to database rebuild feature
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:16
 msgid "Rebuild"
-msgstr "திரும்பவும் கட்டியெழுப்பு"
+msgstr "bərpa etmək"
 
 #. Translators, note about database rebuild shown on dashboard
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:22
 msgid "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
-msgstr "தரவுத்தள மீள் கட்டியெழுப்பல் அனைத்து குறிச்சொற்களையும் இழக்க செய்யும். Librarian ஐ இது பராமரிப்பு நிலையில் வைக்கும் மற்றும் பாவனையாளர் உள்ளடக்கத்தை அணுகுவதை தடுக்கும்."
+msgstr "Database tags itirilmiş səbəb olacaq yenidən. O, həmçinin istismar rejimində daxil Kitabxanaçı qoymaq və məzmun daxil istifadəçilər qarşısını alır"
 
 #. Translators, used as page heading
 #: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:5
 #: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:10
 msgid "Database backup"
-msgstr "தரவுத்தள காப்பு"
+msgstr "Database backup "
 
 #: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:14
 msgid "Database backup has been completed successfully. You will be taken to the backup folder in 10 seconds."
-msgstr "தரவுத்தள காப்பு வெற்றிகரமாக நிறைவுசெய்யப்பட்டது. நீங்கள் 10 வினாடிகளில் காப்பு கோப்பறைக்கு எடுத்து செல்லப்படுவீர்கள்."
+msgstr "Database backup uğurla başa çatdırılmışdır. Siz 10 saniyə backup qovluq alınacaq"
 
 #: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:16
 #: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:16
 msgid "The operation took %s second"
 msgid_plural "The operation took %s seconds"
-msgstr[0] "இந்த நடைமுறை %s வினாடி எடுத்தது"
-msgstr[1] "இந்த நடைமுறை %s வினாடிகள் எடுத்தது"
+msgstr[0] "Əməliyyat% s saniyə etmişdir"
+msgstr[1] "Əməliyyat% s saniyə etmişdir"
 
 #: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:19
 msgid "Database backup could not be completed. The following error occurred:"
-msgstr "தரவுத்தள காப்பினை நிறைவு செய்ய முடியவில்லை. பின்வரும் பிழை ஏற்பட்டது:"
+msgstr "Database backup başa çatdırılması bilməz. Aşağıdakı səhv meydana gəldi:"
 
 #. Translators, used as page heading
 #: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:5
 #: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:10
 msgid "Database rebuild"
-msgstr "தரவுத்தளத்தை மீண்டும் கட்டியெழுப்பு"
+msgstr " Database bərpa"
 
 #: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:14
 msgid "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
-msgstr "உள்ளடக்க தரவுத்தளம் மீண்டும் புதிதாக மீளக் கட்டியெழுப்ப பட்டுள்ளது. அசல் தரவுத்தளத்தில் ஒரு காப்பு நகல் உருவாக்கப்பட்டது. நீங்கள் கோப்புகளை பிரிவில் அதை கண்டுபிடிக்க முடியும்."
+msgstr "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
 
 #: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:19
 msgid "Database could not be rebuilt. The following error occurred:"
-msgstr "தரவுத்தளத்தை மீண்டும் கட்டியெழுப்ப முடியவில்லை. பின்வரும் பிழை ஏற்பட்டது:"
+msgstr "Database could not be rebuilt. The following error occurred:"
 
 #: librarian/plugins/license/views/license.tpl:5
 msgid "\n"
@@ -683,69 +686,74 @@ msgid "\n"
 "Free Software Foundation, either version 3 of the License, or (at your\n"
 "option) any later version.\n"
 ""
-msgstr "இந்த மென்பொருள் ஒரு கட்டற்ற மென்பொருள் ஆகும்: கட்டற்ற மென்பொருள் இயக்கதினால் வெளியிடப்பட்ட குனூ பொதுமக்கள் உரிமத்தில் உள்ள பதிப்பு 3 அல்லது (உங்கள் விருப்பப்படி) அதற்கு பிந்திய பதிப்பின் கீழ் நீங்கள்  இதனை மறுவிநியோகம் செய்ய மற்றும்/அல்லது இதில் மாற்றங்கள் செய்ய முடியும், "
+msgstr "\n"
+"This program is free software: you can redistribute it and/or modify it\n"
+"under the terms of the GNU General Public License as published by the\n"
+"Free Software Foundation, either version 3 of the License, or (at your\n"
+"option) any later version.\n"
+""
 
 #: librarian/views/500.tpl:18 librarian/plugins/logs/views/logs.tpl:6
 msgid "Download application log"
-msgstr "பயன்பாட்டு மென்பொருள் பதிவினை பதிவிறக்கு"
+msgstr "Download application log"
 
 #. Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
 #: librarian/plugins/ondd/views/ondd.tpl:17
 msgid "Downloads in progress"
-msgstr "பதிவிறக்கங்கள் நடைபெறுகின்றன"
+msgstr "Downloads in progress"
 
 #. Translators, label for select list that allows user to pick a satellite to tune into
 #: librarian/plugins/ondd/views/ondd.tpl:27
 msgid "Satellite:"
-msgstr "செயற்கைக்கோள்:"
+msgstr "Satellite:"
 
 #. Translators, placeholder for satellite selection select list
 #: librarian/plugins/ondd/views/ondd.tpl:30
 msgid "Select a satellite"
-msgstr "ஒரு செயற்கைக்கோளைத் தெரிக"
+msgstr "Select a satellite"
 
 #. Translators, label for option that allows user to set custom transponder parameters
 #: librarian/plugins/ondd/views/ondd.tpl:40
 msgid "Custom..."
-msgstr "விருப்ப ..."
+msgstr "Custom..."
 
 #. Translators, form label for transponder frequency
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:16
 msgid "Frequency:"
-msgstr "அதிர்வெண்:"
+msgstr "tezlik:"
 
 #. Translators, form label for transponder symbol rate
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:22
 msgid "Symbol rate:"
-msgstr "குறியீட்டு விகிதம்:"
+msgstr "Symbol dərəcəsi:"
 
 #. Translators, form label for transponder delivery system (DVB-S or DVB-S2)
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:28
 msgid "Delivery system:"
-msgstr "விநியோக அமைப்பு:"
+msgstr "Çatdırılma sistemi:"
 
 #. Translators, form label for transponder modulation mode (QPSK, etc)
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:34
 msgid "Modulation:"
-msgstr "பண்பேற்றம்:"
+msgstr "Modulyasiya:"
 
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:40
 msgid "Polarization:"
-msgstr "முனைவாக்கம்:"
+msgstr "polyarizasiya:"
 
 #. Translators, button label that confirms tuner settings
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:48
 msgid "Tune in"
-msgstr "ட்யூன்"
+msgstr "qur"
 
 #. Translators, whether tuner has a lock on the signal or not (note: technical term)
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:3
 msgid "has lock"
-msgstr "பூட்டு உள்ளது"
+msgstr "kilidi var"
 
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:3
 msgid "no lock"
-msgstr "பூட்டு இல்லை"
+msgstr "kilidi yoxdu"
 
 #. Translators, short for 'signal/noise ratio'
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:14
@@ -756,116 +764,118 @@ msgstr "SNR"
 #. Translators, used as error page heading
 #: librarian/views/500.tpl:5 librarian/views/500.tpl:10
 msgid "Error"
-msgstr "பிழை"
+msgstr "səhv "
 
 #: librarian/views/500.tpl:13
 msgid "Librarian has failed to fulfill your request due to unexpected error in the program. Details are provided below."
-msgstr "Librarian எதிர்பாராத பிழை காரணமாக உங்கள் திட்ட கோரிக்கையை நிறைவேற்ற தவறிவிட்டது. விவரங்கள் கீழே கொடுக்கப்பட்டுள்ளது."
+msgstr "Librarian has failed to fulfill your request due to unexpected error in the program. Details are provided below."
 
 #. Translators, used as page title
 #. Translators, used as maintenance page heading
 #: librarian/views/503.tpl:5 librarian/views/503.tpl:10
 msgid "Under maintenance"
-msgstr "பராமரிப்புப் பணிகள் நடைபெறுகின்றன"
+msgstr "Under maintenance"
 
 #: librarian/views/503.tpl:14
 msgid "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
-msgstr "Librarian பராமரிப்பு முறையில் தற்போது உள்ளது. ஒரு சில நிமிடங்கள் காத்திருந்து, மீண்டும் முயற்சிக்கவும்."
+msgstr "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
 
 #. Translators, used as label for link that leads to file list
 #: librarian/views/file_list.tpl:34
 msgid "(go to file list)"
-msgstr "(கோப்பு பட்டியலிற்கு செல்)"
+msgstr "(go to file list)"
 
 #. Translators, attribution (e.g., 'By Project Gutenberg')
 #: librarian/views/_content_list.tpl:31
 msgid "by %s"
-msgstr "%s னால்"
+msgstr "by %s"
 
 #. Translators, error message shown when user does not supply username
 #. Translators, error message shown when user does not supply username
 #: librarian/routes/auth.py:30
 msgid "Type in your username"
-msgstr "உங்கள் பயனர் பெயரை தட்டச்சு செய்க"
+msgstr "Type in your username"
 
 #. Translators, error message shown when user does not supply password
 #. Translators, error message shown when user does not supply password
 #: librarian/routes/auth.py:33
 msgid "Type in your password"
-msgstr "உங்கள் கடவுச்சொல்லை தட்டச்சு செய்க"
+msgstr "Type in your password"
 
 #: librarian/routes/auth.py:39
 msgid "Please enter the correct username and password."
-msgstr "சரியான பயனர் பெயர் மற்றும் கடவுச்சொல்லை உள்ளிடவும்."
+msgstr "Please enter the correct username and password."
 
 #: librarian/utils/lang.py:92
 msgid "any language"
-msgstr "எந்த மொழியும்"
+msgstr "any language"
 
 #: librarian/plugins/ondd/views/ondd/_file_list.tpl:5
 msgid "No files are being downloaded"
-msgstr "எந்த கோப்புகளும் பதிவிறக்கப்படவில்லை"
+msgstr "No files are being downloaded"
 
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:8
 msgid "LNB type:"
-msgstr "LNB வகை:"
+msgstr "LNB növü:\n"
+""
 
 #: librarian/views/403.tpl:5 librarian/views/403.tpl:10
 msgid "Forbidden"
-msgstr "தடைப்படுத்தப்பட்டுள்ளது"
+msgstr "qadağan"
 
 #: librarian/views/403.tpl:15
 msgid "You are not authorized to access this page."
-msgstr "இந்தப் பக்கத்தை அணுக உங்களுக்கு அதிகாரம் இல்லை."
+msgstr "Bu səhifəni daxil olmaq üçün səlahiyyətiniz yoxdur"
 
 #: librarian/views/base.tpl:34
 msgid "Log out"
-msgstr "வெளியேறு"
+msgstr "Çıxış"
 
 #: librarian/views/login.tpl:5 librarian/views/login.tpl:10
 #: librarian/views/login.tpl:35
 msgid "Login"
-msgstr "உள்நுழை"
+msgstr "Login"
 
 #: librarian/views/login.tpl:22
 msgid "Username:"
-msgstr "பயனர் பெயர்:"
+msgstr "Username:\n"
+""
 
 #: librarian/views/login.tpl:24
 msgid "username"
-msgstr "பயனர் பெயர்"
+msgstr "username"
 
 #: librarian/views/login.tpl:29
 msgid "Password:"
-msgstr "கடவுச்சொல்:"
+msgstr "Şifrə:"
 
 #: librarian/views/login.tpl:31
 msgid "password"
-msgstr "கடவுச்சொல்"
+msgstr "Şifrə"
 
 #: librarian/views/reader.tpl:33
 msgid "Download"
-msgstr "பதிவிறக்கம்"
+msgstr "Yüklə"
 
 #: librarian/views/_list_controls.tpl:11
 msgid "Delete all"
-msgstr "எல்லாவற்றையும் நீக்கு"
+msgstr "hamısını sil"
 
 #: librarian/views/content_list.tpl:34 librarian/views/downloads.tpl:37
 msgid "filter"
-msgstr "வடிகட்டி"
+msgstr "filtr"
 
 #: librarian/views/downloads.tpl:59
 msgid "language"
-msgstr "மொழி"
+msgstr "dil"
 
 #: librarian/views/remove_error.tpl:5 librarian/views/remove_error.tpl:10
 msgid "Content file missing"
-msgstr "உள்ளடக்க கோப்பை காணவில்லை"
+msgstr "itkin mezmun fayl"
 
 #: librarian/views/remove_error.tpl:14
 msgid "The content file was not found, but has been removed from the database. You will be redirected to the content list shortly."
-msgstr "உள்ளடக்க கோப்பை காணவில்லை, ஆனால் தரவுத்தளத்திலிருந்து நீக்கப்பட்டுள்ளது. நீங்கள் விரைவில் உள்ளடக்க பட்டியலிற்கு திருப்பி விடப்படுவீர்கள்."
+msgstr "Məzmun fayl tapılmadı, lakin bazası qaldırıldı. Siz qısa məzmunu siyahısı yönlendirileceksiniz."
 
 #: librarian/utils/lang.py:34
 msgid "unknown"
