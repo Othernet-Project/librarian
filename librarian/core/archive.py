@@ -19,7 +19,7 @@ from bottle import request, abort
 
 from ..lib.squery import sqlin
 
-from .metadata import clean_keys, Meta
+from .metadata import clean_keys, Meta, META_SPECIFICATION
 from .downloads import get_spool_zip_path, get_zip_path, get_metadata
 
 
@@ -31,24 +31,7 @@ FACTORS = {
 }
 
 CONTENT_ORDER = ['-date(updated)', '-views']
-INSERT_KEYS = (
-    'md5',
-    'url',
-    'title',
-    'images',
-    'timestamp',
-    'updated',
-    'keep_formatting',
-    'is_partner',
-    'is_sponsored',
-    'archive',
-    'partner',
-    'license',
-    'language',
-    'size',
-    'multipage',
-    'entry_point',
-)
+INSERT_KEYS = META_SPECIFICATION.keys()
 
 
 def multiarg(query, n):
