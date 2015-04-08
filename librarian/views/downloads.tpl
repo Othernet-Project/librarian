@@ -85,7 +85,7 @@ ${_('Updates')}
             % else:
                 <tr>
                 ## Translators, note that appears in table on updates page when there is no new downloaded content
-                <td class="empty" colspan="4">${_('There is no new content')}</td>
+                <td class="empty" colspan="5">${_('There is no new content')}</td>
                 </tr>
             % endif
         </tbody>
