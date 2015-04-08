@@ -93,10 +93,6 @@ class FormatError(MetadataError):
     pass
 
 
-def get_standard_fields():
-    return
-
-
 def get_default_value(key):
     return STANDARD_FIELDS[key].get('default', None)
 
