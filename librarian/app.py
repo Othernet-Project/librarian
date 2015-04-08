@@ -161,11 +161,6 @@ ROUTES = (
 )
 
 app = bottle.default_app()
-add_routes(app, ROUTES)
-app.error(403)(system.show_access_denied_page)
-app.error(404)(system.show_page_missing)
-app.error(500)(system.show_error_page)
-app.error(503)(system.show_maint_page)
 
 
 def prestart(config, logfile=None, debug=False):
@@ -272,6 +267,13 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         reserved_hostnames=config['librarian.hostnames']
     ))
     app.install(request_timer('Handler'))
+
+    # Install routes
+    add_routes(app, ROUTES)
+    app.error(403)(system.show_access_denied_page)
+    app.error(404)(system.show_page_missing)
+    app.error(500)(system.show_error_page)
+    app.error(503)(system.show_maint_page)
 
     # Prepare to start
     bottle.debug(debug)
