@@ -71,7 +71,6 @@ class FileRangeWrapper(object):
     specified range.
     """
     def __init__(self, fd, offset, length):
-        assert hasattr(fd, 'read'), 'Expected fd to be file-like object'
         self.fd = fd
         self.offset = offset
         self.remaining = length
@@ -131,6 +130,7 @@ def send_file(fd, filename, size, timestamp):
     :param size:        file size in bytes
     :param timestamp:   file's timestamp seconds since epoch
     """
+    assert hasattr(fd, 'read'), 'Expected fd to be file-like object'
     headers = {}
     ctype = get_mimetype(filename)
 

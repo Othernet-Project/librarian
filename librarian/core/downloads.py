@@ -141,7 +141,7 @@ def get_md5_from_path(path):
     return os.path.basename(os.path.splitext(path)[0])
 
 
-def extract_file(path, filename):
+def extract_file(path, filename, no_read=False):
     """ Extract a single file from a zipball into memory
 
     This function is cached using in-memory cache with arguments as keys.
@@ -152,6 +152,7 @@ def extract_file(path, filename):
 
     :param path:        path to the zip file
     :param filename:    name of the file to extract
+    :param noread:      return file handle instead of file contents
     :returns:           two-tuple in ``(metadata, content)`` format, containing
                         ``zipfile.ZipInfo`` object and file content
                         respectively
@@ -161,7 +162,11 @@ def extract_file(path, filename):
         with open(path, 'rb') as f:
             with zipfile.ZipFile(f) as content:
                 metadata = content.getinfo(filename)
-                content = content.open(filename, 'r').read()
+                fd = content.open(filename, 'r')
+                if no_read:
+                    content = fd
+                else:
+                    content = fd.read()
     except zipfile.BadZipfile:
         raise ContentError("'%s' is not a valid zipfile" % path, path)
     except Exception as err:
@@ -169,7 +174,7 @@ def extract_file(path, filename):
     return metadata, content
 
 
-def get_file(path, filename):
+def get_file(path, filename, no_read=False):
     """ Extract a single file from a zipball into memory
 
     This function is cached using in-memory cache with arguments as keys.
@@ -180,6 +185,7 @@ def get_file(path, filename):
 
     :param path:        path to the zip file
     :param filename:    name of the file to extract
+    :param noread:      return file handle instead of file contents
     :returns:           two-tuple in ``(metadata, content)`` format, containing
                         ``zipfile.ZipInfo`` object and file content
                         respectively
@@ -187,7 +193,7 @@ def get_file(path, filename):
     # TODO: Add caching
     dirname = get_md5_from_path(path)
     filename = '%s/%s' % (dirname, filename)  # we always use forward slash
-    return extract_file(path, filename)
+    return extract_file(path, filename, no_read)
 
 
 @cached()

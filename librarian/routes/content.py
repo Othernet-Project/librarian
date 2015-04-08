@@ -16,6 +16,10 @@ import logging
 import urlparse
 import functools
 import subprocess
+try:
+    from io import BytesIO as StringIO
+except ImportError:
+    from cStringIO import StringIO
 
 from bottle import (
     request, mako_view as view, abort, default_app, static_file, redirect,
@@ -141,7 +145,7 @@ def content_file(content_id, filename):
     """ Serve file from zipball with specified id """
     zippath = downloads.get_zip_path(content_id)
     try:
-        metadata, content = downloads.get_file(zippath, filename)
+        metadata, content = downloads.get_file(zippath, filename, no_read=True)
     except downloads.ContentError as err:
         logging.error(err)
         abort(404)
@@ -150,7 +154,8 @@ def content_file(content_id, filename):
     if filename.endswith('.html') and archive.needs_formatting(content_id):
         logging.debug("Patching HTML file '%s' with Librarian stylesheet" % (
                       filename))
-        size, content = patch_content.patch(content)
+        size, content = patch_content.patch(content.read())
+        content = StringIO(content.encode('utf8'))
     return send_file.send_file(content, filename, size, timestamp)
 
 
