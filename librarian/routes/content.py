@@ -228,7 +228,8 @@ def show_file_list(path='.'):
                     name=os.path.basename(path),
                     size=fstat[stat.ST_SIZE],
                 ))
-            return static_file(err.path, root=files.get_file_dir())
+            options = {'download': request.params.get('filename', False)}
+            return static_file(err.path, root=files.get_file_dir(), **options)
     up = os.path.normpath(os.path.join(path, '..'))
     up = os.path.relpath(up, conf['content.filedir'])
     if resp_format == 'json':
