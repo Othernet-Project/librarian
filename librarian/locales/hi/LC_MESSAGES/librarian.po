@@ -1,936 +1,921 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Librarian\n"
-"Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2015-04-03 14:41+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
+"Project-Id-Version: Librarian\n"
 "Language: hi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. Translators, this is used when app doesn't provide a description
-#. Translators, this is used when app doesn't provide a description
-#: librarian\core\apps.py:45
-msgid "No description provided"
-msgstr "प्रदान की कोई विवरण नहीं"
+#: librarian/views/base.tpl:8 librarian/views/base.tpl:63
+msgid "Librarian"
+msgstr "लाइब्रेरीअन"
 
-#: librarian\core\metadata.py:25
-msgid "Unknown license"
-msgstr "अज्ञात  अनुज्ञापत्र "
+#: librarian/views/base.tpl:31 librarian/views/dashboard.tpl:5
+#: librarian/views/dashboard.tpl:10
+msgid "Dashboard"
+msgstr "डैशबोर्ड"
 
-#: librarian\core\metadata.py:26
-msgid "Creative Commons Attribution"
-msgstr " सृजनशील  सर्वसामान्य रोपण"
+#: librarian/views/base.tpl:29 librarian/views/downloads.tpl:7
+#: librarian/views/downloads.tpl:12
+msgid "Updates"
+msgstr "अपडेट"
 
-#: librarian\core\metadata.py:27
-msgid "Creative Commons Attribution-NoDerivs"
-msgstr "क्रिएटिव कॉमन्स रोपण-NoDerivs"
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:20
+#, fuzzy
+msgid "%s more space should be freed."
+msgstr "%s अधिक जगह खाली कर दी जानी चाहिए."
 
-#: librarian\core\metadata.py:28
-msgid "Creative Commons Attribution-NonCommercial"
-msgstr "क्रिएटिव कॉमन्स रोपण-गैर वाणिज्यिक"
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:25
+msgid "There is enough free space on storage"
+msgstr "स्टोर में पर्याप्त खाली जगह है"
 
-#: librarian\core\metadata.py:29
-msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
-msgstr "क्रिएटिव कॉमन्स रोपण गैर-NoDerivs"
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:33
+#, fuzzy
+msgid "delete?"
+msgstr "हटायें?"
 
-#: librarian\core\metadata.py:31
-msgid "Creative Commons Attribution-ShareAlike"
-msgstr "क्रिएटिव कॉमन्स रोपण- ShareAlike"
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:35
+msgid "date"
+msgstr "तारीख"
 
-#: librarian\core\metadata.py:32
-msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
-msgstr "क्रिएटिव कॉमन्स रोपण गैर-d प्रलेखन"
+#: librarian/views/downloads.tpl:53
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:37
+msgid "title"
+msgstr "शीर्षक"
 
-#: librarian\core\metadata.py:34
-msgid "GNU Free Documentation License"
-msgstr "ग्नू मुक्त प्रलेखन अनुज्ञापत्र"
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:39
+msgid "size"
+msgstr "आकार"
 
-#: librarian\core\metadata.py:35
-msgid "Open Publication License"
-msgstr "ओपेन पब्लिकेशन अनुज्ञापत्र"
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:55
+msgid "There is enough free space. No clean-up needed."
+msgstr "काफी खाली जगह है. खाली करने की जरूरत नहीं है"
 
-#: librarian\core\metadata.py:36
-msgid "Open Content License"
-msgstr "खुली सामग्री अनुज्ञापत्र"
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:62
+msgid "How much space does this free up?"
+msgstr "यह कितनी जगह खाली करता है?"
 
-#: librarian\core\metadata.py:37
-msgid "Against DRM License"
-msgstr "DRM के अनुज्ञापत्र के खिलाफ"
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:64
+#, fuzzy
+msgid "Delete selected now"
+msgstr "हटाएं चयनित ?\n"
+""
 
-#: librarian\core\metadata.py:38
-msgid "Free Art License"
-msgstr "मुफ्त कला अनुज्ञापत्र"
+#: librarian/plugins/diskspace/views/diskspace.tpl:27
+msgid "used space"
+msgstr "भरी हुई जगह"
 
-#: librarian\core\metadata.py:39
-msgid "Public Domain"
-msgstr " सार्वजनिक डोमेन"
+#: librarian/views/downloads.tpl:26
+msgid "last update"
+msgstr "पिछले अपडेट"
 
-#: librarian\core\metadata.py:40
-msgid "Other free license"
-msgstr "अन्य नि: शुल्क अनुज्ञापत्र"
+#: librarian/plugins/diskspace/views/diskspace.tpl:11
+msgid "You are running low on disk space."
+msgstr "आपकी डिस्क में कम जगह बची हैं"
 
-#: librarian\core\metadata.py:41
-msgid "All rights reserved"
-msgstr "सर्वाधिकार सुरक्षित"
+#: librarian/plugins/diskspace/views/diskspace.tpl:13
+msgid "Free some space now"
+msgstr "कुछ जगह खाली करें"
 
-#: librarian\core\metadata.py:42
-msgid "Other non-free license"
-msgstr "अन्य गैर-मुक्त अनुज्ञापत्र"
+#: librarian/views/downloads.tpl:51
+msgid "select"
+msgstr "चुने"
 
-#. Translators, used as label, meaning content belogs to core
-#. Translators, used as label, meaning content belogs to core
-#: librarian\core\metadata.py:147 librarian\views\reader.tpl:30
+#: librarian/views/downloads.tpl:88
+msgid "There is no new content"
+msgstr "कोई नई सामग्री नहीं है"
+
+#: librarian/views/_list_controls.tpl:9
+msgid "Delete selected"
+msgstr "चयनित हटाएँ"
+
+#: librarian/routes/content.py:119 librarian/views/base.tpl:21
+msgid "Library"
+msgstr "पुस्तकालय"
+
+#: librarian/views/content_list.tpl:49
+msgid "Content library is currently empty"
+msgstr "सामग्री पुस्तकालय अभी खाली है"
+
+#: librarian/views/content_list.tpl:25
+msgid "search titles"
+msgstr "शीर्षक से खोजें"
+
+#: librarian/views/file_list.tpl:18 librarian/views/content_list.tpl:27
+msgid "go"
+msgstr "जायें"
+
+#: librarian/views/content_list.tpl:30
+msgid "clear"
+msgstr "हटायें"
+
+#: librarian/views/downloads.tpl:20
+msgid "update available"
+msgid_plural "updates available"
+msgstr[0] "अपडेट उपलब्ध\n"
+"P: अपडेटें उपलब्ध"
+msgstr[1] "अपडेट मौजूद है "
+
+#: librarian/plugins/diskspace/plugin.py:88
+msgid "Content library stats"
+msgstr "सामग्री लाइब्रेरी के आँकड़े"
+
+#: librarian/plugins/diskspace/views/diskspace.tpl:21
+msgid "item in the library"
+msgid_plural "items in the library"
+msgstr[0] "पुस्तकालय में चीज़ें"
+msgstr[1] "पुस्तकालय में आइटम"
+
+#: librarian/plugins/logs/plugin.py:30
+msgid "Application logs"
+msgstr "एप्लिकेशन सूची"
+
+#: librarian/plugins/logs/views/logs.tpl:4
+msgid "Logs are shown in reverse chronological order"
+msgstr "सूची विपरीत कालानुक्रमिक क्रम में दिखाए जाते हैं"
+
+#: librarian/views/_list_controls.tpl:3
+msgid "Select all"
+msgstr "सभी का चयन करें"
+
+#: librarian/views/_list_controls.tpl:5
+msgid "Select none"
+msgstr "कोई भी न चुनें"
+
+#: librarian/views/downloads.tpl:55
+msgid "broadcast"
+msgstr "प्रसारण"
+
+#: librarian/views/downloads.tpl:57
+msgid "downloaded"
+msgstr "डाउनलोड"
+
+#: librarian/views/content_list.tpl:40
+#, fuzzy
+msgid "Showing search results for '%(terms)s'"
+msgstr "के लिए खोज परिणाम दिखा रहा है '% (नियम) एस'"
+
+#: librarian/views/content_list.tpl:52
+#, fuzzy
+msgid "There are no search results for '%(terms)s'"
+msgstr "के लिए कोई खोज परिणाम '% (नियम) एस' कर रहे हैं"
+
+#. Translators, used in the pager
+#: librarian/views/_simple_pager.tpl:4
+msgid "previous"
+msgstr "पूर्व"
+
+#. Translators, used in the pager
+#: librarian/views/_simple_pager.tpl:19
+msgid "next"
+msgstr "अगला"
+
+#. Translators, used as page title
+#. Translators, used as page title on clean-up page
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:5
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:10
+msgid "Library clean-up"
+msgstr "लाइब्रेरी सफाई"
+
+#. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
+#: librarian/views/_simple_pager.tpl:9
+msgid "page"
+msgstr "पृष्ठ"
+
+#. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
+#: librarian/views/_simple_pager.tpl:13
+msgid "per page"
+msgstr "प्रति पृष्ठ"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: librarian/plugins/diskspace/views/diskspace/_space_info.tpl:4
+msgid "total space (%s free)"
+msgstr "कुल स्थान (% मुफ़्त)"
+
+#. Translators, used as button label on updates page for adding marked content to library
+#: librarian/views/_list_controls.tpl:7
+msgid "Add selected to library"
+msgstr "पुस्तकालय के लिए चयनित जोड़ें"
+
+#. Translators, used as 'content belongs to core archive' badge
+#: librarian/core/metadata.py:189 librarian/views/reader.tpl:30
 msgid "core"
 msgstr "कोर"
 
-#. Translators, used as label, meaning content was sponsored by someone
-#. Translators, used as label, meaning content was sponsored by someone
-#: librarian\core\metadata.py:149 librarian\views\reader.tpl:26
+#. Translators, used as 'sponsored content' badge
+#: librarian/core/metadata.py:191 librarian/views/reader.tpl:26
 msgid "sponsored"
 msgstr "प्रायोजित"
 
-#. Translators, used as label, meaning content is from a partner
-#. Translators, used as label, meaning content is from a partner
-#: librarian\core\metadata.py:151 librarian\views\reader.tpl:21
-msgid "partner"
-msgstr "साथी"
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#: librarian/views/base.tpl:27 librarian/views/app_list.tpl:5
+#: librarian/views/app_list.tpl:10
+msgid "Apps"
+msgstr "एप्प्स"
 
-#. Translators, error message displayed when locking fails during
-#. database rebuild
-#. Translators, error message displayed when locking fails during
-#. database rebuild
-#: librarian\plugins\dbmanage\plugin.py:154
-msgid ""
-"Librarian could not enter maintenance mode and database rebuild was "
-"cancelled. Please make sure noone else is using Librarian and try again."
-msgstr ""
-"Librarian could not enter maintenance mode and database rebuild was "
-"cancelled. Please make sure noone else is using Librarian and try again."
+#. Translators, refers to app author
+#: librarian/views/app_list.tpl:22
+msgid "author:"
+msgstr "लेखक:"
 
-#. Translators, used as dashboard section title
-#. Translators, used as dashboard section title
-#: librarian\plugins\dbmanage\plugin.py:173
-msgid "Content database"
-msgstr "Content database"
+#. Translators, refers to app version
+#: librarian/views/app_list.tpl:24
+#: librarian/plugins/license/views/license.tpl:13
+msgid "version:"
+msgstr "संस्करण:"
+
+#. Translators, message show in app listing when no apps are present.
+#: librarian/views/app_list.tpl:33
+msgid "No apps found."
+msgstr "कोई एप्प नहीं मिली"
+
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian/views/base.tpl:23 librarian/views/file_list.tpl:5
+#: librarian/views/file_list.tpl:10
+msgid "Files"
+msgstr "फ़ाइलें"
+
+#: librarian/views/_simple_pager.tpl:14
+msgid "Reload"
+msgstr "फिर लोड करें"
+
+#: librarian/views/downloads.tpl:73
+msgid "replaces:"
+msgstr "बदलें :"
+
+#. Translators, used as label for link that leads to parent directory in file listing
+#: librarian/views/file_list.tpl:28
+msgid "(go up one level)"
+msgstr "(एक स्तर ऊपर जाना)"
+
+#: librarian/views/file_list.tpl:50 librarian/views/file_list.tpl:70
+msgid "Rename"
+msgstr "नाम बदलें"
+
+#: librarian/views/file_list.tpl:55 librarian/views/file_list.tpl:75
+msgid "Delete"
+msgstr "हटाना"
+
+#: librarian/views/file_list.tpl:92
+msgid "About this folder"
+msgstr "इस फ़ोल्डर के बारे में"
+
+#. Translators, used as page title for page that shows result of running a script
+#. Translators, used as page header for page that shows result of running a script
+#: librarian/views/exec_result.tpl:2 librarian/views/exec_result.tpl:5
+msgid "Script output"
+msgstr "स्क्रिप्ट उत्पादन"
+
+#. Translators, return (result) code of the script executed via file browser
+#: librarian/views/exec_result.tpl:11
+msgid "return code:"
+msgstr "कोड लौटने:"
+
+#. Translators, shown when result code is good (0).
+#: librarian/views/exec_result.tpl:14
+msgid "OK"
+msgstr "ठीक"
+
+#. Translators, shown when result code is not good (non-zero).
+#: librarian/views/exec_result.tpl:17
+msgid "error"
+msgstr "त्रुटि"
+
+#. Translators, refers to standard output of script run from file browser (STDOUT)
+#: librarian/views/exec_result.tpl:22
+msgid "Output"
+msgstr "उत्पादन"
+
+#. Translators, shown if script returned no output
+#: librarian/views/exec_result.tpl:27
+msgid "no output"
+msgstr "कोई उत्पादन नहीं |"
+
+#. Translators, refers to standard errors of script run from file browser (STDERR)
+#: librarian/views/exec_result.tpl:32
+msgid "Errors"
+msgstr "त्रुटियाँ"
+
+#. Translators, label for button in file listing that allows user to run a script
+#: librarian/views/file_list.tpl:82
+msgid "Run"
+msgstr "रन"
+
+#. Translators, this is used when app doesn't provide a description
+#: librarian/core/apps.py:45
+msgid "No description provided"
+msgstr "प्रदान की कोई विवरण नहीं"
+
+#: librarian/core/metadata.py:25
+msgid "Unknown license"
+msgstr "अज्ञात  अनुज्ञापत्र "
+
+#: librarian/core/metadata.py:26
+msgid "Creative Commons Attribution"
+msgstr " सृजनशील  सर्वसामान्य रोपण"
+
+#: librarian/core/metadata.py:27
+msgid "Creative Commons Attribution-NoDerivs"
+msgstr "क्रिएटिव कॉमन्स रोपण-NoDerivs"
+
+#: librarian/core/metadata.py:28
+msgid "Creative Commons Attribution-NonCommercial"
+msgstr "क्रिएटिव कॉमन्स रोपण-गैर वाणिज्यिक"
+
+#: librarian/core/metadata.py:29
+msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
+msgstr "क्रिएटिव कॉमन्स रोपण गैर-NoDerivs"
+
+#: librarian/core/metadata.py:31
+msgid "Creative Commons Attribution-ShareAlike"
+msgstr "क्रिएटिव कॉमन्स रोपण- ShareAlike"
+
+#: librarian/core/metadata.py:32
+msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
+msgstr "क्रिएटिव कॉमन्स रोपण गैर-d प्रलेखन"
+
+#: librarian/core/metadata.py:34
+msgid "GNU Free Documentation License"
+msgstr "ग्नू मुक्त प्रलेखन अनुज्ञापत्र"
+
+#: librarian/core/metadata.py:35
+msgid "Open Publication License"
+msgstr "ओपेन पब्लिकेशन अनुज्ञापत्र"
+
+#: librarian/core/metadata.py:36
+msgid "Open Content License"
+msgstr "खुली सामग्री अनुज्ञापत्र"
+
+#: librarian/core/metadata.py:37
+msgid "Against DRM License"
+msgstr "DRM के अनुज्ञापत्र के खिलाफ"
+
+#: librarian/core/metadata.py:38
+msgid "Free Art License"
+msgstr "मुफ्त कला अनुज्ञापत्र"
+
+#: librarian/core/metadata.py:39
+msgid "Public Domain"
+msgstr " सार्वजनिक डोमेन"
+
+#: librarian/core/metadata.py:40
+msgid "Other free license"
+msgstr "अन्य नि: शुल्क अनुज्ञापत्र"
+
+#: librarian/core/metadata.py:41
+msgid "All rights reserved"
+msgstr "सर्वाधिकार सुरक्षित"
+
+#: librarian/core/metadata.py:42
+msgid "Other non-free license"
+msgstr "अन्य गैर-मुक्त अनुज्ञापत्र"
 
 #. Translators, used as response to innvalid HTTP request
-#. Translators, used as response to innvalid HTTP request
-#: librarian\plugins\diskspace\plugin.py:42
+#: librarian/plugins/diskspace/plugin.py:42
 msgid "Invalid request"
 msgstr "अमान्य अनुरोध"
 
 #. Translators, used as message to user when clean-up is started
 #. without selecting any content
-#. Translators, used as message to user when clean-up is started
-#. without selecting any content
-#: librarian\plugins\diskspace\plugin.py:52
+#: librarian/plugins/diskspace/plugin.py:52
 msgid "No content selected"
 msgstr "चयनित कोई सामग्री"
 
 #. Translators, used when user is previewing clean-up, %s is
 #. replaced by amount of content that can be freed in bytes,
 #. KB, MB, etc
-#. Translators, used when user is previewing clean-up, %s is
-#. replaced by amount of content that can be freed in bytes,
-#. KB, MB, etc
-#: librarian\plugins\diskspace\plugin.py:59
-#, fuzzy, python-format
+#: librarian/plugins/diskspace/plugin.py:59
 msgid "%s can be freed by removing selected content"
 msgstr "% की चयनित सामग्री को हटाने से मुक्त किया जा सकता है"
 
 #. Translators, error message shown on clean-up page when there was
 #. no deletable content
-#. Translators, error message shown on clean-up page when there was
-#. no deletable content
-#: librarian\plugins\diskspace\plugin.py:69
+#: librarian/plugins/diskspace/plugin.py:69
 msgid "Nothing to delete"
 msgstr "कुछ भी नहीं नष्ट करने के लिए"
 
-#. Translators, used as dashboard section title
-#. Translators, used as dashboard section title
-#: librarian\plugins\diskspace\plugin.py:88
-msgid "Content library stats"
-msgstr "सामग्री लाइब्रेरी के आँकड़े"
-
-#. Translators, used as dashboard section title
-#. Translators, used as dashboard section title
-#: librarian\plugins\license\plugin.py:24
-msgid "About"
-msgstr "अबाउट"
-
-#. Translators, used as dashboard section title
-#. Translators, used as dashboard section title
-#: librarian\plugins\logs\plugin.py:30
-msgid "Application logs"
-msgstr "एप्लिकेशन सूची"
-
-#. Translators, refers to transponder polarization
-#. Translators, refers to transponder polarization
-#: librarian\plugins\ondd\plugin.py:44
-msgid "None"
-msgstr "None"
-
-#. Translators, refers to transponder polarization
-#. Translators, refers to transponder polarization
-#: librarian\plugins\ondd\plugin.py:46
-msgid "Vertical"
-msgstr "Vertical"
-
-#. Translators, refers to transponder polarization
-#. Translators, refers to transponder polarization
-#: librarian\plugins\ondd\plugin.py:48
-msgid "Horizontal"
-msgstr "Horizontal"
-
-#. Translators, this is a type of LNB
-#. Translators, this is a type of LNB
-#: librarian\plugins\ondd\plugin.py:59
-msgid "Universal"
-msgstr "Universal"
-
-#. Translators, this is a type of LNB
-#. Translators, this is a type of LNB
-#: librarian\plugins\ondd\plugin.py:61
-msgid "North America Ku band"
-msgstr "North America Ku band"
-
-#. Translators, error message when LNB type is incorrect
-#. Translators, error message when LNB type is incorrect
-#: librarian\plugins\ondd\plugin.py:120
-msgid "Invalid choice for LNB type"
-msgstr "Invalid choice for LNB type"
-
-#. Translators, error message when frequency value is
-#. wrong
-#. Translators, error message when frequency value is
-#. wrong
-#: librarian\plugins\ondd\plugin.py:124
-msgid "Frequency must be a positive number"
-msgstr "Frequency must be a positive number"
-
-#. Translators, error message when frequency value is
-#. wrong
-#. Translators, error message when symbolrate value is
-#. wrong
-#. Translators, error message when frequency value is
-#. wrong
-#. Translators, error message when symbolrate value is
-#. wrong
-#: librarian\plugins\ondd\plugin.py:127 librarian\plugins\ondd\plugin.py:134
-msgid "Please type in a number"
-msgstr "Please type in a number"
-
-#. Translators, error message when symbolrate value is
-#. wrong
-#. Translators, error message when symbolrate value is
-#. wrong
-#: librarian\plugins\ondd\plugin.py:131
-msgid "Symbolrate must be a positive number"
-msgstr "Symbolrate must be a positive number"
-
-#. Translators, error message shown when wrong delivery
-#. system is selected
-#. Translators, error message shown when wrong delivery
-#. system is selected
-#: librarian\plugins\ondd\plugin.py:138
-msgid "Invalid choice for delivery system"
-msgstr "Invalid choice for delivery system"
-
-#. Translators, error message shown when wrong modulation
-#. mode is selected
-#. Translators, error message shown when wrong modulation
-#. mode is selected
-#: librarian\plugins\ondd\plugin.py:142
-msgid "Invalid choice for modulation mode"
-msgstr "Invalid choice for modulation mode"
-
-#. Translators, error message shown when wrong
-#. polarization is selected
-#. Translators, error message shown when wrong
-#. polarization is selected
-#: librarian\plugins\ondd\plugin.py:146
-msgid "Invalid choice for polarization"
-msgstr "Invalid choice for polarization"
-
-#. Translators, error message shown when setting transponder
-#. configuration is not successful
-#. Translators, error message shown when setting transponder
-#. configuration is not successful
-#: librarian\plugins\ondd\plugin.py:165
-msgid "Transponder configuration could not be set"
-msgstr "Transponder configuration could not be set"
-
-#. Translators, used as dashboard section title
-#. Translators, used as dashboard section title
-#: librarian\plugins\ondd\plugin.py:197
-#: librarian\plugins\tvheadend\plugin.py:24
-#: librarian\plugins\ondd\views\ondd\settings.tpl:6
-#: librarian\plugins\ondd\views\ondd\settings.tpl:11
-msgid "Tuner settings"
-msgstr "ट्यूनर सेटिंग"
-
-#. Translators, error message shown when user does not supply username
-#. Translators, error message shown when user does not supply username
-#: librarian\routes\auth.py:30
-msgid "Type in your username"
-msgstr ""
-
-#. Translators, error message shown when user does not supply password
-#. Translators, error message shown when user does not supply password
-#: librarian\routes\auth.py:33
-msgid "Type in your password"
-msgstr ""
-
-#: librarian\routes\auth.py:39
-msgid "Please enter the correct username and password."
-msgstr ""
-
-#: librarian\routes\content.py:65
-msgid "Specified tag was not found"
-msgstr "निर्दिष्ट टैग नहीं मिला"
-
-#: librarian\routes\content.py:178
-msgid "The files you were looking for could not be found"
-msgstr "The files you were looking for could not be found"
-
-#: librarian\routes\content.py:180
-msgid "This list represents the search results"
-msgstr "This list represents the search results"
-
-#: librarian\routes\content.py:191
-msgid "This folder does not exist"
-msgstr "This folder does not exist"
-
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
-#. Translators, used as error message shown to user when wrong action
-#. code is submitted to server
-#: librarian\routes\downloads.py:96
+#: librarian/routes/downloads.py:96
 msgid "Invalid action, please use one of the form buttons."
 msgstr "अवैध कार्रवाई, फार्म बटनों में से एक का उपयोग करें."
 
-#: librarian\utils\lang.py:85
-msgid "any language"
-msgstr ""
+#. Translators, used as placeholder while infinite scrolling content is being loaded
+#: librarian/views/content_list.tpl:77
+msgid "Loading..."
+msgstr "लोडिंग..."
 
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:4
+#. Translators, shown when user reaches the end of the library
+#: librarian/views/content_list.tpl:84
+msgid "You have reached the end of the library."
+msgstr "आप पुस्तकालय के अंत तक पहुँच चुके हैं ।"
+
+#. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
+#: librarian/views/content_list.tpl:86 librarian/views/content_list.tpl:93
+msgid "Go to top"
+msgstr "शीर्ष पर जाएँ"
+
+#. Translators, used as section heading on dashboard above 'About' section
+#: librarian/plugins/license/plugin.py:24
+msgid "About"
+msgstr "अबाउट"
+
+#. Translators, appears in copyright line in dashboard's 'About' section
+#: librarian/plugins/license/views/license.tpl:16
+msgid "Some rights reserved."
+msgstr "कुछ  सुरक्षित अधिकार।"
+
+#: librarian/routes/content.py:75
+msgid "Specified tag was not found"
+msgstr "निर्दिष्ट टैग नहीं मिला"
+
+#. Translators, used as not on library page when there is no content for given tag
+#: librarian/views/content_list.tpl:55
+msgid "There are no results for '%(tag)s'"
+msgstr "' % ( टैग) एस ' के लिए कोई परिणाम नहीं कर रहे हैं"
+
+#. Translators, button label for a button that saves user tags for a piece of content
+#: librarian/views/_tags.tpl:11
+msgid "Save tags"
+msgstr "टैग बचाने"
+
+#. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
+#: librarian/views/_tags.tpl:15
+msgid "Separate tags with commas"
+msgstr "कॉमा से अलग टैग\n"
+""
+
+#. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
+#: librarian/views/_tag_cloud.tpl:5
+msgid "everything"
+msgstr "सब कुछ"
+
+#. Translators, used as label for button that appears next to tag list
+#: librarian/views/_tag_js_templates.tpl:3
+msgid "Edit tags"
+msgstr "संपादित टैग"
+
+#. Translators, used as label for button that appears in tag editing form
+#: librarian/views/_tag_js_templates.tpl:8
+msgid "Close"
+msgstr "बंद"
+
+#. Translators, error message shown when updating tags fails
+#: librarian/views/_tag_js_templates.tpl:13
+msgid "Tags could not be updated."
+msgstr "टैग अद्यतन नहीं किया जा सकता है।"
+
+#. Translators, link that loads more content in infinite scrolling page
+#: librarian/views/content_list.tpl:69
+msgid "Load more content"
+msgstr "अधिक सामग्री लोड"
+
+#. Translators, used as section heading on dashboard
+#: librarian/plugins/ondd/plugin.py:197
+#: librarian/plugins/tvheadend/plugin.py:24
+#: librarian/plugins/ondd/views/ondd/settings.tpl:6
+#: librarian/plugins/ondd/views/ondd/settings.tpl:11
+msgid "Tuner settings"
+msgstr "ट्यूनर सेटिंग"
+
+#: librarian/plugins/tvheadend/views/tvheadend.tpl:4
+msgid "Access TVHeadend"
+msgstr "पहुंच TVHeadend"
+
+#: librarian/views/file_list.tpl:40
+msgid "There are currently no files or folders here."
+msgstr "यहाँ कोई फाइल या फ़ोल्डर वर्तमान में कर रहे हैं।"
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian/views/tag_cloud.tpl:2 librarian/views/tag_cloud.tpl:5
+msgid "Tag cloud"
+msgstr "टैग बादल"
+
+#. Translators, error message displayed when locking fails during
+#. database rebuild
+#. Translators, error message displayed when locking fails during
+#. database rebuild
+#: librarian/plugins/dbmanage/plugin.py:154
+msgid "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
+msgstr "लाइब्रेरियन रखरखाव मोड में प्रवेश नहीं कर सकता है और डेटाबेस को रद्द कर दिया गया था पुनर्निर्माण। लाइब्रेरियन उपयोग कर रहा है किसी और सुनिश्चित करें कि कोई भी बनाने के लिए और फिर कोशिश करें। "
+
+#. Translators, used as dashboard section title
+#. Translators, used as dashboard section title
+#: librarian/plugins/dbmanage/plugin.py:173
+msgid "Content database"
+msgstr "सामग्री डेटाबेस"
+
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian/plugins/ondd/plugin.py:44
+msgid "None"
+msgstr "कोई नहीं"
+
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian/plugins/ondd/plugin.py:46
+msgid "Vertical"
+msgstr "सीधा"
+
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian/plugins/ondd/plugin.py:48
+msgid "Horizontal"
+msgstr "आड़ा"
+
+#. Translators, this is a type of LNB
+#. Translators, this is a type of LNB
+#: librarian/plugins/ondd/plugin.py:59
+msgid "Universal"
+msgstr "यूनिवर्सल"
+
+#. Translators, this is a type of LNB
+#. Translators, this is a type of LNB
+#: librarian/plugins/ondd/plugin.py:61
+msgid "North America Ku band"
+msgstr "उत्तरी अमेरिका Ku बैंड"
+
+#. Translators, error message when LNB type is incorrect
+#. Translators, error message when LNB type is incorrect
+#: librarian/plugins/ondd/plugin.py:120
+msgid "Invalid choice for LNB type"
+msgstr "LNB के प्रकार के लिए अवैध विकल्प"
+
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when frequency value is
+#. wrong
+#: librarian/plugins/ondd/plugin.py:124
+msgid "Frequency must be a positive number"
+msgstr "फ्रीक्वेंसी एक सकारात्मक संख्या होनी चाहिए"
+
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#: librarian/plugins/ondd/plugin.py:127 librarian/plugins/ondd/plugin.py:134
+msgid "Please type in a number"
+msgstr "एक नंबर में टाइप करें"
+
+#. Translators, error message when symbolrate value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#: librarian/plugins/ondd/plugin.py:131
+msgid "Symbolrate must be a positive number"
+msgstr "Symbolrate एक सकारात्मक संख्या होनी चाहिए"
+
+#. Translators, error message shown when wrong delivery
+#. system is selected
+#. Translators, error message shown when wrong delivery
+#. system is selected
+#: librarian/plugins/ondd/plugin.py:138
+msgid "Invalid choice for delivery system"
+msgstr "वितरण प्रणाली के लिए अमान्य विकल्प"
+
+#. Translators, error message shown when wrong modulation
+#. mode is selected
+#. Translators, error message shown when wrong modulation
+#. mode is selected
+#: librarian/plugins/ondd/plugin.py:142
+msgid "Invalid choice for modulation mode"
+msgstr "मॉडुलन मोड के लिए अमान्य विकल्प"
+
+#. Translators, error message shown when wrong
+#. polarization is selected
+#. Translators, error message shown when wrong
+#. polarization is selected
+#: librarian/plugins/ondd/plugin.py:146
+msgid "Invalid choice for polarization"
+msgstr "ध्रुवीकरण के लिए अमान्य विकल्प"
+
+#. Translators, error message shown when setting transponder
+#. configuration is not successful
+#. Translators, error message shown when setting transponder
+#. configuration is not successful
+#: librarian/plugins/ondd/plugin.py:165
+msgid "Transponder configuration could not be set"
+msgstr "ट्रांसपोंडर विन्यास सेट नहीं किया जा सकता है"
+
+#: librarian/routes/content.py:214
+msgid "The files you were looking for could not be found"
+msgstr "आप के लिए देख रहे थे फ़ाइलों को पाया नहीं जा सका"
+
+#: librarian/routes/content.py:216
+msgid "This list represents the search results"
+msgstr "इस सूची में खोज परिणामों का प्रतिनिधित्व करता है"
+
+#: librarian/routes/content.py:227
+msgid "This folder does not exist"
+msgstr "ये फ़ोल्डर मौजूद नही है"
+
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:4
 msgid "Database size"
-msgstr "Database size"
+msgstr "डेटाबेस आकार"
 
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:5
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:5
 msgid "download"
-msgstr "download"
+msgstr "डाउनलोड"
 
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:11
+#. Translators, refers to database backup
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:11
 msgid "Backup"
 msgstr "Backup"
 
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:16
+#. Translators, refers to database rebuild feature
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:16
 msgid "Rebuild"
 msgstr "Rebuild"
 
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:22
-msgid ""
-"Database rebuild will cause all tags to be lost. It will also put Librarian "
-"into maintenance mode and prevent users from accessing content."
-msgstr ""
-"Database rebuild will cause all tags to be lost. It will also put Librarian "
-"into maintenance mode and prevent users from accessing content."
+#. Translators, note about database rebuild shown on dashboard
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:22
+msgid "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
+msgstr "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
 
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:5
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:10
+#. Translators, used as page heading
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:5
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:10
 msgid "Database backup"
 msgstr "Database backup"
 
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:14
-msgid ""
-"Database backup has been completed successfully. You will be taken to the "
-"backup folder in 10 seconds."
-msgstr ""
-"Database backup has been completed successfully. You will be taken to the "
-"backup folder in 10 seconds."
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:14
+msgid "Database backup has been completed successfully. You will be taken to the backup folder in 10 seconds."
+msgstr "Database backup has been completed successfully. You will be taken to the backup folder in 10 seconds."
 
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:16
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:16
-#, python-format
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:16
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:16
 msgid "The operation took %s second"
 msgid_plural "The operation took %s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:19
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:19
 msgid "Database backup could not be completed. The following error occurred:"
 msgstr "Database backup could not be completed. The following error occurred:"
 
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:5
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:10
+#. Translators, used as page heading
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:5
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:10
 msgid "Database rebuild"
 msgstr "Database rebuild"
 
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:14
-msgid ""
-"Content database has been rebuilt from scratch. A backup copy of the "
-"original database has been created. You will find it in the files section."
-msgstr ""
-"Content database has been rebuilt from scratch. A backup copy of the "
-"original database has been created. You will find it in the files section."
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:14
+msgid "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
+msgstr "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
 
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:19
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:19
 msgid "Database could not be rebuilt. The following error occurred:"
 msgstr "Database could not be rebuilt. The following error occurred:"
 
-#: librarian\plugins\diskspace\views\diskspace.tpl:11
-msgid "You are running low on disk space."
-msgstr "आपकी डिस्क में कम जगह बची हैं"
-
-#: librarian\plugins\diskspace\views\diskspace.tpl:13
-msgid "Free some space now"
-msgstr "कुछ जगह खाली करें"
-
-#: librarian\plugins\diskspace\views\diskspace.tpl:21
-msgid "item in the library"
-msgid_plural "items in the library"
-msgstr[0] "पुस्तकालय में चीज़ें"
-msgstr[1] "पुस्तकालय में आइटम"
-
-#: librarian\plugins\diskspace\views\diskspace.tpl:27
-msgid "used space"
-msgstr "भरी हुई जगह"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:5
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:10
-msgid "Library clean-up"
-msgstr "लाइब्रेरी सफाई"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:20
-#, fuzzy, python-format
-msgid "%s more space should be freed."
-msgstr "%s अधिक जगह खाली कर दी जानी चाहिए."
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:25
-msgid "There is enough free space on storage"
-msgstr "स्टोर में पर्याप्त खाली जगह है"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:33
-#, fuzzy
-msgid "delete?"
-msgstr "हटायें?"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:35
-msgid "date"
-msgstr "तारीख"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:37
-#: librarian\views\downloads.tpl:53
-msgid "title"
-msgstr "शीर्षक"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:39
-msgid "size"
-msgstr "आकार"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:55
-msgid "There is enough free space. No clean-up needed."
-msgstr "काफी खाली जगह है. खाली करने की जरूरत नहीं है"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:62
-msgid "How much space does this free up?"
-msgstr "यह कितनी जगह खाली करता है?"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:64
-#, fuzzy
-msgid "Delete selected now"
-msgstr "हटाएं चयनित ?\n"
-
-#: librarian\plugins\diskspace\views\diskspace\_space_info.tpl:4
-#, fuzzy, python-format
-msgid "total space (%s free)"
-msgstr "कुल स्थान (% मुफ़्त)"
-
-#: librarian\plugins\license\views\license.tpl:5
-msgid ""
-"\n"
+#: librarian/plugins/license/views/license.tpl:5
+msgid "\n"
 "This program is free software: you can redistribute it and/or modify it\n"
 "under the terms of the GNU General Public License as published by the\n"
 "Free Software Foundation, either version 3 of the License, or (at your\n"
 "option) any later version.\n"
-msgstr ""
-"\n"
+""
+msgstr "\n"
 "This program is free software: you can redistribute it and/or modify it\n"
 "under the terms of the GNU General Public License as published by the\n"
 "Free Software Foundation, either version 3 of the License, or (at your\n"
 "option) any later version.\n"
+""
 
-#: librarian\plugins\license\views\license.tpl:13
-#: librarian\views\app_list.tpl:24
-msgid "version:"
-msgstr "संस्करण:"
-
-#: librarian\plugins\license\views\license.tpl:16
-msgid "Some rights reserved."
-msgstr "कुछ  सुरक्षित अधिकार।"
-
-#: librarian\plugins\logs\views\logs.tpl:4
-msgid "Logs are shown in reverse chronological order"
-msgstr "सूची विपरीत कालानुक्रमिक क्रम में दिखाए जाते हैं"
-
-#: librarian\plugins\logs\views\logs.tpl:6 librarian\views\500.tpl:18
+#: librarian/views/500.tpl:18 librarian/plugins/logs/views/logs.tpl:6
 msgid "Download application log"
 msgstr "Download application log"
 
-#: librarian\plugins\ondd\views\ondd.tpl:17
+#. Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
+#: librarian/plugins/ondd/views/ondd.tpl:17
 msgid "Downloads in progress"
 msgstr "Downloads in progress"
 
-#: librarian\plugins\ondd\views\ondd.tpl:27
+#. Translators, label for select list that allows user to pick a satellite to tune into
+#: librarian/plugins/ondd/views/ondd.tpl:27
 msgid "Satellite:"
 msgstr "Satellite:"
 
-#: librarian\plugins\ondd\views\ondd.tpl:30
+#. Translators, placeholder for satellite selection select list
+#: librarian/plugins/ondd/views/ondd.tpl:30
 msgid "Select a satellite"
 msgstr "Select a satellite"
 
-#: librarian\plugins\ondd\views\ondd.tpl:40
+#. Translators, label for option that allows user to set custom transponder parameters
+#: librarian/plugins/ondd/views/ondd.tpl:40
 msgid "Custom..."
 msgstr "Custom..."
 
-#: librarian\plugins\ondd\views\ondd\_file_list.tpl:5
-msgid "No files are being downloaded"
-msgstr ""
-
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:8
-msgid "LNB type:"
-msgstr ""
-
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:16
+#. Translators, form label for transponder frequency
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:16
 msgid "Frequency:"
 msgstr "Frequency:"
 
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:22
+#. Translators, form label for transponder symbol rate
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:22
 msgid "Symbol rate:"
 msgstr "Symbol rate:"
 
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:28
+#. Translators, form label for transponder delivery system (DVB-S or DVB-S2)
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:28
 msgid "Delivery system:"
 msgstr "Delivery system:"
 
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:34
+#. Translators, form label for transponder modulation mode (QPSK, etc)
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:34
 msgid "Modulation:"
 msgstr "Modulation:"
 
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:40
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:40
 msgid "Polarization:"
 msgstr "Polarization:"
 
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:48
+#. Translators, button label that confirms tuner settings
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:48
 msgid "Tune in"
 msgstr "Tune in"
 
-#: librarian\plugins\ondd\views\ondd\_signal.tpl:3
+#. Translators, whether tuner has a lock on the signal or not (note: technical term)
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:3
 msgid "has lock"
 msgstr "has lock"
 
-#: librarian\plugins\ondd\views\ondd\_signal.tpl:3
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:3
 msgid "no lock"
 msgstr "no lock"
 
-#: librarian\plugins\ondd\views\ondd\_signal.tpl:14
+#. Translators, short for 'signal/noise ratio'
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:14
 msgid "SNR"
 msgstr "SNR"
 
-#: librarian\plugins\tvheadend\views\tvheadend.tpl:4
-msgid "Access TVHeadend"
-msgstr "पहुंच TVHeadend"
-
-#: librarian\views\403.tpl:5 librarian\views\403.tpl:10
-msgid "Forbidden"
-msgstr ""
-
-#: librarian\views\403.tpl:15
-msgid "You are not authorized to access this page."
-msgstr ""
-
-#: librarian\views\500.tpl:5 librarian\views\500.tpl:10
+#. Translators, used as page title
+#. Translators, used as error page heading
+#: librarian/views/500.tpl:5 librarian/views/500.tpl:10
 msgid "Error"
 msgstr "Error"
 
-#: librarian\views\500.tpl:13
-msgid ""
-"Librarian has failed to fulfill your request due to unexpected error in the "
-"program. Details are provided below."
-msgstr ""
-"Librarian has failed to fulfill your request due to unexpected error in the "
-"program. Details are provided below."
+#: librarian/views/500.tpl:13
+msgid "Librarian has failed to fulfill your request due to unexpected error in the program. Details are provided below."
+msgstr "Librarian has failed to fulfill your request due to unexpected error in the program. Details are provided below."
 
-#: librarian\views\503.tpl:5 librarian\views\503.tpl:10
+#. Translators, used as page title
+#. Translators, used as maintenance page heading
+#: librarian/views/503.tpl:5 librarian/views/503.tpl:10
 msgid "Under maintenance"
 msgstr "Under maintenance"
 
-#: librarian\views\503.tpl:14
-msgid ""
-"Librarian is currently in maintenance mode. Please wait a few minutes and "
-"try again."
-msgstr ""
-"Librarian is currently in maintenance mode. Please wait a few minutes and "
-"try again."
+#: librarian/views/503.tpl:14
+msgid "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
+msgstr "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
 
-#: librarian\views\app_list.tpl:5 librarian\views\app_list.tpl:10
-#: librarian\views\base.tpl:24
-msgid "Apps"
-msgstr "एप्प्स"
-
-#: librarian\views\app_list.tpl:22
-msgid "author:"
-msgstr "लेखक:"
-
-#: librarian\views\app_list.tpl:33
-msgid "No apps found."
-msgstr "कोई एप्प नहीं मिली"
-
-#: librarian\views\base.tpl:8 librarian\views\base.tpl:60
-msgid "Librarian"
-msgstr "लाइब्रेरीअन"
-
-#: librarian\views\base.tpl:20 librarian\views\content_list.tpl:9
-#: librarian\views\content_list.tpl:14
-msgid "Library"
-msgstr "पुस्तकालय"
-
-#: librarian\views\base.tpl:22 librarian\views\file_list.tpl:5
-#: librarian\views\file_list.tpl:10
-msgid "Files"
-msgstr "फ़ाइलें"
-
-#: librarian\views\base.tpl:26 librarian\views\downloads.tpl:7
-#: librarian\views\downloads.tpl:12
-msgid "Updates"
-msgstr "अपडेट"
-
-#: librarian\views\base.tpl:28 librarian\views\dashboard.tpl:5
-#: librarian\views\dashboard.tpl:10
-msgid "Dashboard"
-msgstr "डैशबोर्ड"
-
-#: librarian\views\base.tpl:31
-msgid "Log out"
-msgstr ""
-
-#: librarian\views\content_list.tpl:25
-msgid "search titles"
-msgstr "शीर्षक से खोजें"
-
-#: librarian\views\content_list.tpl:27 librarian\views\file_list.tpl:18
-msgid "go"
-msgstr "जायें"
-
-#: librarian\views\content_list.tpl:30
-msgid "clear"
-msgstr "हटायें"
-
-#: librarian\views\content_list.tpl:34 librarian\views\downloads.tpl:37
-msgid "filter"
-msgstr ""
-
-#: librarian\views\content_list.tpl:40
-#, fuzzy, python-format
-msgid "Showing search results for '%(terms)s'"
-msgstr "के लिए खोज परिणाम दिखा रहा है '% (नियम) एस'"
-
-#: librarian\views\content_list.tpl:49
-msgid "Content library is currently empty"
-msgstr "सामग्री पुस्तकालय अभी खाली है"
-
-#: librarian\views\content_list.tpl:52
-#, fuzzy, python-format
-msgid "There are no search results for '%(terms)s'"
-msgstr "के लिए कोई खोज परिणाम '% (नियम) एस' कर रहे हैं"
-
-#: librarian\views\content_list.tpl:55
-#, fuzzy, python-format
-msgid "There are no results for '%(tag)s'"
-msgstr "' % ( टैग) एस ' के लिए कोई परिणाम नहीं कर रहे हैं"
-
-#: librarian\views\content_list.tpl:69
-msgid "Load more content"
-msgstr "अधिक सामग्री लोड"
-
-#: librarian\views\content_list.tpl:77
-msgid "Loading..."
-msgstr "लोडिंग..."
-
-#: librarian\views\content_list.tpl:84
-msgid "You have reached the end of the library."
-msgstr "आप पुस्तकालय के अंत तक पहुँच चुके हैं ।"
-
-#: librarian\views\content_list.tpl:86 librarian\views\content_list.tpl:93
-msgid "Go to top"
-msgstr "शीर्ष पर जाएँ"
-
-#: librarian\views\downloads.tpl:20
-msgid "update available"
-msgid_plural "updates available"
-msgstr[0] ""
-"अपडेट उपलब्ध\n"
-"P: अपडेटें उपलब्ध"
-msgstr[1] "अपडेट मौजूद है "
-
-#: librarian\views\downloads.tpl:26
-msgid "last update"
-msgstr "पिछले अपडेट"
-
-#: librarian\views\downloads.tpl:51
-msgid "select"
-msgstr "चुने"
-
-#: librarian\views\downloads.tpl:55
-msgid "broadcast"
-msgstr "प्रसारण"
-
-#: librarian\views\downloads.tpl:57
-msgid "downloaded"
-msgstr "डाउनलोड"
-
-#: librarian\views\downloads.tpl:59
-msgid "language"
-msgstr ""
-
-#: librarian\views\downloads.tpl:73
-msgid "replaces:"
-msgstr "बदलें :"
-
-#: librarian\views\downloads.tpl:88
-msgid "There is no new content"
-msgstr "कोई नई सामग्री नहीं है"
-
-#. Translators, used as page title for page that shows result of running a script
-#. Translators, used as page header for page that shows result of running a script
-#: librarian\views\exec_result.tpl:2 librarian\views\exec_result.tpl:5
-msgid "Script output"
-msgstr "स्क्रिप्ट उत्पादन"
-
-#. Translators, return (result) code of the script executed via file browser
-#: librarian\views\exec_result.tpl:11
-msgid "return code:"
-msgstr "कोड लौटने:"
-
-#. Translators, shown when result code is good (0).
-#: librarian\views\exec_result.tpl:14
-msgid "OK"
-msgstr "ठीक"
-
-#. Translators, shown when result code is not good (non-zero).
-#: librarian\views\exec_result.tpl:17
-msgid "error"
-msgstr "त्रुटि"
-
-#. Translators, refers to standard output of script run from file browser (STDOUT)
-#: librarian\views\exec_result.tpl:22
-msgid "Output"
-msgstr "उत्पादन"
-
-#. Translators, shown if script returned no output
-#: librarian\views\exec_result.tpl:27
-msgid "no output"
-msgstr "कोई उत्पादन नहीं |"
-
-#. Translators, refers to standard errors of script run from file browser (STDERR)
-#: librarian\views\exec_result.tpl:32
-msgid "Errors"
-msgstr "त्रुटियाँ"
-
-#: librarian\views\file_list.tpl:28
-msgid "(go up one level)"
-msgstr "(एक स्तर ऊपर जाना)"
-
-#: librarian\views\file_list.tpl:34
+#. Translators, used as label for link that leads to file list
+#: librarian/views/file_list.tpl:34
 msgid "(go to file list)"
 msgstr "(go to file list)"
 
-#: librarian\views\file_list.tpl:40
-msgid "There are currently no files or folders here."
-msgstr "यहाँ कोई फाइल या फ़ोल्डर वर्तमान में कर रहे हैं।"
-
-#: librarian\views\file_list.tpl:50 librarian\views\file_list.tpl:70
-msgid "Rename"
-msgstr "नाम बदलें"
-
-#: librarian\views\file_list.tpl:55 librarian\views\file_list.tpl:75
-msgid "Delete"
-msgstr "हटाना"
-
-#: librarian\views\file_list.tpl:82
-msgid "Run"
-msgstr "रन"
-
-#: librarian\views\file_list.tpl:92
-msgid "About this folder"
-msgstr "इस फ़ोल्डर के बारे में"
-
-#: librarian\views\login.tpl:5 librarian\views\login.tpl:10
-#: librarian\views\login.tpl:35
-msgid "Login"
-msgstr ""
-
-#: librarian\views\login.tpl:22
-msgid "Username:"
-msgstr ""
-
-#: librarian\views\login.tpl:24
-msgid "username"
-msgstr ""
-
-#: librarian\views\login.tpl:29
-msgid "Password:"
-msgstr ""
-
-#: librarian\views\login.tpl:31
-msgid "password"
-msgstr ""
-
-#: librarian\views\reader.tpl:33
-msgid "Download"
-msgstr ""
-
-#: librarian\views\remove_error.tpl:5 librarian\views\remove_error.tpl:10
-msgid "Content file missing"
-msgstr ""
-
-#: librarian\views\remove_error.tpl:14
-msgid ""
-"The content file was not found, but has been removed from the database. You "
-"will be redirected to the content list shortly."
-msgstr ""
-
-#. Translators, used as page title
-#. Translators, used as page heading
-#: librarian\views\tag_cloud.tpl:2 librarian\views\tag_cloud.tpl:5
-msgid "Tag cloud"
-msgstr "टैग बादल"
-
-#: librarian\views\_content_list.tpl:31
-#, python-format
+#. Translators, attribution (e.g., 'By Project Gutenberg')
+#: librarian/views/_content_list.tpl:31
 msgid "by %s"
 msgstr "by %s"
 
-#: librarian\views\_list_controls.tpl:3
-msgid "Select all"
-msgstr "सभी का चयन करें"
+#. Translators, error message shown when user does not supply username
+#. Translators, error message shown when user does not supply username
+#: librarian/routes/auth.py:30
+msgid "Type in your username"
+msgstr "Type in your username"
 
-#: librarian\views\_list_controls.tpl:5
-msgid "Select none"
-msgstr "कोई भी न चुनें"
+#. Translators, error message shown when user does not supply password
+#. Translators, error message shown when user does not supply password
+#: librarian/routes/auth.py:33
+msgid "Type in your password"
+msgstr "Type in your password"
 
-#: librarian\views\_list_controls.tpl:7
-msgid "Add selected to library"
-msgstr "पुस्तकालय के लिए चयनित जोड़ें"
+#: librarian/routes/auth.py:39
+msgid "Please enter the correct username and password."
+msgstr "Please enter the correct username and password."
 
-#: librarian\views\_list_controls.tpl:9
-msgid "Delete selected"
-msgstr "चयनित हटाएँ"
+#: librarian/utils/lang.py:92
+msgid "any language"
+msgstr "any language"
 
-#: librarian\views\_list_controls.tpl:11
+#: librarian/plugins/ondd/views/ondd/_file_list.tpl:5
+msgid "No files are being downloaded"
+msgstr "No files are being downloaded"
+
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:8
+msgid "LNB type:"
+msgstr "LNB type:"
+
+#: librarian/views/403.tpl:5 librarian/views/403.tpl:10
+msgid "Forbidden"
+msgstr "Forbidden"
+
+#: librarian/views/403.tpl:15
+msgid "You are not authorized to access this page."
+msgstr "You are not authorized to access this page."
+
+#: librarian/views/base.tpl:34
+msgid "Log out"
+msgstr "Log out"
+
+#: librarian/views/login.tpl:5 librarian/views/login.tpl:10
+#: librarian/views/login.tpl:35
+msgid "Login"
+msgstr "Login"
+
+#: librarian/views/login.tpl:22
+msgid "Username:"
+msgstr "Username:"
+
+#: librarian/views/login.tpl:24
+msgid "username"
+msgstr "username"
+
+#: librarian/views/login.tpl:29
+msgid "Password:"
+msgstr "Password:"
+
+#: librarian/views/login.tpl:31
+msgid "password"
+msgstr "password"
+
+#: librarian/views/reader.tpl:33
+msgid "Download"
+msgstr "Download"
+
+#: librarian/views/_list_controls.tpl:11
 msgid "Delete all"
-msgstr ""
+msgstr "Delete all"
 
-#: librarian\views\_simple_pager.tpl:4
-msgid "previous"
-msgstr "पूर्व"
+#: librarian/views/content_list.tpl:34 librarian/views/downloads.tpl:37
+msgid "filter"
+msgstr "filter"
 
-#: librarian\views\_simple_pager.tpl:9
-msgid "page"
-msgstr "पृष्ठ"
+#: librarian/views/downloads.tpl:59
+msgid "language"
+msgstr "language"
 
-#: librarian\views\_simple_pager.tpl:13
-msgid "per page"
-msgstr "प्रति पृष्ठ"
+#: librarian/views/remove_error.tpl:5 librarian/views/remove_error.tpl:10
+msgid "Content file missing"
+msgstr "Content file missing"
 
-#: librarian\views\_simple_pager.tpl:14
-msgid "Reload"
-msgstr "फिर लोड करें"
+#: librarian/views/remove_error.tpl:14
+msgid "The content file was not found, but has been removed from the database. You will be redirected to the content list shortly."
+msgstr "The content file was not found, but has been removed from the database. You will be redirected to the content list shortly."
 
-#: librarian\views\_simple_pager.tpl:19
-msgid "next"
-msgstr "अगला"
+#: librarian/utils/lang.py:34
+msgid "unknown"
+msgstr "unknown"
 
-#: librarian\views\_tags.tpl:11
-msgid "Save tags"
-msgstr "टैग बचाने"
+#. Translators, used as label, meaning content is from a publisher
+#: librarian/core/metadata.py:193 librarian/views/reader.tpl:21
+msgid "publisher"
+msgstr "publisher"
 
-#: librarian\views\_tags.tpl:15
-msgid "Separate tags with commas"
-msgstr "कॉमा से अलग टैग\n"
+#. Translators, used as dashboard section title
+#: librarian/plugins/netinterfaces/plugin.py:29
+msgid "Network interfaces"
+msgstr "Network interfaces"
 
-#: librarian\views\_tag_cloud.tpl:5
-msgid "everything"
-msgstr "सब कुछ"
+#. Translators, used main navigation menu
+#: librarian/routes/content.py:128 librarian/views/base.tpl:25
+msgid "Sites"
+msgstr "Sites"
 
-#: librarian\views\_tag_js_templates.tpl:3
-msgid "Edit tags"
-msgstr "संपादित टैग"
+#. Translators, used as page title
+#. Translators, used as error page heading
+#: librarian/views/404.tpl:5 librarian/views/404.tpl:10
+msgid "Page not found"
+msgstr "Page not found"
 
-#: librarian\views\_tag_js_templates.tpl:8
-msgid "Close"
-msgstr "बंद"
+#: librarian/views/404.tpl:13
+msgid "The page you were looking for could not be found"
+msgstr "The page you were looking for could not be found"
 
-#: librarian\views\_tag_js_templates.tpl:13
-msgid "Tags could not be updated."
-msgstr "टैग अद्यतन नहीं किया जा सकता है।"
+#. Translators, used as note in Application network interfaces section
+#: librarian/plugins/netinterfaces/views/netinterfaces.tpl:4
+msgid "List of available network interfaces"
+msgstr "List of available network interfaces"
 
-#~ msgid "Some files could not be removed"
-#~ msgstr "कुछ फ़ाइलें नहीं हटाया जा सकता"
+#. Translators, used as label for network interface name
+#: librarian/plugins/netinterfaces/views/netinterfaces.tpl:8
+msgid "Interface name"
+msgstr "Interface name"
 
-#~ msgid "Content could not be removed"
-#~ msgstr "सामग्री हटाया नहीं जा सका"
-
-#~ msgid ""
-#~ "Please make sure the storage device is not write-protected and try again."
-#~ msgstr ""
-#~ "सुनिश्चित करें कि भंडारण युक्ति लिखने - संरक्षित नहीं है बनाने के लिए और फिर कोशिश करें।"
-
-#~ msgid "Retry"
-#~ msgstr "पुन: प्रयास करें"
-
-#~ msgid "Favorites"
-#~ msgstr "पसंदीदा"
-
-#~ msgid "Remember that favorited content cannot be deleted."
-#~ msgstr "याद रखें की पसंदीदा सामग्री को हटाया नहीं जा सकता"
-
-#~ msgid "unfavorite"
-#~ msgstr "पसंदीदा से हटायें"
-
-#~ msgid "download directory (%s free)"
-#~ msgstr "डाउनलोड निर्देशिका (% मुफ़्त)"
-
-#~ msgid "content library (%s free)"
-#~ msgstr "सामग्री पुस्तकालय (% मुफ़्त)"
-
-#~ msgid "You have not favorited any content yet"
-#~ msgstr "आपने अभी तक किसी भी सामग्री को पसंदीदा नहीं किया है"
-
-#~ msgid "content partner"
-#~ msgstr "सामग्री भागीदार"
-
-#~ msgid "sponsored content"
-#~ msgstr "प्रायोजित साथी"
-
-#~ msgid "Outernet core archive"
-#~ msgstr "outernet कोर संग्रह"
-
-#~ msgid "Opening source database failed"
-#~ msgstr "Opening source database failed"
-
-#~ msgid "Opening backup database failed"
-#~ msgstr "Opening backup database failed"
-
-#~ msgid "Could not create database backup handler"
-#~ msgstr "Could not create database backup handler"
-
-#~ msgid "No files are being downloadded"
-#~ msgstr "No files are being downloadded"
-
-#~ msgid "LNB type"
-#~ msgstr "LNB type"

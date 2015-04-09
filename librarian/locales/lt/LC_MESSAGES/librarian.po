@@ -1,937 +1,915 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Librarian\n"
-"Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2015-04-03 14:41+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
+"Project-Id-Version: Librarian\n"
 "Language: lt\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
-"100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#. Translators, this is used when app doesn't provide a description
-#. Translators, this is used when app doesn't provide a description
-#: librarian\core\apps.py:45
-msgid "No description provided"
-msgstr "Aprašymas nepateiktas"
-
-#: librarian\core\metadata.py:25
-msgid "Unknown license"
-msgstr "Nežinoma licenzija"
-
-#: librarian\core\metadata.py:26
-msgid "Creative Commons Attribution"
-msgstr "Creative Commons Attribution"
-
-#: librarian\core\metadata.py:27
-msgid "Creative Commons Attribution-NoDerivs"
-msgstr "Creative Commons Attribution-NoDerivs"
-
-#: librarian\core\metadata.py:28
-msgid "Creative Commons Attribution-NonCommercial"
-msgstr "Creative Commons Attribution-NonCommercial"
-
-#: librarian\core\metadata.py:29
-msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
-msgstr "Creative Commons Attribution-NonCommercial-NoDerivs"
-
-#: librarian\core\metadata.py:31
-msgid "Creative Commons Attribution-ShareAlike"
-msgstr "Creative Commons Attribution-ShareAlike"
-
-#: librarian\core\metadata.py:32
-msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
-msgstr "Creative Commons Attribution-NonCommercial-ShareAlike "
-
-#: librarian\core\metadata.py:34
-msgid "GNU Free Documentation License"
-msgstr "GNU Free Documentation Licenzija"
-
-#: librarian\core\metadata.py:35
-msgid "Open Publication License"
-msgstr "Atviros publikacijos licenzija"
-
-#: librarian\core\metadata.py:36
-msgid "Open Content License"
-msgstr "Atviro turinio licenzija"
-
-#: librarian\core\metadata.py:37
-msgid "Against DRM License"
-msgstr "Against DRM License"
-
-#: librarian\core\metadata.py:38
-msgid "Free Art License"
-msgstr "Laisvo Meno Licenzija"
-
-#: librarian\core\metadata.py:39
-msgid "Public Domain"
-msgstr "Viešas Domenas"
-
-#: librarian\core\metadata.py:40
-msgid "Other free license"
-msgstr "Kita nemokama licenzija"
-
-#: librarian\core\metadata.py:41
-msgid "All rights reserved"
-msgstr "Visos teisės saugomos"
-
-#: librarian\core\metadata.py:42
-msgid "Other non-free license"
-msgstr "Kita apmokęstinta licenzija"
-
-#. Translators, used as label, meaning content belogs to core
-#. Translators, used as label, meaning content belogs to core
-#: librarian\core\metadata.py:147 librarian\views\reader.tpl:30
-msgid "core"
-msgstr "pagrindinis"
-
-#. Translators, used as label, meaning content was sponsored by someone
-#. Translators, used as label, meaning content was sponsored by someone
-#: librarian\core\metadata.py:149 librarian\views\reader.tpl:26
-msgid "sponsored"
-msgstr "remiamas"
-
-#. Translators, used as label, meaning content is from a partner
-#. Translators, used as label, meaning content is from a partner
-#: librarian\core\metadata.py:151 librarian\views\reader.tpl:21
-msgid "partner"
-msgstr "partneris"
-
-#. Translators, error message displayed when locking fails during
-#. database rebuild
-#. Translators, error message displayed when locking fails during
-#. database rebuild
-#: librarian\plugins\dbmanage\plugin.py:154
-msgid ""
-"Librarian could not enter maintenance mode and database rebuild was "
-"cancelled. Please make sure noone else is using Librarian and try again."
-msgstr ""
-"Librarian could not enter maintenance mode and database rebuild was "
-"cancelled. Please make sure noone else is using Librarian and try again."
-
-#. Translators, used as dashboard section title
-#. Translators, used as dashboard section title
-#: librarian\plugins\dbmanage\plugin.py:173
-msgid "Content database"
-msgstr "Content database"
-
-#. Translators, used as response to innvalid HTTP request
-#. Translators, used as response to innvalid HTTP request
-#: librarian\plugins\diskspace\plugin.py:42
-msgid "Invalid request"
-msgstr "Negaliojantis prašymas"
-
-#. Translators, used as message to user when clean-up is started
-#. without selecting any content
-#. Translators, used as message to user when clean-up is started
-#. without selecting any content
-#: librarian\plugins\diskspace\plugin.py:52
-msgid "No content selected"
-msgstr "Nepasirinktas joks turinys"
-
-#. Translators, used when user is previewing clean-up, %s is
-#. replaced by amount of content that can be freed in bytes,
-#. KB, MB, etc
-#. Translators, used when user is previewing clean-up, %s is
-#. replaced by amount of content that can be freed in bytes,
-#. KB, MB, etc
-#: librarian\plugins\diskspace\plugin.py:59
-#, fuzzy, python-format
-msgid "%s can be freed by removing selected content"
-msgstr "% gali būti atlaisvinta ištrinant pasirinktą turinį"
-
-#. Translators, error message shown on clean-up page when there was
-#. no deletable content
-#. Translators, error message shown on clean-up page when there was
-#. no deletable content
-#: librarian\plugins\diskspace\plugin.py:69
-msgid "Nothing to delete"
-msgstr "Nėra ko ištrinti"
-
-#. Translators, used as dashboard section title
-#. Translators, used as dashboard section title
-#: librarian\plugins\diskspace\plugin.py:88
-msgid "Content library stats"
-msgstr "Bibliotekos turinio statistika"
-
-#. Translators, used as dashboard section title
-#. Translators, used as dashboard section title
-#: librarian\plugins\license\plugin.py:24
-msgid "About"
-msgstr "Apie"
-
-#. Translators, used as dashboard section title
-#. Translators, used as dashboard section title
-#: librarian\plugins\logs\plugin.py:30
-msgid "Application logs"
-msgstr "Programos žurnalas"
-
-#. Translators, refers to transponder polarization
-#. Translators, refers to transponder polarization
-#: librarian\plugins\ondd\plugin.py:44
-msgid "None"
-msgstr "None"
-
-#. Translators, refers to transponder polarization
-#. Translators, refers to transponder polarization
-#: librarian\plugins\ondd\plugin.py:46
-msgid "Vertical"
-msgstr "Vertical"
-
-#. Translators, refers to transponder polarization
-#. Translators, refers to transponder polarization
-#: librarian\plugins\ondd\plugin.py:48
-msgid "Horizontal"
-msgstr "Horizontal"
-
-#. Translators, this is a type of LNB
-#. Translators, this is a type of LNB
-#: librarian\plugins\ondd\plugin.py:59
-msgid "Universal"
-msgstr "Universal"
-
-#. Translators, this is a type of LNB
-#. Translators, this is a type of LNB
-#: librarian\plugins\ondd\plugin.py:61
-msgid "North America Ku band"
-msgstr "North America Ku band"
-
-#. Translators, error message when LNB type is incorrect
-#. Translators, error message when LNB type is incorrect
-#: librarian\plugins\ondd\plugin.py:120
-msgid "Invalid choice for LNB type"
-msgstr "Invalid choice for LNB type"
-
-#. Translators, error message when frequency value is
-#. wrong
-#. Translators, error message when frequency value is
-#. wrong
-#: librarian\plugins\ondd\plugin.py:124
-msgid "Frequency must be a positive number"
-msgstr "Frequency must be a positive number"
-
-#. Translators, error message when frequency value is
-#. wrong
-#. Translators, error message when symbolrate value is
-#. wrong
-#. Translators, error message when frequency value is
-#. wrong
-#. Translators, error message when symbolrate value is
-#. wrong
-#: librarian\plugins\ondd\plugin.py:127 librarian\plugins\ondd\plugin.py:134
-msgid "Please type in a number"
-msgstr "Please type in a number"
-
-#. Translators, error message when symbolrate value is
-#. wrong
-#. Translators, error message when symbolrate value is
-#. wrong
-#: librarian\plugins\ondd\plugin.py:131
-msgid "Symbolrate must be a positive number"
-msgstr "Symbolrate must be a positive number"
-
-#. Translators, error message shown when wrong delivery
-#. system is selected
-#. Translators, error message shown when wrong delivery
-#. system is selected
-#: librarian\plugins\ondd\plugin.py:138
-msgid "Invalid choice for delivery system"
-msgstr "Invalid choice for delivery system"
-
-#. Translators, error message shown when wrong modulation
-#. mode is selected
-#. Translators, error message shown when wrong modulation
-#. mode is selected
-#: librarian\plugins\ondd\plugin.py:142
-msgid "Invalid choice for modulation mode"
-msgstr "Invalid choice for modulation mode"
-
-#. Translators, error message shown when wrong
-#. polarization is selected
-#. Translators, error message shown when wrong
-#. polarization is selected
-#: librarian\plugins\ondd\plugin.py:146
-msgid "Invalid choice for polarization"
-msgstr "Invalid choice for polarization"
-
-#. Translators, error message shown when setting transponder
-#. configuration is not successful
-#. Translators, error message shown when setting transponder
-#. configuration is not successful
-#: librarian\plugins\ondd\plugin.py:165
-msgid "Transponder configuration could not be set"
-msgstr "Transponder configuration could not be set"
-
-#. Translators, used as dashboard section title
-#. Translators, used as dashboard section title
-#: librarian\plugins\ondd\plugin.py:197
-#: librarian\plugins\tvheadend\plugin.py:24
-#: librarian\plugins\ondd\views\ondd\settings.tpl:6
-#: librarian\plugins\ondd\views\ondd\settings.tpl:11
-msgid "Tuner settings"
-msgstr "Derintojo nustatymai"
-
-#. Translators, error message shown when user does not supply username
-#. Translators, error message shown when user does not supply username
-#: librarian\routes\auth.py:30
-msgid "Type in your username"
-msgstr ""
-
-#. Translators, error message shown when user does not supply password
-#. Translators, error message shown when user does not supply password
-#: librarian\routes\auth.py:33
-msgid "Type in your password"
-msgstr ""
-
-#: librarian\routes\auth.py:39
-msgid "Please enter the correct username and password."
-msgstr ""
-
-#: librarian\routes\content.py:65
-msgid "Specified tag was not found"
-msgstr "Nurodyta žyma nerasta"
-
-#: librarian\routes\content.py:178
-msgid "The files you were looking for could not be found"
-msgstr "The files you were looking for could not be found"
-
-#: librarian\routes\content.py:180
-msgid "This list represents the search results"
-msgstr "This list represents the search results"
-
-#: librarian\routes\content.py:191
-msgid "This folder does not exist"
-msgstr "This folder does not exist"
-
-#. Translators, used as error message shown to user when wrong action
-#. code is submitted to server
-#. Translators, used as error message shown to user when wrong action
-#. code is submitted to server
-#: librarian\routes\downloads.py:96
-msgid "Invalid action, please use one of the form buttons."
-msgstr "Negaliojantis veiksmas, prašome naudoti viena iš formos mygtukų."
-
-#: librarian\utils\lang.py:85
-msgid "any language"
-msgstr ""
-
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:4
-msgid "Database size"
-msgstr "Database size"
-
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:5
-msgid "download"
-msgstr "download"
-
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:11
-msgid "Backup"
-msgstr "Backup"
-
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:16
-msgid "Rebuild"
-msgstr "Rebuild"
-
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:22
-msgid ""
-"Database rebuild will cause all tags to be lost. It will also put Librarian "
-"into maintenance mode and prevent users from accessing content."
-msgstr ""
-"Database rebuild will cause all tags to be lost. It will also put Librarian "
-"into maintenance mode and prevent users from accessing content."
-
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:5
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:10
-msgid "Database backup"
-msgstr "Database backup"
-
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:14
-msgid ""
-"Database backup has been completed successfully. You will be taken to the "
-"backup folder in 10 seconds."
-msgstr ""
-"Database backup has been completed successfully. You will be taken to the "
-"backup folder in 10 seconds."
-
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:16
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:16
-#, python-format
-msgid "The operation took %s second"
-msgid_plural "The operation took %s seconds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:19
-msgid "Database backup could not be completed. The following error occurred:"
-msgstr "Database backup could not be completed. The following error occurred:"
-
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:5
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:10
-msgid "Database rebuild"
-msgstr "Database rebuild"
-
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:14
-msgid ""
-"Content database has been rebuilt from scratch. A backup copy of the "
-"original database has been created. You will find it in the files section."
-msgstr ""
-"Content database has been rebuilt from scratch. A backup copy of the "
-"original database has been created. You will find it in the files section."
-
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:19
-msgid "Database could not be rebuilt. The following error occurred:"
-msgstr "Database could not be rebuilt. The following error occurred:"
-
-#: librarian\plugins\diskspace\views\diskspace.tpl:11
-msgid "You are running low on disk space."
-msgstr "Jums liko labai mažai laisvos vietos"
-
-#: librarian\plugins\diskspace\views\diskspace.tpl:13
-msgid "Free some space now"
-msgstr "Atlaisvinti daugiau vietos"
-
-#: librarian\plugins\diskspace\views\diskspace.tpl:21
-msgid "item in the library"
-msgid_plural "items in the library"
-msgstr[0] "dalykas bibliotekoje"
-msgstr[1] "dalykai bibliotekoje"
-msgstr[2] "dalykai bibliotekoje"
-
-#: librarian\plugins\diskspace\views\diskspace.tpl:27
-msgid "used space"
-msgstr "išnaudota vieta"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:5
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:10
-msgid "Library clean-up"
-msgstr "Bibliotekos valymas"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:20
-#, python-format
-msgid "%s more space should be freed."
-msgstr "Reikia atlaisvinti dar %s laisvos vietos."
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:25
-msgid "There is enough free space on storage"
-msgstr "Laikmenoje užtenka laisvos vietos"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:33
-msgid "delete?"
-msgstr "ištrinti?"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:35
-msgid "date"
-msgstr "data"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:37
-#: librarian\views\downloads.tpl:53
-msgid "title"
-msgstr "pavadinimas"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:39
-msgid "size"
-msgstr "dydis"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:55
-msgid "There is enough free space. No clean-up needed."
-msgstr "Laisvos vietos yra pakankama. Valymas nereikalingas."
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:62
-msgid "How much space does this free up?"
-msgstr "Kiek laisvos vietos bus atlaisvinta?"
-
-#: librarian\plugins\diskspace\views\diskspace\cleanup.tpl:64
-msgid "Delete selected now"
-msgstr "Ištrinti pažymėta eilutę."
-
-#: librarian\plugins\diskspace\views\diskspace\_space_info.tpl:4
-#, python-format
-msgid "total space (%s free)"
-msgstr "viso vietos (%s free)"
-
-#: librarian\plugins\license\views\license.tpl:5
-msgid ""
-"\n"
-"This program is free software: you can redistribute it and/or modify it\n"
-"under the terms of the GNU General Public License as published by the\n"
-"Free Software Foundation, either version 3 of the License, or (at your\n"
-"option) any later version.\n"
-msgstr ""
-"\n"
-"This program is free software: you can redistribute it and/or modify it\n"
-"under the terms of the GNU General Public License as published by the\n"
-"Free Software Foundation, either version 3 of the License, or (at your\n"
-"option) any later version.\n"
-
-#: librarian\plugins\license\views\license.tpl:13
-#: librarian\views\app_list.tpl:24
-msgid "version:"
-msgstr "versija:"
-
-#: librarian\plugins\license\views\license.tpl:16
-msgid "Some rights reserved."
-msgstr "Kai kurios teisės saugomos"
-
-#: librarian\plugins\logs\views\logs.tpl:4
-msgid "Logs are shown in reverse chronological order"
-msgstr "Žurnalo įrašai rodomi atvirkštine tvarka"
-
-#: librarian\plugins\logs\views\logs.tpl:6 librarian\views\500.tpl:18
-msgid "Download application log"
-msgstr "Download application log"
-
-#: librarian\plugins\ondd\views\ondd.tpl:17
-msgid "Downloads in progress"
-msgstr "Downloads in progress"
-
-#: librarian\plugins\ondd\views\ondd.tpl:27
-msgid "Satellite:"
-msgstr "Satellite:"
-
-#: librarian\plugins\ondd\views\ondd.tpl:30
-msgid "Select a satellite"
-msgstr "Select a satellite"
-
-#: librarian\plugins\ondd\views\ondd.tpl:40
-msgid "Custom..."
-msgstr "Custom..."
-
-#: librarian\plugins\ondd\views\ondd\_file_list.tpl:5
-msgid "No files are being downloaded"
-msgstr ""
-
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:8
-msgid "LNB type:"
-msgstr ""
-
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:16
-msgid "Frequency:"
-msgstr "Frequency:"
-
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:22
-msgid "Symbol rate:"
-msgstr "Symbol rate:"
-
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:28
-msgid "Delivery system:"
-msgstr "Delivery system:"
-
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:34
-msgid "Modulation:"
-msgstr "Modulation:"
-
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:40
-msgid "Polarization:"
-msgstr "Polarization:"
-
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:48
-msgid "Tune in"
-msgstr "Tune in"
-
-#: librarian\plugins\ondd\views\ondd\_signal.tpl:3
-msgid "has lock"
-msgstr "has lock"
-
-#: librarian\plugins\ondd\views\ondd\_signal.tpl:3
-msgid "no lock"
-msgstr "no lock"
-
-#: librarian\plugins\ondd\views\ondd\_signal.tpl:14
-msgid "SNR"
-msgstr "SNR"
-
-#: librarian\plugins\tvheadend\views\tvheadend.tpl:4
-msgid "Access TVHeadend"
-msgstr "Prieiti prie TVHeadend"
-
-#: librarian\views\403.tpl:5 librarian\views\403.tpl:10
-msgid "Forbidden"
-msgstr ""
-
-#: librarian\views\403.tpl:15
-msgid "You are not authorized to access this page."
-msgstr ""
-
-#: librarian\views\500.tpl:5 librarian\views\500.tpl:10
-msgid "Error"
-msgstr "Error"
-
-#: librarian\views\500.tpl:13
-msgid ""
-"Librarian has failed to fulfill your request due to unexpected error in the "
-"program. Details are provided below."
-msgstr ""
-"Librarian has failed to fulfill your request due to unexpected error in the "
-"program. Details are provided below."
-
-#: librarian\views\503.tpl:5 librarian\views\503.tpl:10
-msgid "Under maintenance"
-msgstr "Under maintenance"
-
-#: librarian\views\503.tpl:14
-msgid ""
-"Librarian is currently in maintenance mode. Please wait a few minutes and "
-"try again."
-msgstr ""
-"Librarian is currently in maintenance mode. Please wait a few minutes and "
-"try again."
-
-#: librarian\views\app_list.tpl:5 librarian\views\app_list.tpl:10
-#: librarian\views\base.tpl:24
-msgid "Apps"
-msgstr "Programos"
-
-#: librarian\views\app_list.tpl:22
-msgid "author:"
-msgstr "autorius:"
-
-#: librarian\views\app_list.tpl:33
-msgid "No apps found."
-msgstr "Programų nėra."
-
-#: librarian\views\base.tpl:8 librarian\views\base.tpl:60
+#: librarian/views/base.tpl:8 librarian/views/base.tpl:63
 msgid "Librarian"
 msgstr "Bibliotekininkas"
 
-#: librarian\views\base.tpl:20 librarian\views\content_list.tpl:9
-#: librarian\views\content_list.tpl:14
-msgid "Library"
-msgstr "Biblioteka"
-
-#: librarian\views\base.tpl:22 librarian\views\file_list.tpl:5
-#: librarian\views\file_list.tpl:10
-msgid "Files"
-msgstr "Failai"
-
-#: librarian\views\base.tpl:26 librarian\views\downloads.tpl:7
-#: librarian\views\downloads.tpl:12
-msgid "Updates"
-msgstr "Atnaujinimai"
-
-#: librarian\views\base.tpl:28 librarian\views\dashboard.tpl:5
-#: librarian\views\dashboard.tpl:10
+#: librarian/views/base.tpl:31 librarian/views/dashboard.tpl:5
+#: librarian/views/dashboard.tpl:10
 msgid "Dashboard"
 msgstr "Prietaisų skydelis"
 
-#: librarian\views\base.tpl:31
-msgid "Log out"
-msgstr ""
+#: librarian/views/base.tpl:29 librarian/views/downloads.tpl:7
+#: librarian/views/downloads.tpl:12
+msgid "Updates"
+msgstr "Atnaujinimai"
 
-#: librarian\views\content_list.tpl:25
-msgid "search titles"
-msgstr "ieškoti pavadinimų"
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:20
+msgid "%s more space should be freed."
+msgstr "Reikia atlaisvinti dar %s laisvos vietos."
 
-#: librarian\views\content_list.tpl:27 librarian\views\file_list.tpl:18
-msgid "go"
-msgstr "pirmyn"
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:25
+msgid "There is enough free space on storage"
+msgstr "Laikmenoje užtenka laisvos vietos"
 
-#: librarian\views\content_list.tpl:30
-msgid "clear"
-msgstr "valyti"
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:33
+msgid "delete?"
+msgstr "ištrinti?"
 
-#: librarian\views\content_list.tpl:34 librarian\views\downloads.tpl:37
-msgid "filter"
-msgstr ""
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:35
+msgid "date"
+msgstr "data"
 
-#: librarian\views\content_list.tpl:40
-#, python-format
-msgid "Showing search results for '%(terms)s'"
-msgstr "Rodomi paieškos rezultatai '%(terms)s' "
+#: librarian/views/downloads.tpl:53
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:37
+msgid "title"
+msgstr "pavadinimas"
 
-#: librarian\views\content_list.tpl:49
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:39
+msgid "size"
+msgstr "dydis"
+
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:55
+msgid "There is enough free space. No clean-up needed."
+msgstr "Laisvos vietos yra pakankama. Valymas nereikalingas."
+
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:62
+msgid "How much space does this free up?"
+msgstr "Kiek laisvos vietos bus atlaisvinta?"
+
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:64
+msgid "Delete selected now"
+msgstr "Ištrinti pažymėta eilutę."
+
+#: librarian/plugins/diskspace/views/diskspace.tpl:27
+msgid "used space"
+msgstr "išnaudota vieta"
+
+#: librarian/views/downloads.tpl:26
+msgid "last update"
+msgstr "paskutinis atnaujinimas\n"
+""
+
+#: librarian/plugins/diskspace/views/diskspace.tpl:11
+msgid "You are running low on disk space."
+msgstr "Jums liko labai mažai laisvos vietos"
+
+#: librarian/plugins/diskspace/views/diskspace.tpl:13
+msgid "Free some space now"
+msgstr "Atlaisvinti daugiau vietos"
+
+#: librarian/views/downloads.tpl:51
+msgid "select"
+msgstr "pasirinkti"
+
+#: librarian/views/downloads.tpl:88
+msgid "There is no new content"
+msgstr "Naujo turinio nėra"
+
+#: librarian/views/_list_controls.tpl:9
+msgid "Delete selected"
+msgstr "Ištrinti pasirinkta"
+
+#: librarian/routes/content.py:119 librarian/views/base.tpl:21
+msgid "Library"
+msgstr "Biblioteka"
+
+#: librarian/views/content_list.tpl:49
 msgid "Content library is currently empty"
 msgstr "Bibliotekos turinio nėra."
 
-#: librarian\views\content_list.tpl:52
-#, python-format
-msgid "There are no search results for '%(terms)s'"
-msgstr "Nėra paieškos rezultatų terminui '%(terms)s' "
+#: librarian/views/content_list.tpl:25
+msgid "search titles"
+msgstr "ieškoti pavadinimų"
 
-#: librarian\views\content_list.tpl:55
-#, python-format
-msgid "There are no results for '%(tag)s'"
-msgstr "'%(tag)s' nebuvo rasta"
+#: librarian/views/file_list.tpl:18 librarian/views/content_list.tpl:27
+msgid "go"
+msgstr "pirmyn"
 
-#: librarian\views\content_list.tpl:69
-msgid "Load more content"
-msgstr "Pakrauti daugiau turinio"
+#: librarian/views/content_list.tpl:30
+msgid "clear"
+msgstr "valyti"
 
-#: librarian\views\content_list.tpl:77
-msgid "Loading..."
-msgstr "Kraunama..."
-
-#: librarian\views\content_list.tpl:84
-msgid "You have reached the end of the library."
-msgstr "Jūs pasiekėte bibliotekos pabaigą."
-
-#: librarian\views\content_list.tpl:86 librarian\views\content_list.tpl:93
-msgid "Go to top"
-msgstr "Į viršų"
-
-#: librarian\views\downloads.tpl:20
+#: librarian/views/downloads.tpl:20
 msgid "update available"
 msgid_plural "updates available"
 msgstr[0] "atnaujinti esanti"
 msgstr[1] "atnaujinti esamus"
 msgstr[2] "atnaujinti esamus"
 
-#: librarian\views\downloads.tpl:26
-msgid "last update"
-msgstr "paskutinis atnaujinimas\n"
+#: librarian/plugins/diskspace/plugin.py:88
+msgid "Content library stats"
+msgstr "Bibliotekos turinio statistika"
 
-#: librarian\views\downloads.tpl:51
-msgid "select"
-msgstr "pasirinkti"
+#: librarian/plugins/diskspace/views/diskspace.tpl:21
+msgid "item in the library"
+msgid_plural "items in the library"
+msgstr[0] "dalykas bibliotekoje"
+msgstr[1] "dalykai bibliotekoje"
+msgstr[2] "dalykai bibliotekoje"
 
-#: librarian\views\downloads.tpl:55
+#: librarian/plugins/logs/plugin.py:30
+msgid "Application logs"
+msgstr "Programos žurnalas"
+
+#: librarian/plugins/logs/views/logs.tpl:4
+msgid "Logs are shown in reverse chronological order"
+msgstr "Žurnalo įrašai rodomi atvirkštine tvarka"
+
+#: librarian/views/_list_controls.tpl:3
+msgid "Select all"
+msgstr "Pažymėti viską"
+
+#: librarian/views/_list_controls.tpl:5
+msgid "Select none"
+msgstr "Atžymėti viska"
+
+#: librarian/views/downloads.tpl:55
 msgid "broadcast"
 msgstr "transliuoti"
 
-#: librarian\views\downloads.tpl:57
+#: librarian/views/downloads.tpl:57
 msgid "downloaded"
 msgstr "parsisiųsta"
 
-#: librarian\views\downloads.tpl:59
-msgid "language"
-msgstr ""
+#: librarian/views/content_list.tpl:40
+msgid "Showing search results for '%(terms)s'"
+msgstr "Rodomi paieškos rezultatai '%(terms)s' "
 
-#: librarian\views\downloads.tpl:73
+#: librarian/views/content_list.tpl:52
+msgid "There are no search results for '%(terms)s'"
+msgstr "Nėra paieškos rezultatų terminui '%(terms)s' "
+
+#. Translators, used in the pager
+#: librarian/views/_simple_pager.tpl:4
+msgid "previous"
+msgstr "praeitas"
+
+#. Translators, used in the pager
+#: librarian/views/_simple_pager.tpl:19
+msgid "next"
+msgstr "sekantis"
+
+#. Translators, used as page title
+#. Translators, used as page title on clean-up page
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:5
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:10
+msgid "Library clean-up"
+msgstr "Bibliotekos valymas"
+
+#. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
+#: librarian/views/_simple_pager.tpl:9
+msgid "page"
+msgstr "puslapis"
+
+#. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
+#: librarian/views/_simple_pager.tpl:13
+msgid "per page"
+msgstr "per puslapį"
+
+#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
+#: librarian/plugins/diskspace/views/diskspace/_space_info.tpl:4
+msgid "total space (%s free)"
+msgstr "viso vietos (%s free)"
+
+#. Translators, used as button label on updates page for adding marked content to library
+#: librarian/views/_list_controls.tpl:7
+msgid "Add selected to library"
+msgstr "Pridėti pasirinktą į biblioteką"
+
+#. Translators, used as 'content belongs to core archive' badge
+#: librarian/core/metadata.py:189 librarian/views/reader.tpl:30
+msgid "core"
+msgstr "pagrindinis"
+
+#. Translators, used as 'sponsored content' badge
+#: librarian/core/metadata.py:191 librarian/views/reader.tpl:26
+msgid "sponsored"
+msgstr "remiamas"
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#: librarian/views/base.tpl:27 librarian/views/app_list.tpl:5
+#: librarian/views/app_list.tpl:10
+msgid "Apps"
+msgstr "Programos"
+
+#. Translators, refers to app author
+#: librarian/views/app_list.tpl:22
+msgid "author:"
+msgstr "autorius:"
+
+#. Translators, refers to app version
+#: librarian/views/app_list.tpl:24
+#: librarian/plugins/license/views/license.tpl:13
+msgid "version:"
+msgstr "versija:"
+
+#. Translators, message show in app listing when no apps are present.
+#: librarian/views/app_list.tpl:33
+msgid "No apps found."
+msgstr "Programų nėra."
+
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#. Translators, used main navigation menu
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian/views/base.tpl:23 librarian/views/file_list.tpl:5
+#: librarian/views/file_list.tpl:10
+msgid "Files"
+msgstr "Failai"
+
+#: librarian/views/_simple_pager.tpl:14
+msgid "Reload"
+msgstr "Perkrauti"
+
+#: librarian/views/downloads.tpl:73
 msgid "replaces:"
 msgstr "pakeičia:"
 
-#: librarian\views\downloads.tpl:88
-msgid "There is no new content"
-msgstr "Naujo turinio nėra"
+#. Translators, used as label for link that leads to parent directory in file listing
+#: librarian/views/file_list.tpl:28
+msgid "(go up one level)"
+msgstr "(pakilti į viršų vienu lygiu)"
+
+#: librarian/views/file_list.tpl:50 librarian/views/file_list.tpl:70
+msgid "Rename"
+msgstr "Pervadinti"
+
+#: librarian/views/file_list.tpl:55 librarian/views/file_list.tpl:75
+msgid "Delete"
+msgstr "Ištrinti"
+
+#: librarian/views/file_list.tpl:92
+msgid "About this folder"
+msgstr "Informacija apie aplanką"
 
 #. Translators, used as page title for page that shows result of running a script
 #. Translators, used as page header for page that shows result of running a script
-#: librarian\views\exec_result.tpl:2 librarian\views\exec_result.tpl:5
+#: librarian/views/exec_result.tpl:2 librarian/views/exec_result.tpl:5
 msgid "Script output"
 msgstr "Scenarijaus išeiga"
 
 #. Translators, return (result) code of the script executed via file browser
-#: librarian\views\exec_result.tpl:11
+#: librarian/views/exec_result.tpl:11
 msgid "return code:"
 msgstr "grąžinomo kodas:"
 
 #. Translators, shown when result code is good (0).
-#: librarian\views\exec_result.tpl:14
+#: librarian/views/exec_result.tpl:14
 msgid "OK"
 msgstr "Gerai"
 
 #. Translators, shown when result code is not good (non-zero).
-#: librarian\views\exec_result.tpl:17
+#: librarian/views/exec_result.tpl:17
 msgid "error"
 msgstr "klaida"
 
 #. Translators, refers to standard output of script run from file browser (STDOUT)
-#: librarian\views\exec_result.tpl:22
+#: librarian/views/exec_result.tpl:22
 msgid "Output"
 msgstr "Išvedimas"
 
 #. Translators, shown if script returned no output
-#: librarian\views\exec_result.tpl:27
+#: librarian/views/exec_result.tpl:27
 msgid "no output"
 msgstr "Jokios išeigos"
 
 #. Translators, refers to standard errors of script run from file browser (STDERR)
-#: librarian\views\exec_result.tpl:32
+#: librarian/views/exec_result.tpl:32
 msgid "Errors"
 msgstr "Klaidos"
 
-#: librarian\views\file_list.tpl:28
-msgid "(go up one level)"
-msgstr "(pakilti į viršų vienu lygiu)"
-
-#: librarian\views\file_list.tpl:34
-msgid "(go to file list)"
-msgstr "(go to file list)"
-
-#: librarian\views\file_list.tpl:40
-msgid "There are currently no files or folders here."
-msgstr "Šiuo metu čia nėra jokių failų ar aplankų."
-
-#: librarian\views\file_list.tpl:50 librarian\views\file_list.tpl:70
-msgid "Rename"
-msgstr "Pervadinti"
-
-#: librarian\views\file_list.tpl:55 librarian\views\file_list.tpl:75
-msgid "Delete"
-msgstr "Ištrinti"
-
-#: librarian\views\file_list.tpl:82
+#. Translators, label for button in file listing that allows user to run a script
+#: librarian/views/file_list.tpl:82
 msgid "Run"
 msgstr "Vykdyti"
 
-#: librarian\views\file_list.tpl:92
-msgid "About this folder"
-msgstr "Informacija apie aplanką"
+#. Translators, this is used when app doesn't provide a description
+#: librarian/core/apps.py:45
+msgid "No description provided"
+msgstr "Aprašymas nepateiktas"
 
-#: librarian\views\login.tpl:5 librarian\views\login.tpl:10
-#: librarian\views\login.tpl:35
-msgid "Login"
-msgstr ""
+#: librarian/core/metadata.py:25
+msgid "Unknown license"
+msgstr "Nežinoma licenzija"
 
-#: librarian\views\login.tpl:22
-msgid "Username:"
-msgstr ""
+#: librarian/core/metadata.py:26
+msgid "Creative Commons Attribution"
+msgstr "Creative Commons Attribution"
 
-#: librarian\views\login.tpl:24
-msgid "username"
-msgstr ""
+#: librarian/core/metadata.py:27
+msgid "Creative Commons Attribution-NoDerivs"
+msgstr "Creative Commons Attribution-NoDerivs"
 
-#: librarian\views\login.tpl:29
-msgid "Password:"
-msgstr ""
+#: librarian/core/metadata.py:28
+msgid "Creative Commons Attribution-NonCommercial"
+msgstr "Creative Commons Attribution-NonCommercial"
 
-#: librarian\views\login.tpl:31
-msgid "password"
-msgstr ""
+#: librarian/core/metadata.py:29
+msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
+msgstr "Creative Commons Attribution-NonCommercial-NoDerivs"
 
-#: librarian\views\reader.tpl:33
-msgid "Download"
-msgstr ""
+#: librarian/core/metadata.py:31
+msgid "Creative Commons Attribution-ShareAlike"
+msgstr "Creative Commons Attribution-ShareAlike"
 
-#: librarian\views\remove_error.tpl:5 librarian\views\remove_error.tpl:10
-msgid "Content file missing"
-msgstr ""
+#: librarian/core/metadata.py:32
+msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
+msgstr "Creative Commons Attribution-NonCommercial-ShareAlike "
 
-#: librarian\views\remove_error.tpl:14
-msgid ""
-"The content file was not found, but has been removed from the database. You "
-"will be redirected to the content list shortly."
-msgstr ""
+#: librarian/core/metadata.py:34
+msgid "GNU Free Documentation License"
+msgstr "GNU Free Documentation Licenzija"
 
-#. Translators, used as page title
-#. Translators, used as page heading
-#: librarian\views\tag_cloud.tpl:2 librarian\views\tag_cloud.tpl:5
-msgid "Tag cloud"
-msgstr "Žymių Cloud'as"
+#: librarian/core/metadata.py:35
+msgid "Open Publication License"
+msgstr "Atviros publikacijos licenzija"
 
-#: librarian\views\_content_list.tpl:31
-#, python-format
-msgid "by %s"
-msgstr "by %s"
+#: librarian/core/metadata.py:36
+msgid "Open Content License"
+msgstr "Atviro turinio licenzija"
 
-#: librarian\views\_list_controls.tpl:3
-msgid "Select all"
-msgstr "Pažymėti viską"
+#: librarian/core/metadata.py:37
+msgid "Against DRM License"
+msgstr "Against DRM License"
 
-#: librarian\views\_list_controls.tpl:5
-msgid "Select none"
-msgstr "Atžymėti viska"
+#: librarian/core/metadata.py:38
+msgid "Free Art License"
+msgstr "Laisvo Meno Licenzija"
 
-#: librarian\views\_list_controls.tpl:7
-msgid "Add selected to library"
-msgstr "Pridėti pasirinktą į biblioteką"
+#: librarian/core/metadata.py:39
+msgid "Public Domain"
+msgstr "Viešas Domenas"
 
-#: librarian\views\_list_controls.tpl:9
-msgid "Delete selected"
-msgstr "Ištrinti pasirinkta"
+#: librarian/core/metadata.py:40
+msgid "Other free license"
+msgstr "Kita nemokama licenzija"
 
-#: librarian\views\_list_controls.tpl:11
-msgid "Delete all"
-msgstr ""
+#: librarian/core/metadata.py:41
+msgid "All rights reserved"
+msgstr "Visos teisės saugomos"
 
-#: librarian\views\_simple_pager.tpl:4
-msgid "previous"
-msgstr "praeitas"
+#: librarian/core/metadata.py:42
+msgid "Other non-free license"
+msgstr "Kita apmokęstinta licenzija"
 
-#: librarian\views\_simple_pager.tpl:9
-msgid "page"
-msgstr "puslapis"
+#. Translators, used as response to innvalid HTTP request
+#: librarian/plugins/diskspace/plugin.py:42
+msgid "Invalid request"
+msgstr "Negaliojantis prašymas"
 
-#: librarian\views\_simple_pager.tpl:13
-msgid "per page"
-msgstr "per puslapį"
+#. Translators, used as message to user when clean-up is started
+#. without selecting any content
+#: librarian/plugins/diskspace/plugin.py:52
+msgid "No content selected"
+msgstr "Nepasirinktas joks turinys"
 
-#: librarian\views\_simple_pager.tpl:14
-msgid "Reload"
-msgstr "Perkrauti"
+#. Translators, used when user is previewing clean-up, %s is
+#. replaced by amount of content that can be freed in bytes,
+#. KB, MB, etc
+#: librarian/plugins/diskspace/plugin.py:59
+msgid "%s can be freed by removing selected content"
+msgstr "% gali būti atlaisvinta ištrinant pasirinktą turinį"
 
-#: librarian\views\_simple_pager.tpl:19
-msgid "next"
-msgstr "sekantis"
+#. Translators, error message shown on clean-up page when there was
+#. no deletable content
+#: librarian/plugins/diskspace/plugin.py:69
+msgid "Nothing to delete"
+msgstr "Nėra ko ištrinti"
 
-#: librarian\views\_tags.tpl:11
+#. Translators, used as error message shown to user when wrong action
+#. code is submitted to server
+#: librarian/routes/downloads.py:96
+msgid "Invalid action, please use one of the form buttons."
+msgstr "Negaliojantis veiksmas, prašome naudoti viena iš formos mygtukų."
+
+#. Translators, used as placeholder while infinite scrolling content is being loaded
+#: librarian/views/content_list.tpl:77
+msgid "Loading..."
+msgstr "Kraunama..."
+
+#. Translators, shown when user reaches the end of the library
+#: librarian/views/content_list.tpl:84
+msgid "You have reached the end of the library."
+msgstr "Jūs pasiekėte bibliotekos pabaigą."
+
+#. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
+#: librarian/views/content_list.tpl:86 librarian/views/content_list.tpl:93
+msgid "Go to top"
+msgstr "Į viršų"
+
+#. Translators, used as section heading on dashboard above 'About' section
+#: librarian/plugins/license/plugin.py:24
+msgid "About"
+msgstr "Apie"
+
+#. Translators, appears in copyright line in dashboard's 'About' section
+#: librarian/plugins/license/views/license.tpl:16
+msgid "Some rights reserved."
+msgstr "Kai kurios teisės saugomos"
+
+#: librarian/routes/content.py:75
+msgid "Specified tag was not found"
+msgstr "Nurodyta žyma nerasta"
+
+#. Translators, used as not on library page when there is no content for given tag
+#: librarian/views/content_list.tpl:55
+msgid "There are no results for '%(tag)s'"
+msgstr "'%(tag)s' nebuvo rasta"
+
+#. Translators, button label for a button that saves user tags for a piece of content
+#: librarian/views/_tags.tpl:11
 msgid "Save tags"
 msgstr "Išsaugoti žymes"
 
-#: librarian\views\_tags.tpl:15
+#. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
+#: librarian/views/_tags.tpl:15
 msgid "Separate tags with commas"
 msgstr "Išskirkite žymes kableliais"
 
-#: librarian\views\_tag_cloud.tpl:5
+#. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
+#: librarian/views/_tag_cloud.tpl:5
 msgid "everything"
 msgstr "viskas"
 
-#: librarian\views\_tag_js_templates.tpl:3
+#. Translators, used as label for button that appears next to tag list
+#: librarian/views/_tag_js_templates.tpl:3
 msgid "Edit tags"
 msgstr "Redaguoti žymes"
 
-#: librarian\views\_tag_js_templates.tpl:8
+#. Translators, used as label for button that appears in tag editing form
+#: librarian/views/_tag_js_templates.tpl:8
 msgid "Close"
 msgstr "Uždaryti"
 
-#: librarian\views\_tag_js_templates.tpl:13
+#. Translators, error message shown when updating tags fails
+#: librarian/views/_tag_js_templates.tpl:13
 msgid "Tags could not be updated."
 msgstr "Žymės negalėjo būti atnaujintos."
 
-#~ msgid "Some files could not be removed"
-#~ msgstr "Keli failai negalėjo būti ištrinti"
+#. Translators, link that loads more content in infinite scrolling page
+#: librarian/views/content_list.tpl:69
+msgid "Load more content"
+msgstr "Pakrauti daugiau turinio"
 
-#~ msgid "Content could not be removed"
-#~ msgstr "Turinio nepavyko ištrinti"
+#. Translators, used as section heading on dashboard
+#: librarian/plugins/ondd/plugin.py:197
+#: librarian/plugins/tvheadend/plugin.py:24
+#: librarian/plugins/ondd/views/ondd/settings.tpl:6
+#: librarian/plugins/ondd/views/ondd/settings.tpl:11
+msgid "Tuner settings"
+msgstr "Derintojo nustatymai"
 
-#~ msgid ""
-#~ "Please make sure the storage device is not write-protected and try again."
-#~ msgstr ""
-#~ "Prašome įsitikinti, kad jūsų laikmena nėra apsaugota ir bandykite dar "
-#~ "kartą."
+#: librarian/plugins/tvheadend/views/tvheadend.tpl:4
+msgid "Access TVHeadend"
+msgstr "Prieiti prie TVHeadend"
 
-#~ msgid "Retry"
-#~ msgstr "Bandyti dar kartą"
+#: librarian/views/file_list.tpl:40
+msgid "There are currently no files or folders here."
+msgstr "Šiuo metu čia nėra jokių failų ar aplankų."
 
-#~ msgid "Favorites"
-#~ msgstr "Mėgstamiausi"
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian/views/tag_cloud.tpl:2 librarian/views/tag_cloud.tpl:5
+msgid "Tag cloud"
+msgstr "Žymių Cloud'as"
 
-#~ msgid "Remember that favorited content cannot be deleted."
-#~ msgstr "Nepamirškite, kad pažymėtas turinys negalės būti ištrintas."
+#. Translators, error message displayed when locking fails during
+#. database rebuild
+#. Translators, error message displayed when locking fails during
+#. database rebuild
+#: librarian/plugins/dbmanage/plugin.py:154
+msgid "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
+msgstr "Bibliotekininkas negali pakeisti rėžimo į priežiųros darbu rėžima, todėl duomenų bazės perkūrimas nutrauktas. Patikrinkite kad niekas nesinaudoja sistema ir bandykite iš naujo."
 
-#~ msgid "unfavorite"
-#~ msgstr "atžymėti"
+#. Translators, used as dashboard section title
+#. Translators, used as dashboard section title
+#: librarian/plugins/dbmanage/plugin.py:173
+msgid "Content database"
+msgstr "Turinio duomenų bazė"
 
-#~ msgid "download directory (%s free)"
-#~ msgstr "parsisiuntimų katalogas (%s free)"
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian/plugins/ondd/plugin.py:44
+msgid "None"
+msgstr "Nieko"
 
-#~ msgid "content library (%s free)"
-#~ msgstr "bibliotekos turinys (%s free)"
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian/plugins/ondd/plugin.py:46
+msgid "Vertical"
+msgstr "Vertikalus"
 
-#~ msgid "You have not favorited any content yet"
-#~ msgstr "Kol kas nepažymėjote jokio turinio"
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian/plugins/ondd/plugin.py:48
+msgid "Horizontal"
+msgstr "Horizontalus"
 
-#~ msgid "content partner"
-#~ msgstr "turinio partneris"
+#. Translators, this is a type of LNB
+#. Translators, this is a type of LNB
+#: librarian/plugins/ondd/plugin.py:59
+msgid "Universal"
+msgstr "Universalus"
 
-#~ msgid "sponsored content"
-#~ msgstr "remiamas turinys"
+#. Translators, this is a type of LNB
+#. Translators, this is a type of LNB
+#: librarian/plugins/ondd/plugin.py:61
+msgid "North America Ku band"
+msgstr "Šiaurės Amerikos Ku dažnis"
 
-#~ msgid "Outernet core archive"
-#~ msgstr "Outernet'o pagrindinis archyvas"
+#. Translators, error message when LNB type is incorrect
+#. Translators, error message when LNB type is incorrect
+#: librarian/plugins/ondd/plugin.py:120
+msgid "Invalid choice for LNB type"
+msgstr "Neteisingas LNB pasirinkimas"
 
-#~ msgid "Opening source database failed"
-#~ msgstr "Opening source database failed"
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when frequency value is
+#. wrong
+#: librarian/plugins/ondd/plugin.py:124
+msgid "Frequency must be a positive number"
+msgstr "Dažnis turi buti didesnis už nuli"
 
-#~ msgid "Opening backup database failed"
-#~ msgstr "Opening backup database failed"
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#: librarian/plugins/ondd/plugin.py:127 librarian/plugins/ondd/plugin.py:134
+msgid "Please type in a number"
+msgstr "Įveskite numerį"
 
-#~ msgid "Could not create database backup handler"
-#~ msgstr "Could not create database backup handler"
+#. Translators, error message when symbolrate value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#: librarian/plugins/ondd/plugin.py:131
+msgid "Symbolrate must be a positive number"
+msgstr "Simbolių sparta turi būti pozityvus numeris"
 
-#~ msgid "No files are being downloadded"
-#~ msgstr "No files are being downloadded"
+#. Translators, error message shown when wrong delivery
+#. system is selected
+#. Translators, error message shown when wrong delivery
+#. system is selected
+#: librarian/plugins/ondd/plugin.py:138
+msgid "Invalid choice for delivery system"
+msgstr "Neteisingas pristatymo sistemos pasirinkimas"
 
-#~ msgid "LNB type"
-#~ msgstr "LNB type"
+#. Translators, error message shown when wrong modulation
+#. mode is selected
+#. Translators, error message shown when wrong modulation
+#. mode is selected
+#: librarian/plugins/ondd/plugin.py:142
+msgid "Invalid choice for modulation mode"
+msgstr "Neteisigas moduliacijos pasirinkimas"
+
+#. Translators, error message shown when wrong
+#. polarization is selected
+#. Translators, error message shown when wrong
+#. polarization is selected
+#: librarian/plugins/ondd/plugin.py:146
+msgid "Invalid choice for polarization"
+msgstr "Neteisinga poliarizacija"
+
+#. Translators, error message shown when setting transponder
+#. configuration is not successful
+#. Translators, error message shown when setting transponder
+#. configuration is not successful
+#: librarian/plugins/ondd/plugin.py:165
+msgid "Transponder configuration could not be set"
+msgstr "Transponderio nustatymai negali būti nustatyti"
+
+#: librarian/routes/content.py:214
+msgid "The files you were looking for could not be found"
+msgstr "Ieškoti failai nebuvo rasti"
+
+#: librarian/routes/content.py:216
+msgid "This list represents the search results"
+msgstr "Paieškos rezultatai šiame sąraše."
+
+#: librarian/routes/content.py:227
+msgid "This folder does not exist"
+msgstr "Katalogas neegzistuoja"
+
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:4
+msgid "Database size"
+msgstr "Duomenų bazės dydis"
+
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:5
+msgid "download"
+msgstr "parsisiųsti"
+
+#. Translators, refers to database backup
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:11
+msgid "Backup"
+msgstr "Atsargine kopija"
+
+#. Translators, refers to database rebuild feature
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:16
+msgid "Rebuild"
+msgstr "Perkurti"
+
+#. Translators, note about database rebuild shown on dashboard
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:22
+msgid "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
+msgstr "Duomenų bazės perkūrimas ištrins visus skirtukus ir perjungs Bibliotekininką i priežiūros darbų rėžimą, kuris neleis prieiti prie turinio."
+
+#. Translators, used as page heading
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:5
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:10
+msgid "Database backup"
+msgstr "Duomenų bazės atsarginė kopija"
+
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:14
+msgid "Database backup has been completed successfully. You will be taken to the backup folder in 10 seconds."
+msgstr "Duomnų bazės atsarginė kopija sukurta sėkmingai. Nukreipsime į atsarginių kopijų kataloga už 10 sekundžių."
+
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:16
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:16
+msgid "The operation took %s second"
+msgid_plural "The operation took %s seconds"
+msgstr[0] "Operacija užtruko %s sekunde"
+msgstr[1] "Operacija užtruko %s sekundes"
+msgstr[2] "Operacija užtruko %s sekundes"
+
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:19
+msgid "Database backup could not be completed. The following error occurred:"
+msgstr "Duomenų bazės atsarginė kopijos kūrimas nepabaigtas, nes įvyko klaida: "
+
+#. Translators, used as page heading
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:5
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:10
+msgid "Database rebuild"
+msgstr "Duomenų bazė perkurta"
+
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:14
+msgid "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
+msgstr "Turinio duomenų bazė buvo perkurta iš naujo. Buvusios duomenų bazės atsarginė kopija sukurta. Ją rasite failų pasirinkime."
+
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:19
+msgid "Database could not be rebuilt. The following error occurred:"
+msgstr "Duomenų bazės perkūrimas nepavyko"
+
+#: librarian/plugins/license/views/license.tpl:5
+msgid "\n"
+"This program is free software: you can redistribute it and/or modify it\n"
+"under the terms of the GNU General Public License as published by the\n"
+"Free Software Foundation, either version 3 of the License, or (at your\n"
+"option) any later version.\n"
+""
+msgstr "Ši programa yra nemokama programinė įranga: Jūs galite ją platinti ir / ar keisti ją\n"
+"pagal GNU General Public License sąlygas, kaip paskelbta\n"
+"Free Software Foundation, arba versija 3 licencijos, arba (Jūsų\n"
+"nuožiūra) bet kuria vėlesne versija."
+
+#: librarian/views/500.tpl:18 librarian/plugins/logs/views/logs.tpl:6
+msgid "Download application log"
+msgstr "Parsisiusti programos registra"
+
+#. Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
+#: librarian/plugins/ondd/views/ondd.tpl:17
+msgid "Downloads in progress"
+msgstr "Parsisiuntimo progresas"
+
+#. Translators, label for select list that allows user to pick a satellite to tune into
+#: librarian/plugins/ondd/views/ondd.tpl:27
+msgid "Satellite:"
+msgstr "Satelitas:"
+
+#. Translators, placeholder for satellite selection select list
+#: librarian/plugins/ondd/views/ondd.tpl:30
+msgid "Select a satellite"
+msgstr "Pasirinkti satelitą:"
+
+#. Translators, label for option that allows user to set custom transponder parameters
+#: librarian/plugins/ondd/views/ondd.tpl:40
+msgid "Custom..."
+msgstr "Individualizuotas..."
+
+#. Translators, form label for transponder frequency
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:16
+msgid "Frequency:"
+msgstr "Dažnis:"
+
+#. Translators, form label for transponder symbol rate
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:22
+msgid "Symbol rate:"
+msgstr "Simbolių sparta:"
+
+#. Translators, form label for transponder delivery system (DVB-S or DVB-S2)
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:28
+msgid "Delivery system:"
+msgstr "Pateikimo sistema:"
+
+#. Translators, form label for transponder modulation mode (QPSK, etc)
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:34
+msgid "Modulation:"
+msgstr "Moduliacija:"
+
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:40
+msgid "Polarization:"
+msgstr "Poliarizacija:"
+
+#. Translators, button label that confirms tuner settings
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:48
+msgid "Tune in"
+msgstr "Nustatyti:"
+
+#. Translators, whether tuner has a lock on the signal or not (note: technical term)
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:3
+msgid "has lock"
+msgstr "užrakinta"
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:3
+msgid "no lock"
+msgstr "neužrakinta"
+
+#. Translators, short for 'signal/noise ratio'
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:14
+msgid "SNR"
+msgstr "SNR"
+
+#. Translators, used as page title
+#. Translators, used as error page heading
+#: librarian/views/500.tpl:5 librarian/views/500.tpl:10
+msgid "Error"
+msgstr "Klaida"
+
+#: librarian/views/500.tpl:13
+msgid "Librarian has failed to fulfill your request due to unexpected error in the program. Details are provided below."
+msgstr "Bibliotekininkas negalėjo pateikti duomenų, dėl nenumatytos klaidos. Detales galite rasti žemiau."
+
+#. Translators, used as page title
+#. Translators, used as maintenance page heading
+#: librarian/views/503.tpl:5 librarian/views/503.tpl:10
+msgid "Under maintenance"
+msgstr "Vyksta priežiūros darbai"
+
+#: librarian/views/503.tpl:14
+msgid "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
+msgstr "Bibliotekininkas šiuo metu yra priežiūros darbų režime. Prašome palaukti keliata minučių ir bandyti dar karta."
+
+#. Translators, used as label for link that leads to file list
+#: librarian/views/file_list.tpl:34
+msgid "(go to file list)"
+msgstr "(į failų sąrašą)"
+
+#. Translators, attribution (e.g., 'By Project Gutenberg')
+#: librarian/views/_content_list.tpl:31
+msgid "by %s"
+msgstr "Pagal %s"
+
+#. Translators, error message shown when user does not supply username
+#. Translators, error message shown when user does not supply username
+#: librarian/routes/auth.py:30
+msgid "Type in your username"
+msgstr "Įveskite vartotojo vardą"
+
+#. Translators, error message shown when user does not supply password
+#. Translators, error message shown when user does not supply password
+#: librarian/routes/auth.py:33
+msgid "Type in your password"
+msgstr "Įveskite slaptažodį"
+
+#: librarian/routes/auth.py:39
+msgid "Please enter the correct username and password."
+msgstr "Prašome įvesti tesinga vartotojo vardą ir slaptažodį"
+
+#: librarian/utils/lang.py:92
+msgid "any language"
+msgstr "bet kokio kalba"
+
+#: librarian/plugins/ondd/views/ondd/_file_list.tpl:5
+msgid "No files are being downloaded"
+msgstr "Nėra siunčiamų failų."
+
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:8
+msgid "LNB type:"
+msgstr "LNB tipas:"
+
+#: librarian/views/403.tpl:5 librarian/views/403.tpl:10
+msgid "Forbidden"
+msgstr "Uždrausta"
+
+#: librarian/views/403.tpl:15
+msgid "You are not authorized to access this page."
+msgstr "Jūms neleidžiama atidaryti šį puslapį"
+
+#: librarian/views/base.tpl:34
+msgid "Log out"
+msgstr "Atsijungti"
+
+#: librarian/views/login.tpl:5 librarian/views/login.tpl:10
+#: librarian/views/login.tpl:35
+msgid "Login"
+msgstr "Prisijungti"
+
+#: librarian/views/login.tpl:22
+msgid "Username:"
+msgstr "Vartatorjo vardas:"
+
+#: librarian/views/login.tpl:24
+msgid "username"
+msgstr "vartotojo vardas"
+
+#: librarian/views/login.tpl:29
+msgid "Password:"
+msgstr "Slaptažodis:"
+
+#: librarian/views/login.tpl:31
+msgid "password"
+msgstr "slaptažodis"
+
+#: librarian/views/reader.tpl:33
+msgid "Download"
+msgstr "Parsisiūsti"
+
+#: librarian/views/_list_controls.tpl:11
+msgid "Delete all"
+msgstr "Viska ištrinti"
+
+#: librarian/views/content_list.tpl:34 librarian/views/downloads.tpl:37
+msgid "filter"
+msgstr "filtras"
+
+#: librarian/views/downloads.tpl:59
+msgid "language"
+msgstr "kalba"
+
+#: librarian/views/remove_error.tpl:5 librarian/views/remove_error.tpl:10
+msgid "Content file missing"
+msgstr "Trūksta turinio failo"
+
+#: librarian/views/remove_error.tpl:14
+msgid "The content file was not found, but has been removed from the database. You will be redirected to the content list shortly."
+msgstr "Turinio failas nerastas, bet buvo ištrintas iš duomenų bazės. Netrukus busite nukreipti į turinio sąrašą."
+
+#: librarian/utils/lang.py:34
+msgid "unknown"
+msgstr "unknown"
+
+#. Translators, used as label, meaning content is from a publisher
+#: librarian/core/metadata.py:193 librarian/views/reader.tpl:21
+msgid "publisher"
+msgstr "publisher"
+
+#. Translators, used as dashboard section title
+#: librarian/plugins/netinterfaces/plugin.py:29
+msgid "Network interfaces"
+msgstr "Network interfaces"
+
+#. Translators, used main navigation menu
+#: librarian/routes/content.py:128 librarian/views/base.tpl:25
+msgid "Sites"
+msgstr "Sites"
+
+#. Translators, used as page title
+#. Translators, used as error page heading
+#: librarian/views/404.tpl:5 librarian/views/404.tpl:10
+msgid "Page not found"
+msgstr "Page not found"
+
+#: librarian/views/404.tpl:13
+msgid "The page you were looking for could not be found"
+msgstr "The page you were looking for could not be found"
+
+#. Translators, used as note in Application network interfaces section
+#: librarian/plugins/netinterfaces/views/netinterfaces.tpl:4
+msgid "List of available network interfaces"
+msgstr "List of available network interfaces"
+
+#. Translators, used as label for network interface name
+#: librarian/plugins/netinterfaces/views/netinterfaces.tpl:8
+msgid "Interface name"
+msgstr "Interface name"
+
