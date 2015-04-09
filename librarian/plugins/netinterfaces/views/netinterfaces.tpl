@@ -12,12 +12,10 @@
     % for iface in interfaces:
     <tr>
         <%
-        if iface.is_ethernet:
-            interface_type = 'ethernet'
-        elif iface.is_wireless:
+        if iface.is_wireless:
             interface_type = 'wireless'
         else:
-            interface_type = 'loopback'
+            interface_type = 'ethernet'
         %>
         <td><span class="icon ${interface_type}"></span> ${iface.name}</td>
         <td>${iface.ipv4}</td>

@@ -9,14 +9,18 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import array
 import fcntl
+import os
 import socket
+import struct
 import ctypes.util
 
 
 IFF_LOOPBACK = 0x8
 SIOCGIWNAME = 0x8B01
+SIOCGIFHWADDR = 0x8927
+
+SYSFS_NET_PATH = "/sys/class/net"
 
 
 class struct_sockaddr(ctypes.Structure):
@@ -77,6 +81,14 @@ def ifap_iter(ifap):
         ifa = ifa.ifa_next.contents
 
 
+def get_mac_address(ifname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    info = fcntl.ioctl(s.fileno(),
+                       SIOCGIFHWADDR,
+                       struct.pack('256s', ifname[:15]))
+    return ':'.join(['%02x' % ord(char) for char in info[18:24]])
+
+
 def getfamaddr(sa):
     family = sa.sa_family
     addr = None
@@ -93,12 +105,22 @@ def getfamaddr(sa):
 
 class NetworkInterface(object):
 
-    def __init__(self, name):
+    def __init__(self, name, mac_addr, is_physical, is_wireless, is_loopback):
         self.name = name
         self.index = libc.if_nametoindex(name)
+        self.mac_address = mac_addr
+        self.is_physical = is_physical
+        self.is_wireless = is_wireless
+        self.is_loopback = is_loopback
         self.addresses = {}
-        self.is_wireless = False
-        self.is_loopback = False
+
+    def __setattr__(self, name, value):
+        if name == 'ipv4':
+            self.addresses[socket.AF_INET] = value
+        elif name == 'ipv6':
+            self.addresses[socket.AF_INET6] = value
+        else:
+            super(NetworkInterface, self).__setattr__(name, value)
 
     @property
     def ipv4(self):
@@ -113,19 +135,17 @@ class NetworkInterface(object):
         return not self.is_loopback and not self.is_wireless
 
 
-def is_wireless(ifa_name):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
-    buf = array.array('b', ifa_name)
-    try:
-        fcntl.ioctl(sock, SIOCGIWNAME, buf, 1)
-    except IOError:
-        return False
-
-    return True
+def is_wireless_interface(ifname):
+    path = os.path.join(SYSFS_NET_PATH, ifname, "device", "wireless")
+    return os.path.exists(path)
 
 
-def is_loopback(ifa_flags):
+def is_loopback_interface(ifa_flags):
     return bool(ifa_flags & IFF_LOOPBACK)
+
+
+def is_physical_interface(ifname):
+    return os.path.exists(os.path.join(SYSFS_NET_PATH, ifname, "device"))
 
 
 def get_network_interfaces():
@@ -138,14 +158,20 @@ def get_network_interfaces():
         retval = {}
         for ifa in ifap_iter(ifap):
             name = ifa.ifa_name
+            mac_address = get_mac_address(name)
+            is_physical = is_physical_interface(name)
+            is_wireless = is_wireless_interface(name)
+            is_loopback = is_loopback_interface(ifa.ifa_flags)
             i = retval.get(name)
             if not i:
-                i = retval[name] = NetworkInterface(name)
+                i = retval[name] = NetworkInterface(name,
+                                                    mac_address,
+                                                    is_physical,
+                                                    is_wireless,
+                                                    is_loopback)
             family, addr = getfamaddr(ifa.ifa_addr.contents)
             if addr:
                 i.addresses[family] = addr
-            i.is_wireless = is_wireless(name)
-            i.is_loopback = is_loopback(ifa.ifa_flags)
         return retval.values()
     finally:
         libc.freeifaddrs(ifap)
