@@ -136,7 +136,7 @@ class NetworkInterface(object):
 
 
 def is_wireless_interface(ifname):
-    path = os.path.join(SYSFS_NET_PATH, ifname, "device", "wireless")
+    path = os.path.join(SYSFS_NET_PATH, ifname, "wireless")
     return os.path.exists(path)
 
 
