@@ -20,7 +20,10 @@ from bottle import request, abort
 from ..lib.squery import sqlin
 
 from .metadata import clean_keys, Meta, META_SPECIFICATION
-from .downloads import get_spool_zip_path, get_zip_path, get_metadata
+from .downloads import (get_spool_zip_path,
+                        get_zip_path,
+                        get_metadata,
+                        get_md5_from_path)
 
 
 FACTORS = {
@@ -281,6 +284,23 @@ def remove_from_archive(hashes):
         db.query(q, *hashes)
     logging.debug("%s items removed from database" % rowcount)
     return failed
+
+
+def reload_data(db):
+    zdir = request.app.config['content.contentdir']
+    content = ((get_md5_from_path(f), os.path.join(zdir, f))
+               for f in os.listdir(zdir)
+               if f.endswith('.zip'))
+    res = process(db, content, no_file_ops=True)
+    return res[0]
+
+
+def clear_and_reload(db):
+    logging.debug('Content refill started.')
+    q = db.Delete('zipballs')
+    db.query(q)
+    rows = reload_data(db)
+    logging.info('Content refill finished for %s pieces of content', rows)
 
 
 def zipball_count():

@@ -340,7 +340,7 @@ def main(args):
         sys.exit(0)
 
     databases = prestart(conf, args.log, args.debug)
-    commands.select_command(args, databases, conf)
+    commands.select_command(args, databases, app)
     return start(databases, conf, args.no_auth, args.repl, args.debug)
 
 

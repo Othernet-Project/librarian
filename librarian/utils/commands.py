@@ -11,7 +11,11 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import sys
 import getpass
 
+from bottle import request
+
+from ..core import archive
 from ..lib import auth
+
 
 COMMANDS = {}
 PARSER_ARGS = []
@@ -28,7 +32,7 @@ def command(name, *args, **kwargs):
 
 
 @command('su', '--su', action='store_true')
-def create_superuser(arg, databases, config):
+def create_superuser(arg, databases, app):
     """ create superuser and quit """
     print("Press ctrl-c to abort")
     try:
@@ -46,16 +50,16 @@ def create_superuser(arg, databases, config):
         print("User created.")
     except auth.UserAlreadyExists:
         print("User already exists, please try a different username.")
-        create_superuser(arg, databases, config)
+        create_superuser(arg, databases, app)
     except auth.InvalidUserCredentials:
         print("Invalid user credentials, please try again.")
-        create_superuser(arg, databases, config)
+        create_superuser(arg, databases, app)
 
     sys.exit(0)
 
 
 @command('dump_tables', '--dump-tables', action='store_true')
-def dump_tables(arg, databases, config):
+def dump_tables(arg, databases, app):
     """ dump table schema as SQL """
     schema = []
     for db in databases.values():
@@ -67,14 +71,23 @@ def dump_tables(arg, databases, config):
     sys.exit(0)
 
 
+@command('refill', '--refill', action='store_true')
+def refill_command(arg, databases, app):
+    print('Begin content refill.')
+    request.environ['bottle.app'] = app  # connect request with application
+    archive.clear_and_reload(databases.main)
+    print('Content refill finished.')
+    sys.exit(0)
+
+
 def add_command_switches(parser):
     for args, kwargs in PARSER_ARGS:
         parser.add_argument(*args, **kwargs)
 
 
-def select_command(args, databases, config):
+def select_command(args, databases, app):
     """ Select one of the registered commands and execute it """
     for cmd, fn in COMMANDS.items():
         arg = getattr(args, cmd, None)
         if arg:
-            fn(arg, databases, config)
+            fn(arg, databases, app)

@@ -19,8 +19,7 @@ from os.path import dirname, join
 from bottle import mako_view as view, request, static_file
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
-from ...core.archive import process
-from ...core.downloads import get_md5_from_path
+from ...core.archive import reload_data
 
 from ...lib import squery
 from ...lib.lock import global_lock, LockFailureError
@@ -94,15 +93,6 @@ def run_migrations():
                        conf)
     logging.debug("Finished running migrations")
     return db
-
-
-def reload_data(db):
-    zdir = request.app.config['content.contentdir']
-    content = ((get_md5_from_path(f), os.path.join(zdir, f))
-               for f in os.listdir(zdir)
-               if f.endswith('.zip'))
-    res = process(db, content, no_file_ops=True)
-    return res[0]
 
 
 def rebuild():
