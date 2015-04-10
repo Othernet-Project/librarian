@@ -1,7 +1,8 @@
 /*global require,module*/
 module.exports = function (grunt) {
     'use strict';
-    var jsRoot = 'librarian/static/js/',
+    var staticRoot = 'librarian/static/';
+        jsRoot = staticRoot + 'js/',
         jsBundles = {
             content: ['tags.js', 'list.js'],
             dashboard: ['collapsible_dash_sections.js'],
@@ -65,10 +66,8 @@ module.exports = function (grunt) {
         compass: {
             dist: {
                 options: {
-                    quiet: false,
-                    trace: true,
                     httpPath: '/static/',
-                    basePath: 'librarian/static',
+                    basePath: staticRoot,
                     cssDir: 'css',
                     sassDir: '../../scss',
                     imagesDir: 'img',
