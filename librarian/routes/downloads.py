@@ -29,7 +29,7 @@ def list_downloads():
     """ Render a list of downloaded content """
     conf = request.app.config
     cover_dir = conf['content.covers']
-    selection = request.params.get('sel', '1') != '0'
+    selection = request.params.get('sel', '0') == '1'
 
     default_lang = request.user.options.get('content_language', None)
     lang = request.params.get('lang', default_lang)
