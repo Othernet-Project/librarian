@@ -312,18 +312,14 @@ def test_debug_printing(mock_print, *ignored):
 
 
 @mock.patch(MOD + '.Database.connect')
-def test_database_plugins_connects(db_connect):
+def test_get_databases_connects(db_connect):
     """ When database name is passed as string, connection is made """
-    plugin = mod.database_plugin({'foo': 'foo.db'})
-    callback = mock.MagicMock(__name__='callback')
-    plugin(callback)()
+    mod.get_databases({'foo': 'foo.db'})
     db_connect.assert_called_once_with('foo.db')
 
 
 @mock.patch(MOD + '.Database')
-def test_database_plugin_does_not_connect_if_connection_is_passed(Database):
+def test_get_databases_does_not_connect_if_connection_is_passed(Database):
     """ When connection object is passed, connection is not made """
-    plugin = mod.database_plugin({})
-    callback = mock.MagicMock(__name__='callback')
-    plugin(callback)()
+    mod.get_databases({})
     assert not Database.connect.called
