@@ -70,8 +70,8 @@ def prepare_metadata(md5, path):
     return archive.prepare_metadata(md5, path)
 
 
-def add_meta_to_db(db, metadata, replaced):
-    return archive.add_meta_to_db(db, metadata, replaced)
+def add_meta_to_db(metadata, replaced):
+    return archive.add_meta_to_db(metadata, replaced)
 
 
 def delete_obsolete(obsolete):
@@ -86,16 +86,12 @@ def process_content_files(content):
     return archive.process_content_files(content)
 
 
-def process_content(db, to_add, to_replace, to_delete, to_copy):
-    return archive.process_content(db,
-                                   to_add,
-                                   to_replace,
-                                   to_delete,
-                                   to_copy)
+def process_content(to_add, to_replace, to_delete, to_copy):
+    return archive.process_content(to_add, to_replace, to_delete, to_copy)
 
 
-def process(db, content, no_file_ops=False):
-    return archive.process(db, content, no_file_ops=no_file_ops)
+def process(content, no_file_ops=False):
+    return archive.process(content, no_file_ops=no_file_ops)
 
 
 def add_to_archive(hashes):
@@ -106,12 +102,12 @@ def remove_from_archive(hashes):
     return archive.remove_from_archive(hashes)
 
 
-def reload_data(db):
-    return archive.reload_data(db)
+def reload_data():
+    return archive.reload_data()
 
 
-def clear_and_reload(db):
-    return archive.clear_and_reload(db)
+def clear_and_reload():
+    return archive.clear_and_reload()
 
 
 def zipball_count():

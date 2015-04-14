@@ -145,7 +145,7 @@ def prepare_metadata(md5, path):
     return meta
 
 
-def add_meta_to_db(db, metadata, replaced):
+def add_meta_to_db(metadata, replaced):
     with db.transaction() as cur:
         logging.debug("Adding new content to archive database")
         q = db.Replace('zipballs', cols=INSERT_KEYS)
@@ -154,7 +154,6 @@ def add_meta_to_db(db, metadata, replaced):
         logging.debug("Removing replaced content from archive database")
         if replaced:
             q = db.Delete('zipballs', where=db.sqlin('md5', replaced))
-            print(q)
         db.executemany(q, replaced)
     return rowcount
 
@@ -201,26 +200,26 @@ def process_content_files(content):
     return to_add, to_replace, to_delete, to_copy
 
 
-def process_content(db, to_add, to_replace, to_delete, to_copy):
+def process_content(to_add, to_replace, to_delete, to_copy):
     content_dir = config['content.contentdir']
-    rowcount = add_meta_to_db(db, to_add, to_replace)
+    rowcount = add_meta_to_db(to_add, to_replace)
     delete_obsolete(to_delete)
     copy_to_archive(to_copy, content_dir)
     return rowcount
 
 
-def process(db, content, no_file_ops=False):
+def process(content, no_file_ops=False):
     to_add, to_replace, to_delete, to_copy = process_content_files(content)
     if no_file_ops:
         to_delete = []
         to_copy = []
-    rows = process_content(db, to_add, to_replace, to_delete, to_copy)
+    rows = process_content(to_add, to_replace, to_delete, to_copy)
     return rows, len(to_delete), len(to_copy)
 
 
 def add_to_archive(hashes):
     content = ((h, get_spool_zip_path(h)) for h in hashes)
-    rows, deleted, copied = process(db, content)
+    rows, deleted, copied = process(content)
     logging.debug("%s items added to database", rows)
     logging.debug("%s items deleted from storage", deleted)
     logging.debug("%s items copied to storage", copied)
@@ -252,20 +251,20 @@ def remove_from_archive(hashes):
     return failed
 
 
-def reload_data(db):
+def reload_data():
     zdir = config['content.contentdir']
     content = ((get_md5_from_path(f), os.path.join(zdir, f))
                for f in os.listdir(zdir)
                if f.endswith('.zip'))
-    res = process(db, content, no_file_ops=True)
+    res = process(content, no_file_ops=True)
     return res[0]
 
 
-def clear_and_reload(db):
+def clear_and_reload():
     logging.debug('Content refill started.')
     q = db.Delete('zipballs')
     db.query(q)
-    rows = reload_data(db)
+    rows = reload_data()
     logging.info('Content refill finished for %s pieces of content', rows)
 
 
@@ -362,5 +361,4 @@ def needs_formatting(md5):
     """ Whether content needs formatting patch """
     q = db.Select('keep_formatting', sets='zipballs', where='md5 = ?')
     db.query(q, md5)
-    print(db)
     return not db.result.keep_formatting
