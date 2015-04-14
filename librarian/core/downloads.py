@@ -13,8 +13,6 @@ import zipfile
 import logging
 from datetime import datetime, timedelta
 
-from ..utils.cache import cached
-
 from .metadata import convert_json, DecodeError, FormatError
 from . import backend
 
@@ -199,7 +197,6 @@ def get_file(path, filename, no_read=False):
     return extract_file(path, filename, no_read)
 
 
-@cached()
 def get_metadata(path):
     """ Extract metadata file from zipball and return its content
 
