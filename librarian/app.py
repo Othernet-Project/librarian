@@ -283,7 +283,6 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
     # contains the I18N middleware. If we pass ``app`` object, then we won't
     # have the I18N middleware active at all.
     servers.start_server('librarian', config, wsgiapp)
-    dbconns = [db.conn for name, db in databases.items()]
 
     if repl:
         repl_thread = start_repl(
@@ -298,8 +297,8 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         if repl_thread:
             repl_thread.join()
         servers.stop_all(5)
-        for conn in dbconns:
-            conn.close()
+        for db in databases.values():
+            db.close()
         logging.info('Clean shutdown completed')
         print('Bye! Have a nice day! Those books are due Tuesday, by the way!')
 
