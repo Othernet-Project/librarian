@@ -491,23 +491,6 @@ def test_label_property_with_key_combinations(*ignored):
 
 @mock.patch(MOD + '.json', autospec=True)
 @mock.patch(MOD + '.os', autospec=True)
-def test_human_label_property(*ignored):
-    """ Human label is a translated label """
-    faux_labels = {
-        'core': 'core translated',
-        'sponsored': 'sponsored translated',
-        'publisher': 'publisher translated'
-    }
-    meta = mod.Meta({}, 'covers_dir')
-    with attr_overrides(meta, LABEL_TITLES=faux_labels):
-        with key_overrides(meta, archive='core'):
-            assert meta.human_label == 'core translated'
-        with key_overrides(meta, archive='ephem', is_sponsored=True):
-            assert meta.human_label == 'sponsored translated'
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
 def test_free_license_property(*ignored):
     """ Free license is True for free licenses """
     meta = mod.Meta({}, 'covers_dir')
@@ -519,23 +502,6 @@ def test_free_license_property(*ignored):
         assert meta.free_license is True
     with key_overrides(meta, license='CC-BY'):
         assert meta.free_license is True
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-def test_human_license_property(*ignored):
-    """ Human license is a translated license name """
-    faux_licenses = (
-        (None, 'unknown translated'),
-        ('ARL', 'ARL translated'),
-    )
-    meta = mod.Meta({}, 'covers_dir')
-    with attr_overrides(mod, LICENSES=faux_licenses):
-        assert meta.human_license == 'unknown translated'
-        with key_overrides(meta, license='ARL'):
-            assert meta.human_license == 'ARL translated'
-        with key_overrides(meta, license='DOUBLE'):
-            assert meta.human_license == 'unknown translated'
 
 
 @mock.patch(MOD + '.json', autospec=True)
