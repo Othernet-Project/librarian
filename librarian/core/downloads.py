@@ -12,6 +12,10 @@ import os
 import zipfile
 import logging
 from datetime import datetime, timedelta
+try:
+    from io import BytesIO as StringIO
+except ImportError:
+    from cStringIO import StringIO
 
 from .metadata import convert_json, DecodeError, FormatError
 from . import backend
@@ -164,7 +168,10 @@ def extract_file(path, filename, no_read=False):
         metadata = content.getinfo(filename)
         fd = content.open(filename, 'r')
         if no_read:
-            content = fd
+            # zip files does not support the `seek` method, which causes
+            # exceptions in `send_file`
+            content = StringIO(fd.read())
+            fd.close()
         else:
             content = fd.read()
             f.close()  # We've read the content, so it's safe to close
