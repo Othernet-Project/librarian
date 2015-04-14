@@ -75,7 +75,7 @@ def dump_tables(arg, databases, app):
 def refill_command(arg, databases, app):
     print('Begin content refill.')
     request.environ['bottle.app'] = app  # connect request with application
-    archive.clear_and_reload(databases.main)
+    archive.clear_and_reload()
     print('Content refill finished.')
     sys.exit(0)
 
