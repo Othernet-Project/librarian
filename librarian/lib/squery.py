@@ -228,17 +228,11 @@ def get_databases(db_confs, debug=False):
     return DatabaseContainer(conns, debug=debug)
 
 
-def database_plugin(db_confs, debug=False):
-    # Connection objects are held in this closure in a semi-global variable
-    # (``connections``) in order to allow reconnection in cases where we need
-    # to disconnect temporarily (e.g., when perofrming rebuilds)
-    connections = get_connections(db_confs)
-
+def database_plugin(databases, debug=False):
     def plugin(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):
-            request.db = DatabaseContainer(connections, debug)
-            request.db_connections = connections
+            request.db = databases
             return callback(*args, **kwargs)
         return wrapper
     return plugin
