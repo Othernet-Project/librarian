@@ -10,9 +10,6 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import json
 
-from bottle import request
-from bottle_utils.i18n import i18n_url, lazy_gettext as _
-
 from .downloads import ContentError, extract_file
 
 
@@ -35,18 +32,12 @@ class AppInfo(object):
         self.author = author
         self.version = version
         self.descriptions = descriptions
-        self.url = i18n_url('apps:app', appid=appid)
         self.icon_behavior = behavior
 
-    @property
-    def description(self):
-        default_desc = self.descriptions.get(
-            # Translators, this is used when app doesn't provide a description
-            request.default_locale, _('No description provided'))
-        return self.descriptions.get(request.locale, default_desc)
-
-    def asset_url(self, path):
-        return i18n_url('apps:asset', appid=self.appid, path=path)
+    def description(self, locale, default_locale, default_description):
+        default_desc = self.descriptions.get(default_locale,
+                                             default_description)
+        return self.descriptions.get(locale, default_desc)
 
 
 def get_app_info(path):
