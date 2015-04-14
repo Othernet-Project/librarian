@@ -64,7 +64,7 @@ ${_('Updates')}
                 % for meta in metadata:
                 <tr class="data">
                     <td class="downloads-selection">
-                        <input id="check-${meta['md5']}" type="checkbox" name="selection" value="${meta['md5']}"${selection and ' checked' or ''}}>
+                        <input id="check-${meta['md5']}" type="checkbox" name="selection" value="${meta['md5']}"${' checked' if selection else ''}>
                     </td>
                     <td class="downloads-title"${' rowspan="3"' if meta.get('replaces_title') else ''}>
                         <p><label for="check-${meta['md5']}"><span${meta.i18n_attrs}>${meta['title'] | h}</span></label></p>
