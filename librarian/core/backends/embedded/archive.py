@@ -25,6 +25,7 @@ from . import backend
 
 db = backend.storage
 config = backend.config
+sqlin = db.sqlin.__func__
 
 CONTENT_ORDER = ['-date(updated)', '-views']
 INSERT_KEYS = META_SPECIFICATION.keys()
@@ -89,7 +90,7 @@ def get_single(md5):
 def get_titles(ids):
     q = db.Select(['title', 'md5'],
                   sets='zipballs',
-                  where=db.sqlin('md5', ids))
+                  where=sqlin('md5', ids))
     db.query(q, *ids)
     return db.results
 
@@ -153,7 +154,7 @@ def add_meta_to_db(metadata, replaced):
         rowcount = cur.rowcount
         logging.debug("Removing replaced content from archive database")
         if replaced:
-            q = db.Delete('zipballs', where=db.sqlin('md5', replaced))
+            q = db.Delete('zipballs', where=sqlin('md5', replaced))
         db.executemany(q, replaced)
     return rowcount
 
@@ -240,7 +241,7 @@ def remove_from_archive(hashes):
             failed.append(md5)
             continue
     with db.transaction() as cur:
-        in_md5s = db.sqlin('md5', hashes)
+        in_md5s = sqlin('md5', hashes)
         logging.debug("Removing %s items from archive database" % len(hashes))
         q = db.Delete('zipballs', where=in_md5s)
         db.query(q, *hashes)
@@ -312,7 +313,7 @@ def add_tags(meta, tags):
         db.executemany(q, ({'name': t} for t in tags))
 
     # Get the IDs of the tags
-    db.query(db.Select(sets='tags', where=db.sqlin('name', tags)), *tags)
+    db.query(db.Select(sets='tags', where=sqlin('name', tags)), *tags)
     tags = db.results
     ids = (i['tag_id'] for i in tags)
 
@@ -336,7 +337,7 @@ def remove_tags(meta, tags):
     meta.tags = dict((n, i) for n, i in meta.tags.items() if n not in tags)
     with db.transaction():
         q = db.Delete('taggings',
-                      where=['md5 = ?', db.sqlin('tag_id', tag_ids)])
+                      where=['md5 = ?', sqlin('tag_id', tag_ids)])
         db.query(q, meta.md5, *tag_ids)
         q = db.Update('zipballs', tags=':tags', where='md5 = :md5')
         db.query(q, md5=meta.md5, tags=json.dumps(meta.tags))
