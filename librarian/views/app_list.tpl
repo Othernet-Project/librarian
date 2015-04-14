@@ -24,7 +24,7 @@ ${_('Apps')}
             <a id="link-${app.appid}" class="app-icon" href="${app_url}"><img src="${i18n_url('apps:asset', appid=app.appid, path='icon.png')}"></a>
             <div class="app-details">
             <span class="app-title"><a href="${app_url}">${app.title}</a></span>
-            <span class="app-description">${h.trunc(app.description, 50)}</span>
+            <span class="app-description">${h.trunc(app_description, 50)}</span>
             ## Translators, refers to app author
             <span class="app-author">${_('author:')} ${app.author}</span>
             ## Translators, refers to app version
