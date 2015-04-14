@@ -156,6 +156,8 @@ class Database(object):
 
     def close(self):
         self.conn.close()
+        # the cached cursor object must be reset, otherwise after reconnecting
+        # it would still try to use it, and would run into the closed db issue
         self._cursor = None
 
     def reconnect(self):
