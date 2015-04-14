@@ -16,7 +16,7 @@
     <div class="details">
         <p class="label">
             <span class="label-archive label-${meta.label}">
-            ${meta.human_label}
+            ${_(meta.label)}
             </span>
             <span class="datestamp">
             ${meta.timestamp.strftime('%Y-%m-%d')}

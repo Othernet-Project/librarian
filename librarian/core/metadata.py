@@ -16,30 +16,26 @@ import glob
 import logging
 import zipfile
 
-from bottle_utils.i18n import lazy_gettext as _
 
-from ..utils.lang import RTL_LANGS
-
+RTL_LANGS = ['ar', 'he', 'ur', 'yi', 'ji', 'iw', 'fa']
 
 LICENSES = (
-    (None, _('Unknown license')),
-    ('CC-BY', _('Creative Commons Attribution')),
-    ('CC-BY-ND', _('Creative Commons Attribution-NoDerivs')),
-    ('CC-BY-NC', _('Creative Commons Attribution-NonCommercial')),
-    ('CC-BY-ND-NC', _('Creative Commons '
-                      'Attribution-NonCommercial-NoDerivs')),
-    ('CC-BY-SA', _('Creative Commons Attribution-ShareAlike')),
-    ('CC-BY-NC-SA', _('Creative Commons '
-                      'Attribution-NonCommercial-ShareAlike')),
-    ('GFDL', _('GNU Free Documentation License')),
-    ('OPL', _('Open Publication License')),
-    ('OCL', _('Open Content License')),
-    ('ADL', _('Against DRM License')),
-    ('FAL', _('Free Art License')),
-    ('PD', _('Public Domain')),
-    ('OF', _('Other free license')),
-    ('ARL', _('All rights reserved')),
-    ('ON', _('Other non-free license')),
+    (None, 'Unknown license'),
+    ('CC-BY', 'Creative Commons Attribution'),
+    ('CC-BY-ND', 'Creative Commons Attribution-NoDerivs'),
+    ('CC-BY-NC', 'Creative Commons Attribution-NonCommercial'),
+    ('CC-BY-ND-NC', 'Creative Commons Attribution-NonCommercial-NoDerivs'),
+    ('CC-BY-SA', 'Creative Commons Attribution-ShareAlike'),
+    ('CC-BY-NC-SA', 'Creative Commons Attribution-NonCommercial-ShareAlike'),
+    ('GFDL', 'GNU Free Documentation License'),
+    ('OPL', 'Open Publication License'),
+    ('OCL', 'Open Content License'),
+    ('ADL', 'Against DRM License'),
+    ('FAL', 'Free Art License'),
+    ('PD', 'Public Domain'),
+    ('OF', 'Other free license'),
+    ('ARL', 'All rights reserved'),
+    ('ON', 'Other non-free license'),
 )
 
 # `default` defaults to `None`
@@ -181,17 +177,7 @@ class Meta(object):
     class at a later time.
     """
 
-    # FIXME: decouple from i18n completely, subclass somewhere else
-
     IMAGE_EXTENSIONS = ('.png', '.gif', '.jpg', '.jpeg')
-    LABEL_TITLES = {
-        # Translators, used as label, meaning content belogs to core
-        'core': _('core'),
-        # Translators, used as label, meaning content was sponsored by someone
-        'sponsored': _('sponsored'),
-        # Translators, used as label, meaning content is from a publisher
-        'publisher': _('publisher')
-    }
 
     def __init__(self, meta, cover_dir, zip_path=None):
         """ Metadata wrapper instantiation
@@ -311,19 +297,8 @@ class Meta(object):
         return 'core'
 
     @property
-    def human_label(self):
-        return self.LABEL_TITLES[self.label]
-
-    @property
     def free_license(self):
         return self.license not in ['ARL', 'ON']
-
-    @property
-    def human_license(self):
-        try:
-            return dict(LICENSES)[self.license]
-        except (KeyError, AttributeError):
-            return LICENSES[0][1]
 
     @property
     def image(self):

@@ -31,7 +31,7 @@ from bottle import request
 
 from bottle_utils.lazy import Lazy
 from bottle_utils import html as helpers
-from bottle_utils.i18n import I18NPlugin
+from bottle_utils.i18n import I18NPlugin, lazy_gettext as _
 from bottle_utils.common import to_unicode
 
 from librarian.core import backend
@@ -241,7 +241,7 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         'h': helpers,
         'th': template_helper,
         'updates': Lazy(lambda: len(list(get_zipballs()))),
-        'readable_license': lambda s: dict(LICENSES).get(s, LICENSES[0][1]),
+        'readable_license': lambda s: _(dict(LICENSES).get(s, LICENSES[0][1])),
         'is_rtl': Lazy(lambda: request.locale in lang.RTL_LANGS),
         'dir': lambda l: 'rtl' if l in lang.RTL_LANGS else 'auto',
         'LANGS': lang.LANGS,
