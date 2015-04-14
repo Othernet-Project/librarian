@@ -13,10 +13,13 @@ import zipfile
 import logging
 from datetime import datetime, timedelta
 
-from bottle import request
+from ..utils.cache import cached
 
 from .metadata import convert_json, DecodeError, FormatError
-from ..utils.cache import cached
+from . import backend
+
+
+config = backend.config
 
 
 class ContentError(BaseException):
@@ -32,7 +35,6 @@ def find_signed():
 
     :returns:   iterator containing all filtered items
     """
-    config = request.app.config
     spooldir = config['content.spooldir']
     extension = config['content.extension']
     everything = os.listdir(spooldir)
@@ -46,7 +48,6 @@ def is_expired(secs):
     :param secs:    seconds from epoch of the local system
     :returns:       whether file has expired
     """
-    config = request.app.config
     maxage = timedelta(days=config['content.keep'])
     filetime = datetime.fromtimestamp(secs)
     now = datetime.now()
@@ -82,7 +83,6 @@ def get_zipballs():
 
     :returns:   iterable containing full paths to zipballs
     """
-    config = request.app.config
     spooldir = os.path.normpath(config['content.spooldir'])
     output_ext = config['content.output_ext']
     zipfiles = (f for f in os.listdir(spooldir) if f.endswith(output_ext))
@@ -210,7 +210,6 @@ def get_metadata(path):
     :param path:    path to the zip file
     :returns:       metadata dict
     """
-    config = request.app.config
     meta_filename = config['content.metadata']
     metadata, content = get_file(path, meta_filename)
     try:
@@ -239,7 +238,6 @@ def get_zip_path(md5):
     :param md5:     md5 of the zipball
     :returns:       actual path to the file of ``None`` if file cannot be found
     """
-    config = request.app.config
     contentdir = os.path.normpath(config['content.contentdir'])
     return get_zip_path_in(md5, contentdir)
 
@@ -250,7 +248,6 @@ def get_spool_zip_path(md5):
     :param md5:     md5 of the zipball
     :returns:       actual path to the file of ``None`` if file cannot be found
     """
-    config = request.app.config
     spooldir = os.path.normpath(config['content.spooldir'])
     return get_zip_path_in(md5, spooldir)
 

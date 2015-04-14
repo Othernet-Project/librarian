@@ -34,6 +34,7 @@ from bottle_utils import html as helpers
 from bottle_utils.i18n import I18NPlugin
 from bottle_utils.common import to_unicode
 
+from librarian.core import backend
 from librarian.core.metadata import LICENSES
 from librarian.core.downloads import get_zipballs
 
@@ -340,6 +341,7 @@ def main(args):
         sys.exit(0)
 
     databases = prestart(conf, args.log, args.debug)
+    backend.setup(conf['librarian.backend'], conf, databases.main)
     commands.select_command(args, databases, app)
     return start(databases, conf, args.no_auth, args.repl, args.debug)
 
