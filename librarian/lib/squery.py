@@ -154,6 +154,13 @@ class Database(object):
     def acquire_lock(self):
         self.execute('BEGIN EXCLUSIVE;')
 
+    def close(self):
+        self.conn.close()
+        self._cursor = None
+
+    def reconnect(self):
+        self.conn.connect()
+
     @property
     def connection(self):
         return self.conn
