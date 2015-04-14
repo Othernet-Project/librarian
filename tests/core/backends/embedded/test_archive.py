@@ -1,8 +1,12 @@
 import mock
 
-import librarian.core.backends.embedded as backend_pkg
+from librarian.core.backends import embedded
+from librarian.lib.squery import Database
+
 mocked_backend = mock.MagicMock()
-setattr(backend_pkg, 'backend', mocked_backend)
+mocked_backend.storage.sqlin = Database.sqlin
+
+setattr(embedded, 'backend', mocked_backend)
 import librarian.core.backends.embedded.archive as mod
 
 db = mocked_backend.storage
