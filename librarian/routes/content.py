@@ -14,6 +14,7 @@ import json
 import shutil
 import logging
 import urlparse
+import functools
 import subprocess
 try:
     from io import BytesIO as StringIO
@@ -22,7 +23,7 @@ except ImportError:
 
 from bottle import (
     request, mako_view as view, abort, default_app, static_file, redirect,
-    response, mako_template as template, hook)
+    response, mako_template as template)
 from bottle_utils.ajax import roca_view
 from bottle_utils.common import to_unicode
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
@@ -326,16 +327,21 @@ def get_content_url(root_url, domain):
     return urlparse.urljoin(root_url, path)
 
 
-def is_ap_client(client_ip):
-    start, end = app.config['librarian.ap_client_ip_range']
-    return client_ip in netutils.IPv4Range(start, end)
+def content_resolver_plugin(root_url, ap_client_ip_range):
 
+    def is_ap_client(client_ip):
+        start, end = app.config['librarian.ap_client_ip_range']
+        return client_ip in netutils.IPv4Range(start, end)
 
-@hook('before_request')
-def content_resolver():
-    if is_ap_client(request.remote_addr):
-        target_host = netutils.get_target_host()
-        # a content domain was entered(most likely), try to load it
-        content_url = get_content_url(app.config['librarian.root_url'],
-                                      target_host)
-        return redirect(content_url)
+    def decorator(callback):
+        @functools.wraps(callback)
+        def wrapper(*args, **kwargs):
+            target_host = netutils.get_target_host()
+            is_regular_access = target_host in root_url
+            if not is_regular_access and is_ap_client(request.remote_addr):
+                # a content domain was entered(most likely), try to load it
+                content_url = get_content_url(root_url, target_host)
+                return redirect(content_url)
+            return callback(*args, **kwargs)
+        return wrapper
+    return decorator
