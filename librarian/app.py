@@ -263,10 +263,6 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
-    app.install(content.content_resolver_plugin(
-        root_url=config['librarian.root_url'],
-        reserved_hostnames=config['librarian.hostnames']
-    ))
     app.install(request_timer('Handler'))
 
     # Install routes

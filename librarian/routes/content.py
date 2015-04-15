@@ -14,7 +14,6 @@ import json
 import shutil
 import logging
 import urlparse
-import functools
 import subprocess
 try:
     from io import BytesIO as StringIO
@@ -23,7 +22,7 @@ except ImportError:
 
 from bottle import (
     request, mako_view as view, abort, default_app, static_file, redirect,
-    response, mako_template as template)
+    response, mako_template as template, hook)
 from bottle_utils.ajax import roca_view
 from bottle_utils.common import to_unicode
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
@@ -176,9 +175,10 @@ def content_reader(meta):
     archive.add_view(meta.md5)
     referer = request.headers.get('Referer', '')
     base_path = i18n_url('content:sites_list')
+    content_path = request.params.get('path', meta.entry_point)
     if str(base_path) not in referer:
         base_path = i18n_url('content:list')
-    return dict(meta=meta, base_path=base_path)
+    return dict(meta=meta, base_path=base_path, content_path=content_path)
 
 
 def cover_image(path):
@@ -317,24 +317,25 @@ def get_content_url(root_url, domain):
         # as multiple matches are possible, pick the first one
         meta = matched_contents[0]
     except IndexError:
-        # invalid content domain, redirect to list
-        path = i18n_url('content:list')
+        # invalid content domain
+        abort(404, _('The specified address was not found.'))
     else:
-        path = i18n_url('content:reader', content_id=meta.md5)
+        base_path = i18n_url('content:reader', content_id=meta.md5)
+        path = '{0}?path={1}'.format(base_path, request.path)
 
     return urlparse.urljoin(root_url, path)
 
 
-def content_resolver_plugin(root_url, reserved_hostnames):
-    def decorator(callback):
-        @functools.wraps(callback)
-        def wrapper(*args, **kwargs):
-            host = netutils.get_current_host()
-            if netutils.is_ip_address(host) or host in reserved_hostnames:
-                # regular librarian access
-                return callback(*args, **kwargs)
-            # a content domain was entered(most likely), try to load it
-            content_url = get_content_url(root_url, host)
-            return redirect(content_url)
-        return wrapper
-    return decorator
+def is_ap_client(client_ip):
+    start, end = app.config['librarian.ap_client_ip_range']
+    return client_ip in netutils.IPv4Range(start, end)
+
+
+@hook('before_request')
+def content_resolver():
+    if is_ap_client(request.remote_addr):
+        target_host = netutils.get_target_host()
+        # a content domain was entered(most likely), try to load it
+        content_url = get_content_url(app.config['librarian.root_url'],
+                                      target_host)
+        return redirect(content_url)

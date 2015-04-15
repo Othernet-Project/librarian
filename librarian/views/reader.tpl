@@ -9,7 +9,7 @@ ${meta.title}
 <%block name="main">
 <div class="reader">
     <div class="reader-frame">
-        <iframe id="reader-main" class="reader-main" src="${i18n_url('content:file', content_id=meta.md5, filename=meta.entry_point)}"></iframe>
+        <iframe id="reader-main" class="reader-main" src="${i18n_url('content:file', content_id=meta.md5, filename=content_path)}"></iframe>
     </div>
     <div class="reader-meta data">
         <div class="inner">
