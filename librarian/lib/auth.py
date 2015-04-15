@@ -241,7 +241,8 @@ def user_plugin(no_auth):
     # Set up a hook, so handlers that raise cannot escape session-saving
     @hook('after_request')
     def store_options():
-        request.session['user'] = request.user.to_json()
+        if hasattr(request, 'session'):
+            request.session['user'] = request.user.to_json()
 
     def plugin(callback):
         @functools.wraps(callback)
