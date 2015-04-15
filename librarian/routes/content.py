@@ -177,6 +177,7 @@ def content_reader(meta):
     referer = request.headers.get('Referer', '')
     base_path = i18n_url('content:sites_list')
     content_path = request.params.get('path', meta.entry_point)
+    content_path = meta.entry_point if content_path == '/' else content_path
     if str(base_path) not in referer:
         base_path = i18n_url('content:list')
     return dict(meta=meta, base_path=base_path, content_path=content_path)
