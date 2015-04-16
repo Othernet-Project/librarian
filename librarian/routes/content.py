@@ -224,11 +224,8 @@ def show_file_list(path='.'):
     else:
         is_search = False
         try:
-            (path,
-             relpath,
-             dirs,
-             file_list,
-             readme) = files.get_dir_contents(path, conf['content.filedir'])
+            dir_contents = files.get_dir_contents(path)
+            (path, relpath, dirs, file_list, readme) = dir_contents
         except files.DoesNotExist:
             is_missing = True
             relpath = '.'
