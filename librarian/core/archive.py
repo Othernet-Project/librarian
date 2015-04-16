@@ -113,10 +113,7 @@ class BaseArchive(object):
     def get_count(self, tag=None, lang=None, multipage=None):
         raise NotImplementedError()
 
-    def get_search_count(self, terms, tag=None, lang=None, multipage=None):
-        raise NotImplementedError()
-
-    def get_content(self, offset=0, limit=0, tag=None, lang=None,
+    def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None,
                     multipage=None):
         raise NotImplementedError()
 
@@ -143,10 +140,6 @@ class BaseArchive(object):
                 m['replaces_title'] = titles[m['replaces']]
 
         return metadata
-
-    def search_content(self, terms, offset=0, limit=0, tag=None, lang=None,
-                       multipage=None):
-        raise NotImplementedError()
 
     def content_for_domain(self, domain):
         raise NotImplementedError()

@@ -36,26 +36,8 @@ class EmbeddedArchive(BaseArchive):
         self.sqlin = lambda *args, **kw: self.db.sqlin.__func__(*args, **kw)
         super(EmbeddedArchive, self).__init__(**config)
 
-    def get_count(self, tag=None, lang=None, multipage=None):
+    def get_count(self, terms=None, tag=None, lang=None, multipage=None):
         q = self.db.Select('COUNT(*) as count', sets='zipballs')
-        if tag:
-            q.where += 'tag_id == :tag'
-            q.sets.natural_join('taggings')
-
-        if lang:
-            q.where += 'language = :lang'
-
-        if multipage is not None:
-            q.where += 'multipage = :multipage'
-
-        self.db.query(q, tag=tag, lang=lang, multipage=multipage)
-        return self.db.result.count
-
-    def get_search_count(self, terms, tag=None, lang=None, multipage=None):
-        terms = '%' + terms.lower() + '%'
-        q = self.db.Select('COUNT(*) as count',
-                           sets='zipballs',
-                           where='title LIKE :terms')
         if tag:
             with_tag(q)
 
@@ -65,6 +47,10 @@ class EmbeddedArchive(BaseArchive):
         if multipage is not None:
             q.where += 'multipage = :multipage'
 
+        if terms:
+            terms = '%' + terms.lower() + '%'
+            q.where += 'title LIKE :terms'
+
         self.db.query(q,
                       terms=terms,
                       tag_id=tag,
@@ -73,10 +59,11 @@ class EmbeddedArchive(BaseArchive):
 
         return self.db.result.count
 
-    def get_content(self, offset=0, limit=0, tag=None, lang=None,
+    def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None,
                     multipage=None):
+        # TODO: tests
         q = self.db.Select(sets='zipballs',
-                           order=['-datetime(updated)', '-views'],
+                           order=CONTENT_ORDER,
                            limit=limit,
                            offset=offset)
         if tag:
@@ -88,7 +75,16 @@ class EmbeddedArchive(BaseArchive):
         if multipage is not None:
             q.where += 'multipage = :multipage'
 
-        self.db.query(q, tag_id=tag, lang=lang, multipage=multipage)
+        if terms:
+            terms = '%' + terms.lower() + '%'
+            q.where += 'title LIKE :terms'
+
+        self.db.query(q,
+                      terms=terms,
+                      tag_id=tag,
+                      lang=lang,
+                      multipage=multipage)
+
         return self.db.results
 
     def get_single(self, md5):
@@ -101,30 +97,6 @@ class EmbeddedArchive(BaseArchive):
                            sets='zipballs',
                            where=self.sqlin('md5', ids))
         self.db.query(q, *ids)
-        return self.db.results
-
-    def search_content(self, terms, offset=0, limit=0, tag=None, lang=None,
-                       multipage=None):
-        # TODO: tests
-        terms = '%' + terms.lower() + '%'
-        q = self.db.Select(sets='zipballs',
-                           where='title LIKE :terms',
-                           order=CONTENT_ORDER,
-                           limit=limit,
-                           offset=offset)
-        if tag:
-            with_tag(q)
-        if lang:
-            q.where += 'language = :lang'
-        if multipage is not None:
-            q.where += 'multipage = :multipage'
-
-        self.db.query(q,
-                      terms=terms,
-                      tag_id=tag,
-                      lang=lang,
-                      multipage=multipage)
-
         return self.db.results
 
     def content_for_domain(self, domain):

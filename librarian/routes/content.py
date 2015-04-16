@@ -59,15 +59,10 @@ def filter_content(multipage=None):
         tag_name = None
 
     archive = open_archive()
-    if query:
-        total_items = archive.get_search_count(query,
-                                               tag=tag,
-                                               lang=lang,
-                                               multipage=multipage)
-    else:
-        total_items = archive.get_count(tag=tag,
-                                        lang=lang,
-                                        multipage=multipage)
+    total_items = archive.get_count(terms=query,
+                                    tag=tag,
+                                    lang=lang,
+                                    multipage=multipage)
 
     if tag:
         try:
@@ -79,20 +74,12 @@ def filter_content(multipage=None):
     # trick the pager into calculating correct page numbers
     pager = Pager(total_items, pid='content')
     pager.get_paging_params()
-
-    if query:
-        metas = archive.search_content(query,
-                                       pager.offset,
-                                       pager.per_page,
-                                       tag=tag,
-                                       lang=lang,
-                                       multipage=multipage)
-    else:
-        metas = archive.get_content(pager.offset,
-                                    pager.per_page,
-                                    tag=tag,
-                                    lang=lang,
-                                    multipage=multipage)
+    metas = archive.get_content(terms=query,
+                                offset=pager.offset,
+                                limit=pager.per_page,
+                                tag=tag,
+                                lang=lang,
+                                multipage=multipage)
 
     cover_dir = conf['content.covers']
     content_dir = conf['content.contentdir']
