@@ -42,7 +42,6 @@ from librarian.lib import auth
 from librarian.lib import sessions
 from librarian.lib.lock import lock_plugin
 from librarian.lib.confloader import ConfDict
-from librarian.lib.template_helpers import template_helper
 
 from librarian.utils import lang
 from librarian.utils import commands
@@ -54,6 +53,7 @@ from librarian.utils.timer import request_timer
 from librarian.utils.gserver import ServerManager
 from librarian.utils import databases as database_utils
 from librarian.utils.signal_handlers import on_interrupt
+from librarian.utils.template_helpers import template_helper
 
 from librarian.plugins import install_plugins
 

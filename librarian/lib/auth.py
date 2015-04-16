@@ -19,8 +19,6 @@ import urlparse
 import pbkdf2
 from bottle import request, abort, redirect, hook
 
-from .template_helpers import template_helper
-
 
 class UserAlreadyExists(Exception):
     pass
@@ -180,11 +178,6 @@ def login_required(redirect_to='/login/', superuser_only=False, next_to=None):
             return redirect(redirect_path)
         return wrapper
     return decorator
-
-
-@template_helper
-def is_authenticated():
-    return not request.no_auth and request.user.is_authenticated
 
 
 def encrypt_password(password):

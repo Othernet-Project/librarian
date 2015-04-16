@@ -14,6 +14,12 @@ from bottle_utils.i18n import lazy_gettext as _, i18n_path
 from ..lib import auth
 from ..lib.validate import nonempty
 from ..utils.http import http_redirect
+from ..utils.template_helpers import template_helper
+
+
+@template_helper
+def is_authenticated():
+    return not request.no_auth and request.user.is_authenticated
 
 
 @view('login', vals={}, errors={})
