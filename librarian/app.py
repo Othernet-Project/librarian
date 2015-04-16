@@ -31,9 +31,10 @@ from bottle import request
 
 from bottle_utils.lazy import Lazy
 from bottle_utils import html as helpers
-from bottle_utils.i18n import I18NPlugin
+from bottle_utils.i18n import I18NPlugin, lazy_gettext as _
 from bottle_utils.common import to_unicode
 
+from librarian.core import backend
 from librarian.core.metadata import LICENSES
 from librarian.core.downloads import get_zipballs
 
@@ -240,7 +241,7 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         'h': helpers,
         'th': template_helper,
         'updates': Lazy(lambda: len(list(get_zipballs()))),
-        'readable_license': lambda s: dict(LICENSES).get(s, LICENSES[0][1]),
+        'readable_license': lambda s: _(dict(LICENSES).get(s, LICENSES[0][1])),
         'is_rtl': Lazy(lambda: request.locale in lang.RTL_LANGS),
         'dir': lambda l: 'rtl' if l in lang.RTL_LANGS else 'auto',
         'LANGS': lang.LANGS,
@@ -282,7 +283,6 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
     # contains the I18N middleware. If we pass ``app`` object, then we won't
     # have the I18N middleware active at all.
     servers.start_server('librarian', config, wsgiapp)
-    dbconns = [db.conn for name, db in databases.items()]
 
     if repl:
         repl_thread = start_repl(
@@ -297,8 +297,8 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         if repl_thread:
             repl_thread.join()
         servers.stop_all(5)
-        for conn in dbconns:
-            conn.close()
+        for db in databases.values():
+            db.close()
         logging.info('Clean shutdown completed')
         print('Bye! Have a nice day! Those books are due Tuesday, by the way!')
 
@@ -340,7 +340,8 @@ def main(args):
         sys.exit(0)
 
     databases = prestart(conf, args.log, args.debug)
-    commands.select_command(args, databases, conf)
+    backend.setup(conf['librarian.backend'], conf, databases.main)
+    commands.select_command(args, databases, app)
     return start(databases, conf, args.no_auth, args.repl, args.debug)
 
 

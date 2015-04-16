@@ -1,7 +1,7 @@
 <span class="pager-links">
     % if pager.page > 1:
     ## Translators, used in the pager
-    <a href="${i18n_path() + h.set_qparam(p=pager.page - 1).to_qs()}" class="button prev">${_('previous')}</a>
+    <a href="${i18n_path(request.path) + h.set_qparam(p=pager.page - 1).to_qs()}" class="button prev">${_('previous')}</a>
     % endif
 
     ${h.form(method='GET', _class='inline')}
@@ -16,6 +16,6 @@
 
     % if pager.page < pager.pages:
     ## Translators, used in the pager
-    <a href="${i18n_path() + h.set_qparam(p=pager.page + 1).to_qs()}" class="button next">${_('next')}</a>
+    <a href="${i18n_path(request.path) + h.set_qparam(p=pager.page + 1).to_qs()}" class="button next">${_('next')}</a>
     % endif
 </span>

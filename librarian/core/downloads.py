@@ -12,11 +12,16 @@ import os
 import zipfile
 import logging
 from datetime import datetime, timedelta
-
-from bottle import request
+try:
+    from io import BytesIO as StringIO
+except ImportError:
+    from cStringIO import StringIO
 
 from .metadata import convert_json, DecodeError, FormatError
-from ..utils.cache import cached
+from . import backend
+
+
+config = backend.config
 
 
 class ContentError(BaseException):
@@ -32,7 +37,6 @@ def find_signed():
 
     :returns:   iterator containing all filtered items
     """
-    config = request.app.config
     spooldir = config['content.spooldir']
     extension = config['content.extension']
     everything = os.listdir(spooldir)
@@ -46,7 +50,6 @@ def is_expired(secs):
     :param secs:    seconds from epoch of the local system
     :returns:       whether file has expired
     """
-    config = request.app.config
     maxage = timedelta(days=config['content.keep'])
     filetime = datetime.fromtimestamp(secs)
     now = datetime.now()
@@ -82,7 +85,6 @@ def get_zipballs():
 
     :returns:   iterable containing full paths to zipballs
     """
-    config = request.app.config
     spooldir = os.path.normpath(config['content.spooldir'])
     output_ext = config['content.output_ext']
     zipfiles = (f for f in os.listdir(spooldir) if f.endswith(output_ext))
@@ -166,7 +168,10 @@ def extract_file(path, filename, no_read=False):
         metadata = content.getinfo(filename)
         fd = content.open(filename, 'r')
         if no_read:
-            content = fd
+            # zip files does not support the `seek` method, which causes
+            # exceptions in `send_file`
+            content = StringIO(fd.read())
+            fd.close()
         else:
             content = fd.read()
             f.close()  # We've read the content, so it's safe to close
@@ -199,7 +204,6 @@ def get_file(path, filename, no_read=False):
     return extract_file(path, filename, no_read)
 
 
-@cached()
 def get_metadata(path):
     """ Extract metadata file from zipball and return its content
 
@@ -210,7 +214,6 @@ def get_metadata(path):
     :param path:    path to the zip file
     :returns:       metadata dict
     """
-    config = request.app.config
     meta_filename = config['content.metadata']
     metadata, content = get_file(path, meta_filename)
     try:
@@ -239,7 +242,6 @@ def get_zip_path(md5):
     :param md5:     md5 of the zipball
     :returns:       actual path to the file of ``None`` if file cannot be found
     """
-    config = request.app.config
     contentdir = os.path.normpath(config['content.contentdir'])
     return get_zip_path_in(md5, contentdir)
 
@@ -250,7 +252,6 @@ def get_spool_zip_path(md5):
     :param md5:     md5 of the zipball
     :returns:       actual path to the file of ``None`` if file cannot be found
     """
-    config = request.app.config
     spooldir = os.path.normpath(config['content.spooldir'])
     return get_zip_path_in(md5, spooldir)
 

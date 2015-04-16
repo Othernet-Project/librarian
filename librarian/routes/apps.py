@@ -47,11 +47,10 @@ def send_app_file(appid, path='index.html'):
     if not os.path.exists(appdir):
         abort(404)
     try:
-        metadata, content = apps.extract_file(app_path, path)
+        metadata, content = apps.extract_file(app_path, path, no_read=True)
     except KeyError as err:
         logging.error("<%s> Coult not extract '%s': %s", app_path, path, err)
         abort(404)
     filename = os.path.basename(path)
     return send_file.send_file(content, filename, metadata.file_size,
                                os.stat(app_path)[stat.ST_MTIME])
-

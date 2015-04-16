@@ -18,8 +18,11 @@ from bottle_utils.i18n import i18n_url, lazy_gettext as _
 from ..core import archive
 from ..core import metadata
 from ..core import downloads
-
 from ..lib.pager import Pager
+
+from ..utils.cache import cached
+
+get_metadata = cached()(downloads.get_metadata)
 
 PER_PAGE = 20
 
@@ -29,7 +32,7 @@ def list_downloads():
     """ Render a list of downloaded content """
     conf = request.app.config
     cover_dir = conf['content.covers']
-    selection = request.params.get('sel', '1') != '0'
+    selection = request.params.get('sel', '0') == '1'
 
     default_lang = request.user.options.get('content_language', None)
     lang = request.params.get('lang', default_lang)
@@ -51,7 +54,7 @@ def list_downloads():
     for z, ts in zipballs:
         logging.debug("<%s> getting metas" % z)
         try:
-            meta = downloads.get_metadata(z)
+            meta = get_metadata(z)
             if lang and meta['language'] != lang:
                 continue
 

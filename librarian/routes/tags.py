@@ -15,6 +15,8 @@ from bottle_utils.ajax import roca_view
 
 from ..core import archive
 
+from .helpers import with_content
+
 
 WS = re.compile(r'\s', re.M)
 
@@ -35,7 +37,7 @@ def tag_cloud():
     return dict(tag_cloud=tags, tag=current, base_path=base_path)
 
 
-@archive.with_content
+@with_content
 def edit_tags(meta):
     base_path = request.params.get('base_path')
     tags = request.forms.getunicode('tags', '')

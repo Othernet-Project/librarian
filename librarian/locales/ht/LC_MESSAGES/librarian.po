@@ -8,223 +8,195 @@ msgstr ""
 "Language: ht\n"
 "Plural-Forms: \n"
 
-#: librarian\app.py:189 librarian\views\base.tpl:8 librarian\views\base.tpl:50
+#: librarian/views/base.tpl:8 librarian/views/base.tpl:63
 msgid "Librarian"
 msgstr "Bibliyotekè"
 
-#: librarian\views\base.tpl:29 librarian\views\dashboard.tpl:3
-#: librarian\views\dashboard.tpl:6
+#: librarian/views/base.tpl:31 librarian/views/dashboard.tpl:5
+#: librarian/views/dashboard.tpl:10
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: librarian\views\favorites.tpl:2 librarian\views\favorites.tpl:4
-msgid "Favorites"
-msgstr "Favori"
-
-#: librarian\views\base.tpl:27 librarian\views\downloads.tpl:2
-#: librarian\views\downloads.tpl:4
+#: librarian/views/base.tpl:29 librarian/views/downloads.tpl:7
+#: librarian/views/downloads.tpl:12
 msgid "Updates"
 msgstr "Mizajou"
 
-#: librarian\views\cleanup.tpl:13
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:20
 msgid "%s more space should be freed."
 msgstr "% espas dwe libere"
 
-#: librarian\views\cleanup.tpl:17
-msgid "Remember that favorited content cannot be deleted."
-msgstr "Pa bliye ke kontni favori yo pa kapab efase"
-
-#: librarian\views\cleanup.tpl:22
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:25
 msgid "There is enough free space on storage"
 msgstr "Genyen ase espas lib"
 
-#: librarian\views\cleanup.tpl:30
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:33
 msgid "delete?"
 msgstr "efase?"
 
-#: librarian\views\cleanup.tpl:32 librarian\views\favorites.tpl:15
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:35
 msgid "date"
 msgstr "dat"
 
-#: librarian\views\cleanup.tpl:34 librarian\views\downloads.tpl:29
-#: librarian\views\favorites.tpl:17
+#: librarian/views/downloads.tpl:53
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:37
 msgid "title"
 msgstr "tit"
 
-#: librarian\views\cleanup.tpl:36
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:39
 msgid "size"
 msgstr "tay"
 
-#: librarian\views\cleanup.tpl:52
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:55
 msgid "There is enough free space. No clean-up needed."
 msgstr "Genyen ase espas. Li pa mande pou netwaye anyen"
 
-#: librarian\views\cleanup.tpl:59
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:62
 msgid "How much space does this free up?"
 msgstr "Ki kantite espas ki pral libere?"
 
-#: librarian\views\cleanup.tpl:61
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:64
 msgid "Delete selected now"
 msgstr "Efase seleksyone yo kounye a"
 
-#: librarian\plugins\diskspace\views\diskspace.tpl:41
+#: librarian/plugins/diskspace/views/diskspace.tpl:27
 msgid "used space"
 msgstr "espas itilize"
 
-#: librarian\views\dashboard.tpl:19
+#: librarian/views/downloads.tpl:26
 msgid "last update"
 msgstr "dènye mizajou"
 
-#: librarian\plugins\diskspace\views\diskspace.tpl:24
+#: librarian/plugins/diskspace/views/diskspace.tpl:11
 msgid "You are running low on disk space."
 msgstr "Espas disk lan ba"
 
-#: librarian\plugins\diskspace\views\diskspace.tpl:26
+#: librarian/plugins/diskspace/views/diskspace.tpl:13
 msgid "Free some space now"
 msgstr "Libere espas kounye menm"
 
-#: librarian\views\downloads.tpl:27
+#: librarian/views/downloads.tpl:51
 msgid "select"
 msgstr "chwazi"
 
-#: librarian\views\downloads.tpl:56
+#: librarian/views/downloads.tpl:88
 msgid "There is no new content"
 msgstr "Pa gen okenn nouvo kontni"
 
-#: librarian\views\_list_controls.tpl:9
+#: librarian/views/_list_controls.tpl:9
 msgid "Delete selected"
 msgstr "efase seleksyone yo"
 
-#: librarian\views\favorites.tpl:26
-msgid "unfavorite"
-msgstr "retire pami favori yo"
-
-#: librarian\views\base.tpl:21 librarian\views\content_list.tpl:4
-#: librarian\views\content_list.tpl:7
+#: librarian/routes/content.py:119 librarian/views/base.tpl:21
 msgid "Library"
 msgstr "Bibliyotèk"
 
-#: librarian\views\content_list.tpl:61
+#: librarian/views/content_list.tpl:49
 msgid "Content library is currently empty"
 msgstr "Bibliyotèk Konni an vid"
 
-#: librarian\views\content_list.tpl:18
+#: librarian/views/content_list.tpl:25
 msgid "search titles"
 msgstr "chèche kek tit"
 
-#: librarian\views\content_list.tpl:20 librarian\views\content_list.tpl:45
-#: librarian\views\file_list.tpl:14
+#: librarian/views/file_list.tpl:18 librarian/views/content_list.tpl:27
 msgid "go"
 msgstr "komanse"
 
-#: librarian\views\content_list.tpl:23
+#: librarian/views/content_list.tpl:30
 msgid "clear"
 msgstr "netwaye"
 
-#: librarian\views\dashboard.tpl:13
+#: librarian/views/downloads.tpl:20
 msgid "update available"
 msgid_plural "updates available"
 msgstr[0] "mizajou disponib"
 
-#: librarian\plugins\diskspace\plugin.py:88
+#: librarian/plugins/diskspace/plugin.py:88
 msgid "Content library stats"
 msgstr "estatistik sou bibliyotek kontni an"
 
-#: librarian\plugins\diskspace\views\diskspace.tpl:35
+#: librarian/plugins/diskspace/views/diskspace.tpl:21
 msgid "item in the library"
 msgid_plural "items in the library"
 msgstr[0] "eleman nan bibliyotèk lan"
 
-#: librarian\plugins\logs\plugin.py:26
+#: librarian/plugins/logs/plugin.py:30
 msgid "Application logs"
 msgstr "koneksyon sou aplikasyon an"
 
-#: librarian\plugins\logs\views\logs.tpl:4
+#: librarian/plugins/logs/views/logs.tpl:4
 msgid "Logs are shown in reverse chronological order"
 msgstr "koneksyon yo prezante nan od kwonolojik envèse"
 
-#: librarian\views\_list_controls.tpl:3
+#: librarian/views/_list_controls.tpl:3
 msgid "Select all"
 msgstr "seleksyone tout"
 
-#: librarian\views\_list_controls.tpl:5
+#: librarian/views/_list_controls.tpl:5
 msgid "Select none"
 msgstr "deseleksyone tout"
 
-#: librarian\views\downloads.tpl:31
+#: librarian/views/downloads.tpl:55
 msgid "broadcast"
 msgstr "difizyon"
 
-#: librarian\views\downloads.tpl:33
+#: librarian/views/downloads.tpl:57
 msgid "downloaded"
 msgstr "fin telechaje"
 
-#: librarian\views\content_list.tpl:52
+#: librarian/views/content_list.tpl:40
 msgid "Showing search results for '%(terms)s'"
 msgstr "Afiche rezilta rechèch la pou '%(terms)s'"
 
-#: librarian\views\content_list.tpl:64
+#: librarian/views/content_list.tpl:52
 msgid "There are no search results for '%(terms)s'"
 msgstr "Pa gen oken rezilta pou '%(terms)s'"
 
 #. Translators, used in the pager
-#: librarian\views\_simple_pager.tpl:4
+#: librarian/views/_simple_pager.tpl:4
 msgid "previous"
 msgstr "avan sa"
 
 #. Translators, used in the pager
-#: librarian\views\_simple_pager.tpl:8
+#: librarian/views/_simple_pager.tpl:19
 msgid "next"
 msgstr "apre sa"
 
 #. Translators, used as page title
 #. Translators, used as page title on clean-up page
-#: librarian\views\cleanup.tpl:2 librarian\views\cleanup.tpl:4
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:5
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:10
 msgid "Library clean-up"
 msgstr "netwayaj bibiyotèk lan"
 
 #. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
-#: librarian\views\content_list.tpl:29 librarian\views\downloads.tpl:10
+#: librarian/views/_simple_pager.tpl:9
 msgid "page"
 msgstr "paj"
 
 #. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
-#: librarian\views\content_list.tpl:43 librarian\views\downloads.tpl:13
+#: librarian/views/_simple_pager.tpl:13
 msgid "per page"
 msgstr "pou chak paj"
 
 #. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian\plugins\diskspace\views\diskspace.tpl:8
-msgid "download directory (%s free)"
-msgstr "dosye telechajman (%s disponib)"
-
-#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian\plugins\diskspace\views\diskspace.tpl:14
-msgid "content library (%s free)"
-msgstr "bibliyotèk kontni yo (%s disponib)"
-
-#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian\plugins\diskspace\views\diskspace.tpl:19
+#: librarian/plugins/diskspace/views/diskspace/_space_info.tpl:4
 msgid "total space (%s free)"
 msgstr "kapasite total (%s disponib)"
 
 #. Translators, used as button label on updates page for adding marked content to library
-#: librarian\views\_list_controls.tpl:7
+#: librarian/views/_list_controls.tpl:7
 msgid "Add selected to library"
 msgstr "ajoute seleksyone a nan bibliyotèk la"
 
 #. Translators, used as 'content belongs to core archive' badge
-#: librarian\lib\downloads.py:327
+#: librarian/core/metadata.py:189 librarian/views/reader.tpl:30
 msgid "core"
 msgstr "Kè"
 
-#. Translators, used as 'partner content' badge
-#: librarian\lib\downloads.py:331
-msgid "partner"
-msgstr "Patenè"
-
 #. Translators, used as 'sponsored content' badge
-#: librarian\lib\downloads.py:329
+#: librarian/core/metadata.py:191 librarian/views/reader.tpl:26
 msgid "sponsored"
 msgstr "esponsorize"
 
@@ -234,24 +206,24 @@ msgstr "esponsorize"
 #. Translators, used as page title
 #. Translators, used as page heading
 #. Translators, used main navigation menu
-#: librarian\views\app_list.tpl:2 librarian\views\app_list.tpl:6
-#: librarian\views\base.tpl:25
+#: librarian/views/base.tpl:27 librarian/views/app_list.tpl:5
+#: librarian/views/app_list.tpl:10
 msgid "Apps"
 msgstr "Applikasyon yo"
 
 #. Translators, refers to app author
-#: librarian\views\app_list.tpl:18
+#: librarian/views/app_list.tpl:22
 msgid "author:"
 msgstr "ekriven"
 
 #. Translators, refers to app version
-#: librarian\plugins\license\views\license.tpl:13
-#: librarian\views\app_list.tpl:20
+#: librarian/views/app_list.tpl:24
+#: librarian/plugins/license/views/license.tpl:13
 msgid "version:"
 msgstr "vèsyon"
 
 #. Translators, message show in app listing when no apps are present.
-#: librarian\views\app_list.tpl:29
+#: librarian/views/app_list.tpl:33
 msgid "No apps found."
 msgstr "pa jwenn okenn aplikasyon"
 
@@ -261,380 +233,324 @@ msgstr "pa jwenn okenn aplikasyon"
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
-#: librarian\views\base.tpl:23 librarian\views\file_list.tpl:2
-#: librarian\views\file_list.tpl:6
+#: librarian/views/base.tpl:23 librarian/views/file_list.tpl:5
+#: librarian/views/file_list.tpl:10
 msgid "Files"
 msgstr "Fichye"
 
-#: librarian\views\downloads.tpl:14
+#: librarian/views/_simple_pager.tpl:14
 msgid "Reload"
 msgstr "rechaje"
 
-#: librarian\views\downloads.tpl:46
+#: librarian/views/downloads.tpl:73
 msgid "replaces:"
 msgstr "ranplase"
 
-#. Translators, used as note shown on favorites page when user has no favorites
-#: librarian\views\favorites.tpl:9
-msgid "You have not favorited any content yet"
-msgstr "ou pa ajoute okenn kontni nan favori yo"
-
 #. Translators, used as label for link that leads to parent directory in file listing
-#: librarian\views\file_list.tpl:23
+#: librarian/views/file_list.tpl:28
 msgid "(go up one level)"
 msgstr "(monte de yon nivo)"
 
-#: librarian\views\file_list.tpl:44 librarian\views\file_list.tpl:63
+#: librarian/views/file_list.tpl:50 librarian/views/file_list.tpl:70
 msgid "Rename"
 msgstr "chanje non an"
 
-#: librarian\views\file_list.tpl:49 librarian\views\file_list.tpl:68
+#: librarian/views/file_list.tpl:55 librarian/views/file_list.tpl:75
 msgid "Delete"
 msgstr "Efase"
 
-#: librarian\views\file_list.tpl:85
+#: librarian/views/file_list.tpl:92
 msgid "About this folder"
 msgstr "Sou dosye sa"
 
 #. Translators, used as page title for page that shows result of running a script
 #. Translators, used as page header for page that shows result of running a script
-#: librarian\views\exec_result.tpl:2 librarian\views\exec_result.tpl:5
+#: librarian/views/exec_result.tpl:2 librarian/views/exec_result.tpl:5
 msgid "Script output"
 msgstr "Soti eskript yo"
 
 #. Translators, return (result) code of the script executed via file browser
-#: librarian\views\exec_result.tpl:11
+#: librarian/views/exec_result.tpl:11
 msgid "return code:"
 msgstr "Kod retou"
 
 #. Translators, shown when result code is good (0).
-#: librarian\views\exec_result.tpl:14
+#: librarian/views/exec_result.tpl:14
 msgid "OK"
 msgstr "OK"
 
 #. Translators, shown when result code is not good (non-zero).
-#: librarian\views\exec_result.tpl:17
+#: librarian/views/exec_result.tpl:17
 msgid "error"
 msgstr "Erè"
 
 #. Translators, refers to standard output of script run from file browser (STDOUT)
-#: librarian\views\exec_result.tpl:22
+#: librarian/views/exec_result.tpl:22
 msgid "Output"
 msgstr "Soti"
 
 #. Translators, shown if script returned no output
-#: librarian\views\exec_result.tpl:27
+#: librarian/views/exec_result.tpl:27
 msgid "no output"
 msgstr "Pa gen soti"
 
 #. Translators, refers to standard errors of script run from file browser (STDERR)
-#: librarian\views\exec_result.tpl:32
+#: librarian/views/exec_result.tpl:32
 msgid "Errors"
 msgstr "plizyè erè"
 
 #. Translators, label for button in file listing that allows user to run a script
-#: librarian\views\file_list.tpl:75
+#: librarian/views/file_list.tpl:82
 msgid "Run"
 msgstr "Lanse"
 
 #. Translators, this is used when app doesn't provide a description
-#: librarian\lib\apps.py:45
+#: librarian/core/apps.py:45
 msgid "No description provided"
 msgstr "Pa gen deskripsyon ki disponib"
 
-#: librarian\lib\downloads.py:34
+#: librarian/core/metadata.py:25
 msgid "Unknown license"
 msgstr "Lisans enkoni"
 
-#: librarian\lib\downloads.py:35
+#: librarian/core/metadata.py:26
 msgid "Creative Commons Attribution"
 msgstr "Lisans Creative Commons"
 
-#: librarian\lib\downloads.py:36
+#: librarian/core/metadata.py:27
 msgid "Creative Commons Attribution-NoDerivs"
 msgstr "Creative Commons Attribution - Pa modifye"
 
-#: librarian\lib\downloads.py:37
+#: librarian/core/metadata.py:28
 msgid "Creative Commons Attribution-NonCommercial"
 msgstr "Creative Commons Attribution - Pa Komèsyal"
 
-#: librarian\lib\downloads.py:38
+#: librarian/core/metadata.py:29
 msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
 msgstr "Creative Commons Attribution - pa komèsyal - Pa modifye"
 
-#: librarian\lib\downloads.py:40
+#: librarian/core/metadata.py:31
 msgid "Creative Commons Attribution-ShareAlike"
 msgstr "Creative Commons Attribution - Pataje nan menm kondisyon yo"
 
-#: librarian\lib\downloads.py:41
+#: librarian/core/metadata.py:32
 msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
 msgstr "Creative Commons Attribution - Pa komèsyal - pataje nan menm kondisyon yo"
 
-#: librarian\lib\downloads.py:43
+#: librarian/core/metadata.py:34
 msgid "GNU Free Documentation License"
 msgstr "Lisans dokimantasyon lib GNU"
 
-#: librarian\lib\downloads.py:44
+#: librarian/core/metadata.py:35
 msgid "Open Publication License"
 msgstr "Lisans piblikasyon ouvèt"
 
-#: librarian\lib\downloads.py:45
+#: librarian/core/metadata.py:36
 msgid "Open Content License"
 msgstr "Lisans kontni ouvè"
 
-#: librarian\lib\downloads.py:46
+#: librarian/core/metadata.py:37
 msgid "Against DRM License"
 msgstr "Kont lisans DRM yo"
 
-#: librarian\lib\downloads.py:47
+#: librarian/core/metadata.py:38
 msgid "Free Art License"
 msgstr "Lisans Art Lib"
 
-#: librarian\lib\downloads.py:48
+#: librarian/core/metadata.py:39
 msgid "Public Domain"
 msgstr "Domèn piblik"
 
-#: librarian\lib\downloads.py:49
+#: librarian/core/metadata.py:40
 msgid "Other free license"
 msgstr "Lot lisans gratis"
 
-#: librarian\lib\downloads.py:50
+#: librarian/core/metadata.py:41
 msgid "All rights reserved"
 msgstr "Tout dwa rezève"
 
-#: librarian\lib\downloads.py:51
+#: librarian/core/metadata.py:42
 msgid "Other non-free license"
 msgstr "Lot lisans peye"
 
 #. Translators, used as response to innvalid HTTP request
-#: librarian\plugins\diskspace\plugin.py:38 librarian\routes\favorites.py:35
-#: librarian\routes\favorites.py:38
+#: librarian/plugins/diskspace/plugin.py:42
 msgid "Invalid request"
 msgstr "rekèt pa valid"
 
 #. Translators, used as message to user when clean-up is started
 #. without selecting any content
-#: librarian\plugins\diskspace\plugin.py:46
+#: librarian/plugins/diskspace/plugin.py:52
 msgid "No content selected"
 msgstr "Pa gen kontni ki seleksyone"
 
 #. Translators, used when user is previewing clean-up, %s is
 #. replaced by amount of content that can be freed in bytes,
 #. KB, MB, etc
-#: librarian\plugins\diskspace\plugin.py:53
+#: librarian/plugins/diskspace/plugin.py:59
 msgid "%s can be freed by removing selected content"
 msgstr "%s kapab libere si w efase kontni ki seleksyone a"
 
-#. Translators, error message shown on clean-up page when some of
-#. the content could not be removed for unknown reasons
-#: librarian\plugins\diskspace\plugin.py:65
-msgid "Some files could not be removed"
-msgstr "Kèk dokiman pa te rive efase"
-
 #. Translators, error message shown on clean-up page when there was
 #. no deletable content
-#: librarian\plugins\diskspace\plugin.py:69
+#: librarian/plugins/diskspace/plugin.py:69
 msgid "Nothing to delete"
 msgstr "Pa gen anyen pou efase"
 
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
-#: librarian\routes\downloads.py:68
+#: librarian/routes/downloads.py:96
 msgid "Invalid action, please use one of the form buttons."
 msgstr "Aksyon envalid, svp itilse youn nan bouton ki sou fich lan"
 
-#: librarian\views\reader.tpl:14
-msgid "content partner"
-msgstr "Kontni patenè"
-
-#: librarian\views\reader.tpl:19
-msgid "sponsored content"
-msgstr "Kontni esponsorize"
-
-#: librarian\views\reader.tpl:23
-msgid "Outernet core archive"
-msgstr "Achiv de baz pa Outernet"
-
 #. Translators, used as placeholder while infinite scrolling content is being loaded
-#: librarian\views\content_list.tpl:84
+#: librarian/views/content_list.tpl:77
 msgid "Loading..."
 msgstr "ap chaje..."
 
 #. Translators, shown when user reaches the end of the library
-#: librarian\views\content_list.tpl:91
+#: librarian/views/content_list.tpl:84
 msgid "You have reached the end of the library."
 msgstr "Ou deja rive nan limit libreri a"
 
 #. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
-#: librarian\views\content_list.tpl:93 librarian\views\content_list.tpl:100
+#: librarian/views/content_list.tpl:86 librarian/views/content_list.tpl:93
 msgid "Go to top"
 msgstr "Retounen nan komansman"
 
 #. Translators, used as section heading on dashboard above 'About' section
-#: librarian\plugins\license\plugin.py:26
+#: librarian/plugins/license/plugin.py:24
 msgid "About"
 msgstr "Apwopo"
 
 #. Translators, appears in copyright line in dashboard's 'About' section
-#: librarian\plugins\license\views\license.tpl:16
+#: librarian/plugins/license/views/license.tpl:16
 msgid "Some rights reserved."
 msgstr "Dwa rezève an pati."
 
-#: librarian\routes\content.py:57
+#: librarian/routes/content.py:75
 msgid "Specified tag was not found"
 msgstr "Pa jwenn mo kle ou antre a."
 
 #. Translators, used as not on library page when there is no content for given tag
-#: librarian\views\content_list.tpl:67
+#: librarian/views/content_list.tpl:55
 msgid "There are no results for '%(tag)s'"
 msgstr "Pa jwenn okenn rezilta pou '%(tag)s'"
 
 #. Translators, button label for a button that saves user tags for a piece of content
-#: librarian\views\_tags.tpl:8
+#: librarian/views/_tags.tpl:11
 msgid "Save tags"
 msgstr "Arejistre  mo sa."
 
 #. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
-#: librarian\views\_tags.tpl:12
+#: librarian/views/_tags.tpl:15
 msgid "Separate tags with commas"
 msgstr "Separe mo kle yo ak vigil."
 
 #. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
-#: librarian\views\_tag_cloud.tpl:5
+#: librarian/views/_tag_cloud.tpl:5
 msgid "everything"
 msgstr "Tout"
 
 #. Translators, used as label for button that appears next to tag list
-#: librarian\views\_tag_js_templates.tpl:3
+#: librarian/views/_tag_js_templates.tpl:3
 msgid "Edit tags"
 msgstr "Chanje mo kle yo"
 
 #. Translators, used as label for button that appears in tag editing form
-#: librarian\views\_tag_js_templates.tpl:8
+#: librarian/views/_tag_js_templates.tpl:8
 msgid "Close"
 msgstr "Fèmen"
 
 #. Translators, error message shown when updating tags fails
-#: librarian\views\_tag_js_templates.tpl:13
+#: librarian/views/_tag_js_templates.tpl:13
 msgid "Tags could not be updated."
 msgstr "Mo kle yo pa te rive "
 
 #. Translators, link that loads more content in infinite scrolling page
-#: librarian\views\content_list.tpl:76
+#: librarian/views/content_list.tpl:69
 msgid "Load more content"
 msgstr "Chaje plis kontni"
 
 #. Translators, used as section heading on dashboard
-#: librarian\plugins\ondd\plugin.py:183
-#: librarian\plugins\tvheadend\plugin.py:24
+#: librarian/plugins/ondd/plugin.py:197
+#: librarian/plugins/tvheadend/plugin.py:24
+#: librarian/plugins/ondd/views/ondd/settings.tpl:6
+#: librarian/plugins/ondd/views/ondd/settings.tpl:11
 msgid "Tuner settings"
 msgstr "Reglaj reseptè an"
 
-#: librarian\plugins\tvheadend\views\tvheadend.tpl:4
+#: librarian/plugins/tvheadend/views/tvheadend.tpl:4
 msgid "Access TVHeadend"
 msgstr "Antre sou TVHeaden"
 
-#: librarian\views\file_list.tpl:35
+#: librarian/views/file_list.tpl:40
 msgid "There are currently no files or folders here."
 msgstr "Aktyèlman pa gen okenn dokiman ou fichye nan anplasman sa."
 
 #. Translators, used as page title
 #. Translators, used as page heading
-#: librarian\views\remove_error.tpl:2 librarian\views\remove_error.tpl:5
-msgid "Content could not be removed"
-msgstr "Kontni an pa te rive efase."
-
-#. Translators, message displayed when content cannot be deleted
-#: librarian\views\remove_error.tpl:9
-msgid "Please make sure the storage device is not write-protected and try again."
-msgstr "Verifye si periferi estokaj la pa pwoteje kont ekriti, apre sa eseye anko."
-
-#. Translators, used as label on button for retrying content removal
-#: librarian\views\remove_error.tpl:13
-msgid "Retry"
-msgstr "Eseye anko"
-
-#. Translators, used as page title
-#. Translators, used as page heading
-#: librarian\views\tag_cloud.tpl:2 librarian\views\tag_cloud.tpl:5
+#: librarian/views/tag_cloud.tpl:2 librarian/views/tag_cloud.tpl:5
 msgid "Tag cloud"
 msgstr "Nyaj mo kle"
 
-#. Translators, error message during database backup
-#. Translators, error message during database backup
-#: librarian\plugins\dbmanage\backup.py:51
-#: librarian\plugins\dbmanage\backup.py:52
-msgid "Opening source database failed"
-msgstr "Opening source database failed"
-
-#. Translators, error message during database backup
-#. Translators, error message during database backup
-#: librarian\plugins\dbmanage\backup.py:60
-#: librarian\plugins\dbmanage\backup.py:61
-msgid "Opening backup database failed"
-msgstr "Opening backup database failed"
-
-#: librarian\plugins\dbmanage\backup.py:66
-msgid "Could not create database backup handler"
-msgstr "Could not create database backup handler"
-
 #. Translators, error message displayed when locking fails during
 #. database rebuild
 #. Translators, error message displayed when locking fails during
 #. database rebuild
-#: librarian\plugins\dbmanage\plugin.py:138
+#: librarian/plugins/dbmanage/plugin.py:154
 msgid "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
-msgstr "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
+msgstr "Libreryen pa pa kapab antre nan mod mentnans e rekonstriksyon bazdone an te anile. Tanpri asire w ke pèsonn lot pap itilize Libreryen an e eseye anko."
 
 #. Translators, used as dashboard section title
 #. Translators, used as dashboard section title
-#: librarian\plugins\dbmanage\plugin.py:153
+#: librarian/plugins/dbmanage/plugin.py:173
 msgid "Content database"
-msgstr "Content database"
+msgstr "Kontni bazdedone a"
 
 #. Translators, refers to transponder polarization
 #. Translators, refers to transponder polarization
-#: librarian\plugins\ondd\plugin.py:44
+#: librarian/plugins/ondd/plugin.py:44
 msgid "None"
-msgstr "None"
+msgstr "Okenn"
 
 #. Translators, refers to transponder polarization
 #. Translators, refers to transponder polarization
-#: librarian\plugins\ondd\plugin.py:46
+#: librarian/plugins/ondd/plugin.py:46
 msgid "Vertical"
-msgstr "Vertical"
+msgstr "Vètikal"
 
 #. Translators, refers to transponder polarization
 #. Translators, refers to transponder polarization
-#: librarian\plugins\ondd\plugin.py:48
+#: librarian/plugins/ondd/plugin.py:48
 msgid "Horizontal"
-msgstr "Horizontal"
+msgstr "Orizontal"
 
 #. Translators, this is a type of LNB
 #. Translators, this is a type of LNB
-#: librarian\plugins\ondd\plugin.py:59
+#: librarian/plugins/ondd/plugin.py:59
 msgid "Universal"
-msgstr "Universal"
+msgstr "Inivèsèl"
 
 #. Translators, this is a type of LNB
 #. Translators, this is a type of LNB
-#: librarian\plugins\ondd\plugin.py:61
+#: librarian/plugins/ondd/plugin.py:61
 msgid "North America Ku band"
-msgstr "North America Ku band"
+msgstr "Amerik di No Ku Band"
 
 #. Translators, error message when LNB type is incorrect
 #. Translators, error message when LNB type is incorrect
-#: librarian\plugins\ondd\plugin.py:111
+#: librarian/plugins/ondd/plugin.py:120
 msgid "Invalid choice for LNB type"
-msgstr "Invalid choice for LNB type"
+msgstr "Tip LNB ki chwazi a pa valid"
 
 #. Translators, error message when frequency value is
 #. wrong
 #. Translators, error message when frequency value is
 #. wrong
-#: librarian\plugins\ondd\plugin.py:115
+#: librarian/plugins/ondd/plugin.py:124
 msgid "Frequency must be a positive number"
-msgstr "Frequency must be a positive number"
+msgstr "Frekans lan dwe yon nomb pozitif"
 
 #. Translators, error message when frequency value is
 #. wrong
@@ -644,235 +560,346 @@ msgstr "Frequency must be a positive number"
 #. wrong
 #. Translators, error message when symbolrate value is
 #. wrong
-#: librarian\plugins\ondd\plugin.py:118 librarian\plugins\ondd\plugin.py:125
+#: librarian/plugins/ondd/plugin.py:127 librarian/plugins/ondd/plugin.py:134
 msgid "Please type in a number"
-msgstr "Please type in a number"
+msgstr "Tanpri rantre yon nomb svp"
 
 #. Translators, error message when symbolrate value is
 #. wrong
 #. Translators, error message when symbolrate value is
 #. wrong
-#: librarian\plugins\ondd\plugin.py:122
+#: librarian/plugins/ondd/plugin.py:131
 msgid "Symbolrate must be a positive number"
-msgstr "Symbolrate must be a positive number"
+msgstr "Senbol To a dwe yon nomb pozitif"
 
 #. Translators, error message shown when wrong delivery
 #. system is selected
 #. Translators, error message shown when wrong delivery
 #. system is selected
-#: librarian\plugins\ondd\plugin.py:129
+#: librarian/plugins/ondd/plugin.py:138
 msgid "Invalid choice for delivery system"
-msgstr "Invalid choice for delivery system"
+msgstr "Sistem livrezon ki chwazi a pa valid"
 
 #. Translators, error message shown when wrong modulation
 #. mode is selected
 #. Translators, error message shown when wrong modulation
 #. mode is selected
-#: librarian\plugins\ondd\plugin.py:133
+#: librarian/plugins/ondd/plugin.py:142
 msgid "Invalid choice for modulation mode"
-msgstr "Invalid choice for modulation mode"
+msgstr "Mod modilasyon ki chwazi a pa valid"
 
 #. Translators, error message shown when wrong
 #. polarization is selected
 #. Translators, error message shown when wrong
 #. polarization is selected
-#: librarian\plugins\ondd\plugin.py:137
+#: librarian/plugins/ondd/plugin.py:146
 msgid "Invalid choice for polarization"
-msgstr "Invalid choice for polarization"
+msgstr "Mod polarizasyon ki chwazi a pa valid"
 
 #. Translators, error message shown when setting transponder
 #. configuration is not successful
 #. Translators, error message shown when setting transponder
 #. configuration is not successful
-#: librarian\plugins\ondd\plugin.py:156
+#: librarian/plugins/ondd/plugin.py:165
 msgid "Transponder configuration could not be set"
-msgstr "Transponder configuration could not be set"
+msgstr "Konfigirasyon transpondè a pat rive regle"
 
-#: librarian\routes\content.py:159
+#: librarian/routes/content.py:214
 msgid "The files you were looking for could not be found"
-msgstr "The files you were looking for could not be found"
+msgstr "Nou pa rive jwenn fichye ou te ap chèche yo"
 
-#: librarian\routes\content.py:161
+#: librarian/routes/content.py:216
 msgid "This list represents the search results"
-msgstr "This list represents the search results"
+msgstr "Lis sa reprezante rezilta rechèch yo"
 
-#: librarian\routes\content.py:172
+#: librarian/routes/content.py:227
 msgid "This folder does not exist"
-msgstr "This folder does not exist"
+msgstr "Dosye sa pa egziste"
 
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:4
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:4
 msgid "Database size"
-msgstr "Database size"
+msgstr "Tay baszdone an"
 
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:5
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:5
 msgid "download"
-msgstr "download"
+msgstr "telechaje"
 
 #. Translators, refers to database backup
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:11
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:11
 msgid "Backup"
 msgstr "Backup"
 
 #. Translators, refers to database rebuild feature
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:16
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:16
 msgid "Rebuild"
-msgstr "Rebuild"
+msgstr "Rekonstui"
 
 #. Translators, note about database rebuild shown on dashboard
-#: librarian\plugins\dbmanage\views\dbmanage.tpl:22
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:22
 msgid "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
-msgstr "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
+msgstr "Si bazdone an rekonstui sa kapab koz tout mokle yo pèdi. Sa pral mete Libreryen an nan mod mentnans e anpeche itilizatè yo gen aksè a kontni an."
 
 #. Translators, used as page heading
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:4
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:5
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:10
 msgid "Database backup"
-msgstr "Database backup"
+msgstr "Backup bazdone an"
 
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:9
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:14
 msgid "Database backup has been completed successfully. You will be taken to the backup folder in 10 seconds."
-msgstr "Database backup has been completed successfully. You will be taken to the backup folder in 10 seconds."
+msgstr "Backup bazdone an te fin konplete avèk siksè. Ou pral dirije sou dosye backup lan nan 10 segond"
 
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:11
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:11
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:16
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:16
 msgid "The operation took %s second"
 msgid_plural "The operation took %s seconds"
-msgstr[0] ""
+msgstr[0] "Operasyon an te pran % segond"
 
-#: librarian\plugins\dbmanage\views\dbmanage\backup_results.tpl:14
+#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:19
 msgid "Database backup could not be completed. The following error occurred:"
-msgstr "Database backup could not be completed. The following error occurred:"
+msgstr "Backup bazdone a pa te rive fini avèk siksè. Men erè ki te pase :"
 
 #. Translators, used as page heading
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:4
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:5
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:10
 msgid "Database rebuild"
-msgstr "Database rebuild"
+msgstr "Rekonstriksyon bazdone a"
 
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:9
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:14
 msgid "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
-msgstr "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
+msgstr "Kontni bazdone a te rekonstui a pati de zewo. Yon kopi backup de bazdone orijinal la te kreye. Ou va jwenn li nan seksyon fichye yo."
 
-#: librarian\plugins\dbmanage\views\dbmanage\rebuild_results.tpl:14
+#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:19
 msgid "Database could not be rebuilt. The following error occurred:"
-msgstr "Database could not be rebuilt. The following error occurred:"
+msgstr "Bazdone a pa te kapab rekonstui. Men erè ki te pase :"
 
-#: librarian\plugins\license\views\license.tpl:5
+#: librarian/plugins/license/views/license.tpl:5
 msgid "\n"
 "This program is free software: you can redistribute it and/or modify it\n"
 "under the terms of the GNU General Public License as published by the\n"
 "Free Software Foundation, either version 3 of the License, or (at your\n"
 "option) any later version.\n"
 ""
-msgstr "\n"
-"This program is free software: you can redistribute it and/or modify it\n"
-"under the terms of the GNU General Public License as published by the\n"
-"Free Software Foundation, either version 3 of the License, or (at your\n"
-"option) any later version.\n"
-""
+msgstr "Pwogram sa se yon lojisyèl lib: ou kapab redistribiye e/oswa modifiye anba kondisyon GNU General Public Licence kom piblye pa Free Software Foundation, ni pou vèsyon 3 de Licens lan, (si ou vle)  oswa nenpot lot vèsyon."
 
-#: librarian\plugins\logs\views\logs.tpl:6 librarian\views\500.tpl:15
+#: librarian/views/500.tpl:18 librarian/plugins/logs/views/logs.tpl:6
 msgid "Download application log"
-msgstr "Download application log"
+msgstr "Relve telechajman aplikasyon an"
 
 #. Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
-#: librarian\plugins\ondd\views\ondd.tpl:12
+#: librarian/plugins/ondd/views/ondd.tpl:17
 msgid "Downloads in progress"
-msgstr "Downloads in progress"
+msgstr "Telechajman an ap fèt"
 
 #. Translators, label for select list that allows user to pick a satellite to tune into
-#: librarian\plugins\ondd\views\ondd.tpl:20
+#: librarian/plugins/ondd/views/ondd.tpl:27
 msgid "Satellite:"
-msgstr "Satellite:"
+msgstr "Satelit:"
 
 #. Translators, placeholder for satellite selection select list
-#: librarian\plugins\ondd\views\ondd.tpl:23
+#: librarian/plugins/ondd/views/ondd.tpl:30
 msgid "Select a satellite"
-msgstr "Select a satellite"
+msgstr "Chwazi yon satelit"
 
 #. Translators, label for option that allows user to set custom transponder parameters
-#: librarian\plugins\ondd\views\ondd.tpl:28
+#: librarian/plugins/ondd/views/ondd.tpl:40
 msgid "Custom..."
-msgstr "Custom..."
-
-#. Translators, shown on dashboard when no files are currently being downloaded
-#: librarian\plugins\ondd\views\ondd\_file_list.tpl:5
-msgid "No files are being downloadded"
-msgstr "No files are being downloadded"
-
-#. Translators, form label for LNB type selection
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:8
-msgid "LNB type"
-msgstr "LNB type"
+msgstr "Pèsonalize...."
 
 #. Translators, form label for transponder frequency
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:16
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:16
 msgid "Frequency:"
-msgstr "Frequency:"
+msgstr "Frekans:"
 
 #. Translators, form label for transponder symbol rate
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:22
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:22
 msgid "Symbol rate:"
-msgstr "Symbol rate:"
+msgstr "Debi senbol"
 
 #. Translators, form label for transponder delivery system (DVB-S or DVB-S2)
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:28
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:28
 msgid "Delivery system:"
-msgstr "Delivery system:"
+msgstr "Sistèm livrezon"
 
 #. Translators, form label for transponder modulation mode (QPSK, etc)
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:34
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:34
 msgid "Modulation:"
-msgstr "Modulation:"
+msgstr "Modilasyon"
 
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:40
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:40
 msgid "Polarization:"
-msgstr "Polarization:"
+msgstr "Polarizasyon"
 
 #. Translators, button label that confirms tuner settings
-#: librarian\plugins\ondd\views\ondd\_settings_form.tpl:48
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:48
 msgid "Tune in"
-msgstr "Tune in"
+msgstr "Branche"
 
 #. Translators, whether tuner has a lock on the signal or not (note: technical term)
-#: librarian\plugins\ondd\views\ondd\_signal.tpl:3
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:3
 msgid "has lock"
-msgstr "has lock"
+msgstr "te kadnase"
 
-#: librarian\plugins\ondd\views\ondd\_signal.tpl:3
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:3
 msgid "no lock"
-msgstr "no lock"
+msgstr "okenn kadna"
 
 #. Translators, short for 'signal/noise ratio'
-#: librarian\plugins\ondd\views\ondd\_signal.tpl:14
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:14
 msgid "SNR"
 msgstr "SNR"
 
 #. Translators, used as page title
 #. Translators, used as error page heading
-#: librarian\views\500.tpl:2 librarian\views\500.tpl:6
+#: librarian/views/500.tpl:5 librarian/views/500.tpl:10
 msgid "Error"
-msgstr "Error"
+msgstr "Erè"
 
-#: librarian\views\500.tpl:10
+#: librarian/views/500.tpl:13
 msgid "Librarian has failed to fulfill your request due to unexpected error in the program. Details are provided below."
-msgstr "Librarian has failed to fulfill your request due to unexpected error in the program. Details are provided below."
+msgstr "Libreryen pa te rive fin reponn ak demand ou an akoz yon erè sanzatann nan pwogram lan. Detay yo ap parèt anba a la."
 
 #. Translators, used as page title
 #. Translators, used as maintenance page heading
-#: librarian\views\503.tpl:2 librarian\views\503.tpl:6
+#: librarian/views/503.tpl:5 librarian/views/503.tpl:10
 msgid "Under maintenance"
-msgstr "Under maintenance"
+msgstr "Sou mentnans"
 
-#: librarian\views\503.tpl:11
+#: librarian/views/503.tpl:14
 msgid "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
-msgstr "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
+msgstr "Libreryen nan mod mentnans kounye a. Tanpri tann kèk minit epi wa eseye anko."
 
 #. Translators, used as label for link that leads to file list
-#: librarian\views\file_list.tpl:29
+#: librarian/views/file_list.tpl:34
 msgid "(go to file list)"
-msgstr "(go to file list)"
+msgstr "(ale nan lis fichye yo)"
 
 #. Translators, attribution (e.g., 'By Project Gutenberg')
-#: librarian\views\_content_list.tpl:28
+#: librarian/views/_content_list.tpl:31
 msgid "by %s"
-msgstr "by %s"
+msgstr "de %s"
+
+#. Translators, error message shown when user does not supply username
+#. Translators, error message shown when user does not supply username
+#: librarian/routes/auth.py:30
+msgid "Type in your username"
+msgstr "Antre non itilizatè ou"
+
+#. Translators, error message shown when user does not supply password
+#. Translators, error message shown when user does not supply password
+#: librarian/routes/auth.py:33
+msgid "Type in your password"
+msgstr "Antre modpas ou"
+
+#: librarian/routes/auth.py:39
+msgid "Please enter the correct username and password."
+msgstr "Tanpri antre non itilizatè ak modpas korèk ou svp."
+
+#: librarian/utils/lang.py:92
+msgid "any language"
+msgstr "nenpot lang"
+
+#: librarian/plugins/ondd/views/ondd/_file_list.tpl:5
+msgid "No files are being downloaded"
+msgstr "Pa gen okenn fichye ki te telechaje"
+
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:8
+msgid "LNB type:"
+msgstr "Tip LNB :"
+
+#: librarian/views/403.tpl:5 librarian/views/403.tpl:10
+msgid "Forbidden"
+msgstr "Sa entèdi"
+
+#: librarian/views/403.tpl:15
+msgid "You are not authorized to access this page."
+msgstr "Ou pa otorize pou ou ale sou paj sa."
+
+#: librarian/views/base.tpl:34
+msgid "Log out"
+msgstr "Soti"
+
+#: librarian/views/login.tpl:5 librarian/views/login.tpl:10
+#: librarian/views/login.tpl:35
+msgid "Login"
+msgstr "Antre"
+
+#: librarian/views/login.tpl:22
+msgid "Username:"
+msgstr "Non itilizatè"
+
+#: librarian/views/login.tpl:24
+msgid "username"
+msgstr "non itilizatè"
+
+#: librarian/views/login.tpl:29
+msgid "Password:"
+msgstr "Modpas:"
+
+#: librarian/views/login.tpl:31
+msgid "password"
+msgstr "modpas"
+
+#: librarian/views/reader.tpl:33
+msgid "Download"
+msgstr "Telechaje"
+
+#: librarian/views/_list_controls.tpl:11
+msgid "Delete all"
+msgstr "Efase tout"
+
+#: librarian/views/content_list.tpl:34 librarian/views/downloads.tpl:37
+msgid "filter"
+msgstr "filtre"
+
+#: librarian/views/downloads.tpl:59
+msgid "language"
+msgstr "lang"
+
+#: librarian/views/remove_error.tpl:5 librarian/views/remove_error.tpl:10
+msgid "Content file missing"
+msgstr "Fichye kontni manke"
+
+#: librarian/views/remove_error.tpl:14
+msgid "The content file was not found, but has been removed from the database. You will be redirected to the content list shortly."
+msgstr "Sistèm lan pat rive jwenn fiche kontni an, osinon li te retire nan bazdone an. Ou pral redirije nan lis kontni yo nan yon ti moman."
+
+#: librarian/utils/lang.py:34
+msgid "unknown"
+msgstr "unknown"
+
+#. Translators, used as label, meaning content is from a publisher
+#: librarian/core/metadata.py:193 librarian/views/reader.tpl:21
+msgid "publisher"
+msgstr "publisher"
+
+#. Translators, used as dashboard section title
+#: librarian/plugins/netinterfaces/plugin.py:29
+msgid "Network interfaces"
+msgstr "Network interfaces"
+
+#. Translators, used main navigation menu
+#: librarian/routes/content.py:128 librarian/views/base.tpl:25
+msgid "Sites"
+msgstr "Sites"
+
+#. Translators, used as page title
+#. Translators, used as error page heading
+#: librarian/views/404.tpl:5 librarian/views/404.tpl:10
+msgid "Page not found"
+msgstr "Page not found"
+
+#: librarian/views/404.tpl:13
+msgid "The page you were looking for could not be found"
+msgstr "The page you were looking for could not be found"
+
+#. Translators, used as note in Application network interfaces section
+#: librarian/plugins/netinterfaces/views/netinterfaces.tpl:4
+msgid "List of available network interfaces"
+msgstr "List of available network interfaces"
+
+#. Translators, used as label for network interface name
+#: librarian/plugins/netinterfaces/views/netinterfaces.tpl:8
+msgid "Interface name"
+msgstr "Interface name"
 

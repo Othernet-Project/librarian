@@ -40,6 +40,8 @@ from ..lib.pager import Pager
 from ..utils import patch_content
 from ..utils import netutils
 
+from .helpers import with_content
+
 
 app = default_app()
 
@@ -168,7 +170,7 @@ def content_zipball(content_id):
 
 
 @view('reader')
-@archive.with_content
+@with_content
 def content_reader(meta):
     """ Loads the reader interface """
     archive.add_view(meta.md5)

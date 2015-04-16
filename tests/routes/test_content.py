@@ -54,7 +54,9 @@ def test_content_file_404_on_missing_zipfile_content(abort, downloads):
 @mock.patch(MOD + '.os')
 def test_content_file_patching(os, downloads, archive, send_file,
                                patch_content):
-    downloads.get_file.return_value = (mock.Mock(), 'bar')
+    content_file = mock.Mock()
+    content_file.read.return_value = 'bar'
+    downloads.get_file.return_value = (mock.Mock(), content_file)
     patch_content.patch.return_value = (200, 'bar')
     archive.needs_formatting.return_value = True
     mod.content_file('foo', 'bar.html')

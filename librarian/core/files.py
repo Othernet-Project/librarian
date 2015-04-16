@@ -11,9 +11,10 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import os
 from collections import namedtuple
 
-from bottle import request
+from . import backend
 
 
+config = backend.config
 Pathdata = namedtuple('Pathdata', ('path', 'name', 'size'))
 
 
@@ -28,7 +29,7 @@ class DoesNotExist(Exception):
 
 
 def get_file_dir():
-    return os.path.normpath(request.app.config['content.filedir'])
+    return os.path.normpath(config['content.filedir'])
 
 
 def get_full_path(path):

@@ -54,37 +54,19 @@ LOCALES = [l for l in babel.localedata.locale_identifiers() if len(l) == 2]
 LOCALES.sort()
 
 UI_LOCALES = (
-    'ar',
-    'bn',
     'ca',
-    'da',
     'de',
     'en',
     'es',
-    'fa',
     'fr',
     'hi',
-    'hr',
-    #'ht',   # disabled due to bug in Python gettext
-    'hu',
-    'it',
-    'ja',
-    'kn',
-    'ko',
+    # 'ht',   # disabled due to bug in Python gettext
+    'id',
     'lt',
-    'nb',
-    'ne',
     'nl',
-    'pt',
     'pt_BR',
-    'ro',
-    'ru',
-    'sr_Latn',
-    'sv',
     'ta',
-    'th',
     'tr',
-    'ur',
     'zh',
 )
 
