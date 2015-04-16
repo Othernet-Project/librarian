@@ -95,7 +95,9 @@ class TestArchive(object):
 
 @pytest.fixture
 def base_archive():
-    return mod.BaseArchive(content_dir='unimportant')
+    return mod.BaseArchive(contentdir='unimportant',
+                           spooldir='unimportant',
+                           meta_filename='unimportant')
 
 
 class TestBaseArchive(object):
@@ -105,7 +107,9 @@ class TestBaseArchive(object):
             mod.BaseArchive()
 
     def test_base_archive_init_success(self):
-        archive = mod.BaseArchive(content_dir='test')
+        archive = mod.BaseArchive(contentdir='test',
+                                  spooldir='test',
+                                  meta_filename='test')
         init_flag = '_{0}__initialized'.format(mod.BaseArchive.__name__)
         assert hasattr(archive, init_flag)
 
