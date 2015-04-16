@@ -1,50 +1,61 @@
 import mock
+import pytest
 
-from librarian.core.backends import embedded
 from librarian.lib.squery import Database
 
-mocked_backend = mock.MagicMock()
-mocked_backend.storage.sqlin = Database.sqlin
-
-setattr(embedded, 'backend', mocked_backend)
 import librarian.core.backends.embedded.archive as mod
 
-db = mocked_backend.storage
 
-MOD = 'librarian.core.backends.embedded.archive'
+MOD = mod.__name__
 
 
-@mock.patch(MOD + '.os')
-@mock.patch(MOD + '.get_zip_path')
-def test_remove_silent_failure(get_zip_path, os):
+@pytest.fixture
+def archive():
+    mocked_db = mock.Mock()
+    mocked_db.sqlin = Database.sqlin
+    return mod.EmbeddedArchive(mocked_db, content_dir='unimportant')
+
+
+def mock_cursor(func):
+    def _mock_cursor(archive, *args, **kwargs):
+        mocked_cursor = mock.Mock()
+        ctx_manager = mock.MagicMock()
+        ctx_manager.__enter__.return_value = mocked_cursor
+        archive.db.transaction.return_value = ctx_manager
+        return func(mocked_cursor, archive, *args, **kwargs)
+    return _mock_cursor
+
+
+@mock_cursor
+def test_remove_meta_from_db(cursor, archive):
+    hashes = ['foo', 'bar', 'baz']
+    cursor.rowcount = len(hashes)
+    sql = 'proper delete query'
+    archive.db.Delete.return_value = sql
+
+    result = archive.remove_meta_from_db(hashes)
+
+    delete_calls = [
+        mock.call('zipballs', where="md5 IN (?, ?, ?)"),
+        mock.call('taggings', where="md5 IN (?, ?, ?)")
+    ]
+    archive.db.Delete.assert_has_calls(delete_calls)
+
+    query_calls = [
+        mock.call(sql, *hashes),
+        mock.call(sql, *hashes)
+    ]
+    archive.db.query.assert_has_calls(query_calls)
+
+    assert result == len(hashes)
+
+
+def test_needs_formatting(archive):
     # FIXME: This needs to be an integration test for full cov
-    get_zip_path.return_value = 'foo'
-    os.unlink.side_effect = [OSError, None, None]  # first file fails
-    ret = mod.remove_from_archive(['foo', 'bar', 'baz'])
-    # Deletes three items even though first one fails
-    db.Delete.assert_any_calls('zipballs', where="md5 in (?, ?, ?)")
-    assert ret == ['foo']
-
-
-@mock.patch(MOD + '.os')
-@mock.patch(MOD + '.get_zip_path')
-def test_remove_failure_when_path_is_none(get_zip_path, os):
-    # FIXME: This needs to be an integration test for full cov
-    get_zip_path.return_value = None
-    try:
-        ret = mod.remove_from_archive(['foo', 'bar', 'baz'])
-    except Exception:
-        assert False, 'Expected not to raise'
-    db.Delete.assert_any_calls('zipballs', where="md5 in (?, ?, ?)")
-    assert ret == ['foo', 'bar', 'baz']
-
-
-def test_needs_formatting():
-    # FIXME: This needs to be an integration test for full cov
-    db.result.keep_formatting = True
-    ret = mod.needs_formatting('foo')
-    assert db.query.called
+    archive.db.result.keep_formatting = True
+    ret = archive.needs_formatting('foo')
+    assert archive.db.query.called
     assert ret is False
-    db.result.keep_formatting = False
-    ret = mod.needs_formatting('foo')
+    archive.db.result.keep_formatting = False
+    ret = archive.needs_formatting('foo')
     assert ret is True
