@@ -39,7 +39,8 @@ def list_downloads():
     lang = request.params.get('lang', default_lang)
     request.user.options['content_language'] = lang
 
-    zipballs = downloads.get_zipballs()
+    zipballs = downloads.get_zipballs(conf['content.spooldir'],
+                                      conf['content.output_ext'])
     zipballs = list(reversed(downloads.order_zipballs(zipballs)))
     if zipballs:
         last_zip = datetime.fromtimestamp(zipballs[0][1])
@@ -55,7 +56,7 @@ def list_downloads():
     for z, ts in zipballs:
         logging.debug("<%s> getting metas" % z)
         try:
-            meta = get_metadata(z)
+            meta = get_metadata(z, conf['content.metadata'])
             if lang and meta['language'] != lang:
                 continue
 
@@ -95,6 +96,7 @@ def manage_downloads():
     forms = request.forms
     action = forms.get('action')
     file_list = forms.getall('selection')
+    conf = request.app.config
     if not action:
         # Translators, used as error message shown to user when wrong action
         # code is submitted to server
@@ -104,7 +106,9 @@ def manage_downloads():
         archive = open_archive()
         archive.add_to_archive(file_list)
     if action == 'delete':
-        downloads.remove_downloads(file_list)
+        downloads.remove_downloads(conf['content.spooldir'],
+                                   md5s=file_list)
     if action == 'deleteall':
-        downloads.remove_downloads()
+        downloads.remove_downloads(conf['content.spooldir'],
+                                   extension=conf['content.output_ext'])
     redirect(i18n_url('downloads:list'))

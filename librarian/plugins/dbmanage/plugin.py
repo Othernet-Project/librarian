@@ -111,7 +111,9 @@ def rebuild():
         logging.debug('Prepared new database')
         archive = Archive.setup(conf['librarian.backend'],
                                 db,
-                                content_dir=conf['content.contentdir'])
+                                contentdir=conf['content.contentdir'],
+                                spooldir=conf['content.spooldir'],
+                                meta_filename=conf['content.metadata'])
         rows = archive.reload_data()
         logging.info('Restored metadata for %s pieces of content', rows)
     logging.debug('Released global lock')

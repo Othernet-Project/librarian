@@ -63,7 +63,9 @@ def cleanup():
         conf = request.app.config
         archive = Archive.setup(conf['librarian.backend'],
                                 request.db.main,
-                                content_dir=conf['content.contentdir'])
+                                contentdir=conf['content.contentdir'],
+                                spooldir=conf['content.spooldir'],
+                                meta_filename=conf['content.metadata'])
         if selected:
             archive.remove_from_archive([z['md5'] for z in selected])
             redirect(i18n_url('content:list'))

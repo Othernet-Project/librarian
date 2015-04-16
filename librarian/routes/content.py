@@ -28,7 +28,6 @@ from bottle_utils.ajax import roca_view
 from bottle_utils.common import to_unicode
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
-from ..core import files
 from ..core import downloads
 from ..core import metadata
 
@@ -39,7 +38,7 @@ from ..lib.pager import Pager
 from ..utils import patch_content
 from ..utils import netutils
 
-from .helpers import open_archive, with_content
+from .helpers import open_archive, init_filemanager, with_content
 
 
 app = default_app()
@@ -96,9 +95,9 @@ def filter_content(multipage=None):
                                     multipage=multipage)
 
     cover_dir = conf['content.covers']
-
-    metas = [metadata.Meta(m, cover_dir, downloads.get_zip_path(m['md5']))
-             for m in metas]
+    content_dir = conf['content.contentdir']
+    zip_path = lambda md5: downloads.get_zip_path(m['md5'], content_dir)
+    metas = [metadata.Meta(m, cover_dir, zip_path(m['md5'])) for m in metas]
 
     return dict(
         metadata=metas,
@@ -146,7 +145,8 @@ def remove_content(content_id):
 
 def content_file(content_id, filename):
     """ Serve file from zipball with specified id """
-    zippath = downloads.get_zip_path(content_id)
+    content_dir = request.app.config['content.contentdir']
+    zippath = downloads.get_zip_path(content_id, content_dir)
     try:
         metadata, content = downloads.get_file(zippath, filename, no_read=True)
     except downloads.ContentError as err:
@@ -165,7 +165,8 @@ def content_file(content_id, filename):
 
 def content_zipball(content_id):
     """ Serve zipball with specified id """
-    zippath = downloads.get_zip_path(content_id)
+    content_dir = request.app.config['content.contentdir']
+    zippath = downloads.get_zip_path(content_id, content_dir)
     dirname = os.path.dirname(zippath)
     filename = os.path.basename(zippath)
     return static_file(filename, root=dirname, download=True)
@@ -205,11 +206,12 @@ def show_file_list(path='.'):
     conf = request.app.config
     is_missing = False
     is_search = False
-
+    files = init_filemanager()
     if search:
         relpath = '.'
         up = ''
-        dirs, file_list = files.get_search_results(search)
+        dirs, file_list = files.get_search_results(search,
+                                                   conf['content.filedir'])
         is_search = True
         if not len(file_list) and len(dirs) == 1:
             redirect(i18n_url('files:path',
@@ -222,8 +224,11 @@ def show_file_list(path='.'):
     else:
         is_search = False
         try:
-            path, relpath, dirs, file_list, readme = files.get_dir_contents(
-                path)
+            (path,
+             relpath,
+             dirs,
+             file_list,
+             readme) = files.get_dir_contents(path, conf['content.filedir'])
         except files.DoesNotExist:
             is_missing = True
             relpath = '.'
@@ -239,7 +244,7 @@ def show_file_list(path='.'):
                     size=fstat[stat.ST_SIZE],
                 ))
             options = {'download': request.params.get('filename', False)}
-            return static_file(err.path, root=files.get_file_dir(), **options)
+            return static_file(err.path, root=files.filedir, **options)
     up = os.path.normpath(os.path.join(path, '..'))
     up = os.path.relpath(up, conf['content.filedir'])
     if resp_format == 'json':
@@ -256,17 +261,17 @@ def show_file_list(path='.'):
 
 
 def go_to_parent(path):
-    filedir = files.get_file_dir()
-    redirect(i18n_url('files:path', path=os.path.relpath(
-        os.path.dirname(path), filedir)))
+    files = init_filemanager()
+    parent_path = os.path.relpath(os.path.dirname(path), files.filedir)
+    redirect(i18n_url('files:path', path=parent_path))
 
 
 def delete_path(path):
-    filedir = files.get_file_dir()
+    files = init_filemanager()
     if not os.path.exists(path):
         abort(404)
     if os.path.isdir(path):
-        if path == filedir:
+        if path == files.filedir:
             # FIXME: handle this case
             abort(400)
         shutil.rmtree(path)
@@ -297,6 +302,7 @@ def run_path(path):
 
 def handle_file_action(path):
     action = request.forms.get('action')
+    files = init_filemanager()
     path = files.get_full_path(path)
     if action == 'delete':
         delete_path(path)

@@ -239,7 +239,10 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         'style': 'screen',  # Default stylesheet
         'h': helpers,
         'th': template_helper,
-        'updates': Lazy(lambda: len(list(get_zipballs()))),
+        'updates': Lazy(lambda: len(list(get_zipballs(
+            config['content.spooldir'],
+            config['content.output_ext']
+        )))),
         'readable_license': lambda s: _(dict(LICENSES).get(s, LICENSES[0][1])),
         'is_rtl': Lazy(lambda: request.locale in lang.RTL_LANGS),
         'dir': lambda l: 'rtl' if l in lang.RTL_LANGS else 'auto',

@@ -77,7 +77,9 @@ def refill_command(arg, databases, app):
     request.environ['bottle.app'] = app  # connect request with application
     archive = Archive.setup(app.config['librarian.backend'],
                             databases.main,
-                            content_dir=app.config['content.contentdir'])
+                            contentdir=app.config['content.contentdir'],
+                            spooldir=app.config['content.spooldir'],
+                            meta_filename=app.config['content.metadata'])
     archive.clear_and_reload()
     print('Content refill finished.')
     sys.exit(0)
