@@ -96,7 +96,9 @@ class Archive(object):
 class BaseArchive(object):
 
     required_config_params = (
-        'content_dir',
+        'contentdir',
+        'spooldir',
+        'meta_filename',
     )
 
     def __init__(self, **config):
@@ -150,7 +152,7 @@ class BaseArchive(object):
         raise NotImplementedError()
 
     def prepare_metadata(self, md5, path):
-        meta = get_metadata(path)
+        meta = get_metadata(path, self.config['meta_filename'])
         clean_keys(meta)
         meta['md5'] = md5
         meta['updated'] = datetime.datetime.now()
@@ -199,7 +201,8 @@ class BaseArchive(object):
             if meta.get('replaces'):
                 logging.debug("<%s> replaces '%s'" % (path, meta['replaces']))
                 to_replace.append(meta['replaces'])
-                to_delete.append(get_zip_path(meta['replaces']))
+                to_delete.append(get_zip_path(meta['replaces'],
+                                              self.config['contentdir']))
 
             to_copy.append(path)
             to_add.append(meta)
@@ -209,7 +212,7 @@ class BaseArchive(object):
     def process_content(self, to_add, to_replace, to_delete, to_copy):
         rowcount = self.add_meta_to_db(to_add, to_replace)
         self.delete_obsolete(to_delete)
-        self.copy_to_archive(to_copy, self.config['content_dir'])
+        self.copy_to_archive(to_copy, self.config['contentdir'])
         return rowcount
 
     def process(self, content, no_file_ops=False):
@@ -226,7 +229,8 @@ class BaseArchive(object):
         return rows, len(to_delete), len(to_copy)
 
     def add_to_archive(self, hashes):
-        content = ((h, get_spool_zip_path(h)) for h in hashes)
+        spooldir = self.config['spooldir']
+        content = ((h, get_spool_zip_path(h, spooldir)) for h in hashes)
         rows, deleted, copied = self.process(content)
         logging.debug("%s items added to database", rows)
         logging.debug("%s items deleted from storage", deleted)
@@ -235,7 +239,8 @@ class BaseArchive(object):
 
     def remove_from_archive(self, hashes):
         failed = []
-        for md5, path in ((h, get_zip_path(h)) for h in hashes):
+        contentdir = self.config['contentdir']
+        for md5, path in ((h, get_zip_path(h, contentdir)) for h in hashes):
             logging.debug("<%s> removing from archive (#%s)" % (path, md5))
             if path is None:
                 failed.append(md5)
@@ -253,9 +258,9 @@ class BaseArchive(object):
         return failed
 
     def reload_data(self):
-        content_dir = self.config['content_dir']
-        content = ((get_md5_from_path(f), os.path.join(content_dir, f))
-                   for f in os.listdir(content_dir)
+        contentdir = self.config['contentdir']
+        content = ((get_md5_from_path(f), os.path.join(contentdir, f))
+                   for f in os.listdir(contentdir)
                    if f.endswith('.zip'))
         res = self.process(content, no_file_ops=True)
         return res[0]
