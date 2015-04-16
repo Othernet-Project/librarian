@@ -210,8 +210,7 @@ def show_file_list(path='.'):
     if search:
         relpath = '.'
         up = ''
-        dirs, file_list = files.get_search_results(search,
-                                                   conf['content.filedir'])
+        dirs, file_list = files.get_search_results(search)
         is_search = True
         if not len(file_list) and len(dirs) == 1:
             redirect(i18n_url('files:path',
