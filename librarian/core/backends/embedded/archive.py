@@ -142,15 +142,6 @@ class EmbeddedArchive(BaseArchive):
         rows = self.reload_data()
         logging.info('Content refill finished for %s pieces of content', rows)
 
-    def zipball_count(self):
-        """ Return the count of zipballs in archive
-
-        :returns:   integer count
-        """
-        q = self.db.Select('COUNT(*) as count', 'zipballs')
-        self.db.query(q)
-        return self.db.result.count
-
     def last_update(self):
         """ Get timestamp of the last updated zipball
 

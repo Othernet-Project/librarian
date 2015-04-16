@@ -261,9 +261,6 @@ class BaseArchive(object):
     def clear_and_reload(self):
         raise NotImplementedError()
 
-    def zipball_count(self):
-        raise NotImplementedError()
-
     def last_update(self):
         raise NotImplementedError()
 
