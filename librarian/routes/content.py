@@ -320,7 +320,7 @@ def get_content_url(root_url, domain):
         meta = matched_contents[0]
     except IndexError:
         # invalid content domain
-        abort(404, _('The specified address was not found.'))
+        path = 'content-not-found'
     else:
         base_path = i18n_url('content:reader', content_id=meta.md5)
         path = '{0}?path={1}'.format(base_path, request.path)
