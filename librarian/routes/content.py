@@ -29,7 +29,6 @@ from bottle_utils.common import to_unicode
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ..core import files
-from ..core import archive
 from ..core import downloads
 from ..core import metadata
 
@@ -40,7 +39,7 @@ from ..lib.pager import Pager
 from ..utils import patch_content
 from ..utils import netutils
 
-from .helpers import with_content
+from .helpers import open_archive, with_content
 
 
 app = default_app()
@@ -60,6 +59,7 @@ def filter_content(multipage=None):
         tag = None
         tag_name = None
 
+    archive = open_archive()
     if query:
         total_items = archive.get_search_count(query,
                                                tag=tag,
@@ -136,6 +136,7 @@ def content_sites_list():
 def remove_content(content_id):
     """ Delete a single piece of content from archive """
     redir_path = i18n_url('content:list')
+    archive = open_archive()
     failed = archive.remove_from_archive([content_id])
     if failed:
         assert len(failed) == 1, 'Expected only one failure'
@@ -153,6 +154,7 @@ def content_file(content_id, filename):
         abort(404)
     size = metadata.file_size
     timestamp = os.stat(zippath)[stat.ST_MTIME]
+    archive = open_archive()
     if filename.endswith('.html') and archive.needs_formatting(content_id):
         logging.debug("Patching HTML file '%s' with Librarian stylesheet" % (
                       filename))
@@ -173,6 +175,7 @@ def content_zipball(content_id):
 @with_content
 def content_reader(meta):
     """ Loads the reader interface """
+    archive = open_archive()
     archive.add_view(meta.md5)
     referer = request.headers.get('Referer', '')
     base_path = i18n_url('content:sites_list')
@@ -312,6 +315,7 @@ def handle_file_action(path):
 
 
 def get_content_url(root_url, domain):
+    archive = open_archive()
     matched_contents = archive.content_for_domain(domain)
     try:
         # as multiple matches are possible, pick the first one

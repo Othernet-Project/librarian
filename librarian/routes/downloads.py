@@ -15,12 +15,13 @@ from datetime import datetime
 from bottle import request, mako_view as view, redirect
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
 
-from ..core import archive
 from ..core import metadata
 from ..core import downloads
 from ..lib.pager import Pager
-
 from ..utils.cache import cached
+
+from .helpers import open_archive
+
 
 get_metadata = cached()(downloads.get_metadata)
 
@@ -73,6 +74,7 @@ def list_downloads():
     pager.get_paging_params()
     metas_on_page = pager.get_items()
 
+    archive = open_archive()
     archive.get_replacements(metas_on_page)
 
     vals = dict(request.params)
@@ -99,6 +101,7 @@ def manage_downloads():
         return {'error': _('Invalid action, please use one of the form '
                            'buttons.')}
     if action == 'add':
+        archive = open_archive()
         archive.add_to_archive(file_list)
     if action == 'delete':
         downloads.remove_downloads(file_list)

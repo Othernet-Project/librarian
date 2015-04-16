@@ -19,7 +19,7 @@ from os.path import dirname, join
 from bottle import mako_view as view, request, static_file
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
-from ...core.archive import reload_data
+from ...core.archive import Archive
 
 from ...lib.lock import global_lock, LockFailureError
 
@@ -95,6 +95,7 @@ def rebuild():
     dbpath = get_dbpath()
     bpath = get_backup_path()
     start = time.time()
+    conf = request.app.config
     db = request.db.main
     logging.debug('Locking database')
     db.acquire_lock()
@@ -108,7 +109,10 @@ def rebuild():
         db.reconnect()
         run_migrations(db)
         logging.debug('Prepared new database')
-        rows = reload_data()
+        archive = Archive.setup(conf['librarian.backend'],
+                                db,
+                                content_dir=conf['content.contentdir'])
+        rows = archive.reload_data()
         logging.info('Restored metadata for %s pieces of content', rows)
     logging.debug('Released global lock')
     end = time.time()
