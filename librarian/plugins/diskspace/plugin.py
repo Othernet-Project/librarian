@@ -14,7 +14,7 @@ import os
 
 from bottle import request, mako_view as view, redirect, MultiDict, abort
 
-from ...core import archive
+from ...core.archive import Archive
 
 from bottle_utils.html import hsize
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
@@ -60,6 +60,12 @@ def cleanup():
         return {'vals': forms, 'metadata': metadata, 'message': message,
                 'needed': zipballs.needed_space(free)}
     else:
+        conf = request.app.config
+        archive = Archive.setup(conf['librarian.backend'],
+                                request.db.main,
+                                contentdir=conf['content.contentdir'],
+                                spooldir=conf['content.spooldir'],
+                                meta_filename=conf['content.metadata'])
         if selected:
             archive.remove_from_archive([z['md5'] for z in selected])
             redirect(i18n_url('content:list'))

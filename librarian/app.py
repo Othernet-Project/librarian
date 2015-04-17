@@ -34,7 +34,6 @@ from bottle_utils import html as helpers
 from bottle_utils.i18n import I18NPlugin, lazy_gettext as _
 from bottle_utils.common import to_unicode
 
-from librarian.core import backend
 from librarian.core.metadata import LICENSES
 from librarian.core.downloads import get_zipballs
 
@@ -43,7 +42,6 @@ from librarian.lib import auth
 from librarian.lib import sessions
 from librarian.lib.lock import lock_plugin
 from librarian.lib.confloader import ConfDict
-from librarian.lib.template_helpers import template_helper
 
 from librarian.utils import lang
 from librarian.utils import commands
@@ -55,6 +53,7 @@ from librarian.utils.timer import request_timer
 from librarian.utils.gserver import ServerManager
 from librarian.utils import databases as database_utils
 from librarian.utils.signal_handlers import on_interrupt
+from librarian.utils.template_helpers import template_helper
 
 from librarian.plugins import install_plugins
 
@@ -240,7 +239,10 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         'style': 'screen',  # Default stylesheet
         'h': helpers,
         'th': template_helper,
-        'updates': Lazy(lambda: len(list(get_zipballs()))),
+        'updates': Lazy(lambda: len(list(get_zipballs(
+            config['content.spooldir'],
+            config['content.output_ext']
+        )))),
         'readable_license': lambda s: _(dict(LICENSES).get(s, LICENSES[0][1])),
         'is_rtl': Lazy(lambda: request.locale in lang.RTL_LANGS),
         'dir': lambda l: 'rtl' if l in lang.RTL_LANGS else 'auto',
@@ -340,7 +342,6 @@ def main(args):
         sys.exit(0)
 
     databases = prestart(conf, args.log, args.debug)
-    backend.setup(conf['librarian.backend'], conf, databases.main)
     commands.select_command(args, databases, app)
     return start(databases, conf, args.no_auth, args.repl, args.debug)
 

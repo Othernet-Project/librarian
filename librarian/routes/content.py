@@ -28,8 +28,6 @@ from bottle_utils.ajax import roca_view
 from bottle_utils.common import to_unicode
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
-from ..core import files
-from ..core import archive
 from ..core import downloads
 from ..core import metadata
 
@@ -40,7 +38,7 @@ from ..lib.pager import Pager
 from ..utils import patch_content
 from ..utils import netutils
 
-from .helpers import with_content
+from .helpers import open_archive, init_filemanager, with_content
 
 
 app = default_app()
@@ -60,15 +58,11 @@ def filter_content(multipage=None):
         tag = None
         tag_name = None
 
-    if query:
-        total_items = archive.get_search_count(query,
-                                               tag=tag,
-                                               lang=lang,
-                                               multipage=multipage)
-    else:
-        total_items = archive.get_count(tag=tag,
-                                        lang=lang,
-                                        multipage=multipage)
+    archive = open_archive()
+    total_items = archive.get_count(terms=query,
+                                    tag=tag,
+                                    lang=lang,
+                                    multipage=multipage)
 
     if tag:
         try:
@@ -80,25 +74,17 @@ def filter_content(multipage=None):
     # trick the pager into calculating correct page numbers
     pager = Pager(total_items, pid='content')
     pager.get_paging_params()
-
-    if query:
-        metas = archive.search_content(query,
-                                       pager.offset,
-                                       pager.per_page,
-                                       tag=tag,
-                                       lang=lang,
-                                       multipage=multipage)
-    else:
-        metas = archive.get_content(pager.offset,
-                                    pager.per_page,
-                                    tag=tag,
-                                    lang=lang,
-                                    multipage=multipage)
+    metas = archive.get_content(terms=query,
+                                offset=pager.offset,
+                                limit=pager.per_page,
+                                tag=tag,
+                                lang=lang,
+                                multipage=multipage)
 
     cover_dir = conf['content.covers']
-
-    metas = [metadata.Meta(m, cover_dir, downloads.get_zip_path(m['md5']))
-             for m in metas]
+    content_dir = conf['content.contentdir']
+    zip_path = lambda md5: downloads.get_zip_path(m['md5'], content_dir)
+    metas = [metadata.Meta(m, cover_dir, zip_path(m['md5'])) for m in metas]
 
     return dict(
         metadata=metas,
@@ -136,6 +122,7 @@ def content_sites_list():
 def remove_content(content_id):
     """ Delete a single piece of content from archive """
     redir_path = i18n_url('content:list')
+    archive = open_archive()
     failed = archive.remove_from_archive([content_id])
     if failed:
         assert len(failed) == 1, 'Expected only one failure'
@@ -145,7 +132,8 @@ def remove_content(content_id):
 
 def content_file(content_id, filename):
     """ Serve file from zipball with specified id """
-    zippath = downloads.get_zip_path(content_id)
+    content_dir = request.app.config['content.contentdir']
+    zippath = downloads.get_zip_path(content_id, content_dir)
     try:
         metadata, content = downloads.get_file(zippath, filename, no_read=True)
     except downloads.ContentError as err:
@@ -153,6 +141,7 @@ def content_file(content_id, filename):
         abort(404)
     size = metadata.file_size
     timestamp = os.stat(zippath)[stat.ST_MTIME]
+    archive = open_archive()
     if filename.endswith('.html') and archive.needs_formatting(content_id):
         logging.debug("Patching HTML file '%s' with Librarian stylesheet" % (
                       filename))
@@ -163,7 +152,8 @@ def content_file(content_id, filename):
 
 def content_zipball(content_id):
     """ Serve zipball with specified id """
-    zippath = downloads.get_zip_path(content_id)
+    content_dir = request.app.config['content.contentdir']
+    zippath = downloads.get_zip_path(content_id, content_dir)
     dirname = os.path.dirname(zippath)
     filename = os.path.basename(zippath)
     return static_file(filename, root=dirname, download=True)
@@ -173,6 +163,7 @@ def content_zipball(content_id):
 @with_content
 def content_reader(meta):
     """ Loads the reader interface """
+    archive = open_archive()
     archive.add_view(meta.md5)
     referer = request.headers.get('Referer', '')
     base_path = i18n_url('content:sites_list')
@@ -204,7 +195,7 @@ def show_file_list(path='.'):
     conf = request.app.config
     is_missing = False
     is_search = False
-
+    files = init_filemanager()
     if search:
         relpath = '.'
         up = ''
@@ -221,8 +212,8 @@ def show_file_list(path='.'):
     else:
         is_search = False
         try:
-            path, relpath, dirs, file_list, readme = files.get_dir_contents(
-                path)
+            dir_contents = files.get_dir_contents(path)
+            (path, relpath, dirs, file_list, readme) = dir_contents
         except files.DoesNotExist:
             is_missing = True
             relpath = '.'
@@ -238,7 +229,7 @@ def show_file_list(path='.'):
                     size=fstat[stat.ST_SIZE],
                 ))
             options = {'download': request.params.get('filename', False)}
-            return static_file(err.path, root=files.get_file_dir(), **options)
+            return static_file(err.path, root=files.filedir, **options)
     up = os.path.normpath(os.path.join(path, '..'))
     up = os.path.relpath(up, conf['content.filedir'])
     if resp_format == 'json':
@@ -255,17 +246,17 @@ def show_file_list(path='.'):
 
 
 def go_to_parent(path):
-    filedir = files.get_file_dir()
-    redirect(i18n_url('files:path', path=os.path.relpath(
-        os.path.dirname(path), filedir)))
+    files = init_filemanager()
+    parent_path = os.path.relpath(os.path.dirname(path), files.filedir)
+    redirect(i18n_url('files:path', path=parent_path))
 
 
 def delete_path(path):
-    filedir = files.get_file_dir()
+    files = init_filemanager()
     if not os.path.exists(path):
         abort(404)
     if os.path.isdir(path):
-        if path == filedir:
+        if path == files.filedir:
             # FIXME: handle this case
             abort(400)
         shutil.rmtree(path)
@@ -296,6 +287,7 @@ def run_path(path):
 
 def handle_file_action(path):
     action = request.forms.get('action')
+    files = init_filemanager()
     path = files.get_full_path(path)
     if action == 'delete':
         delete_path(path)
@@ -314,6 +306,7 @@ def handle_file_action(path):
 
 
 def get_content_url(root_url, domain):
+    archive = open_archive()
     matched_contents = archive.content_for_domain(domain)
     try:
         # as multiple matches are possible, pick the first one
