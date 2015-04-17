@@ -32,7 +32,11 @@ def content_path_components(s):
 
 
 def to_path(md5, prefix=None):
-    """ Convert content ID (md5 hexdigest) to path """
+    """ Convert content ID (md5 hexdigest) to path
+
+    Optional prefix can be specified which is prepended to the converted path.
+    The prefix is always normalized to platform's path style.
+    """
     path = os.sep.join(content_path_components(md5))
     if prefix:
         prefix = prefix.replace('\\', '/')
