@@ -31,9 +31,13 @@ def content_path_components(s):
     return COMP_RE.findall(s)
 
 
-def to_path(md5):
+def to_path(md5, prefix=None):
     """ Convert content ID (md5 hexdigest) to path """
-    return os.sep.join(content_path_components(md5))
+    path = os.sep.join(content_path_components(md5))
+    if prefix:
+        prefix = prefix.replace('\\', '/')
+        return os.path.join(os.path.normpath(prefix), path)
+    return path
 
 
 def to_md5(path):

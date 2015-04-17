@@ -66,6 +66,26 @@ def test_convert_to_path_with_bad_id():
     assert mod.to_path(md5) == ''
 
 
+def test_convert_to_path_with_prefix():
+    """ For given id and prefix, a prefixed path is gnerated """
+    md5 = '202ab62b551f6d7fc002f65652525544'
+    path = '/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525/255/44'.replace(
+        '/', os.sep)
+    assert mod.to_path(md5, prefix='/srv/zipballs') == path
+
+
+def test_prefixes_are_always_normalized():
+    """
+    Regardless of the type of slash used in prefix, correct ones are always
+    used in the output
+    """
+    md5 = '202ab62b551f6d7fc002f65652525544'
+    path = '/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525/255/44'.replace(
+        '/', os.sep)
+    assert mod.to_path(md5, prefix='\\srv\\zipballs') == path
+    assert mod.to_path(md5, prefix='/srv/zipballs') == path
+
+
 def test_convert_to_id():
     """ For given path, convert to proper MD5 hash """
     path = '202/ab6/2b5/51f/6d7/fc0/02f/656/525/255/44'.replace('/', os.sep)
