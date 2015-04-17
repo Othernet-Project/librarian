@@ -29,3 +29,13 @@ def content_path_components(s):
     if not MD5_RE.match(s):
         return []
     return COMP_RE.findall(s)
+
+
+def to_path(md5):
+    """ Convert content ID (md5 hexdigest) to path """
+    return os.sep.join(content_path_components(md5))
+
+
+def to_md5(path):
+    """ Convert path to content ID """
+    return ''.join(content_path_components(path))
