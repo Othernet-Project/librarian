@@ -9,6 +9,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
+import io
 import time
 
 from bottle import (HTTPResponse, HTTPError, parse_date, parse_range_header,
@@ -77,10 +78,18 @@ class FileRangeWrapper(object):
         if offset:
             try:
                 self.fd.seek(offset)
-            except AttributeError:
+            except (AttributeError, io.UnsupportedOperation):
                 # File handles for zip file content have no seek() so we simply
                 # read and discard the data immediately.
-                self.fd.read(offset)
+                self.read_to_offset(offset)
+
+    def read_to_offset(self, offset=0, chunk=1024 * 8):
+        """ Read from fd in chunks until offset is reached """
+        while offset > chunk:
+            self.fd.read(chunk)
+            offset -= chunk
+        self.fd.read(offset)
+        offset = 0
 
     def read(self, size=None):
         if not self.fd:
@@ -163,6 +172,7 @@ def send_file(fd, filename, size, timestamp):
             return HTTPError(416, "Request Range Not Satisfiable")
         start, end = ranges[0]
         headers['Content-Range'] = 'bytes %d-%d/%d' % (start, end - 1, size)
-        headers['Content-Length'] = str(end - start)
-        fd = FileRangeWrapper(fd, start, end - start)
+        length = end - 1 - start
+        headers['Content-Length'] = str(length)
+        fd = FileRangeWrapper(fd, offset=start, length=length)
     return HTTPResponse(fd, **headers)
