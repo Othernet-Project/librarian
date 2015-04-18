@@ -10,10 +10,39 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 import re
+import json
 
 
-COMP_RE = re.compile(r'([0-9a-f]{2,3})')
-MD5_RE = re.compile(r'[0-9a-f]{32}')
+COMP_RE = re.compile(r'([0-9a-f]{2,3})')  # path component
+MD5_RE = re.compile(r'[0-9a-f]{32}')  # complete md5 hexdigest
+HEX_PATH = r'(/[0-9a-f]{3}){10}/[0-9a-f]{2}'  # md5-based dir path
+
+
+def fnwalk(path, fn):
+    """
+    Walk directory tree top-down until directories of desired length are found
+
+    This generator function takes a ``path`` from which to begin the traversal,
+    and a ``fn`` object that selects the paths to be returned. It calls
+    ``os.listdir()`` recursively until either a full path is flagged by ``fn``
+    function as valid (by returning a truthy value) or ``os.listdir()`` fails
+    with ``OSError``.
+
+    This function has been added specifically to deal with large and deep
+    directory trees, and it's tehrefore not avisable to convert the return
+    values to a lists and similar memory-intensive objects.
+    """
+    if fn(path):
+        yield path
+
+    try:
+        names = os.listdir(path)
+    except OSError:
+        return
+
+    for name in names:
+        for child in fnwalk(os.path.join(path, name), fn):
+            yield child
 
 
 def content_path_components(s):
@@ -47,3 +76,52 @@ def to_path(md5, prefix=None):
 def to_md5(path):
     """ Convert path to content ID """
     return ''.join(content_path_components(path))
+
+
+def find_content_dirs(basedir):
+    """ Find all content directories within basedir
+
+    This function matches all MD5-based directory structures within the
+    specified base directory. It uses glob patterns to do this.
+
+    The returned value is an iterator. It's highly recommended to use it as is
+    (e.g., without converting it to a list) due to increased memory usage with
+    large number of directories.
+    """
+    rxp = re.compile(basedir + HEX_PATH)
+    for path in fnwalk(basedir, lambda p: rxp.match(p)):
+        yield path
+
+
+def find_infos(basedir):
+    """ Find all info.json files and decode them
+
+    Retrns an iterator that yields three-tuples of info.json path, decoded
+    info.json metadata, and md5 hexdigest matching the path.
+    """
+    for path in find_content_dirs(basedir):
+        infopath = os.path.join(path, 'info.json')
+        if not os.path.exists(infopath):
+            continue
+        with open(infopath, 'r') as f:
+            data = json.load(f, 'utf8')
+        relpath = os.path.relpath(path, basedir)
+        yield (infopath, data, to_md5(relpath))
+
+
+def get_meta(basedir, md5):
+    """ Find info.json at path matching specified md5 ID
+
+    This function looks up the path matching the specified md5 and returns
+    parsed metadata.
+
+    This function does not trap the ``ValueError`` exception raised by json
+    module if metadata cannot be parsed.
+
+    If the metadata file is not found, ``IOError`` is raised.
+    """
+    path = to_path(md5, prefix=basedir)
+    infopath = os.path.join(path, 'info.json')
+    with open(infopath, 'rb') as f:
+        data = json.load(f, 'utf8')
+    return data
