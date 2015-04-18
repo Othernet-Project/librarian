@@ -9,18 +9,49 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
+import json
 import shutil
 import zipfile
 import tempfile
 
 from . import content
+from . import metadata
+
+
+class ValidationError(Exception):
+    """ Raised when zipball fails validation """
+    def __init__(self, path, msg):
+        self.path = path
+        self.msg = msg
+        super(ValidationError, self).__init__(msg)
+
+
+def get_info(zfile, prefix):
+    """ Get metadata from zipball
+
+    The ``prefix`` is the directory in which the metadata file is located,
+    without the trailing slash. It is expected that the user will pass a valid
+    path and no checking is performed.
+
+    Metadata is parsed and ``ValueError`` is raised when it cannot be parsed.
+
+    If metadata file is missing, ``KeyError`` is raised.
+
+    Returns a parsed dict.
+    """
+    prefix = prefix.rstrip('/')
+    infopath = '{}/info.json'.format(prefix)
+    with zfile.open(infopath) as info:
+        return json.load(info, 'utf8')
 
 
 def validate(path):
     """ Validates the zipball
 
-    This function validates ``path`` and returns ``True`` if it points to a
-    valid content zipball, otherwise returning ``False``.
+    This function validates the content zipball found at ``path`` and returns
+    the metadata dict from the zipball if it is valid. If the zipball is not
+    valid, ``ValidationError`` exception is raised. This exeption will be
+    passed a human-readable message about why the validation failed.
 
     For a content zipball to be considered valid it must:
 
@@ -30,35 +61,43 @@ def validate(path):
     - all paths in the zipball are under directory of same name as file (and
       there are, by extension, no absolute paths)
     - contain a file called info.json inside the directory
-    - contain a file called index.html inside the directory
+    - have valid metadata in info.json
+    - location of index file in metadata must be present
 
     The checks are performed from least expensive to most expensive and the
-    first check that fails immediately returns ``False``.
+    first check that fails immediately raises.
     """
     # Inspect extension
     if not path.endswith('.zip'):
-        return False
+        raise ValidationError(path, 'invalid extension')
     # Inspect filename
     md5, _ = os.path.splitext(os.path.basename(path))
     if not content.MD5_RE.match(md5):
-        return False
+        raise ValidationError(path, 'invalid filename')
     # Inspect zipfile magic number
     if not zipfile.is_zipfile(path):
-        return False
+        raise ValidationError(path, 'invalid magic number, not a ZIP file')
+        return
     # Inspect contents
     zfile = zipfile.ZipFile(path)
     md5dir = '{}/'.format(md5)
     names = zfile.namelist()
-    print(names)
     if not names:
-        return False
+        raise ValidationError(path, 'ZIP file is empty')
     if not all([n.startswith(md5dir) for n in names]):
-        return False
-    if '{}info.json'.format(md5dir) not in names:
-        return False
-    if '{}index.html'.format(md5dir) not in names:
-        return False
-    return True
+        raise ValidationError(path, 'invalid content directory strcuture')
+    # Inspect metadata
+    try:
+        info = get_info(zfile, md5)
+    except (KeyError, ValueError):
+        raise ValidationError(path, 'missing or malformed metadata file')
+    for k in metadata.REQUIRED_KEYS:
+        if k not in info:
+            raise ValidationError(path, "missing required key '{}'".format(k))
+    indexpath = '{}/{}'.format(md5, info.get('index', 'index.html'))
+    if indexpath not in names:
+        raise ValidationError(path, "missing index at '{}'".format(indexpath))
+    return info
 
 
 def backup(path):
