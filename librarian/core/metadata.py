@@ -74,6 +74,10 @@ META_SPECIFICATION = {
 STANDARD_FIELDS = dict((k, v) for k, v in META_SPECIFICATION.items()
                        if not v.get('auto', False))
 
+# Used for simple checks
+REQUIRED_KEYS = [k for k, v in META_SPECIFICATION.items()
+                 if v.get('required', False)]
+
 
 class MetadataError(Exception):
     """ Base metadata error """
