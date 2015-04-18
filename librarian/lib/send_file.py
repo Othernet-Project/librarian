@@ -141,6 +141,7 @@ def send_file(fd, filename, size, timestamp):
     """
     assert hasattr(fd, 'read'), 'Expected fd to be file-like object'
     headers = {}
+    status = 200
     ctype = get_mimetype(filename)
 
     if ctype.startswith('text/'):
@@ -172,7 +173,8 @@ def send_file(fd, filename, size, timestamp):
             return HTTPError(416, "Request Range Not Satisfiable")
         start, end = ranges[0]
         headers['Content-Range'] = 'bytes %d-%d/%d' % (start, end - 1, size)
-        length = end - 1 - start
+        length = end - start
         headers['Content-Length'] = str(length)
         fd = FileRangeWrapper(fd, offset=start, length=length)
-    return HTTPResponse(fd, **headers)
+        status = 206
+    return HTTPResponse(fd, status=status, **headers)
