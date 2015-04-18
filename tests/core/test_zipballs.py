@@ -20,14 +20,6 @@ import pytest
 from librarian.core import zipballs as mod
 
 MOD = mod.__name__
-MOCK_META = {
-    'url': 'test://outernet.is/',
-    'title': 'Test',
-    'timestamp': '2015-01-01 00:00:00 UTC',
-    'broadcast': '2015-01-01',  # not currently required
-    'license': 'GFDL',
-}
-
 
 @mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
 @mock.patch(MOD + '.json.load')
@@ -140,12 +132,13 @@ def test_validate_zipball_no_valid_meta_keys(ZipFile, is_zipfile, get_info):
 @mock.patch(MOD + '.get_info')
 @mock.patch(MOD + '.zipfile.is_zipfile')
 @mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-def test_validate_zipball_contains_index_html(ZipFile, is_zipfile, get_info):
+def test_validate_zipball_contains_index_html(ZipFile, is_zipfile, get_info,
+                                              metadata):
     is_zipfile.return_value = True
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
         '202ab62b551f6d7fc002f65652525544/']
-    get_info.return_value = MOCK_META
+    get_info.return_value = metadata
     with pytest.raises(mod.ValidationError):
         mod.validate(path)
 
@@ -154,14 +147,14 @@ def test_validate_zipball_contains_index_html(ZipFile, is_zipfile, get_info):
 @mock.patch(MOD + '.zipfile.is_zipfile')
 @mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
 def test_validate_zipball_contains_wrong_index_html(ZipFile, is_zipfile,
-                                                    get_info):
+                                                    get_info, metadata):
     is_zipfile.return_value = True
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
         '202ab62b551f6d7fc002f65652525544/',
         '202ab62b551f6d7fc002f65652525544/index.html']
     get_info.return_value = {'index': 'foo/index.html'}
-    get_info.return_value.update(MOCK_META)
+    get_info.return_value.update(metadata)
     with pytest.raises(mod.ValidationError):
         mod.validate(path)
 
@@ -169,27 +162,28 @@ def test_validate_zipball_contains_wrong_index_html(ZipFile, is_zipfile,
 @mock.patch(MOD + '.get_info')
 @mock.patch(MOD + '.zipfile.is_zipfile')
 @mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-def test_validate_zipball_valid(ZipFile, is_zipfile, get_info):
+def test_validate_zipball_valid(ZipFile, is_zipfile, get_info, metadata):
     is_zipfile.return_value = True
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
         '202ab62b551f6d7fc002f65652525544/',
         '202ab62b551f6d7fc002f65652525544/index.html']
-    get_info.return_value = MOCK_META
+    get_info.return_value = metadata
     assert mod.validate(path) is get_info.return_value
 
 
 @mock.patch(MOD + '.get_info')
 @mock.patch(MOD + '.zipfile.is_zipfile')
 @mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-def test_validate_zipball_valid_with_index(ZipFile, is_zipfile, get_info):
+def test_validate_zipball_valid_with_index(ZipFile, is_zipfile, get_info,
+                                           metadata):
     is_zipfile.return_value = True
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
         '202ab62b551f6d7fc002f65652525544/',
         '202ab62b551f6d7fc002f65652525544/foo/index.html']
     get_info.return_value = {'index': 'foo/index.html'}
-    get_info.return_value.update(MOCK_META)
+    get_info.return_value.update(metadata)
     assert mod.validate(path) is get_info.return_value
 
 
