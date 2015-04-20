@@ -246,4 +246,5 @@ def user_plugin(no_auth):
             return callback(*args, **kwargs)
 
         return wrapper
+    plugin.name = 'user'
     return plugin

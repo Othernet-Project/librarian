@@ -63,6 +63,7 @@ from librarian.routes import (content, tags, downloads, apps, dashboard,
 from librarian import __version__
 
 MODDIR = dirname(abspath(__file__))
+APP_ONLY_PLUGINS = ('session', 'user')
 
 
 def in_pkg(*paths):
@@ -103,7 +104,7 @@ ROUTES = (
     ('content:reader', content.content_reader,
      'GET', '/pages/<content_id>', {}),
     ('content:cover', content.cover_image,
-     'GET', '/covers/<path>', dict(no_i18n=True)),
+     'GET', '/covers/<path>', dict(no_i18n=True, skip=APP_ONLY_PLUGINS)),
     ('content:delete', content.remove_content,
      'POST', '/delete/<content_id>', {}),
 
@@ -147,11 +148,14 @@ ROUTES = (
     # System
 
     ('sys:static', system.send_static,
-     'GET', '/static/<path:path>', dict(no_i18n=True, unlocked=True)),
+     'GET', '/static/<path:path>',
+     dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
     ('sys:favicon', system.send_favicon,
-     'GET', '/favicon.ico', dict(no_i18n=True, unlocked=True)),
+     'GET', '/favicon.ico',
+     dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
     ('sys:logs', system.send_logfile,
-     'GET', '/librarian.log', dict(no_i18n=True, unlocked=True)),
+     'GET', '/librarian.log',
+     dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
 
     # This route handler is added because unhandled missing pages cause bottle
     # to _not_ install any plugins, and some are essential to rendering of the
