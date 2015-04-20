@@ -103,19 +103,8 @@ def test_adding_missing_keys():
     """ Metadata keys that are not in ``d`` will be added """
     d = {}
     mod.add_missing_keys(d)
-    _has_key(d, 'url')
-    _has_key(d, 'title')
-    _has_key(d, 'images')
-    _has_key(d, 'timestamp')
-    _has_key(d, 'keep_formatting')
-    _has_key(d, 'is_publisher')
-    _has_key(d, 'is_sponsored')
-    _has_key(d, 'archive')
-    _has_key(d, 'publisher')
-    _has_key(d, 'license')
-    _has_key(d, 'language')
-    _has_key(d, 'multipage')
-    _has_key(d, 'entry_point')
+    for key in mod.STANDARD_FIELDS:
+        _has_key(d, key)
 
 
 def test_adding_missing_key_doesnt_remove_existing():
@@ -166,7 +155,9 @@ def test_convert_returns__added_keys(json, is_required):
         'license': None,
         'language': '',
         'multipage': False,
-        'entry_point': 'index.html'
+        'entry_point': 'index.html',
+        'broadcast': None,
+        'keywords': '',
     }
 
 
@@ -235,6 +226,7 @@ def test_convert_correct_keys(json, *ignored):
         'title': 'foo',
         'timestamp': 'foo',
         'license': 'foo',
+        'broadcast': 'foo',
     }
     try:
         mod.convert_json(s)

@@ -67,6 +67,8 @@ META_SPECIFICATION = {
         'default': 'index.html',
         'aliases': ['index']
     },
+    'broadcast': {'required': False},
+    'keywords': {'default': ''},
     'md5': {'auto': True},
     'size': {'auto': True},
     'updated': {'auto': True}
