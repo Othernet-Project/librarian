@@ -16,6 +16,12 @@ import glob
 import logging
 import zipfile
 
+import dateutil.parser
+
+
+def default_broadcast(key, meta):
+    return dateutil.parser.parse(meta['timestamp']).date()
+
 
 RTL_LANGS = ['ar', 'he', 'ur', 'yi', 'ji', 'iw', 'fa']
 
@@ -67,10 +73,12 @@ META_SPECIFICATION = {
         'default': 'index.html',
         'aliases': ['index']
     },
-    'broadcast': {'required': False},  # although this field is required by
-                                       # the specification, legacy content that
-                                       # has no such field defined would be
-                                       # just ignored during processing
+    # although this field is required by the specification, legacy content that
+    # has no such field defined would be just ignored during processing
+    'broadcast': {
+        'required': False,
+        'default': default_broadcast
+    },
     'keywords': {'default': ''},
     'md5': {'auto': True},
     'size': {'auto': True},
@@ -99,8 +107,11 @@ class FormatError(MetadataError):
     pass
 
 
-def get_default_value(key):
-    return STANDARD_FIELDS[key].get('default', None)
+def get_default_value(key, meta):
+    default = STANDARD_FIELDS[key].get('default', None)
+    if callable(default):
+        return default(key, meta)
+    return default
 
 
 def get_aliases_for(key):
@@ -121,7 +132,7 @@ def add_missing_keys(meta):
     """
     for key in STANDARD_FIELDS:
         if key not in meta:
-            meta[key] = get_default_value(key)
+            meta[key] = get_default_value(key, meta)
 
 
 def replace_aliases(meta):
@@ -171,7 +182,11 @@ def convert_json(meta):
     for key in STANDARD_FIELDS:
         if key not in meta and is_required(key):
             raise FormatError("Mandatory key '%s' missing" % key)
-    add_missing_keys(meta)
+    try:
+        add_missing_keys(meta)
+    except Exception as exc:
+        raise DecodeError("Failed to add default values: '%s'" % exc)
+
     return meta
 
 

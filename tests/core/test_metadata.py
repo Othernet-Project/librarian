@@ -1,3 +1,5 @@
+import datetime
+
 from functools import wraps
 from contextlib import contextmanager
 
@@ -62,10 +64,14 @@ def attr_overrides(obj, **kwargs):
 
 def test_get_default_value():
     with pytest.raises(KeyError):
-        mod.get_default_value('invalid')
+        mod.get_default_value('invalid', {})
 
-    assert mod.get_default_value('url') is None
-    assert mod.get_default_value('keep_formatting') is False
+    assert mod.get_default_value('url', {}) is None
+    assert mod.get_default_value('keep_formatting', {}) is False
+
+    meta = {'timestamp': '2014-08-10 19:59:19 UTC'}
+    broadcast = mod.get_default_value('broadcast', meta)
+    assert broadcast == datetime.date(2014, 8, 10)
 
 
 def test_get_aliases_for():
@@ -99,7 +105,8 @@ def test_replace_aliases():
     assert meta == expected
 
 
-def test_adding_missing_keys():
+@mock.patch(MOD + '.dateutil.parser.parse')
+def test_adding_missing_keys(date_parse):
     """ Metadata keys that are not in ``d`` will be added """
     d = {}
     mod.add_missing_keys(d)
@@ -107,21 +114,24 @@ def test_adding_missing_keys():
         _has_key(d, key)
 
 
-def test_adding_missing_key_doesnt_remove_existing():
+@mock.patch(MOD + '.dateutil.parser.parse')
+def test_adding_missing_key_doesnt_remove_existing(date_parse):
     """ Existing keys will be kept """
     d = {'url': 'foo'}
     mod.add_missing_keys(d)
     assert d['url'] == 'foo'
 
 
-def test_adding_missing_keys_doeesnt_remove_arbitrary_keys():
+@mock.patch(MOD + '.dateutil.parser.parse')
+def test_adding_missing_keys_doeesnt_remove_arbitrary_keys(date_parse):
     """" Even non-standard keys will be kept """
     d = {'foo': 'bar'}
     mod.add_missing_keys(d)
     _has_key(d, 'foo')
 
 
-def test_add_missing_keys_has_return():
+@mock.patch(MOD + '.dateutil.parser.parse')
+def test_add_missing_keys_has_return(date_parse):
     """ Add missing key mutates the supplies dict, but has no return value """
     d = {}
     ret = mod.add_missing_keys(d)
@@ -135,12 +145,16 @@ def test_clean_keys():
     assert d == {'title': 'title'}
 
 
+@mock.patch(MOD + '.dateutil.parser.parse')
 @mock.patch(MOD + '.is_required')
 @mock.patch(MOD + '.json', autospec=True)
-def test_convert_returns__added_keys(json, is_required):
+def test_convert_returns__added_keys(json, is_required, date_parse):
     """ Conversion to json calls ``add_missing_keys()`` on converted value """
     json.loads.return_value = {}
     is_required.return_value = False
+    date_mock = mock.Mock()
+    date_mock.date.return_value = None
+    date_parse.return_value = date_mock
     out = mod.convert_json('')
     assert out == {
         'url': None,
@@ -159,6 +173,21 @@ def test_convert_returns__added_keys(json, is_required):
         'broadcast': None,
         'keywords': '',
     }
+
+
+@mock.patch(MOD + '.add_missing_keys')
+@mock.patch(MOD + '.is_required')
+@mock.patch(MOD + '.json', autospec=True)
+def test_convert_add_default_fails(json, is_required, add_missing_keys):
+    """ DecodeError must be raised when adding default values raises an exc """
+    json.loads.return_value = {}
+    is_required.return_value = False
+    add_missing_keys.side_effect = Exception()
+    try:
+        mod.convert_json('')
+        assert False, 'Expected to raise'
+    except mod.DecodeError:
+        pass
 
 
 @mock.patch(MOD + '.json', autospec=True)
