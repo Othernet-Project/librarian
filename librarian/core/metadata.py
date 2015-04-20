@@ -67,7 +67,10 @@ META_SPECIFICATION = {
         'default': 'index.html',
         'aliases': ['index']
     },
-    'broadcast': {'required': False},
+    'broadcast': {'required': False},  # although this field is required by
+                                       # the specification, legacy content that
+                                       # has no such field defined would be
+                                       # just ignored during processing
     'keywords': {'default': ''},
     'md5': {'auto': True},
     'size': {'auto': True},
