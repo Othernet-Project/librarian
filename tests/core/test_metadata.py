@@ -156,15 +156,15 @@ def test_convert_returns__added_keys(json, is_required):
     assert out == {
         'url': None,
         'title': None,
-        'images': None,
+        'images': 0,
         'timestamp': None,
         'keep_formatting': False,
         'is_publisher': False,
         'is_sponsored': False,
-        'archive': None,
-        'publisher': None,
+        'archive': 'core',
+        'publisher': '',
         'license': None,
-        'language': None,
+        'language': '',
         'multipage': False,
         'entry_point': 'index.html'
     }

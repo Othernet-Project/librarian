@@ -45,7 +45,7 @@ LICENSES = (
 META_SPECIFICATION = {
     'url': {'required': True},
     'title': {'required': True},
-    'images': {},
+    'images': {'default': 0},
     'timestamp': {'required': True},
     'keep_formatting': {'default': False},
     'is_publisher': {
@@ -53,14 +53,15 @@ META_SPECIFICATION = {
         'aliases': ['is_partner']
     },
     'is_sponsored': {'default': False},
-    'archive': {},
+    'archive': {'default': 'core'},
     'publisher': {
+        'default': '',
         'aliases': ['partner']
     },
     'license': {
         'required': True
     },
-    'language': {},
+    'language': {'default': ''},
     'multipage': {'default': False},
     'entry_point': {
         'default': 'index.html',
