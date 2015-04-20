@@ -25,12 +25,12 @@ from bottle import (
 from bottle_utils.ajax import roca_view
 from bottle_utils.common import to_unicode
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
+from fdsend import send_file
 
 from ..core import downloads
 from ..core import metadata
 
 from ..lib import auth
-from ..lib import send_file
 from ..lib.pager import Pager
 
 from ..utils import patch_content
@@ -144,7 +144,7 @@ def content_file(content_id, filename):
                       filename))
         size, content = patch_content.patch(content.read())
         content = StringIO(content.encode('utf8'))
-    return send_file.send_file(content, filename, size, timestamp)
+    return send_file(content, filename, size, timestamp)
 
 
 def content_zipball(content_id):

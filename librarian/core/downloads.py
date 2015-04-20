@@ -12,10 +12,6 @@ import os
 import zipfile
 import logging
 from datetime import datetime, timedelta
-try:
-    from io import BytesIO as StringIO
-except ImportError:
-    from cStringIO import StringIO
 
 from .metadata import convert_json, DecodeError, FormatError
 
@@ -151,7 +147,7 @@ def extract_file(path, filename, no_read=False):
 
     :param path:        path to the zip file
     :param filename:    name of the file to extract
-    :param noread:      return file handle instead of file contents
+    :param no_read:     return file handle instead of file contents
     :returns:           two-tuple in ``(metadata, content)`` format, containing
                         ``zipfile.ZipInfo`` object and file content
                         respectively
@@ -165,12 +161,13 @@ def extract_file(path, filename, no_read=False):
         metadata = content.getinfo(filename)
         fd = content.open(filename, 'r')
         if no_read:
-            # zip files does not support the `seek` method, which causes
-            # exceptions in `send_file`
-            content = StringIO(fd.read())
-            fd.close()
+            # We are retruning the file descriptor pointing to the zipfile
+            # contents. This is not a real file descritor, just a file-like
+            # object (it has read() but not seek().
+            content = fd
         else:
             content = fd.read()
+            fd.close()
             f.close()  # We've read the content, so it's safe to close
     except zipfile.BadZipfile:
         raise ContentError("'%s' is not a valid zipfile" % path, path)
@@ -190,7 +187,7 @@ def get_file(path, filename, no_read=False):
 
     :param path:        path to the zip file
     :param filename:    name of the file to extract
-    :param noread:      return file handle instead of file contents
+    :param no_read:     return file handle instead of file contents
     :returns:           two-tuple in ``(metadata, content)`` format, containing
                         ``zipfile.ZipInfo`` object and file content
                         respectively
