@@ -54,6 +54,7 @@ from librarian.utils.gserver import ServerManager
 from librarian.utils import databases as database_utils
 from librarian.utils.signal_handlers import on_interrupt
 from librarian.utils.template_helpers import template_helper
+from librarian.utils.content_domain_handler import content_resolver_plugin
 
 from librarian.plugins import install_plugins
 
@@ -265,7 +266,7 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
-    app.install(content.content_resolver_plugin(
+    app.install(content_resolver_plugin(
         root_url=config['librarian.root_url'],
         ap_client_ip_range=config['librarian.ap_client_ip_range']
     ))

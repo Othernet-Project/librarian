@@ -13,8 +13,6 @@ import stat
 import json
 import shutil
 import logging
-import urlparse
-import functools
 import subprocess
 try:
     from io import BytesIO as StringIO
@@ -36,7 +34,6 @@ from ..lib import send_file
 from ..lib.pager import Pager
 
 from ..utils import patch_content
-from ..utils import netutils
 
 from .helpers import open_archive, init_filemanager, with_content
 
@@ -303,39 +300,3 @@ def handle_file_action(path):
         return template('exec_result', ret=ret, out=out, err=err)
     else:
         abort(400)
-
-
-def get_content_url(root_url, domain):
-    archive = open_archive()
-    matched_contents = archive.content_for_domain(domain)
-    try:
-        # as multiple matches are possible, pick the first one
-        meta = matched_contents[0]
-    except IndexError:
-        # invalid content domain
-        path = 'content-not-found'
-    else:
-        base_path = i18n_url('content:reader', content_id=meta.md5)
-        path = '{0}?path={1}'.format(base_path, request.path)
-
-    return urlparse.urljoin(root_url, path)
-
-
-def content_resolver_plugin(root_url, ap_client_ip_range):
-
-    def is_ap_client(client_ip):
-        start, end = app.config['librarian.ap_client_ip_range']
-        return client_ip in netutils.IPv4Range(start, end)
-
-    def decorator(callback):
-        @functools.wraps(callback)
-        def wrapper(*args, **kwargs):
-            target_host = netutils.get_target_host()
-            is_regular_access = target_host in root_url
-            if not is_regular_access and is_ap_client(request.remote_addr):
-                # a content domain was entered(most likely), try to load it
-                content_url = get_content_url(root_url, target_host)
-                return redirect(content_url)
-            return callback(*args, **kwargs)
-        return wrapper
-    return decorator
