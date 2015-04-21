@@ -2,7 +2,7 @@
 <%namespace name='delete_button' file='_delete_button.tpl'/>
 
 % for meta in metadata:
-<li class="data ${meta.get('archive', 'unknown')} ${'publisher' if meta.is_publisher else ''} ${'sponsored' if meta.is_sponsored else ''}" data-id="${meta.md5}">
+<li class="data ${meta.get('archive', 'unknown')} ${'partner' if meta.is_partner else ''} ${'sponsored' if meta.is_sponsored else ''}" data-id="${meta.md5}">
     <p class="thumbnail">
     <a href="${i18n_url('content:reader', content_id=meta.md5)}">
     % if meta.images > 0 and meta.image:

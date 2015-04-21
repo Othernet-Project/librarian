@@ -79,7 +79,7 @@ def test_get_aliases_for():
         mod.get_aliases_for('invalid')
 
     assert mod.get_aliases_for('url') == []
-    assert mod.get_aliases_for('is_publisher') == ['is_partner']
+    assert mod.get_aliases_for('publisher') == ['partner']
 
 
 def test_is_required():
@@ -98,7 +98,7 @@ def test_replace_aliases():
             'index': 'some.html'}
     expected = {'url': 'test',
                 'title': 'again',
-                'is_publisher': True,
+                'is_partner': True,
                 'publisher': 'Partner',
                 'entry_point': 'some.html'}
     mod.replace_aliases(meta)
@@ -162,7 +162,7 @@ def test_convert_returns__added_keys(json, is_required, date_parse):
         'images': 0,
         'timestamp': None,
         'keep_formatting': False,
-        'is_publisher': False,
+        'is_partner': False,
         'is_sponsored': False,
         'archive': 'core',
         'publisher': '',
@@ -491,8 +491,8 @@ def test_label_property_with_keys(*ignored):
         assert meta.label == 'core'
     with key_overrides(meta, is_sponsored=True):
         assert meta.label == 'sponsored'
-    with key_overrides(meta, is_publisher=True):
-        assert meta.label == 'publisher'
+    with key_overrides(meta, is_partner=True):
+        assert meta.label == 'partner'
 
 
 @mock.patch(MOD + '.json', autospec=True)
@@ -504,10 +504,10 @@ def test_label_property_with_key_combinations(*ignored):
         assert meta.label == 'core'
     with key_overrides(meta, archive='ephem', is_sponsored=True):
         assert meta.label == 'sponsored'
-    with key_overrides(meta, archive='core', is_publisher=True):
+    with key_overrides(meta, archive='core', is_partner=True):
         assert meta.label == 'core'
-    with key_overrides(meta, archive='ephem', is_publisher=True):
-        assert meta.label == 'publisher'
+    with key_overrides(meta, archive='ephem', is_partner=True):
+        assert meta.label == 'partner'
 
 
 @mock.patch(MOD + '.json', autospec=True)

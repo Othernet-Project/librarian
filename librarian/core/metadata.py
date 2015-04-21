@@ -54,10 +54,7 @@ META_SPECIFICATION = {
     'images': {'default': 0},
     'timestamp': {'required': True},
     'keep_formatting': {'default': False},
-    'is_publisher': {
-        'default': False,
-        'aliases': ['is_partner']
-    },
+    'is_partner': {'default': False},
     'is_sponsored': {'default': False},
     'archive': {'default': 'core'},
     'publisher': {
@@ -317,8 +314,8 @@ class Meta(object):
             return 'core'
         elif self.meta.get('is_sponsored'):
             return 'sponsored'
-        elif self.meta.get('is_publisher'):
-            return 'publisher'
+        elif self.meta.get('is_partner'):
+            return 'partner'
         return 'core'
 
     @property
