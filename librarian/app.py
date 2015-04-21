@@ -37,9 +37,10 @@ from bottle_utils.common import to_unicode
 from librarian.core.metadata import LICENSES
 from librarian.core.downloads import get_zipballs
 
-from librarian.lib import squery
 from librarian.lib import auth
+from librarian.lib import setup
 from librarian.lib import sessions
+from librarian.lib import squery
 from librarian.lib.lock import lock_plugin
 from librarian.lib.confloader import ConfDict
 
@@ -256,6 +257,7 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
 
     # Install bottle plugins and WSGI middleware
     app.install(request_timer('Total'))
+    app.install(setup.setup_plugin(app, config['librarian.setup_file']))
     app.install(squery.database_plugin(databases, debug=debug and not repl))
     app.install(sessions.session_plugin(
         cookie_name=config['session.cookie_name'],
