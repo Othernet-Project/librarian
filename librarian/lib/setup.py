@@ -13,7 +13,7 @@ import json
 import logging
 import os
 
-from bottle import request, redirect
+from bottle import request, redirect, mako_template as template
 
 from bottle_utils.i18n import i18n_url
 
@@ -22,22 +22,37 @@ from .wizard import Wizard
 
 logger = logging.getLogger(__name__)
 
+AUTO_CONFIGURATORS = dict()
+
+
+def autoconfigurator(name):
+    def decorator(func):
+        AUTO_CONFIGURATORS[name] = func
+        return func
+    return decorator
+
 
 class SetupWizard(Wizard):
+    __name__ = 'SetupWizard'
 
     def wizard_finished(self, data):
         setup_data = dict()
         for step, step_result in data.items():
             setup_data.update(step_result)
 
+        request.app.setup.save(setup_data)
+        result = template(self.finished_template)
+        return result
+
 
 class Setup(object):
 
     def __init__(self, setup_file):
         self.setup_file = setup_file
-        self.is_completed = False
-        self.data = dict()
-        self.load()
+        self.data = self.load()
+        self.is_completed = self.data is not None
+        if not self.is_completed:
+            self.data = self.auto_configure()
 
     def __getitem__(self, key):
         return self.data[key]
@@ -50,27 +65,34 @@ class Setup(object):
         if os.path.exists(self.setup_file):
             with open(self.setup_file, 'r') as s_file:
                 try:
-                    self.data = json.load(s_file)
+                    return json.load(s_file)
                 except Exception:
                     logger.exception('Setup file loading failed.')
-                else:
-                    self.is_completed = True
 
-    def save(self):
+    def save(self, data):
         """Save the setup data file."""
         with open(self.setup_file, 'w') as s_file:
-            json.dump(self.data, s_file)
+            json.dump(data, s_file)
+        self.is_completed = True
+
+    def auto_configure(self):
+        data = dict()
+        for name, configurator in AUTO_CONFIGURATORS.items():
+            data[name] = configurator()
+        return data
 
 
-def setup_plugin(setup_template):
+def setup_plugin(setup_template, setup_finished_template):
     setup_wizard.template = setup_template
+    setup_wizard.finished_template = setup_finished_template
 
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
-            if not request.app.setup.is_completed:
-                path = '{0}?next={1}'.format(i18n_url('setup:main'),
-                                             request.fullpath())
+            setup_path = i18n_url('setup:main')
+            if (not request.app.setup.is_completed and
+                    request.path != setup_path):
+                path = '{0}?next={1}'.format(setup_path, request.fullpath)
                 return redirect(path)
             return callback(*args, **kwargs)
         return wrapper
