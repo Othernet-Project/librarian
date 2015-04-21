@@ -137,6 +137,11 @@ ROUTES = (
     ('dashboard:main', dashboard.dashboard,
      'GET', '/dashboard/', {}),
 
+    # Setup wizard
+
+    ('setup:main', setup.setup_wizard,
+     ['GET', 'POST'], '/setup/', {}),
+
     # Apps
 
     ('apps:list', apps.show_apps,
@@ -163,6 +168,8 @@ ROUTES = (
 )
 
 app = bottle.default_app()
+# register session secret auto configurator
+setup.autoconfigurator('session.secret')(sessions.generate_secret_key)
 
 
 def prestart(config, logfile=None, debug=False):
@@ -262,12 +269,13 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         cookie_name=config['session.cookie_name'],
         secret=app.setup.get('session.secret')
     ))
-    app.install(setup.setup_plugin(config['setup.template']))
     app.install(auth.user_plugin(no_auth))
     wsgiapp = I18NPlugin(app, langs=lang.UI_LANGS,
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
+    app.install(setup.setup_plugin(config['setup.base_template'],
+                                   config['setup.finished_template']))
     app.install(content_resolver_plugin(
         root_url=config['librarian.root_url'],
         ap_client_ip_range=config['librarian.ap_client_ip_range']
