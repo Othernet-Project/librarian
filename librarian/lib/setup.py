@@ -17,73 +17,64 @@ from bottle import request, redirect
 
 from bottle_utils.i18n import i18n_url
 
+from .wizard import Wizard
+
 
 logger = logging.getLogger(__name__)
-steps = []
+
+
+class SetupWizard(Wizard):
+
+    def wizard_finished(self, data):
+        setup_data = dict()
+        for step, step_result in data.items():
+            setup_data.update(step_result)
 
 
 class Setup(object):
 
     def __init__(self, setup_file):
+        self.setup_file = setup_file
         self.is_completed = False
-        self._load(setup_file)
+        self.data = dict()
+        self.load()
 
-    def _load(self, setup_file):
-        """Attempt loading the setup config file."""
-        if os.path.exists(setup_file):
-            with open(setup_file, 'r') as config_file:
+    def __getitem__(self, key):
+        return self.data[key]
+
+    def get(self, key, default=None):
+        return self.data.get(key, default)
+
+    def load(self):
+        """Attempt loading the setup data file."""
+        if os.path.exists(self.setup_file):
+            with open(self.setup_file, 'r') as s_file:
                 try:
-                    self.config = json.load(config_file)
+                    self.data = json.load(s_file)
                 except Exception:
-                    logger.exception('Setup config loading failed.')
+                    logger.exception('Setup file loading failed.')
                 else:
                     self.is_completed = True
 
-    def get_next_step(self):
-        """Return next step of the setup wizard."""
-        setup_state = request.session.get('setup')
-        if not setup_state:
-            setup_state = dict(step=0)
-        else:
-            setup_state['step'] += 1
-
-        request.session['setup'] = setup_state
-        return steps[setup_state['step']]
-
-    def store(self, data):
-        """Called by individual steps to add their data to the so far collected
-        data by all steps of the wizard."""
-        setup_state = request.session.get('setup')
-        setup_state['data'].update(data)
-        request.session['setup'] = setup_state
+    def save(self):
+        """Save the setup data file."""
+        with open(self.setup_file, 'w') as s_file:
+            json.dump(self.data, s_file)
 
 
-def register_wizard_step(index=None):
-    def decorator(func):
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            return func(*args, **kwargs)
-        if index is None:
-            steps.append(wrapper)
-        else:
-            steps.insert(index, wrapper)
-        return wrapper
-    return decorator
-
-
-def setup_step_dispatcher_route():
-    step = request.setup.get_next_step()
-    return step()
-
-
-def setup_plugin(app, setup_file):
-    app.setup = Setup(setup_file)
+def setup_plugin(setup_template):
+    setup_wizard.template = setup_template
 
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
             if not request.app.setup.is_completed:
-                return redirect(i18n_url('setup:main'))
+                path = '{0}?next={1}'.format(i18n_url('setup:main'),
+                                             request.fullpath())
+                return redirect(path)
             return callback(*args, **kwargs)
         return wrapper
     return plugin
+
+
+setup_wizard = SetupWizard(name='setup')

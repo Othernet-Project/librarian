@@ -257,12 +257,12 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
 
     # Install bottle plugins and WSGI middleware
     app.install(request_timer('Total'))
-    app.install(setup.setup_plugin(app, config['librarian.setup_file']))
     app.install(squery.database_plugin(databases, debug=debug and not repl))
     app.install(sessions.session_plugin(
         cookie_name=config['session.cookie_name'],
-        secret=config['session.secret'])
-    )
+        secret=app.setup.get('session.secret')
+    ))
+    app.install(setup.setup_plugin(config['setup.template']))
     app.install(auth.user_plugin(no_auth))
     wsgiapp = I18NPlugin(app, langs=lang.UI_LANGS,
                          default_locale=lang.DEFAULT_LOCALE,
@@ -338,6 +338,7 @@ def configure_argparse(parser):
 def main(args):
     app.config = ConfDict.from_file(args.conf, catchall=True, autojson=True)
     conf = app.config
+    app.setup = setup.Setup(conf['setup.file'])
 
     if args.debug_conf:
         print('Configuration file path: %s' % args.conf)
