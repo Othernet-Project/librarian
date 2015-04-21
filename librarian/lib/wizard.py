@@ -8,8 +8,6 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import functools
-
 from bottle import request, redirect, mako_template as template
 
 
@@ -79,12 +77,7 @@ class Wizard(object):
 
     def register_step(self, index=None):
         def decorator(func):
-            @functools.wraps(func)
-            def wrapper(*args, **kwargs):
-                return func(*args, **kwargs)
-
             idx = max(self.steps.keys() + [-1]) + 1 if index is None else index
-            self.steps[idx] = wrapper
-
-            return wrapper
+            self.steps[idx] = func
+            return func
         return decorator
