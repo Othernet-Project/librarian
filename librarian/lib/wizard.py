@@ -10,6 +10,8 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from bottle import request, redirect, mako_template as template
 
+from bottle_utils.common import basestring
+
 
 class Wizard(object):
     prefix = 'wizard_'
@@ -29,11 +31,11 @@ class Wizard(object):
 
         return self.start_next_step()
 
-    def __next__(self):
+    def next(self):
         """Return next step of the wizard."""
         wizard_state = request.session.get(self.id)
         if not wizard_state:
-            wizard_state = dict(step=0)
+            wizard_state = dict(step=0, data={})
         else:
             wizard_state['step'] += 1
 
