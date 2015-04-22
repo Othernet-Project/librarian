@@ -60,7 +60,7 @@ from librarian.utils.content_domain_handler import content_resolver_plugin
 from librarian.plugins import install_plugins
 
 from librarian.routes import (content, tags, downloads, apps, dashboard,
-                              system, auth as auth_route)
+                              system, auth as auth_route, setup as setup_route)
 
 from librarian import __version__
 
