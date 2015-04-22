@@ -267,6 +267,7 @@ def session_plugin(cookie_name, secret):
                 request.session = Session.create()
             return callback(*args, **kwargs)
         return wrapper
+    plugin.name = 'session'
     return plugin
 
 
