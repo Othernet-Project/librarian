@@ -18,7 +18,7 @@ from ..utils.lang import UI_LOCALES, DEFAULT_LOCALE
 
 @setup_wizard.register_step('language', method='GET', index=0)
 def setup_language_form():
-    return template('setup_language.tpl',
+    return template('setup/step_language.tpl',
                     errors={},
                     language={'language': DEFAULT_LOCALE})
 
@@ -28,7 +28,7 @@ def setup_language():
     lang = request.forms.get('language')
     if lang not in UI_LOCALES:
         errors = {'language': _('Please select a valid language.')}
-        return template('setup_language.tpl',
+        return template('setup/step_language.tpl',
                         errors=errors,
                         language={'language': DEFAULT_LOCALE})
 
