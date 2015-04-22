@@ -96,6 +96,7 @@ def setup_plugin(setup_template, setup_finished_template):
                 return redirect(path)
             return callback(*args, **kwargs)
         return wrapper
+    plugin.name = 'setup'
     return plugin
 
 

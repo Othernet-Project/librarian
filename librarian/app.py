@@ -65,7 +65,7 @@ from librarian.routes import (content, tags, downloads, apps, dashboard,
 from librarian import __version__
 
 MODDIR = dirname(abspath(__file__))
-APP_ONLY_PLUGINS = ('session', 'user')
+APP_ONLY_PLUGINS = ('session', 'user', 'setup')
 
 
 def in_pkg(*paths):
