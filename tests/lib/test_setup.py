@@ -24,6 +24,16 @@ def test_setup_init_not_completed(load, auto_configure):
     auto_configure.assert_called_once_with()
 
 
+@mock.patch.object(mod.Setup, 'load')
+def test_setup_data_access(load):
+    load.return_value = {'some': 'data'}
+    setup = mod.Setup('setup.json')
+
+    assert setup['some'] == 'data'
+    assert setup.get('some') == 'data'
+    assert setup.get('invalid', 1) == 1
+
+
 @mock.patch.object(mod.os.path, 'exists')
 @mock.patch.object(mod.Setup, '__init__')
 def test_load_does_not_exist(init, exists):
@@ -76,3 +86,5 @@ def test_save_config(init, f_open, json_dump):
 
     merged_data = {'auto': 'configured', 'setup': 'result', 'another': 1}
     json_dump.assert_called_once_with(merged_data, mocked_file)
+
+    assert setup.is_completed is True
