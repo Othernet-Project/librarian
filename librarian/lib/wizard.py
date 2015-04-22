@@ -8,78 +8,128 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from bottle import request, redirect, mako_template as template
+from bottle import request, mako_template as template
 
 from bottle_utils.common import basestring
 
 
+class MissingStepHandler(ValueError):
+
+    def __init__(self, index, method):
+        msg = 'Missing {0} request handler in step: {1}'.format(method, index)
+        super(MissingStepHandler, self).__init__(msg)
+
+
 class Wizard(object):
+    valid_methods = ('GET', 'POST')
     prefix = 'wizard_'
+    steps = dict()
 
     def __init__(self, name=None, template=None):
         self.name = name
         self.template = template
-        self.steps = dict()
-
-    @property
-    def id(self):
-        return self.prefix + self.name
 
     def __call__(self, *args, **kwargs):
+        # each request gets a separate instance so states won't get mixed up
+        instance = self.create_wizard(self.name,
+                                      self.template,
+                                      self.__dict__)
+        return instance.dispatch()
+
+    @property
+    def __name__(self):
+        return self.__class__.__name__
+
+    def dispatch(self):
+        # entry-point of a wizard instance, load wizard state from session
+        self.load_state()
         if request.method == 'POST':
             return self.process_current_step()
 
         return self.start_next_step()
 
+    @property
+    def id(self):
+        return self.prefix + self.name
+
+    def load_state(self):
+        state = request.session.get(self.id)
+        if not state:
+            state = dict(step=0, data={})
+        self.state = state
+
+    def save_state(self):
+        request.session[self.id] = self.state
+
     def next(self):
         """Return next step of the wizard."""
-        wizard_state = request.session.get(self.id)
-        if not wizard_state:
-            wizard_state = dict(step=0, data={})
-        else:
-            wizard_state['step'] += 1
-
-        request.session[self.id] = wizard_state
+        step_index = self.state['step']
         try:
-            return self.steps[wizard_state['step']]
+            step_handlers = self.steps[step_index]
         except KeyError:
             raise StopIteration()
+        else:
+            try:
+                return step_handlers['GET']
+            except KeyError:
+                raise MissingStepHandler(step_index, 'GET')
 
     def start_next_step(self):
         try:
             step = next(self)
         except StopIteration:
-            wizard_state = request.session.get(self.id)
-            return self.wizard_finished(wizard_state['data'])
+            return self.wizard_finished(self.state['data'])
         else:
             step_partial = step()
             return template(self.template, step=step_partial)
 
     def process_current_step(self):
-        wizard_state = request.session.get(self.id)
-        if not wizard_state:
-            redirect(request.fullpath())
+        current_step_index = self.state['step']
+        step_handlers = self.steps[current_step_index]
+        try:
+            step = step_handlers['POST']
+        except KeyError:
+            raise MissingStepHandler(current_step_index, 'POST')
 
-        index = wizard_state['step']
-        step = self.steps[index]
         step_result = step()
         if isinstance(step_result, basestring):
             # it's a rendered template, the step may have form errors
             return template(self.template, step=step_result)
 
-        current_data = wizard_state.get('data', {})
-        current_data[index] = step_result
-        wizard_state['data'] = current_data
-        request.session[self.id] = wizard_state
-
+        self.state['data'][current_step_index] = step_result
+        self.state['step'] += 1
+        self.save_state()
         return self.start_next_step()
 
     def wizard_finished(self, data):
         raise NotImplementedError()
 
-    def register_step(self, index=None):
+    @classmethod
+    def register_step(cls, method=valid_methods, index=None):
         def decorator(func):
-            idx = max(self.steps.keys() + [-1]) + 1 if index is None else index
-            self.steps[idx] = func
+            idx = max(cls.steps.keys() + [-1]) + 1 if index is None else index
+            try:
+                idx = int(idx)
+            except (ValueError, TypeError):
+                raise ValueError('Step index must be an integer.')
+
+            methods = [method] if isinstance(method, basestring) else method
+            for name in methods:
+                if name not in cls.valid_methods:
+                    msg = '{0} is not an acceptable HTTP method.'.format(name)
+                    raise ValueError(msg)
+                cls.steps.setdefault(idx, dict())
+                cls.steps[idx][name] = func
+
             return func
         return decorator
+
+    @classmethod
+    def create_wizard(cls, name, template, attrs):
+        instance = cls(name, template)
+        # make sure attributes that were assigned after the wizard instance was
+        # created will be passed on to new instances as well
+        for name, value in attrs.items():
+            setattr(instance, name, value)
+
+        return instance
