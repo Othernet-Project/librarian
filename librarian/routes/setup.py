@@ -13,12 +13,14 @@ from bottle import request, mako_template as template
 from bottle_utils.i18n import lazy_gettext as _
 
 from ..lib.setup import setup_wizard
-from ..utils.lang import UI_LOCALES
+from ..utils.lang import UI_LOCALES, DEFAULT_LOCALE
 
 
 @setup_wizard.register_step('GET', index=0)
 def setup_language_form():
-    return template('setup_language.tpl', errors={})
+    return template('setup_language.tpl',
+                    errors={},
+                    language={'language': DEFAULT_LOCALE})
 
 
 @setup_wizard.register_step('POST', index=0)
@@ -26,6 +28,8 @@ def setup_language():
     lang = request.forms.get('language')
     if lang not in UI_LOCALES:
         errors = {'language': _('Please select a valid language.')}
-        return template('setup_language.tpl', errors=errors)
+        return template('setup_language.tpl',
+                        errors=errors,
+                        language={'language': DEFAULT_LOCALE})
 
     return {'language': lang}
