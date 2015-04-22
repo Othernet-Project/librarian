@@ -33,7 +33,6 @@ def autoconfigurator(name):
 
 
 class SetupWizard(Wizard):
-    __name__ = 'SetupWizard'
 
     def wizard_finished(self, data):
         setup_data = dict()
@@ -69,10 +68,11 @@ class Setup(object):
                 except Exception:
                     logger.exception('Setup file loading failed.')
 
-    def save(self, data):
+    def save(self, new_data):
         """Save the setup data file."""
+        self.data.update(new_data)
         with open(self.setup_file, 'w') as s_file:
-            json.dump(data, s_file)
+            json.dump(self.data, s_file)
         self.is_completed = True
 
     def auto_configure(self):
