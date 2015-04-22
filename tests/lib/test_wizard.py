@@ -207,6 +207,10 @@ def test_register_step_invalid_index(wizard):
     with pytest.raises(ValueError):
         decorator(mocked_step)
 
+    decorator = wizard.register_step('test_step', index=-3)
+    with pytest.raises(ValueError):
+        decorator(mocked_step)
+
     assert len(wizard.steps) == 0
 
 
@@ -219,8 +223,16 @@ def test_register_step_invalid_method(wizard):
     assert len(wizard.steps) == 0
 
 
-def test_create_wizard():
+def test_remove_gaps(wizard):
+    wizard.steps = {1: 'first', 3: 'second', 8: 'third'}
+    wizard.remove_gaps()
+    assert wizard.steps == {0: 'first', 1: 'second', 2: 'third'}
+
+
+@mock.patch.object(mod.Wizard, 'remove_gaps')
+def test_create_wizard(remove_gaps):
     wizard = mod.Wizard.create_wizard('test', 'template.tpl', {'attr': 1})
+    remove_gaps.assert_called_once_with()
     assert wizard.name == 'test'
     assert wizard.template == 'template.tpl'
     assert wizard.attr == 1

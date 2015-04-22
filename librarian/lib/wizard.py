@@ -109,8 +109,10 @@ class Wizard(object):
             next_index = max(self.steps.keys() + [-1]) + 1
             try:
                 wanted_index = next_index if index is None else int(index)
+                if wanted_index < 0:
+                    raise ValueError()
             except (ValueError, TypeError):
-                raise ValueError('Step index must be an integer.')
+                raise ValueError('Step index must be a positive integer.')
 
             if (wanted_index in self.steps and
                     self.steps[wanted_index]['name'] != name):
@@ -132,6 +134,15 @@ class Wizard(object):
             return func
         return decorator
 
+    def remove_gaps(self):
+        """Inplace removal of eventual gaps between registered step indexes."""
+        original = [None] * (max(self.steps.keys()) + 1)
+        for idx, step in self.steps.items():
+            original[idx] = step
+
+        gapless = [step for step in original if step is not None]
+        self.steps = dict((idx, step) for idx, step in enumerate(gapless))
+
     @classmethod
     def create_wizard(cls, name, template, attrs):
         instance = cls(name, template)
@@ -140,4 +151,5 @@ class Wizard(object):
         for name, value in attrs.items():
             setattr(instance, name, value)
 
+        instance.remove_gaps()
         return instance
