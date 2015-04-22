@@ -23,11 +23,11 @@ class MissingStepHandler(ValueError):
 class Wizard(object):
     valid_methods = ('GET', 'POST')
     prefix = 'wizard_'
-    steps = dict()
 
     def __init__(self, name=None, template=None):
         self.name = name
         self.template = template
+        self.steps = dict()
 
     def __call__(self, *args, **kwargs):
         # each request gets a separate instance so states won't get mixed up
@@ -104,31 +104,30 @@ class Wizard(object):
     def wizard_finished(self, data):
         raise NotImplementedError()
 
-    @classmethod
-    def register_step(cls, name, method=valid_methods, index=None):
+    def register_step(self, name, method=valid_methods, index=None):
         def decorator(func):
-            next_index = max(cls.steps.keys() + [-1]) + 1
+            next_index = max(self.steps.keys() + [-1]) + 1
             try:
                 wanted_index = next_index if index is None else int(index)
             except (ValueError, TypeError):
                 raise ValueError('Step index must be an integer.')
 
-            if (wanted_index in cls.steps and
-                    cls.steps[wanted_index]['name'] != name):
+            if (wanted_index in self.steps and
+                    self.steps[wanted_index]['name'] != name):
                 # an auto-indexed handler probably have taken the place of this
                 # manually indexed handler, switch their places
-                cls.steps[next_index] = cls.steps[wanted_index]
-                del cls.steps[wanted_index]
+                self.steps[next_index] = self.steps[wanted_index]
+                del self.steps[wanted_index]
 
             methods = [method] if isinstance(method, basestring) else method
             for method_name in methods:
-                if method_name not in cls.valid_methods:
+                if method_name not in self.valid_methods:
                     msg = '{0} is not an acceptable HTTP method.'.format(
                         method_name
                     )
                     raise ValueError(msg)
-                cls.steps.setdefault(wanted_index, dict(name=name))
-                cls.steps[wanted_index][method_name] = func
+                self.steps.setdefault(wanted_index, dict(name=name))
+                self.steps[wanted_index][method_name] = func
 
             return func
         return decorator
