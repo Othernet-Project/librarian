@@ -89,11 +89,10 @@ def setup_plugin(setup_template, setup_finished_template):
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
-            setup_path = i18n_url('setup:main')[len(request.locale) + 1:]
+            setup_path = i18n_url('setup:main')
             if (not request.app.setup.is_completed and
-                    request.path != setup_path):
-                path = '{0}?next={1}'.format(setup_path, request.fullpath)
-                return redirect(path)
+                    request.path != setup_path[len(request.locale) + 1:]):
+                return redirect(setup_path)
             return callback(*args, **kwargs)
         return wrapper
     plugin.name = 'setup'
