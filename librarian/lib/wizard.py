@@ -52,6 +52,10 @@ class Wizard(object):
     def id(self):
         return self.prefix + self.name
 
+    @property
+    def step_count(self):
+        return len(self.steps)
+
     def load_state(self):
         state = request.session.get(self.id)
         if not state:
@@ -81,7 +85,10 @@ class Wizard(object):
             return self.wizard_finished(self.state['data'])
         else:
             step_partial = step()
-            return template(self.template, step=step_partial)
+            return template(self.template,
+                            step=step_partial,
+                            step_index=self.state['step'],
+                            step_count=self.step_count)
 
     def process_current_step(self):
         current_step_index = self.state['step']
@@ -94,7 +101,10 @@ class Wizard(object):
         step_result = step()
         if isinstance(step_result, basestring):
             # it's a rendered template, the step may have form errors
-            return template(self.template, step=step_result)
+            return template(self.template,
+                            step=step_result,
+                            step_index=current_step_index,
+                            step_count=self.step_count)
 
         self.state['data'][current_step_index] = step_result
         self.state['step'] += 1

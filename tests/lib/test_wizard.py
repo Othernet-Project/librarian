@@ -122,10 +122,15 @@ def test_start_next_step_wizard_finished(w_next, wizard_finished, wizard):
 def test_start_next_step_has_result(w_next, template, wizard):
     mocked_step = mock.Mock()
     mocked_step.return_value = 'partial html'
+    wizard.state = {'step': 1}
+    wizard.steps[1] = mocked_step
     w_next.return_value = mocked_step
     wizard.start_next_step()
     mocked_step.assert_called_once_with()
-    template.assert_called_once_with('template.tpl', step='partial html')
+    template.assert_called_once_with('template.tpl',
+                                     step='partial html',
+                                     step_index=1,
+                                     step_count=1)
 
 
 @mock.patch.object(mod.Wizard, 'start_next_step')
@@ -158,7 +163,10 @@ def test_process_current_step_has_error(template, wizard):
     result = wizard.process_current_step()
 
     assert result == 'whole html with error'
-    template.assert_called_once_with('template.tpl', step=partial_html)
+    template.assert_called_once_with('template.tpl',
+                                     step=partial_html,
+                                     step_index=1,
+                                     step_count=1)
 
 
 def test_process_current_step_missing_post_handler(wizard):
