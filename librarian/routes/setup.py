@@ -16,6 +16,7 @@ from bottle import request, mako_template as template
 from bottle_utils.i18n import lazy_gettext as _
 from dateutil.parser import parse as parse_datetime
 
+from ..lib import auth
 from ..lib.setup import setup_wizard
 from ..utils.lang import UI_LOCALES, DEFAULT_LOCALE
 
@@ -76,4 +77,33 @@ def setup_datetime():
 
     # Linux only!
     os.system("date +'%Y-%m-%d %T' -s '{0}'".format(datetime_str))
+    return {}
+
+
+@setup_wizard.register_step('superuser', method='GET', index=2)
+def setup_superuser_form():
+    return template('setup/step_superuser.tpl', errors={})
+
+
+@setup_wizard.register_step('superuser', method='POST', index=2)
+def setup_superuser():
+    username = request.forms.get('username')
+    password1 = request.forms.get('password1')
+    password2 = request.forms.get('password2')
+    if password1 != password2:
+        errors = {'_': _("The entered passwords do not match.")}
+        return template('setup/step_superuser.tpl', errors=errors)
+
+    try:
+        auth.create_user(username,
+                         password1,
+                         is_superuser=True,
+                         db=request.db.sessions)
+    except auth.UserAlreadyExists:
+        errors = {'username': _("This username is already taken.")}
+        return template('setup/step_superuser.tpl', errors=errors)
+    except auth.InvalidUserCredentials:
+        errors = {'_': _("Invalid user credentials, please try again.")}
+        return template('setup/step_superuser.tpl', errors=errors)
+
     return {}
