@@ -1,3 +1,6 @@
+<%inherit file='main.tpl'/>
+
+<%block name="step">
 <h3>${_('Please enter the desired credentials for the superuser account.')}</h3>
 <div class="step-superuser-form">
     <p>
@@ -23,3 +26,4 @@
     </p>
     ${h.form_errors(errors)}
 </div>
+</%block>

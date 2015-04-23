@@ -41,7 +41,9 @@
             <h1><%block name="heading"/></h1>
             <%block name="content">
                 <div class="inner">
+                <%block name="inner">
                     ${self.body(**context.kwargs)}
+                </%block>
                 </div>
             </%block>
         </%block>

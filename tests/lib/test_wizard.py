@@ -6,14 +6,14 @@ import librarian.lib.wizard as mod
 
 @pytest.fixture
 def wizard():
-    return mod.Wizard('test', 'template.tpl')
+    return mod.Wizard('test')
 
 
 @pytest.fixture
 def subclassed_wizard():
     class TestWizard(mod.Wizard):
         pass
-    return TestWizard('test', 'template.tpl')
+    return TestWizard('test')
 
 
 @mock.patch.object(mod.Wizard, 'create_wizard')
@@ -22,11 +22,8 @@ def test_call(create_wizard, wizard):
     create_wizard.return_value = mocked_instance
     wizard.test_attr = 1
     wizard()
-    wiz_dict = {'name': 'test',
-                'template': 'template.tpl',
-                'steps': {},
-                'test_attr': 1}
-    create_wizard.assert_called_once_with('test', 'template.tpl', wiz_dict)
+    wiz_dict = {'name': 'test', 'steps': {}, 'test_attr': 1}
+    create_wizard.assert_called_once_with('test', wiz_dict)
     mocked_instance.dispatch.assert_called_once_with()
 
 
@@ -121,14 +118,14 @@ def test_start_next_step_wizard_finished(w_next, wizard_finished, wizard):
 @mock.patch.object(mod.Wizard, 'next')
 def test_start_next_step_has_result(w_next, template, wizard):
     mocked_step = mock.Mock()
-    mocked_step.return_value = 'partial html'
+    mocked_step.return_value = {'some': 'param'}
     wizard.state = {'step': 1}
     wizard.steps[1] = mocked_step
-    w_next.return_value = mocked_step
+    w_next.return_value = {'handler': mocked_step, 'template': 'step_tmp.tpl'}
     wizard.start_next_step()
     mocked_step.assert_called_once_with()
-    template.assert_called_once_with('template.tpl',
-                                     step='partial html',
+    template.assert_called_once_with('step_tmp.tpl',
+                                     some='param',
                                      step_index=1,
                                      step_count=1)
 
@@ -137,9 +134,10 @@ def test_start_next_step_has_result(w_next, template, wizard):
 @mock.patch.object(mod.Wizard, 'save_state')
 def test_process_current_step_success(save_state, start_next_step, wizard):
     mocked_handler = mock.Mock()
-    mocked_handler.return_value = {'some': 'data'}
+    mocked_handler.return_value = {'some': 'data', 'successful': True}
     wizard.state = {'step': 1, 'data': {}}
-    wizard.steps = {1: {'POST': mocked_handler}}
+    wizard.steps = {1: {'POST': {'handler': mocked_handler,
+                                 'template': 'step_tmp.tpl'}}}
     start_next_step.return_value = 'next step html'
 
     result = wizard.process_current_step()
@@ -153,18 +151,18 @@ def test_process_current_step_success(save_state, start_next_step, wizard):
 
 @mock.patch.object(mod, 'template')
 def test_process_current_step_has_error(template, wizard):
-    partial_html = 'same step partial html with error'
     mocked_handler = mock.Mock()
-    mocked_handler.return_value = partial_html
+    mocked_handler.return_value = {'successful': False, 'errors': {'_': '1'}}
     wizard.state = {'step': 1, 'data': {}}
-    wizard.steps = {1: {'POST': mocked_handler}}
+    wizard.steps = {1: {'POST': {'handler': mocked_handler,
+                                 'template': 'step_tmp.tpl'}}}
     template.return_value = 'whole html with error'
 
     result = wizard.process_current_step()
 
     assert result == 'whole html with error'
-    template.assert_called_once_with('template.tpl',
-                                     step=partial_html,
+    template.assert_called_once_with('step_tmp.tpl',
+                                     errors={'_': '1'},
                                      step_index=1,
                                      step_count=1)
 
@@ -178,44 +176,50 @@ def test_process_current_step_missing_post_handler(wizard):
 
 def test_register_step_autoindex(wizard):
     mocked_step = mock.Mock()
-    decorator = wizard.register_step('test_step')
+    decorator = wizard.register_step('test_step', 'step_tmp.tpl')
     decorator(mocked_step)
     assert len(wizard.steps) == 1
     assert wizard.steps[0] == {'name': 'test_step',
-                               'GET': mocked_step,
-                               'POST': mocked_step}
+                               'GET': {'handler': mocked_step,
+                                       'template': 'step_tmp.tpl'},
+                               'POST': {'handler': mocked_step,
+                                        'template': 'step_tmp.tpl'}}
 
 
 def test_register_step_manualindex(wizard):
     mocked_step = mock.Mock()
-    decorator = wizard.register_step('test_step', index=3)
+    decorator = wizard.register_step('test_step', 'step_tmp.tpl', index=3)
     decorator(mocked_step)
     assert len(wizard.steps) == 1
     assert wizard.steps[3] == {'name': 'test_step',
-                               'GET': mocked_step,
-                               'POST': mocked_step}
+                               'GET': {'handler': mocked_step,
+                                       'template': 'step_tmp.tpl'},
+                               'POST': {'handler': mocked_step,
+                                        'template': 'step_tmp.tpl'}}
 
 
 def test_register_step_index_conflict(wizard):
     wizard.steps[3] = {'name': 'intruder'}
     mocked_step = mock.Mock()
     assert len(wizard.steps) == 1
-    decorator = wizard.register_step('test_step', index=3)
+    decorator = wizard.register_step('test_step', 'step_tmp.tpl', index=3)
     decorator(mocked_step)
     assert len(wizard.steps) == 2
     assert wizard.steps[4] == {'name': 'intruder'}
     assert wizard.steps[3] == {'name': 'test_step',
-                               'GET': mocked_step,
-                               'POST': mocked_step}
+                               'GET': {'handler': mocked_step,
+                                       'template': 'step_tmp.tpl'},
+                               'POST': {'handler': mocked_step,
+                                        'template': 'step_tmp.tpl'}}
 
 
 def test_register_step_invalid_index(wizard):
     mocked_step = mock.Mock()
-    decorator = wizard.register_step('test_step', index='idx')
+    decorator = wizard.register_step('test_step', 'step_tmp.tpl', index='idx')
     with pytest.raises(ValueError):
         decorator(mocked_step)
 
-    decorator = wizard.register_step('test_step', index=-3)
+    decorator = wizard.register_step('test_step', 'step_tmp.tpl', index=-3)
     with pytest.raises(ValueError):
         decorator(mocked_step)
 
@@ -224,7 +228,7 @@ def test_register_step_invalid_index(wizard):
 
 def test_register_step_invalid_method(wizard):
     mocked_step = mock.Mock()
-    decorator = wizard.register_step('test_step', method='PUT')
+    decorator = wizard.register_step('test_step', 'step_tmp.tpl', method='PUT')
     with pytest.raises(ValueError):
         decorator(mocked_step)
 
@@ -239,8 +243,7 @@ def test_remove_gaps(wizard):
 
 @mock.patch.object(mod.Wizard, 'remove_gaps')
 def test_create_wizard(remove_gaps):
-    wizard = mod.Wizard.create_wizard('test', 'template.tpl', {'attr': 1})
+    wizard = mod.Wizard.create_wizard('test', {'attr': 1})
     remove_gaps.assert_called_once_with()
     assert wizard.name == 'test'
-    assert wizard.template == 'template.tpl'
     assert wizard.attr == 1

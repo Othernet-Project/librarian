@@ -31,7 +31,7 @@ from bottle import request
 
 from bottle_utils.lazy import Lazy
 from bottle_utils import html as helpers
-from bottle_utils.i18n import I18NPlugin, lazy_gettext as _
+from bottle_utils.i18n import I18NPlugin, lazy_gettext as _, i18n_url
 from bottle_utils.common import to_unicode
 
 from librarian.core.metadata import LICENSES
@@ -59,7 +59,7 @@ from librarian.utils.content_domain_handler import content_resolver_plugin
 
 from librarian.plugins import install_plugins
 
-from librarian.routes import (content,  # NOQA
+from librarian.routes import (content,
                               tags,
                               downloads,
                               apps,
@@ -148,7 +148,7 @@ ROUTES = (
 
     # Setup wizard
 
-    ('setup:main', setup.setup_wizard,
+    ('setup:main', setup_route.setup_wizard,
      ['GET', 'POST'], '/setup/', {}),
 
     # Apps
@@ -286,8 +286,7 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
-    app.install(setup.setup_plugin(config['setup.base_template'],
-                                   config['setup.finished_template']))
+    app.install(setup.setup_plugin(setup_path=i18n_url('setup:main')))
     app.install(content_resolver_plugin(
         root_url=config['librarian.root_url'],
         ap_client_ip_range=config['librarian.ap_client_ip_range']

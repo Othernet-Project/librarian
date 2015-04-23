@@ -1,3 +1,6 @@
+<%inherit file='main.tpl'/>
+
+<%block name="step">
 <h3>${_('Please set the current date and time.')}</h3>
 <div class="step-datetime-form">
     <p>
@@ -17,3 +20,4 @@
     ${h.form_errors(errors)}
 </div>
 <script type="text/javascript" src="${url('sys:static', path='js/setupdatetime.js')}"></script>
+</%block>

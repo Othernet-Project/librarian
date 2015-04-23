@@ -1,3 +1,6 @@
+<%inherit file='main.tpl'/>
+
+<%block name="step">
 <h3>${_('Please select the interface language.')}</h3>
 <div class="step-language-form">
     <p>
@@ -7,3 +10,4 @@
         ${h.field_error('language', errors)}
     </p>
 </div>
+</%block>

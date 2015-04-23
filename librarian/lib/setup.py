@@ -13,11 +13,7 @@ import json
 import logging
 import os
 
-from bottle import request, redirect, mako_template as template
-
-from bottle_utils.i18n import i18n_url
-
-from .wizard import Wizard
+from bottle import request, redirect
 
 
 logger = logging.getLogger(__name__)
@@ -30,18 +26,6 @@ def autoconfigurator(name):
         AUTO_CONFIGURATORS[name] = func
         return func
     return decorator
-
-
-class SetupWizard(Wizard):
-
-    def wizard_finished(self, data):
-        setup_data = dict()
-        for step, step_result in data.items():
-            setup_data.update(step_result)
-
-        request.app.setup.save(setup_data)
-        result = template(self.finished_template, setup=setup_data)
-        return result
 
 
 class Setup(object):
@@ -83,14 +67,10 @@ class Setup(object):
         return data
 
 
-def setup_plugin(setup_template, setup_finished_template):
-    setup_wizard.template = setup_template
-    setup_wizard.finished_template = setup_finished_template
-
+def setup_plugin(setup_path):
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
-            setup_path = i18n_url('setup:main')
             if (not request.app.setup.is_completed and
                     request.path != setup_path[len(request.locale) + 1:]):
                 return redirect(setup_path)
@@ -98,6 +78,3 @@ def setup_plugin(setup_template, setup_finished_template):
         return wrapper
     plugin.name = 'setup'
     return plugin
-
-
-setup_wizard = SetupWizard(name='setup')

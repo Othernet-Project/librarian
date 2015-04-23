@@ -24,16 +24,13 @@ class Wizard(object):
     valid_methods = ('GET', 'POST')
     prefix = 'wizard_'
 
-    def __init__(self, name=None, template=None):
+    def __init__(self, name=None):
         self.name = name
-        self.template = template
         self.steps = dict()
 
     def __call__(self, *args, **kwargs):
         # each request gets a separate instance so states won't get mixed up
-        instance = self.create_wizard(self.name,
-                                      self.template,
-                                      self.__dict__)
+        instance = self.create_wizard(self.name, self.__dict__)
         return instance.dispatch()
 
     @property
@@ -56,6 +53,10 @@ class Wizard(object):
     def step_count(self):
         return len(self.steps)
 
+    @property
+    def current_step_index(self):
+        return self.state['step']
+
     def load_state(self):
         state = request.session.get(self.id)
         if not state:
@@ -67,16 +68,15 @@ class Wizard(object):
 
     def next(self):
         """Return next step of the wizard."""
-        step_index = self.state['step']
         try:
-            step_handlers = self.steps[step_index]
+            step_handlers = self.steps[self.current_step_index]
         except KeyError:
             raise StopIteration()
         else:
             try:
                 return step_handlers['GET']
             except KeyError:
-                raise MissingStepHandler(step_index, 'GET')
+                raise MissingStepHandler(self.current_step_index, 'GET')
 
     def start_next_step(self):
         try:
@@ -84,29 +84,27 @@ class Wizard(object):
         except StopIteration:
             return self.wizard_finished(self.state['data'])
         else:
-            step_partial = step()
-            return template(self.template,
-                            step=step_partial,
-                            step_index=self.state['step'],
-                            step_count=self.step_count)
+            step_context = step['handler']()
+            return template(step['template'],
+                            step_index=self.current_step_index,
+                            step_count=self.step_count,
+                            **step_context)
 
     def process_current_step(self):
-        current_step_index = self.state['step']
-        step_handlers = self.steps[current_step_index]
+        step_handlers = self.steps[self.current_step_index]
         try:
             step = step_handlers['POST']
         except KeyError:
-            raise MissingStepHandler(current_step_index, 'POST')
+            raise MissingStepHandler(self.current_step_index, 'POST')
 
-        step_result = step()
-        if isinstance(step_result, basestring):
-            # it's a rendered template, the step may have form errors
-            return template(self.template,
-                            step=step_result,
-                            step_index=current_step_index,
-                            step_count=self.step_count)
+        step_result = step['handler']()
+        if not step_result.pop('successful', False):
+            return template(step['template'],
+                            step_index=self.current_step_index,
+                            step_count=self.step_count,
+                            **step_result)
 
-        self.state['data'][current_step_index] = step_result
+        self.state['data'][self.current_step_index] = step_result
         self.state['step'] += 1
         self.save_state()
         return self.start_next_step()
@@ -114,7 +112,7 @@ class Wizard(object):
     def wizard_finished(self, data):
         raise NotImplementedError()
 
-    def register_step(self, name, method=valid_methods, index=None):
+    def register_step(self, name, template, method=valid_methods, index=None):
         def decorator(func):
             next_index = max(self.steps.keys() + [-1]) + 1
             try:
@@ -139,8 +137,8 @@ class Wizard(object):
                     )
                     raise ValueError(msg)
                 self.steps.setdefault(wanted_index, dict(name=name))
-                self.steps[wanted_index][method_name] = func
-
+                self.steps[wanted_index][method_name] = {'handler': func,
+                                                         'template': template}
             return func
         return decorator
 
@@ -154,8 +152,8 @@ class Wizard(object):
         self.steps = dict((idx, step) for idx, step in enumerate(gapless))
 
     @classmethod
-    def create_wizard(cls, name, template, attrs):
-        instance = cls(name, template)
+    def create_wizard(cls, name, attrs):
+        instance = cls(name)
         # make sure attributes that were assigned after the wizard instance was
         # created will be passed on to new instances as well
         for name, value in attrs.items():
