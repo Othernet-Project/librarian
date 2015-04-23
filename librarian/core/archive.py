@@ -13,7 +13,8 @@ import logging
 import os
 import shutil
 
-from .downloads import (get_spool_zip_path,
+from .downloads import (ContentError,
+                        get_spool_zip_path,
                         get_zip_path,
                         get_metadata,
                         get_md5_from_path)
@@ -190,7 +191,12 @@ class BaseArchive(object):
                 continue
 
             logging.debug("<%s> adding to archive (#%s)" % (path, md5))
-            meta = self.prepare_metadata(md5, path)
+            try:
+                meta = self.prepare_metadata(md5, path)
+            except ContentError:
+                logging.debug("skipping '%s', invalid metadata.", md5)
+                continue
+
             if meta.get('replaces'):
                 logging.debug("<%s> replaces '%s'" % (path, meta['replaces']))
                 to_replace.append(meta['replaces'])

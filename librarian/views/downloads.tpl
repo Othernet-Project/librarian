@@ -84,8 +84,15 @@ ${_('Updates')}
                 % endfor
             % else:
                 <tr>
-                ## Translators, note that appears in table on updates page when there is no new downloaded content
-                <td class="empty" colspan="5">${_('There is no new content')}</td>
+                    <td class="empty" colspan="5">
+                    % if lang['lang']:
+                    ## Translators, note that appears in table on updates page when there is no new downloaded content for a given language
+                    ${_("Language filter for '%(lang)s' is active. Click %(link)s to see all updates") % {'lang': th.lang_name_safe(lang['lang']), 'link': '<a href="%(path)s">%(label)s</a>' % {'path': i18n_url(request.path) + h.set_qparam(lang='').to_qs(), 'label': _('here')}}}
+                    % else:
+                    ## Translators, note that appears in table on updates page when there is no new downloaded content
+                    ${_('There is no new content')}
+                    % endif
+                </td>
                 </tr>
             % endif
         </tbody>
