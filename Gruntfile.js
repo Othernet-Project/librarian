@@ -1,7 +1,7 @@
 /*global require,module*/
 module.exports = function (grunt) {
     'use strict';
-    var staticRoot = 'librarian/static/';
+    var staticRoot = 'librarian/static/',
         jsRoot = staticRoot + 'js/',
         jsBundles = {
             content: ['tags.js', 'list.js'],
@@ -19,7 +19,7 @@ module.exports = function (grunt) {
     }
 
     // prefix each filename in `jsBundles` with `jsRoot`
-    Object.keys(jsBundles).forEach(function(key) {
+    Object.keys(jsBundles).forEach(function (key) {
         jsBundles[key] = prefixJS.apply(this, jsBundles[key]);
     });
 
