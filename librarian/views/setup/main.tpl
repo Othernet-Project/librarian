@@ -7,7 +7,7 @@ ${_('Setup Wizard')}
 
 <%block name="heading">
 ## Translators, used as page heading
-${_('Setup Wizard')}
+${_('Setup Wizard: Step %s of %s') % (step_index, step_count)}
 </%block>
 
 <div class="setup-wizard">
