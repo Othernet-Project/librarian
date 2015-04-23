@@ -40,7 +40,7 @@ class SetupWizard(Wizard):
             setup_data.update(step_result)
 
         request.app.setup.save(setup_data)
-        result = template(self.finished_template)
+        result = template(self.finished_template, setup=setup_data)
         return result
 
 

@@ -12,5 +12,5 @@ ${_('Setup Finished')}
 
 <div class="setup-finished">
     <p>Libriran has been set up successfully.</p>
-    <a class="button" href="${i18n_url('content:list')}">Start Librarian</a>
+    <a class="button" href="${i18n_url('content:list', locale=setup['language'])}">Start Librarian</a>
 </div>
