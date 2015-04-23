@@ -1,28 +1,17 @@
+<h3>${_('Please set the current date and time.')}</h3>
 <p>
-    <span id="manual-date">
-        <input type="text" name="year" value="${datetime['year']}" />
-        ${h.vselect('month', months, datetime)}
-        <input type="text" name="day" value="${datetime['day']}" />
+    <span id="noscript-picker">
+        ${h.vinput('year', datetime, _type='text', _class='year')}&ndash;
+        ${h.vselect('month', months, datetime)}&ndash;
+        ${h.vinput('day', datetime, _type='text', _class='time')}
     </span>
-    <input type="text" id="datepicker" value="${datetime['year']}-${datetime['month']}-${datetime['day']}" />
-    <input type="text" class="time" name="hour" value="${datetime['hour']}" />&#58;
-    <input type="text" class="time" name="minute" value="${datetime['minute']}" />&#58;
-    <input type="text" class="time" name="second" value="${datetime['second']}" />
+    <input type="text" id="datepicker" value="${datetime['year']}-${datetime['month']}-${datetime['day']}" style="display: none" />
+    ${h.vinput('hour', datetime, _type='text', _class='time')}&#58;
+    ${h.vinput('minute', datetime, _type='text', _class='time')}&#58;
+    ${h.vinput('second', datetime, _type='text', _class='time')}
     <div class="flow-element">
         <div id="pikaday-container"></div>
     </div>
     ${h.form_errors(errors)}
 </p>
-<script type="text/javascript" src="${url('sys:static', path='js/pikaday.js')}"></script>
-<script type="text/javascript">
-    document.getElementById('manual-date').style.display = 'none';
-    var picker = new Pikaday({
-        field: document.getElementById('datepicker'),
-        container: document.getElementById('pikaday-container'),
-        onSelect: function (date) {
-            $('input[name="year"]').val(date.getFullYear());
-            $('select[name="month"]').val(date.getMonth() + 1);
-            $('input[name="day"]').val(date.getDate());
-        }
-    });
-</script>
+<script type="text/javascript" src="${url('sys:static', path='js/setupdatetime.js')}"></script>

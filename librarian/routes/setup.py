@@ -59,11 +59,10 @@ def setup_datetime():
     entered_dt = dict((key, request.forms.get(key, ''))
                       for key in DATETIME_KEYS)
     datetime_str = datetime_template.format(**entered_dt)
-    print(datetime_str)
     try:
         parse_datetime(datetime_str)
     except ValueError as exc:
-        errors = {'_': exc.message}
+        errors = {'_': str(exc)}
         return template('setup/step_datetime.tpl',
                         errors=errors,
                         months=MONTHS,
@@ -76,5 +75,5 @@ def setup_datetime():
                         datetime=entered_dt)
 
     # Linux only!
-    os.system("date +'%Y:%m:%d %T %z' -s '{0} -0400'".format(datetime_str))
+    os.system("date +'%Y-%m-%d %T' -s '{0}'".format(datetime_str))
     return {}
