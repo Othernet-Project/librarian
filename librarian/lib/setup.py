@@ -65,8 +65,9 @@ class Setup(object):
             with open(self.setup_file, 'r') as s_file:
                 try:
                     return json.load(s_file)
-                except Exception:
-                    logger.exception('Setup file loading failed.')
+                except Exception as exc:
+                    msg = 'Setup file loading failed: {0}'.format(str(exc))
+                    logger.error(msg)
 
     def save(self, new_data):
         """Save the setup data file."""
