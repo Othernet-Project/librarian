@@ -7,7 +7,8 @@ module.exports = function (grunt) {
             content: ['tags.js', 'list.js'],
             dashboard: ['collapsible_dash_sections.js'],
             reader: ['jquery.js', 'lodash.js', 'templates.js', 'tags.js'],
-            ui: ['jquery.js', 'lodash.js', 'templates.js', 'URI.js']
+            ui: ['jquery.js', 'lodash.js', 'templates.js', 'URI.js'],
+            setupdatetime: ['pikaday.js', 'setdt.js']
         },
         uglifyConfig;
 
@@ -61,6 +62,10 @@ module.exports = function (grunt) {
             jsUi: {
                 files: jsBundles.ui,
                 tasks: ['uglify:ui']
+            },
+            jsSetupdatetime: {
+                files: jsBundles.setupdatetime,
+                tasks: ['uglify:setupdatetime']
             }
         },
         compass: {
