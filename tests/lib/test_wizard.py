@@ -16,6 +16,13 @@ def subclassed_wizard():
     return TestWizard('test')
 
 
+@pytest.fixture
+def backable_wizard():
+    class TestWizard(mod.Wizard):
+        allow_back = True
+    return TestWizard('test')
+
+
 @mock.patch.object(mod.Wizard, 'create_wizard')
 def test_call(create_wizard, wizard):
     mocked_instance = mock.Mock()
@@ -33,28 +40,32 @@ def test_wizard_name(subclassed_wizard):
 
 @mock.patch.object(mod.Wizard, 'process_current_step')
 @mock.patch.object(mod.Wizard, 'start_next_step')
+@mock.patch.object(mod.Wizard, 'override_next_step')
 @mock.patch.object(mod.Wizard, 'load_state')
 @mock.patch.object(mod, 'request')
-def test_dispatch_get(request, load_state, start_next_step,
+def test_dispatch_get(request, load_state, override_next_step, start_next_step,
                       process_current_step, wizard):
     request.method = 'GET'
     wizard.dispatch()
 
     load_state.assert_called_once_with()
+    override_next_step.assert_called_once_with()
     start_next_step.assert_called_once_with()
     assert not process_current_step.called
 
 
 @mock.patch.object(mod.Wizard, 'process_current_step')
 @mock.patch.object(mod.Wizard, 'start_next_step')
+@mock.patch.object(mod.Wizard, 'override_next_step')
 @mock.patch.object(mod.Wizard, 'load_state')
 @mock.patch.object(mod, 'request')
-def test_dispatch_post(request, load_state, start_next_step,
-                       process_current_step, wizard):
+def test_dispatch_post(request, load_state, override_next_step,
+                       start_next_step, process_current_step, wizard):
     request.method = 'POST'
     wizard.dispatch()
 
     load_state.assert_called_once_with()
+    override_next_step.assert_called_once_with()
     process_current_step.assert_called_once_with()
     assert not start_next_step.called
 
@@ -75,6 +86,17 @@ def test_load_state_not_found(request, wizard):
     request.session.get.return_value = None
     wizard.load_state()
     assert wizard.state == {'step': 0, 'data': {}}
+
+
+@mock.patch.object(mod, 'request')
+def test_load_state_not_found_custom_start_index(request):
+    class CustomWizard(mod.Wizard):
+        start_index = 4
+
+    custom_wizard = CustomWizard('custom')
+    request.session.get.return_value = None
+    custom_wizard.load_state()
+    assert custom_wizard.state == {'step': 4, 'data': {}}
 
 
 @mock.patch.object(mod, 'request')
@@ -103,6 +125,66 @@ def test_next_missing_get_handler(wizard):
     wizard.steps = {1: {}}
     with pytest.raises(mod.MissingStepHandler):
         next(wizard)
+
+
+@mock.patch.object(mod, 'request')
+def test_override_next_step_not_allowed(request, wizard):
+    request.params = {wizard.step_param: 1}
+    wizard.steps = {1: {}, 2: {}}
+    wizard.state = {'step': 2}
+    assert wizard.allow_back is False
+    wizard.override_next_step()
+    assert wizard.state['step'] == 2
+
+
+@mock.patch.object(mod, 'request')
+def test_override_next_step_no_param_sent(request, backable_wizard):
+    request.params = {}
+    backable_wizard.steps = {1: {}, 2: {}}
+    backable_wizard.state = {'step': 2}
+    assert backable_wizard.allow_back is True
+    backable_wizard.override_next_step()
+    assert backable_wizard.state['step'] == 2
+
+
+@mock.patch.object(mod, 'request')
+def test_override_next_step_invalid_param_sent(request, backable_wizard):
+    request.params = {backable_wizard.step_param: 'aa'}
+    backable_wizard.steps = {1: {}, 2: {}}
+    backable_wizard.state = {'step': 2}
+    assert backable_wizard.allow_back is True
+    backable_wizard.override_next_step()
+    assert backable_wizard.state['step'] == 2
+
+
+@mock.patch.object(mod, 'request')
+def test_override_next_step_not_existing_step(request, backable_wizard):
+    request.params = {backable_wizard.step_param: 10}
+    backable_wizard.steps = {1: {}, 2: {}}
+    backable_wizard.state = {'step': 2}
+    assert backable_wizard.allow_back is True
+    backable_wizard.override_next_step()
+    assert backable_wizard.state['step'] == 2
+
+
+@mock.patch.object(mod, 'request')
+def test_override_next_step_invalid_step(request, backable_wizard):
+    request.params = {backable_wizard.step_param: 3}
+    backable_wizard.steps = {1: {}, 2: {}, 3: {}}
+    backable_wizard.state = {'step': 2}
+    assert backable_wizard.allow_back is True
+    backable_wizard.override_next_step()
+    assert backable_wizard.state['step'] == 2
+
+
+@mock.patch.object(mod, 'request')
+def test_override_next_step_ok(request, backable_wizard):
+    request.params = {backable_wizard.step_param: 1}
+    backable_wizard.steps = {1: {}, 2: {}, 3: {}}
+    backable_wizard.state = {'step': 2}
+    assert backable_wizard.allow_back is True
+    backable_wizard.override_next_step()
+    assert backable_wizard.state['step'] == 1
 
 
 @mock.patch.object(mod.Wizard, 'wizard_finished')
@@ -146,6 +228,32 @@ def test_process_current_step_success(save_state, start_next_step, wizard):
     assert wizard.state['step'] == 2
     assert wizard.state['data'][1] == {'some': 'data'}
     start_next_step.assert_called_once_with()
+    save_state.assert_called_once_with()
+
+
+@mock.patch.object(mod, 'redirect')
+@mock.patch.object(mod, 'request')
+@mock.patch.object(mod.Wizard, 'save_state')
+def test_process_current_step_success_allow_back(save_state, request,
+                                                 redirect):
+    class TestWizard(mod.Wizard):
+        allow_back = True
+
+    wizard = TestWizard('testw')
+    mocked_handler = mock.Mock()
+    mocked_handler.return_value = {'some': 'data', 'successful': True}
+    wizard.state = {'step': 1, 'data': {}}
+    wizard.steps = {1: {'POST': {'handler': mocked_handler,
+                                 'template': 'step_tmp.tpl'}}}
+    redirect.return_value = 302
+    request.fullpath = '/path/to/wizard/'
+
+    result = wizard.process_current_step()
+
+    assert result == 302
+    assert wizard.state['step'] == 2
+    assert wizard.state['data'][1] == {'some': 'data'}
+    redirect.assert_called_once_with('/path/to/wizard/?step=2')
     save_state.assert_called_once_with()
 
 
@@ -241,9 +349,66 @@ def test_remove_gaps(wizard):
     assert wizard.steps == {0: 'first', 1: 'second', 2: 'third'}
 
 
+def test_remove_gaps_custom_start_index():
+    class CustomWizard(mod.Wizard):
+        start_index = 3
+
+    custom_wizard = CustomWizard('custom')
+    custom_wizard.steps = {1: 'first', 3: 'second', 8: 'third'}
+    custom_wizard.remove_gaps()
+    assert custom_wizard.steps == {3: 'first', 4: 'second', 5: 'third'}
+
+
 @mock.patch.object(mod.Wizard, 'remove_gaps')
 def test_create_wizard(remove_gaps):
     wizard = mod.Wizard.create_wizard('test', {'attr': 1})
     remove_gaps.assert_called_once_with()
     assert wizard.name == 'test'
     assert wizard.attr == 1
+
+
+@mock.patch.object(mod.Wizard, 'remove_gaps')
+def test_create_wizard_class_attrs(remove_gaps):
+    class WizardA(mod.Wizard):
+        step_param = 'steppa'
+        allow_back = True
+        start_index = 1
+
+    class WizardB(mod.Wizard):
+        step_param = 'current'
+        allow_back = True
+        start_index = 2
+
+    wiz_a = WizardA.create_wizard('testa', {'attr': 1})
+    wiz_b = WizardB.create_wizard('testb', {'attr': 1})
+
+    assert wiz_a.step_param == 'steppa'
+    assert wiz_a.allow_back is True
+    assert wiz_a.start_index == 1
+
+    assert wiz_b.step_param == 'current'
+    assert wiz_b.allow_back is True
+    assert wiz_b.start_index == 2
+
+
+def test_attr_inheritance():
+    class WizardA(mod.Wizard):
+        allow_back = True
+        start_index = 1
+
+    class WizardB(mod.Wizard):
+        allow_back = True
+        start_index = 2
+
+    w = mod.Wizard('base')
+    wa = WizardA('a')
+    wb = WizardB('b')
+
+    assert w.allow_back is False
+    assert w.start_index == 0
+
+    assert wa.allow_back is True
+    assert wa.start_index == 1
+
+    assert wb.allow_back is True
+    assert wb.start_index == 2
