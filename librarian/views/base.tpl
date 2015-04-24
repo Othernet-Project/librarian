@@ -14,6 +14,7 @@
         <%block name="extra_head"/>
     </head>
     <body>
+        <%block name="header">
         <header>
             <div id="toolbar" class="toolbar">
                 <% icon = '<span class="icon"></span>' %>
@@ -35,6 +36,7 @@
                 % endif
             </div>
         </header>
+        </%block>
 
         <div class="body">
         <%block name="main">
