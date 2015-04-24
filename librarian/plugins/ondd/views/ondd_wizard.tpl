@@ -16,10 +16,6 @@
         ${settings_fields.body()}
     </div>
 </div>
-</%block>
-
-<%block name="extra_scripts">
-<script type="text/javascript" src="${url('plugins:ondd:static', path='ondd.js')}"></script>
 <script type="text/template" id="satPresets">
     <p class="transponder-selection">
     ## Translators, label for select list that allows user to pick a satellite to tune into
@@ -40,4 +36,8 @@
     </select>
     </p>
 </script>
+</%block>
+
+<%block name="extra_scripts">
+<script type="text/javascript" src="${url('plugins:ondd:static', path='ondd.js')}"></script>
 </%block>
