@@ -67,13 +67,13 @@ class Setup(object):
         return data
 
 
-def setup_plugin(setup_path):
+def setup_plugin(setup_path, step_param):
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
             if (not request.app.setup.is_completed and
                     request.path != setup_path[len(request.locale) + 1:]):
-                return redirect(setup_path + '?step={0}'.format(0))
+                return redirect(setup_path + '?{0}={1}'.format(step_param, 1))
             return callback(*args, **kwargs)
         return wrapper
     plugin.name = 'setup'

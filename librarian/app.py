@@ -286,7 +286,10 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
-    app.install(setup.setup_plugin(setup_path=i18n_url('setup:main')))
+    app.install(setup.setup_plugin(
+        setup_path=i18n_url('setup:main'),
+        step_param=setup_route.setup_wizard.step_param
+    ))
     app.install(content_resolver_plugin(
         root_url=config['librarian.root_url'],
         ap_client_ip_range=config['librarian.ap_client_ip_range']

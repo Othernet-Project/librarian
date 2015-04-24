@@ -24,17 +24,16 @@ class Wizard(object):
     valid_methods = ('GET', 'POST')
     prefix = 'wizard_'
     step_param = 'step'
+    start_index = 0
+    allow_back = False
 
-    def __init__(self, name, allow_back=False):
+    def __init__(self, name):
         self.name = name
-        self.allow_back = allow_back
         self.steps = dict()
 
     def __call__(self, *args, **kwargs):
         # each request gets a separate instance so states won't get mixed up
-        instance = self.create_wizard(self.name,
-                                      self.allow_back,
-                                      self.__dict__)
+        instance = self.create_wizard(self.name, self.__dict__)
         return instance.dispatch()
 
     @property
@@ -65,7 +64,7 @@ class Wizard(object):
     def load_state(self):
         state = request.session.get(self.id)
         if not state:
-            state = dict(step=0, data={})
+            state = dict(step=self.start_index, data={})
         self.state = state
 
     def save_state(self):
@@ -129,6 +128,7 @@ class Wizard(object):
         if self.allow_back:
             query = '?{0}={1}'.format(self.step_param, self.current_step_index)
             return redirect(request.fullpath + query)
+
         return self.start_next_step()
 
     def wizard_finished(self, data):
@@ -171,11 +171,12 @@ class Wizard(object):
             original[idx] = step
 
         gapless = [step for step in original if step is not None]
-        self.steps = dict((idx, step) for idx, step in enumerate(gapless))
+        self.steps = dict((self.start_index + idx, step)
+                          for idx, step in enumerate(gapless))
 
     @classmethod
-    def create_wizard(cls, name, allow_back, attrs):
-        instance = cls(name, allow_back=allow_back)
+    def create_wizard(cls, name, attrs):
+        instance = cls(name)
         # make sure attributes that were assigned after the wizard instance was
         # created will be passed on to new instances as well
         for name, value in attrs.items():

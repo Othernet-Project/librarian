@@ -27,6 +27,8 @@ MONTHS = [(idx, name) for idx, name in enumerate(calendar.month_name)]
 
 class SetupWizard(wizard.Wizard):
     finished_template = 'setup/finished.tpl'
+    allow_back = True
+    start_index = 1
 
     def wizard_finished(self, data):
         setup_data = dict()
@@ -38,17 +40,17 @@ class SetupWizard(wizard.Wizard):
         return result
 
 
-setup_wizard = SetupWizard(name='setup', allow_back=True)
+setup_wizard = SetupWizard(name='setup')
 
 
 @setup_wizard.register_step('language', template='setup/step_language.tpl',
-                            method='GET', index=0)
+                            method='GET', index=1)
 def setup_language_form():
     return dict(errors={}, language={'language': DEFAULT_LOCALE})
 
 
 @setup_wizard.register_step('language', template='setup/step_language.tpl',
-                            method='POST', index=0)
+                            method='POST', index=1)
 def setup_language():
     lang = request.forms.get('language')
     if lang not in UI_LOCALES:
@@ -61,7 +63,7 @@ def setup_language():
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
-                            method='GET', index=1)
+                            method='GET', index=2)
 def setup_datetime_form():
     now = datetime.datetime.now()
     current_dt = dict((key, getattr(now, key)) for key in DATETIME_KEYS)
@@ -69,7 +71,7 @@ def setup_datetime_form():
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
-                            method='POST', index=1)
+                            method='POST', index=2)
 def setup_datetime():
     datetime_template = '{year}-{month}-{day} {hour}:{minute}:{second}'
     entered_dt = dict((key, request.forms.get(key, ''))
@@ -96,13 +98,13 @@ def setup_datetime():
 
 
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
-                            method='GET', index=2)
+                            method='GET', index=3)
 def setup_superuser_form():
     return dict(errors={})
 
 
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
-                            method='POST', index=2)
+                            method='POST', index=3)
 def setup_superuser():
     username = request.forms.get('username')
     password1 = request.forms.get('password1')
