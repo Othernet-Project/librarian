@@ -294,6 +294,21 @@ def test_register_step_autoindex(wizard):
                                         'template': 'step_tmp.tpl'}}
 
 
+def test_register_step_autoindex_separate_handlers(wizard):
+    mocked_step_get = mock.Mock()
+    mocked_step_post = mock.Mock()
+    decor = wizard.register_step('test_step', 'step_tmp1.tpl', method='GET')
+    decor(mocked_step_get)
+    decor = wizard.register_step('test_step', 'step_tmp2.tpl', method='POST')
+    decor(mocked_step_post)
+    assert len(wizard.steps) == 1
+    assert wizard.steps[0] == {'name': 'test_step',
+                               'GET': {'handler': mocked_step_get,
+                                       'template': 'step_tmp1.tpl'},
+                               'POST': {'handler': mocked_step_post,
+                                        'template': 'step_tmp2.tpl'}}
+
+
 def test_register_step_manualindex(wizard):
     mocked_step = mock.Mock()
     decorator = wizard.register_step('test_step', 'step_tmp.tpl', index=3)

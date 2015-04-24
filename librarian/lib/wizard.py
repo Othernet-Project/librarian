@@ -134,22 +134,36 @@ class Wizard(object):
     def wizard_finished(self, data):
         raise NotImplementedError()
 
+    def request_step_index(self, name, index, next_free_index):
+        if index is None:
+            # check if a step is already registered by the same name
+            for step_idx, step in self.steps.items():
+                if step['name'] == name:
+                    return step_idx
+            # assign the next available index as no step was registered
+            # previously with this name
+            return next_free_index
+        # index was explicitly specified by registerer, attempt to use it
+        try:
+            use_index = int(index)
+            if use_index < 0:
+                raise ValueError()
+        except (ValueError, TypeError):
+            raise ValueError('Step index must be a positive integer.')
+        else:
+            return use_index
+
     def register_step(self, name, template, method=valid_methods, index=None):
         def decorator(func):
-            next_index = max(self.steps.keys() + [-1]) + 1
-            try:
-                wanted_index = next_index if index is None else int(index)
-                if wanted_index < 0:
-                    raise ValueError()
-            except (ValueError, TypeError):
-                raise ValueError('Step index must be a positive integer.')
+            next_free_index = max(self.steps.keys() + [-1]) + 1
+            use_index = self.request_step_index(name, index, next_free_index)
 
-            if (wanted_index in self.steps and
-                    self.steps[wanted_index]['name'] != name):
+            if (use_index in self.steps and
+                    self.steps[use_index]['name'] != name):
                 # an auto-indexed handler probably have taken the place of this
                 # manually indexed handler, switch their places
-                self.steps[next_index] = self.steps[wanted_index]
-                del self.steps[wanted_index]
+                self.steps[next_free_index] = self.steps[use_index]
+                del self.steps[use_index]
 
             methods = [method] if isinstance(method, basestring) else method
             for method_name in methods:
@@ -158,9 +172,9 @@ class Wizard(object):
                         method_name
                     )
                     raise ValueError(msg)
-                self.steps.setdefault(wanted_index, dict(name=name))
-                self.steps[wanted_index][method_name] = {'handler': func,
-                                                         'template': template}
+                self.steps.setdefault(use_index, dict(name=name))
+                self.steps[use_index][method_name] = {'handler': func,
+                                                      'template': template}
             return func
         return decorator
 
