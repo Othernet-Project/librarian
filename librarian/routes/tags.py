@@ -13,9 +13,7 @@ import re
 from bottle import request, redirect, mako_template as template
 from bottle_utils.ajax import roca_view
 
-from ..core import archive
-
-from .helpers import with_content
+from .helpers import open_archive, with_content
 
 
 WS = re.compile(r'\s', re.M)
@@ -33,6 +31,7 @@ def tag_cloud():
         current = request.params.get('tag')
     except (ValueError, TypeError):
         current = None
+    archive = open_archive()
     tags = archive.get_tag_cloud()
     return dict(tag_cloud=tags, tag=current, base_path=base_path)
 
@@ -45,6 +44,7 @@ def edit_tags(meta):
     existing_tags = set(meta.tags.keys())
     new = tags - existing_tags
     removed = existing_tags - tags
+    archive = open_archive()
     archive.add_tags(meta, new)
     archive.remove_tags(meta, removed)
     if request.is_xhr:

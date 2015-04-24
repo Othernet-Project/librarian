@@ -50,3 +50,5 @@ $content-gap: 1em;
 @import "partials/dash_diskspace";
 @import "partials/dash_netinterfaces";
 
+@import "partials/_setup";
+@import "vendor/pikaday";

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Librarian\n"
 "Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2015-04-08 23:28+0200\n"
+"POT-Creation-Date: 2015-04-24 19:13+0200\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,110 +14,89 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: librarian/utils/lang.py:92
+#: librarian/utils/lang.py:74
 msgid "any language"
 msgstr ""
 
-#. Translators, this is used when app doesn't provide a description
-#: librarian/core/apps.py:45
-#, fuzzy
-msgid "No description provided"
-msgstr "توضیحی ارائه نشده است"
-
-#: librarian/core/metadata.py:25
+#: librarian/core/metadata.py:32
 #, fuzzy
 msgid "Unknown license"
 msgstr "مجوز نامشخص"
 
-#: librarian/core/metadata.py:26
+#: librarian/core/metadata.py:33
 #, fuzzy
 msgid "Creative Commons Attribution"
 msgstr "تعیین مشخصه های معمول"
 
-#: librarian/core/metadata.py:27
+#: librarian/core/metadata.py:34
 #, fuzzy
 msgid "Creative Commons Attribution-NoDerivs"
 msgstr "تعیین مشخصه های دیگر معمول غیر از منبع دریافت شده"
 
-#: librarian/core/metadata.py:28
+#: librarian/core/metadata.py:35
 #, fuzzy
 msgid "Creative Commons Attribution-NonCommercial"
 msgstr "تعیین مشخصه های غیر تجاری معمول"
 
-#: librarian/core/metadata.py:29
+#: librarian/core/metadata.py:36
 #, fuzzy
 msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
 msgstr "تعیین مشخصه های غیر تجاری معمول غیر از منبع دریافت شده"
 
-#: librarian/core/metadata.py:31
+#: librarian/core/metadata.py:37
 #, fuzzy
 msgid "Creative Commons Attribution-ShareAlike"
 msgstr "تعیین مشخصه های عمومی اشتراک گزاری شده"
 
-#: librarian/core/metadata.py:32
+#: librarian/core/metadata.py:38
 #, fuzzy
 msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
 msgstr "تعیین مشخصه های معمول -غیر تجاری -اشتراک گزاری شده"
 
-#: librarian/core/metadata.py:34
+#: librarian/core/metadata.py:39
 #, fuzzy
 msgid "GNU Free Documentation License"
 msgstr "مجوز مستندات آزاد GNU"
 
-#: librarian/core/metadata.py:35
+#: librarian/core/metadata.py:40
 #, fuzzy
 msgid "Open Publication License"
 msgstr "مجوز انتشار منابع آزاد"
 
-#: librarian/core/metadata.py:36
+#: librarian/core/metadata.py:41
 #, fuzzy
 msgid "Open Content License"
 msgstr "مجوز  محنوای باز"
 
-#: librarian/core/metadata.py:37
+#: librarian/core/metadata.py:42
 #, fuzzy
 msgid "Against DRM License"
 msgstr "برخلاف مجوز DRM"
 
-#: librarian/core/metadata.py:38
+#: librarian/core/metadata.py:43
 #, fuzzy
 msgid "Free Art License"
 msgstr "مجوز هنر رایگان"
 
-#: librarian/core/metadata.py:39
+#: librarian/core/metadata.py:44
 #, fuzzy
 msgid "Public Domain"
 msgstr "دامنه های عمومی"
 
-#: librarian/core/metadata.py:40
+#: librarian/core/metadata.py:45
 #, fuzzy
 msgid "Other free license"
 msgstr "مجوز دیگر رایگان"
 
-#: librarian/core/metadata.py:41
+#: librarian/core/metadata.py:46
 #, fuzzy
 msgid "All rights reserved"
 msgstr "تمام حقوق محفوظ است"
 
-#: librarian/core/metadata.py:42
+#: librarian/core/metadata.py:47
 #, fuzzy
 msgid "Other non-free license"
 msgstr "مجوز دیگرغیر رایگان"
-
-#. Translators, used as label, meaning content belogs to core
-#: librarian/core/metadata.py:189 librarian/views/reader.tpl:30
-msgid "core"
-msgstr "هسته"
-
-#. Translators, used as label, meaning content was sponsored by someone
-#: librarian/core/metadata.py:191 librarian/views/reader.tpl:26
-msgid "sponsored"
-msgstr "تحت  حمایت"
-
-#. Translators, used as label, meaning content is from a publisher
-#: librarian/core/metadata.py:193 librarian/views/reader.tpl:21
-msgid "publisher"
-msgstr ""
 
 #. Translators, used as dashboard section title
 #: librarian/plugins/license/plugin.py:24
@@ -148,19 +127,19 @@ msgstr "%s میتواند آزاد شود با حذف مطالب انتخاب ش
 
 #. Translators, error message shown on clean-up page when there was
 #. no deletable content
-#: librarian/plugins/diskspace/plugin.py:69
+#: librarian/plugins/diskspace/plugin.py:75
 #, fuzzy
 msgid "Nothing to delete"
 msgstr "چیزی برای حذف شدن وجود ندارد"
 
 #. Translators, used as dashboard section title
-#: librarian/plugins/diskspace/plugin.py:88
+#: librarian/plugins/diskspace/plugin.py:94
 msgid "Content library stats"
 msgstr "وضعیت محتوای کتابخانه"
 
 #. Translators, error message displayed when locking fails during
 #. database rebuild
-#: librarian/plugins/dbmanage/plugin.py:154
+#: librarian/plugins/dbmanage/plugin.py:145
 msgid ""
 "Librarian could not enter maintenance mode and database rebuild was "
 "cancelled. Please make sure noone else is using Librarian and try again."
@@ -169,7 +148,7 @@ msgstr ""
 "cancelled. Please make sure noone else is using Librarian and try again."
 
 #. Translators, used as dashboard section title
-#: librarian/plugins/dbmanage/plugin.py:173
+#: librarian/plugins/dbmanage/plugin.py:164
 msgid "Content database"
 msgstr "Content database"
 
@@ -179,38 +158,38 @@ msgid "Application logs"
 msgstr "گزارشات برنامه"
 
 #. Translators, refers to transponder polarization
-#: librarian/plugins/ondd/plugin.py:44
+#: librarian/plugins/ondd/plugin.py:45
 msgid "None"
 msgstr "None"
 
 #. Translators, refers to transponder polarization
-#: librarian/plugins/ondd/plugin.py:46
+#: librarian/plugins/ondd/plugin.py:47
 msgid "Vertical"
 msgstr "Vertical"
 
 #. Translators, refers to transponder polarization
-#: librarian/plugins/ondd/plugin.py:48
+#: librarian/plugins/ondd/plugin.py:49
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #. Translators, this is a type of LNB
-#: librarian/plugins/ondd/plugin.py:59
+#: librarian/plugins/ondd/plugin.py:60
 msgid "Universal"
 msgstr "Universal"
 
 #. Translators, this is a type of LNB
-#: librarian/plugins/ondd/plugin.py:61
+#: librarian/plugins/ondd/plugin.py:62
 msgid "North America Ku band"
 msgstr "North America Ku band"
 
 #. Translators, error message when LNB type is incorrect
-#: librarian/plugins/ondd/plugin.py:120
+#: librarian/plugins/ondd/plugin.py:121 librarian/plugins/ondd/plugin.py:189
 msgid "Invalid choice for LNB type"
 msgstr "Invalid choice for LNB type"
 
 #. Translators, error message when frequency value is
 #. wrong
-#: librarian/plugins/ondd/plugin.py:124
+#: librarian/plugins/ondd/plugin.py:125 librarian/plugins/ondd/plugin.py:193
 msgid "Frequency must be a positive number"
 msgstr "Frequency must be a positive number"
 
@@ -222,44 +201,53 @@ msgstr "Frequency must be a positive number"
 #. wrong
 #. Translators, error message when symbolrate value is
 #. wrong
-#: librarian/plugins/ondd/plugin.py:127 librarian/plugins/ondd/plugin.py:134
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#: librarian/plugins/ondd/plugin.py:128 librarian/plugins/ondd/plugin.py:135
+#: librarian/plugins/ondd/plugin.py:196 librarian/plugins/ondd/plugin.py:203
 msgid "Please type in a number"
 msgstr "Please type in a number"
 
 #. Translators, error message when symbolrate value is
 #. wrong
-#: librarian/plugins/ondd/plugin.py:131
+#: librarian/plugins/ondd/plugin.py:132 librarian/plugins/ondd/plugin.py:200
 msgid "Symbolrate must be a positive number"
 msgstr "Symbolrate must be a positive number"
 
 #. Translators, error message shown when wrong delivery
 #. system is selected
-#: librarian/plugins/ondd/plugin.py:138
+#: librarian/plugins/ondd/plugin.py:139 librarian/plugins/ondd/plugin.py:207
 msgid "Invalid choice for delivery system"
 msgstr "Invalid choice for delivery system"
 
 #. Translators, error message shown when wrong modulation
 #. mode is selected
-#: librarian/plugins/ondd/plugin.py:142
+#: librarian/plugins/ondd/plugin.py:143 librarian/plugins/ondd/plugin.py:211
 msgid "Invalid choice for modulation mode"
 msgstr "Invalid choice for modulation mode"
 
 #. Translators, error message shown when wrong
 #. polarization is selected
-#: librarian/plugins/ondd/plugin.py:146
+#: librarian/plugins/ondd/plugin.py:147 librarian/plugins/ondd/plugin.py:215
 msgid "Invalid choice for polarization"
 msgstr "Invalid choice for polarization"
 
 #. Translators, error message shown when setting transponder
 #. configuration is not successful
-#: librarian/plugins/ondd/plugin.py:165
+#: librarian/plugins/ondd/plugin.py:166 librarian/plugins/ondd/plugin.py:238
 msgid "Transponder configuration could not be set"
 msgstr "Transponder configuration could not be set"
 
 #. Translators, used as dashboard section title
 #. Translators, used as page title
 #. Translators, used as page heading
-#: librarian/plugins/ondd/plugin.py:197
+#: librarian/plugins/ondd/plugin.py:269
 #: librarian/plugins/tvheadend/plugin.py:24
 #: librarian/plugins/ondd/views/ondd/settings.tpl:6
 #: librarian/plugins/ondd/views/ondd/settings.tpl:11
@@ -268,55 +256,75 @@ msgid "Tuner settings"
 msgstr "تنظیمات تیونر"
 
 #. Translators, used as dashboard section title
-#: librarian/plugins/netinterfaces/plugin.py:29
+#: librarian/plugins/netinterfaces/plugin.py:26
 msgid "Network interfaces"
 msgstr ""
 
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
-#: librarian/routes/downloads.py:96
+#: librarian/routes/downloads.py:103
 #, fuzzy
 msgid "Invalid action, please use one of the form buttons."
 msgstr "عملیات نامعتبر است، لطفا یکی از دکمه های فرم را استفاده کنید"
 
-#: librarian/routes/content.py:75
+#: librarian/routes/setup.py:57
+msgid "Please select a valid language."
+msgstr ""
+
+#: librarian/routes/setup.py:89
+msgid "Please select a valid date and time."
+msgstr ""
+
+#: librarian/routes/setup.py:113
+msgid "The entered passwords do not match."
+msgstr ""
+
+#: librarian/routes/setup.py:122
+msgid "This username is already taken."
+msgstr ""
+
+#: librarian/routes/setup.py:125
+msgid "Invalid user credentials, please try again."
+msgstr ""
+
+#: librarian/routes/content.py:68
 #, fuzzy
 msgid "Specified tag was not found"
 msgstr "برچسب مشخص شده یافت نشد.\n"
 
 #. Translators, used main navigation menu
-#: librarian/routes/content.py:119 librarian/views/base.tpl:21
+#: librarian/routes/content.py:104 librarian/views/base.tpl:22
 msgid "Library"
 msgstr "کتابخانه"
 
 #. Translators, used main navigation menu
-#: librarian/routes/content.py:128 librarian/views/base.tpl:25
+#: librarian/routes/content.py:113 librarian/views/base.tpl:26
 msgid "Sites"
 msgstr ""
 
-#: librarian/routes/content.py:214
+#: librarian/routes/content.py:206
 msgid "The files you were looking for could not be found"
 msgstr "The files you were looking for could not be found"
 
-#: librarian/routes/content.py:216
+#: librarian/routes/content.py:208
 msgid "This list represents the search results"
 msgstr "This list represents the search results"
 
-#: librarian/routes/content.py:227
+#: librarian/routes/content.py:219
 msgid "This folder does not exist"
 msgstr "This folder does not exist"
 
 #. Translators, error message shown when user does not supply username
-#: librarian/routes/auth.py:30
+#: librarian/routes/auth.py:36
 msgid "Type in your username"
 msgstr ""
 
 #. Translators, error message shown when user does not supply password
-#: librarian/routes/auth.py:33
+#: librarian/routes/auth.py:39
 msgid "Type in your password"
 msgstr ""
 
-#: librarian/routes/auth.py:39
+#: librarian/routes/auth.py:45
 msgid "Please enter the correct username and password."
 msgstr ""
 
@@ -347,14 +355,14 @@ msgstr ""
 
 #. Translators, used in page title
 #. Translators, used in footer
-#: librarian/views/base.tpl:8 librarian/views/base.tpl:63
+#: librarian/views/base.tpl:8 librarian/views/base.tpl:67
 msgid "Librarian"
 msgstr "کتابدار"
 
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
-#: librarian/views/base.tpl:23 librarian/views/file_list.tpl:5
+#: librarian/views/base.tpl:24 librarian/views/file_list.tpl:5
 #: librarian/views/file_list.tpl:10
 msgid "Files"
 msgstr "پرونده ها، فایل ها"
@@ -362,7 +370,7 @@ msgstr "پرونده ها، فایل ها"
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
-#: librarian/views/base.tpl:27 librarian/views/app_list.tpl:5
+#: librarian/views/base.tpl:28 librarian/views/app_list.tpl:5
 #: librarian/views/app_list.tpl:10
 msgid "Apps"
 msgstr "برنامه ها، اپلیکیشین ها"
@@ -370,7 +378,7 @@ msgstr "برنامه ها، اپلیکیشین ها"
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
-#: librarian/views/base.tpl:29 librarian/views/downloads.tpl:7
+#: librarian/views/base.tpl:30 librarian/views/downloads.tpl:7
 #: librarian/views/downloads.tpl:12
 msgid "Updates"
 msgstr "به روز رسانی"
@@ -378,12 +386,12 @@ msgstr "به روز رسانی"
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
-#: librarian/views/base.tpl:31 librarian/views/dashboard.tpl:5
+#: librarian/views/base.tpl:32 librarian/views/dashboard.tpl:5
 #: librarian/views/dashboard.tpl:10
 msgid "Dashboard"
 msgstr "پنل کنترل"
 
-#: librarian/views/base.tpl:34
+#: librarian/views/base.tpl:35
 msgid "Log out"
 msgstr ""
 
@@ -430,6 +438,18 @@ msgstr "اِجرا"
 msgid "About this folder"
 msgstr "درباره ی این پوشه"
 
+#: librarian/views/reader.tpl:21
+msgid "partner"
+msgstr "شریک"
+
+#: librarian/views/reader.tpl:26
+msgid "sponsored"
+msgstr "تحت  حمایت"
+
+#: librarian/views/reader.tpl:30
+msgid "core"
+msgstr "هسته"
+
 #: librarian/views/reader.tpl:33
 msgid "Download"
 msgstr ""
@@ -442,22 +462,25 @@ msgid "Login"
 msgstr ""
 
 #. Translators, used as label for a login field
-#: librarian/views/login.tpl:22
+#. Translators, used as label for a username field
+#: librarian/views/login.tpl:22 librarian/views/setup/step_superuser.tpl:8
 msgid "Username:"
 msgstr ""
 
 #. Translators, used as placeholder in the login field
-#: librarian/views/login.tpl:24
+#. Translators, used as placeholder in the username field
+#: librarian/views/login.tpl:24 librarian/views/setup/step_superuser.tpl:10
 msgid "username"
 msgstr ""
 
 #. Translators, used as label for a login field
-#: librarian/views/login.tpl:29
+#. Translators, used as label for a password field
+#: librarian/views/login.tpl:29 librarian/views/setup/step_superuser.tpl:15
 msgid "Password:"
 msgstr ""
 
 #. Translators, used as placeholder in the password field
-#: librarian/views/login.tpl:31
+#: librarian/views/login.tpl:31 librarian/views/setup/step_superuser.tpl:17
 msgid "password"
 msgstr ""
 
@@ -499,26 +522,38 @@ msgstr "نتیجه ای برای  جستجو '%(terms)s'  یافت نشد"
 msgid "There are no results for '%(tag)s'"
 msgstr "هیچ نتیجه ای برای تگ  '%(tag)s'  یافت نشد"
 
+#. Translators, used as not on library page when there is no content for given language
+#. Translators, note that appears in table on updates page when there is no new downloaded content for a given language
+#: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
+#, python-format
+msgid ""
+"Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
+msgstr ""
+
+#: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
+msgid "here"
+msgstr ""
+
 #. Translators, link that loads more content in infinite scrolling page
-#: librarian/views/content_list.tpl:69
+#: librarian/views/content_list.tpl:72
 #, fuzzy
 msgid "Load more content"
 msgstr "بارگزاری محتوای بیشتر"
 
 #. Translators, used as placeholder while infinite scrolling content is being loaded
-#: librarian/views/content_list.tpl:77
+#: librarian/views/content_list.tpl:80
 #, fuzzy
 msgid "Loading..."
 msgstr "در حال بارگذاری ..."
 
 #. Translators, shown when user reaches the end of the library
-#: librarian/views/content_list.tpl:84
+#: librarian/views/content_list.tpl:87
 #, fuzzy
 msgid "You have reached the end of the library."
 msgstr "شما به پایان کتابخانه رسیده اید."
 
 #. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
-#: librarian/views/content_list.tpl:86 librarian/views/content_list.tpl:93
+#: librarian/views/content_list.tpl:89 librarian/views/content_list.tpl:96
 #, fuzzy
 msgid "Go to top"
 msgstr "برو بالا"
@@ -543,20 +578,26 @@ msgid ""
 "will be redirected to the content list shortly."
 msgstr ""
 
+#. Translators, this is used when app doesn't provide a description
+#: librarian/views/app_list.tpl:21
+#, fuzzy
+msgid "No description provided"
+msgstr "توضیحی ارائه نشده است"
+
 #. Translators, refers to app author
-#: librarian/views/app_list.tpl:22
+#: librarian/views/app_list.tpl:29
 msgid "author:"
 msgstr "نویسنده:"
 
 #. Translators, refers to app version
 #. Translators, used as label for Librarian version in dashboard's 'About' section
-#: librarian/views/app_list.tpl:24
+#: librarian/views/app_list.tpl:31
 #: librarian/plugins/license/views/license.tpl:13
 msgid "version:"
 msgstr "نسخه:"
 
 #. Translators, message show in app listing when no apps are present.
-#: librarian/views/app_list.tpl:33
+#: librarian/views/app_list.tpl:40
 msgid "No apps found."
 msgstr "اپلیکیشینی پیدا نشد."
 
@@ -611,7 +652,7 @@ msgid "replaces:"
 msgstr "جایگزین ها:"
 
 #. Translators, note that appears in table on updates page when there is no new downloaded content
-#: librarian/views/downloads.tpl:88
+#: librarian/views/downloads.tpl:93
 msgid "There is no new content"
 msgstr "محتوای جدیدی موجود نیست"
 
@@ -767,6 +808,62 @@ msgstr "بستن"
 #, fuzzy
 msgid "Tags could not be updated."
 msgstr "برچسب ها از قابلیت بروز رسانی برخوردار نمی باشند"
+
+#: librarian/views/setup/step_superuser.tpl:4
+msgid "Please enter the desired credentials for the superuser account."
+msgstr ""
+
+#. Translators, used as label for a password field
+#: librarian/views/setup/step_superuser.tpl:22
+msgid "Confirm Password:"
+msgstr ""
+
+#. Translators, used as placeholder in the password field
+#: librarian/views/setup/step_superuser.tpl:24
+msgid "confirm password"
+msgstr ""
+
+#. Translators, used as page title
+#: librarian/views/setup/main.tpl:5
+msgid "Setup Wizard"
+msgstr ""
+
+#. Translators, used as page heading
+#: librarian/views/setup/main.tpl:10
+#, python-format
+msgid "Setup Wizard: Step %s of %s"
+msgstr ""
+
+#: librarian/views/setup/main.tpl:20
+msgid "Next"
+msgstr ""
+
+#: librarian/views/setup/step_datetime.tpl:4
+msgid "Please set the current date and time."
+msgstr ""
+
+#: librarian/views/setup/step_language.tpl:4
+msgid "Please select the interface language."
+msgstr ""
+
+#. Translators, used as label for language
+#: librarian/views/setup/step_language.tpl:8
+msgid "Language:"
+msgstr ""
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian/views/setup/finished.tpl:5 librarian/views/setup/finished.tpl:10
+msgid "Setup Completed"
+msgstr ""
+
+#: librarian/views/setup/finished.tpl:14
+msgid "Libriran has been set up successfully."
+msgstr ""
+
+#: librarian/views/setup/finished.tpl:15
+msgid "Start using Librarian"
+msgstr ""
 
 #. Translators, this is a note about GPL license in the 'About' section on dashboard
 #: librarian/plugins/license/views/license.tpl:5
@@ -949,44 +1046,57 @@ msgstr "Downloads in progress"
 
 #. Translators, label for select list that allows user to pick a satellite to tune into
 #: librarian/plugins/ondd/views/ondd.tpl:27
+#: librarian/plugins/ondd/views/ondd_wizard.tpl:22
 msgid "Satellite:"
 msgstr "Satellite:"
 
 #. Translators, placeholder for satellite selection select list
 #: librarian/plugins/ondd/views/ondd.tpl:30
+#: librarian/plugins/ondd/views/ondd_wizard.tpl:25
 msgid "Select a satellite"
 msgstr "Select a satellite"
 
 #. Translators, label for option that allows user to set custom transponder parameters
 #: librarian/plugins/ondd/views/ondd.tpl:40
+#: librarian/plugins/ondd/views/ondd_wizard.tpl:35
 msgid "Custom..."
 msgstr "Custom..."
 
+#: librarian/plugins/ondd/views/ondd_wizard.tpl:6
+msgid "Please select the satellite you'd like to receive data from."
+msgstr ""
+
 #. Translators, form label for LNB type selection
+#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:5
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:8
 msgid "LNB type:"
 msgstr ""
 
 #. Translators, form label for transponder frequency
+#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:13
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:16
 msgid "Frequency:"
 msgstr "Frequency:"
 
 #. Translators, form label for transponder symbol rate
+#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:19
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:22
 msgid "Symbol rate:"
 msgstr "Symbol rate:"
 
 #. Translators, form label for transponder delivery system (DVB-S or DVB-S2)
+#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:25
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:28
 msgid "Delivery system:"
 msgstr "Delivery system:"
 
 #. Translators, form label for transponder modulation mode (QPSK, etc)
+#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:31
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:34
 msgid "Modulation:"
 msgstr "Modulation:"
 
+#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:37
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:40
 msgid "Polarization:"
 msgstr "Polarization:"
@@ -1029,9 +1139,6 @@ msgstr ""
 #, fuzzy
 msgid "Access TVHeadend"
 msgstr "دسترسی به مهمترین موارد تلوزیون"
-
-#~ msgid "partner"
-#~ msgstr "شریک"
 
 #, fuzzy
 #~ msgid "Some files could not be removed"

@@ -41,7 +41,8 @@ def posint(key, notpositive, notnum, errors_dict):
             errors_dict[key] = notpositive
     except (TypeError, ValueError):
         errors_dict[key] = notnum
-    return value
+    else:
+        return value
 
 
 def keyof(key, mapping, error, errors_dict):
@@ -57,4 +58,3 @@ def keyof(key, mapping, error, errors_dict):
     if not value or value not in mapping:
         errors_dict[key] = error
     return value
-

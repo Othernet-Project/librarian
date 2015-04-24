@@ -13,7 +13,7 @@ import getpass
 
 from bottle import request
 
-from ..core import archive
+from ..core.archive import Archive
 from ..lib import auth
 
 
@@ -75,6 +75,11 @@ def dump_tables(arg, databases, app):
 def refill_command(arg, databases, app):
     print('Begin content refill.')
     request.environ['bottle.app'] = app  # connect request with application
+    archive = Archive.setup(app.config['librarian.backend'],
+                            databases.main,
+                            contentdir=app.config['content.contentdir'],
+                            spooldir=app.config['content.spooldir'],
+                            meta_filename=app.config['content.metadata'])
     archive.clear_and_reload()
     print('Content refill finished.')
     sys.exit(0)
