@@ -16,6 +16,7 @@ from bottle import mako_view as view, request, redirect
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ...lib.validate import posint, keyof
+from ...routes.setup import setup_wizard
 
 from ..exceptions import NotSupportedError
 from ..dashboard import DashboardPlugin
@@ -173,6 +174,77 @@ def set_settings():
 @view('ondd/_file_list')
 def show_file_list():
     return dict(files=get_file_list())
+
+
+@setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='GET')
+def setup_ondd_form():
+    return dict(status=ipc.get_status(), vals={}, errors={}, **CONST)
+
+
+@setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='POST')
+def setup_ondd():
+    errors = {}
+    lnb_type = keyof('lnb', LNB_TYPES,
+                     # Translators, error message when LNB type is incorrect
+                     _('Invalid choice for LNB type'), errors)
+    frequency = posint('frequency',
+                       # Translators, error message when frequency value is
+                       # wrong
+                       _('Frequency must be a positive number'),
+                       # Translators, error message when frequency value is
+                       # wrong
+                       _('Please type in a number'), errors)
+    symbolrate = posint('symbolrate',
+                        # Translators, error message when symbolrate value is
+                        # wrong
+                        _('Symbolrate must be a positive number'),
+                        # Translators, error message when symbolrate value is
+                        # wrong
+                        _('Please type in a number'), errors)
+    delivery = keyof('delivery', DELIVERY,
+                     # Translators, error message shown when wrong delivery
+                     # system is selected
+                     _('Invalid choice for delivery system'), errors)
+    modulation = keyof('modulation', MODULATION,
+                       # Translators, error message shown when wrong modulation
+                       # mode is selected
+                       _('Invalid choice for modulation mode'), errors)
+    polarization = keyof('polarization', POLARIZATION,
+                         # Translators, error message shown when wrong
+                         # polarization is selected
+                         _('Invalid choice for polarization'), errors)
+    # TODO: Add support for DiSEqC azimuth value
+
+    if errors:
+        return dict(successful=False,
+                    errors=errors,
+                    vals=request.forms,
+                    status=ipc.get_status(),
+                    **CONST)
+
+    needs_tone = ipc.needs_tone(frequency, lnb_type)
+    frequency = ipc.freq_conv(frequency, lnb_type)
+
+    resp = ipc.set_settings(frequency=frequency,
+                            symbolrate=symbolrate,
+                            delivery=delivery,
+                            tone=needs_tone,
+                            modulation=dict(MODULATION)[modulation],
+                            voltage=VOLTS[polarization])
+
+    if not resp.startswith('2'):
+        # Translators, error message shown when setting transponder
+        # configuration is not successful
+        errors['_'] = _('Transponder configuration could not be set')
+        return dict(successful=False,
+                    errors=errors,
+                    vals=request.forms,
+                    status=ipc.get_status(),
+                    **CONST)
+
+    logging.info('ONDD: tuner settings updated')
+
+    return dict(successful=True)
 
 
 def install(app, route):
