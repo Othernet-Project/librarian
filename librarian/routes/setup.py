@@ -120,7 +120,7 @@ def setup_superuser():
                          db=request.db.sessions)
     except auth.UserAlreadyExists:
         errors = {'username': _("This username is already taken.")}
-        return dict(successful=False, errors=errors)
+        return dict(successful=False, errors=errors, username='')
     except auth.InvalidUserCredentials:
         errors = {'_': _("Invalid user credentials, please try again.")}
         return dict(successful=False, errors=errors, username=username)
