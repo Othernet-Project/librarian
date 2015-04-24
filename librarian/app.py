@@ -38,13 +38,13 @@ from librarian.core.metadata import LICENSES
 from librarian.core.downloads import get_zipballs
 
 from librarian.lib import auth
-from librarian.lib import setup
 from librarian.lib import sessions
 from librarian.lib import squery
 from librarian.lib.lock import lock_plugin
 from librarian.lib.confloader import ConfDict
 
 from librarian.utils import lang
+from librarian.utils import setup
 from librarian.utils import commands
 from librarian.utils import migrations
 from librarian.utils.repl import start_repl

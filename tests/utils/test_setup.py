@@ -1,6 +1,6 @@
 import mock
 
-import librarian.lib.setup as mod
+import librarian.utils.setup as mod
 
 
 @mock.patch.object(mod.Setup, 'auto_configure')
