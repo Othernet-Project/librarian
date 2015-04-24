@@ -12,11 +12,11 @@ import os
 import stat
 import logging
 
+from fdsend import send_file
 from bottle import request, mako_view as view, abort
 
 from ..core import apps
 
-from ..lib import send_file
 
 PREFIX = '/apps'
 
@@ -52,5 +52,5 @@ def send_app_file(appid, path='index.html'):
         logging.error("<%s> Coult not extract '%s': %s", app_path, path, err)
         abort(404)
     filename = os.path.basename(path)
-    return send_file.send_file(content, filename, metadata.file_size,
-                               os.stat(app_path)[stat.ST_MTIME])
+    return send_file(content, filename, metadata.file_size,
+                     os.stat(app_path)[stat.ST_MTIME])

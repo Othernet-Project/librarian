@@ -8,16 +8,16 @@ msgstr ""
 "Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: librarian/views/base.tpl:8 librarian/views/base.tpl:63
+#: librarian/views/base.tpl:8 librarian/views/base.tpl:67
 msgid "Librarian"
 msgstr "Pustakawan"
 
-#: librarian/views/base.tpl:31 librarian/views/dashboard.tpl:5
+#: librarian/views/base.tpl:32 librarian/views/dashboard.tpl:5
 #: librarian/views/dashboard.tpl:10
 msgid "Dashboard"
 msgstr "Dasbor"
 
-#: librarian/views/base.tpl:29 librarian/views/downloads.tpl:7
+#: librarian/views/base.tpl:30 librarian/views/downloads.tpl:7
 #: librarian/views/downloads.tpl:12
 msgid "Updates"
 msgstr "Pembaharuan"
@@ -79,7 +79,7 @@ msgstr "Bebaskan sejumlah ruang sekarang"
 msgid "select"
 msgstr "pilih"
 
-#: librarian/views/downloads.tpl:88
+#: librarian/views/downloads.tpl:93
 msgid "There is no new content"
 msgstr "Saat ini belum ada konten baru"
 
@@ -87,7 +87,7 @@ msgstr "Saat ini belum ada konten baru"
 msgid "Delete selected"
 msgstr "Hapus yang terpilih"
 
-#: librarian/routes/content.py:119 librarian/views/base.tpl:21
+#: librarian/routes/content.py:104 librarian/views/base.tpl:22
 msgid "Library"
 msgstr "Perpustakaan"
 
@@ -112,7 +112,7 @@ msgid "update available"
 msgid_plural "updates available"
 msgstr[0] "pembaharuan tersedia"
 
-#: librarian/plugins/diskspace/plugin.py:88
+#: librarian/plugins/diskspace/plugin.py:94
 msgid "Content library stats"
 msgstr "Status konten perpustakaan"
 
@@ -147,7 +147,7 @@ msgstr "terunduh"
 
 #: librarian/views/content_list.tpl:40
 msgid "Showing search results for '%(terms)s'"
-msgstr "Memperlihatkan hasil pencarian untuk '%(term)'"
+msgstr "Memperlihatkan hasil pencarian untuk '%(term)s'"
 
 #: librarian/views/content_list.tpl:52
 msgid "There are no search results for '%(terms)s'"
@@ -191,12 +191,12 @@ msgid "Add selected to library"
 msgstr "Tambahkan yang terpilih ke perpustakaan"
 
 #. Translators, used as 'content belongs to core archive' badge
-#: librarian/core/metadata.py:189 librarian/views/reader.tpl:30
+#: librarian/views/reader.tpl:30
 msgid "core"
 msgstr "inti"
 
 #. Translators, used as 'sponsored content' badge
-#: librarian/core/metadata.py:191 librarian/views/reader.tpl:26
+#: librarian/views/reader.tpl:26
 msgid "sponsored"
 msgstr "disponsori"
 
@@ -206,24 +206,24 @@ msgstr "disponsori"
 #. Translators, used as page title
 #. Translators, used as page heading
 #. Translators, used main navigation menu
-#: librarian/views/base.tpl:27 librarian/views/app_list.tpl:5
+#: librarian/views/base.tpl:28 librarian/views/app_list.tpl:5
 #: librarian/views/app_list.tpl:10
 msgid "Apps"
 msgstr "Aplikasi"
 
 #. Translators, refers to app author
-#: librarian/views/app_list.tpl:22
+#: librarian/views/app_list.tpl:29
 msgid "author:"
 msgstr "pengarang:"
 
 #. Translators, refers to app version
-#: librarian/views/app_list.tpl:24
+#: librarian/views/app_list.tpl:31
 #: librarian/plugins/license/views/license.tpl:13
 msgid "version:"
 msgstr "versi:"
 
 #. Translators, message show in app listing when no apps are present.
-#: librarian/views/app_list.tpl:33
+#: librarian/views/app_list.tpl:40
 msgid "No apps found."
 msgstr "Tidak ada aplikasi yang ditemukan."
 
@@ -233,7 +233,7 @@ msgstr "Tidak ada aplikasi yang ditemukan."
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
-#: librarian/views/base.tpl:23 librarian/views/file_list.tpl:5
+#: librarian/views/base.tpl:24 librarian/views/file_list.tpl:5
 #: librarian/views/file_list.tpl:10
 msgid "Files"
 msgstr "Arsip"
@@ -305,71 +305,71 @@ msgid "Run"
 msgstr "Jalankan"
 
 #. Translators, this is used when app doesn't provide a description
-#: librarian/core/apps.py:45
+#: librarian/views/app_list.tpl:21
 msgid "No description provided"
 msgstr "Tidak ada deskripsi tersedia"
 
-#: librarian/core/metadata.py:25
+#: librarian/core/metadata.py:32
 msgid "Unknown license"
 msgstr "Lisensi tidak diketahui"
 
-#: librarian/core/metadata.py:26
+#: librarian/core/metadata.py:33
 msgid "Creative Commons Attribution"
 msgstr "Atribusi Creative Commons"
 
-#: librarian/core/metadata.py:27
+#: librarian/core/metadata.py:34
 msgid "Creative Commons Attribution-NoDerivs"
 msgstr "Atribusi Creative Commons-TanpaTurunan"
 
-#: librarian/core/metadata.py:28
+#: librarian/core/metadata.py:35
 msgid "Creative Commons Attribution-NonCommercial"
 msgstr "Atribusi Creative Commons-Nonkomersial"
 
-#: librarian/core/metadata.py:29
+#: librarian/core/metadata.py:36
 msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
 msgstr "Atribusi Creative Commons-Nonkomersial-TanpaTurunan"
 
-#: librarian/core/metadata.py:31
+#: librarian/core/metadata.py:37
 msgid "Creative Commons Attribution-ShareAlike"
 msgstr "Atribusi Creative Commons-BerbagiSerupa"
 
-#: librarian/core/metadata.py:32
+#: librarian/core/metadata.py:38
 msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
 msgstr "Atribusi Creative Commons-Nonkomersial-BerbagiSerupa"
 
-#: librarian/core/metadata.py:34
+#: librarian/core/metadata.py:39
 msgid "GNU Free Documentation License"
 msgstr "Lisensi Dokumentasi Bebas GNU"
 
-#: librarian/core/metadata.py:35
+#: librarian/core/metadata.py:40
 msgid "Open Publication License"
 msgstr "Lisensi Publikasi Terbuka"
 
-#: librarian/core/metadata.py:36
+#: librarian/core/metadata.py:41
 msgid "Open Content License"
 msgstr "Lisensi Konten Terbuka"
 
-#: librarian/core/metadata.py:37
+#: librarian/core/metadata.py:42
 msgid "Against DRM License"
 msgstr "Melawan Lisensi DRM"
 
-#: librarian/core/metadata.py:38
+#: librarian/core/metadata.py:43
 msgid "Free Art License"
 msgstr "Lisensi Kebebasan Seni"
 
-#: librarian/core/metadata.py:39
+#: librarian/core/metadata.py:44
 msgid "Public Domain"
 msgstr "Domain publik"
 
-#: librarian/core/metadata.py:40
+#: librarian/core/metadata.py:45
 msgid "Other free license"
 msgstr "Lisensi gratis lainnya"
 
-#: librarian/core/metadata.py:41
+#: librarian/core/metadata.py:46
 msgid "All rights reserved"
 msgstr "Semua hak cipta"
 
-#: librarian/core/metadata.py:42
+#: librarian/core/metadata.py:47
 msgid "Other non-free license"
 msgstr "Lisensi tidak-bebas lainnya"
 
@@ -393,28 +393,28 @@ msgstr "%s dapat dibebaskan dengan mehilangkan konten terpilih"
 
 #. Translators, error message shown on clean-up page when there was
 #. no deletable content
-#: librarian/plugins/diskspace/plugin.py:69
+#: librarian/plugins/diskspace/plugin.py:75
 msgid "Nothing to delete"
 msgstr "Tiada yang dihapus"
 
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
-#: librarian/routes/downloads.py:96
+#: librarian/routes/downloads.py:103
 msgid "Invalid action, please use one of the form buttons."
 msgstr "Tindakan invalid, tolong gunakan salah satu tombol yang tersedia."
 
 #. Translators, used as placeholder while infinite scrolling content is being loaded
-#: librarian/views/content_list.tpl:77
+#: librarian/views/content_list.tpl:80
 msgid "Loading..."
 msgstr "Memuat..."
 
 #. Translators, shown when user reaches the end of the library
-#: librarian/views/content_list.tpl:84
+#: librarian/views/content_list.tpl:87
 msgid "You have reached the end of the library."
 msgstr "Anda mencapai batas akhir perpustakaan"
 
 #. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
-#: librarian/views/content_list.tpl:86 librarian/views/content_list.tpl:93
+#: librarian/views/content_list.tpl:89 librarian/views/content_list.tpl:96
 msgid "Go to top"
 msgstr "Pergi ke atas"
 
@@ -428,7 +428,7 @@ msgstr "Tentang"
 msgid "Some rights reserved."
 msgstr "Beberapa hak cipta."
 
-#: librarian/routes/content.py:75
+#: librarian/routes/content.py:68
 msgid "Specified tag was not found"
 msgstr "Label spesifik tidak ditemukan"
 
@@ -468,12 +468,12 @@ msgid "Tags could not be updated."
 msgstr "Label tidak dapat diperbaharui"
 
 #. Translators, link that loads more content in infinite scrolling page
-#: librarian/views/content_list.tpl:69
+#: librarian/views/content_list.tpl:72
 msgid "Load more content"
 msgstr "Muat lebih banyak konten"
 
 #. Translators, used as section heading on dashboard
-#: librarian/plugins/ondd/plugin.py:197
+#: librarian/plugins/ondd/plugin.py:269
 #: librarian/plugins/tvheadend/plugin.py:24
 #: librarian/plugins/ondd/views/ondd/settings.tpl:6
 #: librarian/plugins/ondd/views/ondd/settings.tpl:11
@@ -498,49 +498,49 @@ msgstr "Label awan"
 #. database rebuild
 #. Translators, error message displayed when locking fails during
 #. database rebuild
-#: librarian/plugins/dbmanage/plugin.py:154
+#: librarian/plugins/dbmanage/plugin.py:145
 msgid "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
 msgstr "Pustakawan tidak dapat memasuki mode perbaikan dan pembangunan kembali dibatalkan. Tolong pastikan tidak ada yang menggunakan pustakawan dan silakan coba lagi."
 
 #. Translators, used as dashboard section title
 #. Translators, used as dashboard section title
-#: librarian/plugins/dbmanage/plugin.py:173
+#: librarian/plugins/dbmanage/plugin.py:164
 msgid "Content database"
 msgstr "Konten database"
 
 #. Translators, refers to transponder polarization
 #. Translators, refers to transponder polarization
-#: librarian/plugins/ondd/plugin.py:44
+#: librarian/plugins/ondd/plugin.py:45
 msgid "None"
 msgstr "Tidak ada"
 
 #. Translators, refers to transponder polarization
 #. Translators, refers to transponder polarization
-#: librarian/plugins/ondd/plugin.py:46
+#: librarian/plugins/ondd/plugin.py:47
 msgid "Vertical"
 msgstr "Vertikal"
 
 #. Translators, refers to transponder polarization
 #. Translators, refers to transponder polarization
-#: librarian/plugins/ondd/plugin.py:48
+#: librarian/plugins/ondd/plugin.py:49
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #. Translators, this is a type of LNB
 #. Translators, this is a type of LNB
-#: librarian/plugins/ondd/plugin.py:59
+#: librarian/plugins/ondd/plugin.py:60
 msgid "Universal"
 msgstr "Universal"
 
 #. Translators, this is a type of LNB
 #. Translators, this is a type of LNB
-#: librarian/plugins/ondd/plugin.py:61
+#: librarian/plugins/ondd/plugin.py:62
 msgid "North America Ku band"
 msgstr "Band Ku Amerika Utara"
 
 #. Translators, error message when LNB type is incorrect
 #. Translators, error message when LNB type is incorrect
-#: librarian/plugins/ondd/plugin.py:120
+#: librarian/plugins/ondd/plugin.py:121 librarian/plugins/ondd/plugin.py:189
 msgid "Invalid choice for LNB type"
 msgstr "Pilihan invalid untuk tipe LNB"
 
@@ -548,7 +548,7 @@ msgstr "Pilihan invalid untuk tipe LNB"
 #. wrong
 #. Translators, error message when frequency value is
 #. wrong
-#: librarian/plugins/ondd/plugin.py:124
+#: librarian/plugins/ondd/plugin.py:125 librarian/plugins/ondd/plugin.py:193
 msgid "Frequency must be a positive number"
 msgstr "Frekuensi harus dalam bilangan positif"
 
@@ -560,7 +560,8 @@ msgstr "Frekuensi harus dalam bilangan positif"
 #. wrong
 #. Translators, error message when symbolrate value is
 #. wrong
-#: librarian/plugins/ondd/plugin.py:127 librarian/plugins/ondd/plugin.py:134
+#: librarian/plugins/ondd/plugin.py:128 librarian/plugins/ondd/plugin.py:135
+#: librarian/plugins/ondd/plugin.py:196 librarian/plugins/ondd/plugin.py:203
 msgid "Please type in a number"
 msgstr "Tolong ketik dalam bilangan"
 
@@ -568,7 +569,7 @@ msgstr "Tolong ketik dalam bilangan"
 #. wrong
 #. Translators, error message when symbolrate value is
 #. wrong
-#: librarian/plugins/ondd/plugin.py:131
+#: librarian/plugins/ondd/plugin.py:132 librarian/plugins/ondd/plugin.py:200
 msgid "Symbolrate must be a positive number"
 msgstr "Symbolrate harus dalam bilangan positif"
 
@@ -576,7 +577,7 @@ msgstr "Symbolrate harus dalam bilangan positif"
 #. system is selected
 #. Translators, error message shown when wrong delivery
 #. system is selected
-#: librarian/plugins/ondd/plugin.py:138
+#: librarian/plugins/ondd/plugin.py:139 librarian/plugins/ondd/plugin.py:207
 msgid "Invalid choice for delivery system"
 msgstr "Pilihan invalid untuk sistem pengiriman"
 
@@ -584,7 +585,7 @@ msgstr "Pilihan invalid untuk sistem pengiriman"
 #. mode is selected
 #. Translators, error message shown when wrong modulation
 #. mode is selected
-#: librarian/plugins/ondd/plugin.py:142
+#: librarian/plugins/ondd/plugin.py:143 librarian/plugins/ondd/plugin.py:211
 msgid "Invalid choice for modulation mode"
 msgstr "Pilihan invalid untuk mode modulasi"
 
@@ -592,7 +593,7 @@ msgstr "Pilihan invalid untuk mode modulasi"
 #. polarization is selected
 #. Translators, error message shown when wrong
 #. polarization is selected
-#: librarian/plugins/ondd/plugin.py:146
+#: librarian/plugins/ondd/plugin.py:147 librarian/plugins/ondd/plugin.py:215
 msgid "Invalid choice for polarization"
 msgstr "Pilihan invalid untuk polarisasi"
 
@@ -600,19 +601,19 @@ msgstr "Pilihan invalid untuk polarisasi"
 #. configuration is not successful
 #. Translators, error message shown when setting transponder
 #. configuration is not successful
-#: librarian/plugins/ondd/plugin.py:165
+#: librarian/plugins/ondd/plugin.py:166 librarian/plugins/ondd/plugin.py:238
 msgid "Transponder configuration could not be set"
 msgstr "Pengaturan transponder tidak dapat ditentukan"
 
-#: librarian/routes/content.py:214
+#: librarian/routes/content.py:206
 msgid "The files you were looking for could not be found"
 msgstr "Arsip yang anda cari tidak dapat ditemukan"
 
-#: librarian/routes/content.py:216
+#: librarian/routes/content.py:208
 msgid "This list represents the search results"
 msgstr "Daftar ini menunjukkan hasil pencarian"
 
-#: librarian/routes/content.py:227
+#: librarian/routes/content.py:219
 msgid "This folder does not exist"
 msgstr "Folder ini tidak ada"
 
@@ -693,39 +694,47 @@ msgstr "Unduhan dalam progres"
 
 #. Translators, label for select list that allows user to pick a satellite to tune into
 #: librarian/plugins/ondd/views/ondd.tpl:27
+#: librarian/plugins/ondd/views/ondd_wizard.tpl:22
 msgid "Satellite:"
 msgstr "Satelit:"
 
 #. Translators, placeholder for satellite selection select list
 #: librarian/plugins/ondd/views/ondd.tpl:30
+#: librarian/plugins/ondd/views/ondd_wizard.tpl:25
 msgid "Select a satellite"
 msgstr "Pilih satelit"
 
 #. Translators, label for option that allows user to set custom transponder parameters
 #: librarian/plugins/ondd/views/ondd.tpl:40
+#: librarian/plugins/ondd/views/ondd_wizard.tpl:35
 msgid "Custom..."
 msgstr "Custom..."
 
 #. Translators, form label for transponder frequency
+#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:13
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:16
 msgid "Frequency:"
 msgstr "Frekuensi:"
 
 #. Translators, form label for transponder symbol rate
+#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:19
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:22
 msgid "Symbol rate:"
 msgstr "Symbol rate:"
 
 #. Translators, form label for transponder delivery system (DVB-S or DVB-S2)
+#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:25
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:28
 msgid "Delivery system:"
 msgstr "Sistem pengiriman:"
 
 #. Translators, form label for transponder modulation mode (QPSK, etc)
+#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:31
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:34
 msgid "Modulation:"
 msgstr "Modulasi:"
 
+#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:37
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:40
 msgid "Polarization:"
 msgstr "Polarisasi:"
@@ -781,41 +790,42 @@ msgstr "dengan %s"
 
 #. Translators, error message shown when user does not supply username
 #. Translators, error message shown when user does not supply username
-#: librarian/routes/auth.py:30
+#: librarian/routes/auth.py:36
 msgid "Type in your username"
-msgstr "Type in your username"
+msgstr "Tuliskan username anda"
 
 #. Translators, error message shown when user does not supply password
 #. Translators, error message shown when user does not supply password
-#: librarian/routes/auth.py:33
-msgid "Type in your password"
-msgstr "Type in your password"
-
 #: librarian/routes/auth.py:39
-msgid "Please enter the correct username and password."
-msgstr "Please enter the correct username and password."
+msgid "Type in your password"
+msgstr "Tuliskan password anda"
 
-#: librarian/utils/lang.py:92
+#: librarian/routes/auth.py:45
+msgid "Please enter the correct username and password."
+msgstr "Harap masukkan username dan password anda yang benar"
+
+#: librarian/utils/lang.py:74
 msgid "any language"
-msgstr "any language"
+msgstr "baahasa apapun"
 
 #: librarian/plugins/ondd/views/ondd/_file_list.tpl:5
 msgid "No files are being downloaded"
-msgstr "No files are being downloaded"
+msgstr "Tidak ada file yang sedang diunduh"
 
+#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:5
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:8
 msgid "LNB type:"
-msgstr "LNB type:"
+msgstr "Tipe LNB"
 
 #: librarian/views/403.tpl:5 librarian/views/403.tpl:10
 msgid "Forbidden"
-msgstr "Forbidden"
+msgstr "Terlarang"
 
 #: librarian/views/403.tpl:15
 msgid "You are not authorized to access this page."
-msgstr "You are not authorized to access this page."
+msgstr "Anda tidak diijinkan mengakses laman ini"
 
-#: librarian/views/base.tpl:34
+#: librarian/views/base.tpl:35
 msgid "Log out"
 msgstr "Log out"
 
@@ -824,29 +834,29 @@ msgstr "Log out"
 msgid "Login"
 msgstr "Login"
 
-#: librarian/views/login.tpl:22
+#: librarian/views/login.tpl:22 librarian/views/setup/step_superuser.tpl:8
 msgid "Username:"
-msgstr "Username:"
+msgstr "Username"
 
-#: librarian/views/login.tpl:24
+#: librarian/views/login.tpl:24 librarian/views/setup/step_superuser.tpl:10
 msgid "username"
-msgstr "username"
+msgstr "Username"
 
-#: librarian/views/login.tpl:29
+#: librarian/views/login.tpl:29 librarian/views/setup/step_superuser.tpl:15
 msgid "Password:"
-msgstr "Password:"
+msgstr "Password"
 
-#: librarian/views/login.tpl:31
+#: librarian/views/login.tpl:31 librarian/views/setup/step_superuser.tpl:17
 msgid "password"
 msgstr "password"
 
 #: librarian/views/reader.tpl:33
 msgid "Download"
-msgstr "Download"
+msgstr "Unduh"
 
 #: librarian/views/_list_controls.tpl:11
 msgid "Delete all"
-msgstr "Delete all"
+msgstr "Hapus semua"
 
 #: librarian/views/content_list.tpl:34 librarian/views/downloads.tpl:37
 msgid "filter"
@@ -854,52 +864,140 @@ msgstr "filter"
 
 #: librarian/views/downloads.tpl:59
 msgid "language"
-msgstr "language"
+msgstr "bahasa"
 
 #: librarian/views/remove_error.tpl:5 librarian/views/remove_error.tpl:10
 msgid "Content file missing"
-msgstr "Content file missing"
+msgstr "konten file hilang"
 
 #: librarian/views/remove_error.tpl:14
 msgid "The content file was not found, but has been removed from the database. You will be redirected to the content list shortly."
-msgstr "The content file was not found, but has been removed from the database. You will be redirected to the content list shortly."
+msgstr "File konten tidak ditemukan, tapi telah dihapus dari database. Anda akan di sambungkan-kembali ke daftar konten sebentar lagi"
 
 #: librarian/utils/lang.py:34
 msgid "unknown"
-msgstr "unknown"
-
-#. Translators, used as label, meaning content is from a publisher
-#: librarian/core/metadata.py:193 librarian/views/reader.tpl:21
-msgid "publisher"
-msgstr "publisher"
+msgstr "Tidak dikenal"
 
 #. Translators, used as dashboard section title
-#: librarian/plugins/netinterfaces/plugin.py:29
+#: librarian/plugins/netinterfaces/plugin.py:26
 msgid "Network interfaces"
-msgstr "Network interfaces"
+msgstr "Interfase jaringan"
 
 #. Translators, used main navigation menu
-#: librarian/routes/content.py:128 librarian/views/base.tpl:25
+#: librarian/routes/content.py:113 librarian/views/base.tpl:26
 msgid "Sites"
-msgstr "Sites"
+msgstr "Situs"
 
 #. Translators, used as page title
 #. Translators, used as error page heading
 #: librarian/views/404.tpl:5 librarian/views/404.tpl:10
 msgid "Page not found"
-msgstr "Page not found"
+msgstr "Laman tidak ditemukan"
 
 #: librarian/views/404.tpl:13
 msgid "The page you were looking for could not be found"
-msgstr "The page you were looking for could not be found"
+msgstr "Laman yang anda cari tidak bisa ditemukan"
 
 #. Translators, used as note in Application network interfaces section
 #: librarian/plugins/netinterfaces/views/netinterfaces.tpl:4
 msgid "List of available network interfaces"
-msgstr "List of available network interfaces"
+msgstr "Daftar interfase jaringan yang tersedia"
 
 #. Translators, used as label for network interface name
 #: librarian/plugins/netinterfaces/views/netinterfaces.tpl:8
 msgid "Interface name"
-msgstr "Interface name"
+msgstr "nama interfase"
+
+#: librarian/routes/setup.py:57
+msgid "Please select a valid language."
+msgstr "Please select a valid language."
+
+#: librarian/routes/setup.py:89
+msgid "Please select a valid date and time."
+msgstr "Please select a valid date and time."
+
+#: librarian/routes/setup.py:113
+msgid "The entered passwords do not match."
+msgstr "The entered passwords do not match."
+
+#: librarian/routes/setup.py:122
+msgid "This username is already taken."
+msgstr "This username is already taken."
+
+#: librarian/routes/setup.py:125
+msgid "Invalid user credentials, please try again."
+msgstr "Invalid user credentials, please try again."
+
+#: librarian/views/reader.tpl:21
+msgid "partner"
+msgstr "partner"
+
+#. Translators, used as not on library page when there is no content for given language
+#. Translators, note that appears in table on updates page when there is no new downloaded content for a given language
+#: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
+msgid "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
+msgstr "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
+
+#: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
+msgid "here"
+msgstr "here"
+
+#: librarian/views/setup/step_superuser.tpl:4
+msgid "Please enter the desired credentials for the superuser account."
+msgstr "Please enter the desired credentials for the superuser account."
+
+#. Translators, used as label for a password field
+#: librarian/views/setup/step_superuser.tpl:22
+msgid "Confirm Password:"
+msgstr "Confirm Password:"
+
+#. Translators, used as placeholder in the password field
+#: librarian/views/setup/step_superuser.tpl:24
+msgid "confirm password"
+msgstr "confirm password"
+
+#. Translators, used as page title
+#: librarian/views/setup/main.tpl:5
+msgid "Setup Wizard"
+msgstr "Setup Wizard"
+
+#. Translators, used as page heading
+#: librarian/views/setup/main.tpl:10
+msgid "Setup Wizard: Step %s of %s"
+msgstr "Setup Wizard: Step %s of %s"
+
+#: librarian/views/setup/main.tpl:20
+msgid "Next"
+msgstr "Next"
+
+#: librarian/views/setup/step_datetime.tpl:4
+msgid "Please set the current date and time."
+msgstr "Please set the current date and time."
+
+#: librarian/views/setup/step_language.tpl:4
+msgid "Please select the interface language."
+msgstr "Please select the interface language."
+
+#. Translators, used as label for language
+#: librarian/views/setup/step_language.tpl:8
+msgid "Language:"
+msgstr "Language:"
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian/views/setup/finished.tpl:5 librarian/views/setup/finished.tpl:10
+msgid "Setup Completed"
+msgstr "Setup Completed"
+
+#: librarian/views/setup/finished.tpl:14
+msgid "Libriran has been set up successfully."
+msgstr "Libriran has been set up successfully."
+
+#: librarian/views/setup/finished.tpl:15
+msgid "Start using Librarian"
+msgstr "Start using Librarian"
+
+#: librarian/plugins/ondd/views/ondd_wizard.tpl:6
+msgid "Please select the satellite you'd like to receive data from."
+msgstr "Please select the satellite you'd like to receive data from."
 

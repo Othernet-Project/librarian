@@ -15,12 +15,13 @@ from datetime import datetime
 from bottle import request, mako_view as view, redirect
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
 
-from ..core import archive
 from ..core import metadata
 from ..core import downloads
 from ..lib.pager import Pager
-
 from ..utils.cache import cached
+
+from .helpers import open_archive
+
 
 get_metadata = cached()(downloads.get_metadata)
 
@@ -38,7 +39,8 @@ def list_downloads():
     lang = request.params.get('lang', default_lang)
     request.user.options['content_language'] = lang
 
-    zipballs = downloads.get_zipballs()
+    zipballs = downloads.get_zipballs(conf['content.spooldir'],
+                                      conf['content.output_ext'])
     zipballs = list(reversed(downloads.order_zipballs(zipballs)))
     if zipballs:
         last_zip = datetime.fromtimestamp(zipballs[0][1])
@@ -54,7 +56,7 @@ def list_downloads():
     for z, ts in zipballs:
         logging.debug("<%s> getting metas" % z)
         try:
-            meta = get_metadata(z)
+            meta = get_metadata(z, conf['content.metadata'])
             if lang and meta['language'] != lang:
                 continue
 
@@ -73,6 +75,7 @@ def list_downloads():
     pager.get_paging_params()
     metas_on_page = pager.get_items()
 
+    archive = open_archive()
     archive.get_replacements(metas_on_page)
 
     vals = dict(request.params)
@@ -93,15 +96,19 @@ def manage_downloads():
     forms = request.forms
     action = forms.get('action')
     file_list = forms.getall('selection')
+    conf = request.app.config
     if not action:
         # Translators, used as error message shown to user when wrong action
         # code is submitted to server
         return {'error': _('Invalid action, please use one of the form '
                            'buttons.')}
     if action == 'add':
+        archive = open_archive()
         archive.add_to_archive(file_list)
     if action == 'delete':
-        downloads.remove_downloads(file_list)
+        downloads.remove_downloads(conf['content.spooldir'],
+                                   md5s=file_list)
     if action == 'deleteall':
-        downloads.remove_downloads()
+        downloads.remove_downloads(conf['content.spooldir'],
+                                   extension=conf['content.output_ext'])
     redirect(i18n_url('downloads:list'))

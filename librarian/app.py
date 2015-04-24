@@ -31,21 +31,20 @@ from bottle import request
 
 from bottle_utils.lazy import Lazy
 from bottle_utils import html as helpers
-from bottle_utils.i18n import I18NPlugin, lazy_gettext as _
+from bottle_utils.i18n import I18NPlugin, lazy_gettext as _, i18n_url
 from bottle_utils.common import to_unicode
 
-from librarian.core import backend
 from librarian.core.metadata import LICENSES
 from librarian.core.downloads import get_zipballs
 
-from librarian.lib import squery
 from librarian.lib import auth
 from librarian.lib import sessions
+from librarian.lib import squery
 from librarian.lib.lock import lock_plugin
 from librarian.lib.confloader import ConfDict
-from librarian.lib.template_helpers import template_helper
 
 from librarian.utils import lang
+from librarian.utils import setup
 from librarian.utils import commands
 from librarian.utils import migrations
 from librarian.utils.repl import start_repl
@@ -55,15 +54,24 @@ from librarian.utils.timer import request_timer
 from librarian.utils.gserver import ServerManager
 from librarian.utils import databases as database_utils
 from librarian.utils.signal_handlers import on_interrupt
+from librarian.utils.template_helpers import template_helper
+from librarian.utils.content_domain_handler import content_resolver_plugin
 
 from librarian.plugins import install_plugins
 
-from librarian.routes import (content, tags, downloads, apps, dashboard,
-                              system, auth as auth_route)
+from librarian.routes import (content,
+                              tags,
+                              downloads,
+                              apps,
+                              dashboard,
+                              system,
+                              auth as auth_route,
+                              setup as setup_route)
 
 from librarian import __version__
 
 MODDIR = dirname(abspath(__file__))
+APP_ONLY_PLUGINS = ('session', 'user', 'setup')
 
 
 def in_pkg(*paths):
@@ -98,13 +106,15 @@ ROUTES = (
     ('content:sites_list', content.content_sites_list,
      'GET', '/sites', {}),
     ('content:file', content.content_file,
-     'GET', '/pages/<content_id>/<filename:path>', dict(no_i18n=True)),
+     'GET', '/pages/<content_id>/<filename:path>',
+     dict(no_i18n=True, skip=APP_ONLY_PLUGINS)),
     ('content:zipball', content.content_zipball,
-     'GET', '/pages/<content_id>.zip', dict(no_i18n=True, unlocked=True)),
+     'GET', '/pages/<content_id>.zip',
+     dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
     ('content:reader', content.content_reader,
      'GET', '/pages/<content_id>', {}),
     ('content:cover', content.cover_image,
-     'GET', '/covers/<path>', dict(no_i18n=True)),
+     'GET', '/covers/<path>', dict(no_i18n=True, skip=APP_ONLY_PLUGINS)),
     ('content:delete', content.remove_content,
      'POST', '/delete/<content_id>', {}),
 
@@ -136,6 +146,11 @@ ROUTES = (
     ('dashboard:main', dashboard.dashboard,
      'GET', '/dashboard/', {}),
 
+    # Setup wizard
+
+    ('setup:main', setup_route.setup_wizard,
+     ['GET', 'POST'], '/setup/', {}),
+
     # Apps
 
     ('apps:list', apps.show_apps,
@@ -148,11 +163,14 @@ ROUTES = (
     # System
 
     ('sys:static', system.send_static,
-     'GET', '/static/<path:path>', dict(no_i18n=True, unlocked=True)),
+     'GET', '/static/<path:path>',
+     dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
     ('sys:favicon', system.send_favicon,
-     'GET', '/favicon.ico', dict(no_i18n=True, unlocked=True)),
+     'GET', '/favicon.ico',
+     dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
     ('sys:logs', system.send_logfile,
-     'GET', '/librarian.log', dict(no_i18n=True, unlocked=True)),
+     'GET', '/librarian.log',
+     dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
 
     # This route handler is added because unhandled missing pages cause bottle
     # to _not_ install any plugins, and some are essential to rendering of the
@@ -162,6 +180,9 @@ ROUTES = (
 )
 
 app = bottle.default_app()
+app.APP_ONLY_PLUGINS = APP_ONLY_PLUGINS
+# register session secret auto configurator
+setup.autoconfigurator('session.secret')(sessions.generate_secret_key)
 
 
 def prestart(config, logfile=None, debug=False):
@@ -240,7 +261,10 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         'style': 'screen',  # Default stylesheet
         'h': helpers,
         'th': template_helper,
-        'updates': Lazy(lambda: len(list(get_zipballs()))),
+        'updates': Lazy(lambda: len(list(get_zipballs(
+            config['content.spooldir'],
+            config['content.output_ext']
+        )))),
         'readable_license': lambda s: _(dict(LICENSES).get(s, LICENSES[0][1])),
         'is_rtl': Lazy(lambda: request.locale in lang.RTL_LANGS),
         'dir': lambda l: 'rtl' if l in lang.RTL_LANGS else 'auto',
@@ -256,14 +280,18 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
     app.install(squery.database_plugin(databases, debug=debug and not repl))
     app.install(sessions.session_plugin(
         cookie_name=config['session.cookie_name'],
-        secret=config['session.secret'])
-    )
+        secret=app.setup.get('session.secret')
+    ))
     app.install(auth.user_plugin(no_auth))
     wsgiapp = I18NPlugin(app, langs=lang.UI_LANGS,
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
-    app.install(content.content_resolver_plugin(
+    app.install(setup.setup_plugin(
+        setup_path=i18n_url('setup:main'),
+        step_param=setup_route.setup_wizard.step_param
+    ))
+    app.install(content_resolver_plugin(
         root_url=config['librarian.root_url'],
         ap_client_ip_range=config['librarian.ap_client_ip_range']
     ))
@@ -333,6 +361,7 @@ def configure_argparse(parser):
 def main(args):
     app.config = ConfDict.from_file(args.conf, catchall=True, autojson=True)
     conf = app.config
+    app.setup = setup.Setup(conf['setup.file'])
 
     if args.debug_conf:
         print('Configuration file path: %s' % args.conf)
@@ -340,7 +369,6 @@ def main(args):
         sys.exit(0)
 
     databases = prestart(conf, args.log, args.debug)
-    backend.setup(conf['librarian.backend'], conf, databases.main)
     commands.select_command(args, databases, app)
     return start(databases, conf, args.no_auth, args.repl, args.debug)
 

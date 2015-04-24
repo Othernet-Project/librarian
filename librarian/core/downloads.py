@@ -12,16 +12,8 @@ import os
 import zipfile
 import logging
 from datetime import datetime, timedelta
-try:
-    from io import BytesIO as StringIO
-except ImportError:
-    from cStringIO import StringIO
 
 from .metadata import convert_json, DecodeError, FormatError
-from . import backend
-
-
-config = backend.config
 
 
 class ContentError(BaseException):
@@ -32,46 +24,47 @@ class ContentError(BaseException):
         super(ContentError, self).__init__(msg)
 
 
-def find_signed():
+def find_signed(spooldir, extension):
     """ Find all signed files in the spool directory
 
+    :param spooldir:    absolute path to spool directory
+    :param extension:   extension of signed files
     :returns:   iterator containing all filtered items
     """
-    spooldir = config['content.spooldir']
-    extension = config['content.extension']
     everything = os.listdir(spooldir)
     everything = (f for f in everything if f.endswith('.' + extension))
     return (os.path.join(spooldir, f) for f in everything)
 
 
-def is_expired(secs):
+def is_expired(secs, maxage):
     """ Checks if timestamp has expired according to keep option
 
     :param secs:    seconds from epoch of the local system
+    :param maxage:  maximum allowed lifetime in days
     :returns:       whether file has expired
     """
-    maxage = timedelta(days=config['content.keep'])
     filetime = datetime.fromtimestamp(secs)
     now = datetime.now()
-    return now - filetime >= maxage
+    return now - filetime >= timedelta(days=maxage)
 
 
-def cleanup(files):
+def cleanup(files, maxage):
     """ Remove obsolete signed files
 
-    Cleanup is done based on ``'content.keep'`` setting and files' timestamps.
+    Cleanup is done based on the passed in maxage param and files' timestamps.
 
     This function simply assume all files exist and are accessible, so
     ``OSError`` and similar exceptions are not trapped. It is the user's
     responsibility to make sure files do exist.
 
     :param files:   list of file paths
+    :param maxage:  maximum allowed lifetime of files in days
     :returns:       list of files that were kept
     """
     kept = []
     logging.debug("Cleaning up spool directory")
     for path in files:
-        if is_expired(os.path.getmtime(path)):
+        if is_expired(os.path.getmtime(path), maxage):
             logging.debug("Removing expired file '%s'" % path)
             os.unlink(path)
         else:
@@ -80,14 +73,14 @@ def cleanup(files):
     return kept
 
 
-def get_zipballs():
+def get_zipballs(spooldir, extension):
     """ Get all zipballs in the spool directory
 
+    :param spooldir:    absolute path to spool directory
+    :param extension:   zipball extension
     :returns:   iterable containing full paths to zipballs
     """
-    spooldir = os.path.normpath(config['content.spooldir'])
-    output_ext = config['content.output_ext']
-    zipfiles = (f for f in os.listdir(spooldir) if f.endswith(output_ext))
+    zipfiles = (f for f in os.listdir(spooldir) if f.endswith(extension))
     return (os.path.join(spooldir, f) for f in zipfiles)
 
 
@@ -154,7 +147,7 @@ def extract_file(path, filename, no_read=False):
 
     :param path:        path to the zip file
     :param filename:    name of the file to extract
-    :param noread:      return file handle instead of file contents
+    :param no_read:     return file handle instead of file contents
     :returns:           two-tuple in ``(metadata, content)`` format, containing
                         ``zipfile.ZipInfo`` object and file content
                         respectively
@@ -168,12 +161,13 @@ def extract_file(path, filename, no_read=False):
         metadata = content.getinfo(filename)
         fd = content.open(filename, 'r')
         if no_read:
-            # zip files does not support the `seek` method, which causes
-            # exceptions in `send_file`
-            content = StringIO(fd.read())
-            fd.close()
+            # We are retruning the file descriptor pointing to the zipfile
+            # contents. This is not a real file descritor, just a file-like
+            # object (it has read() but not seek().
+            content = fd
         else:
             content = fd.read()
+            fd.close()
             f.close()  # We've read the content, so it's safe to close
     except zipfile.BadZipfile:
         raise ContentError("'%s' is not a valid zipfile" % path, path)
@@ -193,7 +187,7 @@ def get_file(path, filename, no_read=False):
 
     :param path:        path to the zip file
     :param filename:    name of the file to extract
-    :param noread:      return file handle instead of file contents
+    :param no_read:     return file handle instead of file contents
     :returns:           two-tuple in ``(metadata, content)`` format, containing
                         ``zipfile.ZipInfo`` object and file content
                         respectively
@@ -204,7 +198,7 @@ def get_file(path, filename, no_read=False):
     return extract_file(path, filename, no_read)
 
 
-def get_metadata(path):
+def get_metadata(path, meta_filename):
     """ Extract metadata file from zipball and return its content
 
     The extraction happens in-memory, so no files are written out. Files
@@ -214,7 +208,6 @@ def get_metadata(path):
     :param path:    path to the zip file
     :returns:       metadata dict
     """
-    meta_filename = config['content.metadata']
     metadata, content = get_file(path, meta_filename)
     try:
         return convert_json(content)
@@ -236,40 +229,45 @@ def get_zip_path_in(md5, directory):
     return None
 
 
-def get_zip_path(md5):
+def get_zip_path(md5, contentdir):
     """ Get zip file path from MD5 hash
 
-    :param md5:     md5 of the zipball
-    :returns:       actual path to the file of ``None`` if file cannot be found
+    :param md5:          md5 of the zipball
+    :param contentdir:   absolute path to the folder of zipballs
+    :returns:       actual path to the file or `None` if file cannot be found
     """
-    contentdir = os.path.normpath(config['content.contentdir'])
-    return get_zip_path_in(md5, contentdir)
+    return get_zip_path_in(md5, os.path.normpath(contentdir))
 
 
-def get_spool_zip_path(md5):
+def get_spool_zip_path(md5, spooldir):
     """ Get zip file path in spool directory from MD5 hash
 
-    :param md5:     md5 of the zipball
-    :returns:       actual path to the file of ``None`` if file cannot be found
+    :param md5:       md5 of the zipball
+    :param spooldir:  absolute path to spool directory
+    :returns:         actual path to the file or `None` if file cannot be found
     """
-    spooldir = os.path.normpath(config['content.spooldir'])
-    return get_zip_path_in(md5, spooldir)
+    return get_zip_path_in(md5, os.path.normpath(spooldir))
 
 
-def remove_downloads(md5s=None):
+def remove_downloads(spooldir, extension=None, md5s=None):
     """ Remove all downloads matching provided MD5 hexdigests
 
     Removal will fail silently. No exceptions are raised and no errors are
     returned from this function. The user is expected to either ignore error
     conditions or check for removal themselves.
 
-    :param md5s:    iterable containing MD5 hexdigests
+    :param spooldir:   absolute path to spool directory
+    :param extension:  zipball extension (mandatory if `md5s` is None)
+    :param md5s:       iterable containing MD5 hexdigests
     """
     if not md5s:
-        paths = get_zipballs()
+        if not extension:
+            raise TypeError('remove_downloads() needs keyword-only argument'
+                            ' extension if `md5s` is not specified.')
+        paths = get_zipballs(spooldir, extension)
         logging.debug("Removing all items from spool directory")
     else:
-        paths = (get_spool_zip_path(md5) for md5 in md5s)
+        paths = (get_spool_zip_path(md5, spooldir) for md5 in md5s)
         logging.debug("Removing %s items from spool directory" % len(md5s))
     for path in paths:
         if not path:

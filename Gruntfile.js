@@ -1,13 +1,14 @@
 /*global require,module*/
 module.exports = function (grunt) {
     'use strict';
-    var staticRoot = 'librarian/static/';
+    var staticRoot = 'librarian/static/',
         jsRoot = staticRoot + 'js/',
         jsBundles = {
             content: ['tags.js', 'list.js'],
             dashboard: ['collapsible_dash_sections.js'],
             reader: ['jquery.js', 'lodash.js', 'templates.js', 'tags.js'],
-            ui: ['jquery.js', 'lodash.js', 'templates.js', 'URI.js']
+            ui: ['jquery.js', 'lodash.js', 'templates.js', 'URI.js'],
+            setupdatetime: ['pikaday.js', 'setdt.js']
         },
         uglifyConfig;
 
@@ -19,7 +20,7 @@ module.exports = function (grunt) {
     }
 
     // prefix each filename in `jsBundles` with `jsRoot`
-    Object.keys(jsBundles).forEach(function(key) {
+    Object.keys(jsBundles).forEach(function (key) {
         jsBundles[key] = prefixJS.apply(this, jsBundles[key]);
     });
 
@@ -61,6 +62,10 @@ module.exports = function (grunt) {
             jsUi: {
                 files: jsBundles.ui,
                 tasks: ['uglify:ui']
+            },
+            jsSetupdatetime: {
+                files: jsBundles.setupdatetime,
+                tasks: ['uglify:setupdatetime']
             }
         },
         compass: {

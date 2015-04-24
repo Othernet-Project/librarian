@@ -1,3 +1,5 @@
+import datetime
+
 from functools import wraps
 from contextlib import contextmanager
 
@@ -62,10 +64,14 @@ def attr_overrides(obj, **kwargs):
 
 def test_get_default_value():
     with pytest.raises(KeyError):
-        mod.get_default_value('invalid')
+        mod.get_default_value('invalid', {})
 
-    assert mod.get_default_value('url') is None
-    assert mod.get_default_value('keep_formatting') is False
+    assert mod.get_default_value('url', {}) is None
+    assert mod.get_default_value('keep_formatting', {}) is False
+
+    meta = {'timestamp': '2014-08-10 19:59:19 UTC'}
+    broadcast = mod.get_default_value('broadcast', meta)
+    assert broadcast == datetime.date(2014, 8, 10)
 
 
 def test_get_aliases_for():
@@ -73,7 +79,7 @@ def test_get_aliases_for():
         mod.get_aliases_for('invalid')
 
     assert mod.get_aliases_for('url') == []
-    assert mod.get_aliases_for('is_publisher') == ['is_partner']
+    assert mod.get_aliases_for('publisher') == ['partner']
 
 
 def test_is_required():
@@ -92,47 +98,40 @@ def test_replace_aliases():
             'index': 'some.html'}
     expected = {'url': 'test',
                 'title': 'again',
-                'is_publisher': True,
+                'is_partner': True,
                 'publisher': 'Partner',
                 'entry_point': 'some.html'}
     mod.replace_aliases(meta)
     assert meta == expected
 
 
-def test_adding_missing_keys():
+@mock.patch(MOD + '.dateutil.parser.parse')
+def test_adding_missing_keys(date_parse):
     """ Metadata keys that are not in ``d`` will be added """
     d = {}
     mod.add_missing_keys(d)
-    _has_key(d, 'url')
-    _has_key(d, 'title')
-    _has_key(d, 'images')
-    _has_key(d, 'timestamp')
-    _has_key(d, 'keep_formatting')
-    _has_key(d, 'is_publisher')
-    _has_key(d, 'is_sponsored')
-    _has_key(d, 'archive')
-    _has_key(d, 'publisher')
-    _has_key(d, 'license')
-    _has_key(d, 'language')
-    _has_key(d, 'multipage')
-    _has_key(d, 'entry_point')
+    for key in mod.STANDARD_FIELDS:
+        _has_key(d, key)
 
 
-def test_adding_missing_key_doesnt_remove_existing():
+@mock.patch(MOD + '.dateutil.parser.parse')
+def test_adding_missing_key_doesnt_remove_existing(date_parse):
     """ Existing keys will be kept """
     d = {'url': 'foo'}
     mod.add_missing_keys(d)
     assert d['url'] == 'foo'
 
 
-def test_adding_missing_keys_doeesnt_remove_arbitrary_keys():
+@mock.patch(MOD + '.dateutil.parser.parse')
+def test_adding_missing_keys_doeesnt_remove_arbitrary_keys(date_parse):
     """" Even non-standard keys will be kept """
     d = {'foo': 'bar'}
     mod.add_missing_keys(d)
     _has_key(d, 'foo')
 
 
-def test_add_missing_keys_has_return():
+@mock.patch(MOD + '.dateutil.parser.parse')
+def test_add_missing_keys_has_return(date_parse):
     """ Add missing key mutates the supplies dict, but has no return value """
     d = {}
     ret = mod.add_missing_keys(d)
@@ -146,28 +145,49 @@ def test_clean_keys():
     assert d == {'title': 'title'}
 
 
+@mock.patch(MOD + '.dateutil.parser.parse')
 @mock.patch(MOD + '.is_required')
 @mock.patch(MOD + '.json', autospec=True)
-def test_convert_returns__added_keys(json, is_required):
+def test_convert_returns__added_keys(json, is_required, date_parse):
     """ Conversion to json calls ``add_missing_keys()`` on converted value """
     json.loads.return_value = {}
     is_required.return_value = False
+    date_mock = mock.Mock()
+    date_mock.date.return_value = None
+    date_parse.return_value = date_mock
     out = mod.convert_json('')
     assert out == {
         'url': None,
         'title': None,
-        'images': None,
+        'images': 0,
         'timestamp': None,
         'keep_formatting': False,
-        'is_publisher': False,
+        'is_partner': False,
         'is_sponsored': False,
-        'archive': None,
-        'publisher': None,
+        'archive': 'core',
+        'publisher': '',
         'license': None,
-        'language': None,
+        'language': '',
         'multipage': False,
-        'entry_point': 'index.html'
+        'entry_point': 'index.html',
+        'broadcast': None,
+        'keywords': '',
     }
+
+
+@mock.patch(MOD + '.add_missing_keys')
+@mock.patch(MOD + '.is_required')
+@mock.patch(MOD + '.json', autospec=True)
+def test_convert_add_default_fails(json, is_required, add_missing_keys):
+    """ DecodeError must be raised when adding default values raises an exc """
+    json.loads.return_value = {}
+    is_required.return_value = False
+    add_missing_keys.side_effect = Exception()
+    try:
+        mod.convert_json('')
+        assert False, 'Expected to raise'
+    except mod.DecodeError:
+        pass
 
 
 @mock.patch(MOD + '.json', autospec=True)
@@ -235,6 +255,7 @@ def test_convert_correct_keys(json, *ignored):
         'title': 'foo',
         'timestamp': 'foo',
         'license': 'foo',
+        'broadcast': 'foo',
     }
     try:
         mod.convert_json(s)
@@ -470,8 +491,8 @@ def test_label_property_with_keys(*ignored):
         assert meta.label == 'core'
     with key_overrides(meta, is_sponsored=True):
         assert meta.label == 'sponsored'
-    with key_overrides(meta, is_publisher=True):
-        assert meta.label == 'publisher'
+    with key_overrides(meta, is_partner=True):
+        assert meta.label == 'partner'
 
 
 @mock.patch(MOD + '.json', autospec=True)
@@ -483,10 +504,10 @@ def test_label_property_with_key_combinations(*ignored):
         assert meta.label == 'core'
     with key_overrides(meta, archive='ephem', is_sponsored=True):
         assert meta.label == 'sponsored'
-    with key_overrides(meta, archive='core', is_publisher=True):
+    with key_overrides(meta, archive='core', is_partner=True):
         assert meta.label == 'core'
-    with key_overrides(meta, archive='ephem', is_publisher=True):
-        assert meta.label == 'publisher'
+    with key_overrides(meta, archive='ephem', is_partner=True):
+        assert meta.label == 'partner'
 
 
 @mock.patch(MOD + '.json', autospec=True)
