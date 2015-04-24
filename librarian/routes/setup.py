@@ -38,7 +38,7 @@ class SetupWizard(wizard.Wizard):
         return result
 
 
-setup_wizard = SetupWizard(name='setup')
+setup_wizard = SetupWizard(name='setup', allow_back=True)
 
 
 @setup_wizard.register_step('language', template='setup/step_language.tpl',

@@ -13,6 +13,7 @@ ${_('Setup Wizard: Step %s of %s') % (step_index + 1, step_count)}
 <%block name="inner">
 <div class="setup-wizard">
     ${h.form('POST', action=i18n_url('setup:main'))}
+        ${h.vinput('step', {'step': step_index}, _type='hidden')}
         <%block name="step"/>
         <button type="submit" name="action" value="next">${_('Next')}</button>
     </form>

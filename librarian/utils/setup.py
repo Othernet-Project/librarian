@@ -73,7 +73,7 @@ def setup_plugin(setup_path):
         def wrapper(*args, **kwargs):
             if (not request.app.setup.is_completed and
                     request.path != setup_path[len(request.locale) + 1:]):
-                return redirect(setup_path)
+                return redirect(setup_path + '?step={0}'.format(0))
             return callback(*args, **kwargs)
         return wrapper
     plugin.name = 'setup'

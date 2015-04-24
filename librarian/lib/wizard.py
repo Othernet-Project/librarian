@@ -8,7 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from bottle import request, mako_template as template
+from bottle import request, redirect, mako_template as template
 
 from bottle_utils.common import basestring
 
@@ -23,14 +23,18 @@ class MissingStepHandler(ValueError):
 class Wizard(object):
     valid_methods = ('GET', 'POST')
     prefix = 'wizard_'
+    step_param = 'step'
 
-    def __init__(self, name=None):
+    def __init__(self, name, allow_back=False):
         self.name = name
+        self.allow_back = allow_back
         self.steps = dict()
 
     def __call__(self, *args, **kwargs):
         # each request gets a separate instance so states won't get mixed up
-        instance = self.create_wizard(self.name, self.__dict__)
+        instance = self.create_wizard(self.name,
+                                      self.allow_back,
+                                      self.__dict__)
         return instance.dispatch()
 
     @property
@@ -40,6 +44,7 @@ class Wizard(object):
     def dispatch(self):
         # entry-point of a wizard instance, load wizard state from session
         self.load_state()
+        self.override_next_step()
         if request.method == 'POST':
             return self.process_current_step()
 
@@ -78,6 +83,20 @@ class Wizard(object):
             except KeyError:
                 raise MissingStepHandler(self.current_step_index, 'GET')
 
+    def override_next_step(self):
+        if self.allow_back:
+            override_step = request.params.get(self.step_param)
+            if override_step is not None:
+                try:
+                    step_index = int(override_step)
+                except ValueError:
+                    return
+                else:
+                    is_existing_step = step_index in self.steps
+                    is_valid_step = step_index <= self.current_step_index
+                    if is_existing_step and is_valid_step:
+                        self.state['step'] = step_index
+
     def start_next_step(self):
         try:
             step = next(self)
@@ -107,6 +126,9 @@ class Wizard(object):
         self.state['data'][self.current_step_index] = step_result
         self.state['step'] += 1
         self.save_state()
+        if self.allow_back:
+            query = '?{0}={1}'.format(self.step_param, self.current_step_index)
+            return redirect(request.fullpath + query)
         return self.start_next_step()
 
     def wizard_finished(self, data):
@@ -152,8 +174,8 @@ class Wizard(object):
         self.steps = dict((idx, step) for idx, step in enumerate(gapless))
 
     @classmethod
-    def create_wizard(cls, name, attrs):
-        instance = cls(name)
+    def create_wizard(cls, name, allow_back, attrs):
+        instance = cls(name, allow_back=allow_back)
         # make sure attributes that were assigned after the wizard instance was
         # created will be passed on to new instances as well
         for name, value in attrs.items():
