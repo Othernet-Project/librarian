@@ -180,6 +180,7 @@ ROUTES = (
 )
 
 app = bottle.default_app()
+app.APP_ONLY_PLUGINS = APP_ONLY_PLUGINS
 # register session secret auto configurator
 setup.autoconfigurator('session.secret')(sessions.generate_secret_key)
 
