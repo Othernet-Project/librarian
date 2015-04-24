@@ -7,7 +7,7 @@
         ## Translators, used as label for a username field
         <label for="username">${_('Username:')}</label>
         ## Translators, used as placeholder in the username field
-        ${h.vinput('username', {}, _type='text', placeholder=_('username'))}
+        ${h.vinput('username', {'username': username}, _type='text', placeholder=_('username'))}
         ${h.field_error('username', errors)}
     </p>
     <p>

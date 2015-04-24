@@ -100,7 +100,7 @@ def setup_datetime():
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
                             method='GET', index=3)
 def setup_superuser_form():
-    return dict(errors={})
+    return dict(errors={}, username='')
 
 
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
@@ -111,7 +111,7 @@ def setup_superuser():
     password2 = request.forms.get('password2')
     if password1 != password2:
         errors = {'_': _("The entered passwords do not match.")}
-        return dict(successful=False, errors=errors)
+        return dict(successful=False, errors=errors, username=username)
 
     try:
         auth.create_user(username,
@@ -123,6 +123,6 @@ def setup_superuser():
         return dict(successful=False, errors=errors)
     except auth.InvalidUserCredentials:
         errors = {'_': _("Invalid user credentials, please try again.")}
-        return dict(successful=False, errors=errors)
+        return dict(successful=False, errors=errors, username=username)
 
     return dict(successful=True)
