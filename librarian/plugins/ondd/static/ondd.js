@@ -50,8 +50,8 @@
 
   function getOptionData(valId) {
     selection = satSelector.find('option[value=' + valId + ']');
-    if (!selection.length) { 
-      return defaultData();
+    if (!selection.length) {
+      return defaultData;
     }
     return selection.data();
   }
@@ -71,7 +71,7 @@
   function fillForm(obj) {
     var key;
     for (key in obj) {
-      settingsForm.find('#' + key).val(obj[key]);   
+      settingsForm.find('#' + key).val(obj[key]);
     }
   }
 }(this, this.jQuery));

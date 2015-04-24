@@ -10,6 +10,8 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import uuid
 import json
+import random
+import string
 import datetime
 import functools
 
@@ -267,3 +269,11 @@ def session_plugin(cookie_name, secret):
         return wrapper
     plugin.name = 'session'
     return plugin
+
+
+def generate_secret_key():
+    charset = [string.ascii_letters, string.digits, string.punctuation]
+    chars = (''.join(charset).replace('\'', '')
+                             .replace('"', '')
+                             .replace('\\', ''))
+    return ''.join([random.choice(chars) for i in range(50)])
