@@ -244,6 +244,7 @@ def setup_ondd():
 
     logging.info('ONDD: tuner settings updated')
 
+    request.app.setup.append({'ondd': True})
     return dict(successful=True)
 
 

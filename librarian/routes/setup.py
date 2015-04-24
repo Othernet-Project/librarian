@@ -39,6 +39,17 @@ class SetupWizard(wizard.Wizard):
         result = template(self.finished_template, setup=setup_data)
         return result
 
+    def load_state(self):
+        super(SetupWizard, self).load_state()
+        if request.params.get(self.step_param):
+            # this is an intentional step change
+            return
+
+        for step_index, step in sorted(self.steps.items(), key=lambda x: x[0]):
+            if not request.app.setup.get(step['name'], False):
+                self.set_step_index(step_index)
+                return
+
 
 setup_wizard = SetupWizard(name='setup')
 
@@ -59,6 +70,7 @@ def setup_language():
                     errors=errors,
                     language={'language': DEFAULT_LOCALE})
 
+    request.app.setup.append({'language': True})
     return dict(successful=True, language=lang)
 
 
@@ -94,6 +106,7 @@ def setup_datetime():
 
     # Linux only!
     os.system("date +'%Y-%m-%d %T' -s '{0}'".format(datetime_str))
+    request.app.setup.append({'datetime': True})
     return dict(successful=True)
 
 
@@ -125,4 +138,5 @@ def setup_superuser():
         errors = {'_': _("Invalid user credentials, please try again.")}
         return dict(successful=False, errors=errors, username=username)
 
+    request.app.setup.append({'superuser': True})
     return dict(successful=True)

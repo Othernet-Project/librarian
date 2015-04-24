@@ -61,6 +61,9 @@ class Wizard(object):
     def current_step_index(self):
         return self.state['step']
 
+    def set_step_index(self, step_index):
+        self.state['step'] = step_index
+
     def load_state(self):
         state = request.session.get(self.id)
         if not state:
