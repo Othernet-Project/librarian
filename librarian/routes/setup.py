@@ -27,7 +27,7 @@ MONTHS = [(idx, name) for idx, name in enumerate(calendar.month_name)]
 
 class SetupWizard(wizard.Wizard):
     finished_template = 'setup/finished.tpl'
-    allow_back = True
+    allow_override = True
     start_index = 1
 
     def wizard_finished(self, data):
@@ -36,19 +36,25 @@ class SetupWizard(wizard.Wizard):
             setup_data.update(step_result)
 
         request.app.setup.save(setup_data)
-        result = template(self.finished_template, setup=setup_data)
+        result = template(self.finished_template, setup=request.app.setup)
         return result
+
+    def get_next_setup_step_index(self):
+        for step_index, step in sorted(self.steps.items(), key=lambda x: x[0]):
+            try:
+                request.app.setup[step['name']]
+            except KeyError:
+                return step_index
 
     def load_state(self):
         super(SetupWizard, self).load_state()
-        if request.params.get(self.step_param):
-            # this is an intentional step change
-            return
-
-        for step_index, step in sorted(self.steps.items(), key=lambda x: x[0]):
-            if not request.app.setup.get(step['name'], False):
-                self.set_step_index(step_index)
-                return
+        wanted_step_index = request.params.get(self.step_param)
+        next_setup_step_index = self.get_next_setup_step_index()
+        if (wanted_step_index is None or
+                wanted_step_index > next_setup_step_index):
+            self.set_step_index(next_setup_step_index)
+        else:
+            self.set_step_index(wanted_step_index)
 
 
 setup_wizard = SetupWizard(name='setup')
@@ -70,7 +76,7 @@ def setup_language():
                     errors=errors,
                     language={'language': DEFAULT_LOCALE})
 
-    request.app.setup.append({'language': True})
+    request.app.setup.append({'language': lang})
     return dict(successful=True, language=lang)
 
 

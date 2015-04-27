@@ -25,7 +25,7 @@ class Wizard(object):
     prefix = 'wizard_'
     step_param = 'step'
     start_index = 0
-    allow_back = False
+    allow_override = False
 
     def __init__(self, name):
         self.name = name
@@ -86,7 +86,7 @@ class Wizard(object):
                 raise MissingStepHandler(self.current_step_index, 'GET')
 
     def override_next_step(self):
-        if self.allow_back:
+        if self.allow_override:
             override_step = request.params.get(self.step_param)
             if override_step is not None:
                 try:
@@ -97,9 +97,17 @@ class Wizard(object):
                     is_existing_step = step_index in self.steps
                     is_valid_step = step_index <= self.current_step_index
                     if is_existing_step and is_valid_step:
-                        self.state['step'] = step_index
+                        self.set_step_index(step_index)
+
+    def redirect_to_step(self):
+        query = '?{0}={1}'.format(self.step_param, self.current_step_index)
+        return redirect(request.fullpath + query)
 
     def start_next_step(self):
+        # in case the step param is missing, redirect to same url to include it
+        if request.params.get('step') is None:
+            return self.redirect_to_step()
+
         try:
             step = next(self)
         except StopIteration:
@@ -109,6 +117,8 @@ class Wizard(object):
             return template(step['template'],
                             step_index=self.current_step_index,
                             step_count=self.step_count,
+                            step_param=self.step_param,
+                            start_index=self.start_index,
                             **step_context)
 
     def process_current_step(self):
@@ -123,16 +133,14 @@ class Wizard(object):
             return template(step['template'],
                             step_index=self.current_step_index,
                             step_count=self.step_count,
+                            step_param=self.step_param,
+                            start_index=self.start_index,
                             **step_result)
 
         self.state['data'][self.current_step_index] = step_result
-        self.state['step'] += 1
+        self.set_step_index(self.current_step_index + 1)
         self.save_state()
-        if self.allow_back:
-            query = '?{0}={1}'.format(self.step_param, self.current_step_index)
-            return redirect(request.fullpath + query)
-
-        return self.start_next_step()
+        return self.redirect_to_step()
 
     def wizard_finished(self, data):
         raise NotImplementedError()
