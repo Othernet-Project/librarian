@@ -46,7 +46,8 @@ def create_superuser(arg, databases, app):
         auth.create_user(username=username,
                          password=password,
                          is_superuser=True,
-                         db=databases.sessions)
+                         db=databases.sessions,
+                         overwrite=True)
         print("User created.")
     except auth.UserAlreadyExists:
         print("User already exists, please try a different username.")
