@@ -38,13 +38,15 @@
   }
 
   function doRefreshFileList(interval) {
-    setTimeout(function () {
-      $.get(filesUrl).done(function (result) {
-        fileList.html(result);
-      }).always(function () {
-        doRefreshFileList(interval);
-      });
-    }, interval);
+    if (fileList.length > 0) {
+      setTimeout(function () {
+        $.get(filesUrl).done(function (result) {
+          fileList.html(result);
+        }).always(function () {
+          doRefreshFileList(interval);
+        });
+      }, interval);
+    }
   }
 
   function updateForm(e) {
