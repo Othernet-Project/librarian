@@ -136,7 +136,6 @@ def setup_datetime():
     dt_format = '%Y-%m-%d %T %z'
     os.system("date +'{0}' -s '{1}'".format(dt_format,
                                             tz_aware_dt.strftime(dt_format)))
-    print(tz_aware_dt.strftime(dt_format))
     request.app.setup.append({'timezone': tz_id, 'datetime': True})
     return dict(successful=True)
 
