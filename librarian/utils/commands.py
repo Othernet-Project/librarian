@@ -13,8 +13,10 @@ import getpass
 
 from bottle import request
 
+from .. import __version__
 from ..core.archive import Archive
 from ..lib import auth
+from .version import full_version_info
 
 
 COMMANDS = {}
@@ -83,6 +85,14 @@ def refill_command(arg, databases, app):
     archive.clear_and_reload()
     print('Content refill finished.')
     sys.exit(0)
+
+
+@command('version', '--version', action='store_true',
+         help='print out version number and exit')
+def version(arg, databases, app):
+    ver = full_version_info(__version__, app.config)
+    print('v%s' % ver)
+    sys.exit()
 
 
 def add_command_switches(parser):
