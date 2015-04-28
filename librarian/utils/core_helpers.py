@@ -1,5 +1,5 @@
 """
-helpers.py: common helper functions
+helpers.py: librarian core helper functions
 
 Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
