@@ -133,7 +133,7 @@ def setup_datetime():
 
     tz_aware_dt = pytz.timezone(tz_id).localize(local_dt)
     # Linux only!
-    dt_format = '%Y-%m-%d %T %z'
+    dt_format = '%Y-%m-%d %T'
     os.system("date +'{0}' -s '{1}'".format(dt_format,
                                             tz_aware_dt.strftime(dt_format)))
     request.app.setup.append({'timezone': tz_id, 'datetime': True})
