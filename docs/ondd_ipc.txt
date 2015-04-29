@@ -1,6 +1,7 @@
 Get tuner / network status
 
-Send: <get uri="/status"/> Response: 
+Send: <get uri="/status"/> 
+Response: 
 <?xml version="1.0" encoding="UTF-8"?>
 <response code="200">
     <tuner>
@@ -8,34 +9,42 @@ Send: <get uri="/status"/> Response:
         <signal>65</signal>
         <snr>0.00</snr>
     </tuner>
-    <network>
+    <streams>
         <stream>
             <pid>65</pid>
             <bitrate>55355</bitrate>
-            <stats>1146/1/3</stats>
             <ident>outernet-0</ident>
         </stream>
-    </network>
+    </streams>
 </response>
 
-Get file download status
+Get signaling information
 
-Send: <get uri="/files/"/> Response: 
+Send: <get uri="/signaling/"/>
+Response:
 <?xml version="1.0" encoding="UTF-8"?>
 <response code="200">
-    <files>
+  <streams>
+    <stream>
+      <pid>65</pid>
+      <files>
         <file>
-            <path>content/0051d970f292ef8afb6d46102e90295e.zip</path>
-            <size>327162</size>
-            <progress>0</progress>
+          <carousel_id>1</carousel_id>
+          <path>content/0051d970f292ef8afb6d46102e90295e.sig</path>
+          <hash>3c5a99f6efa38ac49a8b627fb8d48fc8b13007f96a040ebad4431dce1254dbc4</hash>
+          <size>325643</size>
+          <fec>ldpc:k=56,n=62,N1=3,seed=865865</fec>
         </file>
         ....
-    </files>
+      </files>
+    </stream>
+  </streams>
 </response>
 
 Get settings:
 
-Send: <get uri="/settings"/> Response: 
+Send: <get uri="/settings"/> 
+Response: 
 <?xml version="1.0" encoding="UTF-8"?>
 <response code="200">
     <tuner>
@@ -61,8 +70,8 @@ Send:
     <voltage>13</voltage>
     <azimuth>97</azimuth>
 </put>
-Response: <?xml version="1.0" encoding="UTF-8"?><response code="204"/>
-
+Response: 
+<?xml version="1.0" encoding="UTF-8"?><response code="204"/>
 
 You can test with netcat as well:
 
