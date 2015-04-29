@@ -28,7 +28,7 @@
         % if meta.publisher:
         <p class="attrib">
             ## Translators, attribution (e.g., 'By Project Gutenberg')
-            ${_('by %s') % meta.publisher | h}
+            ${unicode(_('by %s')) % meta.publisher | h}
         </p>
         % endif
         <p class="badges"></p>

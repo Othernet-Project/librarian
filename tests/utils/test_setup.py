@@ -6,9 +6,9 @@ import librarian.utils.setup as mod
 @mock.patch.object(mod.Setup, 'auto_configure')
 @mock.patch.object(mod.Setup, 'load')
 def test_setup_init_already_completed(load, auto_configure):
-    load.return_value = {'some': 'data'}
+    load.return_value = {'some': 'data', 'completed': True}
     setup = mod.Setup('setup.json')
-    assert setup.data == {'some': 'data'}
+    assert setup.data == {'some': 'data', 'completed': True}
     assert setup.is_completed is True
     assert not auto_configure.called
 
@@ -84,7 +84,10 @@ def test_save_config(init, f_open, json_dump):
 
     setup.save({'setup': 'result', 'another': 1})
 
-    merged_data = {'auto': 'configured', 'setup': 'result', 'another': 1}
+    merged_data = {'auto': 'configured',
+                   'setup': 'result',
+                   'another': 1,
+                   'completed': True}
     json_dump.assert_called_once_with(merged_data, mocked_file)
 
     assert setup.is_completed is True

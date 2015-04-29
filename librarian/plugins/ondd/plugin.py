@@ -111,10 +111,7 @@ def get_signal_status():
     return dict(status=ipc.get_status())
 
 
-@view('ondd/settings', vals={}, errors={}, **CONST)
-def set_settings():
-    errors = {}
-    original_route = request.forms.get('backto', i18n_url('dashboard:main'))
+def validate_params(errors):
     lnb_type = keyof('lnb', LNB_TYPES,
                      # Translators, error message when LNB type is incorrect
                      _('Invalid choice for LNB type'), errors)
@@ -145,19 +142,36 @@ def set_settings():
                          # polarization is selected
                          _('Invalid choice for polarization'), errors)
     # TODO: Add support for DiSEqC azimuth value
+    return dict(lnb_type=lnb_type,
+                frequency=frequency,
+                symbolrate=symbolrate,
+                delivery=delivery,
+                modulation=modulation,
+                polarization=polarization)
 
-    if errors:
-        return dict(errors=errors, vals=request.forms)
 
+def setup_ipc(lnb_type, frequency, symbolrate, delivery, modulation,
+              polarization):
     needs_tone = ipc.needs_tone(frequency, lnb_type)
     frequency = ipc.freq_conv(frequency, lnb_type)
-
-    resp = ipc.set_settings(frequency=frequency,
+    return ipc.set_settings(frequency=frequency,
                             symbolrate=symbolrate,
                             delivery=delivery,
                             tone=needs_tone,
                             modulation=dict(MODULATION)[modulation],
                             voltage=VOLTS[polarization])
+
+
+@view('ondd/settings', vals={}, errors={}, **CONST)
+def set_settings():
+    errors = {}
+    original_route = request.forms.get('backto', i18n_url('dashboard:main'))
+    params = validate_params(errors)
+
+    if errors:
+        return dict(errors=errors, vals=request.forms)
+
+    resp = setup_ipc(**params)
 
     if not resp.startswith('2'):
         # Translators, error message shown when setting transponder
@@ -183,36 +197,7 @@ def setup_ondd_form():
 @setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='POST')
 def setup_ondd():
     errors = {}
-    lnb_type = keyof('lnb', LNB_TYPES,
-                     # Translators, error message when LNB type is incorrect
-                     _('Invalid choice for LNB type'), errors)
-    frequency = posint('frequency',
-                       # Translators, error message when frequency value is
-                       # wrong
-                       _('Frequency must be a positive number'),
-                       # Translators, error message when frequency value is
-                       # wrong
-                       _('Please type in a number'), errors)
-    symbolrate = posint('symbolrate',
-                        # Translators, error message when symbolrate value is
-                        # wrong
-                        _('Symbolrate must be a positive number'),
-                        # Translators, error message when symbolrate value is
-                        # wrong
-                        _('Please type in a number'), errors)
-    delivery = keyof('delivery', DELIVERY,
-                     # Translators, error message shown when wrong delivery
-                     # system is selected
-                     _('Invalid choice for delivery system'), errors)
-    modulation = keyof('modulation', MODULATION,
-                       # Translators, error message shown when wrong modulation
-                       # mode is selected
-                       _('Invalid choice for modulation mode'), errors)
-    polarization = keyof('polarization', POLARIZATION,
-                         # Translators, error message shown when wrong
-                         # polarization is selected
-                         _('Invalid choice for polarization'), errors)
-    # TODO: Add support for DiSEqC azimuth value
+    params = validate_params(errors)
 
     if errors:
         return dict(successful=False,
@@ -221,15 +206,7 @@ def setup_ondd():
                     status=ipc.get_status(),
                     **CONST)
 
-    needs_tone = ipc.needs_tone(frequency, lnb_type)
-    frequency = ipc.freq_conv(frequency, lnb_type)
-
-    resp = ipc.set_settings(frequency=frequency,
-                            symbolrate=symbolrate,
-                            delivery=delivery,
-                            tone=needs_tone,
-                            modulation=dict(MODULATION)[modulation],
-                            voltage=VOLTS[polarization])
+    resp = setup_ipc(**params)
 
     if not resp.startswith('2'):
         # Translators, error message shown when setting transponder
@@ -243,6 +220,7 @@ def setup_ondd():
 
     logging.info('ONDD: tuner settings updated')
 
+    request.app.setup.append({'ondd': True})
     return dict(successful=True)
 
 
