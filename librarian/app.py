@@ -104,7 +104,7 @@ ROUTES = (
     ('content:list', content.content_list,
      'GET', '/', {}),
     ('content:sites_list', content.content_sites_list,
-     'GET', '/sites', {}),
+     'GET', '/sites/', {}),
     ('content:file', content.content_file,
      'GET', '/pages/<content_id>/<filename:path>',
      dict(no_i18n=True, skip=APP_ONLY_PLUGINS)),
