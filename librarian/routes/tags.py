@@ -13,7 +13,7 @@ import re
 from bottle import request, redirect, mako_template as template
 from bottle_utils.ajax import roca_view
 
-from .helpers import open_archive, with_content
+from ..utils.core_helpers import open_archive, with_content
 
 
 WS = re.compile(r'\s', re.M)

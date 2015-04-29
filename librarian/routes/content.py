@@ -34,8 +34,7 @@ from ..lib import auth
 from ..lib.pager import Pager
 
 from ..utils import patch_content
-
-from .helpers import open_archive, init_filemanager, with_content
+from ..utils.core_helpers import open_archive, init_filemanager, with_content
 
 
 app = default_app()

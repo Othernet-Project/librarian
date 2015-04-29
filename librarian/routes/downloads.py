@@ -19,8 +19,7 @@ from ..core import metadata
 from ..core import downloads
 from ..lib.pager import Pager
 from ..utils.cache import cached
-
-from .helpers import open_archive
+from ..utils.core_helpers import open_archive
 
 
 get_metadata = cached()(downloads.get_metadata)
