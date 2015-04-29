@@ -12,6 +12,7 @@ import calendar
 import datetime
 import os
 
+import pytz
 from bottle import request, mako_template as template
 from bottle_utils.i18n import lazy_gettext as _
 from dateutil.parser import parse as parse_datetime
@@ -23,11 +24,13 @@ from ..utils.lang import UI_LOCALES, DEFAULT_LOCALE
 
 DATETIME_KEYS = ('year', 'month', 'day', 'hour', 'minute', 'second')
 MONTHS = [(idx, name) for idx, name in enumerate(calendar.month_name)]
+TIMEZONES = [(tzname, tzname) for tzname in pytz.all_timezones]
+DEFAULT_TIMEZONE = pytz.all_timezones[0]
 
 
 class SetupWizard(wizard.Wizard):
     finished_template = 'setup/finished.tpl'
-    allow_back = True
+    allow_override = True
     start_index = 1
 
     def wizard_finished(self, data):
@@ -36,8 +39,27 @@ class SetupWizard(wizard.Wizard):
             setup_data.update(step_result)
 
         request.app.setup.save(setup_data)
-        result = template(self.finished_template, setup=setup_data)
+        result = template(self.finished_template, setup=request.app.setup)
         return result
+
+    def get_next_setup_step_index(self):
+        for step_index, step in sorted(self.steps.items(), key=lambda x: x[0]):
+            try:
+                request.app.setup[step['name']]
+            except KeyError:
+                return step_index
+
+        return self.step_count + self.start_index
+
+    def load_state(self):
+        super(SetupWizard, self).load_state()
+        wanted_step_index = request.params.get(self.step_param)
+        next_setup_step_index = self.get_next_setup_step_index()
+        if (wanted_step_index is None or
+                wanted_step_index > next_setup_step_index):
+            self.set_step_index(next_setup_step_index)
+        else:
+            self.set_step_index(wanted_step_index)
 
 
 setup_wizard = SetupWizard(name='setup')
@@ -59,6 +81,7 @@ def setup_language():
                     errors=errors,
                     language={'language': DEFAULT_LOCALE})
 
+    request.app.setup.append({'language': lang})
     return dict(successful=True, language=lang)
 
 
@@ -67,7 +90,11 @@ def setup_language():
 def setup_datetime_form():
     now = datetime.datetime.now()
     current_dt = dict((key, getattr(now, key)) for key in DATETIME_KEYS)
-    return dict(errors={}, months=MONTHS, datetime=current_dt)
+    return dict(errors={},
+                months=MONTHS,
+                timezones=TIMEZONES,
+                datetime=current_dt,
+                tz=DEFAULT_TIMEZONE)
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
@@ -77,23 +104,41 @@ def setup_datetime():
     entered_dt = dict((key, request.forms.get(key, ''))
                       for key in DATETIME_KEYS)
     datetime_str = datetime_template.format(**entered_dt)
+
+    tz_id = request.forms.get('timezone')
+    if tz_id not in pytz.all_timezones:
+        errors = {'timezone': _("Please select a valid timezone.")}
+        return dict(successful=False,
+                    errors=errors,
+                    months=MONTHS,
+                    timezones=TIMEZONES,
+                    datetime=entered_dt,
+                    tz=tz_id)
     try:
-        parse_datetime(datetime_str)
+        local_dt = parse_datetime(datetime_str)
     except ValueError as exc:
         errors = {'_': str(exc)}
         return dict(successful=False,
                     errors=errors,
                     months=MONTHS,
-                    datetime=entered_dt)
+                    timezones=TIMEZONES,
+                    datetime=entered_dt,
+                    tz=tz_id)
     except TypeError:
         errors = {'_': _("Please select a valid date and time.")}
         return dict(successful=False,
                     errors=errors,
                     months=MONTHS,
-                    datetime=entered_dt)
+                    timezones=TIMEZONES,
+                    datetime=entered_dt,
+                    tz=tz_id)
 
+    tz_aware_dt = pytz.timezone(tz_id).localize(local_dt)
     # Linux only!
-    os.system("date +'%Y-%m-%d %T' -s '{0}'".format(datetime_str))
+    dt_format = '%Y-%m-%d %T'
+    os.system("date +'{0}' -s '{1}'".format(dt_format,
+                                            tz_aware_dt.strftime(dt_format)))
+    request.app.setup.append({'timezone': tz_id, 'datetime': True})
     return dict(successful=True)
 
 
@@ -125,4 +170,5 @@ def setup_superuser():
         errors = {'_': _("Invalid user credentials, please try again.")}
         return dict(successful=False, errors=errors, username=username)
 
+    request.app.setup.append({'superuser': True})
     return dict(successful=True)
