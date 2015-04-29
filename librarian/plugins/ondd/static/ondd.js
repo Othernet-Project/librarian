@@ -21,20 +21,32 @@
   };
 
   fields.before(satSelection);
-  $(function() {
-    setInterval(doRefresh, refreshInterval);
-    setInterval(doRefreshFileList, fileRefreshInterval);
-  })
+  doRefresh(refreshInterval);
+  doRefreshFileList(fileRefreshInterval);
 
   satSelector.on('change', updateForm);
   updateForm();
 
-  function doRefresh() {
-    signalStatus.load(url);
+  function doRefresh(interval) {
+    setTimeout(function () {
+      $.get(url).done(function (result) {
+        signalStatus.html(result);
+      }).always(function () {
+        doRefresh(interval);
+      });
+    }, interval);
   }
 
-  function doRefreshFileList() {
-    fileList.load(filesUrl);
+  function doRefreshFileList(interval) {
+    if (fileList.length > 0) {
+      setTimeout(function () {
+        $.get(filesUrl).done(function (result) {
+          fileList.html(result);
+        }).always(function () {
+          doRefreshFileList(interval);
+        });
+      }, interval);
+    }
   }
 
   function updateForm(e) {

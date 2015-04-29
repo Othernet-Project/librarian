@@ -19,7 +19,7 @@ def subclassed_wizard():
 @pytest.fixture
 def backable_wizard():
     class TestWizard(mod.Wizard):
-        allow_back = True
+        allow_override = True
     return TestWizard('test')
 
 
@@ -132,7 +132,7 @@ def test_override_next_step_not_allowed(request, wizard):
     request.params = {wizard.step_param: 1}
     wizard.steps = {1: {}, 2: {}}
     wizard.state = {'step': 2}
-    assert wizard.allow_back is False
+    assert wizard.allow_override is False
     wizard.override_next_step()
     assert wizard.state['step'] == 2
 
@@ -142,7 +142,7 @@ def test_override_next_step_no_param_sent(request, backable_wizard):
     request.params = {}
     backable_wizard.steps = {1: {}, 2: {}}
     backable_wizard.state = {'step': 2}
-    assert backable_wizard.allow_back is True
+    assert backable_wizard.allow_override is True
     backable_wizard.override_next_step()
     assert backable_wizard.state['step'] == 2
 
@@ -152,7 +152,7 @@ def test_override_next_step_invalid_param_sent(request, backable_wizard):
     request.params = {backable_wizard.step_param: 'aa'}
     backable_wizard.steps = {1: {}, 2: {}}
     backable_wizard.state = {'step': 2}
-    assert backable_wizard.allow_back is True
+    assert backable_wizard.allow_override is True
     backable_wizard.override_next_step()
     assert backable_wizard.state['step'] == 2
 
@@ -162,7 +162,7 @@ def test_override_next_step_not_existing_step(request, backable_wizard):
     request.params = {backable_wizard.step_param: 10}
     backable_wizard.steps = {1: {}, 2: {}}
     backable_wizard.state = {'step': 2}
-    assert backable_wizard.allow_back is True
+    assert backable_wizard.allow_override is True
     backable_wizard.override_next_step()
     assert backable_wizard.state['step'] == 2
 
@@ -172,7 +172,7 @@ def test_override_next_step_invalid_step(request, backable_wizard):
     request.params = {backable_wizard.step_param: 3}
     backable_wizard.steps = {1: {}, 2: {}, 3: {}}
     backable_wizard.state = {'step': 2}
-    assert backable_wizard.allow_back is True
+    assert backable_wizard.allow_override is True
     backable_wizard.override_next_step()
     assert backable_wizard.state['step'] == 2
 
@@ -182,23 +182,28 @@ def test_override_next_step_ok(request, backable_wizard):
     request.params = {backable_wizard.step_param: 1}
     backable_wizard.steps = {1: {}, 2: {}, 3: {}}
     backable_wizard.state = {'step': 2}
-    assert backable_wizard.allow_back is True
+    assert backable_wizard.allow_override is True
     backable_wizard.override_next_step()
     assert backable_wizard.state['step'] == 1
 
 
+@mock.patch.object(mod, 'request')
 @mock.patch.object(mod.Wizard, 'wizard_finished')
 @mock.patch.object(mod.Wizard, 'next')
-def test_start_next_step_wizard_finished(w_next, wizard_finished, wizard):
+def test_start_next_step_wizard_finished(w_next, wizard_finished, request,
+                                         wizard):
+    request.params = {'step': 1}
     wizard.state = {'data': 'state'}
     w_next.side_effect = StopIteration()
     wizard.start_next_step()
     wizard_finished.assert_called_once_with('state')
 
 
+@mock.patch.object(mod, 'request')
 @mock.patch.object(mod, 'template')
 @mock.patch.object(mod.Wizard, 'next')
-def test_start_next_step_has_result(w_next, template, wizard):
+def test_start_next_step_has_result(w_next, template, request, wizard):
+    request.params = {'step': 1}
     mocked_step = mock.Mock()
     mocked_step.return_value = {'some': 'param'}
     wizard.state = {'step': 1}
@@ -209,35 +214,28 @@ def test_start_next_step_has_result(w_next, template, wizard):
     template.assert_called_once_with('step_tmp.tpl',
                                      some='param',
                                      step_index=1,
-                                     step_count=1)
+                                     step_count=1,
+                                     step_param='step',
+                                     start_index=0)
 
 
-@mock.patch.object(mod.Wizard, 'start_next_step')
-@mock.patch.object(mod.Wizard, 'save_state')
-def test_process_current_step_success(save_state, start_next_step, wizard):
-    mocked_handler = mock.Mock()
-    mocked_handler.return_value = {'some': 'data', 'successful': True}
-    wizard.state = {'step': 1, 'data': {}}
-    wizard.steps = {1: {'POST': {'handler': mocked_handler,
-                                 'template': 'step_tmp.tpl'}}}
-    start_next_step.return_value = 'next step html'
-
-    result = wizard.process_current_step()
-
-    assert result == 'next step html'
-    assert wizard.state['step'] == 2
-    assert wizard.state['data'][1] == {'some': 'data'}
-    start_next_step.assert_called_once_with()
-    save_state.assert_called_once_with()
+@mock.patch.object(mod, 'request')
+@mock.patch.object(mod, 'redirect')
+@mock.patch.object(mod.Wizard, 'next')
+def test_start_next_step_has_result_no_step(w_next, redirect, request, wizard):
+    request.params = {}
+    request.fullpath = '/wizard/'
+    wizard.state = {'step': 1}
+    wizard.start_next_step()
+    redirect.assert_called_once_with('/wizard/?step=1')
 
 
 @mock.patch.object(mod, 'redirect')
 @mock.patch.object(mod, 'request')
 @mock.patch.object(mod.Wizard, 'save_state')
-def test_process_current_step_success_allow_back(save_state, request,
-                                                 redirect):
+def test_process_current_step_success(save_state, request, redirect):
     class TestWizard(mod.Wizard):
-        allow_back = True
+        allow_override = True
 
     wizard = TestWizard('testw')
     mocked_handler = mock.Mock()
@@ -272,7 +270,9 @@ def test_process_current_step_has_error(template, wizard):
     template.assert_called_once_with('step_tmp.tpl',
                                      errors={'_': '1'},
                                      step_index=1,
-                                     step_count=1)
+                                     step_count=1,
+                                     step_param='step',
+                                     start_index=0)
 
 
 def test_process_current_step_missing_post_handler(wizard):
@@ -386,44 +386,44 @@ def test_create_wizard(remove_gaps):
 def test_create_wizard_class_attrs(remove_gaps):
     class WizardA(mod.Wizard):
         step_param = 'steppa'
-        allow_back = True
+        allow_override = True
         start_index = 1
 
     class WizardB(mod.Wizard):
         step_param = 'current'
-        allow_back = True
+        allow_override = True
         start_index = 2
 
     wiz_a = WizardA.create_wizard('testa', {'attr': 1})
     wiz_b = WizardB.create_wizard('testb', {'attr': 1})
 
     assert wiz_a.step_param == 'steppa'
-    assert wiz_a.allow_back is True
+    assert wiz_a.allow_override is True
     assert wiz_a.start_index == 1
 
     assert wiz_b.step_param == 'current'
-    assert wiz_b.allow_back is True
+    assert wiz_b.allow_override is True
     assert wiz_b.start_index == 2
 
 
 def test_attr_inheritance():
     class WizardA(mod.Wizard):
-        allow_back = True
+        allow_override = True
         start_index = 1
 
     class WizardB(mod.Wizard):
-        allow_back = True
+        allow_override = True
         start_index = 2
 
     w = mod.Wizard('base')
     wa = WizardA('a')
     wb = WizardB('b')
 
-    assert w.allow_back is False
+    assert w.allow_override is False
     assert w.start_index == 0
 
-    assert wa.allow_back is True
+    assert wa.allow_override is True
     assert wa.start_index == 1
 
-    assert wb.allow_back is True
+    assert wb.allow_override is True
     assert wb.start_index == 2
