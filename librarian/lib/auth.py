@@ -148,7 +148,8 @@ def is_valid_password(password, encrypted_password):
     return encrypted_password == pbkdf2.crypt(password, encrypted_password)
 
 
-def create_user(username, password, is_superuser=False, db=None):
+def create_user(username, password, is_superuser=False, db=None,
+                overwrite=False):
     if not username or not password:
         raise InvalidUserCredentials()
 
@@ -160,10 +161,11 @@ def create_user(username, password, is_superuser=False, db=None):
                  'is_superuser': is_superuser}
 
     db = db or request.db.sessions
-    query = db.Insert('users', cols=('username',
-                                     'password',
-                                     'created',
-                                     'is_superuser'))
+    sql_cmd = db.Replace if overwrite else db.Insert
+    query = sql_cmd('users', cols=('username',
+                                   'password',
+                                   'created',
+                                   'is_superuser'))
     try:
         db.execute(query, user_data)
     except sqlite3.IntegrityError:

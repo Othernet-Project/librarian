@@ -162,7 +162,8 @@ def setup_superuser():
         auth.create_user(username,
                          password1,
                          is_superuser=True,
-                         db=request.db.sessions)
+                         db=request.db.sessions,
+                         overwrite=True)
     except auth.UserAlreadyExists:
         errors = {'username': _("This username is already taken.")}
         return dict(successful=False, errors=errors, username='')
