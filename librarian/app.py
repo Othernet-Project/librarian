@@ -52,6 +52,7 @@ from librarian.utils.system import ensure_dir
 from librarian.utils.routing import add_routes
 from librarian.utils.timer import request_timer
 from librarian.utils.gserver import ServerManager
+from librarian.utils.version import full_version_info
 from librarian.utils import databases as database_utils
 from librarian.utils.signal_handlers import on_interrupt
 from librarian.utils.template_helpers import template_helper
@@ -244,8 +245,9 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
 
     servers = ServerManager()
 
+    version = full_version_info(__version__, config)
     # Srart the server
-    logging.info('===== Starting Librarian v%s =====', __version__)
+    logging.info('===== Starting Librarian v%s =====', version)
 
     # Install Librarian plugins
     install_plugins(app)
@@ -256,7 +258,7 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
     template_helper(lang.lang_name_safe)
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))
     bottle.BaseTemplate.defaults.update({
-        'app_version': __version__,
+        'app_version': version,
         'request': request,
         'style': 'screen',  # Default stylesheet
         'h': helpers,
@@ -344,8 +346,6 @@ def configure_argparse(parser):
                         'the configuration in use and exit')
     parser.add_argument('--debug', action='store_true', help='enable '
                         'debugging')
-    parser.add_argument('--version', action='store_true', help='print out '
-                        'version number and exit')
     parser.add_argument('--log', metavar='PATH', help='path to log file '
                         '(default: as configured in .ini file)', default=None)
     parser.add_argument('--no-auth', action='store_true',
@@ -366,7 +366,7 @@ def main(args):
         sys.exit(0)
 
     databases = prestart(conf, args.log, args.debug)
-    commands.select_command(args, databases, app)
+    commands.select_command(args, databases, conf)
     return start(databases, conf, args.no_auth, args.repl, args.debug)
 
 
@@ -376,9 +376,4 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     configure_argparse(parser)
     args = parser.parse_args(sys.argv[1:])
-
-    if args.version:
-        print('v%s' % __version__)
-        sys.exit()
-
     sys.exit(main(args))

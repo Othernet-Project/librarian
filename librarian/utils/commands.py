@@ -11,10 +11,10 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import sys
 import getpass
 
-from bottle import request
-
+from .. import __version__
 from ..core.archive import Archive
 from ..lib import auth
+from .version import full_version_info
 
 
 COMMANDS = {}
@@ -32,7 +32,7 @@ def command(name, *args, **kwargs):
 
 
 @command('su', '--su', action='store_true')
-def create_superuser(arg, databases, app):
+def create_superuser(arg, databases, config):
     """ create superuser and quit """
     print("Press ctrl-c to abort")
     try:
@@ -51,16 +51,16 @@ def create_superuser(arg, databases, app):
         print("User created.")
     except auth.UserAlreadyExists:
         print("User already exists, please try a different username.")
-        create_superuser(arg, databases, app)
+        create_superuser(arg, databases, config)
     except auth.InvalidUserCredentials:
         print("Invalid user credentials, please try again.")
-        create_superuser(arg, databases, app)
+        create_superuser(arg, databases, config)
 
     sys.exit(0)
 
 
 @command('dump_tables', '--dump-tables', action='store_true')
-def dump_tables(arg, databases, app):
+def dump_tables(arg, databases, config):
     """ dump table schema as SQL """
     schema = []
     for db in databases.values():
@@ -73,17 +73,24 @@ def dump_tables(arg, databases, app):
 
 
 @command('refill', '--refill', action='store_true')
-def refill_command(arg, databases, app):
+def refill_command(arg, databases, config):
     print('Begin content refill.')
-    request.environ['bottle.app'] = app  # connect request with application
-    archive = Archive.setup(app.config['librarian.backend'],
+    archive = Archive.setup(config['librarian.backend'],
                             databases.main,
-                            contentdir=app.config['content.contentdir'],
-                            spooldir=app.config['content.spooldir'],
-                            meta_filename=app.config['content.metadata'])
+                            contentdir=config['content.contentdir'],
+                            spooldir=config['content.spooldir'],
+                            meta_filename=config['content.metadata'])
     archive.clear_and_reload()
     print('Content refill finished.')
     sys.exit(0)
+
+
+@command('version', '--version', action='store_true',
+         help='print out version number and exit')
+def version(arg, databases, config):
+    ver = full_version_info(__version__, config)
+    print('v%s' % ver)
+    sys.exit()
 
 
 def add_command_switches(parser):
@@ -91,9 +98,9 @@ def add_command_switches(parser):
         parser.add_argument(*args, **kwargs)
 
 
-def select_command(args, databases, app):
+def select_command(args, databases, config):
     """ Select one of the registered commands and execute it """
     for cmd, fn in COMMANDS.items():
         arg = getattr(args, cmd, None)
         if arg:
-            fn(arg, databases, app)
+            fn(arg, databases, config)
