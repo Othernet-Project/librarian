@@ -1,107 +1,109 @@
-/*jslint indent: 2 */
 (function (window, $) {
-  var signalStatus = $('#signal-status');
-  var url = signalStatus.data('url');
-  var fileList = $('#ondd-file-list');
-  var filesUrl = fileList.data('url');
+    'use strict';
+    var self = {},
+        signalStatus = $('#signal-status'),
+        url = signalStatus.data('url'),
+        fileList = $('#ondd-file-list'),
+        filesUrl = fileList.data('url'),
 
-  var refreshDelay = 3000;  // ms
-  var refreshInterval = 3000;  // ms
-  var fileRefreshInterval = 30000;  // ms
-  var satSelection = $(window.templates.satPresets);
-  var satSelector = satSelection.find('select');
-  var settingsForm;
-  var fields;
-  var submitButton;
-  var defaultData = {
-    frequency: '',
-    symbolrate: '',
-    delivery: '1',
-    modulation: 'qp',
-    polarization: '0'
-  };
+        refreshInterval = 3000,  // ms
+        fileRefreshInterval = 30000,  // ms
+        satSelection = $(window.templates.satPresets),
+        satSelector = satSelection.find('select'),
+        settingsForm,
+        fields,
+        submitButton,
+        defaultData = {
+            frequency: '',
+            symbolrate: '',
+            delivery: '1',
+            modulation: 'qp',
+            polarization: '0'
+        };
 
-  doRefresh(refreshInterval);
-  doRefreshFileList(fileRefreshInterval);
-  initForm();
+    self.getOptionData = function (valId) {
+        var selection = satSelector.find('option[value=' + valId + ']');
+        if (!selection.length) {
+            return defaultData;
+        }
+        return selection.data();
+    };
 
-  function initForm() {
-    settingsForm = $('#settings-form');
-    fields = settingsForm.find('.settings-fields');
-    submitButton = settingsForm.find('button');
-    fields.before(satSelection);
-    satSelector.on('change', updateForm);
-    updateForm();
-    submitButton.on('click', submitForm);
-  }
+    self.fillForm = function (obj) {
+        var key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                settingsForm.find('#' + key).val(obj[key]);
+            }
+        }
+    };
 
-  function submitForm(event) {
-    event.preventDefault();
-    $.post(settingsForm.attr('action'), settingsForm.serialize(), function (result) {
-      submitButton.off();
-      satSelector.off();
-      settingsForm.replaceWith(result);
-      initForm();
-    });
-  }
+    self.fillFormFromSelection = function (valId) {
+        var data;
 
-  function doRefresh(interval) {
-    setTimeout(function () {
-      $.get(url).done(function (result) {
-        signalStatus.html(result);
-      }).always(function () {
-        doRefresh(interval);
-      });
-    }, interval);
-  }
+        if (valId === '0' || valId === '-1') {
+            data = defaultData;
+        } else {
+            data = self.getOptionData(valId);
+        }
+        self.fillForm(data);
+    };
 
-  function doRefreshFileList(interval) {
-    if (fileList.length > 0) {
-      setTimeout(function () {
-        $.get(filesUrl).done(function (result) {
-          fileList.html(result);
-        }).always(function () {
-          doRefreshFileList(interval);
+    self.updateForm = function () {
+        var valId = satSelector.val();
+
+        self.fillFormFromSelection(valId);
+        submitButton.toggle(valId !== '0');
+        if (valId === '-1') {
+            fields.slideDown();
+        } else {
+            fields.slideUp();
+        }
+    };
+
+    self.submitForm = function (event) {
+        event.preventDefault();
+        $.post(settingsForm.attr('action'), settingsForm.serialize(), function (result) {
+            submitButton.off();
+            satSelector.off();
+            settingsForm.replaceWith(result);
+            self.initForm();
         });
-      }, interval);
-    }
-  }
+    };
 
-  function updateForm(e) {
-    var valId = satSelector.val();
-    fillFormFromSelection(valId);
-    submitButton.toggle(valId !== '0');
-    if (valId === '-1') {
-      fields.slideDown();
-    } else {
-      fields.slideUp();
-    }
-  }
+    self.initForm = function () {
+        settingsForm = $('#settings-form');
+        fields = settingsForm.find('.settings-fields');
+        submitButton = settingsForm.find('button');
+        fields.before(satSelection);
+        satSelector.on('change', self.updateForm);
+        self.updateForm();
+        submitButton.on('click', self.submitForm);
+    };
 
-  function getOptionData(valId) {
-    selection = satSelector.find('option[value=' + valId + ']');
-    if (!selection.length) {
-      return defaultData;
-    }
-    return selection.data();
-  }
+    self.doRefresh = function (interval) {
+        setTimeout(function () {
+            $.get(url).done(function (result) {
+                signalStatus.html(result);
+            }).always(function () {
+                self.doRefresh(interval);
+            });
+        }, interval);
+    };
 
-  function fillFormFromSelection(valId) {
-    var data;
-    var selection;
+    self.doRefreshFileList = function (interval) {
+        if (fileList.length > 0) {
+            setTimeout(function () {
+                $.get(filesUrl).done(function (result) {
+                    fileList.html(result);
+                }).always(function () {
+                    self.doRefreshFileList(interval);
+                });
+            }, interval);
+        }
+    };
 
-    if (valId === '0' || valId === '-1') {
-      data = defaultData;
-    } else {
-      data = getOptionData(valId)
-    }
-    fillForm(data);
-  }
-
-  function fillForm(obj) {
-    var key;
-    for (key in obj) {
-      settingsForm.find('#' + key).val(obj[key]);
-    }
-  }
+    self.doRefresh(refreshInterval);
+    self.doRefreshFileList(fileRefreshInterval);
+    self.initForm();
 }(this, this.jQuery));
