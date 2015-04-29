@@ -49,6 +49,8 @@ class SetupWizard(wizard.Wizard):
             except KeyError:
                 return step_index
 
+        return self.step_count + self.start_index
+
     def load_state(self):
         super(SetupWizard, self).load_state()
         wanted_step_index = request.params.get(self.step_param)
