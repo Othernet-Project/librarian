@@ -1,3 +1,4 @@
+/*jslint indent: 2 */
 (function (window, $) {
   var signalStatus = $('#signal-status');
   var url = signalStatus.data('url');
@@ -9,9 +10,9 @@
   var fileRefreshInterval = 30000;  // ms
   var satSelection = $(window.templates.satPresets);
   var satSelector = satSelection.find('select');
-  var settingsForm = $('#settings-form');
-  var fields = settingsForm.find('.settings-fields');
-  var submitButton = settingsForm.find('button');
+  var settingsForm;
+  var fields;
+  var submitButton;
   var defaultData = {
     frequency: '',
     symbolrate: '',
@@ -20,12 +21,29 @@
     polarization: '0'
   };
 
-  fields.before(satSelection);
   doRefresh(refreshInterval);
   doRefreshFileList(fileRefreshInterval);
+  initForm();
 
-  satSelector.on('change', updateForm);
-  updateForm();
+  function initForm() {
+    settingsForm = $('#settings-form');
+    fields = settingsForm.find('.settings-fields');
+    submitButton = settingsForm.find('button');
+    fields.before(satSelection);
+    satSelector.on('change', updateForm);
+    updateForm();
+    submitButton.on('click', submitForm);
+  }
+
+  function submitForm(event) {
+    event.preventDefault();
+    $.post(settingsForm.attr('action'), settingsForm.serialize(), function (result) {
+      submitButton.off();
+      satSelector.off();
+      settingsForm.replaceWith(result);
+      initForm();
+    });
+  }
 
   function doRefresh(interval) {
     setTimeout(function () {
