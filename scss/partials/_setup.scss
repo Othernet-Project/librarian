@@ -1,14 +1,22 @@
 .step-datetime-form {
+    position: relative;
     .flow-element {
         display: inline-block;
         margin-right: 3em;
         vertical-align: top;
+        position: absolute;
+        left: 90px;
+        top: 0;
     }
     .flow-element:last-child {
         margin-right: 0;
     }
     .flow-element input {
         margin-top: 0;
+    }
+    label {
+        width: 90px;
+        display: inline-block;
     }
     input[type="text"].time {
         width: 18px;

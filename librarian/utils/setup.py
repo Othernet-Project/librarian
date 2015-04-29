@@ -33,8 +33,8 @@ class Setup(object):
     def __init__(self, setup_file):
         self.setup_file = setup_file
         self.data = self.load()
-        self.is_completed = self.data is not None
-        if not self.is_completed:
+        self.is_completed = self.data is not None and 'completed' in self.data
+        if self.data is None:
             self.data = self.auto_configure()
 
     def __getitem__(self, key):
@@ -53,11 +53,15 @@ class Setup(object):
                     msg = 'Setup file loading failed: {0}'.format(str(exc))
                     logger.error(msg)
 
-    def save(self, new_data):
-        """Save the setup data file."""
+    def append(self, new_data):
         self.data.update(new_data)
         with open(self.setup_file, 'w') as s_file:
             json.dump(self.data, s_file)
+
+    def save(self, new_data):
+        """Save the setup data file."""
+        new_data['completed'] = True
+        self.append(new_data)
         self.is_completed = True
 
     def auto_configure(self):
@@ -67,13 +71,13 @@ class Setup(object):
         return data
 
 
-def setup_plugin(setup_path, step_param):
+def setup_plugin(setup_path):
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
             if (not request.app.setup.is_completed and
                     request.path != setup_path[len(request.locale) + 1:]):
-                return redirect(setup_path + '?{0}={1}'.format(step_param, 1))
+                return redirect(setup_path)
             return callback(*args, **kwargs)
         return wrapper
     plugin.name = 'setup'
