@@ -189,12 +189,19 @@ def show_file_list():
     return dict(files=get_file_list())
 
 
-@setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='GET')
+def has_no_lock():
+    status = ipc.get_status()
+    return not status['has_lock']
+
+
+@setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='GET',
+                            test=has_no_lock)
 def setup_ondd_form():
     return dict(status=ipc.get_status(), vals={}, errors={}, **CONST)
 
 
-@setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='POST')
+@setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='POST',
+                            test=has_no_lock)
 def setup_ondd():
     errors = {}
     params = validate_params(errors)
