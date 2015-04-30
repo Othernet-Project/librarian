@@ -122,6 +122,12 @@ class Wizard(object):
                             **step_context)
 
     def process_current_step(self):
+        # could happen in case the saved state points to a higher step and in
+        # the meantime a test condition made one of the steps to drop out and
+        # a post request is sent to a step with an old higher index
+        if self.current_step_index not in self.steps:
+            return self.redirect_to_step()
+
         step_handlers = self.steps[self.current_step_index]
         try:
             step = step_handlers['POST']

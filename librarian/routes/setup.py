@@ -51,12 +51,17 @@ class SetupWizard(wizard.Wizard):
 
         return self.step_count + self.start_index
 
-    def load_state(self):
-        super(SetupWizard, self).load_state()
-        wanted_step_index = request.params.get(self.step_param)
+    def override_next_step(self):
+        try:
+            wanted_step_index = int(request.params.get(self.step_param, ''))
+        except ValueError:
+            return
+        else:
+            if wanted_step_index not in self.steps:
+                return
+
         next_setup_step_index = self.get_next_setup_step_index()
-        if (wanted_step_index is None or
-                wanted_step_index > next_setup_step_index):
+        if wanted_step_index > next_setup_step_index:
             self.set_step_index(next_setup_step_index)
         else:
             self.set_step_index(wanted_step_index)
