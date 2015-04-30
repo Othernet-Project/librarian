@@ -1,24 +1,29 @@
 /*jslint browser: true*/
-/*globals Pikaday,$*/
-(function () {
+(function ($, Pikaday) {
     'use strict';
-    document.getElementById('noscript-picker').style.display = 'none';
-    document.getElementById('datepicker').style.display = 'inline-block';
+    $('#noscript-picker').hide();
+    $('#datepicker').css('display', 'inline-block');
 
-    var picker = new Pikaday({
+    function zeroPad(str, count) {
+        str = str.toString();
+        return str.length < count ? zeroPad("0" + str, count) : str;
+    }
+
+    var dateStr = '{0}-{1}-{2}'.replace('{0}', $('#year').val())
+                               .replace('{1}', zeroPad($('#month').val(), 2))
+                               .replace('{2}', zeroPad($('#day').val(), 2)),
+        picker = new Pikaday({
             field: document.getElementById('datepicker'),
             container: document.getElementById('pikaday-container'),
             onSelect: function (date) {
                 $('input[name="year"]').val(date.getFullYear());
                 $('select[name="month"]').val(date.getMonth() + 1);
                 $('input[name="day"]').val(date.getDate());
+            },
+            onClose: function () {
+                picker.setDate(picker.toString());
             }
-        }),
-        year = document.getElementById('year'),
-        month = document.getElementById('month'),
-        day = document.getElementById('day'),
-        dateStr = '{0}-{1}-{2}'.replace('{0}', year.value)
-                               .replace('{1}', month.value)
-                               .replace('{2}', day.value);
+        });
+
     picker.setDate(dateStr);
-}());
+}(this.jQuery, this.Pikaday));
