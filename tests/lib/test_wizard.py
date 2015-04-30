@@ -358,6 +358,13 @@ def test_register_step_invalid_method(wizard):
     assert len(wizard.steps) == 0
 
 
+def test_register_step_invalid_test(wizard):
+    mocked_step = mock.Mock()
+    decorator = wizard.register_step('test_step', 'step_tmp.tpl', test='fake')
+    with pytest.raises(TypeError):
+        decorator(mocked_step)
+
+
 def test_remove_gaps(wizard):
     wizard.steps = {1: 'first', 3: 'second', 8: 'third'}
     wizard.remove_gaps()
@@ -374,16 +381,32 @@ def test_remove_gaps_custom_start_index():
     assert custom_wizard.steps == {3: 'first', 4: 'second', 5: 'third'}
 
 
+def test_skip_needless_steps(wizard):
+    fails = lambda: False
+    passes = lambda: True
+    wizard.steps = {0: {'name': 'first'},
+                    1: {'test': fails},
+                    2: {'name': 'ok'},
+                    3: {'test': passes}}
+    wizard.skip_needless_steps()
+    assert wizard.steps == {0: {'name': 'first'},
+                            2: {'name': 'ok'},
+                            3: {'test': passes}}
+
+
+@mock.patch.object(mod.Wizard, 'skip_needless_steps')
 @mock.patch.object(mod.Wizard, 'remove_gaps')
-def test_create_wizard(remove_gaps):
+def test_create_wizard(remove_gaps, skip_needless_steps):
     wizard = mod.Wizard.create_wizard('test', {'attr': 1})
+    skip_needless_steps.assert_called_once_with()
     remove_gaps.assert_called_once_with()
     assert wizard.name == 'test'
     assert wizard.attr == 1
 
 
+@mock.patch.object(mod.Wizard, 'skip_needless_steps')
 @mock.patch.object(mod.Wizard, 'remove_gaps')
-def test_create_wizard_class_attrs(remove_gaps):
+def test_create_wizard_class_attrs(remove_gaps, skip_needless_steps):
     class WizardA(mod.Wizard):
         step_param = 'steppa'
         allow_override = True
