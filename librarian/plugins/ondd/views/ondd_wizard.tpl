@@ -8,6 +8,7 @@
 <div class="step-ondd-form">
     <style>@import "${url('plugins:ondd:static', path='ondd.css')}";</style>
 
+    <input type="hidden" id="preset-error-msg" value="${_('Please select a satellite.')}" />
     <p id="signal-status" class="signal-status" data-url="${i18n_url('plugins:ondd:status')}">
         ${signal.body()}
     </p>
@@ -22,4 +23,5 @@ ${presets.body()}
 
 <%block name="extra_scripts">
 <script type="text/javascript" src="${url('plugins:ondd:static', path='ondd.js')}"></script>
+<script type="text/javascript" src="${url('plugins:ondd:static', path='onddwizard.js')}"></script>
 </%block>
