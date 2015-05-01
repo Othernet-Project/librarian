@@ -61,8 +61,10 @@
     self.fillFormFromSelection = function (valId) {
         var data;
 
-        if (valId === '0' || valId === '-1') {
+        if (valId === '0') {
             data = defaultData;
+        } else if (valId === '-1') {
+            data = self.getCurrentData();
         } else {
             data = self.getOptionData(valId);
         }
@@ -91,27 +93,33 @@
         });
     };
 
-    self.selectSavedPreset = function () {
-        var currentPreset = {},
-            options = satSelector.find('option'),
-            isEqual = false,
-            opt,
-            i;
+    self.getCurrentData = function () {
+        var currentData = {};
 
         fields.find('input').each(function () {
             var el = $(this);
-            currentPreset[el.attr('id')] = el.attr('value');
+            currentData[el.attr('id')] = el.attr('value');
         });
 
         fields.find('select').each(function () {
             var select = $(this),
                 selectedOption = select.find('option[selected="None"]');
-            currentPreset[select.attr('id')] = selectedOption.val();
+            currentData[select.attr('id')] = selectedOption.val();
         });
+
+        return currentData;
+    };
+
+    self.selectSavedPreset = function () {
+        var currentData = self.getCurrentData(),
+            options = satSelector.find('option'),
+            isEqual = false,
+            opt,
+            i;
 
         for (i = 0; i < options.length; i += 1) {
             opt = $(options[i]);
-            isEqual = self.equalObjects(opt.data(), currentPreset, true);
+            isEqual = self.equalObjects(opt.data(), currentData, true);
 
             if (isEqual) {
                 satSelector.val(opt.val());
@@ -119,7 +127,7 @@
             }
         }
 
-        if (!isEqual && !self.equalObjects(currentPreset, {})) {
+        if (!isEqual && !self.equalObjects(currentData, {})) {
             // custom parameters
             satSelector.val(-1);
         }
