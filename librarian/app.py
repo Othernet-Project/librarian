@@ -13,7 +13,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from __future__ import unicode_literals, print_function
 
 import gevent.monkey
-gevent.monkey.patch_all(aggressive=True, thread=False)
+gevent.monkey.patch_all(aggressive=True)
 
 # For more details on the below see: http://bit.ly/18fP1uo
 import gevent.hub
