@@ -92,7 +92,11 @@
     };
 
     self.selectSavedPreset = function () {
-        var currentPreset = {};
+        var currentPreset = {},
+            options = satSelector.find('option'),
+            isEqual = false,
+            opt,
+            i;
 
         fields.find('input').each(function () {
             var el = $(this);
@@ -105,15 +109,20 @@
             currentPreset[select.attr('id')] = selectedOption.val();
         });
 
-        satSelector.find('option').each(function () {
-            var option = $(this),
-                data = option.data(),
-                isEqual = self.equalObjects(data, currentPreset, true);
+        for (i = 0; i < options.length; i += 1) {
+            opt = $(options[i]);
+            isEqual = self.equalObjects(opt.data(), currentPreset, true);
 
             if (isEqual) {
-                satSelector.val(option.val());
+                satSelector.val(opt.val());
+                break;
             }
-        });
+        }
+
+        if (!isEqual && !self.equalObjects(currentPreset, {})) {
+            // custom parameters
+            satSelector.val(-1);
+        }
     };
 
     self.initForm = function () {
