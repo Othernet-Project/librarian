@@ -78,7 +78,7 @@
         submitButton.toggle(valId !== '0');
         if (valId === '-1') {
             fields.slideDown();
-        } else {
+        } else if (fields.is(':visible')) {
             fields.slideUp();
         }
     };
@@ -86,10 +86,12 @@
     self.submitForm = function (event) {
         event.preventDefault();
         $.post(settingsForm.attr('action'), settingsForm.serialize(), function (result) {
+            var oldDisplay = fields.css('display');
             submitButton.off();
             satSelector.off();
             settingsForm.replaceWith(result);
             self.initForm();
+            fields.css('display', oldDisplay);
         });
     };
 
