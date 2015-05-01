@@ -21,6 +21,26 @@
             polarization: '0'
         };
 
+    self.equalObjects = function (a, b, soft) {
+        var key,
+            valsMismatch;
+
+        for (key in a) {
+            if (a.hasOwnProperty(key)) {
+                valsMismatch = soft ? a[key] != b[key] : a[key] !== b[key];
+                if (!b.hasOwnProperty(key) || valsMismatch) {
+                    return false;
+                }
+            }
+        }
+        for (key in b) {
+            if (b.hasOwnProperty(key) && !a.hasOwnProperty(key)) {
+                return false;
+            }
+        }
+        return true;
+    };
+
     self.getOptionData = function (valId) {
         var selection = satSelector.find('option[value=' + valId + ']');
         if (!selection.length) {
@@ -71,14 +91,40 @@
         });
     };
 
+    self.selectSavedPreset = function () {
+        var currentPreset = {};
+
+        fields.find('input').each(function () {
+            var el = $(this);
+            currentPreset[el.attr('id')] = el.attr('value');
+        });
+
+        fields.find('select').each(function () {
+            var select = $(this),
+                selectedOption = select.find('option[selected="None"]');
+            currentPreset[select.attr('id')] = selectedOption.val();
+        });
+
+        satSelector.find('option').each(function () {
+            var option = $(this),
+                data = option.data(),
+                isEqual = self.equalObjects(data, currentPreset, true);
+
+            if (isEqual) {
+                satSelector.val(option.val());
+            }
+        });
+    };
+
     self.initForm = function () {
         settingsForm = $('#settings-form');
         fields = settingsForm.find('.settings-fields');
-        submitButton = settingsForm.find('button');
         fields.before(satSelection);
-        satSelector.on('change', self.updateForm);
-        self.updateForm();
+        submitButton = settingsForm.find('button');
         submitButton.on('click', self.submitForm);
+        satSelector.on('change', self.updateForm);
+        self.selectSavedPreset();
+        self.updateForm();
     };
 
     self.doRefresh = function (interval) {
