@@ -249,4 +249,4 @@ class Dashboard(DashboardPlugin):
 
     def get_context(self):
         return dict(status=ipc.get_status(), vals={}, errors={},
-                    files=get_file_list(), **CONST)
+                    files=[], **CONST)
