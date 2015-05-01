@@ -60,8 +60,8 @@ $loose-spacing: 0.2em;
   @include all-caps;
   @include loose-spacing;
   @include transition(
-    border-color $long-anim, 
-    background-color $short-anim, 
+    border-color $long-anim,
+    background-color $short-anim,
     color $long-anim
   );
 }
@@ -75,9 +75,9 @@ $loose-spacing: 0.2em;
   border-width: 1px;
   border-style: solid;
 
-  &::-moz-focus-inner { 
-    border: 0; 
-    padding: 0; 
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
   }
 }
 
@@ -94,7 +94,7 @@ $loose-spacing: 0.2em;
 
     @if $no-outline == yes {
       border-color: $h-face;
-    } @else { 
+    } @else {
       border-color: $h-line;
     }
 
@@ -154,9 +154,9 @@ $loose-spacing: 0.2em;
   border-width: 0;
   border-style: none;
 
-  &::-moz-focus-inner { 
-    border: inherit; 
-    padding: inherit; 
+  &::-moz-focus-inner {
+    border: inherit;
+    padding: inherit;
   }
 }
 
@@ -223,10 +223,10 @@ $loose-spacing: 0.2em;
 
 @mixin input-coloring($color, $text, $focus-outline: $yellow, $error-outline: $red) {
   background: $color;
-  border-color: $dirt;
+  border-color: $dark-dirt;
   color: $text;
   @include transition(
-    border-color $long-anim, 
+    border-color $long-anim,
     background-color $short-anim
   );
 
