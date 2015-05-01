@@ -233,7 +233,7 @@ def install(app, route):
         raise NotSupportedError('ONDD socket refused connection')
     route(
         ('status', get_signal_status,
-         'GET', '/status', dict(unlocked=True, skip=app.APP_ONLY_PLUGINS)),
+         'GET', '/status', dict(unlocked=True, skip=['setup'])),
         ('settings', set_settings,
          'POST', '/settings', dict(unlocked=True)),
         ('files', show_file_list,
