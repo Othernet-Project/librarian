@@ -99,14 +99,22 @@
         var currentData = {};
 
         fields.find('input').each(function () {
-            var el = $(this);
-            currentData[el.attr('id')] = el.attr('value');
+            var el = $(this),
+                value = el.attr('value');
+
+            if (value !== undefined) {
+                currentData[el.attr('id')] = value;
+            }
         });
 
         fields.find('select').each(function () {
             var select = $(this),
-                selectedOption = select.find('option[selected="None"]');
-            currentData[select.attr('id')] = selectedOption.val();
+                selectedOption = select.find('option[selected="None"]'),
+                value = selectedOption.val();
+
+            if (value !== undefined) {
+                currentData[select.attr('id')] = value;
+            }
         });
 
         return currentData;
