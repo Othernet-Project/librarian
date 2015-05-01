@@ -1,13 +1,15 @@
-(function ($) {
+(function (window, $) {
     'use strict';
     var self = {},
         nextButton = $('.setup-wizard button'),
-        satPresetSelect = $('#settings-form select[name="preset"]'),
-        errMsg = $('#preset-error-msg').val();
+        settingsForm = $('#settings-form'),
+        satPresetSelect = settingsForm.find('select[name="preset"]'),
+        errTemplate = $(window.templates.jsFieldError),
+        messages = JSON.parse($('#validation-messages').html());
 
     self.validatePresetSelect = function (event) {
         var selectedPreset = satPresetSelect.val(),
-            errEl = $('<span class="field-error js-error" id="preset-error">{0}</span>'.replace('{0}', errMsg));
+            errEl = $(errTemplate).text(messages.preset);
 
         if (selectedPreset === '0') {
             satPresetSelect.after(errEl);
@@ -16,9 +18,9 @@
     };
 
     self.clearValidationMessages = function () {
-        $('.field-error.js-error').remove();
+        settingsForm.find('.field-error.js-error').remove();
     };
 
     satPresetSelect.on('change', self.clearValidationMessages);
     nextButton.click(self.validatePresetSelect);
-}(this.jQuery));
+}(this, this.jQuery));
