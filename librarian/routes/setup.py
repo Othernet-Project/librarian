@@ -24,8 +24,16 @@ from ..utils.lang import UI_LOCALES, DEFAULT_LOCALE
 
 DATETIME_KEYS = ('year', 'month', 'day', 'hour', 'minute', 'second')
 MONTHS = [(idx, idx) for idx, nm in enumerate(calendar.month_name) if idx > 0]
+HOURS = [(i, i) for i in range(24)]
+MINUTES = SECONDS = [(i, i) for i in range(60)]
 TIMEZONES = [(tzname, tzname) for tzname in pytz.all_timezones]
 DEFAULT_TIMEZONE = pytz.all_timezones[0]
+
+DATE_CONSTS = dict(months=MONTHS,
+                   hours=HOURS,
+                   minutes=MINUTES,
+                   seconds=SECONDS,
+                   timezones=TIMEZONES)
 
 
 class SetupWizard(wizard.Wizard):
@@ -91,10 +99,9 @@ def setup_datetime_form():
     now = datetime.datetime.now()
     current_dt = dict((key, getattr(now, key)) for key in DATETIME_KEYS)
     return dict(errors={},
-                months=MONTHS,
-                timezones=TIMEZONES,
                 datetime=current_dt,
-                tz=DEFAULT_TIMEZONE)
+                tz=DEFAULT_TIMEZONE,
+                **DATE_CONSTS)
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
@@ -110,28 +117,25 @@ def setup_datetime():
         errors = {'timezone': _("Please select a valid timezone.")}
         return dict(successful=False,
                     errors=errors,
-                    months=MONTHS,
-                    timezones=TIMEZONES,
                     datetime=entered_dt,
-                    tz=tz_id)
+                    tz=tz_id,
+                    **DATE_CONSTS)
     try:
         local_dt = parse_datetime(datetime_str)
     except ValueError as exc:
         errors = {'_': str(exc)}
         return dict(successful=False,
                     errors=errors,
-                    months=MONTHS,
-                    timezones=TIMEZONES,
                     datetime=entered_dt,
-                    tz=tz_id)
+                    tz=tz_id,
+                    **DATE_CONSTS)
     except TypeError:
         errors = {'_': _("Please select a valid date and time.")}
         return dict(successful=False,
                     errors=errors,
-                    months=MONTHS,
-                    timezones=TIMEZONES,
                     datetime=entered_dt,
-                    tz=tz_id)
+                    tz=tz_id,
+                    **DATE_CONSTS)
 
     tz_aware_dt = pytz.timezone(tz_id).localize(local_dt)
     # Linux only!

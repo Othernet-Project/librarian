@@ -12,9 +12,9 @@
             ${h.vinput('day', datetime, _type='text', _id="day", _class='time')}
         </span>
         <input type="text" id="datepicker" style="display: none" />
-        ${h.vinput('hour', datetime, _type='text', _class='time')}&#58;
-        ${h.vinput('minute', datetime, _type='text', _class='time')}&#58;
-        ${h.vinput('second', datetime, _type='text', _class='time')}
+        ${h.vselect('hour', hours, datetime, _class='time')}&#58;
+        ${h.vselect('minute', minutes, datetime, _class='time')}&#58;
+        ${h.vselect('second', seconds, datetime, _class='time')}
     </p>
     <div class="flow-element">
         <div id="pikaday-container"></div>
