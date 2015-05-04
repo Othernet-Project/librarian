@@ -23,7 +23,7 @@ from ..utils.lang import UI_LOCALES, DEFAULT_LOCALE
 
 
 DATETIME_KEYS = ('year', 'month', 'day', 'hour', 'minute', 'second')
-MONTHS = [(idx, name) for idx, name in enumerate(calendar.month_name)]
+MONTHS = [(idx, idx) for idx, nm in enumerate(calendar.month_name) if idx > 0]
 TIMEZONES = [(tzname, tzname) for tzname in pytz.all_timezones]
 DEFAULT_TIMEZONE = pytz.all_timezones[0]
 
