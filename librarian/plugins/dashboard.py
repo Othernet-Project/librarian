@@ -8,6 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import logging
 import os
 
 import bottle
@@ -44,6 +45,7 @@ class DashboardPlugin(object):
     javascript = []
     template_lookup_base = os.path.dirname(__file__)
     classes = ['collapsible', 'collapsed']
+    plugin_error_template = 'plugin_error.tpl'
 
     def get_name(self):
         """ Return section name """
@@ -80,14 +82,19 @@ class DashboardPlugin(object):
 
     def render(self):
         """ Render dashboard section """
+        name = self.get_name()
         context = {
             'plugin': self,
-            'name': self.get_name(),
+            'name': name,
             'heading': self.get_heading(),
             'classes': self.get_formatted_classes(),
         }
-        context.update(self.get_context())
-        return bottle.mako_template(self.get_template(), **context)
+        try:
+            context.update(self.get_context())
+            return bottle.mako_template(self.get_template(), **context)
+        except Exception:
+            logging.exception("Plugin rendering failed: {0}".format(name))
+            return bottle.mako_template(self.plugin_error_template, **context)
 
     def render_javascript(self):
         html = ''
