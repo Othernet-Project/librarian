@@ -56,7 +56,9 @@
             // value and creating new option elements from the data
             $.each(self.tzOptions, function (i, opt) {
                 if (opt.value.substring(0, first.length) === first) {
-                    var newOpt = $('<option />').val(opt.value).text(opt.value);
+                    var tzText = opt.value.replace(first + '/', ''),
+                        newOpt = $('<option />').val(opt.value).text(tzText);
+
                     options.push(newOpt);
                 }
             });
