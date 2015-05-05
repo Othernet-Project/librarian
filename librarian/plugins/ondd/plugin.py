@@ -21,6 +21,7 @@ from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ...lib.validate import posint, keyof
 from ...routes.setup import setup_wizard
+from ...utils.template_helpers import template_helper
 
 from ..exceptions import NotSupportedError
 from ..dashboard import DashboardPlugin
@@ -104,6 +105,14 @@ PRESETS = [
 # For easier consumption as view default ctx
 CONST = dict(DELIVERY=DELIVERY, MODULATION=MODULATION,
              POLARIZATION=POLARIZATION, PRESETS=PRESETS, LNB_TYPES=LNB_TYPES)
+
+
+@template_helper
+def get_bitrate(status):
+    for stream in status.get('streams', []):
+        return stream['bitrate']
+
+    return ''
 
 
 def get_file_list():
