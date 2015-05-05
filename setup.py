@@ -49,7 +49,7 @@ DEPS = read_reqs(REQPATH)
 def rebuild_catalogs():
     import subprocess
     import platform
-    needs_shell = platform.system = 'Windows'
+    needs_shell = platform.system() == 'Windows'
     subprocess.call('python scripts/cmpmsgs.py librarian/locales',
                     shell=needs_shell)
 
