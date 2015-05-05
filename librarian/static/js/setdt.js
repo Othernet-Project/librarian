@@ -46,11 +46,11 @@
     self.timezoneRegionSelected = function () {
         // when region selector is changed, create secondary select for exact location
         var selectedOpt = $(this),
-            select = selectedOpt.parent(),
-            first = selectedOpt.val();
+            first = selectedOpt.val(),
+            timezoneSelector;
 
         $('#second-level').remove();
-        select.after($('<select />').attr('id', 'second-level').append(function () {
+        timezoneSelector = $('<select />').attr('id', 'second-level').append(function () {
             var options = [];
             // populate new select element by filtering on the region selector's
             // value and creating new option elements from the data
@@ -63,7 +63,9 @@
             // set first option from the new listas the currently selected value
             self.timezone.val(options[0].val());
             return options;
-        }).on('change', self.timezoneSelected));
+        }).on('change', self.timezoneSelected);
+
+        self.timezoneContainer.append(timezoneSelector);
     };
 
     self.initTimezoneSelector = function () {
@@ -86,13 +88,14 @@
             });
         }).on('change', self.timezoneRegionSelected);
 
-        self.timezone.after(regionSelector);
+        self.timezoneContainer.append(regionSelector);
 
         self.timezoneRegionSelected.call(regionSelector);
     };
 
     self.initDatePicker();
 
+    self.timezoneContainer = $('.timezone-container');
     self.timezone = $('#timezone');
     self.tzOptions = self.timezone.find('option');
     self.initTimezoneSelector();

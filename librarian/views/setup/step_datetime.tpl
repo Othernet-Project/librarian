@@ -19,12 +19,14 @@
     <div class="flow-element">
         <div id="pikaday-container"></div>
     </div>
-    <p>
+    <div>
         ## Translators, used as label for timezone
         <label for="timezone">${_('Timezone:')}</label>
+        <div class="timezone-container">
         ${h.vselect('timezone', timezones, {'timezone': tz}, _id="timezone")}
         ${h.field_error('timezone', errors)}
-    </p>
+        </div>
+    </div>
     ${h.form_errors(errors)}
 </div>
 </%block>
