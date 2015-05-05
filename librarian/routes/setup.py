@@ -147,14 +147,21 @@ def setup_datetime():
     return dict(successful=True)
 
 
+def has_no_superuser():
+    db = request.db.sessions
+    query = db.Select(sets='users', where='is_superuser = ?')
+    db.query(query, True)
+    return db.result is None
+
+
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
-                            method='GET', index=3)
+                            method='GET', index=3, test=has_no_superuser)
 def setup_superuser_form():
     return dict(errors={}, username='')
 
 
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
-                            method='POST', index=3)
+                            method='POST', index=3, test=has_no_superuser)
 def setup_superuser():
     username = request.forms.get('username')
     password1 = request.forms.get('password1')
