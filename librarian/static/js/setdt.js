@@ -1,29 +1,99 @@
 /*jslint browser: true*/
 (function ($, Pikaday) {
     'use strict';
-    $('#noscript-picker').hide();
-    $('#datepicker').css('display', 'inline-block');
+    var self = {};
 
-    function zeroPad(str, count) {
+    self.zeroPad = function (str, count) {
         str = str.toString();
-        return str.length < count ? zeroPad("0" + str, count) : str;
-    }
+        return str.length < count ? self.zeroPad("0" + str, count) : str;
+    };
 
-    var dateStr = '{0}-{1}-{2}'.replace('{0}', $('#year').val())
-                               .replace('{1}', zeroPad($('#month').val(), 2))
-                               .replace('{2}', zeroPad($('#day').val(), 2)),
-        picker = new Pikaday({
-            field: document.getElementById('datepicker'),
-            container: document.getElementById('pikaday-container'),
-            onSelect: function (date) {
-                $('input[name="year"]').val(date.getFullYear());
-                $('select[name="month"]').val(date.getMonth() + 1);
-                $('input[name="day"]').val(date.getDate());
-            },
-            onClose: function () {
-                picker.setDate(picker.toString());
+    self.initDatePicker = function () {
+        var dateStr = '{0}-{1}-{2}'.replace(
+                '{0}',
+                $('#year').val()
+            ).replace(
+                '{1}',
+                self.zeroPad($('#month').val(), 2)
+            ).replace(
+                '{2}',
+                self.zeroPad($('#day').val(), 2)
+            ),
+            picker = new Pikaday({
+                field: document.getElementById('datepicker'),
+                container: document.getElementById('pikaday-container'),
+                onSelect: function (date) {
+                    $('input[name="year"]').val(date.getFullYear());
+                    $('select[name="month"]').val(date.getMonth() + 1);
+                    $('input[name="day"]').val(date.getDate());
+                },
+                onClose: function () {
+                    picker.setDate(picker.toString());
+                }
+            });
+
+        $('#noscript-picker').hide();
+        $('#datepicker').css('display', 'inline-block');
+        picker.setDate(dateStr);
+    };
+
+    self.timezoneSelected = function () {
+        // when second select is chosen, populate the hidden select field
+        // which will actually be posted
+        self.timezone.val($(this).val());
+    };
+
+    self.timezoneRegionSelected = function () {
+        // when region selector is changed, create secondary select for exact location
+        var selectedOpt = $(this),
+            select = selectedOpt.parent(),
+            first = selectedOpt.val();
+
+        $('#second-level').remove();
+        select.after($('<select />').attr('id', 'second-level').append(function () {
+            var options = [];
+            // populate new select element by filtering on the region selector's
+            // value and creating new option elements from the data
+            $.each(self.tzOptions, function (i, opt) {
+                if (opt.value.substring(0, first.length) === first) {
+                    var newOpt = $('<option />').val(opt.value).text(opt.value);
+                    options.push(newOpt);
+                }
+            });
+            // set first option from the new listas the currently selected value
+            self.timezone.val(options[0].val());
+            return options;
+        }).on('change', self.timezoneSelected));
+    };
+
+    self.initTimezoneSelector = function () {
+        var firstLevel = [],
+            regionSelector;
+
+        self.timezone.hide();
+        // collect region strings only
+        $.each(self.tzOptions, function (i, option) {
+            var first = option.value.split('/')[0];
+
+            if ($.inArray(first, firstLevel) === -1) {
+                firstLevel.push(first);
             }
         });
+        // create region selector element from previously collected data
+        regionSelector = $('<select />').append(function () {
+            return $.map(firstLevel, function (value) {
+                return $('<option />').val(value).text(value);
+            });
+        }).on('change', self.timezoneRegionSelected);
 
-    picker.setDate(dateStr);
+        self.timezone.after(regionSelector);
+
+        self.timezoneRegionSelected.call(regionSelector);
+    };
+
+    self.initDatePicker();
+
+    self.timezone = $('#timezone');
+    self.tzOptions = self.timezone.find('option');
+    self.initTimezoneSelector();
 }(this.jQuery, this.Pikaday));

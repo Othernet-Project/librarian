@@ -26,8 +26,8 @@ DATETIME_KEYS = ('year', 'month', 'day', 'hour', 'minute', 'second')
 MONTHS = [(idx, idx) for idx, nm in enumerate(calendar.month_name) if idx > 0]
 HOURS = [(i, i) for i in range(24)]
 MINUTES = SECONDS = [(i, i) for i in range(60)]
-TIMEZONES = [(tzname, tzname) for tzname in pytz.all_timezones]
-DEFAULT_TIMEZONE = pytz.all_timezones[0]
+TIMEZONES = [(tzname, tzname) for tzname in pytz.common_timezones]
+DEFAULT_TIMEZONE = pytz.common_timezones[0]
 
 DATE_CONSTS = dict(months=MONTHS,
                    hours=HOURS,
