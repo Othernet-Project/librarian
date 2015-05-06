@@ -1,7 +1,10 @@
 /*global require,module*/
+var crypto = require('crypto');
+
 module.exports = function (grunt) {
     'use strict';
     var staticRoot = 'librarian/static/',
+        cssRoot = staticRoot + 'css/',
         jsRoot = staticRoot + 'js/',
         jsBundles = {
             content: ['tags.js', 'list.js'],
@@ -68,6 +71,11 @@ module.exports = function (grunt) {
                 tasks: ['uglify:setupdatetime']
             }
         },
+        clean: {
+            build: {
+                src: staticRoot + 'dist'
+            }
+        },
         compass: {
             dist: {
                 options: {
@@ -82,10 +90,34 @@ module.exports = function (grunt) {
                 }
             }
         },
+        hash: {
+            options: {
+                mapping: staticRoot + 'assets.json',
+                srcBasePath: staticRoot,
+                destBasePath: staticRoot + 'dist/',
+                flatten: false,
+                hashLength: 8,
+                hashFunction: function (source, encoding) {
+                    return crypto.createHash('sha1').update(source, encoding).digest('hex');
+                }
+            },
+            js: {
+                src: jsRoot + '*.js',
+                dest: staticRoot + 'dist/js/'
+            },
+            css: {
+                src: cssRoot + '*.css',
+                dest: staticRoot + 'dist/css/'
+            }
+        },
         uglify: uglifyConfig
     });
 
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-compass');
+    grunt.loadNpmTasks('grunt-hash');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+
+    grunt.registerTask('build', ['compass', 'uglify', 'clean', 'hash']);
 };
