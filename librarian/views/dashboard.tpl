@@ -21,7 +21,7 @@ ${_('Dashboard')}
 </%block>
 
 <%block name="extra_scripts">
-<script src="${url('sys:static', path='js/dashboard.js')}"></script>
+<script src="${th.static_url('sys:static', path='js/dashboard.js')}"></script>
 % for p in plugins:
     ${p.render_javascript()}
 % endfor

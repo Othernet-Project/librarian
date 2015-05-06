@@ -30,5 +30,5 @@
 </%block>
 
 <%block name="extra_scripts">
-<script type="text/javascript" src="${url('sys:static', path='js/setupdatetime.js')}"></script>
+<script type="text/javascript" src="${th.static_url('sys:static', path='js/setupdatetime.js')}"></script>
 </%block>
