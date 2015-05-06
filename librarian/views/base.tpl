@@ -27,7 +27,7 @@
                 ## Translators, used main navigation menu
                 ${h.link_other(icon + _('Apps'), i18n_url('apps:list'), request.original_path, h.SPAN, _class="apps navicon")}
                 ## Translators, used main navigation menu
-                ${h.link_other(icon + _('Updates') + (' (%s)' % updates if updates > 0 else ''), i18n_url('downloads:list'), request.original_path, h.SPAN, _class="updates navicon" + (updates > 0 and ' notice' or ''))}
+                ${h.link_other(icon + _('Updates') + (' (%s)' % updates if updates > 0 else ''), i18n_url('downloads:list'), i18n_path(request.path), h.SPAN, _class="updates navicon" + (updates > 0 and ' notice' or ''))}
                 ## Translators, used main navigation menu
                 ${h.link_other(icon + _('Dashboard'), i18n_url('dashboard:main'), request.original_path, h.SPAN, _class="dashboard navicon")}
                 ## Translators, used main navigation menu

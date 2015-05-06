@@ -26,7 +26,6 @@ header {
       background-repeat: no-repeat;
       background-position: 11px 10px;
       padding: 0.7em 0;
-      cursor: pointer;
       overflow: hidden;
       width: 47px;
       white-space: nowrap;
@@ -40,6 +39,7 @@ header {
 
     span.navicon {
       background-color: $blue;
+      cursor: default;
     }
 
     a.navicon {
