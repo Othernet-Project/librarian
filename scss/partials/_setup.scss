@@ -4,8 +4,7 @@
         display: inline-block;
         margin-right: 3em;
         vertical-align: top;
-        position: absolute;
-        left: 90px;
+        left: 180px;
         top: 0;
     }
     .flow-element:last-child {
@@ -14,8 +13,11 @@
     .flow-element input {
         margin-top: 0;
     }
+    .date-field {
+        margin-bottom: 10px;
+    }
     label {
-        width: 230px;
+        width: 180px;
         display: inline-block;
     }
     .pika-table tr {

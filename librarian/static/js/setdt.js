@@ -25,8 +25,9 @@
             });
 
         $('#noscript-picker').hide();
-        $('#datepicker').css('display', 'inline-block');
+        picker.hide = function () {};  // disable hide
         picker.setDate(dateStr);
+        picker.show();
     };
 
     self.timezoneSelected = function () {
