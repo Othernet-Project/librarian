@@ -51,12 +51,17 @@ class SetupWizard(wizard.Wizard):
 
         return self.step_count + self.start_index
 
-    def load_state(self):
-        super(SetupWizard, self).load_state()
-        wanted_step_index = request.params.get(self.step_param)
+    def override_next_step(self):
+        try:
+            wanted_step_index = int(request.params.get(self.step_param, ''))
+        except ValueError:
+            return
+        else:
+            if wanted_step_index not in self.steps:
+                return
+
         next_setup_step_index = self.get_next_setup_step_index()
-        if (wanted_step_index is None or
-                wanted_step_index > next_setup_step_index):
+        if wanted_step_index > next_setup_step_index:
             self.set_step_index(next_setup_step_index)
         else:
             self.set_step_index(wanted_step_index)
@@ -142,14 +147,21 @@ def setup_datetime():
     return dict(successful=True)
 
 
+def has_no_superuser():
+    db = request.db.sessions
+    query = db.Select(sets='users', where='is_superuser = ?')
+    db.query(query, True)
+    return db.result is None
+
+
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
-                            method='GET', index=3)
+                            method='GET', index=3, test=has_no_superuser)
 def setup_superuser_form():
     return dict(errors={}, username='')
 
 
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
-                            method='POST', index=3)
+                            method='POST', index=3, test=has_no_superuser)
 def setup_superuser():
     username = request.forms.get('username')
     password1 = request.forms.get('password1')
