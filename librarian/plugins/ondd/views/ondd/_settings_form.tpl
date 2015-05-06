@@ -7,4 +7,7 @@ ${h.form('post', action=i18n_url('plugins:ondd:settings'), _class='settings-form
     ## Translators, button label that confirms tuner settings
     <button type="submit">${_('Tune in')}</button>
     </p>
+    % if message:
+    <p>${ message }</p>
+    % endif
 </form>

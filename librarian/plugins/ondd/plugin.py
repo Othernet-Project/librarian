@@ -12,11 +12,16 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import logging
 
-from bottle import mako_view as view, request, redirect
+from bottle import (mako_view as view,
+                    mako_template as template,
+                    request,
+                    redirect)
+from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ...lib.validate import posint, keyof
 from ...routes.setup import setup_wizard
+from ...utils.template_helpers import template_helper
 
 from ..exceptions import NotSupportedError
 from ..dashboard import DashboardPlugin
@@ -102,6 +107,14 @@ CONST = dict(DELIVERY=DELIVERY, MODULATION=MODULATION,
              POLARIZATION=POLARIZATION, PRESETS=PRESETS, LNB_TYPES=LNB_TYPES)
 
 
+@template_helper
+def get_bitrate(status):
+    for stream in status.get('streams', []):
+        return stream['bitrate']
+
+    return ''
+
+
 def get_file_list():
     return ipc.get_file_list()
 
@@ -162,7 +175,8 @@ def setup_ipc(lnb_type, frequency, symbolrate, delivery, modulation,
                             voltage=VOLTS[polarization])
 
 
-@view('ondd/settings', vals={}, errors={}, **CONST)
+@roca_view('ondd/settings', 'ondd/_settings_form', template_func=template,
+           vals={}, errors={}, message='', **CONST)
 def set_settings():
     errors = {}
     original_route = request.forms.get('backto', i18n_url('dashboard:main'))
@@ -180,6 +194,11 @@ def set_settings():
         return dict(errors=errors, vals=request.forms)
 
     logging.info('ONDD: tuner settings updated')
+
+    if request.is_xhr:
+        return dict(errors={},
+                    vals=request.forms,
+                    message=_('Transponder configuration saved.'))
 
     redirect(original_route)
 
