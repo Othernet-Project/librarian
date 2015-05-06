@@ -22,7 +22,7 @@ from ..lib import wizard
 from ..utils.lang import UI_LOCALES, DEFAULT_LOCALE
 
 
-DATETIME_KEYS = ('year', 'month', 'day', 'hour', 'minute')
+DATETIME_KEYS = ('date', 'hour', 'minute')
 MONTHS = [(idx, idx) for idx, nm in enumerate(calendar.month_name) if idx > 0]
 HOURS = [(i, i) for i in range(24)]
 MINUTES = [(i, i) for i in range(60)]
@@ -101,7 +101,8 @@ def setup_language():
                             method='GET', index=2)
 def setup_datetime_form():
     now = datetime.datetime.now()
-    current_dt = dict((key, getattr(now, key)) for key in DATETIME_KEYS)
+    date = '{0:04d}-{1:02d}-{2:02d}'.format(now.year, now.month, now.day)
+    current_dt = dict(date=date, hour=now.hour, minute=now.minute)
     return dict(errors={},
                 datetime=current_dt,
                 tz=DEFAULT_TIMEZONE,
@@ -111,7 +112,7 @@ def setup_datetime_form():
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
                             method='POST', index=2)
 def setup_datetime():
-    datetime_template = '{year}-{month}-{day} {hour}:{minute}'
+    datetime_template = '{date} {hour}:{minute}'
     entered_dt = dict((key, request.forms.get(key, ''))
                       for key in DATETIME_KEYS)
     datetime_str = datetime_template.format(**entered_dt)

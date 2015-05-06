@@ -5,11 +5,9 @@
 <div class="step-datetime-form">
     <p>
         ## Translators, used as label for date time selector
-        <label>${_('Date / time:')}</label>
+        <label>${_('Date / time ("YYYY-MM-DD"):')}</label>
         <span id="noscript-picker">
-            ${h.vinput('year', datetime, _type='text', _id="year", _class='year')}&ndash;
-            ${h.vselect('month', months, datetime, _id="month")}&ndash;
-            ${h.vinput('day', datetime, _type='text', _id="day", _class='time')}
+            ${h.vinput('date', datetime, _type='text', _id="date", _class='date')}
         </span>
         <input type="text" id="datepicker" style="display: none" />
         ${h.vselect('hour', hours, datetime, _class='time')}&#58;

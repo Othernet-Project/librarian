@@ -9,23 +9,15 @@
     };
 
     self.initDatePicker = function () {
-        var dateStr = '{0}-{1}-{2}'.replace(
-                '{0}',
-                $('#year').val()
-            ).replace(
-                '{1}',
-                self.zeroPad($('#month').val(), 2)
-            ).replace(
-                '{2}',
-                self.zeroPad($('#day').val(), 2)
-            ),
+        var dateStr = $('#date').val(),
             picker = new Pikaday({
                 field: document.getElementById('datepicker'),
                 container: document.getElementById('pikaday-container'),
                 onSelect: function (date) {
-                    $('input[name="year"]').val(date.getFullYear());
-                    $('select[name="month"]').val(date.getMonth() + 1);
-                    $('input[name="day"]').val(date.getDate());
+                    var sDate = '{0}-{1}-{2}'.replace('{0}', date.getFullYear())
+                                             .replace('{1}', date.getMonth() + 1)
+                                             .replace('{2}', date.getDate());
+                    $('#date').val(sDate);
                 },
                 onClose: function () {
                     picker.setDate(picker.toString());
