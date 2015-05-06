@@ -13,8 +13,7 @@
         </span>
         <input type="text" id="datepicker" style="display: none" />
         ${h.vselect('hour', hours, datetime, _class='time')}&#58;
-        ${h.vselect('minute', minutes, datetime, _class='time')}&#58;
-        ${h.vselect('second', seconds, datetime, _class='time')}
+        ${h.vselect('minute', minutes, datetime, _class='time')}
     </p>
     <div class="flow-element">
         <div id="pikaday-container"></div>
