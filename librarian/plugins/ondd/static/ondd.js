@@ -21,6 +21,26 @@
             polarization: '0'
         };
 
+    self.equalObjects = function (a, b, soft) {
+        var key,
+            valsMismatch;
+
+        for (key in a) {
+            if (a.hasOwnProperty(key)) {
+                valsMismatch = soft ? a[key] != b[key] : a[key] !== b[key];
+                if (!b.hasOwnProperty(key) || valsMismatch) {
+                    return false;
+                }
+            }
+        }
+        for (key in b) {
+            if (b.hasOwnProperty(key) && !a.hasOwnProperty(key)) {
+                return false;
+            }
+        }
+        return true;
+    };
+
     self.getOptionData = function (valId) {
         var selection = satSelector.find('option[value=' + valId + ']');
         if (!selection.length) {
@@ -41,8 +61,10 @@
     self.fillFormFromSelection = function (valId) {
         var data;
 
-        if (valId === '0' || valId === '-1') {
+        if (valId === '0') {
             data = defaultData;
+        } else if (valId === '-1') {
+            data = self.getCurrentData();
         } else {
             data = self.getOptionData(valId);
         }
@@ -56,7 +78,7 @@
         submitButton.toggle(valId !== '0');
         if (valId === '-1') {
             fields.slideDown();
-        } else {
+        } else if (fields.is(':visible')) {
             fields.slideUp();
         }
     };
@@ -64,21 +86,72 @@
     self.submitForm = function (event) {
         event.preventDefault();
         $.post(settingsForm.attr('action'), settingsForm.serialize(), function (result) {
+            var oldDisplay = fields.css('display');
             submitButton.off();
             satSelector.off();
             settingsForm.replaceWith(result);
             self.initForm();
+            fields.css('display', oldDisplay);
         });
+    };
+
+    self.getCurrentData = function () {
+        var currentData = {};
+
+        fields.find('input').each(function () {
+            var el = $(this),
+                value = el.attr('value');
+
+            if (value !== undefined) {
+                currentData[el.attr('id')] = value;
+            }
+        });
+
+        fields.find('select').each(function () {
+            var select = $(this),
+                selectedOption = select.find('option[selected="None"]'),
+                value = selectedOption.val();
+
+            if (value !== undefined) {
+                currentData[select.attr('id')] = value;
+            }
+        });
+
+        return currentData;
+    };
+
+    self.selectSavedPreset = function () {
+        var currentData = self.getCurrentData(),
+            options = satSelector.find('option'),
+            isEqual = false,
+            opt,
+            i;
+
+        for (i = 0; i < options.length; i += 1) {
+            opt = $(options[i]);
+            isEqual = self.equalObjects(opt.data(), currentData, true);
+
+            if (isEqual) {
+                satSelector.val(opt.val());
+                break;
+            }
+        }
+
+        if (!isEqual && !self.equalObjects(currentData, {})) {
+            // custom parameters
+            satSelector.val(-1);
+        }
     };
 
     self.initForm = function () {
         settingsForm = $('#settings-form');
         fields = settingsForm.find('.settings-fields');
-        submitButton = settingsForm.find('button');
         fields.before(satSelection);
-        satSelector.on('change', self.updateForm);
-        self.updateForm();
+        submitButton = settingsForm.find('button');
         submitButton.on('click', self.submitForm);
+        satSelector.on('change', self.updateForm);
+        self.selectSavedPreset();
+        self.updateForm();
     };
 
     self.doRefresh = function (interval) {
