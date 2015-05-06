@@ -29,6 +29,15 @@
     .pika-table tr {
         border: 0 none;
     }
+    .timezone-container {
+        display: inline-block;
+        vertical-align: top;
+        select {
+            display:block;
+            width: 220px;
+            margin-bottom: 10px;
+        }
+    }
 }
 
 .step-superuser-form {

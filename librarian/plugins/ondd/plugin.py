@@ -12,11 +12,16 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import logging
 
-from bottle import mako_view as view, request, redirect
+from bottle import (mako_view as view,
+                    mako_template as template,
+                    request,
+                    redirect)
+from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ...lib.validate import posint, keyof
 from ...routes.setup import setup_wizard
+from ...utils.template_helpers import template_helper
 
 from ..exceptions import NotSupportedError
 from ..dashboard import DashboardPlugin
@@ -102,6 +107,14 @@ CONST = dict(DELIVERY=DELIVERY, MODULATION=MODULATION,
              POLARIZATION=POLARIZATION, PRESETS=PRESETS, LNB_TYPES=LNB_TYPES)
 
 
+@template_helper
+def get_bitrate(status):
+    for stream in status.get('streams', []):
+        return stream['bitrate']
+
+    return ''
+
+
 def get_file_list():
     return ipc.get_file_list()
 
@@ -112,9 +125,9 @@ def get_signal_status():
 
 
 def validate_params(errors):
-    lnb_type = keyof('lnb', LNB_TYPES,
-                     # Translators, error message when LNB type is incorrect
-                     _('Invalid choice for LNB type'), errors)
+    lnb = keyof('lnb', LNB_TYPES,
+                # Translators, error message when LNB type is incorrect
+                _('Invalid choice for LNB type'), errors)
     frequency = posint('frequency',
                        # Translators, error message when frequency value is
                        # wrong
@@ -142,7 +155,7 @@ def validate_params(errors):
                          # polarization is selected
                          _('Invalid choice for polarization'), errors)
     # TODO: Add support for DiSEqC azimuth value
-    return dict(lnb_type=lnb_type,
+    return dict(lnb=lnb,
                 frequency=frequency,
                 symbolrate=symbolrate,
                 delivery=delivery,
@@ -150,10 +163,9 @@ def validate_params(errors):
                 polarization=polarization)
 
 
-def setup_ipc(lnb_type, frequency, symbolrate, delivery, modulation,
-              polarization):
-    needs_tone = ipc.needs_tone(frequency, lnb_type)
-    frequency = ipc.freq_conv(frequency, lnb_type)
+def setup_ipc(lnb, frequency, symbolrate, delivery, modulation, polarization):
+    needs_tone = ipc.needs_tone(frequency, lnb)
+    frequency = ipc.freq_conv(frequency, lnb)
     return ipc.set_settings(frequency=frequency,
                             symbolrate=symbolrate,
                             delivery=delivery,
@@ -162,7 +174,8 @@ def setup_ipc(lnb_type, frequency, symbolrate, delivery, modulation,
                             voltage=VOLTS[polarization])
 
 
-@view('ondd/settings', vals={}, errors={}, **CONST)
+@roca_view('ondd/settings', 'ondd/_settings_form', template_func=template,
+           vals={}, errors={}, message='', **CONST)
 def set_settings():
     errors = {}
     original_route = request.forms.get('backto', i18n_url('dashboard:main'))
@@ -180,6 +193,12 @@ def set_settings():
         return dict(errors=errors, vals=request.forms)
 
     logging.info('ONDD: tuner settings updated')
+    request.app.setup.append({'ondd': params})
+
+    if request.is_xhr:
+        return dict(errors={},
+                    vals=request.forms,
+                    message=_('Transponder configuration saved.'))
 
     redirect(original_route)
 
@@ -189,12 +208,19 @@ def show_file_list():
     return dict(files=get_file_list())
 
 
-@setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='GET')
+def has_no_lock():
+    status = ipc.get_status()
+    return not status['has_lock']
+
+
+@setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='GET',
+                            test=has_no_lock)
 def setup_ondd_form():
     return dict(status=ipc.get_status(), vals={}, errors={}, **CONST)
 
 
-@setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='POST')
+@setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='POST',
+                            test=has_no_lock)
 def setup_ondd():
     errors = {}
     params = validate_params(errors)
@@ -220,7 +246,7 @@ def setup_ondd():
 
     logging.info('ONDD: tuner settings updated')
 
-    request.app.setup.append({'ondd': True})
+    request.app.setup.append({'ondd': params})
     return dict(successful=True)
 
 
@@ -233,7 +259,7 @@ def install(app, route):
         raise NotSupportedError('ONDD socket refused connection')
     route(
         ('status', get_signal_status,
-         'GET', '/status', dict(unlocked=True, skip=app.APP_ONLY_PLUGINS)),
+         'GET', '/status', dict(unlocked=True, skip=['setup'])),
         ('settings', set_settings,
          'POST', '/settings', dict(unlocked=True)),
         ('files', show_file_list,
@@ -248,5 +274,8 @@ class Dashboard(DashboardPlugin):
     javascript = ['ondd.js']
 
     def get_context(self):
-        return dict(status=ipc.get_status(), vals={}, errors={},
-                    files=get_file_list(), **CONST)
+        return dict(status=ipc.get_status(),
+                    vals=request.app.setup.get('ondd', {}),
+                    files=[],
+                    errors={},
+                    **CONST)

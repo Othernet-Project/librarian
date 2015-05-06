@@ -23,9 +23,17 @@ from ..utils.lang import UI_LOCALES, DEFAULT_LOCALE
 
 
 DATETIME_KEYS = ('year', 'month', 'day', 'hour', 'minute', 'second')
-MONTHS = [(idx, name) for idx, name in enumerate(calendar.month_name)]
-TIMEZONES = [(tzname, tzname) for tzname in pytz.all_timezones]
-DEFAULT_TIMEZONE = pytz.all_timezones[0]
+MONTHS = [(idx, idx) for idx, nm in enumerate(calendar.month_name) if idx > 0]
+HOURS = [(i, i) for i in range(24)]
+MINUTES = SECONDS = [(i, i) for i in range(60)]
+TIMEZONES = [(tzname, tzname) for tzname in pytz.common_timezones]
+DEFAULT_TIMEZONE = pytz.common_timezones[0]
+
+DATE_CONSTS = dict(months=MONTHS,
+                   hours=HOURS,
+                   minutes=MINUTES,
+                   seconds=SECONDS,
+                   timezones=TIMEZONES)
 
 
 class SetupWizard(wizard.Wizard):
@@ -51,12 +59,17 @@ class SetupWizard(wizard.Wizard):
 
         return self.step_count + self.start_index
 
-    def load_state(self):
-        super(SetupWizard, self).load_state()
-        wanted_step_index = request.params.get(self.step_param)
+    def override_next_step(self):
+        try:
+            wanted_step_index = int(request.params.get(self.step_param, ''))
+        except ValueError:
+            return
+        else:
+            if wanted_step_index not in self.steps:
+                return
+
         next_setup_step_index = self.get_next_setup_step_index()
-        if (wanted_step_index is None or
-                wanted_step_index > next_setup_step_index):
+        if wanted_step_index > next_setup_step_index:
             self.set_step_index(next_setup_step_index)
         else:
             self.set_step_index(wanted_step_index)
@@ -91,10 +104,9 @@ def setup_datetime_form():
     now = datetime.datetime.now()
     current_dt = dict((key, getattr(now, key)) for key in DATETIME_KEYS)
     return dict(errors={},
-                months=MONTHS,
-                timezones=TIMEZONES,
                 datetime=current_dt,
-                tz=DEFAULT_TIMEZONE)
+                tz=DEFAULT_TIMEZONE,
+                **DATE_CONSTS)
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
@@ -110,28 +122,25 @@ def setup_datetime():
         errors = {'timezone': _("Please select a valid timezone.")}
         return dict(successful=False,
                     errors=errors,
-                    months=MONTHS,
-                    timezones=TIMEZONES,
                     datetime=entered_dt,
-                    tz=tz_id)
+                    tz=tz_id,
+                    **DATE_CONSTS)
     try:
         local_dt = parse_datetime(datetime_str)
     except ValueError as exc:
         errors = {'_': str(exc)}
         return dict(successful=False,
                     errors=errors,
-                    months=MONTHS,
-                    timezones=TIMEZONES,
                     datetime=entered_dt,
-                    tz=tz_id)
+                    tz=tz_id,
+                    **DATE_CONSTS)
     except TypeError:
         errors = {'_': _("Please select a valid date and time.")}
         return dict(successful=False,
                     errors=errors,
-                    months=MONTHS,
-                    timezones=TIMEZONES,
                     datetime=entered_dt,
-                    tz=tz_id)
+                    tz=tz_id,
+                    **DATE_CONSTS)
 
     tz_aware_dt = pytz.timezone(tz_id).localize(local_dt)
     # Linux only!
@@ -142,14 +151,21 @@ def setup_datetime():
     return dict(successful=True)
 
 
+def has_no_superuser():
+    db = request.db.sessions
+    query = db.Select(sets='users', where='is_superuser = ?')
+    db.query(query, True)
+    return db.result is None
+
+
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
-                            method='GET', index=3)
+                            method='GET', index=3, test=has_no_superuser)
 def setup_superuser_form():
     return dict(errors={}, username='')
 
 
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
-                            method='POST', index=3)
+                            method='POST', index=3, test=has_no_superuser)
 def setup_superuser():
     username = request.forms.get('username')
     password1 = request.forms.get('password1')

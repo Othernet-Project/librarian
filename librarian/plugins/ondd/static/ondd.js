@@ -1,89 +1,182 @@
 (function (window, $) {
-  var signalStatus = $('#signal-status');
-  var url = signalStatus.data('url');
-  var fileList = $('#ondd-file-list');
-  var filesUrl = fileList.data('url');
+    'use strict';
+    var self = {},
+        signalStatus = $('#signal-status'),
+        url = signalStatus.data('url'),
+        fileList = $('#ondd-file-list'),
+        filesUrl = fileList.data('url'),
 
-  var refreshDelay = 3000;  // ms
-  var refreshInterval = 3000;  // ms
-  var fileRefreshInterval = 30000;  // ms
-  var satSelection = $(window.templates.satPresets);
-  var satSelector = satSelection.find('select');
-  var settingsForm = $('#settings-form');
-  var fields = settingsForm.find('.settings-fields');
-  var submitButton = settingsForm.find('button');
-  var defaultData = {
-    frequency: '',
-    symbolrate: '',
-    delivery: '1',
-    modulation: 'qp',
-    polarization: '0'
-  };
+        refreshInterval = 3000,  // ms
+        fileRefreshInterval = 30000,  // ms
+        satSelection = $(window.templates.satPresets),
+        satSelector = satSelection.find('select'),
+        settingsForm,
+        fields,
+        submitButton,
+        defaultData = {
+            frequency: '',
+            symbolrate: '',
+            delivery: '1',
+            modulation: 'qp',
+            polarization: '0'
+        };
 
-  fields.before(satSelection);
-  doRefresh(refreshInterval);
-  doRefreshFileList(fileRefreshInterval);
+    self.equalObjects = function (a, b, soft) {
+        var key,
+            valsMismatch;
 
-  satSelector.on('change', updateForm);
-  updateForm();
+        for (key in a) {
+            if (a.hasOwnProperty(key)) {
+                valsMismatch = soft ? a[key] != b[key] : a[key] !== b[key];
+                if (!b.hasOwnProperty(key) || valsMismatch) {
+                    return false;
+                }
+            }
+        }
+        for (key in b) {
+            if (b.hasOwnProperty(key) && !a.hasOwnProperty(key)) {
+                return false;
+            }
+        }
+        return true;
+    };
 
-  function doRefresh(interval) {
-    setTimeout(function () {
-      $.get(url).done(function (result) {
-        signalStatus.html(result);
-      }).always(function () {
-        doRefresh(interval);
-      });
-    }, interval);
-  }
+    self.getOptionData = function (valId) {
+        var selection = satSelector.find('option[value=' + valId + ']');
+        if (!selection.length) {
+            return defaultData;
+        }
+        return selection.data();
+    };
 
-  function doRefreshFileList(interval) {
-    if (fileList.length > 0) {
-      setTimeout(function () {
-        $.get(filesUrl).done(function (result) {
-          fileList.html(result);
-        }).always(function () {
-          doRefreshFileList(interval);
+    self.fillForm = function (obj) {
+        var key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                settingsForm.find('#' + key).val(obj[key]);
+            }
+        }
+    };
+
+    self.fillFormFromSelection = function (valId) {
+        var data;
+
+        if (valId === '0') {
+            data = defaultData;
+        } else if (valId === '-1') {
+            data = self.getCurrentData();
+        } else {
+            data = self.getOptionData(valId);
+        }
+        self.fillForm(data);
+    };
+
+    self.updateForm = function () {
+        var valId = satSelector.val();
+
+        self.fillFormFromSelection(valId);
+        submitButton.toggle(valId !== '0');
+        if (valId === '-1') {
+            fields.slideDown();
+        } else if (fields.is(':visible')) {
+            fields.slideUp();
+        }
+    };
+
+    self.submitForm = function (event) {
+        event.preventDefault();
+        $.post(settingsForm.attr('action'), settingsForm.serialize(), function (result) {
+            var oldDisplay = fields.css('display');
+            submitButton.off();
+            satSelector.off();
+            settingsForm.replaceWith(result);
+            self.initForm();
+            fields.css('display', oldDisplay);
         });
-      }, interval);
-    }
-  }
+    };
 
-  function updateForm(e) {
-    var valId = satSelector.val();
-    fillFormFromSelection(valId);
-    submitButton.toggle(valId !== '0');
-    if (valId === '-1') {
-      fields.slideDown();
-    } else {
-      fields.slideUp();
-    }
-  }
+    self.getCurrentData = function () {
+        var currentData = {};
 
-  function getOptionData(valId) {
-    selection = satSelector.find('option[value=' + valId + ']');
-    if (!selection.length) {
-      return defaultData;
-    }
-    return selection.data();
-  }
+        fields.find('input').each(function () {
+            var el = $(this),
+                value = el.attr('value');
 
-  function fillFormFromSelection(valId) {
-    var data;
-    var selection;
+            if (value !== undefined) {
+                currentData[el.attr('id')] = value;
+            }
+        });
 
-    if (valId === '0' || valId === '-1') {
-      data = defaultData;
-    } else {
-      data = getOptionData(valId)
-    }
-    fillForm(data);
-  }
+        fields.find('select').each(function () {
+            var select = $(this),
+                selectedOption = select.find('option[selected="None"]'),
+                value = selectedOption.val();
 
-  function fillForm(obj) {
-    var key;
-    for (key in obj) {
-      settingsForm.find('#' + key).val(obj[key]);
-    }
-  }
+            if (value !== undefined) {
+                currentData[select.attr('id')] = value;
+            }
+        });
+
+        return currentData;
+    };
+
+    self.selectSavedPreset = function () {
+        var currentData = self.getCurrentData(),
+            options = satSelector.find('option'),
+            isEqual = false,
+            opt,
+            i;
+
+        for (i = 0; i < options.length; i += 1) {
+            opt = $(options[i]);
+            isEqual = self.equalObjects(opt.data(), currentData, true);
+
+            if (isEqual) {
+                satSelector.val(opt.val());
+                break;
+            }
+        }
+
+        if (!isEqual && !self.equalObjects(currentData, {})) {
+            // custom parameters
+            satSelector.val(-1);
+        }
+    };
+
+    self.initForm = function () {
+        settingsForm = $('#settings-form');
+        fields = settingsForm.find('.settings-fields');
+        fields.before(satSelection);
+        submitButton = settingsForm.find('button');
+        submitButton.on('click', self.submitForm);
+        satSelector.on('change', self.updateForm);
+        self.selectSavedPreset();
+        self.updateForm();
+    };
+
+    self.doRefresh = function (interval) {
+        setTimeout(function () {
+            $.get(url).done(function (result) {
+                signalStatus.html(result);
+            }).always(function () {
+                self.doRefresh(interval);
+            });
+        }, interval);
+    };
+
+    self.doRefreshFileList = function (interval) {
+        if (fileList.length > 0) {
+            setTimeout(function () {
+                $.get(filesUrl).done(function (result) {
+                    fileList.html(result);
+                }).always(function () {
+                    self.doRefreshFileList(interval);
+                });
+            }, interval);
+        }
+    };
+
+    self.doRefresh(refreshInterval);
+    self.doRefreshFileList(fileRefreshInterval);
+    self.initForm();
 }(this, this.jQuery));

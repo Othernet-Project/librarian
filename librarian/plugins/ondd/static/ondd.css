@@ -42,7 +42,7 @@
   white-space: nowrap;
 }
 
-.snr {
+.snr, .bitrate {
   display: block;
   font-size: 80%;
   font-weight: bold;

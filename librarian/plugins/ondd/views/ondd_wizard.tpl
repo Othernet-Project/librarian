@@ -18,8 +18,17 @@
     </div>
 </div>
 ${presets.body()}
+<script type="text/template" id="jsFieldError">
+    <span class="field-error js-error"></span>
+</script>
+<script type="application/json" id="validation-messages">
+    {
+        "preset": "${_('Please select a satellite.')}"
+    }
+</script>
 </%block>
 
 <%block name="extra_scripts">
 <script type="text/javascript" src="${url('plugins:ondd:static', path='ondd.js')}"></script>
+<script type="text/javascript" src="${url('plugins:ondd:static', path='onddwizard.js')}"></script>
 </%block>

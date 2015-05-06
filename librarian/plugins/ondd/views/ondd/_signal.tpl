@@ -13,3 +13,7 @@
     ## Translators, short for 'signal/noise ratio'
     ${_('SNR')} ${status['snr']}
 </span>
+<span class="bitrate">
+    ## Translators, bitrate
+    ${_('Bitrate')} ${th.get_bitrate(status)}
+</span>

@@ -130,9 +130,14 @@ def get_old_content():
     return db.results
 
 
-def get_zip_space():
-    # FIXME: Implement this function
-    raise NotImplementedError('Woah!')
+def get_zip_space(md5, contentdir):
+    filename = '{0}.zip'.format(md5)
+    zippath = os.path.join(contentdir, filename)
+    return os.stat(zippath).st_size
+
+
+def clone_zipball(zipball):
+    return dict((key, zipball[key]) for key in zipball.keys())
 
 
 def cleanup_list(free_space):
@@ -143,13 +148,14 @@ def cleanup_list(free_space):
     configuration.
     """
     # TODO: tests
-    old = get_old_content()
+    zipballs = iter(get_old_content())
     config = request.app.config
     cdir = config['content.contentdir']
-    zspace = lambda z: get_zip_space(z['md5'] + '.zip', cdir)
-    zipballs = map(lambda z: (z.setdefault('size', zspace(z)) and z), old)
     space = needed_space(free_space)
     while space > 0:
-        zipball = next(zipballs)
+        zipball = clone_zipball(next(zipballs))
+        if 'size' not in zipball:
+            zipball['size'] = get_zip_space(zipball['md5'], cdir)
+
         space -= zipball['size']
         yield zipball

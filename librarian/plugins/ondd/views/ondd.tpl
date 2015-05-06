@@ -13,6 +13,7 @@
 ${settings_form.body()}
 ${presets.body()}
 
+% if files:
 <h3>
 ## Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
 ${_('Downloads in progress')}
@@ -20,3 +21,4 @@ ${_('Downloads in progress')}
 <div id="ondd-file-list" data-url="${i18n_url('plugins:ondd:files')}">
     ${file_list.body()}
 </div>
+% endif

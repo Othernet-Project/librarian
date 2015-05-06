@@ -25,7 +25,7 @@ from ..exceptions import NotSupportedError
 from . import zipballs
 
 
-@view('cleanup', message=None, vals=MultiDict())
+@view('diskspace/cleanup', message=None, vals=MultiDict())
 def cleanup_list():
     """ Render a list of items that can be deleted """
     free = zipballs.free_space()[0]
@@ -33,7 +33,7 @@ def cleanup_list():
             'needed': zipballs.needed_space(free)}
 
 
-@view('cleanup', message=None, vals=MultiDict())
+@view('diskspace/cleanup', message=None, vals=MultiDict())
 def cleanup():
     forms = request.forms
     action = forms.get('action', 'check')

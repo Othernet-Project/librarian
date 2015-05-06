@@ -122,6 +122,12 @@ class Wizard(object):
                             **step_context)
 
     def process_current_step(self):
+        # could happen in case the saved state points to a higher step and in
+        # the meantime a test condition made one of the steps to drop out and
+        # a post request is sent to a step with an old higher index
+        if self.current_step_index not in self.steps:
+            return self.redirect_to_step()
+
         step_handlers = self.steps[self.current_step_index]
         try:
             step = step_handlers['POST']
@@ -164,7 +170,8 @@ class Wizard(object):
         else:
             return use_index
 
-    def register_step(self, name, template, method=valid_methods, index=None):
+    def register_step(self, name, template, method=valid_methods, index=None,
+                      test=None):
         def decorator(func):
             next_free_index = max(self.steps.keys() + [-1]) + 1
             use_index = self.request_step_index(name, index, next_free_index)
@@ -184,6 +191,12 @@ class Wizard(object):
                     )
                     raise ValueError(msg)
                 self.steps.setdefault(use_index, dict(name=name))
+
+                if test is not None:
+                    if not callable(test):
+                        raise TypeError('`test` parameter must be a callable.')
+                    self.steps[use_index]['test'] = test
+
                 self.steps[use_index][method_name] = {'handler': func,
                                                       'template': template}
             return func
@@ -199,6 +212,12 @@ class Wizard(object):
         self.steps = dict((self.start_index + idx, step)
                           for idx, step in enumerate(gapless))
 
+    def skip_needless_steps(self):
+        """Inplace removal of steps that should be skipped, based on the return
+        value of an optional test function specified by individual steps."""
+        self.steps = dict((idx, step) for idx, step in self.steps.items()
+                          if step.get('test', lambda: True)())
+
     @classmethod
     def create_wizard(cls, name, attrs):
         instance = cls(name)
@@ -207,5 +226,6 @@ class Wizard(object):
         for name, value in attrs.items():
             setattr(instance, name, value)
 
+        instance.skip_needless_steps()
         instance.remove_gaps()
         return instance
