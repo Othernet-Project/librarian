@@ -51,9 +51,10 @@ def rebuild_catalogs():
     subprocess.call('python scripts/cmpmsgs.py librarian/locales', shell=True)
 
 
-def rebuild_static():
+def rebuild_static(sdist=False):
     import subprocess
-    subprocess.call(['grunt', 'build'])
+    cmd = ('build', 'dist')[sdist]
+    subprocess.call(['grunt', cmd])
 
 
 def clean_pyc():
@@ -99,7 +100,7 @@ class Develop(DevelopCommand):
 class Package(SdistCommand):
     def run(self):
         rebuild_catalogs()
-        rebuild_static()
+        rebuild_static(sdist=True)
         clean_pyc()
         SdistCommand.run(self)
 
