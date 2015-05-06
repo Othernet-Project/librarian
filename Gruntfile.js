@@ -7,6 +7,7 @@ module.exports = function (grunt) {
         cssSrc = 'assets/scss/',
         cssDest = staticRoot + 'css/',
         imgSrc = 'assets/img/',
+        imgDest = staticRoot + 'img/',
         jsSrc = 'assets/js/',
         jsDest = staticRoot + 'js/',
         jsBundles = {
@@ -35,7 +36,7 @@ module.exports = function (grunt) {
         var config = {
                 options: {
                     sourceMap: true,
-                    sourceMapName: jsDest + key + '.js.map'
+                    sourceMapIncludeSources: true
                 },
                 files: {}
             };
@@ -75,8 +76,11 @@ module.exports = function (grunt) {
             }
         },
         clean: {
-            build: {
+            hashed: {
                 src: staticRoot + 'dist'
+            },
+            source: {
+                src: [cssDest, jsDest, staticRoot + 'dist/js/*.map']
             }
         },
         compass: {
@@ -88,10 +92,28 @@ module.exports = function (grunt) {
                     sassDir: '../../' + cssSrc,
                     imagesDir: '../../' + imgSrc,
                     generatedImagesDir: 'img',
+                    httpGeneratedImagesPath: '/static/img/',
                     javascriptsDir: 'js',
                     relativeAssets: false,
                     outputStyle: 'compressed'
                 }
+            }
+        },
+        copy: {
+            main: {
+                files: [{
+                    expand: true,
+                    flatten: true,
+                    src: [jsDest + '*.map'],
+                    dest: staticRoot + 'dist/js/',
+                    filter: 'isFile'
+                }, {
+                    expand: true,
+                    flatten: true,
+                    src: [imgSrc + '*'],
+                    dest: imgDest,
+                    filter: 'isFile'
+                }]
             }
         },
         hash: {
@@ -119,9 +141,11 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-compass');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-hash');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('build', ['compass', 'uglify', 'clean', 'hash']);
+    grunt.registerTask('build', ['compass', 'uglify', 'clean:hashed', 'hash', 'copy']);
+    grunt.registerTask('dist', ['build', 'clean:source']);
 };
