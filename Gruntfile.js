@@ -4,8 +4,10 @@ var crypto = require('crypto');
 module.exports = function (grunt) {
     'use strict';
     var staticRoot = 'librarian/static/',
-        cssRoot = staticRoot + 'css/',
-        jsRoot = staticRoot + 'js/',
+        cssSrc = 'assets/scss',
+        cssDest = staticRoot + 'css/',
+        jsSrc = 'assets/js/',
+        jsDest = staticRoot + 'js/',
         jsBundles = {
             content: ['tags.js', 'list.js'],
             dashboard: ['collapsible_dash_sections.js'],
@@ -18,11 +20,11 @@ module.exports = function (grunt) {
     function prefixJS() {
         var args = Array.prototype.slice.call(arguments);
         return args.map(function (filename) {
-            return jsRoot + filename;
+            return jsSrc + filename;
         });
     }
 
-    // prefix each filename in `jsBundles` with `jsRoot`
+    // prefix each filename in `jsBundles` with `jsSrc`
     Object.keys(jsBundles).forEach(function (key) {
         jsBundles[key] = prefixJS.apply(this, jsBundles[key]);
     });
@@ -32,11 +34,11 @@ module.exports = function (grunt) {
         var config = {
                 options: {
                     sourceMap: true,
-                    sourceMapName: jsRoot + key + '.js.map'
+                    sourceMapName: jsDest + key + '.js.map'
                 },
                 files: {}
             };
-        config.files[jsRoot + key + '.js'] = jsBundles[key];
+        config.files[jsDest + key + '.js'] = jsBundles[key];
         confs[key] = config;
         return confs;
     }, {});
@@ -82,7 +84,7 @@ module.exports = function (grunt) {
                     httpPath: '/static/',
                     basePath: staticRoot,
                     cssDir: 'css',
-                    sassDir: '../../scss',
+                    sassDir: '../../' + cssSrc,
                     imagesDir: 'img',
                     javascriptsDir: 'js',
                     relativeAssets: false,
@@ -102,11 +104,11 @@ module.exports = function (grunt) {
                 }
             },
             js: {
-                src: jsRoot + '*.js',
+                src: jsDest + '*.js',
                 dest: staticRoot + 'dist/js/'
             },
             css: {
-                src: cssRoot + '*.css',
+                src: cssDest + '*.css',
                 dest: staticRoot + 'dist/css/'
             }
         },
