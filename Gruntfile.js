@@ -4,8 +4,9 @@ var crypto = require('crypto');
 module.exports = function (grunt) {
     'use strict';
     var staticRoot = 'librarian/static/',
-        cssSrc = 'assets/scss',
+        cssSrc = 'assets/scss/',
         cssDest = staticRoot + 'css/',
+        imgSrc = 'assets/img/',
         jsSrc = 'assets/js/',
         jsDest = staticRoot + 'js/',
         jsBundles = {
@@ -85,7 +86,8 @@ module.exports = function (grunt) {
                     basePath: staticRoot,
                     cssDir: 'css',
                     sassDir: '../../' + cssSrc,
-                    imagesDir: 'img',
+                    imagesDir: '../../' + imgSrc,
+                    generatedImagesDir: 'img',
                     javascriptsDir: 'js',
                     relativeAssets: false,
                     outputStyle: 'compressed'
