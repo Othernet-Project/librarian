@@ -54,7 +54,7 @@ def rebuild_catalogs():
 def rebuild_static(sdist=False):
     import subprocess
     cmd = ('build', 'dist')[sdist]
-    subprocess.call(['grunt', cmd])
+    subprocess.check_call(['grunt', cmd])
 
 
 def clean_pyc():
