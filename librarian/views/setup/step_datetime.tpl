@@ -5,10 +5,11 @@
 <div class="step-datetime-form">
     <div class="date-field">
         ## Translators, used as label for date selector
-        <label>${_('Date ("YYYY-MM-DD"):')}</label>
-        <span id="noscript-picker">
+        <label>${_('Date:')}</label>
+        <div id="noscript-picker">
             ${h.vinput('date', datetime, _type='text', _id="date", _class='date')}
-        </span>
+            <p class="helptext">${_('Please enter the date in YYYY-MM-DD format (e.g.: %s)') %datetime['date']}</p>
+        </div>
         <input type="text" id="datepicker" style="display: none" />
         <div class="flow-element">
             <div id="pikaday-container"></div>
