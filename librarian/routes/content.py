@@ -100,7 +100,8 @@ def content_list():
     """ Show list of content """
     result = filter_content()
     result.update({'base_path': i18n_url('content:list'),
-                   'page_title': _('Library')})
+                   'page_title': _('Library'),
+                   'empty_message': _('Content library is currently empty')})
     return result
 
 
@@ -109,7 +110,8 @@ def content_sites_list():
     """ Show list of multipage content only """
     result = filter_content(multipage=True)
     result.update({'base_path': i18n_url('content:sites_list'),
-                   'page_title': _('Sites')})
+                   'page_title': _('Sites'),
+                   'empty_message': _('There are no sites in the library.')})
     return result
 
 
