@@ -15,5 +15,5 @@
 </span>
 <span class="bitrate">
     ## Translators, bitrate
-    ${_('Bitrate')} ${th.get_bitrate(status)}
+    ${_('Bitrate')} ${h.hsize(th.get_bitrate(status), unit='bit', step=1000)}
 </span>
