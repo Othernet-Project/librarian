@@ -11,3 +11,5 @@ __pycache__/
 /.coverage
 /node_modules
 *.log
+/librarian/static/dist
+/librarian/static/assets.json

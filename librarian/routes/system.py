@@ -8,6 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import json
 import logging
 import datetime
 from os.path import dirname, join, basename
@@ -15,9 +16,27 @@ from os.path import dirname, join, basename
 from bottle import mako_view as view, request, static_file, abort
 
 from librarian import __version__
+from ..utils.template_helpers import template_helper
 
 
 STATICDIR = join(dirname(dirname(__file__)), 'static')
+HASHEDDIR = 'dist'
+try:
+    with open(join(STATICDIR, 'assets.json'), 'r') as assets_file:
+        ASSET_MAPPING = json.load(assets_file)
+except Exception:
+    logging.warning('No hashed assets found.')
+    ASSET_MAPPING = {}
+
+
+@template_helper
+def static_url(route, path):
+    try:
+        actual_path = join(HASHEDDIR, ASSET_MAPPING[path])
+    except KeyError:
+        actual_path = path
+
+    return request.app.get_url(route, path=actual_path)
 
 
 def send_static(path):

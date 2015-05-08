@@ -62,7 +62,7 @@ ${page_title}
 </div>
 
 <%block name="extra_scripts">
-<script src="${url('sys:static', path='js/content.js')}"></script>
+<script src="${th.static_url('sys:static', path='js/content.js')}"></script>
 </%block>
 
 <%block name="script_templates">
