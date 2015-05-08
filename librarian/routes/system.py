@@ -40,7 +40,14 @@ def static_url(route, path):
 
 
 def send_static(path):
-    return static_file(path, root=STATICDIR)
+    # WORKAROUND: apps api has no access to `static_url` template helper, so if
+    # a request comes in with the old unhashed paths, return a file to them
+    try:
+        actual_path = join(HASHEDDIR, ASSET_MAPPING[path])
+    except KeyError:
+        actual_path = path
+    # END WORKAROUND
+    return static_file(actual_path, root=STATICDIR)
 
 
 def send_favicon():
