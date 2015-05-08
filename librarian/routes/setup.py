@@ -25,7 +25,7 @@ from ..utils.lang import UI_LOCALES, DEFAULT_LOCALE
 DATETIME_KEYS = ('date', 'hour', 'minute')
 MONTHS = [(idx, idx) for idx, nm in enumerate(calendar.month_name) if idx > 0]
 HOURS = [(i, i) for i in range(24)]
-MINUTES = [(i, i) for i in range(60)]
+MINUTES = [(i, str(i).zfill(2)) for i in range(60)]
 TIMEZONES = [(tzname, tzname) for tzname in pytz.common_timezones]
 DEFAULT_TIMEZONE = pytz.common_timezones[0]
 
