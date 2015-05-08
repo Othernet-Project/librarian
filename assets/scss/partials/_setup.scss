@@ -6,6 +6,11 @@
         vertical-align: top;
         left: 90px;
         top: 0;
+        .pika-single {
+            position: static;
+            left: auto;
+            top: auto;
+        }
     }
     .flow-element:last-child {
         margin-right: 0;
