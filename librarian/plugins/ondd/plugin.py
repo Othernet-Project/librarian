@@ -112,7 +112,7 @@ def get_bitrate(status):
     for stream in status.get('streams', []):
         return stream['bitrate']
 
-    return ''
+    return 0
 
 
 def get_file_list():
