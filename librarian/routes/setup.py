@@ -59,19 +59,24 @@ class SetupWizard(wizard.Wizard):
         return self.step_count + self.start_index
 
     def override_next_step(self):
+        next_setup_step_index = self.get_next_setup_step_index()
         try:
-            wanted_step_index = int(request.params.get(self.step_param, ''))
-        except ValueError:
+            wanted_step_index = request.params[self.step_param]
+        except KeyError:
+            self.set_step_index(next_setup_step_index)
             return
         else:
-            if wanted_step_index not in self.steps:
+            try:
+                wanted_step_index = int(wanted_step_index)
+            except ValueError:
+                self.set_step_index(next_setup_step_index)
                 return
-
-        next_setup_step_index = self.get_next_setup_step_index()
-        if wanted_step_index > next_setup_step_index:
-            self.set_step_index(next_setup_step_index)
-        else:
-            self.set_step_index(wanted_step_index)
+            else:
+                if (wanted_step_index not in self.steps or
+                        wanted_step_index > next_setup_step_index):
+                    self.set_step_index(next_setup_step_index)
+                else:
+                    self.set_step_index(wanted_step_index)
 
 
 setup_wizard = SetupWizard(name='setup')

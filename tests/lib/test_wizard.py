@@ -41,14 +41,24 @@ def test_wizard_name(subclassed_wizard):
 @mock.patch.object(mod.Wizard, 'process_current_step')
 @mock.patch.object(mod.Wizard, 'start_next_step')
 @mock.patch.object(mod.Wizard, 'override_next_step')
+@mock.patch.object(mod.Wizard, 'remove_gaps')
+@mock.patch.object(mod.Wizard, 'skip_needless_steps')
+@mock.patch.object(mod.Wizard, 'get_needed_steps')
 @mock.patch.object(mod.Wizard, 'load_state')
 @mock.patch.object(mod, 'request')
-def test_dispatch_get(request, load_state, override_next_step, start_next_step,
-                      process_current_step, wizard):
+def test_dispatch_get(request, load_state, get_needed_steps,
+                      skip_needless_steps, remove_gaps, override_next_step,
+                      start_next_step, process_current_step, wizard):
     request.method = 'GET'
+    load_state.return_value = True
+    get_needed_steps.return_value = [1, 4, 5]
+    wizard.state = {}
     wizard.dispatch()
 
+    get_needed_steps.assert_called_once_with()
     load_state.assert_called_once_with()
+    skip_needless_steps.assert_called_once_with([1, 4, 5])
+    remove_gaps.assert_called_once_with()
     override_next_step.assert_called_once_with()
     start_next_step.assert_called_once_with()
     assert not process_current_step.called
@@ -57,14 +67,22 @@ def test_dispatch_get(request, load_state, override_next_step, start_next_step,
 @mock.patch.object(mod.Wizard, 'process_current_step')
 @mock.patch.object(mod.Wizard, 'start_next_step')
 @mock.patch.object(mod.Wizard, 'override_next_step')
+@mock.patch.object(mod.Wizard, 'remove_gaps')
+@mock.patch.object(mod.Wizard, 'skip_needless_steps')
+@mock.patch.object(mod.Wizard, 'get_needed_steps')
 @mock.patch.object(mod.Wizard, 'load_state')
 @mock.patch.object(mod, 'request')
-def test_dispatch_post(request, load_state, override_next_step,
+def test_dispatch_post(request, load_state, get_needed_steps,
+                       skip_needless_steps, remove_gaps, override_next_step,
                        start_next_step, process_current_step, wizard):
     request.method = 'POST'
+    load_state.return_value = False
+    wizard.state = {'needed_steps': [1, 2]}
     wizard.dispatch()
 
     load_state.assert_called_once_with()
+    skip_needless_steps.assert_called_once_with([1, 2])
+    remove_gaps.assert_called_once_with()
     override_next_step.assert_called_once_with()
     process_current_step.assert_called_once_with()
     assert not start_next_step.called
@@ -77,14 +95,16 @@ def test_id(wizard):
 @mock.patch.object(mod, 'request')
 def test_load_state_found(request, wizard):
     request.session.get.return_value = {'custom': 'data'}
-    wizard.load_state()
+    created = wizard.load_state()
+    assert not created
     assert wizard.state == {'custom': 'data'}
 
 
 @mock.patch.object(mod, 'request')
 def test_load_state_not_found(request, wizard):
     request.session.get.return_value = None
-    wizard.load_state()
+    created = wizard.load_state()
+    assert created
     assert wizard.state == {'step': 0, 'data': {}}
 
 
@@ -95,7 +115,8 @@ def test_load_state_not_found_custom_start_index(request):
 
     custom_wizard = CustomWizard('custom')
     request.session.get.return_value = None
-    custom_wizard.load_state()
+    created = custom_wizard.load_state()
+    assert created
     assert custom_wizard.state == {'step': 4, 'data': {}}
 
 
@@ -381,32 +402,34 @@ def test_remove_gaps_custom_start_index():
     assert custom_wizard.steps == {3: 'first', 4: 'second', 5: 'third'}
 
 
-def test_skip_needless_steps(wizard):
+def test_get_needed_steps(wizard):
     fails = lambda: False
     passes = lambda: True
     wizard.steps = {0: {'name': 'first'},
                     1: {'test': fails},
                     2: {'name': 'ok'},
                     3: {'test': passes}}
-    wizard.skip_needless_steps()
-    assert wizard.steps == {0: {'name': 'first'},
-                            2: {'name': 'ok'},
-                            3: {'test': passes}}
+    steps = wizard.get_needed_steps()
+    assert steps == [0, 2, 3]
 
 
-@mock.patch.object(mod.Wizard, 'skip_needless_steps')
-@mock.patch.object(mod.Wizard, 'remove_gaps')
-def test_create_wizard(remove_gaps, skip_needless_steps):
+def test_skip_needless_steps(wizard):
+    wizard.steps = {0: {'name': 'first'},
+                    1: {'test': 'second'},
+                    2: {'name': 'ok'},
+                    3: {'test': 'fourth'}}
+    wizard.skip_needless_steps(needed_steps=[1, 2])
+    assert wizard.steps == {1: {'test': 'second'},
+                            2: {'name': 'ok'}}
+
+
+def test_create_wizard():
     wizard = mod.Wizard.create_wizard('test', {'attr': 1})
-    skip_needless_steps.assert_called_once_with()
-    remove_gaps.assert_called_once_with()
     assert wizard.name == 'test'
     assert wizard.attr == 1
 
 
-@mock.patch.object(mod.Wizard, 'skip_needless_steps')
-@mock.patch.object(mod.Wizard, 'remove_gaps')
-def test_create_wizard_class_attrs(remove_gaps, skip_needless_steps):
+def test_create_wizard_class_attrs():
     class WizardA(mod.Wizard):
         step_param = 'steppa'
         allow_override = True
