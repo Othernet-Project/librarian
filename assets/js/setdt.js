@@ -15,8 +15,8 @@
                 container: document.getElementById('pikaday-container'),
                 onSelect: function (date) {
                     var sDate = '{0}-{1}-{2}'.replace('{0}', date.getFullYear())
-                                             .replace('{1}', date.getMonth() + 1)
-                                             .replace('{2}', date.getDate());
+                                             .replace('{1}', self.zeroPad(date.getMonth() + 1, 2))
+                                             .replace('{2}', self.zeroPad(date.getDate(), 2));
                     $('#date').val(sDate);
                 },
                 onClose: function () {
