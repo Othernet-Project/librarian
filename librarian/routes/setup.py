@@ -114,6 +114,15 @@ def setup_datetime_form():
                 **DATE_CONSTS)
 
 
+def validate_datetime(dt_str):
+    try:
+        parse_datetime(dt_str)
+    except ValueError as exc:
+        return str(exc)
+    except TypeError:
+        return _("Invalid input.")
+
+
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
                             method='POST', index=2)
 def setup_datetime():
@@ -130,23 +139,24 @@ def setup_datetime():
                     datetime=entered_dt,
                     tz=tz_id,
                     **DATE_CONSTS)
-    try:
-        local_dt = parse_datetime(datetime_str)
-    except ValueError as exc:
-        errors = {'_': str(exc)}
+
+    time_error = validate_datetime('{hour}:{minute}'.format(**entered_dt))
+    if time_error:
         return dict(successful=False,
-                    errors=errors,
-                    datetime=entered_dt,
-                    tz=tz_id,
-                    **DATE_CONSTS)
-    except TypeError:
-        errors = {'_': _("Please select a valid date and time.")}
-        return dict(successful=False,
-                    errors=errors,
+                    errors={'time': time_error},
                     datetime=entered_dt,
                     tz=tz_id,
                     **DATE_CONSTS)
 
+    date_error = validate_datetime('{date}'.format(**entered_dt))
+    if date_error:
+        return dict(successful=False,
+                    errors={'date': date_error},
+                    datetime=entered_dt,
+                    tz=tz_id,
+                    **DATE_CONSTS)
+
+    local_dt = parse_datetime(datetime_str)
     tz_aware_dt = pytz.timezone(tz_id).localize(local_dt)
     # Linux only!
     dt_format = '%Y-%m-%d %T'

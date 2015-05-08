@@ -4,7 +4,7 @@
         display: inline-block;
         margin-right: 3em;
         vertical-align: top;
-        left: 180px;
+        left: 90px;
         top: 0;
     }
     .flow-element:last-child {
@@ -16,9 +16,16 @@
     .date-field {
         margin-bottom: 10px;
     }
+    .js-error {
+        display: none;
+    }
     label {
-        width: 180px;
+        width: 90px;
         display: inline-block;
+    }
+    #noscript-picker {
+        display: inline-block;
+        vertical-align: top;
     }
     .pika-table tr {
         border: 0 none;
