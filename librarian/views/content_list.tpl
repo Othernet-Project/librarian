@@ -46,7 +46,7 @@ ${page_title}
         <p class="empty">
         % if not query and not tag and not lang['lang']:
         ## Translators, used as note on library page when library is empty
-        ${_('Content library is currently empty')}
+        ${empty_message}
         % elif query:
         ## Translators, used as note on library page when search does not return anything
         ${_("There are no search results for '%(terms)s'") % {'terms': query}}
