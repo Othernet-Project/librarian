@@ -100,7 +100,16 @@ module.exports = function (grunt) {
             }
         },
         copy: {
-            main: {
+            src: {
+                files: [{
+                    expand: true,
+                    flatten: true,
+                    src: [jsSrc + '*.js'],
+                    dest: jsDest,
+                    filter: 'isFile'
+                }]
+            },
+            dist: {
                 files: [{
                     expand: true,
                     flatten: true,
@@ -146,6 +155,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('build', ['compass', 'uglify', 'clean:hashed', 'hash', 'copy']);
+    grunt.registerTask('build', ['compass', 'uglify', 'clean:hashed', 'copy:src', 'hash', 'copy:dist']);
     grunt.registerTask('dist', ['build', 'clean:source']);
 };
