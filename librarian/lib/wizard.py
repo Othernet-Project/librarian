@@ -42,8 +42,17 @@ class Wizard(object):
 
     def dispatch(self):
         # entry-point of a wizard instance, load wizard state from session
-        self.load_state()
+        created = self.load_state()
+        if created:
+            needed_steps = self.get_needed_steps()
+            self.state['needed_steps'] = needed_steps
+        else:
+            needed_steps = self.state['needed_steps']
+
+        self.skip_needless_steps(needed_steps)
+        self.remove_gaps()
         self.override_next_step()
+
         if request.method == 'POST':
             return self.process_current_step()
 
@@ -65,10 +74,14 @@ class Wizard(object):
         self.state['step'] = step_index
 
     def load_state(self):
+        created = False
         state = request.session.get(self.id)
         if not state:
             state = dict(step=self.start_index, data={})
+            created = True
+
         self.state = state
+        return created
 
     def save_state(self):
         request.session[self.id] = self.state
@@ -212,11 +225,13 @@ class Wizard(object):
         self.steps = dict((self.start_index + idx, step)
                           for idx, step in enumerate(gapless))
 
-    def skip_needless_steps(self):
-        """Inplace removal of steps that should be skipped, based on the return
-        value of an optional test function specified by individual steps."""
+    def get_needed_steps(self):
+        return [idx for idx, step in self.steps.items()
+                if step.get('test', lambda: True)()]
+
+    def skip_needless_steps(self, needed_steps):
         self.steps = dict((idx, step) for idx, step in self.steps.items()
-                          if step.get('test', lambda: True)())
+                          if idx in needed_steps)
 
     @classmethod
     def create_wizard(cls, name, attrs):
@@ -226,6 +241,4 @@ class Wizard(object):
         for name, value in attrs.items():
             setattr(instance, name, value)
 
-        instance.skip_needless_steps()
-        instance.remove_gaps()
         return instance
