@@ -92,6 +92,7 @@
 
     self.initDatePicker();
 
+    $('.js-error').show();
     self.timezoneContainer = $('.timezone-container');
     self.timezone = $('#timezone');
     self.tzOptions = self.timezone.find('option');

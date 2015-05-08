@@ -8,18 +8,21 @@
         <label>${_('Date:')}</label>
         <div id="noscript-picker">
             ${h.vinput('date', datetime, _type='text', _id="date", _class='date')}
+            ${h.field_error('date', errors)}
             <p class="helptext">${_('Please enter the date in YYYY-MM-DD format (e.g.: %s)') %datetime['date']}</p>
         </div>
         <input type="text" id="datepicker" style="display: none" />
         <div class="flow-element">
             <div id="pikaday-container"></div>
         </div>
+        <span class="js-error">${h.field_error('date', errors)}</span>
     </div>
     <div class="date-field">
         ## Translators, used as label for time input
         <label>${_('Time:')}</label>
         ${h.vselect('hour', hours, datetime, _class='time')}&#58;
         ${h.vselect('minute', minutes, datetime, _class='time')}
+        ${h.field_error('time', errors)}
     </div>
     <div class="date-field">
         ## Translators, used as label for timezone
