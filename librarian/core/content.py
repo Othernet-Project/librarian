@@ -12,13 +12,15 @@ import os
 import re
 import json
 
+import scandir
+
 
 COMP_RE = re.compile(r'([0-9a-f]{2,3})')  # path component
 MD5_RE = re.compile(r'[0-9a-f]{32}')  # complete md5 hexdigest
 HEX_PATH = r'(/[0-9a-f]{3}){10}/[0-9a-f]{2}'  # md5-based dir path
 
 
-def fnwalk(path, fn):
+def fnwalk(path, fn, shallow=False):
     """
     Walk directory tree top-down until directories of desired length are found
 
@@ -29,19 +31,28 @@ def fnwalk(path, fn):
     with ``OSError``.
 
     This function has been added specifically to deal with large and deep
-    directory trees, and it's tehrefore not avisable to convert the return
-    values to a lists and similar memory-intensive objects.
+    directory trees, and it's therefore not advisable to convert the return
+    values to lists and similar memory-intensive objects.
+
+    The ``shallow`` flag is used to terminate further recursion on match. If
+    ``shallow`` is ``False``, recursion continues even after a path is matched.
+
+    For example, given a path ``/foo/bar/bar``, and a matcher that matches
+    ``bar``, with ``shallow`` flag set to ``True``, only ``/foo/bar`` is
+    matched. Otherwise, both ``/foo/bar`` and ``/foo/bar/bar`` are matched.
     """
     if fn(path):
         yield path
+        if shallow:
+            return
 
     try:
-        names = os.listdir(path)
+        entries = scandir.scandir(path)
     except OSError:
         return
 
-    for name in names:
-        for child in fnwalk(os.path.join(path, name), fn):
+    for entry in entries:
+        for child in fnwalk(entry.path, fn, shallow):
             yield child
 
 

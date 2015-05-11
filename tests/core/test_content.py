@@ -11,6 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import os
 import json
 
+import mock
 import pytest
 
 from librarian.core import content as mod
@@ -18,6 +19,57 @@ from librarian.core import content as mod
 MOD = mod.__name__
 
 SEPARATOR = os.sep
+# Mock directory tree
+DIRTREE = {
+    '.': ('index.html', 'static', 'articles'),
+    'index.html': None,
+    'static': ('favicon.ico', 'img', 'css'),
+    'static/favicon.ico': None,
+    'static/img': ('logo.png', 'header.jpg', 'bg.gif'),
+    'static/img/logo.png': None,
+    'static/img/header.jpg': None,
+    'static/img/bg.gif': None,
+    'static/css': ('style.css',),
+    'static/css/style.css': None,
+    'articles': ('article1.html', 'article2.html', 'images'),
+    'articles/article1.html': None,
+    'articles/article2.html': None,
+    'articles/images': ('img1.svg', 'img2.jpg'),
+    'articles/images/img1.svg': None,
+    'articles/images/img2.jpg': None,
+}
+
+
+def mock_direntry(name, base_path):
+    d = mock.Mock()
+    d.path = '/'.join([base_path, name])
+    d.name = name
+    d.is_file.side_effect = lambda: '.' in name
+    return d
+
+
+# Simplified simulation of os.listdir()
+def mock_scan(path):
+    base_path = path
+    if path.startswith('./'):
+        path = path[2:]
+    contents = DIRTREE.get(path)
+    if contents is None:
+        raise OSError()
+    contents = [mock_direntry(n, base_path) for n in contents]
+    print(path, contents)
+    return contents
+
+
+@pytest.yield_fixture
+def mock_scandir():
+    """
+    Rigged version of scandir module that uses mock directory structure instead
+    of a real one.
+    """
+    with mock.patch(MOD + '.scandir') as msc:
+        msc.scandir = mock_scan
+        yield msc
 
 
 def test_path_components():
@@ -102,47 +154,48 @@ def test_convert_bad_path_to_id():
     assert mod.to_md5(path) == ''
 
 
-def test_fnwalk(dirs):
-    """ Can walk a directory tree using a matcher function """
-    names, tmpdir = dirs
-    matcher = lambda p: p.endswith('7')
-    ret = list(mod.fnwalk(tmpdir, matcher))
-    ret.sort()
-    assert ret == [
-        '{}/1/7'.format(tmpdir),
-        '{}/10/7'.format(tmpdir),
-        '{}/2/7'.format(tmpdir),
-        '{}/3/7'.format(tmpdir),
-        '{}/4/7'.format(tmpdir),
-        '{}/5/7'.format(tmpdir),
-        '{}/6/7'.format(tmpdir),
-        '{}/7'.format(tmpdir),
-        '{}/7/7'.format(tmpdir),
-        '{}/8/7'.format(tmpdir),
-        '{}/9/7'.format(tmpdir),
+def test_fnwalk(mock_scandir):
+    """
+    Given base path and a matcher function, when fnwalk() is called, it returns
+    an iterator that yields paths for which matcher returns True.
+    """
+    matcher = lambda p: 'article' in p
+    assert list(sorted(mod.fnwalk('.', matcher))) == [
+        './articles',
+        './articles/article1.html',
+        './articles/article2.html',
+        './articles/images',
+        './articles/images/img1.svg',
+        './articles/images/img2.jpg',
     ]
 
 
-def test_fnwalk_true(dirs):
+def test_fnwalk_shallow(mock_scandir):
     """
-    If matcher always returns True, all possible paths are returned, including
-    the base directory.
+    Given a base path and matcher function, when fnwalk() is called with sallow
+    flag, then it returns an iterator that yields only the first path matched.
     """
-    names, tmpdir = dirs
-    matcher = lambda p: True
-    ret = list(mod.fnwalk(tmpdir, matcher))
-    assert set(names).issubset(set(ret))
-    assert tmpdir in ret
+    matcher = lambda p: 'article' in p
+    assert list(sorted(mod.fnwalk('.', matcher, shallow=True))) == [
+        './articles',
+    ]
 
 
-def test_fnwalk_false(dirs):
+def test_fnwalk_match_self(mock_scandir):
     """
-    If matcher always returns False, none of the directories are returned
+    Given a base path and matcher function that matches the base path, when
+    fnwalk() is called, it returns an iterator that yields base path, in
+    additon to other matched path.
     """
-    names, tmpdir = dirs
-    matcher = lambda p: False
-    ret = list(mod.fnwalk(tmpdir, matcher))
-    assert ret == []
+    matcher = lambda p: 'article' in p
+    assert list(sorted(mod.fnwalk('articles', matcher))) == [
+        'articles',
+        'articles/article1.html',
+        'articles/article2.html',
+        'articles/images',
+        'articles/images/img1.svg',
+        'articles/images/img2.jpg',
+    ]
 
 
 def test_find_content_dir(md5dirs):
