@@ -1,0 +1,54 @@
+/**
+ * screen.scss: Master stylesheet for screens
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "base";
+@import "compass/css3";
+@import "compass/typography/text/replacement";
+
+$content-gap: 1em;
+
+// Helpers
+@import "partials/colors";
+@import "partials/fonts";
+@import "mixins/controls";
+@import "mixins/effects";
+@import "mixins/hdpi_images";
+@import "mixins/media_query";
+@import "mixins/sprites";
+
+// Core elements
+@import "partials/basics";
+@import "partials/header";
+@import "partials/footer";
+@import "partials/languages";
+
+// Sections
+@import "partials/auth";
+@import "partials/dash";
+@import "partials/content_list";
+@import "partials/reader";
+@import "partials/downloads";
+@import "partials/files";
+@import "partials/apps";
+
+// Details
+@import "partials/search";
+@import "partials/content_details";
+@import "partials/tags";
+
+// Dash subsections
+// TODO: We need to move dash subsection code to individual plugins
+@import "partials/dash_content_archive";
+@import "partials/dash_diskspace";
+@import "partials/dash_netinterfaces";
+
+@import "partials/_setup";
+@import "vendor/pikaday";

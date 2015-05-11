@@ -13,8 +13,6 @@ import stat
 import json
 import shutil
 import logging
-import urlparse
-import functools
 import subprocess
 try:
     from io import BytesIO as StringIO
@@ -27,18 +25,16 @@ from bottle import (
 from bottle_utils.ajax import roca_view
 from bottle_utils.common import to_unicode
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
+from fdsend import send_file
 
 from ..core import downloads
 from ..core import metadata
 
 from ..lib import auth
-from ..lib import send_file
 from ..lib.pager import Pager
 
 from ..utils import patch_content
-from ..utils import netutils
-
-from .helpers import open_archive, init_filemanager, with_content
+from ..utils.core_helpers import open_archive, init_filemanager, with_content
 
 
 app = default_app()
@@ -104,7 +100,8 @@ def content_list():
     """ Show list of content """
     result = filter_content()
     result.update({'base_path': i18n_url('content:list'),
-                   'page_title': _('Library')})
+                   'page_title': _('Library'),
+                   'empty_message': _('Content library is currently empty')})
     return result
 
 
@@ -113,7 +110,8 @@ def content_sites_list():
     """ Show list of multipage content only """
     result = filter_content(multipage=True)
     result.update({'base_path': i18n_url('content:sites_list'),
-                   'page_title': _('Sites')})
+                   'page_title': _('Sites'),
+                   'empty_message': _('There are no sites in the library.')})
     return result
 
 
@@ -147,7 +145,7 @@ def content_file(content_id, filename):
                       filename))
         size, content = patch_content.patch(content.read())
         content = StringIO(content.encode('utf8'))
-    return send_file.send_file(content, filename, size, timestamp)
+    return send_file(content, filename, size, timestamp)
 
 
 def content_zipball(content_id):
@@ -169,6 +167,9 @@ def content_reader(meta):
     base_path = i18n_url('content:sites_list')
     content_path = request.params.get('path', meta.entry_point)
     content_path = meta.entry_point if content_path == '/' else content_path
+    if content_path.startswith('/'):
+        content_path = content_path[1:]
+
     if str(base_path) not in referer:
         base_path = i18n_url('content:list')
     return dict(meta=meta, base_path=base_path, content_path=content_path)
@@ -303,39 +304,3 @@ def handle_file_action(path):
         return template('exec_result', ret=ret, out=out, err=err)
     else:
         abort(400)
-
-
-def get_content_url(root_url, domain):
-    archive = open_archive()
-    matched_contents = archive.content_for_domain(domain)
-    try:
-        # as multiple matches are possible, pick the first one
-        meta = matched_contents[0]
-    except IndexError:
-        # invalid content domain
-        path = 'content-not-found'
-    else:
-        base_path = i18n_url('content:reader', content_id=meta.md5)
-        path = '{0}?path={1}'.format(base_path, request.path)
-
-    return urlparse.urljoin(root_url, path)
-
-
-def content_resolver_plugin(root_url, ap_client_ip_range):
-
-    def is_ap_client(client_ip):
-        start, end = app.config['librarian.ap_client_ip_range']
-        return client_ip in netutils.IPv4Range(start, end)
-
-    def decorator(callback):
-        @functools.wraps(callback)
-        def wrapper(*args, **kwargs):
-            target_host = netutils.get_target_host()
-            is_regular_access = target_host in root_url
-            if not is_regular_access and is_ap_client(request.remote_addr):
-                # a content domain was entered(most likely), try to load it
-                content_url = get_content_url(root_url, target_host)
-                return redirect(content_url)
-            return callback(*args, **kwargs)
-        return wrapper
-    return decorator

@@ -16,26 +16,35 @@ import glob
 import logging
 import zipfile
 
+import dateutil.parser
+
+
+def default_broadcast(key, meta):
+    return dateutil.parser.parse(meta['timestamp']).date()
+
 
 RTL_LANGS = ['ar', 'he', 'ur', 'yi', 'ji', 'iw', 'fa']
 
+# FIXME: This is a dummy gettext to cause the strings to be extracted.
+_ = lambda x: x
+
 LICENSES = (
-    (None, 'Unknown license'),
-    ('CC-BY', 'Creative Commons Attribution'),
-    ('CC-BY-ND', 'Creative Commons Attribution-NoDerivs'),
-    ('CC-BY-NC', 'Creative Commons Attribution-NonCommercial'),
-    ('CC-BY-ND-NC', 'Creative Commons Attribution-NonCommercial-NoDerivs'),
-    ('CC-BY-SA', 'Creative Commons Attribution-ShareAlike'),
-    ('CC-BY-NC-SA', 'Creative Commons Attribution-NonCommercial-ShareAlike'),
-    ('GFDL', 'GNU Free Documentation License'),
-    ('OPL', 'Open Publication License'),
-    ('OCL', 'Open Content License'),
-    ('ADL', 'Against DRM License'),
-    ('FAL', 'Free Art License'),
-    ('PD', 'Public Domain'),
-    ('OF', 'Other free license'),
-    ('ARL', 'All rights reserved'),
-    ('ON', 'Other non-free license'),
+    (None, _('Unknown license')),
+    ('CC-BY', _('Creative Commons Attribution')),
+    ('CC-BY-ND', _('Creative Commons Attribution-NoDerivs')),
+    ('CC-BY-NC', _('Creative Commons Attribution-NonCommercial')),
+    ('CC-BY-ND-NC', _('Creative Commons Attribution-NonCommercial-NoDerivs')),
+    ('CC-BY-SA', _('Creative Commons Attribution-ShareAlike')),
+    ('CC-BY-NC-SA', _('Creative Commons Attribution-NonCommercial-ShareAlike')),
+    ('GFDL', _('GNU Free Documentation License')),
+    ('OPL', _('Open Publication License')),
+    ('OCL', _('Open Content License')),
+    ('ADL', _('Against DRM License')),
+    ('FAL', _('Free Art License')),
+    ('PD', _('Public Domain')),
+    ('OF', _('Other free license')),
+    ('ARL', _('All rights reserved')),
+    ('ON', _('Other non-free license')),
 )
 
 # `default` defaults to `None`
@@ -45,27 +54,32 @@ LICENSES = (
 META_SPECIFICATION = {
     'url': {'required': True},
     'title': {'required': True},
-    'images': {},
+    'images': {'default': 0},
     'timestamp': {'required': True},
     'keep_formatting': {'default': False},
-    'is_publisher': {
-        'default': False,
-        'aliases': ['is_partner']
-    },
+    'is_partner': {'default': False},
     'is_sponsored': {'default': False},
-    'archive': {},
+    'archive': {'default': 'core'},
     'publisher': {
+        'default': '',
         'aliases': ['partner']
     },
     'license': {
         'required': True
     },
-    'language': {},
+    'language': {'default': ''},
     'multipage': {'default': False},
     'entry_point': {
         'default': 'index.html',
         'aliases': ['index']
     },
+    # although this field is required by the specification, legacy content that
+    # has no such field defined would be just ignored during processing
+    'broadcast': {
+        'required': False,
+        'default': default_broadcast
+    },
+    'keywords': {'default': ''},
     'md5': {'auto': True},
     'size': {'auto': True},
     'updated': {'auto': True}
@@ -93,8 +107,11 @@ class FormatError(MetadataError):
     pass
 
 
-def get_default_value(key):
-    return STANDARD_FIELDS[key].get('default', None)
+def get_default_value(key, meta):
+    default = STANDARD_FIELDS[key].get('default', None)
+    if callable(default):
+        return default(key, meta)
+    return default
 
 
 def get_aliases_for(key):
@@ -115,7 +132,7 @@ def add_missing_keys(meta):
     """
     for key in STANDARD_FIELDS:
         if key not in meta:
-            meta[key] = get_default_value(key)
+            meta[key] = get_default_value(key, meta)
 
 
 def replace_aliases(meta):
@@ -165,7 +182,11 @@ def convert_json(meta):
     for key in STANDARD_FIELDS:
         if key not in meta and is_required(key):
             raise FormatError("Mandatory key '%s' missing" % key)
-    add_missing_keys(meta)
+    try:
+        add_missing_keys(meta)
+    except Exception as exc:
+        raise DecodeError("Failed to add default values: '%s'" % exc)
+
     return meta
 
 
@@ -296,8 +317,8 @@ class Meta(object):
             return 'core'
         elif self.meta.get('is_sponsored'):
             return 'sponsored'
-        elif self.meta.get('is_publisher'):
-            return 'publisher'
+        elif self.meta.get('is_partner'):
+            return 'partner'
         return 'core'
 
     @property

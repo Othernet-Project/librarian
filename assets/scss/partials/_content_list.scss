@@ -1,0 +1,241 @@
+/**
+ * _content_list.scss: content list styling
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+.content-list {
+  padding: 0;
+
+  li {
+    text-align: left;
+    margin: 0 0 2em;
+    list-style: none;
+    position: relative;
+    clear: both;
+    border-bottom: 1px solid $light-grey;
+
+    .thumbnail {
+      width: 100px;
+      height: 100px;
+      float: left;
+      position: relative;
+      overflow: hidden;
+      @include border-radius(50px);
+      background: $light-grey;
+
+      .a {
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        margin-top: -50%;
+      }
+
+      .thumb-image {
+        display: inline-block;
+        width: 100%;
+      }
+
+      @include phone-portrait-wide {
+        width: 64px;
+        height: 64px;
+      }
+    }
+
+    .details {
+      margin-left: 120px;
+
+      @include phone-portrait-wide {
+        margin-left: 0;
+      }
+    }
+
+    h2 {
+      border: 0;
+      font-size: 150%;
+      line-height: 100%;
+      font-weight: normal;
+      margin: 0.4em 0 0.2em;
+
+      @include phone-portrait-wide {
+        clear: left;
+        font-size: 120%;
+      }
+
+      a {
+        color: $dark-grey;
+        display: inline-block;
+
+        span {
+          display: inline-block;
+          padding: 1em;
+        }
+
+        &:hover, &:focus {
+          color: $blue;
+          text-decoration: none;
+        }
+      }
+    }
+
+    .label {
+      margin-bottom: 0;
+      text-transform: uppercase;
+      font-size: 80%;
+      letter-spacing: 0.1em;
+      color: $grey;
+
+      @include phone-portrait-wide {
+        margin-left: 80px;
+        position: relative;
+        top: 2em;
+        line-height: 140%;
+
+        .datestamp {
+          display: block;
+        }
+      }
+
+      .label-archive {
+        vertical-align: middle;
+        display: inline-block;
+        padding: 0 0.3em;
+        color: $white;
+        @include loose-spacing;
+      }
+
+      .label-core {
+        background: $ash-blue;
+      }
+
+      .label-sponsored {
+        background: $orange;
+      }
+
+      .label-partner {
+        background: $green;
+      }
+    }
+
+    .attrib {
+      text-transform: none;
+      font-style: italic;
+      color: $grey;
+      letter-spacing: 0;
+      margin-bottom: 0.2em;
+    }
+
+    .badges {
+      // NOTE: This is because there are currently no badges to show
+      display: none;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    .delete-button button {
+      @include no-button;
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      padding: 3px;
+      background-color: $light-grey;
+      opacity: 0.5;
+      @include border-radius(image-width('icons/1x/delete.png'));
+      line-height: 100%;
+
+      @include phone-portrait-wide {
+        top: 0;
+        right: 0;
+        opacity: 1;
+        width: 24px;
+        height: 24px;
+        font-size: 24px;
+        line-height: 68%;
+        letter-spacing: 0;
+        @include button-red;
+
+        .altlabel:after {
+          content: "\00d7";  // &times entity
+          display: inline;
+          color: $white;
+        }
+
+        .fulllabel {
+          display: none;
+        }
+      }
+
+      .icon {
+        @include icon('delete');
+        @include hide-text;
+
+        @include phone-portrait-wide {
+          text-indent: 0;
+          background: transparent;
+          width: auto;
+          height: auto;
+        }
+      }
+
+      &:hover, &:focus {
+        opacity: 1;
+      }
+    }
+  }
+
+  .badges, .tags {
+    display: inline-block;
+  }
+
+  .tags {
+    margin-bottom: 2em;
+  }
+}
+
+.loading, .end {
+  font-size: 200%;
+  color: $grey;
+  text-align: center;
+  padding: 2em 0;
+
+  @include phone-portrait-wide {
+    padding: 0;
+  }
+
+  @include phone-portrait-narrow {
+    padding: 0;
+    font-size: 100%;
+
+    button {
+      @include button-medium;
+      padding: 0;
+      width: 100%;
+    }
+  }
+}
+
+#to-top {
+  position: fixed;
+  z-index: 2;
+  bottom: 1em;
+  right: 1em;
+
+  a {
+    display: inline-block;
+    background: transparentize($black, 0.2);
+    border: 1px solid $black;
+    color: $blue;
+    padding: 1em;
+    text-transform: uppercase;
+    font-size: 90%;
+    @include border-radius(2px);
+  }
+}
+

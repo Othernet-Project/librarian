@@ -98,8 +98,11 @@ def install_static(app, mod):
         return static_file(path, static_path)
     _route_plugin_static.__name__ = '_route_%s_static' % mod
 
-    app.route('/s/%s/<path:path>' % mod, 'GET', _route_plugin_static,
-              name='plugins:%s:static' % mod, no_i18n=True)
+    app.route('/s/%s/<path:path>' % mod, 'GET',
+              _route_plugin_static,
+              name='plugins:%s:static' % mod,
+              no_i18n=True,
+              skip=app.APP_ONLY_PLUGINS)
 
 
 def install_plugins(app):

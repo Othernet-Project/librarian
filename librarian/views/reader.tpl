@@ -16,9 +16,9 @@ ${meta.title}
             <p class="date">
             <strong>
                 ${meta.timestamp.strftime('%Y-%m-%d')}
-                % if meta.is_publisher:
+                % if meta.is_partner:
                 / ${meta.publisher}
-                / <span class="special">${_('publisher')}</span>
+                / <span class="special">${_('partner')}</span>
                 % endif
 
                 % if meta.is_sponsored:

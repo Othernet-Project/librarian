@@ -44,22 +44,25 @@ ${page_title}
     </ul>
     % if not metadata:
         <p class="empty">
-        % if not query and not tag:
+        % if not query and not tag and not lang['lang']:
         ## Translators, used as note on library page when library is empty
-        ${_('Content library is currently empty')}
+        ${empty_message}
         % elif query:
         ## Translators, used as note on library page when search does not return anything
         ${_("There are no search results for '%(terms)s'") % {'terms': query}}
         % elif tag:
         ## Translators, used as not on library page when there is no content for given tag
         ${_("There are no results for '%(tag)s'") % {'tag': tag}}
+        % elif lang['lang']:
+        ## Translators, used as not on library page when there is no content for given language
+        ${_("Language filter for '%(lang)s' is active. Click %(link)s to see all updates") % {'lang': th.lang_name_safe(lang['lang']), 'link': '<a href="%(path)s">%(label)s</a>' % {'path': i18n_url(request.path) + h.set_qparam(lang='').to_qs(), 'label': _('here')}}}
         % endif
         </p>
     % endif
 </div>
 
 <%block name="extra_scripts">
-<script src="${url('sys:static', path='js/content.js')}"></script>
+<script src="${th.static_url('sys:static', path='js/content.js')}"></script>
 </%block>
 
 <%block name="script_templates">

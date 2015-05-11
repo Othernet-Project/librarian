@@ -150,7 +150,7 @@ def get_status():
         }
 
     tuner = root.find('tuner')
-    net = root.find('network')
+    streams = root.find('streams')
     return {
         'has_lock': tuner.find('lock').text == 'yes',
         'signal': int(tuner.find('signal').text),
@@ -158,13 +158,13 @@ def get_status():
         'streams': [
             {'id': s.find('ident').text,
              'bitrate': int(s.find('bitrate').text)}
-            for s in net]
+            for s in streams]
     }
 
 
 def get_file_list():
     """ Get ONDD file download list """
-    payload = xml_get_path('/files/')
+    payload = xml_get_path('/signaling/')
     try:
         root = send(payload)
     except ET.ParseError:
@@ -175,13 +175,14 @@ def get_file_list():
         return []
 
     out = []
-    flist = root.find('files')
-    for f in flist:
-        out.append({
-            'path': f.find('path').text,
-            'size': int(f.find('size').text),
-            'progress': int(f.find('progress').text),
-        })
+    streams = root.find('streams')
+    for s in streams:
+        files = s.find('files')
+        for f in files:
+            out.append({
+                'path': f.find('path').text,
+                'size': int(f.find('size').text)
+            })
     return out
 
 

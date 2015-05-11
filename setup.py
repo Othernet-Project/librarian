@@ -3,8 +3,9 @@
 import os
 import sys
 import shutil
-from setuptools import setup, find_packages
+from subprocess import check_output
 from distutils.cmd import Command
+from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 from setuptools.command.develop import develop as DevelopCommand
 from setuptools.command.sdist import sdist as SdistCommand
@@ -13,6 +14,12 @@ import librarian
 
 SCRIPTDIR = os.path.dirname(__file__) or '.'
 PY3 = sys.version_info >= (3, 0, 0)
+VERSION = librarian.__version__
+
+if '--snapshot' in sys.argv:
+    sys.argv.remove('--snapshot')
+    head = check_output(['git', 'rev-parse', 'HEAD'], cwd=SCRIPTDIR).strip()
+    VERSION += '+git%s' % head[:8]
 
 
 def read(fname):
@@ -41,10 +48,13 @@ DEPS = read_reqs(REQPATH)
 
 def rebuild_catalogs():
     import subprocess
-    import platform
-    needs_shell = platform.system = 'Windows'
-    subprocess.call('python scripts/cmpmsgs.py librarian/locales',
-                    shell=needs_shell)
+    subprocess.call('python scripts/cmpmsgs.py librarian/locales', shell=True)
+
+
+def rebuild_static(sdist=False):
+    import subprocess
+    cmd = ('build', 'dist')[sdist]
+    subprocess.check_call(['grunt', cmd])
 
 
 def clean_pyc():
@@ -84,11 +94,13 @@ class Develop(DevelopCommand):
     def run(self):
         DevelopCommand.run(self)
         rebuild_catalogs()
+        rebuild_static()
 
 
 class Package(SdistCommand):
     def run(self):
         rebuild_catalogs()
+        rebuild_static(sdist=True)
         clean_pyc()
         SdistCommand.run(self)
 
@@ -100,7 +112,7 @@ class Clean(Command):
 
 setup(
     name='librarian',
-    version=librarian.__version__,
+    version=VERSION,
     author='Outernet Inc',
     author_email='branko@outernet.is',
     description=('Web-based UI for managing local Outernet broadcast '

@@ -13,7 +13,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from __future__ import unicode_literals, print_function
 
 import gevent.monkey
-gevent.monkey.patch_all(aggressive=True, thread=False)
+gevent.monkey.patch_all(aggressive=True)
 
 # For more details on the below see: http://bit.ly/18fP1uo
 import gevent.hub
@@ -31,19 +31,20 @@ from bottle import request
 
 from bottle_utils.lazy import Lazy
 from bottle_utils import html as helpers
-from bottle_utils.i18n import I18NPlugin, lazy_gettext as _
+from bottle_utils.i18n import I18NPlugin, lazy_gettext as _, i18n_url
 from bottle_utils.common import to_unicode
 
 from librarian.core.metadata import LICENSES
 from librarian.core.downloads import get_zipballs
 
-from librarian.lib import squery
 from librarian.lib import auth
 from librarian.lib import sessions
+from librarian.lib import squery
 from librarian.lib.lock import lock_plugin
 from librarian.lib.confloader import ConfDict
 
 from librarian.utils import lang
+from librarian.utils import setup
 from librarian.utils import commands
 from librarian.utils import migrations
 from librarian.utils.repl import start_repl
@@ -51,18 +52,27 @@ from librarian.utils.system import ensure_dir
 from librarian.utils.routing import add_routes
 from librarian.utils.timer import request_timer
 from librarian.utils.gserver import ServerManager
+from librarian.utils.version import full_version_info
 from librarian.utils import databases as database_utils
 from librarian.utils.signal_handlers import on_interrupt
 from librarian.utils.template_helpers import template_helper
+from librarian.utils.content_domain_handler import content_resolver_plugin
 
 from librarian.plugins import install_plugins
 
-from librarian.routes import (content, tags, downloads, apps, dashboard,
-                              system, auth as auth_route)
+from librarian.routes import (content,
+                              tags,
+                              downloads,
+                              apps,
+                              dashboard,
+                              system,
+                              auth as auth_route,
+                              setup as setup_route)
 
 from librarian import __version__
 
 MODDIR = dirname(abspath(__file__))
+APP_ONLY_PLUGINS = ('session', 'user', 'setup')
 
 
 def in_pkg(*paths):
@@ -95,15 +105,17 @@ ROUTES = (
     ('content:list', content.content_list,
      'GET', '/', {}),
     ('content:sites_list', content.content_sites_list,
-     'GET', '/sites', {}),
+     'GET', '/sites/', {}),
     ('content:file', content.content_file,
-     'GET', '/pages/<content_id>/<filename:path>', dict(no_i18n=True)),
+     'GET', '/pages/<content_id>/<filename:path>',
+     dict(no_i18n=True, skip=APP_ONLY_PLUGINS)),
     ('content:zipball', content.content_zipball,
-     'GET', '/pages/<content_id>.zip', dict(no_i18n=True, unlocked=True)),
+     'GET', '/pages/<content_id>.zip',
+     dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
     ('content:reader', content.content_reader,
      'GET', '/pages/<content_id>', {}),
     ('content:cover', content.cover_image,
-     'GET', '/covers/<path>', dict(no_i18n=True)),
+     'GET', '/covers/<path>', dict(no_i18n=True, skip=APP_ONLY_PLUGINS)),
     ('content:delete', content.remove_content,
      'POST', '/delete/<content_id>', {}),
 
@@ -135,6 +147,11 @@ ROUTES = (
     ('dashboard:main', dashboard.dashboard,
      'GET', '/dashboard/', {}),
 
+    # Setup wizard
+
+    ('setup:main', setup_route.setup_wizard,
+     ['GET', 'POST'], '/setup/', {}),
+
     # Apps
 
     ('apps:list', apps.show_apps,
@@ -147,11 +164,14 @@ ROUTES = (
     # System
 
     ('sys:static', system.send_static,
-     'GET', '/static/<path:path>', dict(no_i18n=True, unlocked=True)),
+     'GET', '/static/<path:path>',
+     dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
     ('sys:favicon', system.send_favicon,
-     'GET', '/favicon.ico', dict(no_i18n=True, unlocked=True)),
+     'GET', '/favicon.ico',
+     dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
     ('sys:logs', system.send_logfile,
-     'GET', '/librarian.log', dict(no_i18n=True, unlocked=True)),
+     'GET', '/librarian.log',
+     dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
 
     # This route handler is added because unhandled missing pages cause bottle
     # to _not_ install any plugins, and some are essential to rendering of the
@@ -161,6 +181,9 @@ ROUTES = (
 )
 
 app = bottle.default_app()
+app.APP_ONLY_PLUGINS = APP_ONLY_PLUGINS
+# register session secret auto configurator
+setup.autoconfigurator('session.secret')(sessions.generate_secret_key)
 
 
 def prestart(config, logfile=None, debug=False):
@@ -222,8 +245,9 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
 
     servers = ServerManager()
 
+    version = full_version_info(__version__, config)
     # Srart the server
-    logging.info('===== Starting Librarian v%s =====', __version__)
+    logging.info('===== Starting Librarian v%s =====', version)
 
     # Install Librarian plugins
     install_plugins(app)
@@ -234,7 +258,7 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
     template_helper(lang.lang_name_safe)
     bottle.TEMPLATE_PATH.insert(0, in_pkg('views'))
     bottle.BaseTemplate.defaults.update({
-        'app_version': __version__,
+        'app_version': version,
         'request': request,
         'style': 'screen',  # Default stylesheet
         'h': helpers,
@@ -258,14 +282,15 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
     app.install(squery.database_plugin(databases, debug=debug and not repl))
     app.install(sessions.session_plugin(
         cookie_name=config['session.cookie_name'],
-        secret=config['session.secret'])
-    )
+        secret=app.setup.get('session.secret')
+    ))
     app.install(auth.user_plugin(no_auth))
     wsgiapp = I18NPlugin(app, langs=lang.UI_LANGS,
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian', locale_dir=in_pkg('locales'))
     app.install(lock_plugin)
-    app.install(content.content_resolver_plugin(
+    app.install(setup.setup_plugin(setup_path=i18n_url('setup:main')))
+    app.install(content_resolver_plugin(
         root_url=config['librarian.root_url'],
         ap_client_ip_range=config['librarian.ap_client_ip_range']
     ))
@@ -321,8 +346,6 @@ def configure_argparse(parser):
                         'the configuration in use and exit')
     parser.add_argument('--debug', action='store_true', help='enable '
                         'debugging')
-    parser.add_argument('--version', action='store_true', help='print out '
-                        'version number and exit')
     parser.add_argument('--log', metavar='PATH', help='path to log file '
                         '(default: as configured in .ini file)', default=None)
     parser.add_argument('--no-auth', action='store_true',
@@ -335,6 +358,7 @@ def configure_argparse(parser):
 def main(args):
     app.config = ConfDict.from_file(args.conf, catchall=True, autojson=True)
     conf = app.config
+    app.setup = setup.Setup(conf['setup.file'])
 
     if args.debug_conf:
         print('Configuration file path: %s' % args.conf)
@@ -342,7 +366,7 @@ def main(args):
         sys.exit(0)
 
     databases = prestart(conf, args.log, args.debug)
-    commands.select_command(args, databases, app)
+    commands.select_command(args, databases, conf)
     return start(databases, conf, args.no_auth, args.repl, args.debug)
 
 
@@ -352,9 +376,4 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     configure_argparse(parser)
     args = parser.parse_args(sys.argv[1:])
-
-    if args.version:
-        print('v%s' % __version__)
-        sys.exit()
-
     sys.exit(main(args))

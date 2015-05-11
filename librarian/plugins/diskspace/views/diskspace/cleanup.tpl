@@ -42,7 +42,7 @@ ${_('There is enough free space on storage')}
             % for meta in metadata:
             <tr>
             <td>
-            ${h.checkbox('selection', meta['md5'], vals, default=True)}
+            ${h.vcheckbox('selection', meta['md5'], vals, default=True)}
             </td>
             <td>${meta['updated'].strftime('%m-%d')}</td>
             <td><a href="${i18n_url('content:reader', content_id=meta['md5'])}">${meta['title']}</a></td>

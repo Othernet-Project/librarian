@@ -1,2 +1,2 @@
-!function(a,b){function c(a){a.preventDefault(),b(a.target).parent(".dash-collapsible").toggleClass("dash-collapsed")}function d(a){b(a).prepend(templates.collapseIcon)}{var e=b(".dash-section h2");b(".dash-collapsible")}e.on("click",c),_.each(e,d)}(this,jQuery);
+!function(a,b){function c(a){a.preventDefault(),b(a.target).parents(".dash-collapsible").toggleClass("dash-collapsed")}function d(a){b(a).prepend(templates.collapseIcon)}{var e=b(".dash-section h2");b(".dash-collapsible")}_.each(e,d),e.on("click",c)}(this,jQuery);
 //# sourceMappingURL=dashboard.js.map
