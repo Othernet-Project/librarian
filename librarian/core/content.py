@@ -52,8 +52,9 @@ def fnwalk(path, fn, shallow=False):
         return
 
     for entry in entries:
-        for child in fnwalk(entry.path, fn, shallow):
-            yield child
+        if entry.is_dir():
+            for child in fnwalk(entry.path, fn, shallow):
+                yield child
 
 
 def content_path_components(s):
