@@ -21,6 +21,7 @@ from librarian.core import zipballs as mod
 
 MOD = mod.__name__
 
+
 @mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
 @mock.patch(MOD + '.json.load')
 def test_get_info(load, ZipFile):
@@ -247,19 +248,21 @@ def test_extract_to_tempdir(to_path, ZipFile, gettempdir, *ignored):
 
 
 @mock.patch(MOD + '.backup')
-@mock.patch(MOD + '.shutil.move')
 @mock.patch(MOD + '.shutil.rmtree')
-@mock.patch(MOD + '.tempfile.gettempdir')
 @mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
 @mock.patch(MOD + '.os.makedirs')
+@mock.patch(MOD + '.tempfile.gettempdir')
+@mock.patch(MOD + '.shutil.move')
 @mock.patch(MOD + '.content.to_path')
-def test_creates_target_dir(to_path, makedirs, *ignored):
-    to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
-                            '/255/44')
+def test_creates_target_dir(to_path, move, gettempdir, *ignored):
+    md5_parts = ['202', 'ab6', '2b5', '51f', '6d7', 'fc0', '02f', '656', '525',
+                 '255', '44']
+    to_path.return_value = ('/srv/zipballs/' + '/'.join(md5_parts))
+    gettempdir.return_value = '/tmp/dir/'
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     mod.extract(path, '/srv/zipballs')
-    makedirs.assert_called_once_with(
-        '/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525/255')
+    move.assert_called_once_with(gettempdir.return_value + ''.join(md5_parts),
+                                 to_path.return_value)
 
 
 @mock.patch(MOD + '.shutil.move')

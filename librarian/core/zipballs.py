@@ -130,7 +130,7 @@ def extract(path, target):
     tempdir = tempfile.gettempdir()
     name, _ = os.path.splitext(os.path.basename(path))
     extract_path = os.path.join(tempdir, name)
-    target_path = content.to_path(name)
+    target_path = content.to_path(name, prefix=target)
 
     # Extract the zip file to temporary directory
     zfile = zipfile.ZipFile(path)
@@ -138,9 +138,6 @@ def extract(path, target):
 
     # Back up existing target directory with .backup suffix
     backup_path = backup(target_path)
-
-    # Make sure target exists
-    os.makedirs(os.path.dirname(target_path))
 
     # Move the extracted directory to target path
     shutil.move(extract_path, target_path)
