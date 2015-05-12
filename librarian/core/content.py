@@ -121,7 +121,7 @@ def find_infos(basedir):
         yield (infopath, data, to_md5(relpath))
 
 
-def get_meta(basedir, md5):
+def get_meta(basedir, md5, meta_filename='info.json'):
     """ Find info.json at path matching specified md5 ID
 
     This function looks up the path matching the specified md5 and returns
@@ -133,7 +133,7 @@ def get_meta(basedir, md5):
     If the metadata file is not found, ``IOError`` is raised.
     """
     path = to_path(md5, prefix=basedir)
-    infopath = os.path.join(path, 'info.json')
+    infopath = os.path.join(path, meta_filename)
     with open(infopath, 'rb') as f:
         data = json.load(f, 'utf8')
     return data
