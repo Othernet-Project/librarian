@@ -141,3 +141,9 @@ def get_meta(basedir, md5, meta_filename='info.json'):
     with open(infopath, 'rb') as f:
         data = json.load(f, 'utf8')
     return data
+
+
+def get_content_size(basedir, md5):
+    """ Return the size of the content folder matching the given md5 ID."""
+    content_path = to_path(md5, prefix=basedir)
+    return os.stat(content_path).st_size

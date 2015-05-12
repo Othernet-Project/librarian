@@ -241,3 +241,14 @@ def test_get_meta_with_bad_metadta(bad_metadata_dir, metadata):
     md5, tmpdir = bad_metadata_dir
     with pytest.raises(ValueError):
         mod.get_meta(tmpdir, md5)
+
+
+@mock.patch('os.stat')
+@mock.patch.object(mod, 'to_path')
+def test_get_content_size(to_path, stat):
+    mocked_stat = mock.Mock(st_size=1024)
+    stat.return_value = mocked_stat
+    to_path.side_effect = lambda x, prefix: prefix + '/' + x
+    assert mod.get_content_size('basedir', 'contentid') == 1024
+    to_path.assert_called_once_with('contentid', prefix='basedir')
+    stat.assert_called_once_with('basedir/contentid')
