@@ -346,3 +346,13 @@ def test_extract_target_path_returned(to_path, gettempdir, *ignored):
     gettempdir.return_value = '/tmp'
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     assert mod.extract(path, '/srv/zipballs') == to_path.return_value
+
+
+def test_get_zip_path():
+    md5 = '202ab62b551f6d7fc002f65652525544'
+    basedir = '/content/path/'
+    with mock.patch('os.path.exists') as exists:
+        exists.return_value = True
+        assert mod.get_zip_path(md5, basedir) == basedir + md5 + '.zip'
+
+    assert mod.get_zip_path('invalid', basedir) is None

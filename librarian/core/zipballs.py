@@ -147,3 +147,16 @@ def extract(path, target):
         shutil.rmtree(backup_path)
 
     return target_path
+
+
+def get_zip_path(md5, directory):
+    """ Return zip path in a directory
+
+    :param md5:         MD5 hex of the zipball
+    :param directory:   directory in which to look for files
+    """
+    root = os.path.normpath(directory)
+    filepath = os.path.join(root, md5 + '.zip')
+    if os.path.exists(filepath):
+        return filepath
+    return None
