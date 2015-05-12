@@ -12,11 +12,9 @@ from __future__ import unicode_literals
 
 import os
 import json
-import glob
-import logging
-import zipfile
 
 import dateutil.parser
+import scandir
 
 
 def default_broadcast(key, meta):
@@ -252,46 +250,16 @@ class Meta(object):
         """
         return self.meta.get(key, default)
 
-    def cache_cover(self, ext, content):
-        """ Store the content cover image with specified extension and content
-
-        The cover is saved in a predefined path within the cover directory
-        given during initialization. The filename of the cover file matches the
-        content ID (md5 hash).
-
-        .. caution::
-
-            Attacker may inject non-image content in an image file to explot
-            browser vulnerabilities. This method writes content to the file
-            blindly without checking it. It is the caller's responsibility to
-            chek the content before calling this method.
-
-        :param ext:     file extension
-        :param content: file content
-        :returns:       filename (not full path) of the created cover
-        """
-        cover_path = os.path.join(self.cover_dir, '%s%s' % (self.md5, ext))
-        with open(cover_path, 'wb') as f:
-            f.write(content)
-        return os.path.basename(cover_path)
-
-    def extract_image(self):
-        with open(self.zip_path, 'rb') as f:
-            z = zipfile.ZipFile(f)
-            for name in z.namelist():
-                extension = os.path.splitext(name)[1].lower()
-                if extension in self.IMAGE_EXTENSIONS:
-                    content = z.open(name, 'r').read()
-                    return extension, content
-            return None, None
-
-    def get_cover_path(self):
-        cover_path = os.path.join(self.cover_dir, '%s.*' % self.md5)
-        g = glob.glob(cover_path)
-        try:
-            return os.path.basename(g[0])
-        except IndexError:
+    def find_image(self):
+        if not self.zip_path:
             return None
+
+        for entry in scandir.scandir(self.zip_path):
+            extension = os.path.splitext(entry.name)[1].lower()
+            if extension in self.IMAGE_EXTENSIONS:
+                return entry.path
+
+        return None
 
     @property
     def lang(self):
@@ -329,24 +297,6 @@ class Meta(object):
     def image(self):
         if self._image is not None:
             return self._image
-        cover = self.get_cover_path()
-        if cover:
-            self._image = cover
-            return self._image
-        if not self.zip_path:
-            return None
-        try:
-            extension, content = self.extract_image()
-        except (TypeError, OSError):
-            # Could not find the zip file
-            logging.error("Could not find or read zip file '%s.zip'", self.md5)
-            return None
-        if extension is None or content is None:
-            return None
-        try:
-            self._image = self.cache_cover(extension, content)
-        except OSError:
-            # Could not write the content
-            logging.error("Could not write the cover image for '%s'", self.md5)
-            return None
+
+        self._image = self.find_image()
         return self._image
