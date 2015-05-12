@@ -37,7 +37,9 @@ class EmbeddedArchive(BaseArchive):
         super(EmbeddedArchive, self).__init__(**config)
 
     def get_count(self, terms=None, tag=None, lang=None, multipage=None):
-        q = self.db.Select('COUNT(*) as count', sets='zipballs')
+        q = self.db.Select('COUNT(*) as count',
+                           sets='zipballs',
+                           where='disabled = 0')
         if tag:
             with_tag(q)
 
@@ -63,6 +65,7 @@ class EmbeddedArchive(BaseArchive):
                     multipage=None):
         # TODO: tests
         q = self.db.Select(sets='zipballs',
+                           where='disabled = 0',
                            order=CONTENT_ORDER,
                            limit=limit,
                            offset=offset)
@@ -102,7 +105,7 @@ class EmbeddedArchive(BaseArchive):
     def content_for_domain(self, domain):
         # TODO: tests
         q = self.db.Select(sets='zipballs',
-                           where='url LIKE :domain',
+                           where='url LIKE :domain AND disabled = 0',
                            order=CONTENT_ORDER)
         domain = '%' + domain.lower() + '%'
         self.db.query(q, domain=domain)
