@@ -76,9 +76,13 @@ def to_path(md5, prefix=None):
     """ Convert content ID (md5 hexdigest) to path
 
     Optional prefix can be specified which is prepended to the converted path.
-    The prefix is always normalized to platform's path style.
+    The prefix is always normalized to platform's path style. If `md5` is not
+    a valid value, `None` will be returned.
     """
     path = os.sep.join(content_path_components(md5))
+    if not path:
+        return None
+
     if prefix:
         prefix = prefix.replace('\\', '/')
         return os.path.join(os.path.normpath(prefix), path)

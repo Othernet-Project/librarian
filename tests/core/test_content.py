@@ -118,7 +118,8 @@ def test_conversion_to_path():
 def test_convert_to_path_with_bad_id():
     """ For broken ID, empty string is returned """
     md5 = '202ab$$$62b551f6d7fc002f65652525544'
-    assert mod.to_path(md5) == ''
+    assert mod.to_path(md5) is None
+    assert mod.to_path(md5, prefix='/some/path/') is None
 
 
 def test_convert_to_path_with_prefix():
