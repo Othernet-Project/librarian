@@ -358,7 +358,7 @@ def test_get_zip_path():
     assert mod.get_zip_path('invalid', basedir) is None
 
 
-@mock.patch.object(mod, 'filewalk')
+@mock.patch.object(mod.content, 'filewalk')
 @mock.patch.object(mod.zipfile, 'ZipFile')
 def test_create(zipfile, filewalk):
     md5 = '202ab62b551f6d7fc002f65652525544'

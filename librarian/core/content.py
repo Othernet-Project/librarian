@@ -57,6 +57,16 @@ def fnwalk(path, fn, shallow=False):
                 yield child
 
 
+def filewalk(root):
+    """Discover and yield all files found in the specified `root` folder."""
+    for entry in scandir.scandir(root):
+        if entry.is_dir():
+            for child in filewalk(entry.path):
+                yield child
+        else:
+            yield entry.path
+
+
 def content_path_components(s):
     """ Extracts path components from and s or a path
 

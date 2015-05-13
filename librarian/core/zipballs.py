@@ -18,8 +18,6 @@ try:
 except ImportError:
     from cStringIO import StringIO
 
-import scandir
-
 from . import content
 from . import metadata
 
@@ -155,23 +153,13 @@ def extract(path, target):
     return target_path
 
 
-def filewalk(root):
-    """Discover and yield all files found in the specified `root` folder."""
-    for entry in scandir.scandir(root):
-        if entry.is_dir():
-            for child in filewalk(entry.path):
-                yield child
-        else:
-            yield entry.path
-
-
 def create(md5, basedir):
     """ Create an in-memory zipfile of content directory, essentially restore
     the original zipball structure. """
     content_path = content.to_path(md5, prefix=basedir)
     out = StringIO()
     with zipfile.ZipFile(out, 'w') as zipball:
-        for path in filewalk(content_path, os.path.isfile):
+        for path in content.filewalk(content_path, os.path.isfile):
             rel_content_path = os.path.relpath(path, content_path)
             zipball.write(path, os.path.join(md5, rel_content_path))
     out.seek(0)
