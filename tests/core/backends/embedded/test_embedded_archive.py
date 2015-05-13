@@ -31,26 +31,24 @@ def mock_cursor(func):
 
 @mock_cursor
 def test_remove_meta_from_db(cursor, archive):
-    hashes = ['foo', 'bar', 'baz']
-    cursor.rowcount = len(hashes)
+    cursor.rowcount = 1
+    md5 = 'an md5hash'
     sql = 'proper delete query'
     archive.db.Delete.return_value = sql
 
-    result = archive.remove_meta_from_db(hashes)
+    assert archive.remove_meta_from_db(md5) == 1
 
     delete_calls = [
-        mock.call('zipballs', where="md5 IN (?, ?, ?)"),
-        mock.call('taggings', where="md5 IN (?, ?, ?)")
+        mock.call('zipballs', where="md5 = ?"),
+        mock.call('taggings', where="md5 = ?")
     ]
     archive.db.Delete.assert_has_calls(delete_calls)
 
     query_calls = [
-        mock.call(sql, *hashes),
-        mock.call(sql, *hashes)
+        mock.call(sql, md5),
+        mock.call(sql, md5)
     ]
     archive.db.query.assert_has_calls(query_calls)
-
-    assert result == len(hashes)
 
 
 def test_needs_formatting(archive):

@@ -90,16 +90,16 @@ class EmbeddedArchive(BaseArchive):
 
         return self.db.results
 
-    def get_single(self, md5):
+    def get_single(self, content_id):
         q = self.db.Select(sets='zipballs', where='md5 = ?')
-        self.db.query(q, md5)
+        self.db.query(q, content_id)
         return self.db.result
 
-    def get_titles(self, ids):
-        q = self.db.Select(['title', 'md5'],
+    def get_multiple(self, content_ids, fields=None):
+        q = self.db.Select(what=['*'] if fields is None else fields,
                            sets='zipballs',
-                           where=self.sqlin('md5', ids))
-        self.db.query(q, *ids)
+                           where=self.sqlin('md5', content_ids))
+        self.db.query(q, *content_ids)
         return self.db.results
 
     def content_for_domain(self, domain):
@@ -111,38 +111,38 @@ class EmbeddedArchive(BaseArchive):
         self.db.query(q, domain=domain)
         return self.db.results
 
-    def add_meta_to_db(self, metadata, replaced):
+    def add_meta_to_db(self, metadata):
         with self.db.transaction() as cur:
             logging.debug("Adding new content to archive database")
             q = self.db.Replace('zipballs', cols=INSERT_KEYS)
-            self.db.executemany(q, metadata)
+            self.db.query(q, metadata)
             rowcount = cur.rowcount
-            logging.debug("Removing replaced content from archive database")
-            if replaced:
+            replaces = metadata.get('replaces')
+            if replaces:
+                msg = "Removing replaced content from archive database."
+                logging.debug(msg)
                 q = self.db.Delete('zipballs',
-                                   where=self.sqlin('md5', replaced))
-
-            self.db.executemany(q, replaced)
+                                   where=self.sqlin('md5', replaces))
+                self.db.query(q, replaces)
 
         return rowcount
 
-    def remove_meta_from_db(self, hashes):
+    def remove_meta_from_db(self, content_id):
         with self.db.transaction() as cur:
-            in_md5s = self.sqlin('md5', hashes)
-            msg = "Removing %s items from archive database" % len(hashes)
+            msg = "Removing {0} from archive database".format(content_id)
             logging.debug(msg)
-            q = self.db.Delete('zipballs', where=in_md5s)
-            self.db.query(q, *hashes)
+            q = self.db.Delete('zipballs', where='md5 = ?')
+            self.db.query(q, content_id)
             rowcount = cur.rowcount
-            q = self.db.Delete('taggings', where=in_md5s)
-            self.db.query(q, *hashes)
+            q = self.db.Delete('taggings', where='md5 = ?')
+            self.db.query(q, content_id)
             return rowcount
 
     def clear_and_reload(self):
         logging.debug('Content refill started.')
         q = self.db.Delete('zipballs')
         self.db.query(q)
-        rows = self.reload_data()
+        rows = self.reload_content()
         logging.info('Content refill finished for %s pieces of content', rows)
 
     def last_update(self):

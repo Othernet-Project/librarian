@@ -113,32 +113,167 @@ class TestBaseArchive(object):
         init_flag = '_{0}__initialized'.format(mod.BaseArchive.__name__)
         assert hasattr(archive, init_flag)
 
-    @mock.patch(MOD + '.os')
-    @mock.patch(MOD + '.get_zip_path')
-    @mock.patch.object(mod.BaseArchive, 'remove_meta_from_db')
-    def test_remove_silent_failure(self, remove_meta_from_db, get_zip_path, os,
-                                   base_archive):
-        # FIXME: This needs to be an integration test for full cov
-        hashes = ['foo', 'bar', 'baz']
-        get_zip_path.return_value = 'foo'
-        os.unlink.side_effect = [OSError, None, None]  # first file fails
-        ret = base_archive.remove_from_archive(hashes)
-        # Deletes three items even though first one fails
-        remove_meta_from_db.assert_called_once_with(hashes)
-        assert ret == ['foo']
+    @mock.patch.object(mod.BaseArchive, 'get_multiple')
+    def test_add_repacement_data(self, get_multiple, base_archive):
+        get_multiple.return_value = [{'md5': '123', 'title': 'old_content'}]
+        metas = [
+            {'md5': '456', 'title': 'first', 'replaces': '123'},
+            {'md5': 'abc', 'title': 'second'}
+        ]
+        base_archive.add_replacement_data(metas, needed_keys=('title',))
+        assert metas == [{'md5': '456',
+                          'title': 'first',
+                          'replaces': '123',
+                          'replaces_title': 'old_content'},
+                         {'md5': 'abc', 'title': 'second'}]
+        get_multiple.assert_called_once_with(['123'], fields=('title',))
 
-    @mock.patch(MOD + '.os')
-    @mock.patch(MOD + '.get_zip_path')
-    @mock.patch.object(mod.BaseArchive, 'remove_meta_from_db')
-    def test_remove_failure_when_path_is_none(self, remove_meta_from_db,
-                                              get_zip_path, os, base_archive):
-        # FIXME: This needs to be an integration test for full cov
-        get_zip_path.return_value = None
-        hashes = ['foo', 'bar', 'baz']
-        try:
-            ret = base_archive.remove_from_archive(hashes)
-        except Exception:
-            assert False, 'Expected not to raise'
+    @mock.patch.object(mod.BaseArchive, 'get_multiple')
+    def test_add_repacement_data_no_match(self, get_multiple, base_archive):
+        get_multiple.return_value = []
+        metas = [{'md5': 'abc', 'title': 'second'}]
+        base_archive.add_replacement_data(metas, needed_keys=('title',))
+        assert metas == [{'md5': 'abc', 'title': 'second'}]
+        assert not get_multiple.called
 
-        remove_meta_from_db.assert_called_once_with(hashes)
-        assert ret == hashes
+    @mock.patch.object(mod, 'get_content_size')
+    @mock.patch.object(mod, 'clean_keys')
+    @mock.patch.object(mod, 'process_meta')
+    @mock.patch.object(mod, 'get_meta')
+    def test_parse_metadata_success(self, get_meta, process_meta, clean_keys,
+                                    get_content_size, base_archive):
+        get_meta.return_value = {'title': 'something'}
+        process_meta.return_value = {'title': 'something', 'added': 'this'}
+
+        result = base_archive.parse_metadata('some_id')
+
+        assert result['md5'] == 'some_id'
+        assert 'size' in result
+        assert 'updated' in result
+        get_meta.assert_called_once_with('unimportant',
+                                         'some_id',
+                                         meta_filename='unimportant')
+        process_meta.assert_called_once_with({'title': 'something'})
+        assert clean_keys.call_count == 1
+        get_content_size.assert_called_once_with('unimportant', 'some_id')
+
+    @mock.patch.object(mod, 'process_meta')
+    @mock.patch.object(mod, 'get_meta')
+    def test_parse_metadata_fail(self, get_meta, process_meta, base_archive):
+        for exc_cls in (IOError, ValueError, mod.FormatError):
+            get_meta.side_effect = exc_cls()
+            with pytest.raises(mod.ContentError):
+                base_archive.parse_metadata('some_id')
+
+    @mock.patch.object(mod, 'to_path')
+    @mock.patch.object(mod, 'shutil')
+    def test_delete_content_files_success(self, shutil, to_path, base_archive):
+        to_path.return_value = '/content_root/some_id/'
+        assert base_archive.delete_content_files('some_id')
+        shutil.rmtree.assert_called_once_with('/content_root/some_id/')
+
+    @mock.patch.object(mod, 'to_path')
+    @mock.patch.object(mod, 'shutil')
+    def test_delete_content_files_invalid_content_id(self, shutil, to_path,
+                                                     base_archive):
+        to_path.return_value = None
+        assert not base_archive.delete_content_files('some_id')
+        assert not shutil.rmtree.called
+
+    @mock.patch.object(mod, 'to_path')
+    @mock.patch.object(mod, 'shutil')
+    def test_delete_content_files_fail(self, shutil, to_path, base_archive):
+        to_path.return_value = '/content_root/some_id/'
+        shutil.rmtree.side_effect = OSError()
+        assert not base_archive.delete_content_files('some_id')
+        shutil.rmtree.assert_called_once_with('/content_root/some_id/')
+
+    @mock.patch.object(mod.BaseArchive, 'delete_content_files')
+    @mock.patch.object(mod.BaseArchive, 'add_meta_to_db')
+    @mock.patch.object(mod.BaseArchive, 'parse_metadata')
+    def test_process_content_success(self, parse_metadata, add_meta_to_db,
+                                     delete_content_files, base_archive):
+        parse_metadata.return_value = {'md5': 'test'}
+        add_meta_to_db.return_value = 1
+        assert base_archive.process_content('some_id') == 1
+        parse_metadata.assert_called_once_with('some_id')
+        add_meta_to_db.assert_called_once_with({'md5': 'test'})
+        assert not delete_content_files.called
+
+    @mock.patch.object(mod.BaseArchive, 'delete_content_files')
+    @mock.patch.object(mod.BaseArchive, 'add_meta_to_db')
+    @mock.patch.object(mod.BaseArchive, 'parse_metadata')
+    def test_process_content_fail(self, parse_metadata, add_meta_to_db,
+                                  delete_content_files, base_archive):
+        parse_metadata.side_effect = mod.ContentError()
+        assert base_archive.process_content('some_id') is False
+        delete_content_files.assert_called_once_with('some_id')
+        assert not add_meta_to_db.called
+
+    @mock.patch.object(mod.BaseArchive, 'process_content')
+    @mock.patch.object(mod, 'extract')
+    @mock.patch.object(mod, 'get_zip_path')
+    def test___add_to_archive_success(self, get_zip_path, extract,
+                                      process_content, base_archive):
+        get_zip_path.return_value = 'zipball path'
+        process_content.return_value = 1
+        assert base_archive._BaseArchive__add_to_archive('some_id')
+        get_zip_path.assert_called_once_with('some_id', 'unimportant')
+        extract.assert_called_once_with('zipball path', 'unimportant')
+        process_content.assert_called_once_with('some_id')
+
+    @mock.patch.object(mod.BaseArchive, 'process_content')
+    @mock.patch.object(mod, 'extract')
+    @mock.patch.object(mod, 'get_zip_path')
+    def test___add_to_archive_fail(self, get_zip_path, extract,
+                                   process_content, base_archive):
+        get_zip_path.return_value = 'zipball path'
+        extract.side_effect = IOError()
+        assert not base_archive._BaseArchive__add_to_archive('some_id')
+        get_zip_path.assert_called_once_with('some_id', 'unimportant')
+        extract.assert_called_once_with('zipball path', 'unimportant')
+        assert not process_content.called
+
+    @mock.patch.object(mod.BaseArchive, '_BaseArchive__add_to_archive')
+    def test_add_to_archive(self, __add_to_archive, base_archive):
+        __add_to_archive.return_value = 1
+        assert base_archive.add_to_archive('some_id') == 1
+        __add_to_archive.assert_called_once_with('some_id')
+
+        assert base_archive.add_to_archive(['some_id', 'other_id']) == 2
+        __add_to_archive.assert_has_calls([mock.call('some_id'),
+                                           mock.call('other_id')])
+
+    @mock.patch.object(mod.BaseArchive, 'remove_meta_from_db')
+    @mock.patch.object(mod.BaseArchive, 'delete_content_files')
+    def test___remove_from_archive(self, delete_content_files,
+                                   remove_meta_from_db, base_archive):
+        remove_meta_from_db.return_value = 1
+        assert base_archive._BaseArchive__remove_from_archive('some_id')
+        delete_content_files.assert_called_once_with('some_id')
+        remove_meta_from_db.assert_called_once_with('some_id')
+
+    @mock.patch.object(mod.BaseArchive, '_BaseArchive__remove_from_archive')
+    def test_remove_from_archive(self, __remove_from_archive, base_archive):
+        __remove_from_archive.return_value = 1
+        assert base_archive.remove_from_archive('some_id') == 1
+        __remove_from_archive.assert_called_once_with('some_id')
+
+        assert base_archive.remove_from_archive(['some_id', 'other_id']) == 2
+        __remove_from_archive.assert_has_calls([mock.call('some_id'),
+                                                mock.call('other_id')])
+
+    @mock.patch.object(mod.BaseArchive, 'process_content')
+    @mock.patch.object(mod, 'to_md5')
+    @mock.patch.object(mod, 'find_content_dirs')
+    def test_reload_content(self, find_content_dirs, to_md5, process_content,
+                            base_archive):
+        to_md5.side_effect = lambda x: x.strip('/')
+        find_content_dirs.return_value = ['unimportant/contentid',
+                                          'unimportant/otherid']
+        process_content.return_value = 1
+        assert base_archive.reload_content() == 2
+        to_md5.assert_has_calls([mock.call('/contentid'),
+                                 mock.call('/otherid')])
+        process_content.assert_has_calls([mock.call('contentid'),
+                                          mock.call('otherid')])
