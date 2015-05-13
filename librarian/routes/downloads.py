@@ -31,7 +31,6 @@ PER_PAGE = 20
 def list_downloads():
     """ Render a list of downloaded content """
     conf = request.app.config
-    cover_dir = conf['content.covers']
     selection = request.params.get('sel', '0') == '1'
 
     default_lang = request.user.options.get('content_language', None)
@@ -61,7 +60,7 @@ def list_downloads():
 
             meta['md5'] = downloads.get_md5_from_path(z)
             meta['ftimestamp'] = datetime.fromtimestamp(ts)
-            metas.append(metadata.Meta(meta, cover_dir, zip_path=z))
+            metas.append(metadata.Meta(meta, z))
         except downloads.ContentError as err:
             # Zip file is invalid. This means that the file is corrupted or the
             # original file was signed with corrupt data in it. Either way, we
@@ -75,7 +74,7 @@ def list_downloads():
     metas_on_page = pager.get_items()
 
     archive = open_archive()
-    archive.add_replacement_data(metas_on_page)
+    archive.add_replacement_data(metas_on_page, needed_keys=('title',))
 
     vals = dict(request.params)
     vals.update({'pp': pager.per_page})
