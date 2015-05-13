@@ -78,6 +78,7 @@ META_SPECIFICATION = {
         'default': default_broadcast
     },
     'keywords': {'default': ''},
+    'replaces': {},
     'md5': {'auto': True},
     'size': {'auto': True},
     'updated': {'auto': True}
