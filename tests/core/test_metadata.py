@@ -275,7 +275,7 @@ def test_meta_class_init(json, os):
     data.get.assert_called_once_with('tags')
     json.loads.assert_called_once_with(data.get.return_value)
     assert meta.tags == json.loads.return_value
-    assert meta.contentdir == 'foo'
+    assert meta.content_path == 'foo'
 
 
 @mock.patch(MOD + '.os', autospec=True)
@@ -338,7 +338,7 @@ def test_meta_get_key(*ignored):
     assert meta.get('missing') is None
 
 
-def test_find_image_no_contentdir():
+def test_find_image_no_content_path():
     meta = mod.Meta({'foo': 'bar'}, '')
     assert meta.find_image() is None
 

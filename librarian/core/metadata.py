@@ -211,18 +211,18 @@ class Meta(object):
 
     IMAGE_EXTENSIONS = ('.png', '.gif', '.jpg', '.jpeg')
 
-    def __init__(self, meta, contentdir):
+    def __init__(self, meta, content_path):
         """ Metadata wrapper instantiation
 
-        :param meta:        dict: Raw metadata as dict
-        :param contentdir:  str: Absolute path of content root
+        :param meta:          dict: Raw metadata as dict
+        :param content_path:  str: Absolute path to specific content
         """
         self.meta = meta
         # We use ``or`` in the following line because 'tags' can be an empty
         # string, which is treated as invalid JSON
         self.tags = json.loads(meta.get('tags') or '{}')
         self._image = None
-        self.contentdir = contentdir
+        self.content_path = content_path
 
     def __getattr__(self, attr):
         try:
@@ -254,10 +254,10 @@ class Meta(object):
         return self.meta.get(key, default)
 
     def find_image(self):
-        if not self.contentdir:
+        if not self.content_path:
             return None
 
-        for entry in scandir.scandir(self.contentdir):
+        for entry in scandir.scandir(self.content_path):
             extension = os.path.splitext(entry.name)[1].lower()
             if extension in self.IMAGE_EXTENSIONS:
                 return entry.name
