@@ -356,3 +356,25 @@ def test_get_zip_path():
         assert mod.get_zip_path(md5, basedir) == basedir + md5 + '.zip'
 
     assert mod.get_zip_path('invalid', basedir) is None
+
+
+@mock.patch.object(mod, 'filewalk')
+@mock.patch.object(mod.zipfile, 'ZipFile')
+def test_create(zipfile, filewalk):
+    md5 = '202ab62b551f6d7fc002f65652525544'
+    basedir = '/content/path/'
+
+    path1 = basedir + '202/ab6/2b5/51f/6d7/fc0/02f/656/525/255/44/index.html'
+    path2 = basedir + '202/ab6/2b5/51f/6d7/fc0/02f/656/525/255/44/s/img.jpg'
+    filewalk.return_value = [path1, path2]
+
+    mocked_zip_obj = mock.Mock()
+    ctx_manager = mock.MagicMock()
+    ctx_manager.__enter__.return_value = mocked_zip_obj
+    zipfile.return_value = ctx_manager
+
+    mod.create(md5, basedir)
+    mocked_zip_obj.write.assert_has_calls([
+        mock.call(path1, '202ab62b551f6d7fc002f65652525544/index.html'),
+        mock.call(path2, '202ab62b551f6d7fc002f65652525544/s/img.jpg')
+    ])
