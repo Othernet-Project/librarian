@@ -275,8 +275,7 @@ def test_meta_class_init(json, os):
     data.get.assert_called_once_with('tags')
     json.loads.assert_called_once_with(data.get.return_value)
     assert meta.tags == json.loads.return_value
-    assert meta.cover_dir == 'foo'
-    assert meta.zip_path is None
+    assert meta.contentdir == 'foo'
 
 
 @mock.patch(MOD + '.os', autospec=True)
@@ -339,7 +338,7 @@ def test_meta_get_key(*ignored):
     assert meta.get('missing') is None
 
 
-def test_find_image_no_zip_path():
+def test_find_image_no_contentdir():
     meta = mod.Meta({'foo': 'bar'}, '')
     assert meta.find_image() is None
 
@@ -347,7 +346,7 @@ def test_find_image_no_zip_path():
 @mock.patch.object(mod, 'scandir')
 def test_find_image_no_files(scandir):
     scandir.scandir.return_value = []
-    meta = mod.Meta({'foo': 'bar'}, '/cover/path', '/zip/path')
+    meta = mod.Meta({'foo': 'bar'}, '/content/path')
     assert meta.find_image() is None
 
 
@@ -356,7 +355,7 @@ def test_find_image_success(scandir):
     mocked_entry = mock.Mock()
     mocked_entry.name = 'image.jpg'
     scandir.scandir.return_value = [mocked_entry]
-    meta = mod.Meta({'foo': 'bar'}, '/cover/path', '/zip/path')
+    meta = mod.Meta({'foo': 'bar'}, '/content/path')
     assert meta.find_image() == 'image.jpg'
 
 
@@ -364,7 +363,7 @@ def test_find_image_success(scandir):
 @mock.patch(MOD + '.os', autospec=True)
 def test_lang_property(*ignored):
     """ The lang property is an alias for language key """
-    meta = mod.Meta({'language': 'foo'}, 'covers_dir')
+    meta = mod.Meta({'language': 'foo'}, '/content/path')
     assert meta.lang == 'foo'
     meta['language'] = 'bar'
     assert meta.lang == 'bar'
@@ -374,7 +373,7 @@ def test_lang_property(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_lang_with_missing_language(*ignored):
     """ Lang property returns None if there is no language key """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     assert meta.lang is None
 
 
@@ -382,7 +381,7 @@ def test_lang_with_missing_language(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_rtl_property(*ignored):
     """ RTL property returns True for RTL languages """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     meta['language'] = 'en'
     assert meta.rtl is False
     meta['language'] = 'ar'
@@ -393,7 +392,7 @@ def test_rtl_property(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_i18n_attrs_property(*ignored):
     """ I18n attributes are returned when langauge is specified """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     assert meta.i18n_attrs == ''
     meta['language'] = 'en'
     assert meta.i18n_attrs == ' lang="en"'
@@ -405,7 +404,7 @@ def test_i18n_attrs_property(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_label_property_default(*ignored):
     """ Label is 'core' if there is no archive key """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     assert meta.label == 'core'
 
 
@@ -413,7 +412,7 @@ def test_label_property_default(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_label_property_with_keys(*ignored):
     """ Correct label should be returned for appropriate key values """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     with key_overrides(meta, archive='core'):
         assert meta.label == 'core'
     with key_overrides(meta, is_sponsored=True):
@@ -426,7 +425,7 @@ def test_label_property_with_keys(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_label_property_with_key_combinations(*ignored):
     """ Correct label should be returned for appropriate key combos """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     with key_overrides(meta, archive='core', is_sponsored=True):
         assert meta.label == 'core'
     with key_overrides(meta, archive='ephem', is_sponsored=True):
@@ -441,7 +440,7 @@ def test_label_property_with_key_combinations(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_free_license_property(*ignored):
     """ Free license is True for free licenses """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     with key_overrides(meta, license='ARL'):
         assert meta.free_license is False
     with key_overrides(meta, license='ON'):
@@ -457,7 +456,7 @@ def test_free_license_property(*ignored):
 @mock.patch.object(mod.Meta, 'find_image')
 def test_image_property_cached(find_image, *ignored):
     """ If image path is cached, it is returned immediately """
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
+    meta = mod.Meta({'md5': 'md5'}, '/content/root/')
     meta._image = 'foobar.jpg'
     assert meta.image == 'foobar.jpg'
     assert not find_image.called
@@ -469,5 +468,5 @@ def test_image_property_cached(find_image, *ignored):
 def test_image_property_found(find_image, *ignored):
     """ If image exist on dist, it will be found and returned """
     find_image.return_value = 'foobar.jpg'
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
+    meta = mod.Meta({'md5': 'md5'}, 'content_dir')
     assert meta.image == 'foobar.jpg'

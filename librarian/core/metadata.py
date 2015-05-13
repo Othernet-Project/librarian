@@ -211,24 +211,18 @@ class Meta(object):
 
     IMAGE_EXTENSIONS = ('.png', '.gif', '.jpg', '.jpeg')
 
-    def __init__(self, meta, cover_dir, zip_path=None):
+    def __init__(self, meta, contentdir):
         """ Metadata wrapper instantiation
 
-        Args:
-            meta (dict)         Raw metadata as dict
-            cover_dir (str)     Directory path where content covers are stored
-
-        Kwargs:
-            zip_path (str)      Optional path to zip file
-
+        :param meta:        dict: Raw metadata as dict
+        :param contentdir:  str: Absolute path of content root
         """
         self.meta = meta
         # We use ``or`` in the following line because 'tags' can be an empty
         # string, which is treated as invalid JSON
         self.tags = json.loads(meta.get('tags') or '{}')
         self._image = None
-        self.cover_dir = os.path.normpath(cover_dir)
-        self.zip_path = zip_path
+        self.contentdir = contentdir
 
     def __getattr__(self, attr):
         try:
@@ -260,10 +254,10 @@ class Meta(object):
         return self.meta.get(key, default)
 
     def find_image(self):
-        if not self.zip_path:
+        if not self.contentdir:
             return None
 
-        for entry in scandir.scandir(self.zip_path):
+        for entry in scandir.scandir(self.contentdir):
             extension = os.path.splitext(entry.name)[1].lower()
             if extension in self.IMAGE_EXTENSIONS:
                 return entry.name
