@@ -355,10 +355,9 @@ def test_find_image_no_files(scandir):
 def test_find_image_success(scandir):
     mocked_entry = mock.Mock()
     mocked_entry.name = 'image.jpg'
-    mocked_entry.path = '/zip/path/image.jpg'
     scandir.scandir.return_value = [mocked_entry]
     meta = mod.Meta({'foo': 'bar'}, '/cover/path', '/zip/path')
-    assert meta.find_image() == '/zip/path/image.jpg'
+    assert meta.find_image() == 'image.jpg'
 
 
 @mock.patch(MOD + '.json', autospec=True)

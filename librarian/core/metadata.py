@@ -266,7 +266,7 @@ class Meta(object):
         for entry in scandir.scandir(self.zip_path):
             extension = os.path.splitext(entry.name)[1].lower()
             if extension in self.IMAGE_EXTENSIONS:
-                return entry.path
+                return entry.name
 
         return None
 
