@@ -177,6 +177,11 @@ def convert_json(meta):
         meta = json.loads(meta)
     except ValueError as err:
         raise DecodeError("Invalid JSON")
+
+    return process_meta(meta)
+
+
+def process_meta(meta):
     replace_aliases(meta)
     for key in STANDARD_FIELDS:
         if key not in meta and is_required(key):
