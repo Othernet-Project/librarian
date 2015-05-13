@@ -14,10 +14,6 @@ import json
 import shutil
 import logging
 import subprocess
-try:
-    from io import BytesIO as StringIO
-except ImportError:
-    from cStringIO import StringIO
 
 from bottle import (
     request, mako_view as view, abort, default_app, static_file, redirect,
@@ -27,17 +23,24 @@ from bottle_utils.common import to_unicode
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 from fdsend import send_file
 
-from ..core import downloads
+from ..core import content
 from ..core import metadata
+from ..core import zipballs
 
 from ..lib import auth
 from ..lib.pager import Pager
 
-from ..utils import patch_content
 from ..utils.core_helpers import open_archive, init_filemanager, with_content
+from ..utils.template_helpers import template_helper
 
 
 app = default_app()
+
+
+@template_helper
+def get_content_path(content_id):
+    """ Return relative path of a content based on it's id """
+    return content.to_path(content_id)
 
 
 def filter_content(multipage=None):
@@ -70,29 +73,25 @@ def filter_content(multipage=None):
     # trick the pager into calculating correct page numbers
     pager = Pager(total_items, pid='content')
     pager.get_paging_params()
-    metas = archive.get_content(terms=query,
-                                offset=pager.offset,
-                                limit=pager.per_page,
-                                tag=tag,
-                                lang=lang,
-                                multipage=multipage)
+    raw_metas = archive.get_content(terms=query,
+                                    offset=pager.offset,
+                                    limit=pager.per_page,
+                                    tag=tag,
+                                    lang=lang,
+                                    multipage=multipage)
+    contentdir = conf['content.contentdir']
+    metas = [metadata.Meta(meta, content.to_path(meta['md5'], contentdir))
+             for meta in raw_metas]
 
-    cover_dir = conf['content.covers']
-    content_dir = conf['content.contentdir']
-    zip_path = lambda md5: downloads.get_zip_path(m['md5'], content_dir)
-    metas = [metadata.Meta(m, cover_dir, zip_path(m['md5'])) for m in metas]
-
-    return dict(
-        metadata=metas,
-        total_items=total_items,
-        pager=pager,
-        vals=request.params.decode(),
-        query=query,
-        lang=dict(lang=lang),
-        tag=tag_name,
-        tag_id=tag,
-        tag_cloud=archive.get_tag_cloud()
-    )
+    return dict(metadata=metas,
+                total_items=total_items,
+                pager=pager,
+                vals=request.params.decode(),
+                query=query,
+                lang=dict(lang=lang),
+                tag=tag_name,
+                tag_id=tag,
+                tag_cloud=archive.get_tag_cloud())
 
 
 @roca_view('content_list', '_content_list', template_func=template)
@@ -121,40 +120,24 @@ def remove_content(content_id):
     """ Delete a single piece of content from archive """
     redir_path = i18n_url('content:list')
     archive = open_archive()
-    failed = archive.remove_from_archive([content_id])
-    if failed:
-        assert len(failed) == 1, 'Expected only one failure'
-        return dict(redirect=redir_path)
+    archive.remove_from_archive([content_id])
     redirect(redir_path)
 
 
-def content_file(content_id, filename):
-    """ Serve file from zipball with specified id """
+def content_file(content_path, filename):
+    """ Serve file from content directory with specified id """
+    # TODO: handle `keep_formatting` flag
     content_dir = request.app.config['content.contentdir']
-    zippath = downloads.get_zip_path(content_id, content_dir)
-    try:
-        metadata, content = downloads.get_file(zippath, filename, no_read=True)
-    except downloads.ContentError as err:
-        logging.error(err)
-        abort(404)
-    size = metadata.file_size
-    timestamp = os.stat(zippath)[stat.ST_MTIME]
-    archive = open_archive()
-    if filename.endswith('.html') and archive.needs_formatting(content_id):
-        logging.debug("Patching HTML file '%s' with Librarian stylesheet" % (
-                      filename))
-        size, content = patch_content.patch(content.read())
-        content = StringIO(content.encode('utf8'))
-    return send_file(content, filename, size, timestamp)
+    content_root = os.path.join(content_dir, content_path)
+    return static_file(filename, root=content_root)
 
 
 def content_zipball(content_id):
     """ Serve zipball with specified id """
     content_dir = request.app.config['content.contentdir']
-    zippath = downloads.get_zip_path(content_id, content_dir)
-    dirname = os.path.dirname(zippath)
-    filename = os.path.basename(zippath)
-    return static_file(filename, root=dirname, download=True)
+    zball = zipballs.create(content_id, content_dir)
+    filename = '{0}.zip'.format(content_id)
+    return send_file(zball, filename, attachment=True)
 
 
 @view('reader')
@@ -163,22 +146,16 @@ def content_reader(meta):
     """ Loads the reader interface """
     archive = open_archive()
     archive.add_view(meta.md5)
+    file_path = request.params.get('path', meta.entry_point)
+    file_path = meta.entry_point if file_path == '/' else file_path
+    if file_path.startswith('/'):
+        file_path = file_path[1:]
+
     referer = request.headers.get('Referer', '')
     base_path = i18n_url('content:sites_list')
-    content_path = request.params.get('path', meta.entry_point)
-    content_path = meta.entry_point if content_path == '/' else content_path
-    if content_path.startswith('/'):
-        content_path = content_path[1:]
-
     if str(base_path) not in referer:
         base_path = i18n_url('content:list')
-    return dict(meta=meta, base_path=base_path, content_path=content_path)
-
-
-def cover_image(path):
-    config = request.app.config
-    covers = config['content.covers']
-    return static_file(path, root=covers, download=os.path.basename(path))
+    return dict(meta=meta, base_path=base_path, file_path=file_path)
 
 
 def dictify_file_list(file_list):

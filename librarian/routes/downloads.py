@@ -75,7 +75,7 @@ def list_downloads():
     metas_on_page = pager.get_items()
 
     archive = open_archive()
-    archive.get_replacements(metas_on_page)
+    archive.add_replacement_data(metas_on_page)
 
     vals = dict(request.params)
     vals.update({'pp': pager.per_page})

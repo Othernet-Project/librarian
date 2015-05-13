@@ -106,18 +106,16 @@ ROUTES = (
      'GET', '/', {}),
     ('content:sites_list', content.content_sites_list,
      'GET', '/sites/', {}),
-    ('content:file', content.content_file,
-     'GET', '/pages/<content_id>/<filename:path>',
-     dict(no_i18n=True, skip=APP_ONLY_PLUGINS)),
     ('content:zipball', content.content_zipball,
      'GET', '/pages/<content_id>.zip',
      dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
     ('content:reader', content.content_reader,
      'GET', '/pages/<content_id>', {}),
-    ('content:cover', content.cover_image,
-     'GET', '/covers/<path>', dict(no_i18n=True, skip=APP_ONLY_PLUGINS)),
     ('content:delete', content.remove_content,
      'POST', '/delete/<content_id>', {}),
+    ('content:file', content.content_file,
+     'GET', '/content/<content_path:re:[0-9a-f]{3}(/[0-9a-f]{3}){9}/[0-9a-f]{2}>/<filename:path>',
+     dict(no_i18n=True, skip=APP_ONLY_PLUGINS)),  # shadowed by static server
 
     # Files
 
