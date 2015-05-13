@@ -172,6 +172,7 @@ def test_convert_returns__added_keys(json, is_required, date_parse):
         'entry_point': 'index.html',
         'broadcast': None,
         'keywords': '',
+        'replaces': None
     }
 
 
@@ -338,99 +339,26 @@ def test_meta_get_key(*ignored):
     assert meta.get('missing') is None
 
 
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@with_mock_open
-def test_meta_cache_cover_file_path(mock_open, os, *ignored):
-    """ Caching cover image returns the name of the created file """
-    os.path.normpath.side_effect = noop
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
-    name = meta.cache_cover('.jpg', 'fake image data')
-    os.path.join.assert_called_once_with('covers_dir', 'md5.jpg')
-    os.path.basename.assert_called_once_with(
-        os.path.join.return_value)
-    assert name == os.path.basename.return_value
+def test_find_image_no_zip_path():
+    meta = mod.Meta({'foo': 'bar'}, '')
+    assert meta.find_image() is None
 
 
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@with_mock_open
-def test_meta_cache_cover_writes_image_data(mock_open, os, *ignored):
-    """ Caching cover image writes image data to file """
-    fd = mock_open()
-    os.path.normpath.side_effect = noop
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
-    meta.cache_cover('.jpg', 'fake image data')
-    fd.write.assert_called_once_with('fake image data')
+@mock.patch.object(mod, 'scandir')
+def test_find_image_no_files(scandir):
+    scandir.scandir.return_value = []
+    meta = mod.Meta({'foo': 'bar'}, '/cover/path', '/zip/path')
+    assert meta.find_image() is None
 
 
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.zipfile', autospec=True)
-@with_mock_open
-def test_extact_image_looks_for_frist_image(mock_open, zipfile, *ignored):
-    """ Extract image looks up the first image-looking in zip file """
-    zipfile = zipfile.ZipFile.return_value
-    zipfile.namelist.return_value = ['foo.txt', 'bar.jpg']
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
-    extension, content = meta.extract_image()
-    mock_open.assert_called_once_with('foo.zip', 'rb')
-    zipfile.open.assert_called_once_with('bar.jpg', 'r')
-    assert extension == '.jpg'
-    assert content == zipfile.open.return_value.read.return_value
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.zipfile', autospec=True)
-@with_mock_open
-def test_extract_image_no_files(mock_open, zipfile, *ignored):
-    """ Extract image  returns None if there are no files in the zipball """
-    zipfile = zipfile.ZipFile.return_value
-    zipfile.namelist.return_value = []
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
-    extension, content = meta.extract_image()
-    assert extension is None
-    assert content is None
-    assert zipfile.open.called is False
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.zipfile', autospec=True)
-@with_mock_open
-def test_extact_image_no_image(mock_open, zipfile, *ignored):
-    """ Extract image returns None if there are no images in the zipball """
-    print(zipfile)
-    zipfile = zipfile.ZipFile.return_value
-    zipfile.namelist.return_value = ['foo.html']
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
-    extension, content = meta.extract_image()
-    assert extension is None
-    assert content is None
-
-
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-def test_get_cover_path_search_cover_dir(glob, os):
-    """ Get cover path searches cover dir for any file with md5 name """
-    os.path.normpath.side_effect = noop
-    glob.glob.side_effect = lambda x: ['found']
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
-    meta.get_cover_path()
-    os.path.join.assert_called_once_with('covers_dir', 'md5.*')
-    glob.glob.assert_called_once_with(os.path.join.return_value)
-    os.path.basename.assert_called_once_with('found')
-
-
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-def test_get_cover_path_no_cover_found(glob, *ignored):
-    """ None is returned and no exception raised when no cover is found """
-    glob.glob.return_value = []
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
-    try:
-        ret = meta.get_cover_path()
-        assert ret is None
-    except Exception:
-        assert False, 'Expected not to raise'
+@mock.patch.object(mod, 'scandir')
+def test_find_image_success(scandir):
+    mocked_entry = mock.Mock()
+    mocked_entry.name = 'image.jpg'
+    mocked_entry.path = '/zip/path/image.jpg'
+    scandir.scandir.return_value = [mocked_entry]
+    meta = mod.Meta({'foo': 'bar'}, '/cover/path', '/zip/path')
+    assert meta.find_image() == '/zip/path/image.jpg'
 
 
 @mock.patch(MOD + '.json', autospec=True)
@@ -525,97 +453,22 @@ def test_free_license_property(*ignored):
         assert meta.free_license is True
 
 
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch.object(mod.Meta, 'get_cover_path')
-@mock.patch.object(mod.Meta, 'extract_image')
-@mock.patch.object(mod.Meta, 'cache_cover')
-def test_image_property(cache_cover, extract_image, get_cover_path, *ignored):
-    """ When there are no covers, new one is extracted and cached """
-    get_cover_path.return_value = None
-    extract_image.return_value = ('foo', 'bar')
-    meta = mod.Meta({}, 'covers_dir', zip_path='foo.zip')
-    res = meta.image
-    extract_image.assert_any_call()
-    cache_cover.assert_called_once_with('foo', 'bar')
-    assert res == cache_cover.return_value
-    assert meta._image == cache_cover.return_value
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch.object(mod.Meta, 'get_cover_path')
-@mock.patch.object(mod.Meta, 'extract_image')
-@mock.patch.object(mod.Meta, 'cache_cover')
-def test_image_exists(cache_cover, extract_image, get_cover_path, *ignored):
-    """ When cover image exists on disk, it is returned and cached """
-    meta = mod.Meta({}, 'covers_dir', zip_path='foo.zip')
-    res = meta.image
-    assert res == get_cover_path.return_value
-    assert meta._image == get_cover_path.return_value
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch.object(mod.Meta, 'cache_cover')
-@mock.patch.object(mod.Meta, 'get_cover_path')
-@mock.patch.object(mod.Meta, 'extract_image')
-def test_extract_error(extract_image, get_cover_path, cache_cover, *ignored):
-    """ If extract image fails, cover is not cached, and None is returned """
-    get_cover_path.return_value = None
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
-
-    extract_image.side_effect = TypeError
-    assert meta.image is None
-    assert not cache_cover.called
-
-    extract_image.side_effect = OSError
-    assert meta.image is None
-    assert not cache_cover.called
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch.object(mod.Meta, 'extract_image')
-@mock.patch.object(mod.Meta, 'cache_cover')
-@mock.patch.object(mod.Meta, 'get_cover_path')
-def test_cache_error(get_cover_path, cache_cover, extract_image, *ignored):
-    """ If extract image fails, cover is not cached, and None is returned """
-    get_cover_path.return_value = None
-    extract_image.return_value = ('foo', 'bar')
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
-    cache_cover.side_effect = OSError
-    assert meta.image is None
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch.object(mod.Meta, 'extract_image')
-@mock.patch.object(mod.Meta, 'cache_cover')
-@mock.patch.object(mod.Meta, 'get_cover_path')
-def test_cached_image(get_cover_path, cache_cover, extract_image, *ignored):
+@mock.patch.object(mod, 'json', autospec=True)
+@mock.patch.object(mod, 'os', autospec=True)
+@mock.patch.object(mod.Meta, 'find_image')
+def test_image_property_cached(find_image, *ignored):
     """ If image path is cached, it is returned immediately """
     meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
     meta._image = 'foobar.jpg'
     assert meta.image == 'foobar.jpg'
-    assert not get_cover_path.called
-    assert not extract_image.called
-    assert not cache_cover.called
+    assert not find_image.called
 
 
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch.object(mod.Meta, 'extract_image')
-@mock.patch.object(mod.Meta, 'cache_cover')
-@mock.patch.object(mod.Meta, 'get_cover_path')
-def test_no_zip_path(get_cover_path, cache_cover, extract_image, *ignored):
-    """ If image exist on dist, it is returned even if zip_path is None """
-    get_cover_path.return_value = 'foobar.jpg'
+@mock.patch.object(mod, 'json', autospec=True)
+@mock.patch.object(mod, 'os', autospec=True)
+@mock.patch.object(mod.Meta, 'find_image')
+def test_image_property_found(find_image, *ignored):
+    """ If image exist on dist, it will be found and returned """
+    find_image.return_value = 'foobar.jpg'
     meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
     assert meta.image == 'foobar.jpg'
