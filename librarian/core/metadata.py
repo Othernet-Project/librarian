@@ -49,6 +49,7 @@ LICENSES = (
 # `aliases` defaults to `[]`
 # `required` defaults to `False`
 # `auto` defaults to `False`
+# `db_field` defaults to `True`
 META_SPECIFICATION = {
     'url': {'required': True},
     'title': {'required': True},
@@ -78,12 +79,14 @@ META_SPECIFICATION = {
         'default': default_broadcast
     },
     'keywords': {'default': ''},
-    'replaces': {},
+    'replaces': {'db_field': False},
     'md5': {'auto': True},
     'size': {'auto': True},
     'updated': {'auto': True}
 }
 
+DB_FIELDS = dict((k, v) for k, v in META_SPECIFICATION.items()
+                 if v.get('db_field', True))
 STANDARD_FIELDS = dict((k, v) for k, v in META_SPECIFICATION.items()
                        if not v.get('auto', False))
 

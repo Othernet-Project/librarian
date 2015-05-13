@@ -322,9 +322,9 @@ class BaseArchive(object):
     def reload_content(self):
         """Reload all existing content from `contentdir` into database."""
         contentdir = self.config['contentdir']
-        to_content_id = lambda path: to_md5(path.strip(contentdir))
-        return sum([self.process_content(to_content_id(content_path))
-                    for content_path in find_content_dirs(contentdir)])
+        content_ids = [to_md5(content_path.replace(contentdir, ''))
+                       for content_path in find_content_dirs(contentdir)]
+        return sum([self.process_content(cid) for cid in content_ids if cid])
 
     def clear_and_reload(self):
         raise NotImplementedError()

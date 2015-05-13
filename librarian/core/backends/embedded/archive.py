@@ -12,11 +12,11 @@ import json
 import logging
 
 from ...archive import BaseArchive
-from ...metadata import META_SPECIFICATION
+from ...metadata import DB_FIELDS
 
 
 CONTENT_ORDER = ['-date(updated)', '-views']
-INSERT_KEYS = META_SPECIFICATION.keys()
+INSERT_KEYS = DB_FIELDS.keys()
 
 
 def multiarg(query, n):
@@ -115,7 +115,7 @@ class EmbeddedArchive(BaseArchive):
         with self.db.transaction() as cur:
             logging.debug("Adding new content to archive database")
             q = self.db.Replace('zipballs', cols=INSERT_KEYS)
-            self.db.query(q, metadata)
+            self.db.query(q, **metadata)
             rowcount = cur.rowcount
             replaces = metadata.get('replaces')
             if replaces:
