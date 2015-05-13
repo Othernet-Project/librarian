@@ -159,7 +159,7 @@ def create(md5, basedir):
     content_path = content.to_path(md5, prefix=basedir)
     out = StringIO()
     with zipfile.ZipFile(out, 'w') as zipball:
-        for path in content.filewalk(content_path, os.path.isfile):
+        for path in content.filewalk(content_path):
             rel_content_path = os.path.relpath(path, content_path)
             zipball.write(path, os.path.join(md5, rel_content_path))
     out.seek(0)
