@@ -1,5 +1,5 @@
 """
-zipballs.py: functions for working with zipballs
+zipballs.py: Low-level functions for working with individual zipballs
 
 Copyright 2014-2015, Outernet Inc.
 Some rights reserved.

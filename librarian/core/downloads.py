@@ -1,5 +1,5 @@
 """
-downloads.py: Download handling
+downloads.py: Higher-level functions for working with collections of zipballs
 
 Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
