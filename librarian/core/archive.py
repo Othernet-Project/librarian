@@ -11,6 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import datetime
 import functools
 import logging
+import os
 import shutil
 
 from .content import (find_content_dirs,
@@ -322,7 +323,7 @@ class BaseArchive(object):
     def reload_content(self):
         """Reload all existing content from `contentdir` into database."""
         contentdir = self.config['contentdir']
-        content_ids = [to_md5(content_path.replace(contentdir, ''))
+        content_ids = [to_md5(os.path.relpath(content_path, contentdir))
                        for content_path in find_content_dirs(contentdir)]
         return sum([self.process_content(cid) for cid in content_ids if cid])
 

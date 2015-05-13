@@ -273,7 +273,6 @@ class TestBaseArchive(object):
                                           'unimportant/otherid']
         process_content.return_value = 1
         assert base_archive.reload_content() == 2
-        to_md5.assert_has_calls([mock.call('/contentid'),
-                                 mock.call('/otherid')])
+        to_md5.assert_has_calls([mock.call('contentid'), mock.call('otherid')])
         process_content.assert_has_calls([mock.call('contentid'),
                                           mock.call('otherid')])
