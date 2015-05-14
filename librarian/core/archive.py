@@ -36,11 +36,6 @@ def content_id_list(func):
     return wrapper
 
 
-class ContentError(Exception):
-    """ Exception related to content decoding, file extraction, etc """
-    pass
-
-
 class Archive(object):
 
     def __init__(self, backend):
@@ -93,6 +88,16 @@ class BaseArchive(object):
         'spooldir',
         'meta_filename',
     )
+    meta_db_mapping = {
+        'replaces': None,
+        'index': 'entry_point'
+    }
+    db_fields = (
+        'md5',
+        'size',
+        'updated',
+    ) + tuple(filter(None, [meta_db_mapping.get(key, key)
+                            for key in metadata.EDGE_KEYS]))
 
     def __init__(self, **config):
         self.config = config
@@ -212,32 +217,6 @@ class BaseArchive(object):
                     replace_key = '{0}{1}'.format(key_prefix, key)
                     meta[replace_key] = replaceable_metadata[key]
 
-    def parse_metadata(self, content_id):
-        """Parse, validate and return metadata of specified content.
-
-        :param content_id:  Id of content which metadata needs to be parsed
-        :returns:           Dictionary of valid content metadata"""
-        # TODO: switch to new outernet-metadata library
-        meta_filename = self.config['meta_filename']
-        try:
-            raw_meta = content.get_meta(self.config['contentdir'],
-                                        content_id,
-                                        meta_filename=meta_filename)
-            meta = metadata.process_meta(raw_meta)
-        except IOError as exc:
-            raise ContentError("Failed to open metadata: '{0}'".format(exc))
-        except (ValueError, metadata.DecodeError) as exc:
-            raise ContentError("Failed to decode metadata: '{0}'".format(exc))
-        except metadata.FormatError as exc:
-            raise ContentError("Bad metadata: '{0}'".format(exc))
-
-        metadata.clean_keys(meta)
-        meta['md5'] = content_id
-        meta['updated'] = datetime.datetime.now()
-        meta['size'] = content.get_content_size(self.config['contentdir'],
-                                                content_id)
-        return meta
-
     def delete_content_files(self, content_id):
         """Delete the specified content's directory and all of it's files.
 
@@ -259,36 +238,44 @@ class BaseArchive(object):
         else:
             return True
 
-    def process_content(self, content_id):
-        """Parse metadata of specified content id and add it to the database.
-        - If metadata is not parseable, it deletes the content folder.
+    def process_content(self, content_id, zip_path, meta):
+        """Extract zipball and add it's metadata to the database.
+        - If extraction fails, it deletes the content folder.
         - If metadata specifies that content is a replacement, old content will
           be removed accordingly and replaced by new one.
 
-        :param content_id:  Id of content to be parsed and imported
+        :param content_id:  Id of content
+        :param zip_path:    Path to zipball to be extracted
+        :param meta:        Dictionary containing valid and clean metadata
         :returns:           int / bool: indicating success
         """
+        contentdir = self.config['contentdir']
         try:
-            meta = self.parse_metadata(content_id)
-        except ContentError as exc:
-            logging.debug("Content '{0}' metadata parsing failed: "
-                          "'{1}'".format(content_id, exc))
+            zipballs.extract(zip_path, contentdir)
+        except Exception as exc:
+            logging.debug("Extraction of '{0}' failed: "
+                          "'{1}'".format(zip_path, exc))
             self.delete_content_files(content_id)
             return False
         else:
+            # add auto-generated values to metadata before writing into db
+            meta['md5'] = content_id
+            meta['updated'] = datetime.datetime.now()
+            meta['size'] = content.get_content_size(contentdir, content_id)
             return self.add_meta_to_db(meta)
 
     def __add_to_archive(self, content_id):
         logging.debug("Adding content '{0}' to archive.".format(content_id))
+        meta_filename = self.config['meta_filename']
         zip_path = zipballs.get_zip_path(content_id, self.config['spooldir'])
         try:
-            zipballs.extract(zip_path, self.config['contentdir'])
-        except Exception as exc:
-            logging.debug("Extraction of '{0}' failed: "
+            meta = zipballs.validate(zip_path, meta_filename=meta_filename)
+        except zipballs.ValidationError as exc:
+            logging.debug("Validation of '{0}' failed: "
                           "'{1}'".format(zip_path, exc))
             return False
         else:
-            return self.process_content(content_id)
+            return self.process_content(content_id, zip_path, meta)
 
     @content_id_list
     def add_to_archive(self, content_ids):
