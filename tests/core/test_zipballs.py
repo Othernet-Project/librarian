@@ -354,7 +354,7 @@ def test_get_zip_path():
 
 @mock.patch.object(mod.content, 'filewalk')
 @mock.patch.object(mod.zipfile, 'ZipFile')
-def test_create(zipfile, filewalk):
+def test_create(ZipFile, filewalk):
     md5 = '202ab62b551f6d7fc002f65652525544'
     basedir = '/content/path/'
 
@@ -365,10 +365,71 @@ def test_create(zipfile, filewalk):
     mocked_zip_obj = mock.Mock()
     ctx_manager = mock.MagicMock()
     ctx_manager.__enter__.return_value = mocked_zip_obj
-    zipfile.return_value = ctx_manager
+    ZipFile.return_value = ctx_manager
 
     mod.create(md5, basedir)
     mocked_zip_obj.write.assert_has_calls([
         mock.call(path1, '202ab62b551f6d7fc002f65652525544/index.html'),
         mock.call(path2, '202ab62b551f6d7fc002f65652525544/s/img.jpg')
     ])
+
+
+def test_get_md5_from_path():
+    assert mod.get_md5_from_path('/path/to/mymd5.zip') == 'mymd5'
+
+
+@mock.patch.object(mod.zipfile, 'ZipFile')
+@mock.patch('__builtin__.open')
+def test_get_file_error_opening(file_open, ZipFile):
+    file_open.side_effect = IOError()
+    with pytest.raises(mod.ValidationError):
+        mod.get_file('test/file.zip', 'image.jpg')
+
+    assert not ZipFile.called
+
+
+@mock.patch.object(mod.zipfile, 'ZipFile')
+@mock.patch('__builtin__.open')
+def test_get_file_invalid_zip(file_open, ZipFile):
+    ZipFile.side_effect = mod.zipfile.BadZipfile()
+    with pytest.raises(mod.ValidationError):
+        mod.get_file('test/file.zip', 'image.jpg')
+
+    ZipFile.assert_called_once_with(file_open.return_value)
+
+
+@mock.patch.object(mod.zipfile, 'ZipFile')
+@mock.patch('__builtin__.open')
+def test_get_file_read(file_open, ZipFile):
+    raw_file = mock.Mock()
+    file_open.return_value = raw_file
+
+    mocked_file = mock.Mock()
+    mocked_file.read.return_value = 'some content'
+    mocked_zipfile = mock.Mock()
+    mocked_zipfile.open.return_value = mocked_file
+    ZipFile.return_value = mocked_zipfile
+
+    result = mod.get_file('test/file.zip', 'file.ext', no_read=False)
+    assert result == 'some content'
+    assert raw_file.close.called
+    assert mocked_file.close.called
+    assert mocked_file.read.called
+
+
+@mock.patch.object(mod.zipfile, 'ZipFile')
+@mock.patch('__builtin__.open')
+def test_get_file_no_read(file_open, ZipFile):
+    raw_file = mock.Mock()
+    file_open.return_value = raw_file
+
+    mocked_file = mock.Mock()
+    mocked_zipfile = mock.Mock()
+    mocked_zipfile.open.return_value = mocked_file
+    ZipFile.return_value = mocked_zipfile
+
+    result = mod.get_file('test/file.zip', 'file.ext', no_read=True)
+    assert result is mocked_file
+    assert not raw_file.close.called
+    assert not mocked_file.close.called
+    assert not mocked_file.read.called

@@ -178,3 +178,49 @@ def get_zip_path(md5, directory):
     if os.path.exists(filepath):
         return filepath
     return None
+
+
+def get_md5_from_path(path):
+    """ Return MD5 hash from the filename
+
+    This function will actually work with any path, not just ones that contain
+    md5. It doesn't really check if the path contains valid md5 hexdigest.
+
+    The function really returns the path without directory tree and extension
+    portions.
+
+    :param path:  path to signed file or zipball
+    :returns:     md5 portion of the filename
+    """
+    return os.path.basename(os.path.splitext(path)[0])
+
+
+def get_file(path, filename, no_read=False):
+    """ Extract a single file from a zipball into memory
+
+    :param path:      path to the zip file
+    :param filename:  name of the file to extract
+    :param no_read:   return file handle instead of file contents
+    :returns:         file-object or contents of it, depending on `no_read`
+    """
+    try:
+        # Note that we do NOT close the file handle if ``no_read`` is used.
+        # This is intentional. If file handle is closed, the file handle we
+        # return will be no good to the caller.
+        raw_file = open(path, 'rb')
+        zip_file = zipfile.ZipFile(raw_file)
+        fd = zip_file.open(filename, 'r')
+        if no_read:
+            # We are retruning the file descriptor pointing to the zipfile
+            # contents. This is not a real file descritor, just a file-like
+            # object (it has read() but not seek()).
+            return fd
+        else:
+            content = fd.read()
+            fd.close()
+            raw_file.close()  # We've read the content, so it's safe to close
+            return content
+    except zipfile.BadZipfile:
+        raise ValidationError(path, "Invalid zipfile.")
+    except Exception as exc:
+        raise ValidationError(path, "Error while opening: {0}".format(exc))
