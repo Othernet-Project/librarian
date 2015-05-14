@@ -71,6 +71,10 @@ def validate(path, meta_filename='info.json'):
 
     The checks are performed from least expensive to most expensive and the
     first check that fails immediately raises.
+
+    :param path:           Absolute path to zipball
+    :param meta_filename:  Optional - name of file containing metadata
+    :returns:              dict: validated and cleaned meta data
     """
     # Inspect extension
     if not path.endswith('.zip'):
