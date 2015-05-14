@@ -35,7 +35,7 @@ from bottle_utils.i18n import I18NPlugin, lazy_gettext as _, i18n_url
 from bottle_utils.common import to_unicode
 
 from librarian.core.metadata import LICENSES
-from librarian.core.downloads import get_zipballs
+from librarian.core.downloads import get_downloads
 
 from librarian.lib import auth
 from librarian.lib import sessions
@@ -261,7 +261,7 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         'style': 'screen',  # Default stylesheet
         'h': helpers,
         'th': template_helper,
-        'updates': Lazy(lambda: len(list(get_zipballs(
+        'updates': Lazy(lambda: len(list(get_downloads(
             config['content.spooldir'],
             config['content.output_ext']
         )))),
