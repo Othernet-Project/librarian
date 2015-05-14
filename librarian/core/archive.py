@@ -14,13 +14,9 @@ import logging
 import os
 import shutil
 
-from .content import (find_content_dirs,
-                      to_md5,
-                      to_path,
-                      get_meta,
-                      get_content_size)
-from .metadata import clean_keys, process_meta, DecodeError, FormatError
-from .zipballs import get_zip_path, extract
+from . import content
+from . import metadata
+from . import zipballs
 
 
 def is_string(obj):
@@ -157,7 +153,7 @@ class BaseArchive(object):
         :returns:       iterable of matched contents"""
         raise NotImplementedError()
 
-    def add_meta_to_db(self, metadata):
+    def add_meta_to_db(self, meta):
         """Add the passed in content metadata to the database.
         Implementation is backend specific.
 
@@ -222,22 +218,24 @@ class BaseArchive(object):
         :param content_id:  Id of content which metadata needs to be parsed
         :returns:           Dictionary of valid content metadata"""
         # TODO: switch to new outernet-metadata library
+        meta_filename = self.config['meta_filename']
         try:
-            raw_meta = get_meta(self.config['contentdir'],
-                                content_id,
-                                meta_filename=self.config['meta_filename'])
-            meta = process_meta(raw_meta)
+            raw_meta = content.get_meta(self.config['contentdir'],
+                                        content_id,
+                                        meta_filename=meta_filename)
+            meta = metadata.process_meta(raw_meta)
         except IOError as exc:
             raise ContentError("Failed to open metadata: '{0}'".format(exc))
-        except (ValueError, DecodeError) as exc:
+        except (ValueError, metadata.DecodeError) as exc:
             raise ContentError("Failed to decode metadata: '{0}'".format(exc))
-        except FormatError as exc:
+        except metadata.FormatError as exc:
             raise ContentError("Bad metadata: '{0}'".format(exc))
 
-        clean_keys(meta)
+        metadata.clean_keys(meta)
         meta['md5'] = content_id
         meta['updated'] = datetime.datetime.now()
-        meta['size'] = get_content_size(self.config['contentdir'], content_id)
+        meta['size'] = content.get_content_size(self.config['contentdir'],
+                                                content_id)
         return meta
 
     def delete_content_files(self, content_id):
@@ -245,7 +243,8 @@ class BaseArchive(object):
 
         :param content_id:  Id of content that is about to be deleted
         :returns:           bool: indicating success of deletion"""
-        content_path = to_path(content_id, prefix=self.config['contentdir'])
+        content_path = content.to_path(content_id,
+                                       prefix=self.config['contentdir'])
         if not content_path:
             msg = "Invalid content_id passed: '{0}'".format(content_id)
             logging.debug(msg)
@@ -281,9 +280,9 @@ class BaseArchive(object):
 
     def __add_to_archive(self, content_id):
         logging.debug("Adding content '{0}' to archive.".format(content_id))
-        zip_path = get_zip_path(content_id, self.config['spooldir'])
+        zip_path = zipballs.get_zip_path(content_id, self.config['spooldir'])
         try:
-            extract(zip_path, self.config['contentdir'])
+            zipballs.extract(zip_path, self.config['contentdir'])
         except Exception as exc:
             logging.debug("Extraction of '{0}' failed: "
                           "'{1}'".format(zip_path, exc))
@@ -323,9 +322,9 @@ class BaseArchive(object):
     def reload_content(self):
         """Reload all existing content from `contentdir` into database."""
         contentdir = self.config['contentdir']
-        content_ids = [to_md5(os.path.relpath(content_path, contentdir))
-                       for content_path in find_content_dirs(contentdir)]
-        return sum([self.process_content(cid) for cid in content_ids if cid])
+        cont_ids = [content.to_md5(os.path.relpath(content_path, contentdir))
+                    for content_path in content.find_content_dirs(contentdir)]
+        return sum([self.process_content(cid) for cid in cont_ids if cid])
 
     def clear_and_reload(self):
         raise NotImplementedError()

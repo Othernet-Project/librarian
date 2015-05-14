@@ -136,10 +136,10 @@ class TestBaseArchive(object):
         assert metas == [{'md5': 'abc', 'title': 'second'}]
         assert not get_multiple.called
 
-    @mock.patch.object(mod, 'get_content_size')
-    @mock.patch.object(mod, 'clean_keys')
-    @mock.patch.object(mod, 'process_meta')
-    @mock.patch.object(mod, 'get_meta')
+    @mock.patch.object(mod.content, 'get_content_size')
+    @mock.patch.object(mod.metadata, 'clean_keys')
+    @mock.patch.object(mod.metadata, 'process_meta')
+    @mock.patch.object(mod.content, 'get_meta')
     def test_parse_metadata_success(self, get_meta, process_meta, clean_keys,
                                     get_content_size, base_archive):
         get_meta.return_value = {'title': 'something'}
@@ -157,22 +157,22 @@ class TestBaseArchive(object):
         assert clean_keys.call_count == 1
         get_content_size.assert_called_once_with('unimportant', 'some_id')
 
-    @mock.patch.object(mod, 'process_meta')
-    @mock.patch.object(mod, 'get_meta')
+    @mock.patch.object(mod.metadata, 'process_meta')
+    @mock.patch.object(mod.content, 'get_meta')
     def test_parse_metadata_fail(self, get_meta, process_meta, base_archive):
-        for exc_cls in (IOError, ValueError, mod.FormatError):
+        for exc_cls in (IOError, ValueError, mod.metadata.FormatError):
             get_meta.side_effect = exc_cls()
             with pytest.raises(mod.ContentError):
                 base_archive.parse_metadata('some_id')
 
-    @mock.patch.object(mod, 'to_path')
+    @mock.patch.object(mod.content, 'to_path')
     @mock.patch.object(mod, 'shutil')
     def test_delete_content_files_success(self, shutil, to_path, base_archive):
         to_path.return_value = '/content_root/some_id/'
         assert base_archive.delete_content_files('some_id')
         shutil.rmtree.assert_called_once_with('/content_root/some_id/')
 
-    @mock.patch.object(mod, 'to_path')
+    @mock.patch.object(mod.content, 'to_path')
     @mock.patch.object(mod, 'shutil')
     def test_delete_content_files_invalid_content_id(self, shutil, to_path,
                                                      base_archive):
@@ -180,7 +180,7 @@ class TestBaseArchive(object):
         assert not base_archive.delete_content_files('some_id')
         assert not shutil.rmtree.called
 
-    @mock.patch.object(mod, 'to_path')
+    @mock.patch.object(mod.content, 'to_path')
     @mock.patch.object(mod, 'shutil')
     def test_delete_content_files_fail(self, shutil, to_path, base_archive):
         to_path.return_value = '/content_root/some_id/'
@@ -211,8 +211,8 @@ class TestBaseArchive(object):
         assert not add_meta_to_db.called
 
     @mock.patch.object(mod.BaseArchive, 'process_content')
-    @mock.patch.object(mod, 'extract')
-    @mock.patch.object(mod, 'get_zip_path')
+    @mock.patch.object(mod.zipballs, 'extract')
+    @mock.patch.object(mod.zipballs, 'get_zip_path')
     def test___add_to_archive_success(self, get_zip_path, extract,
                                       process_content, base_archive):
         get_zip_path.return_value = 'zipball path'
@@ -223,8 +223,8 @@ class TestBaseArchive(object):
         process_content.assert_called_once_with('some_id')
 
     @mock.patch.object(mod.BaseArchive, 'process_content')
-    @mock.patch.object(mod, 'extract')
-    @mock.patch.object(mod, 'get_zip_path')
+    @mock.patch.object(mod.zipballs, 'extract')
+    @mock.patch.object(mod.zipballs, 'get_zip_path')
     def test___add_to_archive_fail(self, get_zip_path, extract,
                                    process_content, base_archive):
         get_zip_path.return_value = 'zipball path'
@@ -264,8 +264,8 @@ class TestBaseArchive(object):
                                                 mock.call('other_id')])
 
     @mock.patch.object(mod.BaseArchive, 'process_content')
-    @mock.patch.object(mod, 'to_md5')
-    @mock.patch.object(mod, 'find_content_dirs')
+    @mock.patch.object(mod.content, 'to_md5')
+    @mock.patch.object(mod.content, 'find_content_dirs')
     def test_reload_content(self, find_content_dirs, to_md5, process_content,
                             base_archive):
         to_md5.side_effect = lambda x: x.strip('/')
