@@ -1,5 +1,3 @@
-import datetime
-
 from functools import wraps
 from contextlib import contextmanager
 
@@ -62,32 +60,32 @@ def attr_overrides(obj, **kwargs):
         setattr(obj, key, value)
 
 
-def test_get_default_value():
-    with pytest.raises(KeyError):
-        mod.get_default_value('invalid', {})
-
-    assert mod.get_default_value('url', {}) is None
-    assert mod.get_default_value('keep_formatting', {}) is False
-
-    meta = {'timestamp': '2014-08-10 19:59:19 UTC'}
-    broadcast = mod.get_default_value('broadcast', meta)
-    assert broadcast == datetime.date(2014, 8, 10)
+def test_get_successor_key():
+    assert mod.get_successor_key('partner') == 'publisher'
+    assert mod.get_successor_key('index') == 'entry_point'
+    assert mod.get_successor_key('publisher') is None
+    assert mod.get_successor_key('url') is None
 
 
-def test_get_aliases_for():
-    with pytest.raises(KeyError):
-        mod.get_aliases_for('invalid')
-
-    assert mod.get_aliases_for('url') == []
-    assert mod.get_aliases_for('publisher') == ['partner']
-
-
-def test_is_required():
-    with pytest.raises(KeyError):
-        mod.is_required('invalid')
-
-    assert mod.is_required('url') is True
-    assert mod.is_required('images') is False
+def test_edge_keys():
+    assert mod.get_edge_keys() == (
+        'publisher',
+        'replaces',
+        'keep_formatting',
+        'language',
+        'license',
+        'title',
+        'url',
+        'timestamp',
+        'multipage',
+        'broadcast',
+        'keywords',
+        'entry_point',
+        'images',
+        'is_partner',
+        'is_sponsored',
+        'archive'
+    )
 
 
 def test_replace_aliases():
@@ -105,33 +103,29 @@ def test_replace_aliases():
     assert meta == expected
 
 
-@mock.patch(MOD + '.dateutil.parser.parse')
-def test_adding_missing_keys(date_parse):
+def test_adding_missing_keys():
     """ Metadata keys that are not in ``d`` will be added """
     d = {}
     mod.add_missing_keys(d)
-    for key in mod.STANDARD_FIELDS:
+    for key in mod.EDGE_KEYS:
         _has_key(d, key)
 
 
-@mock.patch(MOD + '.dateutil.parser.parse')
-def test_adding_missing_key_doesnt_remove_existing(date_parse):
+def test_adding_missing_key_doesnt_remove_existing():
     """ Existing keys will be kept """
     d = {'url': 'foo'}
     mod.add_missing_keys(d)
     assert d['url'] == 'foo'
 
 
-@mock.patch(MOD + '.dateutil.parser.parse')
-def test_adding_missing_keys_doeesnt_remove_arbitrary_keys(date_parse):
+def test_adding_missing_keys_doeesnt_remove_arbitrary_keys():
     """" Even non-standard keys will be kept """
     d = {'foo': 'bar'}
     mod.add_missing_keys(d)
     _has_key(d, 'foo')
 
 
-@mock.patch(MOD + '.dateutil.parser.parse')
-def test_add_missing_keys_has_return(date_parse):
+def test_add_missing_keys_has_return():
     """ Add missing key mutates the supplies dict, but has no return value """
     d = {}
     ret = mod.add_missing_keys(d)
@@ -145,123 +139,36 @@ def test_clean_keys():
     assert d == {'title': 'title'}
 
 
-@mock.patch(MOD + '.dateutil.parser.parse')
-@mock.patch(MOD + '.is_required')
-@mock.patch(MOD + '.json', autospec=True)
-def test_convert_returns__added_keys(json, is_required, date_parse):
-    """ Conversion to json calls ``add_missing_keys()`` on converted value """
-    json.loads.return_value = {}
-    is_required.return_value = False
-    date_mock = mock.Mock()
-    date_mock.date.return_value = None
-    date_parse.return_value = date_mock
-    out = mod.convert_json('')
-    assert out == {
-        'url': None,
-        'title': None,
-        'images': 0,
-        'timestamp': None,
-        'keep_formatting': False,
-        'is_partner': False,
-        'is_sponsored': False,
-        'archive': 'core',
-        'publisher': '',
-        'license': None,
-        'language': '',
-        'multipage': False,
-        'entry_point': 'index.html',
-        'broadcast': None,
-        'keywords': '',
-        'replaces': None
-    }
+@mock.patch.object(mod, 'clean_keys')
+@mock.patch.object(mod, 'add_missing_keys')
+@mock.patch.object(mod, 'replace_aliases')
+@mock.patch.object(mod.validator, 'validate')
+def test_process_meta_success(validate, replace_aliases, add_missing_keys,
+                              clean_keys):
+    meta = {'title': 'test'}
+    validate.return_value = {}
+    assert mod.process_meta(meta) == meta
+    validate.assert_called_once_with(meta, broadcast=True)
+    replace_aliases.assert_called_once_with(meta)
+    add_missing_keys.assert_called_once_with(meta)
+    clean_keys.assert_called_once_with(meta)
 
 
-@mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.is_required')
-@mock.patch(MOD + '.json', autospec=True)
-def test_convert_add_default_fails(json, is_required, add_missing_keys):
-    """ DecodeError must be raised when adding default values raises an exc """
-    json.loads.return_value = {}
-    is_required.return_value = False
-    add_missing_keys.side_effect = Exception()
-    try:
-        mod.convert_json('')
-        assert False, 'Expected to raise'
-    except mod.DecodeError:
-        pass
+@mock.patch.object(mod, 'clean_keys')
+@mock.patch.object(mod, 'add_missing_keys')
+@mock.patch.object(mod, 'replace_aliases')
+@mock.patch.object(mod.validator, 'validate')
+def test_process_meta_fail(validate, replace_aliases, add_missing_keys,
+                           clean_keys):
+    meta = {'title': 'test'}
+    validate.return_value = {'error': 'some'}
+    with pytest.raises(mod.MetadataError):
+        mod.process_meta(meta)
 
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.is_required')
-def test_convert_decodes_string(is_required, *ignored):
-    """ During conversion, strings are decoded as UTF8 """
-    s = mock.Mock()
-    is_required.return_value = False
-    mod.convert_json(s)
-    s.decode.assert_called_once_with('utf8')
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.is_required')
-def test_convert_decoding_fails(*ignored):
-    """ DecodeError must be raised when string decoding fails """
-    s = mock.Mock()
-    s.decode.side_effect = UnicodeDecodeError('utf-8', b"", 0, 1, 'mock str')
-    try:
-        mod.convert_json(s)
-        assert False, 'Expected to raise'
-    except mod.DecodeError:
-        pass
-
-
-@mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.is_required')
-@mock.patch(MOD + '.json', autospec=True)
-def test_convert_json_fails(json, *ignored):
-    """ DecodeError must be raised when JSON cannot be decoded """
-    s = mock.Mock()
-
-    json.loads.side_effect = ValueError
-    try:
-        mod.convert_json(s)
-        assert False, 'Expected to raise'
-    except mod.DecodeError:
-        pass
-
-
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch(MOD + '.add_missing_keys', autospec=True)
-@mock.patch(MOD + '.json', autospec=True)
-def test_convert_missing_keys(json, *ignored):
-    """ When required keys are missing, FormatError must be raised """
-    s = mock.Mock()
-    json.loads.return_value = {}
-    try:
-        mod.convert_json(s)
-        assert False, 'Expected to raise'
-    except mod.FormatError:
-        pass
-
-
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.json', autospec=True)
-def test_convert_correct_keys(json, *ignored):
-    """ When correct keys are supplied, no exception should be raised """
-    s = mock.Mock()
-    json.loads.return_value = {
-        'url': 'foo',
-        'title': 'foo',
-        'timestamp': 'foo',
-        'license': 'foo',
-        'broadcast': 'foo',
-    }
-    try:
-        mod.convert_json(s)
-    except mod.FormatError:
-        assert False, 'Expected not to raise'
+    validate.assert_called_once_with(meta, broadcast=True)
+    assert not replace_aliases.called
+    assert not add_missing_keys.called
+    assert not clean_keys.called
 
 
 @mock.patch(MOD + '.os', autospec=True)

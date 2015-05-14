@@ -13,12 +13,9 @@ from __future__ import unicode_literals
 import os
 import json
 
-import dateutil.parser
 import scandir
 
-
-def default_broadcast(key, meta):
-    return dateutil.parser.parse(meta['timestamp']).date()
+from outernet_metadata import validator
 
 
 RTL_LANGS = ['ar', 'he', 'ur', 'yi', 'ji', 'iw', 'fa']
@@ -45,96 +42,57 @@ LICENSES = (
     ('ON', _('Other non-free license')),
 )
 
-# `default` defaults to `None`
-# `aliases` defaults to `[]`
-# `required` defaults to `False`
-# `auto` defaults to `False`
-# `db_field` defaults to `True`
-META_SPECIFICATION = {
-    'url': {'required': True},
-    'title': {'required': True},
-    'images': {'default': 0},
-    'timestamp': {'required': True},
-    'keep_formatting': {'default': False},
-    'is_partner': {'default': False},
-    'is_sponsored': {'default': False},
-    'archive': {'default': 'core'},
-    'publisher': {
-        'default': '',
-        'aliases': ['partner']
-    },
-    'license': {
-        'required': True
-    },
-    'language': {'default': ''},
-    'multipage': {'default': False},
-    'entry_point': {
-        'default': 'index.html',
-        'aliases': ['index']
-    },
-    # although this field is required by the specification, legacy content that
-    # has no such field defined would be just ignored during processing
-    'broadcast': {
-        'required': False,
-        'default': default_broadcast
-    },
-    'keywords': {'default': ''},
-    'replaces': {'db_field': False},
-    'md5': {'auto': True},
-    'size': {'auto': True},
-    'updated': {'auto': True}
+ALIASES = {
+    'publisher': ['partner'],
+    'entry_point': ['index']
 }
 
-DB_FIELDS = dict((k, v) for k, v in META_SPECIFICATION.items()
-                 if v.get('db_field', True))
-STANDARD_FIELDS = dict((k, v) for k, v in META_SPECIFICATION.items()
-                       if not v.get('auto', False))
 
-# Used for simple checks
-REQUIRED_KEYS = [k for k, v in META_SPECIFICATION.items()
-                 if v.get('required', False)]
+def get_successor_key(key):
+    """ If a key becomes obsolete, return it's successor.
+
+    :param key:  string: old(now obsolete) key name
+    :returns:    string: new(successor) key name"""
+    for edge_key, edge_aliases in ALIASES.items():
+        for obsolete_key in edge_aliases:
+            if obsolete_key == key:
+                return edge_key
+
+
+def get_edge_keys():
+    """ Return the most recent valid key names.
+
+    :returns:  tuple of strings(key names)"""
+    edge_keys = set()
+    for key in validator.values.KEYS:
+        successor = get_successor_key(key)
+        edge_keys.add(successor or key)
+
+    return tuple(edge_keys)
+
+
+EDGE_KEYS = get_edge_keys()
 
 
 class MetadataError(Exception):
     """ Base metadata error """
-    pass
-
-
-class DecodeError(MetadataError):
-    pass
-
-
-class FormatError(MetadataError):
-    """ Raised when metadata format is wrong """
-    pass
-
-
-def get_default_value(key, meta):
-    default = STANDARD_FIELDS[key].get('default', None)
-    if callable(default):
-        return default(key, meta)
-    return default
-
-
-def get_aliases_for(key):
-    return STANDARD_FIELDS[key].get('aliases', [])
-
-
-def is_required(key):
-    return STANDARD_FIELDS[key].get('required', False)
+    def __init__(self, msg, errors):
+        self.errors = errors
+        super(MetadataError, self).__init__(msg)
 
 
 def add_missing_keys(meta):
-    """ Make sure metadata dict contains all required keys
+    """ Make sure metadata dict contains all keys defined in the specification,
+    using the default values from the specification itself for missing keys.
 
     This function modifies the metadata dict in-place, and has no useful return
     value.
 
     :param meta:    metadata dict
     """
-    for key in STANDARD_FIELDS:
+    for key in EDGE_KEYS:
         if key not in meta:
-            meta[key] = get_default_value(key, meta)
+            meta[key] = validator.values.DEFAULTS.get(key, None)
 
 
 def replace_aliases(meta):
@@ -145,9 +103,9 @@ def replace_aliases(meta):
 
     :param meta:    metadata dict
     """
-    for key in STANDARD_FIELDS:
+    for key in EDGE_KEYS:
         if key not in meta:
-            for alias in get_aliases_for(key):
+            for alias in ALIASES.get(key, []):
                 if alias in meta:
                     meta[key] = meta.pop(alias)
 
@@ -158,42 +116,23 @@ def clean_keys(meta):
     This function modifies the metadata dict in-place, and always returns
     ``None``.
 
-    :param meta:    metadta dict
+    :param meta:  metadata dict
     """
-    valid_keys = STANDARD_FIELDS.keys()
     for key in meta.keys():
-        if key not in valid_keys:
+        if key not in EDGE_KEYS:
             del meta[key]
 
 
-def convert_json(meta):
-    """ Convert metadata JSON to a dictionary and add missing keys
-
-    :param meta:    string JSON meta
-    :returns:       metadata dict
-    """
-    try:
-        meta = str(meta.decode('utf8'))
-    except UnicodeDecodeError as err:
-        raise DecodeError("Failed to decode metadata: '%s'" % err)
-    try:
-        meta = json.loads(meta)
-    except ValueError as err:
-        raise DecodeError("Invalid JSON")
-
-    return process_meta(meta)
-
-
 def process_meta(meta):
-    replace_aliases(meta)
-    for key in STANDARD_FIELDS:
-        if key not in meta and is_required(key):
-            raise FormatError("Mandatory key '%s' missing" % key)
-    try:
-        add_missing_keys(meta)
-    except Exception as exc:
-        raise DecodeError("Failed to add default values: '%s'" % exc)
+    failed = validator.validate(meta, broadcast=True)
+    if failed:
+        keys = ', '.join(failed.keys())
+        msg = "Metadata validation failed for keys: {0}".format(keys)
+        raise MetadataError(msg, failed)
 
+    replace_aliases(meta)
+    add_missing_keys(meta)
+    clean_keys(meta)
     return meta
 
 
