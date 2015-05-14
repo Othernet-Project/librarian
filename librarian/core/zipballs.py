@@ -30,7 +30,7 @@ class ValidationError(Exception):
         super(ValidationError, self).__init__(msg)
 
 
-def get_info(zfile, prefix):
+def get_metadata(zfile, prefix, meta_filename='info.json', encoding='utf8'):
     """ Get metadata from zipball
 
     The ``prefix`` is the directory in which the metadata file is located,
@@ -44,12 +44,13 @@ def get_info(zfile, prefix):
     Returns a parsed dict.
     """
     prefix = prefix.rstrip('/')
-    infopath = '{}/info.json'.format(prefix)
+    infopath = '{0}/{1}'.format(prefix, meta_filename)
     with zfile.open(infopath) as info:
-        return json.load(info, 'utf8')
+        raw_meta = json.load(info, encoding)
+        return metadata.process_meta(raw_meta)
 
 
-def validate(path):
+def validate(path, meta_filename='info.json'):
     """ Validates the zipball
 
     This function validates the content zipball found at ``path`` and returns
@@ -81,7 +82,6 @@ def validate(path):
     # Inspect zipfile magic number
     if not zipfile.is_zipfile(path):
         raise ValidationError(path, 'invalid magic number, not a ZIP file')
-        return
     # Inspect contents
     zfile = zipfile.ZipFile(path)
     md5dir = '{}/'.format(md5)
@@ -92,16 +92,17 @@ def validate(path):
         raise ValidationError(path, 'invalid content directory strcuture')
     # Inspect metadata
     try:
-        info = get_info(zfile, md5)
+        meta = get_metadata(zfile, md5, meta_filename=meta_filename)
+    except metadata.MetadataError as exc:
+        raise ValidationError(path, str(exc))
     except (KeyError, ValueError):
         raise ValidationError(path, 'missing or malformed metadata file')
-    for k in metadata.REQUIRED_KEYS:
-        if k not in info:
-            raise ValidationError(path, "missing required key '{}'".format(k))
-    indexpath = '{}/{}'.format(md5, info.get('index', 'index.html'))
+    # Inspect entry point
+    indexpath = '{0}/{1}'.format(md5, meta.get('index', 'index.html'))
     if indexpath not in names:
         raise ValidationError(path, "missing index at '{}'".format(indexpath))
-    return info
+
+    return meta
 
 
 def backup(path):

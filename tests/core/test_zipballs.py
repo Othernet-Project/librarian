@@ -19,22 +19,22 @@ import pytest
 
 from librarian.core import zipballs as mod
 
-MOD = mod.__name__
 
-
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-@mock.patch(MOD + '.json.load')
-def test_get_info(load, ZipFile):
+@mock.patch.object(mod.metadata, 'process_meta')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+@mock.patch.object(mod.json, 'load')
+def test_get_metadata(load, ZipFile, process_meta):
     z = ZipFile('foo.zip')
     path = 'foo'
-    ret = mod.get_info(z, path)
+    ret = mod.get_metadata(z, path)
     z.open.assert_called_once_with('foo/info.json')
     zcontext = z.open.return_value.__enter__  # open is a contenxt manager
     load.assert_called_once_with(zcontext.return_value, 'utf8')
-    assert ret == load.return_value
+    process_meta.assert_called_once_with(load.return_value)
+    assert ret == process_meta.return_value
 
 
-@mock.patch(MOD + '.get_info')
+@mock.patch.object(mod, 'get_metadata')
 def test_validate_wrong_extension(*ignored):
     """ If extension isn't .zip, returns False """
     path = '/var/spool/downloads/foo.txt'
@@ -42,7 +42,7 @@ def test_validate_wrong_extension(*ignored):
         mod.validate(path)
 
 
-@mock.patch(MOD + '.get_info')
+@mock.patch.object(mod, 'get_metadata')
 def test_validate_zipball_wrong_name(*ignored):
     """ If filename isn't MD5 hash, returns False """
     path = '/var/spool/downloads/content/foo.zip'
@@ -50,8 +50,8 @@ def test_validate_zipball_wrong_name(*ignored):
         mod.validate(path)
 
 
-@mock.patch(MOD + '.get_info')
-@mock.patch(MOD + '.zipfile.is_zipfile')
+@mock.patch.object(mod, 'get_metadata')
+@mock.patch.object(mod.zipfile, 'is_zipfile')
 def test_validate_zipball_not_zipfile(is_zipfile, *ignored):
     """ If path does not point to a valid zipfile, returns False """
     is_zipfile.return_value = False
@@ -60,9 +60,9 @@ def test_validate_zipball_not_zipfile(is_zipfile, *ignored):
         mod.validate(path)
 
 
-@mock.patch(MOD + '.get_info')
-@mock.patch(MOD + '.zipfile.is_zipfile')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
+@mock.patch.object(mod, 'get_metadata')
+@mock.patch.object(mod.zipfile, 'is_zipfile')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
 def test_validate_zipball_has_no_md5_dir(ZipFile, is_zipfile, *ignored):
     """ If zipball doesn't contain md5 directory, returns False """
     is_zipfile.return_value = True
@@ -72,9 +72,9 @@ def test_validate_zipball_has_no_md5_dir(ZipFile, is_zipfile, *ignored):
         mod.validate(path)
 
 
-@mock.patch(MOD + '.get_info')
-@mock.patch(MOD + '.zipfile.is_zipfile')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
+@mock.patch.object(mod, 'get_metadata')
+@mock.patch.object(mod.zipfile, 'is_zipfile')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
 def test_validate_zipball_contains_non_dir_md5(ZipFile, is_zipfile, *ignored):
     """ If zipball contains md5 path that isn't a dir, returns False """
     is_zipfile.return_value = True
@@ -85,24 +85,25 @@ def test_validate_zipball_contains_non_dir_md5(ZipFile, is_zipfile, *ignored):
         mod.validate(path)
 
 
-@mock.patch(MOD + '.get_info')
-@mock.patch(MOD + '.zipfile.is_zipfile')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-def test_validate_zipball_contains_info_json(ZipFile, is_zipfile, get_info):
+@mock.patch.object(mod, 'get_metadata')
+@mock.patch.object(mod.zipfile, 'is_zipfile')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+def test_validate_zipball_contains_info_json(ZipFile, is_zipfile,
+                                             get_metadata):
     """ If zipball doesn't contain info.json, returns False """
     is_zipfile.return_value = True
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
         '202ab62b551f6d7fc002f65652525544/']
-    get_info.side_effect = KeyError
+    get_metadata.side_effect = KeyError()
     with pytest.raises(mod.ValidationError):
         mod.validate(path)
 
 
-@mock.patch(MOD + '.get_info')
-@mock.patch(MOD + '.zipfile.is_zipfile')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-def test_validate_zipball_no_valid_meta(ZipFile, is_zipfile, get_info):
+@mock.patch.object(mod, 'get_metadata')
+@mock.patch.object(mod.zipfile, 'is_zipfile')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+def test_validate_zipball_no_valid_meta(ZipFile, is_zipfile, get_metadata):
     """
     If zipball doesn't contain metadata that can be parsed, returns False
     """
@@ -110,95 +111,95 @@ def test_validate_zipball_no_valid_meta(ZipFile, is_zipfile, get_info):
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
         '202ab62b551f6d7fc002f65652525544/']
-    get_info.side_effect = ValueError
+    get_metadata.side_effect = ValueError()
     with pytest.raises(mod.ValidationError):
         mod.validate(path)
 
 
-@mock.patch(MOD + '.get_info')
-@mock.patch(MOD + '.zipfile.is_zipfile')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-def test_validate_zipball_no_valid_meta_keys(ZipFile, is_zipfile, get_info):
+@mock.patch.object(mod, 'get_metadata')
+@mock.patch.object(mod.zipfile, 'is_zipfile')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+def test_validate_zipball_invalid_meta(ZipFile, is_zipfile, get_metadata):
     """ If zipball doesn't contain valid metadata keys, returns False """
     is_zipfile.return_value = True
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
         '202ab62b551f6d7fc002f65652525544/',
         '202ab62b551f6d7fc002f65652525544/index.html']
-    get_info.return_value = {}
+    get_metadata.side_effect = mod.metadata.MetadataError('msg', {})
     with pytest.raises(mod.ValidationError):
         mod.validate(path)
 
 
-@mock.patch(MOD + '.get_info')
-@mock.patch(MOD + '.zipfile.is_zipfile')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-def test_validate_zipball_contains_index_html(ZipFile, is_zipfile, get_info,
-                                              metadata):
+@mock.patch.object(mod, 'get_metadata')
+@mock.patch.object(mod.zipfile, 'is_zipfile')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+def test_validate_zipball_contains_index_html(ZipFile, is_zipfile,
+                                              get_metadata, metadata):
     is_zipfile.return_value = True
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
         '202ab62b551f6d7fc002f65652525544/']
-    get_info.return_value = metadata
+    get_metadata.return_value = metadata
     with pytest.raises(mod.ValidationError):
         mod.validate(path)
 
 
-@mock.patch(MOD + '.get_info')
-@mock.patch(MOD + '.zipfile.is_zipfile')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
+@mock.patch.object(mod, 'get_metadata')
+@mock.patch.object(mod.zipfile, 'is_zipfile')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
 def test_validate_zipball_contains_wrong_index_html(ZipFile, is_zipfile,
-                                                    get_info, metadata):
+                                                    get_metadata, metadata):
     is_zipfile.return_value = True
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
         '202ab62b551f6d7fc002f65652525544/',
         '202ab62b551f6d7fc002f65652525544/index.html']
-    get_info.return_value = {'index': 'foo/index.html'}
-    get_info.return_value.update(metadata)
+    get_metadata.return_value = {'index': 'foo/index.html'}
+    get_metadata.return_value.update(metadata)
     with pytest.raises(mod.ValidationError):
         mod.validate(path)
 
 
-@mock.patch(MOD + '.get_info')
-@mock.patch(MOD + '.zipfile.is_zipfile')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-def test_validate_zipball_valid(ZipFile, is_zipfile, get_info, metadata):
+@mock.patch.object(mod, 'get_metadata')
+@mock.patch.object(mod.zipfile, 'is_zipfile')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+def test_validate_zipball_valid(ZipFile, is_zipfile, get_metadata, metadata):
     is_zipfile.return_value = True
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
         '202ab62b551f6d7fc002f65652525544/',
         '202ab62b551f6d7fc002f65652525544/index.html']
-    get_info.return_value = metadata
-    assert mod.validate(path) is get_info.return_value
+    get_metadata.return_value = metadata
+    assert mod.validate(path) is get_metadata.return_value
 
 
-@mock.patch(MOD + '.get_info')
-@mock.patch(MOD + '.zipfile.is_zipfile')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-def test_validate_zipball_valid_with_index(ZipFile, is_zipfile, get_info,
+@mock.patch.object(mod, 'get_metadata')
+@mock.patch.object(mod.zipfile, 'is_zipfile')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+def test_validate_zipball_valid_with_index(ZipFile, is_zipfile, get_metadata,
                                            metadata):
     is_zipfile.return_value = True
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
         '202ab62b551f6d7fc002f65652525544/',
         '202ab62b551f6d7fc002f65652525544/foo/index.html']
-    get_info.return_value = {'index': 'foo/index.html'}
-    get_info.return_value.update(metadata)
-    assert mod.validate(path) is get_info.return_value
+    get_metadata.return_value = {'index': 'foo/index.html'}
+    get_metadata.return_value.update(metadata)
+    assert mod.validate(path) is get_metadata.return_value
 
 
-@mock.patch(MOD + '.os.path.exists')
-@mock.patch(MOD + '.os.rename')
+@mock.patch.object(mod.os.path, 'exists')
+@mock.patch.object(mod.os, 'rename')
 def test_backup_returns_early_if_nothing_to_do(rename, exists):
     exists.return_value = False
     mod.backup('foo')
     assert not rename.called
 
 
-@mock.patch(MOD + '.os.rename')
-@mock.patch(MOD + '.os.path.exists')
-def test_backup_normalizes(exists, rename):
+@mock.patch.object(mod.os.path, 'exists')
+@mock.patch.object(mod.os, 'rename')
+def test_backup_normalizes(rename, exists):
     """ Backup always normalizes the path """
     exists.return_value = True
     mod.backup('\\foo\\bar\\baz')
@@ -206,8 +207,8 @@ def test_backup_normalizes(exists, rename):
     rename.assert_called_once_with(expected, expected + '.backup')
 
 
-@mock.patch(MOD + '.os.path.exists')
-@mock.patch(MOD + '.os.rename')
+@mock.patch.object(mod.os.path, 'exists')
+@mock.patch.object(mod.os, 'rename')
 def test_backup(rename, exists):
     """ Backup moves path to a path with .backup suffix """
     exists.return_value = True
@@ -215,29 +216,28 @@ def test_backup(rename, exists):
     rename.assert_called_once_with('foo', 'foo.backup')
 
 
-@mock.patch(MOD + '.os.path.exists')
-@mock.patch(MOD + '.os.rename')
+@mock.patch.object(mod.os.path, 'exists')
+@mock.patch.object(mod.os, 'rename')
 def test_backup_returns_target_path(rename, exists):
     """ The path of the backup file/dir is returned """
     exists.return_value = True
     assert mod.backup('foo') == 'foo.backup'
 
 
-@mock.patch(MOD + '.os.path.exists')
-@mock.patch(MOD + '.os.rename')
+@mock.patch.object(mod.os.path, 'exists')
+@mock.patch.object(mod.os, 'rename')
 def test_backup_returns_none_if_no_backup_is_done(rename, exists):
     """ The path of the backup file/dir is returned """
     exists.return_value = False
     assert mod.backup('foo') is None
 
 
-@mock.patch(MOD + '.backup')
-@mock.patch(MOD + '.shutil.move')
-@mock.patch(MOD + '.shutil.rmtree')
-@mock.patch(MOD + '.os.makedirs')
-@mock.patch(MOD + '.tempfile.gettempdir')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-@mock.patch(MOD + '.content.to_path')
+@mock.patch.object(mod, 'backup')
+@mock.patch.object(mod.shutil, 'move')
+@mock.patch.object(mod.shutil, 'rmtree')
+@mock.patch.object(mod.tempfile, 'gettempdir')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+@mock.patch.object(mod.content, 'to_path')
 def test_extract_to_tempdir(to_path, ZipFile, gettempdir, *ignored):
     to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
                             '/255/44')
@@ -247,13 +247,12 @@ def test_extract_to_tempdir(to_path, ZipFile, gettempdir, *ignored):
         gettempdir.return_value)
 
 
-@mock.patch(MOD + '.backup')
-@mock.patch(MOD + '.shutil.rmtree')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-@mock.patch(MOD + '.os.makedirs')
-@mock.patch(MOD + '.tempfile.gettempdir')
-@mock.patch(MOD + '.shutil.move')
-@mock.patch(MOD + '.content.to_path')
+@mock.patch.object(mod, 'backup')
+@mock.patch.object(mod.shutil, 'rmtree')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+@mock.patch.object(mod.tempfile, 'gettempdir')
+@mock.patch.object(mod.shutil, 'move')
+@mock.patch.object(mod.content, 'to_path')
 def test_creates_target_dir(to_path, move, gettempdir, *ignored):
     md5_parts = ['202', 'ab6', '2b5', '51f', '6d7', 'fc0', '02f', '656', '525',
                  '255', '44']
@@ -265,13 +264,12 @@ def test_creates_target_dir(to_path, move, gettempdir, *ignored):
                                  to_path.return_value)
 
 
-@mock.patch(MOD + '.shutil.move')
-@mock.patch(MOD + '.shutil.rmtree')
-@mock.patch(MOD + '.os.makedirs')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-@mock.patch(MOD + '.tempfile.gettempdir')
-@mock.patch(MOD + '.backup')
-@mock.patch(MOD + '.content.to_path')
+@mock.patch.object(mod.shutil, 'move')
+@mock.patch.object(mod.shutil, 'rmtree')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+@mock.patch.object(mod.tempfile, 'gettempdir')
+@mock.patch.object(mod, 'backup')
+@mock.patch.object(mod.content, 'to_path')
 def test_extract_backs_up(to_path, backup, gettempdir, *ignored):
     to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
                             '/255/44')
@@ -280,13 +278,12 @@ def test_extract_backs_up(to_path, backup, gettempdir, *ignored):
     backup.assert_called_once_with(to_path.return_value)
 
 
-@mock.patch(MOD + '.backup')
-@mock.patch(MOD + '.shutil.rmtree')
-@mock.patch(MOD + '.os.makedirs')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-@mock.patch(MOD + '.tempfile.gettempdir')
-@mock.patch(MOD + '.shutil.move')
-@mock.patch(MOD + '.content.to_path')
+@mock.patch.object(mod, 'backup')
+@mock.patch.object(mod.shutil, 'rmtree')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+@mock.patch.object(mod.tempfile, 'gettempdir')
+@mock.patch.object(mod.shutil, 'move')
+@mock.patch.object(mod.content, 'to_path')
 def test_extract_dir_is_moved(to_path, move, gettempdir, *ignored):
     to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
                             '/255/44')
@@ -297,13 +294,12 @@ def test_extract_dir_is_moved(to_path, move, gettempdir, *ignored):
                                  to_path.return_value)
 
 
-@mock.patch(MOD + '.os.makedirs')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-@mock.patch(MOD + '.shutil.move')
-@mock.patch(MOD + '.tempfile.gettempdir')
-@mock.patch(MOD + '.backup')
-@mock.patch(MOD + '.shutil.rmtree')
-@mock.patch(MOD + '.content.to_path')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+@mock.patch.object(mod.shutil, 'move')
+@mock.patch.object(mod.tempfile, 'gettempdir')
+@mock.patch.object(mod, 'backup')
+@mock.patch.object(mod.shutil, 'rmtree')
+@mock.patch.object(mod.content, 'to_path')
 def test_extract_backup_removed(to_path, rmtree, backup, gettempdir,
                                 *ignored):
     to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
@@ -315,13 +311,12 @@ def test_extract_backup_removed(to_path, rmtree, backup, gettempdir,
     rmtree.assert_called_once_with('foo.backup')
 
 
-@mock.patch(MOD + '.os.makedirs')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-@mock.patch(MOD + '.shutil.move')
-@mock.patch(MOD + '.tempfile.gettempdir')
-@mock.patch(MOD + '.backup')
-@mock.patch(MOD + '.shutil.rmtree')
-@mock.patch(MOD + '.content.to_path')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+@mock.patch.object(mod.shutil, 'move')
+@mock.patch.object(mod.tempfile, 'gettempdir')
+@mock.patch.object(mod, 'backup')
+@mock.patch.object(mod.shutil, 'rmtree')
+@mock.patch.object(mod.content, 'to_path')
 def test_extract_no_backup(to_path, rmtree, backup, gettempdir,
                            *ignored):
     to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
@@ -333,13 +328,12 @@ def test_extract_no_backup(to_path, rmtree, backup, gettempdir,
     assert not rmtree.called
 
 
-@mock.patch(MOD + '.backup')
-@mock.patch(MOD + '.shutil.move')
-@mock.patch(MOD + '.shutil.rmtree')
-@mock.patch(MOD + '.os.makedirs')
-@mock.patch(MOD + '.zipfile.ZipFile', autospec=True)
-@mock.patch(MOD + '.tempfile.gettempdir')
-@mock.patch(MOD + '.content.to_path')
+@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+@mock.patch.object(mod.shutil, 'move')
+@mock.patch.object(mod, 'backup')
+@mock.patch.object(mod.shutil, 'rmtree')
+@mock.patch.object(mod.tempfile, 'gettempdir')
+@mock.patch.object(mod.content, 'to_path')
 def test_extract_target_path_returned(to_path, gettempdir, *ignored):
     to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
                             '/255/44')
