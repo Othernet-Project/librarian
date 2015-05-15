@@ -45,7 +45,7 @@ def test_generate_key(base_cache):
 @mock.patch.object(mod.BaseCache, 'get')
 @mock.patch.object(mod, 'request')
 def test_cached_no_backend(request, get):
-    request.app = None
+    request.app.cache = None
     orig_func = mock.Mock(__name__='orig_func')
     orig_func.return_value = 'data'
     cached_func = mod.cached()(orig_func)
