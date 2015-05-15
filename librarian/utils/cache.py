@@ -71,7 +71,7 @@ class BaseCache(object):
     :param default_timeout:  timeout value to use if explicit `timeout` param
                              is omitted or `None`. `0` means no timeout.
     """
-    def __init__(self, default_timeout=0):
+    def __init__(self, default_timeout=0, **kwargs):
         self.default_timeout = default_timeout
 
     def get(self, key):
@@ -98,8 +98,8 @@ class BaseCache(object):
 
 class InMemoryCache(BaseCache):
     """Simple in-memory cache backend"""
-    def __init__(self, default_timeout=0):
-        super(InMemoryCache, self).__init__(default_timeout=default_timeout)
+    def __init__(self, **kwargs):
+        super(InMemoryCache, self).__init__(**kwargs)
         self._cache = dict()
 
     def get(self, key):
@@ -126,8 +126,8 @@ class MemcachedCache(BaseCache):
 
     :param servers:  list / tuple containing memcache server address(es)
     """
-    def __init__(self, servers, default_timeout=0):
-        super(MemcachedCache, self).__init__(default_timeout=default_timeout)
+    def __init__(self, servers, **kwargs):
+        super(MemcachedCache, self).__init__(**kwargs)
         try:
             import pylibmc
         except ImportError:
