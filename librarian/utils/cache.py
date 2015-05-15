@@ -119,3 +119,36 @@ class InMemoryCache(BaseCache):
 
     def clear(self):
         self._cache = dict()
+
+
+class MemcachedCache(BaseCache):
+    """Memcached based cache backend
+
+    :param servers:  list / tuple containing memcache server address(es)
+    """
+    def __init__(self, servers, default_timeout=0):
+        super(MemcachedCache, self).__init__(default_timeout=default_timeout)
+        try:
+            import pylibmc
+        except ImportError:
+            try:
+                import memcache
+            except ImportError:
+                raise RuntimeError("No memcache client library found.")
+            else:
+                self._cache = memcache.Client(servers)
+        else:
+            self._cache = pylibmc.Client(servers)
+
+    def get(self, key):
+        return self._cache.get(key)
+
+    def set(self, key, value, timeout=None):
+        expires = self.get_expiry(timeout)
+        self._cache.set(key, value, expires)
+
+    def delete(self, key):
+        self._cache.delete(key)
+
+    def clear(self):
+        self._cache.flush_all()
