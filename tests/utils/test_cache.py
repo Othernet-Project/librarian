@@ -16,6 +16,12 @@ def im_cache():
     return mod.InMemoryCache()
 
 
+def test_generate_key(base_cache):
+    known_md5 = 'f3e993b570e3ec53b3b05df933267e6f'
+    generated_md5 = mod.generate_key(1, 2, 'ab', name='something')
+    assert generated_md5 == known_md5
+
+
 @mock.patch.object(mod.BaseCache, 'get')
 @mock.patch.object(mod, 'request')
 def test_cached_no_backend(request, get):
@@ -32,7 +38,7 @@ def test_cached_no_backend(request, get):
 
 @mock.patch.object(mod.BaseCache, 'set')
 @mock.patch.object(mod.BaseCache, 'get')
-@mock.patch.object(mod.BaseCache, 'generate_key')
+@mock.patch.object(mod, 'generate_key')
 @mock.patch.object(mod, 'request')
 def test_cached_found(request, generate_key, get, setfunc, base_cache):
     request.app.cache = base_cache
@@ -50,7 +56,7 @@ def test_cached_found(request, generate_key, get, setfunc, base_cache):
 
 @mock.patch.object(mod.BaseCache, 'set')
 @mock.patch.object(mod.BaseCache, 'get')
-@mock.patch.object(mod.BaseCache, 'generate_key')
+@mock.patch.object(mod, 'generate_key')
 @mock.patch.object(mod, 'request')
 def test_cached_not_found(request, generate_key, get, setfunc, base_cache):
     request.app.cache = base_cache
@@ -71,7 +77,7 @@ def test_cached_not_found(request, generate_key, get, setfunc, base_cache):
 
 @mock.patch.object(mod.BaseCache, 'set')
 @mock.patch.object(mod.BaseCache, 'get')
-@mock.patch.object(mod.BaseCache, 'generate_key')
+@mock.patch.object(mod, 'generate_key')
 @mock.patch.object(mod, 'request')
 def test_cached_not_found_no_timeout(request, generate_key, get, setfunc,
                                      base_cache):
@@ -88,7 +94,7 @@ def test_cached_not_found_no_timeout(request, generate_key, get, setfunc,
 
 @mock.patch.object(mod.BaseCache, 'set')
 @mock.patch.object(mod.BaseCache, 'get')
-@mock.patch.object(mod.BaseCache, 'generate_key')
+@mock.patch.object(mod, 'generate_key')
 @mock.patch.object(mod, 'request')
 def test_cached_not_found_custom_timeout(request, generate_key, get, setfunc,
                                          base_cache):
@@ -115,11 +121,6 @@ class TestBaseCache(object):
         assert not base_cache.has_expired(None)
         assert not base_cache.has_expired(time.time() + 100)
         assert base_cache.has_expired(time.time() - 100)
-
-    def test_get_key(self, base_cache):
-        known_md5 = 'f3e993b570e3ec53b3b05df933267e6f'
-        generated_md5 = base_cache.generate_key(1, 2, 'ab', name='something')
-        assert generated_md5 == known_md5
 
 
 class TestInMemoryCache(object):

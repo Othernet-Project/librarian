@@ -14,6 +14,19 @@ import time
 from bottle import request
 
 
+def generate_key(*args, **kwargs):
+    """Helper function to generate the md5 hash of all the passed in args."""
+    md5 = hashlib.md5()
+
+    for data in args:
+        md5.update(str(data))
+
+    for key, value in kwargs.items():
+        md5.update(str(key) + str(value))
+
+    return md5.hexdigest()
+
+
 def cached(timeout=None):
     """Decorator that caches return values of functions that it wraps. The
     key is generated from the function's name and the parameters passed to
@@ -37,7 +50,7 @@ def cached(timeout=None):
                 return func(*args, **kwargs)
 
             prefix = func.__name__
-            key = backend.generate_key(prefix, *args, **kwargs)
+            key = generate_key(prefix, *args, **kwargs)
             value = backend.get(key)
             if value is None:
                 # not found in cache, or is expired, recalculate value
@@ -81,18 +94,6 @@ class BaseCache(object):
 
     def has_expired(self, expires):
         return expires > 0 and expires < time.time()
-
-    def generate_key(self, *args, **kwargs):
-        """Return the md5 hash all the passed arguments."""
-        md5 = hashlib.md5()
-
-        for data in args:
-            md5.update(str(data))
-
-        for key, value in kwargs.items():
-            md5.update(str(key) + str(value))
-
-        return md5.hexdigest()
 
 
 class InMemoryCache(BaseCache):
