@@ -7,16 +7,15 @@ Some rights reserved.
 This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
-import datetime
 import functools
 import hashlib
+import time
+
+from bottle import request
 
 
-_cache = dict()
-
-
-def get_key(*args, **kwargs):
-    """Return the md5 hash all the passed arguments."""
+def generate_key(*args, **kwargs):
+    """Helper function to generate the md5 hash of all the passed in args."""
     md5 = hashlib.md5()
 
     for data in args:
@@ -28,30 +27,147 @@ def get_key(*args, **kwargs):
     return md5.hexdigest()
 
 
-def get_expiry(expires_in):
-    return datetime.datetime.now() + datetime.timedelta(seconds=expires_in)
+def cached(timeout=None):
+    """Decorator that caches return values of functions that it wraps. The
+    key is generated from the function's name and the parameters passed to
+    it. E.g.:
 
+    @cached(timeout=300)  # expires in 5 minutes
+    def my_func(a, b, c=4):
+        return (a + b) / c
 
-def has_expired(expires):
-    return expires < datetime.datetime.now()
-
-
-def cached(expires_in=None):
+    Cache key in this case is an md5 hash, generated from the combined
+    values of: function's name("my_func"), and values of `a`, `b` and in
+    case of keyword arguments both argument name "c" and the value of `c`.
+    """
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            prefix = func.__name__
-            key = get_key(prefix, *args, **kwargs)
             try:
-                data = _cache[key]
-                if expires_in and has_expired(data['expires']):
-                    raise KeyError()
-            except KeyError:
-                # not found in cache, or is expired, recalculate data
-                data = dict(value=func(*args, **kwargs))
-                if expires_in is not None:
-                    data['expires'] = get_expiry(expires_in)
-                _cache[key] = data
-            return data['value']
+                backend = request.app.cache
+            except AttributeError:
+                # no caching backend installed
+                return func(*args, **kwargs)
+
+            prefix = func.__name__
+            key = generate_key(prefix, *args, **kwargs)
+            value = backend.get(key)
+            if value is None:
+                # not found in cache, or is expired, recalculate value
+                value = func(*args, **kwargs)
+                expires_in = timeout
+                if expires_in is None:
+                    expires_in = backend.default_timeout
+                backend.set(key, value, timeout=expires_in)
+            return value
         return wrapper
     return decorator
+
+
+class BaseCache(object):
+    """Abstract class, meant to be subclassed by specific caching backends to
+    implement their own `get` and `set` methods.
+
+    :param default_timeout:  timeout value to use if explicit `timeout` param
+                             is omitted or `None`. `0` means no timeout.
+    """
+    def __init__(self, default_timeout=0, **kwargs):
+        self.default_timeout = default_timeout
+
+    def get(self, key):
+        raise NotImplementedError()
+
+    def set(self, key, value, timeout=None):
+        raise NotImplementedError()
+
+    def delete(self, key):
+        raise NotImplementedError()
+
+    def clear(self):
+        raise NotImplementedError()
+
+    def get_expiry(self, timeout):
+        if timeout is None:
+            timeout = self.default_timeout
+
+        return time.time() + timeout if timeout > 0 else timeout
+
+    def has_expired(self, expires):
+        return expires > 0 and expires < time.time()
+
+
+class InMemoryCache(BaseCache):
+    """Simple in-memory cache backend"""
+    def __init__(self, **kwargs):
+        super(InMemoryCache, self).__init__(**kwargs)
+        self._cache = dict()
+
+    def get(self, key):
+        try:
+            (expires, data) = self._cache[key]
+            if not self.has_expired(expires):
+                return data
+        except KeyError:
+            return None
+
+    def set(self, key, value, timeout=None):
+        expires = self.get_expiry(timeout)
+        self._cache[key] = (expires, value)
+
+    def delete(self, key):
+        self._cache.pop(key, None)
+
+    def clear(self):
+        self._cache = dict()
+
+
+class MemcachedCache(BaseCache):
+    """Memcached based cache backend
+
+    :param servers:  list / tuple containing memcache server address(es)
+    """
+    def __init__(self, servers, **kwargs):
+        super(MemcachedCache, self).__init__(**kwargs)
+        try:
+            import pylibmc
+        except ImportError:
+            try:
+                import memcache
+            except ImportError:
+                raise RuntimeError("No memcache client library found.")
+            else:
+                self._cache = memcache.Client(servers)
+        else:
+            self._cache = pylibmc.Client(servers)
+
+    def get(self, key):
+        return self._cache.get(key)
+
+    def set(self, key, value, timeout=None):
+        expires = self.get_expiry(timeout)
+        self._cache.set(key, value, expires)
+
+    def delete(self, key):
+        self._cache.delete(key)
+
+    def clear(self):
+        self._cache.flush_all()
+
+
+def setup(backend, timeout, servers):
+    """Instantiate and return the requested cache backend.
+
+    :param backend:  string: unique backend class identifier, possible values:
+                     "in-memory", "memcached"
+    :param timeout:  default timeout in seconds
+    :param servers:  list / tuple of server addresses
+    """
+    backends = {'in-memory': InMemoryCache,
+                'memcached': MemcachedCache}
+    try:
+        backend_cls = backends[backend]
+    except KeyError:
+        return None  # caching will be disabled
+    else:
+        return backend_cls(default_timeout=timeout,
+                           servers=servers)

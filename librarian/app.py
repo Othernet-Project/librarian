@@ -44,6 +44,7 @@ from librarian.lib.lock import lock_plugin
 from librarian.lib.confloader import ConfDict
 
 from librarian.utils import lang
+from librarian.utils import cache
 from librarian.utils import setup
 from librarian.utils import commands
 from librarian.utils import migrations
@@ -293,6 +294,10 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         ap_client_ip_range=config['librarian.ap_client_ip_range']
     ))
     app.install(request_timer('Handler'))
+    # setup cache backend
+    app.cache = cache.setup(backend=config['cache.backend'],
+                            timeout=config['cache.timeout'],
+                            servers=config['cache.servers'])
 
     # Install routes
     add_routes(app, ROUTES)
