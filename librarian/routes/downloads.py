@@ -17,26 +17,14 @@ from bottle_utils.i18n import i18n_url, lazy_gettext as _
 from ..core import metadata
 from ..core import downloads
 from ..core import zipballs
-from ..lib.pager import Pager
+from ..lib.paginator import Paginator
 from ..utils.cache import cached
 from ..utils.core_helpers import open_archive
 
 
-validate_zipball = cached()(zipballs.validate)
-
-PER_PAGE = 20
-
-
-@view('downloads', vals={})
-def list_downloads():
-    """ Render a list of downloaded content """
+@cached()
+def filter_downloads(lang):
     conf = request.app.config
-    selection = request.params.get('sel', '0') == '1'
-
-    default_lang = request.user.options.get('content_language', None)
-    lang = request.params.get('lang', default_lang)
-    request.user.options['content_language'] = lang
-
     zballs = downloads.get_downloads(conf['content.spooldir'],
                                      conf['content.output_ext'])
     zballs = list(reversed(downloads.order_downloads(zballs)))
@@ -50,12 +38,13 @@ def list_downloads():
         logging.info('No updates found')
     # Collect metadata of valid zipballs. If a language filter is specified
     # filter the list based on that.
+    meta_filename = conf['content.metadata']
     metas = []
     for zipball_path, timestamp in zballs:
         logging.debug("Reading zipball: {0}".format(zipball_path))
         try:
-            meta = validate_zipball(zipball_path,
-                                    meta_filename=conf['content.metadata'])
+            meta = zipballs.validate_zipball(zipball_path,
+                                             meta_filename=meta_filename)
         except zipballs.ValidationError as exc:
             # Zip file is invalid. This means that the file is corrupted or the
             # original file was signed with corrupt data in it. Either way, we
@@ -70,23 +59,38 @@ def list_downloads():
             meta['ftimestamp'] = datetime.fromtimestamp(timestamp)
             metas.append(metadata.Meta(meta, zipball_path))
 
-    pager = Pager(metas, pid='downloads')
-    pager.get_paging_params()
-    metas_on_page = pager.get_items()
-
     archive = open_archive()
-    archive.add_replacement_data(metas_on_page, needed_keys=('title',))
+    archive.add_replacement_data(metas, needed_keys=('title',))
 
-    vals = dict(request.params)
-    vals.update({'pp': pager.per_page})
-
-    return dict(vals=vals,
-                metadata=metas_on_page,
-                selection=selection,
-                lang=dict(lang=lang),
-                pager=pager,
+    return dict(metadata=metas,
                 nzipballs=nzipballs,
                 last_zip=last_zip)
+
+
+@view('downloads', vals={})
+def list_downloads():
+    """ Render a list of downloaded content """
+    selection = request.params.get('sel', '0') == '1'
+    # parse language filter
+    default_lang = request.user.options.get('content_language', None)
+    lang = request.params.get('lang', default_lang)
+    request.user.options['content_language'] = lang
+    # parse pagination params
+    page = Paginator.parse_page(request.params)
+    per_page = Paginator.parse_per_page(request.params)
+    # get downloads filtered by above parsed filter params
+    result = filter_downloads(lang)
+
+    paginator = Paginator(result['metadata'], page, per_page)
+    vals = dict(request.params)
+    vals.update({'pp': per_page, 'p': page})
+
+    result.update(dict(vals=vals,
+                       pager=paginator,
+                       selection=selection,
+                       lang=dict(lang=lang),
+                       metadata=paginator.get_items()))
+    return result
 
 
 @view('downloads_error')  # TODO: Add this view

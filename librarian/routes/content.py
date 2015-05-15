@@ -28,8 +28,9 @@ from ..core import metadata
 from ..core import zipballs
 
 from ..lib import auth
-from ..lib.pager import Pager
+from ..lib.paginator import Paginator
 
+from ..utils.cache import cached
 from ..utils.core_helpers import open_archive, init_filemanager, with_content
 from ..utils.template_helpers import template_helper
 
@@ -43,48 +44,46 @@ def get_content_path(content_id):
     return content.to_path(content_id)
 
 
-def filter_content(multipage=None):
+@cached()
+def filter_content(query, lang, tag, multipage):
     conf = request.app.config
-    query = request.params.getunicode('q', '').strip()
+    archive = open_archive()
+    raw_metas = archive.get_content(terms=query,
+                                    lang=lang,
+                                    tag=tag,
+                                    multipage=multipage)
+    contentdir = conf['content.contentdir']
+    metas = [metadata.Meta(meta, content.to_path(meta['md5'], contentdir))
+             for meta in raw_metas]
+    return metas
 
+
+def prepare_content_list(multipage=None):
+    # parse search query
+    query = request.params.getunicode('q', '').strip()
+    # parse language filter
     default_lang = request.user.options.get('content_language', None)
     lang = request.params.get('lang', default_lang)
     request.user.options['content_language'] = lang
-
+    # parse tag filter
+    archive = open_archive()
     try:
         tag = int(request.params.get('tag'))
     except (TypeError, ValueError):
         tag = None
         tag_name = None
-
-    archive = open_archive()
-    total_items = archive.get_count(terms=query,
-                                    tag=tag,
-                                    lang=lang,
-                                    multipage=multipage)
-
-    if tag:
+    else:
         try:
             tag_name = archive.get_tag_name(tag)['name']
         except (IndexError, KeyError):
             abort(404, _('Specified tag was not found'))
-
-    # We will use a list of fake content (just a normal list of numbers) to
-    # trick the pager into calculating correct page numbers
-    pager = Pager(total_items, pid='content')
-    pager.get_paging_params()
-    raw_metas = archive.get_content(terms=query,
-                                    offset=pager.offset,
-                                    limit=pager.per_page,
-                                    tag=tag,
-                                    lang=lang,
-                                    multipage=multipage)
-    contentdir = conf['content.contentdir']
-    metas = [metadata.Meta(meta, content.to_path(meta['md5'], contentdir))
-             for meta in raw_metas]
-
-    return dict(metadata=metas,
-                total_items=total_items,
+    # parse pagination params
+    page = Paginator.parse_page(request.params)
+    per_page = Paginator.parse_per_page(request.params)
+    # get content list filtered by above parsed filter params
+    metas = filter_content(query, lang, tag, multipage)
+    pager = Paginator(metas, page, per_page)
+    return dict(metadata=pager.get_items(),
                 pager=pager,
                 vals=request.params.decode(),
                 query=query,
@@ -97,7 +96,7 @@ def filter_content(multipage=None):
 @roca_view('content_list', '_content_list', template_func=template)
 def content_list():
     """ Show list of content """
-    result = filter_content()
+    result = prepare_content_list()
     result.update({'base_path': i18n_url('content:list'),
                    'page_title': _('Library'),
                    'empty_message': _('Content library is currently empty')})
@@ -107,7 +106,7 @@ def content_list():
 @roca_view('content_list', '_content_list', template_func=template)
 def content_sites_list():
     """ Show list of multipage content only """
-    result = filter_content(multipage=True)
+    result = prepare_content_list(multipage=True)
     result.update({'base_path': i18n_url('content:sites_list'),
                    'page_title': _('Sites'),
                    'empty_message': _('There are no sites in the library.')})
