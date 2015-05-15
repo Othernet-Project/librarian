@@ -16,6 +16,26 @@ def im_cache():
     return mod.InMemoryCache()
 
 
+@pytest.fixture(params=['pylibmc', 'memcache'])
+def mc_cache(request):
+    def import_mock(name, *args):
+        if request.param != name:
+            raise ImportError()
+
+        client = mock.Mock()
+        client.name = request.param
+
+        client_lib = mock.Mock()
+        client_lib.Client.return_value = client
+
+        return client_lib
+
+    with mock.patch('__builtin__.__import__', side_effect=import_mock):
+        instance = mod.MemcachedCache(['127.0.0.1:11211'])
+        assert instance._cache.name == request.param
+        return instance
+
+
 def test_generate_key(base_cache):
     known_md5 = 'f3e993b570e3ec53b3b05df933267e6f'
     generated_md5 = mod.generate_key(1, 2, 'ab', name='something')
@@ -165,3 +185,30 @@ class TestInMemoryCache(object):
             im_cache.delete('invalid')
         except Exception as exc:
             pytest.fail('Should not raise: {0}'.format(exc))
+
+
+class TestMemcachedCache(object):
+
+    def test_no_client_lib(self):
+        with pytest.raises(RuntimeError):
+            with mock.patch('__builtin__.__import__', side_effect=ImportError):
+                mod.MemcachedCache(['127.0.0.1:11211'])
+
+    def test_get(self, mc_cache):
+        mc_cache.get('test')
+        mc_cache._cache.get.assert_called_once_with('test')
+
+    @mock.patch.object(mod.MemcachedCache, 'get_expiry')
+    def test_set(self, get_expiry, mc_cache):
+        get_expiry.return_value = 'expires'
+        mc_cache.set('key', 'data', timeout=120)
+        mc_cache._cache.set.assert_called_once_with('key', 'data', 'expires')
+        get_expiry.assert_called_once_with(120)
+
+    def test_delete(self, mc_cache):
+        mc_cache.delete('key')
+        mc_cache._cache.delete.assert_called_once_with('key')
+
+    def test_clear(self, mc_cache):
+        mc_cache.clear()
+        mc_cache._cache.flush_all.assert_called_once_with()
