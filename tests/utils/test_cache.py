@@ -1,108 +1,157 @@
-import datetime
+import time
 
 import mock
+import pytest
 
 from librarian.utils import cache as mod
 
 
-MOD = mod.__name__
+@pytest.fixture
+def base_cache():
+    return mod.BaseCache()
 
 
-def test_get_expiry():
-    result = mod.get_expiry(60)
-    assert result > datetime.datetime.now()
+@pytest.fixture
+def im_cache():
+    return mod.InMemoryCache()
 
 
-def test_has_expired():
-    minute_ago = datetime.datetime.now() - datetime.timedelta(seconds=60)
-    assert mod.has_expired(minute_ago)
+@mock.patch.object(mod.BaseCache, 'get')
+@mock.patch.object(mod, 'request')
+def test_cached_no_backend(request, get):
+    request.app = None
+    orig_func = mock.Mock(__name__='orig_func')
+    orig_func.return_value = 'data'
+    cached_func = mod.cached()(orig_func)
 
-    in_a_minute = datetime.datetime.now() + datetime.timedelta(seconds=60)
-    assert not mod.has_expired(in_a_minute)
-
-
-def test_get_key():
-    known_md5 = 'f3e993b570e3ec53b3b05df933267e6f'
-    assert mod.get_key(1, 2, 'ab', name='something') == known_md5
-
-
-@mock.patch(MOD + '._cache')
-def test_cache_found_no_expiry(cache):
-    test_func = mock.Mock(__name__='test_func')
-    cached_func = mod.cached()(test_func)
-    cache.__getitem__.return_value = {'value': 42}
-
-    result = cached_func(1)
-
-    assert result == 42
-    assert not test_func.called
-    assert not cache.__setitem__.called
+    result = cached_func('test', a=3)
+    assert result == 'data'
+    orig_func.assert_called_once_with('test', a=3)
+    assert not get.called
 
 
-@mock.patch(MOD + '.has_expired')
-@mock.patch(MOD + '._cache')
-def test_cache_found_not_expired(cache, has_expired):
-    test_func = mock.Mock(__name__='test_func')
-    cached_func = mod.cached()(test_func)
-    cache.__getitem__.return_value = {'value': 42}
-    has_expired.return_value = False
+@mock.patch.object(mod.BaseCache, 'set')
+@mock.patch.object(mod.BaseCache, 'get')
+@mock.patch.object(mod.BaseCache, 'generate_key')
+@mock.patch.object(mod, 'request')
+def test_cached_found(request, generate_key, get, setfunc, base_cache):
+    request.app.cache = base_cache
+    orig_func = mock.Mock(__name__='orig_func')
+    cached_func = mod.cached()(orig_func)
+    generate_key.return_value = 'md5_key'
+    get.return_value = 'data'
 
-    result = cached_func(1)
-
-    assert result == 42
-    assert not test_func.called
-    assert not cache.__setitem__.called
-
-
-@mock.patch(MOD + '.has_expired')
-@mock.patch(MOD + '.get_expiry')
-@mock.patch(MOD + '.get_key')
-@mock.patch(MOD + '._cache')
-def test_cache_found_but_expired(cache, get_key, get_expiry, has_expired):
-    test_func = mock.Mock(__name__='test_func', return_value=48)
-    cached_func = mod.cached(expires_in=10)(test_func)
-    get_key.return_value = 'unique_key'
-    get_expiry.return_value = 'now'
-    has_expired.return_value = True
-
-    cache.__getitem__.return_value = {'value': 42, 'expires': 'minute ago'}
-
-    result = cached_func(1)
-
-    assert result == 48
-    test_func.assert_called_once_with(1)
-    cache.__setitem__.assert_called_once_with('unique_key', {'value': 48,
-                                                             'expires': 'now'})
+    result = cached_func('test', a=3)
+    assert result == 'data'
+    generate_key.assert_called_once_with('orig_func', 'test', a=3)
+    get.assert_called_once_with('md5_key')
+    assert not setfunc.called
 
 
-@mock.patch(MOD + '.get_key')
-@mock.patch(MOD + '._cache')
-def test_cache_not_found_no_expiry(cache, get_key):
-    test_func = mock.Mock(__name__='test_func', return_value=42)
-    cached_func = mod.cached()(test_func)
-    cache.__getitem__.side_effect = KeyError()
-    get_key.return_value = 'unique_key'
+@mock.patch.object(mod.BaseCache, 'set')
+@mock.patch.object(mod.BaseCache, 'get')
+@mock.patch.object(mod.BaseCache, 'generate_key')
+@mock.patch.object(mod, 'request')
+def test_cached_not_found(request, generate_key, get, setfunc, base_cache):
+    request.app.cache = base_cache
+    orig_func = mock.Mock(__name__='orig_func')
+    orig_func.return_value = 'fresh'
+    cached_func = mod.cached()(orig_func)
+    generate_key.return_value = 'md5_key'
+    get.return_value = None
 
-    result = cached_func(1)
+    result = cached_func('test', a=3)
+    assert result == 'fresh'
+    generate_key.assert_called_once_with('orig_func', 'test', a=3)
+    get.assert_called_once_with('md5_key')
+    setfunc.assert_called_once_with('md5_key',
+                                    'fresh',
+                                    timeout=base_cache.default_timeout)
 
-    assert result == 42
-    test_func.assert_called_once_with(1)
-    cache.__setitem__.assert_called_once_with('unique_key', {'value': 42})
+
+@mock.patch.object(mod.BaseCache, 'set')
+@mock.patch.object(mod.BaseCache, 'get')
+@mock.patch.object(mod.BaseCache, 'generate_key')
+@mock.patch.object(mod, 'request')
+def test_cached_not_found_no_timeout(request, generate_key, get, setfunc,
+                                     base_cache):
+    request.app.cache = base_cache
+    orig_func = mock.Mock(__name__='orig_func')
+    orig_func.return_value = 'fresh'
+    cached_func = mod.cached(timeout=0)(orig_func)
+    generate_key.return_value = 'md5_key'
+    get.return_value = None
+
+    cached_func('test', a=3)
+    setfunc.assert_called_once_with('md5_key', 'fresh', timeout=0)
 
 
-@mock.patch(MOD + '.get_expiry')
-@mock.patch(MOD + '.get_key')
-@mock.patch(MOD + '._cache')
-def test_cache_not_found_has_expiry(cache, get_key, get_expiry):
-    test_func = mock.Mock(__name__='test_func', return_value=42)
-    cached_func = mod.cached(expires_in=10)(test_func)
-    cache.__getitem__.side_effect = KeyError()
-    get_key.return_value = 'unique_key'
-    get_expiry.return_value = 'now'
+@mock.patch.object(mod.BaseCache, 'set')
+@mock.patch.object(mod.BaseCache, 'get')
+@mock.patch.object(mod.BaseCache, 'generate_key')
+@mock.patch.object(mod, 'request')
+def test_cached_not_found_custom_timeout(request, generate_key, get, setfunc,
+                                         base_cache):
+    request.app.cache = base_cache
+    orig_func = mock.Mock(__name__='orig_func')
+    orig_func.return_value = 'fresh'
+    cached_func = mod.cached(timeout=180)(orig_func)
+    generate_key.return_value = 'md5_key'
+    get.return_value = None
 
-    result = cached_func(1)
+    cached_func('test', a=3)
+    setfunc.assert_called_once_with('md5_key', 'fresh', timeout=180)
 
-    assert result == 42
-    test_func.assert_called_once_with(1)
-    cache.__setitem__.assert_called_once_with('unique_key', {'value': 42,
-                                                             'expires': 'now'})
+
+class TestBaseCache(object):
+
+    def test_get_expiry(self, base_cache):
+        assert base_cache.get_expiry(60) > time.time()
+        assert base_cache.get_expiry(None) == 0
+        assert base_cache.get_expiry(0) == 0
+
+    def test_has_expired(self, base_cache):
+        assert not base_cache.has_expired(0)
+        assert not base_cache.has_expired(None)
+        assert not base_cache.has_expired(time.time() + 100)
+        assert base_cache.has_expired(time.time() - 100)
+
+    def test_get_key(self, base_cache):
+        known_md5 = 'f3e993b570e3ec53b3b05df933267e6f'
+        generated_md5 = base_cache.generate_key(1, 2, 'ab', name='something')
+        assert generated_md5 == known_md5
+
+
+class TestInMemoryCache(object):
+
+    @mock.patch.object(mod.InMemoryCache, 'has_expired')
+    def test_get_found(self, has_expired, im_cache):
+        has_expired.return_value = False
+        im_cache._cache['key'] = ('expires', 'data')
+        assert im_cache.get('key') == 'data'
+        has_expired.assert_called_once_with('expires')
+
+    @mock.patch.object(mod.InMemoryCache, 'has_expired')
+    def test_get_found_expired(self, has_expired, im_cache):
+        has_expired.return_value = True
+        im_cache._cache['key'] = ('expires', 'data')
+        assert im_cache.get('key') is None
+        has_expired.assert_called_once_with('expires')
+
+    @mock.patch.object(mod.InMemoryCache, 'has_expired')
+    def test_get_not_found(self, has_expired, im_cache):
+        assert im_cache.get('key') is None
+        assert not has_expired.called
+
+    @mock.patch.object(mod.InMemoryCache, 'get_expiry')
+    def test_set(self, get_expiry, im_cache):
+        timeout = 300
+        get_expiry.return_value = 'expires'
+        im_cache.set('key', 'data', timeout=timeout)
+        get_expiry.assert_called_once_with(timeout)
+        assert im_cache._cache['key'] == ('expires', 'data')
+
+    def test_clear(self, im_cache):
+        im_cache._cache['key'] = 'test'
+        im_cache.clear()
+        assert im_cache._cache == {}
