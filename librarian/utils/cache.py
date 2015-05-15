@@ -67,6 +67,9 @@ class BaseCache(object):
     def set(self, key, value, timeout=None):
         raise NotImplementedError()
 
+    def delete(self, key):
+        raise NotImplementedError()
+
     def clear(self):
         raise NotImplementedError()
 
@@ -109,6 +112,9 @@ class InMemoryCache(BaseCache):
     def set(self, key, value, timeout=None):
         expires = self.get_expiry(timeout)
         self._cache[key] = (expires, value)
+
+    def delete(self, key):
+        self._cache.pop(key, None)
 
     def clear(self):
         self._cache = dict()

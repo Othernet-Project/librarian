@@ -155,3 +155,12 @@ class TestInMemoryCache(object):
         im_cache._cache['key'] = 'test'
         im_cache.clear()
         assert im_cache._cache == {}
+
+    def test_delete(self, im_cache):
+        im_cache._cache['key'] = 'test'
+        im_cache.delete('key')
+        assert im_cache._cache == {}
+        try:
+            im_cache.delete('invalid')
+        except Exception as exc:
+            pytest.fail('Should not raise: {0}'.format(exc))
