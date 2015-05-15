@@ -152,3 +152,22 @@ class MemcachedCache(BaseCache):
 
     def clear(self):
         self._cache.flush_all()
+
+
+def setup(backend, timeout, servers):
+    """Instantiate and return the requested cache backend.
+
+    :param backend:  string: unique backend class identifier, possible values:
+                     "in-memory", "memcached"
+    :param timeout:  default timeout in seconds
+    :param servers:  list / tuple of server addresses
+    """
+    backends = {'in-memory': InMemoryCache,
+                'memcached': MemcachedCache}
+    try:
+        backend_cls = backends[backend]
+    except KeyError:
+        return None  # caching will be disabled
+    else:
+        return backend_cls(default_timeout=timeout,
+                           servers=servers)

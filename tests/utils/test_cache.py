@@ -212,3 +212,24 @@ class TestMemcachedCache(object):
     def test_clear(self, mc_cache):
         mc_cache.clear()
         mc_cache._cache.flush_all.assert_called_once_with()
+
+
+@mock.patch.object(mod, 'MemcachedCache')
+@mock.patch.object(mod, 'InMemoryCache')
+def test_setup(im_cache_cls, mc_cache_cls):
+    im_cache = mock.Mock()
+    im_cache_cls.return_value = im_cache
+    cache = mod.setup('in-memory', 300, ['server'])
+    im_cache_cls.assert_called_once_with(default_timeout=300,
+                                         servers=['server'])
+    assert cache is im_cache
+
+    mc_cache = mock.Mock()
+    mc_cache_cls.return_value = mc_cache
+    cache = mod.setup('memcached', 400, ['server2'])
+    mc_cache_cls.assert_called_once_with(default_timeout=400,
+                                         servers=['server2'])
+    assert cache is mc_cache
+
+    no_cache = mod.setup('invalid', 100, ['server3'])
+    assert no_cache is None
