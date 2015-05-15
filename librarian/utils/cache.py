@@ -43,10 +43,8 @@ def cached(timeout=None):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            try:
-                backend = request.app.cache
-            except AttributeError:
-                # no caching backend installed
+            backend = request.app.cache
+            if backend is None:  # no caching backend installed
                 return func(*args, **kwargs)
 
             prefix = func.__name__
