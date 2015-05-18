@@ -183,9 +183,10 @@ class TestBaseArchive(object):
 
     @mock.patch.object(mod.BaseArchive, 'delete_content_files')
     @mock.patch.object(mod.BaseArchive, 'add_meta_to_db')
+    @mock.patch.object(mod.os, 'remove')
     @mock.patch.object(mod.content, 'get_content_size')
     @mock.patch.object(mod.zipballs, 'extract')
-    def test_process_content_success(self, extract, get_content_size,
+    def test_process_content_success(self, extract, get_content_size, remove,
                                      add_meta_to_db, delete_content_files,
                                      base_archive):
         content_id = 'some_id'
@@ -202,18 +203,21 @@ class TestBaseArchive(object):
         add_meta_to_db.side_effect = mocked_add_meta
         assert base_archive.process_content(content_id, zip_path, meta) == 1
         extract.assert_called_once_with(zip_path, contentdir)
+        remove.assert_called_once_with(zip_path)
         get_content_size.assert_called_once_with(contentdir, content_id)
         assert add_meta_to_db.call_count == 1
         assert not delete_content_files.called
 
     @mock.patch.object(mod.BaseArchive, 'delete_content_files')
     @mock.patch.object(mod.BaseArchive, 'add_meta_to_db')
+    @mock.patch.object(mod.os, 'remove')
     @mock.patch.object(mod.zipballs, 'extract')
-    def test_process_content_fail(self, extract, add_meta_to_db,
+    def test_process_content_fail(self, extract, remove, add_meta_to_db,
                                   delete_content_files, base_archive):
         extract.side_effect = IOError()
         assert base_archive.process_content('some_id', 'zip/path', {}) is False
         delete_content_files.assert_called_once_with('some_id')
+        assert not remove.called
         assert not add_meta_to_db.called
 
     @mock.patch.object(mod.BaseArchive, 'process_content')

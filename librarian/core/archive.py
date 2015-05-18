@@ -258,6 +258,8 @@ class BaseArchive(object):
             self.delete_content_files(content_id)
             return False
         else:
+            # extraction successful, delete zipball
+            os.remove(zip_path)
             # add auto-generated values to metadata before writing into db
             meta['md5'] = content_id
             meta['updated'] = datetime.datetime.now()
@@ -281,7 +283,8 @@ class BaseArchive(object):
     def add_to_archive(self, content_ids):
         """Add the specified newly downloaded content(s) to the library.
         Unpacks zipballs located in `spooldir` into `contentdir` and adds their
-        meta information to the database.
+        meta information to the database. The zipball from `spooldir` will be
+        deleted on successful import.
 
         :param content_ids:  string: a single content id to be added
                              iterable: an iterable of content ids to be added
