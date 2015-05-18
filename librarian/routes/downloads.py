@@ -22,6 +22,9 @@ from ..utils.cache import cached
 from ..utils.core_helpers import open_archive
 
 
+read_meta = cached()(zipballs.validate)
+
+
 @cached()
 def filter_downloads(lang):
     conf = request.app.config
@@ -43,8 +46,7 @@ def filter_downloads(lang):
     for zipball_path, timestamp in zballs:
         logging.debug("Reading zipball: {0}".format(zipball_path))
         try:
-            meta = zipballs.validate_zipball(zipball_path,
-                                             meta_filename=meta_filename)
+            meta = read_meta(zipball_path, meta_filename=meta_filename)
         except zipballs.ValidationError as exc:
             # Zip file is invalid. This means that the file is corrupted or the
             # original file was signed with corrupt data in it. Either way, we
