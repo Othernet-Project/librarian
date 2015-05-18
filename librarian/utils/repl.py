@@ -9,7 +9,10 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import code
+import sys
 import threading
+
+from gevent import fileobject
 
 
 BANNER = """
@@ -29,9 +32,19 @@ To exit the REPL, type exit() or Ctrl-D (Ctrl-Z followed by Enter on Windows).
 """
 
 
+_green_stdin = fileobject.FileObject(sys.stdin)
+_green_stdout = fileobject.FileObject(sys.stdout)
+
+
+def _green_raw_input(prompt):
+    _green_stdout.write(prompt)
+    _green_stdout.flush()
+    return _green_stdin.readline()[:-1]
+
+
 def repl_factory(local, exit_message):
     def repl_starter():
-        code.interact(banner=BANNER, local=local)
+        code.interact(BANNER, _green_raw_input, local=local)
         print(exit_message)
     return repl_starter
 
