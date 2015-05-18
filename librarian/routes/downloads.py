@@ -89,7 +89,7 @@ def list_downloads():
                        pager=paginator,
                        selection=selection,
                        lang=dict(lang=lang),
-                       metadata=paginator.get_items()))
+                       metadata=paginator.items))
     return result
 
 

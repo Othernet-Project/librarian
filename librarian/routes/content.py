@@ -83,7 +83,7 @@ def prepare_content_list(multipage=None):
     # get content list filtered by above parsed filter params
     metas = filter_content(query, lang, tag, multipage)
     pager = Paginator(metas, page, per_page)
-    return dict(metadata=pager.get_items(),
+    return dict(metadata=pager.items,
                 pager=pager,
                 vals=request.params.decode(),
                 query=query,
