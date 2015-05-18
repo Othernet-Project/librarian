@@ -131,6 +131,7 @@ def content_file(content_path, filename):
     return static_file(filename, root=content_root)
 
 
+@cached()
 def content_zipball(content_id):
     """ Serve zipball with specified id """
     content_dir = request.app.config['content.contentdir']
