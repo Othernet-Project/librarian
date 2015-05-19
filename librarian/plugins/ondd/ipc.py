@@ -21,6 +21,7 @@ from bottle_utils.html import yesno
 OUT_ENCODING = 'ascii'
 IN_ENCODING = 'utf8'
 
+C_OFF = 5150  # Frequency offset for C band
 NA_KU_OFF = 10750  # Frequency offset for North America Ku
 UN_LO_OFF = 9750  # Low band offset
 UN_HI_OFF = 10600  # High band offset
@@ -201,6 +202,9 @@ def freq_conv(freq, lnb_type):
     if lnb_type == 'k':
         # NA Ku band LNB
         return freq - NA_KU_OFF
+    if lnb_type == 'c':
+        # C band LNB
+        return freq - C_OFF
     # Universal
     if freq > UN_HI_SW:
         return freq - UN_HI_OFF
@@ -212,7 +216,7 @@ def needs_tone(freq, lnb_type):
 
     Always returns ``True`` for North America Ku band LNBs.
     """
-    if lnb_type == 'k':
+    if lnb_type in ('k', 'c'):
         return True
     return freq > UN_HI_SW
 

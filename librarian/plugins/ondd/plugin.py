@@ -65,6 +65,8 @@ LNB_TYPES = (
     ('u', _('Universal')),
     # Translators, this is a type of LNB
     ('k', _('North America Ku band')),
+    # Translators, this is a type of LNB
+    ('c', _('C band')),
 )
 
 PRESETS = [
