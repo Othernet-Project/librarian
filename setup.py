@@ -110,6 +110,39 @@ class Clean(Command):
         clean_pyc()
 
 
+class Benchmark(Command):
+    description = 'run siege against the specified path'
+    user_options = [('siege-target=', None, 'Target URL'),
+                    ('siege-args=', None, 'Arguments for siege')]
+    default_args = ['-d1', '-r10']
+    default_concurrent = [10, 20, 30, 40]
+
+    def initialize_options(self):
+        self.siege_target = None
+        self.siege_args = None
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        import subprocess
+
+        if not self.siege_target:
+            print('siege-target (target URL) must be specified.')
+            return
+
+        if not self.siege_args:
+            for concurrent in self.default_concurrent:
+                cmd = ['siege',
+                       self.siege_target,
+                       '-c{0}'.format(concurrent)] + self.default_args
+                subprocess.check_call(cmd)
+                print("=" * 80)
+        else:
+            cmd = ['siege', self.siege_target] + self.siege_args.split()
+            subprocess.check_call(cmd)
+
+
 setup(
     name='librarian',
     version=VERSION,
@@ -139,5 +172,6 @@ setup(
         'develop': Develop,
         'sdist': Package,
         'uncache': Clean,
+        'benchmark': Benchmark,
     },
 )
