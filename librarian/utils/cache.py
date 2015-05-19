@@ -10,6 +10,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import functools
 import hashlib
 import time
+import uuid
 
 from bottle import request
 
@@ -49,7 +50,8 @@ def cached(prefix='', timeout=None):
                 return func(*args, **kwargs)
 
             generated = generate_key(func.__name__, *args, **kwargs)
-            key = '{0}{1}'.format(prefix, generated)
+            parsed_prefix = backend.parse_prefix(prefix)
+            key = '{0}{1}'.format(parsed_prefix, generated)
             value = backend.get(key)
             if value is None:
                 # not found in cache, or is expired, recalculate value
@@ -83,6 +85,19 @@ class BaseCache(object):
         raise NotImplementedError()
 
     def clear(self):
+        raise NotImplementedError()
+
+    def parse_prefix(self, prefix):
+        raise NotImplementedError()
+
+    def invalidate(self, prefix):
+        """Invalidates all cached data where the cached `key` starts with the
+        given prefix.
+
+        :param prefix:  the same `prefix` string that was passed to the
+                        `cached` decorator, or basically any string that was
+                        used to prefix keys.
+        """
         raise NotImplementedError()
 
     def get_expiry(self, timeout):
@@ -119,12 +134,22 @@ class InMemoryCache(BaseCache):
     def clear(self):
         self._cache = dict()
 
+    def parse_prefix(self, prefix):
+        return prefix
+
+    def invalidate(self, prefix):
+        for key in self._cache.keys():
+            if key.startswith(prefix):
+                self.delete(key)
+
 
 class MemcachedCache(BaseCache):
     """Memcached based cache backend
 
     :param servers:  list / tuple containing memcache server address(es)
     """
+    prefixes_key = '__prefix__'
+
     def __init__(self, servers, **kwargs):
         super(MemcachedCache, self).__init__(**kwargs)
         try:
@@ -151,6 +176,23 @@ class MemcachedCache(BaseCache):
 
     def clear(self):
         self._cache.flush_all()
+
+    def _new_prefix(self, prefix):
+        prefix_key = '{0}{1}'.format(self.prefixes_key, prefix)
+        new_prefix = '{0}{1}'.format(prefix, uuid.uuid4())
+        self._cache.set(prefix_key, new_prefix, timeout=0)
+        return new_prefix
+
+    def parse_prefix(self, prefix):
+        prefix_key = '{0}{1}'.format(self.prefixes_key, prefix)
+        actual_prefix = self._cache.get(prefix_key)
+        if not actual_prefix:
+            actual_prefix = self._new_prefix(prefix)
+
+        return actual_prefix
+
+    def invalidate(self, prefix):
+        self._new_prefix(prefix)
 
 
 def setup(backend, timeout, servers):
