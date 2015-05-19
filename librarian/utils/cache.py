@@ -11,6 +11,10 @@ import functools
 import hashlib
 import time
 import uuid
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
 
 from bottle import request
 
@@ -120,13 +124,14 @@ class InMemoryCache(BaseCache):
         try:
             (expires, data) = self._cache[key]
             if not self.has_expired(expires):
-                return data
+                return pickle.loads(data)
         except KeyError:
             return None
 
     def set(self, key, value, timeout=None):
         expires = self.get_expiry(timeout)
-        self._cache[key] = (expires, value)
+        pickled_value = pickle.dumps(value, pickle.HIGHEST_PROTOCOL)
+        self._cache[key] = (expires, pickled_value)
 
     def delete(self, key):
         self._cache.pop(key, None)

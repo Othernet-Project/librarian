@@ -176,10 +176,12 @@ class TestBaseCache(object):
 
 class TestInMemoryCache(object):
 
+    @mock.patch.object(mod, 'pickle')
     @mock.patch.object(mod.InMemoryCache, 'has_expired')
-    def test_get_found(self, has_expired, im_cache):
+    def test_get_found(self, has_expired, pickle, im_cache):
         has_expired.return_value = False
         im_cache._cache['key'] = ('expires', 'data')
+        pickle.loads.side_effect = lambda x: x
         assert im_cache.get('key') == 'data'
         has_expired.assert_called_once_with('expires')
 
@@ -195,10 +197,12 @@ class TestInMemoryCache(object):
         assert im_cache.get('key') is None
         assert not has_expired.called
 
+    @mock.patch.object(mod, 'pickle')
     @mock.patch.object(mod.InMemoryCache, 'get_expiry')
-    def test_set(self, get_expiry, im_cache):
+    def test_set(self, get_expiry, pickle, im_cache):
         timeout = 300
         get_expiry.return_value = 'expires'
+        pickle.dumps.side_effect = lambda x, y: x
         im_cache.set('key', 'data', timeout=timeout)
         get_expiry.assert_called_once_with(timeout)
         assert im_cache._cache['key'] == ('expires', 'data')
