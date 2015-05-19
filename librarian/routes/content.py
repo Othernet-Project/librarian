@@ -15,9 +15,7 @@ import shutil
 import logging
 import subprocess
 
-from bottle import (
-    request, mako_view as view, abort, default_app, static_file, redirect,
-    response, mako_template as template)
+from bottle import request, abort, default_app, static_file, redirect, response
 from bottle_utils.ajax import roca_view
 from bottle_utils.common import to_unicode
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
@@ -31,6 +29,7 @@ from ..lib import auth
 from ..lib.paginator import Paginator
 
 from ..utils.cache import cached
+from ..utils.template import template, view
 from ..utils.core_helpers import open_archive, init_filemanager, with_content
 from ..utils.template_helpers import template_helper
 

@@ -16,7 +16,7 @@ import logging
 import datetime
 from os.path import dirname, join
 
-from bottle import mako_view as view, request, static_file
+from bottle import request, static_file
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ...core.archive import Archive
@@ -24,6 +24,7 @@ from ...core.archive import Archive
 from ...lib.lock import global_lock, LockFailureError
 
 from ...utils import migrations, databases
+from ...utils.template import view
 
 from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError

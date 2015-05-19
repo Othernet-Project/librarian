@@ -11,7 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import logging
 import os
 
-import bottle
+from ..utils.template import template
 
 
 class DashboardPlugin(object):
@@ -91,10 +91,10 @@ class DashboardPlugin(object):
         }
         try:
             context.update(self.get_context())
-            return bottle.mako_template(self.get_template(), **context)
+            return template(self.get_template(), **context)
         except Exception:
             logging.exception("Plugin rendering failed: {0}".format(name))
-            return bottle.mako_template(self.plugin_error_template, **context)
+            return template(self.plugin_error_template, **context)
 
     def render_javascript(self):
         html = ''

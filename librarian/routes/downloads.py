@@ -11,7 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import logging
 from datetime import datetime
 
-from bottle import request, mako_view as view, redirect
+from bottle import request, redirect
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
 
 from ..core import metadata
@@ -20,6 +20,7 @@ from ..core import zipballs
 from ..lib.paginator import Paginator
 from ..utils.cache import cached
 from ..utils.core_helpers import open_archive
+from ..utils.template import view
 
 
 read_meta = cached()(zipballs.validate)

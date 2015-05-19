@@ -13,9 +13,10 @@ import stat
 import logging
 
 from fdsend import send_file
-from bottle import request, mako_view as view, abort
+from bottle import request, abort
 
 from ..core import apps
+from ..utils.template import view
 
 
 PREFIX = '/apps'

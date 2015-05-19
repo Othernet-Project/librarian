@@ -8,10 +8,9 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from bottle import mako_view as view
-
 from ..lib import auth
 from ..plugins import DASHBOARD as DASHBOARD_PLUGINS
+from ..utils.template import view
 
 
 @auth.login_required()

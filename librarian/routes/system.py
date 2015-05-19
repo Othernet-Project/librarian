@@ -13,9 +13,10 @@ import logging
 import datetime
 from os.path import dirname, join, basename
 
-from bottle import mako_view as view, request, static_file, abort
+from bottle import request, static_file, abort
 
 from librarian import __version__
+from ..utils.template import view
 from ..utils.template_helpers import template_helper
 
 

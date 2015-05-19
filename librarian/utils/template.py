@@ -44,3 +44,4 @@ class MakoTemplate(bottle.BaseTemplate):
 
 
 template = functools.partial(bottle.template, template_adapter=MakoTemplate)
+view = functools.partial(bottle.view, template_adapter=MakoTemplate)
