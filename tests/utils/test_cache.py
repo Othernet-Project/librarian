@@ -129,6 +129,24 @@ def test_cached_not_found_custom_timeout(request, generate_key, get, setfunc,
     setfunc.assert_called_once_with('md5_key', 'fresh', timeout=180)
 
 
+@mock.patch.object(mod.BaseCache, 'set')
+@mock.patch.object(mod.BaseCache, 'get')
+@mock.patch.object(mod, 'generate_key')
+@mock.patch.object(mod, 'request')
+def test_cached_not_found_custom_prefix(request, generate_key, get, setfunc,
+                                        base_cache):
+    request.app.cache = base_cache
+    orig_func = mock.Mock(__name__='orig_func')
+    orig_func.return_value = 'fresh'
+    cached_func = mod.cached(prefix='test_', timeout=180)(orig_func)
+    generate_key.return_value = 'md5_key'
+    get.return_value = None
+
+    cached_func('test', a=3)
+    get.assert_called_once_with('test_md5_key')
+    setfunc.assert_called_once_with('test_md5_key', 'fresh', timeout=180)
+
+
 class TestBaseCache(object):
 
     def test_get_expiry(self, base_cache):

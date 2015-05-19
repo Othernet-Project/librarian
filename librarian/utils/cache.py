@@ -27,7 +27,7 @@ def generate_key(*args, **kwargs):
     return md5.hexdigest()
 
 
-def cached(timeout=None):
+def cached(prefix='', timeout=None):
     """Decorator that caches return values of functions that it wraps. The
     key is generated from the function's name and the parameters passed to
     it. E.g.:
@@ -38,7 +38,8 @@ def cached(timeout=None):
 
     Cache key in this case is an md5 hash, generated from the combined
     values of: function's name("my_func"), and values of `a`, `b` and in
-    case of keyword arguments both argument name "c" and the value of `c`.
+    case of keyword arguments both argument name "c" and the value of `c`,
+    prefix with the value of the `prefix` keyword argument.
     """
     def decorator(func):
         @functools.wraps(func)
@@ -47,8 +48,8 @@ def cached(timeout=None):
             if backend is None:  # no caching backend installed
                 return func(*args, **kwargs)
 
-            prefix = func.__name__
-            key = generate_key(prefix, *args, **kwargs)
+            generated = generate_key(func.__name__, *args, **kwargs)
+            key = '{0}{1}'.format(prefix, generated)
             value = backend.get(key)
             if value is None:
                 # not found in cache, or is expired, recalculate value
