@@ -4,13 +4,12 @@ import librarian.routes.content as mod
 
 from ..helpers import strip_wrappers
 
-MOD = 'librarian.routes.content'
 
-
-@mock.patch(MOD + '.redirect')
-@mock.patch(MOD + '.i18n_url')
-@mock.patch(MOD + '.open_archive')
-def test_remove(open_archive, i18n_url, redirect):
+@mock.patch.object(mod, 'request')
+@mock.patch.object(mod, 'redirect')
+@mock.patch.object(mod, 'i18n_url')
+@mock.patch.object(mod, 'open_archive')
+def test_remove(open_archive, i18n_url, redirect, request):
     remove_content = strip_wrappers(mod.remove_content)
     i18n_url.side_effect = lambda x, **y: x
 
@@ -22,3 +21,4 @@ def test_remove(open_archive, i18n_url, redirect):
     archive.remove_from_archive.assert_called_once_with(['foo'])
     assert ret is None
     redirect.assert_called_once_with('content:list')
+    request.app.cache.invalidate.assert_called_once_with(prefix='content')

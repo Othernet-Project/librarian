@@ -26,7 +26,7 @@ from ..utils.template import view
 read_meta = cached()(zipballs.validate)
 
 
-@cached()
+@cached(prefix='downloads', timeout=30)
 def filter_downloads(lang):
     conf = request.app.config
     zballs = downloads.get_downloads(conf['content.spooldir'],
@@ -111,10 +111,14 @@ def manage_downloads():
     if action == 'add':
         archive = open_archive()
         archive.add_to_archive(file_list)
+        request.app.cache.invalidate(prefix='content')
     if action == 'delete':
         downloads.remove_downloads(conf['content.spooldir'],
                                    md5s=file_list)
+        request.app.cache.invalidate(prefix='downloads')
     if action == 'deleteall':
         downloads.remove_downloads(conf['content.spooldir'],
                                    extension=conf['content.output_ext'])
+        request.app.cache.invalidate(prefix='downloads')
+
     redirect(i18n_url('downloads:list'))

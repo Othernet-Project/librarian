@@ -43,7 +43,7 @@ def get_content_path(content_id):
     return content.to_path(content_id)
 
 
-@cached()
+@cached(prefix='content')
 def filter_content(query, lang, tag, multipage):
     conf = request.app.config
     archive = open_archive()
@@ -119,6 +119,7 @@ def remove_content(content_id):
     redir_path = i18n_url('content:list')
     archive = open_archive()
     archive.remove_from_archive([content_id])
+    request.app.cache.invalidate(prefix='content')
     redirect(redir_path)
 
 
