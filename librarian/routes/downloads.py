@@ -112,6 +112,7 @@ def manage_downloads():
         archive = open_archive()
         archive.add_to_archive(file_list)
         request.app.cache.invalidate(prefix='content')
+        request.app.cache.invalidate(prefix='downloads')
     if action == 'delete':
         downloads.remove_downloads(conf['content.spooldir'],
                                    md5s=file_list)
