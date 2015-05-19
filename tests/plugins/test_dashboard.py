@@ -3,7 +3,7 @@ import mock
 import librarian.plugins.dashboard as mod
 
 
-@mock.patch('bottle.mako_template')
+@mock.patch.object(mod, 'template')
 @mock.patch.object(mod.DashboardPlugin, 'get_context')
 def test_plugin_context_error(get_context, mako_template):
     get_context.side_effect = ValueError('test')
@@ -21,7 +21,7 @@ def test_plugin_context_error(get_context, mako_template):
     )
 
 
-@mock.patch('bottle.mako_template')
+@mock.patch.object(mod, 'template')
 def test_plugin_render_error(mako_template):
     def error_on_normal_call(template_name, **kwargs):
         if template_name != mod.DashboardPlugin.plugin_error_template:

@@ -221,7 +221,7 @@ def test_start_next_step_wizard_finished(w_next, wizard_finished, request,
 
 
 @mock.patch.object(mod, 'request')
-@mock.patch.object(mod, 'template')
+@mock.patch.object(mod.Wizard, 'template_func')
 @mock.patch.object(mod.Wizard, 'next')
 def test_start_next_step_has_result(w_next, template, request, wizard):
     request.params = {'step': 1}
@@ -276,7 +276,7 @@ def test_process_current_step_success(save_state, request, redirect):
     save_state.assert_called_once_with()
 
 
-@mock.patch.object(mod, 'template')
+@mock.patch.object(mod.Wizard, 'template_func')
 def test_process_current_step_has_error(template, wizard):
     mocked_handler = mock.Mock()
     mocked_handler.return_value = {'successful': False, 'errors': {'_': '1'}}
