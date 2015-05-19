@@ -21,6 +21,10 @@ from bottle_utils.html import yesno
 OUT_ENCODING = 'ascii'
 IN_ENCODING = 'utf8'
 
+KU_BAND = 'k'
+C_BAND = 'c'
+UNIVERSAL = 'u'
+
 C_OFF = 5150  # Frequency offset for C band
 NA_KU_OFF = 10750  # Frequency offset for North America Ku
 UN_LO_OFF = 9750  # Low band offset
@@ -190,8 +194,10 @@ def get_file_list():
 def freq_conv(freq, lnb_type):
     """ Converts transponder frequency to L-band frequency
 
-    The conversion formula requires the LNB type. The type can be either `'k'`
-    for North America Ku band LNB or `'u'` for Universal LNB.
+    The conversion formula requires the LNB type. The type can be either:
+    `KU_BAND` or `'k'` for North America Ku band LNB
+    `C_BAND` or `'c'` for C band LNB
+    `UNIVERSAL` or `'u'` for Universal LNB.
 
     Example:
 
@@ -199,10 +205,10 @@ def freq_conv(freq, lnb_type):
         1721
 
     """
-    if lnb_type == 'k':
+    if lnb_type == KU_BAND:
         # NA Ku band LNB
         return freq - NA_KU_OFF
-    if lnb_type == 'c':
+    if lnb_type == C_BAND:
         # C band LNB
         return freq - C_OFF
     # Universal
@@ -214,9 +220,9 @@ def freq_conv(freq, lnb_type):
 def needs_tone(freq, lnb_type):
     """ Whether LNB needs a 22KHz tone
 
-    Always returns ``True`` for North America Ku band LNBs.
+    Always returns ``True`` for C band and North America Ku band LNBs.
     """
-    if lnb_type in ('k', 'c'):
+    if lnb_type in (KU_BAND, C_BAND):
         return True
     return freq > UN_HI_SW
 
