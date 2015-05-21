@@ -66,6 +66,7 @@ class Field(object):
         self.value = value
         self.processed_value = None
         self._name = None
+        self.attrs = kwargs
 
     def __str__(self):
         """Calls renderer function"""
@@ -138,7 +139,8 @@ class StringField(Field):
         return html.vinput(self.name,
                            {self.name: self.value},
                            _type='text',
-                           _id=self._id_prefix + self.name)
+                           _id=self._id_prefix + self.name,
+                           **self.attrs)
 
 
 class PasswordField(StringField):
@@ -147,7 +149,8 @@ class PasswordField(StringField):
         return html.vinput(self.name,
                            {},
                            _type='password',
-                           _id=self._id_prefix + self.name)
+                           _id=self._id_prefix + self.name,
+                           **self.attrs)
 
 
 class TextAreaField(StringField):
@@ -155,7 +158,8 @@ class TextAreaField(StringField):
     def render(self):
         return html.varea(self.name,
                           {self.name: self.value},
-                          _id=self._id_prefix + self.name)
+                          _id=self._id_prefix + self.name,
+                          **self.attrs)
 
 
 class IntegerField(Field):
@@ -170,7 +174,8 @@ class IntegerField(Field):
         return html.vinput(self.name,
                            {self.name: self.value},
                            _type='text',
-                           _id=self._id_prefix + self.name)
+                           _id=self._id_prefix + self.name,
+                           **self.attrs)
 
 
 class FloatField(Field):
@@ -185,7 +190,8 @@ class FloatField(Field):
         return html.vinput(self.name,
                            {self.name: self.value},
                            _type='text',
-                           _id=self._id_prefix + self.name)
+                           _id=self._id_prefix + self.name,
+                           **self.attrs)
 
 
 class BooleanField(Field):
@@ -210,7 +216,8 @@ class BooleanField(Field):
                               self.expected_value,
                               data,
                               default=self.default,
-                              _id=self._id_prefix + self.name)
+                              _id=self._id_prefix + self.name,
+                              **self.attrs)
 
 
 class SelectField(Field):
@@ -234,7 +241,9 @@ class SelectField(Field):
     def render(self):
         return html.vselect(self.name,
                             self.choices,
-                            {self.name: self.value})
+                            {self.name: self.value},
+                            _id=self._id_prefix + self.name,
+                            **self.attrs)
 
 
 class Form(object):
