@@ -11,6 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from bottle_utils import html
 from bottle_utils.common import basestring, unicode
 from bottle_utils.i18n import lazy_gettext as _
+from bottle_utils.lazy import Lazy
 
 
 class FieldUnboundError(Exception):
@@ -84,13 +85,15 @@ class Field(object):
 
     def bind(self, field_name):
         attrs = {}
+        ignore = ('name', 'attrs')
         for attr_name in dir(self):
-            if not attr_name.startswith('__') and attr_name != 'name':
+            if not attr_name.startswith('_') and attr_name not in ignore:
                 value = getattr(self, attr_name)
-                if not callable(value):
+                if not callable(value) or isinstance(value, Lazy):
                     attrs[attr_name] = value
 
-        instance = self.__class__(**attrs)
+        attrs.update(self.attrs)
+        instance = type(self)(**attrs)
         instance._name = field_name
         instance.is_value_bound = False
         return instance
