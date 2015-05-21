@@ -11,7 +11,6 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from bottle_utils import html
 from bottle_utils.common import basestring, unicode
 from bottle_utils.i18n import lazy_gettext as _
-from bottle_utils.lazy import Lazy
 
 
 class FieldUnboundError(Exception):
@@ -59,6 +58,7 @@ class Required(Validator):
 
 class Field(object):
     _id_prefix = 'id_'
+    copy_attrs = ('label', 'validators', 'value')
 
     def __init__(self, label, validators=None, value=None, **kwargs):
         self.label = label
@@ -67,7 +67,7 @@ class Field(object):
         self.value = value
         self.processed_value = None
         self._name = None
-        self.attrs = kwargs
+        self.kwargs = kwargs
 
     def __str__(self):
         """Calls renderer function"""
@@ -85,14 +85,10 @@ class Field(object):
 
     def bind(self, field_name):
         attrs = {}
-        ignore = ('name', 'attrs')
-        for attr_name in dir(self):
-            if not attr_name.startswith('__') and attr_name not in ignore:
-                value = getattr(self, attr_name)
-                if not callable(value) or isinstance(value, Lazy):
-                    attrs[attr_name] = value
+        for attr_name in self.copy_attrs:
+            attrs[attr_name] = getattr(self, attr_name)
 
-        attrs.update(self.attrs)
+        attrs.update(self.kwargs)
         instance = type(self)(**attrs)
         instance._name = field_name
         instance.is_value_bound = False
@@ -139,6 +135,7 @@ class StringField(Field):
         return unicode(value)
 
     def render(self):
+        print(self.attrs)
         return html.vinput(self.name,
                            {self.name: self.value},
                            _type='text',
@@ -198,6 +195,7 @@ class FloatField(Field):
 
 
 class BooleanField(Field):
+    copy_attrs = Field.copy_attrs + ('default',)
 
     def __init__(self, label, validators=None, value=None, default=False,
                  **kwargs):
@@ -224,6 +222,7 @@ class BooleanField(Field):
 
 
 class SelectField(Field):
+    copy_attrs = Field.copy_attrs + ('choices',)
 
     def __init__(self, label, validators=None, value=None, choices=None,
                  **kwargs):
