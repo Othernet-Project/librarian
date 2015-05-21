@@ -357,11 +357,12 @@ class Form(object):
             # holding validated / processed data
             self.processed_data[field_name] = field.processed_value
 
-        # run form level validation
-        try:
-            self.validate()
-        except ValidationError as exc:
-            self._add_error(self, exc)
+        # run form level validation only if there were no field errors detected
+        if not self._has_error:
+            try:
+                self.validate()
+            except ValidationError as exc:
+                self._add_error(self, exc)
 
         return not self._has_error
 
