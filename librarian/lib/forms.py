@@ -68,11 +68,11 @@ class Field(object):
         self._name = None
 
     def __str__(self):
-        """Calls rendered function"""
+        """Calls renderer function"""
         return self.render()
 
     def __unicode__(self):
-        """Calls rendered function"""
+        """Calls renderer function"""
         return self.render()
 
     @property
