@@ -87,7 +87,7 @@ class Field(object):
         attrs = {}
         ignore = ('name', 'attrs')
         for attr_name in dir(self):
-            if not attr_name.startswith('_') and attr_name not in ignore:
+            if not attr_name.startswith('__') and attr_name not in ignore:
                 value = getattr(self, attr_name)
                 if not callable(value) or isinstance(value, Lazy):
                     attrs[attr_name] = value
