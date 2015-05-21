@@ -15,8 +15,8 @@ ${h.form('post')}
     ${form.error}
     % endif
 
+    ${th.csrf_tag()}
     <input type="hidden" name="next" value="${next_path}">
-
     <p>
         ## Translators, used as label for a login field
         <label for="username">${_('Username:')}</label>
