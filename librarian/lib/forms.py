@@ -271,7 +271,8 @@ class Form(object):
         :param data:     Dict-like object containing the form data to be
                          validated, or the initial values of a new form
         """
-        self.errors = {}
+        self._has_error = False
+        self.error = None
         self.processed_data = {}
 
         self._bind(data)
@@ -293,11 +294,10 @@ class Form(object):
         return dict((name, getattr(self, name)) for name in dir(self)
                     if name != 'fields' and is_form_field(name))
 
-    def _add_error(self, field_name, error):
+    def _add_error(self, field, error):
         # if the error is from one of the processors, bind it to the field too
-        if field_name != self._form_name:
-            self.fields[field_name].error = error
-        self.errors[field_name] = error
+        field.error = error
+        self._has_error = True
 
     def _run_processor(self, prefix, field_name, value):
         processor_name = prefix + field_name
@@ -325,11 +325,11 @@ class Form(object):
                     field.value
                 )
             except ValidationError as exc:
-                self._add_error(field_name, exc)
+                self._add_error(field, exc)
                 continue
             # perform individual field validation
             if not field.is_valid():
-                self._add_error(field_name, field.error)
+                self._add_error(field, field.error)
                 continue
             # run post-processor on processed value, if defined
             try:
@@ -339,7 +339,7 @@ class Form(object):
                     field.processed_value
                 )
             except ValidationError as exc:
-                self._add_error(field_name, exc)
+                self._add_error(field, exc)
                 continue
             # if field level validations passed, add the value to a dictionary
             # holding validated / processed data
@@ -349,9 +349,9 @@ class Form(object):
         try:
             self.validate()
         except ValidationError as exc:
-            self._add_error(self._form_name, exc)
+            self._add_error(self, exc)
 
-        return not self.errors
+        return not self._has_error
 
     def validate(self):
         """Perform form-level validation, which can check fields dependent on
