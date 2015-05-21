@@ -38,6 +38,26 @@ class ValidationError(Exception):
         return html.SPAN(html.html_escape(msg), _class=html.ERR_CLS)
 
 
+class Label(object):
+
+    def __init__(self, text, for_element):
+        self.text = text
+        self.for_element = for_element
+
+    def __str__(self):
+        """Calls renderer function"""
+        return self.render()
+
+    def __unicode__(self):
+        """Calls renderer function"""
+        return self.render()
+
+    def render(self):
+        return html.tag('label',
+                        html.html_escape(self.text),
+                        _for=self.for_element)
+
+
 class Validator(object):
 
     def __call__(self, data):
@@ -90,6 +110,7 @@ class Field(object):
 
         attrs.update(self.kwargs)
         instance = type(self)(**attrs)
+        instance.label = Label(instance.label, field_name)
         instance._name = field_name
         instance.is_value_bound = False
         return instance
