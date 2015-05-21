@@ -25,6 +25,18 @@ class ValidationError(Exception):
         self.params = params
         super(ValidationError, self).__init__(message)
 
+    def __str__(self):
+        """Calls renderer function"""
+        return self.render()
+
+    def __unicode__(self):
+        """Calls renderer function"""
+        return self.render()
+
+    def render(self):
+        msg = self.message.format(**self.params)
+        return html.SPAN(html.html_escape(msg), _class=html.ERR_CLS)
+
 
 class Validator(object):
 
