@@ -58,7 +58,7 @@ class Required(Validator):
 
 class Field(object):
     _id_prefix = 'id_'
-    copy_attrs = ('label', 'validators', 'value')
+    init_args = ('label', 'validators', 'value')
 
     def __init__(self, label, validators=None, value=None, **kwargs):
         self.label = label
@@ -85,7 +85,7 @@ class Field(object):
 
     def bind(self, field_name):
         attrs = {}
-        for attr_name in self.copy_attrs:
+        for attr_name in self.init_args:
             attrs[attr_name] = getattr(self, attr_name)
 
         attrs.update(self.kwargs)
@@ -194,7 +194,7 @@ class FloatField(Field):
 
 
 class BooleanField(Field):
-    copy_attrs = Field.copy_attrs + ('default',)
+    init_args = ('label', 'validators', 'value', 'default')
 
     def __init__(self, label, validators=None, value=None, default=False,
                  **kwargs):
@@ -221,7 +221,7 @@ class BooleanField(Field):
 
 
 class SelectField(Field):
-    copy_attrs = Field.copy_attrs + ('choices',)
+    init_args = ('label', 'validators', 'value', 'choices')
 
     def __init__(self, label, validators=None, value=None, choices=None,
                  **kwargs):
