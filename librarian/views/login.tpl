@@ -18,16 +18,14 @@ ${h.form('post')}
     ${th.csrf_tag()}
     <input type="hidden" name="next" value="${next_path}">
     <p>
-        ## Translators, used as label for a login field
-        <label for="username">${_('Username:')}</label>
+        ${form.username.label}
         ${form.username}
         % if form.username.error:
         ${form.username.error}
         % endif
     </p>
     <p>
-        ## Translators, used as label for a login field
-        <label for="password">${_('Password:')}</label>
+        ${form.password.label}
         ${form.password}
         % if form.password.error:
         ${form.password.error}
