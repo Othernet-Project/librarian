@@ -53,7 +53,7 @@ class TestField(object):
 
     def test_bind(self):
         class CustomField(mod.Field):
-            copy_attrs = mod.Field.copy_attrs + ('something',)
+            init_args = ('label', 'validators', 'something',)
 
             def __init__(self, label, validators, something, **kwargs):
                 self.something = something
