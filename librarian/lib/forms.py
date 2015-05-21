@@ -135,12 +135,11 @@ class StringField(Field):
         return unicode(value)
 
     def render(self):
-        print(self.attrs)
         return html.vinput(self.name,
                            {self.name: self.value},
                            _type='text',
                            _id=self._id_prefix + self.name,
-                           **self.attrs)
+                           **self.kwargs)
 
 
 class PasswordField(StringField):
@@ -150,7 +149,7 @@ class PasswordField(StringField):
                            {},
                            _type='password',
                            _id=self._id_prefix + self.name,
-                           **self.attrs)
+                           **self.kwargs)
 
 
 class TextAreaField(StringField):
@@ -159,7 +158,7 @@ class TextAreaField(StringField):
         return html.varea(self.name,
                           {self.name: self.value},
                           _id=self._id_prefix + self.name,
-                          **self.attrs)
+                          **self.kwargs)
 
 
 class IntegerField(Field):
@@ -175,7 +174,7 @@ class IntegerField(Field):
                            {self.name: self.value},
                            _type='text',
                            _id=self._id_prefix + self.name,
-                           **self.attrs)
+                           **self.kwargs)
 
 
 class FloatField(Field):
@@ -191,7 +190,7 @@ class FloatField(Field):
                            {self.name: self.value},
                            _type='text',
                            _id=self._id_prefix + self.name,
-                           **self.attrs)
+                           **self.kwargs)
 
 
 class BooleanField(Field):
@@ -218,7 +217,7 @@ class BooleanField(Field):
                               data,
                               default=self.default,
                               _id=self._id_prefix + self.name,
-                              **self.attrs)
+                              **self.kwargs)
 
 
 class SelectField(Field):
@@ -245,7 +244,7 @@ class SelectField(Field):
                             self.choices,
                             {self.name: self.value},
                             _id=self._id_prefix + self.name,
-                            **self.attrs)
+                            **self.kwargs)
 
 
 class Form(object):
