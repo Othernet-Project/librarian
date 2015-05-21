@@ -9,10 +9,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 from bottle import mako_view as view, request
-from bottle_utils.i18n import lazy_gettext as _, i18n_path
+from bottle_utils.i18n import i18n_path
 
-from ..lib import auth
-from ..lib.validate import nonempty
+from ..forms.auth import LoginForm
 from ..utils.http import http_redirect
 from ..utils.template_helpers import template_helper
 
@@ -22,30 +21,20 @@ def is_authenticated():
     return not request.no_auth and request.user.is_authenticated
 
 
-@view('login', vals={}, errors={})
+@view('login')
 def show_login_form():
-    return dict(next_path=request.params.get('next', '/'))
+    return dict(form=LoginForm(), next_path=request.params.get('next', '/'))
 
 
 @view('login')
 def login():
-    errors = {}
-    next_path = request.forms.get('next', '/')
+    next_path = request.params.get('next', '/')
 
-    # Translators, error message shown when user does not supply username
-    username = nonempty('username', _('Type in your username'), errors, True)
+    form = LoginForm(request.params)
+    if form.is_valid():
+        return http_redirect(i18n_path(next_path))
 
-    # Translators, error message shown when user does not supply password
-    password = nonempty('password', _('Type in your password'), errors)
-
-    if errors:
-        return dict(next_path=next_path, errors=errors, vals=request.forms)
-
-    if not auth.login_user(username, password):
-        errors['_'] = _("Please enter the correct username and password.")
-        return dict(next_path=next_path, errors=errors, vals=request.forms)
-
-    return http_redirect(i18n_path(next_path))
+    return dict(next_path=next_path, form=form)
 
 
 def logout():
