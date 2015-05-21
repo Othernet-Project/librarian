@@ -237,7 +237,7 @@ class TestForm(object):
             assert not form.is_valid()
 
         mocked_field.is_valid.assert_called_once_with()
-        assert form.errors == [('field_name', error)]
+        assert form.errors == {'field_name': error}
 
     def test_is_valid_preprocessor_fail(self, form_cls):
         preprocessor = mock.Mock()
@@ -253,7 +253,7 @@ class TestForm(object):
         with mock.patch.object(mod.Form, 'fields', fields_dict):
             assert not form.is_valid()
 
-        assert form.errors == [('field_name', error)]
+        assert form.errors == {'field_name': error}
         assert not mocked_field.is_valid.called
         preprocessor.assert_called_once_with(3)
 
@@ -271,7 +271,7 @@ class TestForm(object):
         with mock.patch.object(mod.Form, 'fields', fields_dict):
             assert not form.is_valid()
 
-        assert form.errors == [('field_name', error)]
+        assert form.errors == {'field_name': error}
         mocked_field.is_valid.assert_called_once_with()
         postprocessor.assert_called_once_with(3)
 
@@ -285,7 +285,7 @@ class TestForm(object):
             assert not form.is_valid()
 
         validate.assert_called_once_with()
-        assert form.errors == [('_', error)]
+        assert form.errors == {'_': error}
 
 
 @mock.patch.object(mod, '_')

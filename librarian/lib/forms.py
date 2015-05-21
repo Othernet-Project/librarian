@@ -262,7 +262,7 @@ class Form(object):
         :param data:     Dict-like object containing the form data to be
                          validated, or the initial values of a new form
         """
-        self.errors = []
+        self.errors = {}
         self.processed_data = {}
 
         self._bind(data)
@@ -284,8 +284,11 @@ class Form(object):
         return dict((name, getattr(self, name)) for name in dir(self)
                     if name != 'fields' and is_form_field(name))
 
-    def _add_error(self, field_name, info):
-        self.errors.append((field_name, info))
+    def _add_error(self, field_name, error):
+        # if the error is from one of the processors, bind it to the field too
+        if field_name != self._form_name:
+            self.fields[field_name].error = error
+        self.errors[field_name] = error
 
     def _run_processor(self, prefix, field_name, value):
         processor_name = prefix + field_name
