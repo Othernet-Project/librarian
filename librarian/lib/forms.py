@@ -141,6 +141,15 @@ class StringField(Field):
                            _id=self._id_prefix + self.name)
 
 
+class PasswordField(StringField):
+
+    def render(self):
+        return html.vinput(self.name,
+                           {},
+                           _type='password',
+                           _id=self._id_prefix + self.name)
+
+
 class TextAreaField(StringField):
 
     def render(self):
