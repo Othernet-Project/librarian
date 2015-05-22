@@ -17,9 +17,9 @@ from bottle import request, mako_template as template
 from bottle_utils.i18n import lazy_gettext as _
 from dateutil.parser import parse as parse_datetime
 
+from ..forms.setup import SetupLanguageForm
 from ..lib import auth
 from ..lib import wizard
-from ..utils.lang import UI_LOCALES, DEFAULT_LOCALE
 
 
 DATETIME_KEYS = ('date', 'hour', 'minute')
@@ -85,19 +85,17 @@ setup_wizard = SetupWizard(name='setup')
 @setup_wizard.register_step('language', template='setup/step_language.tpl',
                             method='GET', index=1)
 def setup_language_form():
-    return dict(errors={}, language={'language': DEFAULT_LOCALE})
+    return dict(form=SetupLanguageForm())
 
 
 @setup_wizard.register_step('language', template='setup/step_language.tpl',
                             method='POST', index=1)
 def setup_language():
-    lang = request.forms.get('language')
-    if lang not in UI_LOCALES:
-        errors = {'language': _('Please select a valid language.')}
-        return dict(successful=False,
-                    errors=errors,
-                    language={'language': DEFAULT_LOCALE})
+    form = SetupLanguageForm(request.forms)
+    if not form.is_valid():
+        return dict(successful=False, form=form)
 
+    lang = form.processed_data['language']
     request.app.setup.append({'language': lang})
     return dict(successful=True, language=lang)
 
