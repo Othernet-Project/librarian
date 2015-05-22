@@ -27,7 +27,7 @@ class TestField(object):
 
     @mock.patch.object(mod.Field, 'render')
     def test___str__(self, render):
-        field = mod.Field('label')
+        field = mod.Field('label', name='alreadybound')
         render.return_value = 'html'
         assert str(field) == 'html'
         render.assert_called_once_with()
@@ -36,25 +36,13 @@ class TestField(object):
     def test___unicode__(self, render):
         if 'unicode' not in globals():
             unicode = str
-        field = mod.Field('label')
+        field = mod.Field('label', name='alreadybound')
         render.return_value = 'html'
         assert unicode(field) == 'html'
         render.assert_called_once_with()
 
-    def test_name_success(self):
-        field = mod.Field('label')
-        field._name = 'set'
-        assert field.name == 'set'
-
-    def test_name_fail(self):
-        field = mod.Field('label')
-        with pytest.raises(mod.FieldUnboundError):
-            field.name
-
     def test_bind(self):
         class CustomField(mod.Field):
-            init_args = ('label', 'validators', 'something',)
-
             def __init__(self, label, validators, something, **kwargs):
                 self.something = something
                 super(CustomField, self).__init__(label, validators, **kwargs)
@@ -67,13 +55,13 @@ class TestField(object):
         assert bound_field2.name == 'field2'
         assert not bound_field1.is_value_bound
         assert not bound_field2.is_value_bound
-        assert field1.something == 'this'
-        assert field2.something == 'that'
+        assert bound_field1.something == 'this'
+        assert bound_field2.something == 'that'
         bound_field1.value = 'test'
         assert bound_field2.value is None
 
     def test_bind_value(self):
-        field = mod.Field('test')
+        field = mod.Field('test', name='alreadybound')
         field.bind_value('val')
         assert field.is_value_bound
         assert field.value == 'val'
@@ -82,7 +70,7 @@ class TestField(object):
     def test_is_valid_parse_fail(self, parse):
         value = 42
         parse.side_effect = ValueError('test')
-        field = mod.Field('label')
+        field = mod.Field('label', name='alreadybound')
         field.bind_value(value)
         assert not field.is_valid()
         assert isinstance(field.error, mod.ValidationError)
@@ -92,7 +80,7 @@ class TestField(object):
     @mock.patch.object(mod.Field, 'parse')
     def test_is_valid_no_validators(self, parse):
         parse.side_effect = lambda x: x
-        field = mod.Field('label')
+        field = mod.Field('label', name='alreadybound')
         field.bind_value('test')
         assert field.is_valid()
 
@@ -100,7 +88,9 @@ class TestField(object):
     def test_is_valid_validator_success(self, parse):
         parse.side_effect = lambda x: x
         mocked_validator = mock.Mock()
-        field = mod.Field('label', validators=[mocked_validator])
+        field = mod.Field('label',
+                          name='alreadybound',
+                          validators=[mocked_validator])
         field.bind_value('test')
         assert field.is_valid()
         mocked_validator.assert_called_once_with('test')
@@ -111,7 +101,9 @@ class TestField(object):
         mocked_validator = mock.Mock()
         error = mod.ValidationError('failure', {})
         mocked_validator.side_effect = error
-        field = mod.Field('label', validators=[mocked_validator])
+        field = mod.Field('label',
+                          name='alreadybound',
+                          validators=[mocked_validator])
         field.bind_value('test')
         assert not field.is_valid()
         mocked_validator.assert_called_once_with('test')
@@ -121,12 +113,13 @@ class TestField(object):
 class TestBooleanFieldIntegration(object):
 
     def test_is_valid(self):
-        field = mod.BooleanField('label', value='val')
+        field = mod.BooleanField('label', value='val', name='alreadybound')
         for val in (None, '', 'another', 'val'):
             field.bind_value(val)
             assert field.is_valid()
 
         field2 = mod.BooleanField('label',
+                                  name='alreadybound',
                                   value='val',
                                   validators=[mod.Required()])
         field2.bind_value(None)
@@ -152,7 +145,7 @@ class TestSelectFieldIntegration(object):
             (1, 'first'),
             (2, 'second')
         )
-        field = mod.SelectField('label', choices=choices)
+        field = mod.SelectField('label', name='alreadybound', choices=choices)
 
         field.bind_value(None)
         assert field.is_valid()
@@ -164,6 +157,7 @@ class TestSelectFieldIntegration(object):
         assert not field.is_valid()
 
         field2 = mod.SelectField('label',
+                                 name='alreadybound',
                                  choices=choices,
                                  validators=[mod.Required()])
 
@@ -190,7 +184,7 @@ def form_cls():
 class TestForm(object):
 
     @mock.patch.object(mod.Field, 'bind_value')
-    @mock.patch.object(mod.Field, 'bind')
+    @mock.patch.object(mod.DormantField, 'bind')
     def test__bind(self, bind, bind_value, form_cls):
         bind.side_effect = lambda x: x
         form = form_cls()

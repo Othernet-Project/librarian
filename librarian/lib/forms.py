@@ -76,17 +76,35 @@ class Required(Validator):
             raise ValidationError(_("This field is required."), {})
 
 
+class DormantField(object):
+
+    def __init__(self, field_cls, args, kwargs):
+        self.field_cls = field_cls
+        self.args = args
+        self.kwargs = kwargs
+
+    def bind(self, name):
+        return self.field_cls(name=name, *self.args, **self.kwargs)
+
+
 class Field(object):
     _id_prefix = 'id_'
-    init_args = ('label', 'validators', 'value')
+    _label_cls = Label
 
-    def __init__(self, label, validators=None, value=None, **kwargs):
-        self.label = label
+    def __new__(cls, *args, **kwargs):
+        if 'name' in kwargs:
+            return super(Field, cls).__new__(cls)
+        return DormantField(cls, args, kwargs)
+
+    def __init__(self, label, validators=None, value=None, name=None,
+                 **kwargs):
+        self.name = name
+        self.label = self._label_cls(label, name)
         self.validators = validators or []
-        self.error = None
         self.value = value
         self.processed_value = None
-        self._name = None
+        self.is_value_bound = False
+        self.error = None
         self.kwargs = kwargs
 
     def __str__(self):
@@ -96,24 +114,6 @@ class Field(object):
     def __unicode__(self):
         """Calls renderer function"""
         return self.render()
-
-    @property
-    def name(self):
-        if self._name is None:
-            raise FieldUnboundError()
-        return self._name
-
-    def bind(self, field_name):
-        attrs = {}
-        for attr_name in self.init_args:
-            attrs[attr_name] = getattr(self, attr_name)
-
-        attrs.update(self.kwargs)
-        instance = type(self)(**attrs)
-        instance.label = Label(instance.label, field_name)
-        instance._name = field_name
-        instance.is_value_bound = False
-        return instance
 
     def bind_value(self, value):
         self.value = value
@@ -215,7 +215,6 @@ class FloatField(Field):
 
 
 class BooleanField(Field):
-    init_args = ('label', 'validators', 'value', 'default')
 
     def __init__(self, label, validators=None, value=None, default=False,
                  **kwargs):
@@ -242,7 +241,6 @@ class BooleanField(Field):
 
 
 class SelectField(Field):
-    init_args = ('label', 'validators', 'value', 'choices')
 
     def __init__(self, label, validators=None, value=None, choices=None,
                  **kwargs):
@@ -310,8 +308,8 @@ class Form(object):
 
     def _bind(self, data):
         """Binds field names and values to the field instances."""
-        for field_name, field in self.fields.items():
-            field_instance = field.bind(field_name)
+        for field_name, dormant_field in self.fields.items():
+            field_instance = dormant_field.bind(field_name)
             setattr(self, field_name, field_instance)
             if data is not None:
                 field_instance.bind_value(data.get(field_name))
@@ -321,7 +319,8 @@ class Form(object):
         """Returns a dictionary of all the fields found on the form instance.
         The return value is never cached so dynamically adding new fields to
         the form is allowed."""
-        is_form_field = lambda name: isinstance(getattr(self, name), Field)
+        types = (Field, DormantField)
+        is_form_field = lambda name: isinstance(getattr(self, name), types)
         return dict((name, getattr(self, name)) for name in dir(self)
                     if name != 'fields' and is_form_field(name))
 
