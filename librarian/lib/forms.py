@@ -8,6 +8,8 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import dateutil.parser
+
 from bottle_utils import html
 from bottle_utils.common import basestring, unicode
 from bottle_utils.i18n import lazy_gettext as _
@@ -69,6 +71,18 @@ class Required(Validator):
     def validate(self, data):
         if not data or isinstance(data, basestring) and not data.strip():
             raise ValidationError(_("This field is required."), {})
+
+
+class DateValidator(Validator):
+
+    def validate(self, value):
+        try:
+            return dateutil.parser.parse(value)
+        except ValueError as exc:
+            raise ValidationError(_("Invalid date: {0}".format(exc)),
+                                  {'value': value})
+        except TypeError as exc:
+            raise ValidationError(_("Invalid input."), {'value': value})
 
 
 class DormantField(object):
@@ -175,6 +189,16 @@ class TextAreaField(StringField):
                           {self.name: self.value},
                           _id=self._id_prefix + self.name,
                           **self.kwargs)
+
+
+class DateField(StringField):
+
+    def __init__(self, label, validators=None, value=None, **kwargs):
+        validators = [DateValidator()] + list(validators or [])
+        super(DateField, self).__init__(label,
+                                        validators=validators,
+                                        value=value,
+                                        **kwargs)
 
 
 class IntegerField(Field):
