@@ -42,7 +42,7 @@ class AppInfo(object):
 
 def get_app_info(path):
     try:
-        metadata, info = zipballs.get_file(path, 'app.json')
+        info = zipballs.get_file(path, 'app.json')
     except zipballs.ValidationError:
         raise MetadataError('Could not extract metadata')
     try:
