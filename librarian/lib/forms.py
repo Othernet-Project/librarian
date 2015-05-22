@@ -13,11 +13,6 @@ from bottle_utils.common import basestring, unicode
 from bottle_utils.i18n import lazy_gettext as _
 
 
-class FieldUnboundError(Exception):
-    """Exception raised when a form field has no name assigned to it"""
-    pass
-
-
 class ValidationError(Exception):
 
     def __init__(self, message, params):
