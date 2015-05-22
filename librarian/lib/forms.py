@@ -110,7 +110,7 @@ class Field(object):
         self.name = name
         self.label = self._label_cls(label, name)
         self.validators = validators or []
-        self.value = value
+        self.value = value() if callable(value) else value
         self.processed_value = None
         self.is_value_bound = False
         self.error = None
