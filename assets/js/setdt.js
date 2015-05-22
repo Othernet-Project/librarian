@@ -9,7 +9,7 @@
     };
 
     self.initDatePicker = function () {
-        var dateStr = $('#date').val(),
+        var dateStr = $('#id_date').val(),
             picker = new Pikaday({
                 field: document.getElementById('datepicker'),
                 container: document.getElementById('pikaday-container'),
@@ -17,7 +17,7 @@
                     var sDate = '{0}-{1}-{2}'.replace('{0}', date.getFullYear())
                                              .replace('{1}', self.zeroPad(date.getMonth() + 1, 2))
                                              .replace('{2}', self.zeroPad(date.getDate(), 2));
-                    $('#date').val(sDate);
+                    $('#id_date').val(sDate);
                 },
                 onClose: function () {
                     picker.setDate(picker.toString());
@@ -94,7 +94,7 @@
 
     $('.js-error').show();
     self.timezoneContainer = $('.timezone-container');
-    self.timezone = $('#timezone');
+    self.timezone = $('#id_timezone');
     self.tzOptions = self.timezone.find('option');
     self.initTimezoneSelector();
 }(this.jQuery, this.Pikaday));
