@@ -31,3 +31,25 @@ class LoginForm(forms.Form):
         if not auth.login_user(username, password):
             message = _("Please enter the correct username and password.")
             raise forms.ValidationError(message, {})
+
+
+class RegistrationForm(forms.Form):
+    # Translators, used as label in create user form
+    username = forms.StringField(_("Username"),
+                                 validators=[forms.Required()],
+                                 placeholder=_('username'))
+    # Translators, used as label in create user form
+    password1 = forms.PasswordField(_("Password"),
+                                    validators=[forms.Required()],
+                                    placeholder=_('password'))
+    # Translators, used as label in create user form
+    password2 = forms.PasswordField(_("Confirm Password"),
+                                    validators=[forms.Required()],
+                                    placeholder=_('confirm password'))
+
+    def validate(self):
+        password1 = self.processed_data['password1']
+        password2 = self.processed_data['password2']
+        if password1 != password2:
+            message = _("The entered passwords do not match.")
+            raise forms.ValidationError(message, {})

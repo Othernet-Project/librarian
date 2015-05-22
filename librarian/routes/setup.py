@@ -12,10 +12,11 @@ import os
 
 import dateutil.parser
 import pytz
-from bottle import request, mako_template as template
-from bottle_utils.i18n import lazy_gettext as _
 
-from ..forms.setup import SetupLanguageForm, SetupDateTimeForm
+from bottle import request, mako_template as template
+
+from ..forms.auth import RegistrationForm
+from ..forms.setup import SetupLanguageForm,  SetupDateTimeForm
 from ..lib import auth
 from ..lib import wizard
 
@@ -120,31 +121,20 @@ def has_no_superuser():
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
                             method='GET', index=3, test=has_no_superuser)
 def setup_superuser_form():
-    return dict(errors={}, username='')
+    return dict(form=RegistrationForm())
 
 
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
                             method='POST', index=3, test=has_no_superuser)
 def setup_superuser():
-    username = request.forms.get('username')
-    password1 = request.forms.get('password1')
-    password2 = request.forms.get('password2')
-    if password1 != password2:
-        errors = {'_': _("The entered passwords do not match.")}
-        return dict(successful=False, errors=errors, username=username)
+    form = RegistrationForm(request.forms)
+    if not form.is_valid():
+        return dict(successful=False, form=form)
 
-    try:
-        auth.create_user(username,
-                         password1,
-                         is_superuser=True,
-                         db=request.db.sessions,
-                         overwrite=True)
-    except auth.UserAlreadyExists:
-        errors = {'username': _("This username is already taken.")}
-        return dict(successful=False, errors=errors, username='')
-    except auth.InvalidUserCredentials:
-        errors = {'_': _("Invalid user credentials, please try again.")}
-        return dict(successful=False, errors=errors, username=username)
-
+    auth.create_user(form.processed_data['username'],
+                     form.processed_data['password1'],
+                     is_superuser=True,
+                     db=request.db.sessions,
+                     overwrite=True)
     request.app.setup.append({'superuser': True})
     return dict(successful=True)
