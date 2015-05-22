@@ -37,20 +37,24 @@ from ..utils.template_helpers import template_helper
 app = default_app()
 
 
+@cached(prefix='content')
+def get_content(**kwargs):
+    archive = open_archive()
+    return archive.get_content(**kwargs)
+
+
 @template_helper
 def get_content_path(content_id):
     """ Return relative path of a content based on it's id """
     return content.to_path(content_id)
 
 
-@cached(prefix='content')
 def filter_content(query, lang, tag, multipage):
     conf = request.app.config
-    archive = open_archive()
-    raw_metas = archive.get_content(terms=query,
-                                    lang=lang,
-                                    tag=tag,
-                                    multipage=multipage)
+    raw_metas = get_content(terms=query,
+                            lang=lang,
+                            tag=tag,
+                            multipage=multipage)
     contentdir = conf['content.contentdir']
     metas = [metadata.Meta(meta, content.to_path(meta['md5'], contentdir))
              for meta in raw_metas]
@@ -131,11 +135,16 @@ def content_file(content_path, filename):
     return static_file(filename, root=content_root)
 
 
-@cached()
-def content_zipball(content_id):
-    """ Serve zipball with specified id """
+@cached(prefix='zipball')
+def prepare_zipball(content_id):
     content_dir = request.app.config['content.contentdir']
     zball = zipballs.create(content_id, content_dir)
+    return zball.getvalue()
+
+
+def content_zipball(content_id):
+    """ Serve zipball with specified id """
+    zball = zipballs.StringIO(prepare_zipball(content_id))
     filename = '{0}.zip'.format(content_id)
     return send_file(zball, filename, attachment=True)
 

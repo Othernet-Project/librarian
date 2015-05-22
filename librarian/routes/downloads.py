@@ -27,11 +27,15 @@ read_meta = cached()(zipballs.validate)
 
 
 @cached(prefix='downloads', timeout=30)
+def get_download_paths():
+    paths = downloads.get_downloads(request.app.config['content.spooldir'],
+                                    request.app.config['content.output_ext'])
+    return list(reversed(downloads.order_downloads(paths)))
+
+
 def filter_downloads(lang):
     conf = request.app.config
-    zballs = downloads.get_downloads(conf['content.spooldir'],
-                                     conf['content.output_ext'])
-    zballs = list(reversed(downloads.order_downloads(zballs)))
+    zballs = get_download_paths()
     if zballs:
         last_zip = datetime.fromtimestamp(zballs[0][1])
         nzipballs = len(zballs)
