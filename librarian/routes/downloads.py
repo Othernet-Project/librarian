@@ -8,7 +8,6 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import os
 import logging
 from datetime import datetime
 
@@ -17,12 +16,13 @@ from bottle_utils.i18n import i18n_url, lazy_gettext as _
 
 from ..core import metadata
 from ..core import downloads
+from ..core import zipballs
 from ..lib.pager import Pager
 from ..utils.cache import cached
 from ..utils.core_helpers import open_archive
 
 
-get_metadata = cached()(downloads.get_metadata)
+validate_zipball = cached()(zipballs.validate)
 
 PER_PAGE = 20
 
@@ -31,19 +31,18 @@ PER_PAGE = 20
 def list_downloads():
     """ Render a list of downloaded content """
     conf = request.app.config
-    cover_dir = conf['content.covers']
     selection = request.params.get('sel', '0') == '1'
 
     default_lang = request.user.options.get('content_language', None)
     lang = request.params.get('lang', default_lang)
     request.user.options['content_language'] = lang
 
-    zipballs = downloads.get_zipballs(conf['content.spooldir'],
-                                      conf['content.output_ext'])
-    zipballs = list(reversed(downloads.order_zipballs(zipballs)))
-    if zipballs:
-        last_zip = datetime.fromtimestamp(zipballs[0][1])
-        nzipballs = len(zipballs)
+    zballs = downloads.get_downloads(conf['content.spooldir'],
+                                     conf['content.output_ext'])
+    zballs = list(reversed(downloads.order_downloads(zballs)))
+    if zballs:
+        last_zip = datetime.fromtimestamp(zballs[0][1])
+        nzipballs = len(zballs)
         logging.info('Found %s updates', nzipballs)
     else:
         last_zip = None
@@ -52,30 +51,31 @@ def list_downloads():
     # Collect metadata of valid zipballs. If a language filter is specified
     # filter the list based on that.
     metas = []
-    for z, ts in zipballs:
-        logging.debug("<%s> getting metas" % z)
+    for zipball_path, timestamp in zballs:
+        logging.debug("Reading zipball: {0}".format(zipball_path))
         try:
-            meta = get_metadata(z, conf['content.metadata'])
-            if lang and meta['language'] != lang:
-                continue
-
-            meta['md5'] = downloads.get_md5_from_path(z)
-            meta['ftimestamp'] = datetime.fromtimestamp(ts)
-            metas.append(metadata.Meta(meta, cover_dir, zip_path=z))
-        except downloads.ContentError as err:
+            meta = validate_zipball(zipball_path,
+                                    meta_filename=conf['content.metadata'])
+        except zipballs.ValidationError as exc:
             # Zip file is invalid. This means that the file is corrupted or the
             # original file was signed with corrupt data in it. Either way, we
             # don't know what to do with the file so we'll remove it.
-            logging.error("<%s> error unpacking: %s" % (z, err))
-            os.unlink(z)
-            continue
+            logging.error("Error reading: {0}: {1}".format(zipball_path, exc))
+            downloads.safe_remove(zipball_path)
+        else:
+            if lang and meta['language'] != lang:
+                continue
+
+            meta['md5'] = zipballs.get_md5_from_path(zipball_path)
+            meta['ftimestamp'] = datetime.fromtimestamp(timestamp)
+            metas.append(metadata.Meta(meta, zipball_path))
 
     pager = Pager(metas, pid='downloads')
     pager.get_paging_params()
     metas_on_page = pager.get_items()
 
     archive = open_archive()
-    archive.get_replacements(metas_on_page)
+    archive.add_replacement_data(metas_on_page, needed_keys=('title',))
 
     vals = dict(request.params)
     vals.update({'pp': pager.per_page})

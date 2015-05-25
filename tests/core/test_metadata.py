@@ -1,5 +1,3 @@
-import datetime
-
 from functools import wraps
 from contextlib import contextmanager
 
@@ -62,32 +60,32 @@ def attr_overrides(obj, **kwargs):
         setattr(obj, key, value)
 
 
-def test_get_default_value():
-    with pytest.raises(KeyError):
-        mod.get_default_value('invalid', {})
-
-    assert mod.get_default_value('url', {}) is None
-    assert mod.get_default_value('keep_formatting', {}) is False
-
-    meta = {'timestamp': '2014-08-10 19:59:19 UTC'}
-    broadcast = mod.get_default_value('broadcast', meta)
-    assert broadcast == datetime.date(2014, 8, 10)
+def test_get_successor_key():
+    assert mod.get_successor_key('partner') == 'publisher'
+    assert mod.get_successor_key('index') == 'entry_point'
+    assert mod.get_successor_key('publisher') is None
+    assert mod.get_successor_key('url') is None
 
 
-def test_get_aliases_for():
-    with pytest.raises(KeyError):
-        mod.get_aliases_for('invalid')
-
-    assert mod.get_aliases_for('url') == []
-    assert mod.get_aliases_for('publisher') == ['partner']
-
-
-def test_is_required():
-    with pytest.raises(KeyError):
-        mod.is_required('invalid')
-
-    assert mod.is_required('url') is True
-    assert mod.is_required('images') is False
+def test_edge_keys():
+    assert mod.get_edge_keys() == (
+        'publisher',
+        'replaces',
+        'keep_formatting',
+        'language',
+        'license',
+        'title',
+        'url',
+        'timestamp',
+        'multipage',
+        'broadcast',
+        'keywords',
+        'entry_point',
+        'images',
+        'is_partner',
+        'is_sponsored',
+        'archive'
+    )
 
 
 def test_replace_aliases():
@@ -105,33 +103,29 @@ def test_replace_aliases():
     assert meta == expected
 
 
-@mock.patch(MOD + '.dateutil.parser.parse')
-def test_adding_missing_keys(date_parse):
+def test_adding_missing_keys():
     """ Metadata keys that are not in ``d`` will be added """
     d = {}
     mod.add_missing_keys(d)
-    for key in mod.STANDARD_FIELDS:
+    for key in mod.EDGE_KEYS:
         _has_key(d, key)
 
 
-@mock.patch(MOD + '.dateutil.parser.parse')
-def test_adding_missing_key_doesnt_remove_existing(date_parse):
+def test_adding_missing_key_doesnt_remove_existing():
     """ Existing keys will be kept """
     d = {'url': 'foo'}
     mod.add_missing_keys(d)
     assert d['url'] == 'foo'
 
 
-@mock.patch(MOD + '.dateutil.parser.parse')
-def test_adding_missing_keys_doeesnt_remove_arbitrary_keys(date_parse):
+def test_adding_missing_keys_doeesnt_remove_arbitrary_keys():
     """" Even non-standard keys will be kept """
     d = {'foo': 'bar'}
     mod.add_missing_keys(d)
     _has_key(d, 'foo')
 
 
-@mock.patch(MOD + '.dateutil.parser.parse')
-def test_add_missing_keys_has_return(date_parse):
+def test_add_missing_keys_has_return():
     """ Add missing key mutates the supplies dict, but has no return value """
     d = {}
     ret = mod.add_missing_keys(d)
@@ -145,122 +139,36 @@ def test_clean_keys():
     assert d == {'title': 'title'}
 
 
-@mock.patch(MOD + '.dateutil.parser.parse')
-@mock.patch(MOD + '.is_required')
-@mock.patch(MOD + '.json', autospec=True)
-def test_convert_returns__added_keys(json, is_required, date_parse):
-    """ Conversion to json calls ``add_missing_keys()`` on converted value """
-    json.loads.return_value = {}
-    is_required.return_value = False
-    date_mock = mock.Mock()
-    date_mock.date.return_value = None
-    date_parse.return_value = date_mock
-    out = mod.convert_json('')
-    assert out == {
-        'url': None,
-        'title': None,
-        'images': 0,
-        'timestamp': None,
-        'keep_formatting': False,
-        'is_partner': False,
-        'is_sponsored': False,
-        'archive': 'core',
-        'publisher': '',
-        'license': None,
-        'language': '',
-        'multipage': False,
-        'entry_point': 'index.html',
-        'broadcast': None,
-        'keywords': '',
-    }
+@mock.patch.object(mod, 'clean_keys')
+@mock.patch.object(mod, 'add_missing_keys')
+@mock.patch.object(mod, 'replace_aliases')
+@mock.patch.object(mod.validator, 'validate')
+def test_process_meta_success(validate, replace_aliases, add_missing_keys,
+                              clean_keys):
+    meta = {'title': 'test'}
+    validate.return_value = {}
+    assert mod.process_meta(meta) == meta
+    validate.assert_called_once_with(meta, broadcast=True)
+    replace_aliases.assert_called_once_with(meta)
+    add_missing_keys.assert_called_once_with(meta)
+    clean_keys.assert_called_once_with(meta)
 
 
-@mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.is_required')
-@mock.patch(MOD + '.json', autospec=True)
-def test_convert_add_default_fails(json, is_required, add_missing_keys):
-    """ DecodeError must be raised when adding default values raises an exc """
-    json.loads.return_value = {}
-    is_required.return_value = False
-    add_missing_keys.side_effect = Exception()
-    try:
-        mod.convert_json('')
-        assert False, 'Expected to raise'
-    except mod.DecodeError:
-        pass
+@mock.patch.object(mod, 'clean_keys')
+@mock.patch.object(mod, 'add_missing_keys')
+@mock.patch.object(mod, 'replace_aliases')
+@mock.patch.object(mod.validator, 'validate')
+def test_process_meta_fail(validate, replace_aliases, add_missing_keys,
+                           clean_keys):
+    meta = {'title': 'test'}
+    validate.return_value = {'error': 'some'}
+    with pytest.raises(mod.MetadataError):
+        mod.process_meta(meta)
 
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.is_required')
-def test_convert_decodes_string(is_required, *ignored):
-    """ During conversion, strings are decoded as UTF8 """
-    s = mock.Mock()
-    is_required.return_value = False
-    mod.convert_json(s)
-    s.decode.assert_called_once_with('utf8')
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.is_required')
-def test_convert_decoding_fails(*ignored):
-    """ DecodeError must be raised when string decoding fails """
-    s = mock.Mock()
-    s.decode.side_effect = UnicodeDecodeError('utf-8', b"", 0, 1, 'mock str')
-    try:
-        mod.convert_json(s)
-        assert False, 'Expected to raise'
-    except mod.DecodeError:
-        pass
-
-
-@mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.is_required')
-@mock.patch(MOD + '.json', autospec=True)
-def test_convert_json_fails(json, *ignored):
-    """ DecodeError must be raised when JSON cannot be decoded """
-    s = mock.Mock()
-
-    json.loads.side_effect = ValueError
-    try:
-        mod.convert_json(s)
-        assert False, 'Expected to raise'
-    except mod.DecodeError:
-        pass
-
-
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch(MOD + '.add_missing_keys', autospec=True)
-@mock.patch(MOD + '.json', autospec=True)
-def test_convert_missing_keys(json, *ignored):
-    """ When required keys are missing, FormatError must be raised """
-    s = mock.Mock()
-    json.loads.return_value = {}
-    try:
-        mod.convert_json(s)
-        assert False, 'Expected to raise'
-    except mod.FormatError:
-        pass
-
-
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch(MOD + '.add_missing_keys')
-@mock.patch(MOD + '.json', autospec=True)
-def test_convert_correct_keys(json, *ignored):
-    """ When correct keys are supplied, no exception should be raised """
-    s = mock.Mock()
-    json.loads.return_value = {
-        'url': 'foo',
-        'title': 'foo',
-        'timestamp': 'foo',
-        'license': 'foo',
-        'broadcast': 'foo',
-    }
-    try:
-        mod.convert_json(s)
-    except mod.FormatError:
-        assert False, 'Expected not to raise'
+    validate.assert_called_once_with(meta, broadcast=True)
+    assert not replace_aliases.called
+    assert not add_missing_keys.called
+    assert not clean_keys.called
 
 
 @mock.patch(MOD + '.os', autospec=True)
@@ -274,8 +182,7 @@ def test_meta_class_init(json, os):
     data.get.assert_called_once_with('tags')
     json.loads.assert_called_once_with(data.get.return_value)
     assert meta.tags == json.loads.return_value
-    assert meta.cover_dir == 'foo'
-    assert meta.zip_path is None
+    assert meta.content_path == 'foo'
 
 
 @mock.patch(MOD + '.os', autospec=True)
@@ -338,106 +245,32 @@ def test_meta_get_key(*ignored):
     assert meta.get('missing') is None
 
 
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@with_mock_open
-def test_meta_cache_cover_file_path(mock_open, os, *ignored):
-    """ Caching cover image returns the name of the created file """
-    os.path.normpath.side_effect = noop
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
-    name = meta.cache_cover('.jpg', 'fake image data')
-    os.path.join.assert_called_once_with('covers_dir', 'md5.jpg')
-    os.path.basename.assert_called_once_with(
-        os.path.join.return_value)
-    assert name == os.path.basename.return_value
+def test_find_image_no_content_path():
+    meta = mod.Meta({'foo': 'bar'}, '')
+    assert meta.find_image() is None
 
 
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@with_mock_open
-def test_meta_cache_cover_writes_image_data(mock_open, os, *ignored):
-    """ Caching cover image writes image data to file """
-    fd = mock_open()
-    os.path.normpath.side_effect = noop
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
-    meta.cache_cover('.jpg', 'fake image data')
-    fd.write.assert_called_once_with('fake image data')
+@mock.patch.object(mod, 'scandir')
+def test_find_image_no_files(scandir):
+    scandir.scandir.return_value = []
+    meta = mod.Meta({'foo': 'bar'}, '/content/path')
+    assert meta.find_image() is None
 
 
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.zipfile', autospec=True)
-@with_mock_open
-def test_extact_image_looks_for_frist_image(mock_open, zipfile, *ignored):
-    """ Extract image looks up the first image-looking in zip file """
-    zipfile = zipfile.ZipFile.return_value
-    zipfile.namelist.return_value = ['foo.txt', 'bar.jpg']
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
-    extension, content = meta.extract_image()
-    mock_open.assert_called_once_with('foo.zip', 'rb')
-    zipfile.open.assert_called_once_with('bar.jpg', 'r')
-    assert extension == '.jpg'
-    assert content == zipfile.open.return_value.read.return_value
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.zipfile', autospec=True)
-@with_mock_open
-def test_extract_image_no_files(mock_open, zipfile, *ignored):
-    """ Extract image  returns None if there are no files in the zipball """
-    zipfile = zipfile.ZipFile.return_value
-    zipfile.namelist.return_value = []
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
-    extension, content = meta.extract_image()
-    assert extension is None
-    assert content is None
-    assert zipfile.open.called is False
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.zipfile', autospec=True)
-@with_mock_open
-def test_extact_image_no_image(mock_open, zipfile, *ignored):
-    """ Extract image returns None if there are no images in the zipball """
-    print(zipfile)
-    zipfile = zipfile.ZipFile.return_value
-    zipfile.namelist.return_value = ['foo.html']
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
-    extension, content = meta.extract_image()
-    assert extension is None
-    assert content is None
-
-
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-def test_get_cover_path_search_cover_dir(glob, os):
-    """ Get cover path searches cover dir for any file with md5 name """
-    os.path.normpath.side_effect = noop
-    glob.glob.side_effect = lambda x: ['found']
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
-    meta.get_cover_path()
-    os.path.join.assert_called_once_with('covers_dir', 'md5.*')
-    glob.glob.assert_called_once_with(os.path.join.return_value)
-    os.path.basename.assert_called_once_with('found')
-
-
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-def test_get_cover_path_no_cover_found(glob, *ignored):
-    """ None is returned and no exception raised when no cover is found """
-    glob.glob.return_value = []
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
-    try:
-        ret = meta.get_cover_path()
-        assert ret is None
-    except Exception:
-        assert False, 'Expected not to raise'
+@mock.patch.object(mod, 'scandir')
+def test_find_image_success(scandir):
+    mocked_entry = mock.Mock()
+    mocked_entry.name = 'image.jpg'
+    scandir.scandir.return_value = [mocked_entry]
+    meta = mod.Meta({'foo': 'bar'}, '/content/path')
+    assert meta.find_image() == 'image.jpg'
 
 
 @mock.patch(MOD + '.json', autospec=True)
 @mock.patch(MOD + '.os', autospec=True)
 def test_lang_property(*ignored):
     """ The lang property is an alias for language key """
-    meta = mod.Meta({'language': 'foo'}, 'covers_dir')
+    meta = mod.Meta({'language': 'foo'}, '/content/path')
     assert meta.lang == 'foo'
     meta['language'] = 'bar'
     assert meta.lang == 'bar'
@@ -447,7 +280,7 @@ def test_lang_property(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_lang_with_missing_language(*ignored):
     """ Lang property returns None if there is no language key """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     assert meta.lang is None
 
 
@@ -455,7 +288,7 @@ def test_lang_with_missing_language(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_rtl_property(*ignored):
     """ RTL property returns True for RTL languages """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     meta['language'] = 'en'
     assert meta.rtl is False
     meta['language'] = 'ar'
@@ -466,7 +299,7 @@ def test_rtl_property(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_i18n_attrs_property(*ignored):
     """ I18n attributes are returned when langauge is specified """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     assert meta.i18n_attrs == ''
     meta['language'] = 'en'
     assert meta.i18n_attrs == ' lang="en"'
@@ -478,7 +311,7 @@ def test_i18n_attrs_property(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_label_property_default(*ignored):
     """ Label is 'core' if there is no archive key """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     assert meta.label == 'core'
 
 
@@ -486,7 +319,7 @@ def test_label_property_default(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_label_property_with_keys(*ignored):
     """ Correct label should be returned for appropriate key values """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     with key_overrides(meta, archive='core'):
         assert meta.label == 'core'
     with key_overrides(meta, is_sponsored=True):
@@ -499,7 +332,7 @@ def test_label_property_with_keys(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_label_property_with_key_combinations(*ignored):
     """ Correct label should be returned for appropriate key combos """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     with key_overrides(meta, archive='core', is_sponsored=True):
         assert meta.label == 'core'
     with key_overrides(meta, archive='ephem', is_sponsored=True):
@@ -514,7 +347,7 @@ def test_label_property_with_key_combinations(*ignored):
 @mock.patch(MOD + '.os', autospec=True)
 def test_free_license_property(*ignored):
     """ Free license is True for free licenses """
-    meta = mod.Meta({}, 'covers_dir')
+    meta = mod.Meta({}, 'content_dir')
     with key_overrides(meta, license='ARL'):
         assert meta.free_license is False
     with key_overrides(meta, license='ON'):
@@ -525,97 +358,22 @@ def test_free_license_property(*ignored):
         assert meta.free_license is True
 
 
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch.object(mod.Meta, 'get_cover_path')
-@mock.patch.object(mod.Meta, 'extract_image')
-@mock.patch.object(mod.Meta, 'cache_cover')
-def test_image_property(cache_cover, extract_image, get_cover_path, *ignored):
-    """ When there are no covers, new one is extracted and cached """
-    get_cover_path.return_value = None
-    extract_image.return_value = ('foo', 'bar')
-    meta = mod.Meta({}, 'covers_dir', zip_path='foo.zip')
-    res = meta.image
-    extract_image.assert_any_call()
-    cache_cover.assert_called_once_with('foo', 'bar')
-    assert res == cache_cover.return_value
-    assert meta._image == cache_cover.return_value
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch.object(mod.Meta, 'get_cover_path')
-@mock.patch.object(mod.Meta, 'extract_image')
-@mock.patch.object(mod.Meta, 'cache_cover')
-def test_image_exists(cache_cover, extract_image, get_cover_path, *ignored):
-    """ When cover image exists on disk, it is returned and cached """
-    meta = mod.Meta({}, 'covers_dir', zip_path='foo.zip')
-    res = meta.image
-    assert res == get_cover_path.return_value
-    assert meta._image == get_cover_path.return_value
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch.object(mod.Meta, 'cache_cover')
-@mock.patch.object(mod.Meta, 'get_cover_path')
-@mock.patch.object(mod.Meta, 'extract_image')
-def test_extract_error(extract_image, get_cover_path, cache_cover, *ignored):
-    """ If extract image fails, cover is not cached, and None is returned """
-    get_cover_path.return_value = None
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
-
-    extract_image.side_effect = TypeError
-    assert meta.image is None
-    assert not cache_cover.called
-
-    extract_image.side_effect = OSError
-    assert meta.image is None
-    assert not cache_cover.called
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch.object(mod.Meta, 'extract_image')
-@mock.patch.object(mod.Meta, 'cache_cover')
-@mock.patch.object(mod.Meta, 'get_cover_path')
-def test_cache_error(get_cover_path, cache_cover, extract_image, *ignored):
-    """ If extract image fails, cover is not cached, and None is returned """
-    get_cover_path.return_value = None
-    extract_image.return_value = ('foo', 'bar')
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
-    cache_cover.side_effect = OSError
-    assert meta.image is None
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch.object(mod.Meta, 'extract_image')
-@mock.patch.object(mod.Meta, 'cache_cover')
-@mock.patch.object(mod.Meta, 'get_cover_path')
-def test_cached_image(get_cover_path, cache_cover, extract_image, *ignored):
+@mock.patch.object(mod, 'json', autospec=True)
+@mock.patch.object(mod, 'os', autospec=True)
+@mock.patch.object(mod.Meta, 'find_image')
+def test_image_property_cached(find_image, *ignored):
     """ If image path is cached, it is returned immediately """
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir', zip_path='foo.zip')
+    meta = mod.Meta({'md5': 'md5'}, '/content/root/')
     meta._image = 'foobar.jpg'
     assert meta.image == 'foobar.jpg'
-    assert not get_cover_path.called
-    assert not extract_image.called
-    assert not cache_cover.called
+    assert not find_image.called
 
 
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.glob', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-@mock.patch.object(mod.Meta, 'extract_image')
-@mock.patch.object(mod.Meta, 'cache_cover')
-@mock.patch.object(mod.Meta, 'get_cover_path')
-def test_no_zip_path(get_cover_path, cache_cover, extract_image, *ignored):
-    """ If image exist on dist, it is returned even if zip_path is None """
-    get_cover_path.return_value = 'foobar.jpg'
-    meta = mod.Meta({'md5': 'md5'}, 'covers_dir')
+@mock.patch.object(mod, 'json', autospec=True)
+@mock.patch.object(mod, 'os', autospec=True)
+@mock.patch.object(mod.Meta, 'find_image')
+def test_image_property_found(find_image, *ignored):
+    """ If image exist on dist, it will be found and returned """
+    find_image.return_value = 'foobar.jpg'
+    meta = mod.Meta({'md5': 'md5'}, 'content_dir')
     assert meta.image == 'foobar.jpg'

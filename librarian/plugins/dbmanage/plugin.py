@@ -114,7 +114,7 @@ def rebuild():
                                 contentdir=conf['content.contentdir'],
                                 spooldir=conf['content.spooldir'],
                                 meta_filename=conf['content.metadata'])
-        rows = archive.reload_data()
+        rows = archive.reload_content()
         logging.info('Restored metadata for %s pieces of content', rows)
     logging.debug('Released global lock')
     end = time.time()
