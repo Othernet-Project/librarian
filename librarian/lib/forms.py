@@ -341,7 +341,6 @@ class Form(object):
     """
     _pre_processor_prefix = 'preprocess_'
     _post_processor_prefix = 'postprocess_'
-    _form_name = '_'
 
     def __init__(self, data=None):
         """Initialize forms.
