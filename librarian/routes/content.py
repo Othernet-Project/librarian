@@ -37,24 +37,20 @@ from ..utils.template_helpers import template_helper
 app = default_app()
 
 
-@cached(prefix='content')
-def get_content(**kwargs):
-    archive = open_archive()
-    return archive.get_content(**kwargs)
-
-
 @template_helper
 def get_content_path(content_id):
     """ Return relative path of a content based on it's id """
     return content.to_path(content_id)
 
 
+@cached(prefix='content')
 def filter_content(query, lang, tag, multipage):
     conf = request.app.config
-    raw_metas = get_content(terms=query,
-                            lang=lang,
-                            tag=tag,
-                            multipage=multipage)
+    archive = open_archive()
+    raw_metas = archive.get_content(terms=query,
+                                    lang=lang,
+                                    tag=tag,
+                                    multipage=multipage)
     contentdir = conf['content.contentdir']
     metas = [metadata.Meta(meta, content.to_path(meta['md5'], contentdir))
              for meta in raw_metas]
