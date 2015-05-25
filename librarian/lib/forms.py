@@ -68,21 +68,51 @@ class Validator(object):
 
 class Required(Validator):
 
+    def __init__(self, message=None):
+        self.message = message or _("This field is required.")
+
     def validate(self, data):
         if not data or isinstance(data, basestring) and not data.strip():
-            raise ValidationError(_("This field is required."), {})
+            raise ValidationError(self.message, {})
 
 
 class DateValidator(Validator):
+
+    def __init__(self, message=None):
+        self.message = message
 
     def validate(self, value):
         try:
             return dateutil.parser.parse(value)
         except ValueError as exc:
-            raise ValidationError(_("Invalid date: {0}".format(exc)),
-                                  {'value': value})
+            msg = self.message or _("Invalid date: {0}")
+            raise ValidationError(msg.format(exc), {'value': value})
         except TypeError as exc:
-            raise ValidationError(_("Invalid input."), {'value': value})
+            msg = self.message or _("Invalid input.")
+            raise ValidationError(msg, {'value': value})
+
+
+class InRangeValidator(Validator):
+
+    def __init__(self, min_value=None, max_value=None, message=None):
+        self.min_value = min_value
+        self.max_value = max_value
+        self.message = message
+
+    def validate(self, value):
+        try:
+            if self.min_value is not None and self.min_value > value:
+                msg = self.message or _("Input value is too small.")
+                msg = msg.format(min=self.min_value, max=self.max_value)
+                raise ValidationError(msg, {'value': value})
+            if self.max_value is not None and self.max_value < value:
+                msg = self.message or _("Input value is too large.")
+                msg = msg.format(min=self.min_value, max=self.max_value)
+                raise ValidationError(msg, {'value': value})
+        except Exception:
+            msg = self.message or _("Invalid input.")
+            msg = msg.format(min=self.min_value, max=self.max_value)
+            raise ValidationError(msg, {'value': value})
 
 
 class DormantField(object):

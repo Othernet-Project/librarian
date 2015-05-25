@@ -110,6 +110,15 @@ class TestField(object):
         assert field.error == error
 
 
+class TestStringField(object):
+
+    def test_parse(self):
+        field = mod.StringField('label', name='alreadybound')
+        assert field.parse(None) == ''
+        assert field.parse(3) == '3'
+        assert field.parse('str') == 'str'
+
+
 class TestBooleanFieldIntegration(object):
 
     def test_is_valid(self):
