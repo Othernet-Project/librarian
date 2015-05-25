@@ -5,7 +5,7 @@
     <select name="preset" id="transponders" class="transponders">
         ## Translators, placeholder for satellite selection select list
         <option value="0">${_('Select a satellite')}</option>
-        % for pname, index, preset in PRESETS:
+        % for pname, index, preset in form.PRESETS:
         <option value="${index}"
             data-frequency="${preset['frequency']}"
             data-symbolrate="${preset['symbolrate']}"

@@ -14,12 +14,11 @@ import logging
 
 from bottle import (mako_view as view,
                     mako_template as template,
-                    request,
-                    redirect)
+                    request)
 from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
-from ...lib.validate import posint, keyof
+from ...lib import forms
 from ...routes.setup import setup_wizard
 from ...utils.template_helpers import template_helper
 
@@ -102,10 +101,6 @@ PRESETS = [
     }),
 ]
 
-# For easier consumption as view default ctx
-CONST = dict(DELIVERY=DELIVERY, MODULATION=MODULATION,
-             POLARIZATION=POLARIZATION, PRESETS=PRESETS, LNB_TYPES=LNB_TYPES)
-
 
 @template_helper
 def get_bitrate(status):
@@ -124,83 +119,97 @@ def get_signal_status():
     return dict(status=ipc.get_status())
 
 
-def validate_params(errors):
-    lnb = keyof('lnb', LNB_TYPES,
-                # Translators, error message when LNB type is incorrect
-                _('Invalid choice for LNB type'), errors)
-    frequency = posint('frequency',
-                       # Translators, error message when frequency value is
-                       # wrong
-                       _('Frequency must be a positive number'),
-                       # Translators, error message when frequency value is
-                       # wrong
-                       _('Please type in a number'), errors)
-    symbolrate = posint('symbolrate',
-                        # Translators, error message when symbolrate value is
-                        # wrong
-                        _('Symbolrate must be a positive number'),
-                        # Translators, error message when symbolrate value is
-                        # wrong
-                        _('Please type in a number'), errors)
-    delivery = keyof('delivery', DELIVERY,
-                     # Translators, error message shown when wrong delivery
-                     # system is selected
-                     _('Invalid choice for delivery system'), errors)
-    modulation = keyof('modulation', MODULATION,
-                       # Translators, error message shown when wrong modulation
-                       # mode is selected
-                       _('Invalid choice for modulation mode'), errors)
-    polarization = keyof('polarization', POLARIZATION,
-                         # Translators, error message shown when wrong
-                         # polarization is selected
-                         _('Invalid choice for polarization'), errors)
+class ONDDForm(forms.Form):
+    PRESETS = PRESETS
     # TODO: Add support for DiSEqC azimuth value
-    return dict(lnb=lnb,
-                frequency=frequency,
-                symbolrate=symbolrate,
-                delivery=delivery,
-                modulation=modulation,
-                polarization=polarization)
+    lnb = forms.SelectField(
+        _("LNB Type"),
+        # Translators, error message when LNB type is incorrect
+        validators=[forms.Required(message=_('Invalid choice for LNB type'))],
+        choices=LNB_TYPES
+    )
+    frequency = forms.IntegerField(
+        _("Frequency"),
+        validators=[
+            forms.Required(),
+            forms.InRangeValidator(
+                min_value=0,
+                # Translators, error message when frequency value is wrong
+                message=_('Frequency must be a positive number')
+            )
+        ]
+    )
+    symbolrate = forms.IntegerField(
+        _("Symbol rate"),
+        validators=[
+            forms.Required(),
+            forms.InRangeValidator(
+                min_value=0,
+                # Translators, error message when symbolrate value is wrong
+                message=_('Symbolrate must be a positive number')
+            )
+        ]
+    )
+    delivery = forms.SelectField(
+        _("Delivery system"),
+        choices=DELIVERY,
+        # Translators, error message when wrong delivery system is selected
+        validators=[
+            forms.Required(message=_('Invalid choice for delivery system'))
+        ]
+    )
+    modulation = forms.SelectField(
+        _("Modulation"),
+        choices=MODULATION,
+        # Translators, error message when wrong modulation mode is selected
+        validators=[
+            forms.Required(message=_('Invalid choice for modulation mode'))
+        ]
+    )
+    polarization = forms.SelectField(
+        _("Polarization"),
+        choices=POLARIZATION,
+        # Translators, error message when wrong polarization is selected
+        validators=[
+            forms.Required(message=_('Invalid choice for polarization'))
+        ]
+    )
+
+    def validate(self):
+        lnb = self.processed_data['lnb']
+        frequency = self.processed_data['frequency']
+        symbolrate = self.processed_data['symbolrate']
+        delivery = self.processed_data['delivery']
+        modulation = self.processed_data['modulation']
+        polarization = self.processed_data['polarization']
+
+        needs_tone = ipc.needs_tone(frequency, lnb)
+        frequency = ipc.freq_conv(frequency, lnb)
+        response = ipc.set_settings(frequency=frequency,
+                                    symbolrate=symbolrate,
+                                    delivery=delivery,
+                                    tone=needs_tone,
+                                    modulation=dict(MODULATION)[modulation],
+                                    voltage=VOLTS[polarization])
+        if not response.startswith('2'):
+            # Translators, error message shown when setting transponder
+            # configuration is not successful
+            msg = _('Transponder configuration could not be set')
+            raise forms.ValidationError(msg, {})
 
 
-def setup_ipc(lnb, frequency, symbolrate, delivery, modulation, polarization):
-    needs_tone = ipc.needs_tone(frequency, lnb)
-    frequency = ipc.freq_conv(frequency, lnb)
-    return ipc.set_settings(frequency=frequency,
-                            symbolrate=symbolrate,
-                            delivery=delivery,
-                            tone=needs_tone,
-                            modulation=dict(MODULATION)[modulation],
-                            voltage=VOLTS[polarization])
-
-
-@roca_view('ondd/settings', 'ondd/_settings_form', template_func=template,
-           vals={}, errors={}, message='', **CONST)
+@roca_view('ondd/settings', 'ondd/_settings_form', template_func=template)
 def set_settings():
-    errors = {}
-    original_route = request.forms.get('backto', i18n_url('dashboard:main'))
-    params = validate_params(errors)
-
-    if errors:
-        return dict(errors=errors, vals=request.forms)
-
-    resp = setup_ipc(**params)
-
-    if not resp.startswith('2'):
-        # Translators, error message shown when setting transponder
-        # configuration is not successful
-        errors['_'] = _('Transponder configuration could not be set')
-        return dict(errors=errors, vals=request.forms)
+    form = ONDDForm(request.forms)
+    if not form.is_valid():
+        return dict(form=form)
 
     logging.info('ONDD: tuner settings updated')
-    request.app.setup.append({'ondd': params})
+    request.app.setup.append({'ondd': form.processed_data})
 
-    if request.is_xhr:
-        return dict(errors={},
-                    vals=request.forms,
-                    message=_('Transponder configuration saved.'))
-
-    redirect(original_route)
+    return dict(form=form,
+                message=_('Transponder configuration saved.'),
+                redirect=i18n_url('dashboard:main'))
 
 
 @view('ondd/_file_list')
@@ -216,37 +225,18 @@ def has_no_lock():
 @setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='GET',
                             test=has_no_lock)
 def setup_ondd_form():
-    return dict(status=ipc.get_status(), vals={}, errors={}, **CONST)
+    return dict(status=ipc.get_status(), form=ONDDForm())
 
 
 @setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='POST',
                             test=has_no_lock)
 def setup_ondd():
-    errors = {}
-    params = validate_params(errors)
-
-    if errors:
-        return dict(successful=False,
-                    errors=errors,
-                    vals=request.forms,
-                    status=ipc.get_status(),
-                    **CONST)
-
-    resp = setup_ipc(**params)
-
-    if not resp.startswith('2'):
-        # Translators, error message shown when setting transponder
-        # configuration is not successful
-        errors['_'] = _('Transponder configuration could not be set')
-        return dict(successful=False,
-                    errors=errors,
-                    vals=request.forms,
-                    status=ipc.get_status(),
-                    **CONST)
+    form = ONDDForm(request.forms)
+    if not form.is_valid():
+        return dict(successful=False, form=form, status=ipc.get_status())
 
     logging.info('ONDD: tuner settings updated')
-
-    request.app.setup.append({'ondd': params})
+    request.app.setup.append({'ondd': form.processed_data})
     return dict(successful=True)
 
 
@@ -256,7 +246,7 @@ def install(app, route):
         ipc.connect(app.config['ondd.socket'])
     except Exception as err:
         logging.error('ONDD: connection failed: %s', err)
-        raise NotSupportedError('ONDD socket refused connection')
+        #raise NotSupportedError('ONDD socket refused connection')
     route(
         ('status', get_signal_status,
          'GET', '/status', dict(unlocked=True, skip=['setup'])),
@@ -274,8 +264,8 @@ class Dashboard(DashboardPlugin):
     javascript = ['ondd.js']
 
     def get_context(self):
+        initial_data = request.app.setup.get('ondd', {})
+        initial_data = {} if isinstance(initial_data, bool) else initial_data
         return dict(status=ipc.get_status(),
-                    vals=request.app.setup.get('ondd', {}),
-                    files=[],
-                    errors={},
-                    **CONST)
+                    form=ONDDForm(initial_data),
+                    files=[])
