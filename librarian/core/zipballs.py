@@ -12,7 +12,6 @@ import os
 import json
 import shutil
 import zipfile
-import tempfile
 try:
     from io import BytesIO as StringIO
 except ImportError:
@@ -126,24 +125,34 @@ def extract(path, target):
     caller has performed necessary validation.
 
     Extraction process looks like this:
-    - Zipfile is first extracted to a temporary directory specified by the
-      operating system configuration.
-    - The target path is calcualted based on zipfile name, and it is checked
-      for already existing content.
-    - Any existing content is renmaed with '.backup' suffix.
+    - Zipfile is first extracted to `target` path
+    - If extraction fails, the partially extracted folder is deleted
+    - The path of the target nested directory structure is calcualted based on
+      zip filename
+    - Any existing content is renamed with '.backup' suffix.
     - The extracted directory is then moved to target path.
+    - If extraction is successful, the backup folder is deleted
 
     Function returns the path to which the zipball has been extracted.
+
+    :param path:    absolute path to zipball
+    :param target:  absolute path to directory where zipball is to be extracted
     """
     # Calculate paths involved
-    tempdir = tempfile.gettempdir()
     name, _ = os.path.splitext(os.path.basename(path))
-    extract_path = os.path.join(tempdir, name)
     target_path = content.to_path(name, prefix=target)
+    extract_path = os.path.join(target, name)
 
-    # Extract the zip file to temporary directory
+    # Extract the zip file to target
     zfile = zipfile.ZipFile(path)
-    zfile.extractall(tempdir)
+    try:
+        zfile.extractall(target)
+    except Exception:
+        # if extraction fails, e.g. no space on device, remove partially
+        # extracted folder if it exists at all, and re-raise
+        if os.path.exists(extract_path):
+            shutil.rmtree(extract_path)
+        raise
 
     # Back up existing target directory with .backup suffix
     backup_path = backup(target_path)
@@ -152,7 +161,7 @@ def extract(path, target):
     shutil.move(extract_path, target_path)
 
     # Remove the backup
-    if backup_path:
+    if os.path.exists(backup_path):
         shutil.rmtree(backup_path)
 
     return target_path

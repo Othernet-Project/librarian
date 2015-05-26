@@ -232,114 +232,58 @@ def test_backup_returns_none_if_no_backup_is_done(rename, exists):
     assert mod.backup('foo') is None
 
 
-@mock.patch.object(mod, 'backup')
-@mock.patch.object(mod.shutil, 'move')
 @mock.patch.object(mod.shutil, 'rmtree')
-@mock.patch.object(mod.tempfile, 'gettempdir')
-@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
-@mock.patch.object(mod.content, 'to_path')
-def test_extract_to_tempdir(to_path, ZipFile, gettempdir, *ignored):
-    to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
-                            '/255/44')
-    path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
-    mod.extract(path, '/srv/zipballs')
-    ZipFile.return_value.extractall.assert_called_once_with(
-        gettempdir.return_value)
-
-
-@mock.patch.object(mod, 'backup')
-@mock.patch.object(mod.shutil, 'rmtree')
-@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
-@mock.patch.object(mod.tempfile, 'gettempdir')
-@mock.patch.object(mod.shutil, 'move')
-@mock.patch.object(mod.content, 'to_path')
-def test_creates_target_dir(to_path, move, gettempdir, *ignored):
-    md5_parts = ['202', 'ab6', '2b5', '51f', '6d7', 'fc0', '02f', '656', '525',
-                 '255', '44']
-    to_path.return_value = ('/srv/zipballs/' + '/'.join(md5_parts))
-    gettempdir.return_value = '/tmp/dir/'
-    path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
-    mod.extract(path, '/srv/zipballs')
-    move.assert_called_once_with(gettempdir.return_value + ''.join(md5_parts),
-                                 to_path.return_value)
-
-
-@mock.patch.object(mod.shutil, 'move')
-@mock.patch.object(mod.shutil, 'rmtree')
-@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
-@mock.patch.object(mod.tempfile, 'gettempdir')
-@mock.patch.object(mod, 'backup')
-@mock.patch.object(mod.content, 'to_path')
-def test_extract_backs_up(to_path, backup, gettempdir, *ignored):
-    to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
-                            '/255/44')
-    path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
-    mod.extract(path, '/srv/zipballs')
-    backup.assert_called_once_with(to_path.return_value)
-
-
-@mock.patch.object(mod, 'backup')
-@mock.patch.object(mod.shutil, 'rmtree')
-@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
-@mock.patch.object(mod.tempfile, 'gettempdir')
-@mock.patch.object(mod.shutil, 'move')
-@mock.patch.object(mod.content, 'to_path')
-def test_extract_dir_is_moved(to_path, move, gettempdir, *ignored):
-    to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
-                            '/255/44')
-    gettempdir.return_value = '/tmp'
-    path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
-    mod.extract(path, '/srv/zipballs')
-    move.assert_called_once_with('/tmp/202ab62b551f6d7fc002f65652525544',
-                                 to_path.return_value)
-
-
-@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
-@mock.patch.object(mod.shutil, 'move')
-@mock.patch.object(mod.tempfile, 'gettempdir')
-@mock.patch.object(mod, 'backup')
-@mock.patch.object(mod.shutil, 'rmtree')
-@mock.patch.object(mod.content, 'to_path')
-def test_extract_backup_removed(to_path, rmtree, backup, gettempdir,
-                                *ignored):
-    to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
-                            '/255/44')
-    gettempdir.return_value = '/tmp'
-    path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
-    backup.return_value = 'foo.backup'
-    mod.extract(path, '/srv/zipballs')
-    rmtree.assert_called_once_with('foo.backup')
-
-
-@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
-@mock.patch.object(mod.shutil, 'move')
-@mock.patch.object(mod.tempfile, 'gettempdir')
-@mock.patch.object(mod, 'backup')
-@mock.patch.object(mod.shutil, 'rmtree')
-@mock.patch.object(mod.content, 'to_path')
-def test_extract_no_backup(to_path, rmtree, backup, gettempdir,
-                           *ignored):
-    to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
-                            '/255/44')
-    gettempdir.return_value = '/tmp'
-    path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
-    backup.return_value = None
-    mod.extract(path, '/srv/zipballs')
-    assert not rmtree.called
-
-
-@mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
+@mock.patch.object(mod.os.path, 'exists')
 @mock.patch.object(mod.shutil, 'move')
 @mock.patch.object(mod, 'backup')
-@mock.patch.object(mod.shutil, 'rmtree')
-@mock.patch.object(mod.tempfile, 'gettempdir')
+@mock.patch.object(mod.zipfile, 'ZipFile')
 @mock.patch.object(mod.content, 'to_path')
-def test_extract_target_path_returned(to_path, gettempdir, *ignored):
-    to_path.return_value = ('/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525'
-                            '/255/44')
-    gettempdir.return_value = '/tmp'
+def test_extract_success(to_path, ZipFile, backup, move, exists, rmtree):
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
-    assert mod.extract(path, '/srv/zipballs') == to_path.return_value
+    target = '/srv/zipballs'
+    extract_path = '/srv/zipballs/202ab62b551f6d7fc002f65652525544'
+    content_path = '/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525/255/44'
+
+    to_path.return_value = content_path
+    backup.return_value = '/path/to/cont.backup'
+    exists.return_value = True
+
+    assert mod.extract(path, target) == content_path
+
+    ZipFile.assert_called_once_with(path)
+    ZipFile.return_value.extractall.assert_called_once_with(target)
+
+    backup.assert_called_once_with(content_path)
+    move.assert_called_once_with(extract_path, content_path)
+    exists.assert_called_once_with(backup.return_value)
+    rmtree.assert_called_once_with(backup.return_value)
+
+
+@mock.patch.object(mod.shutil, 'rmtree')
+@mock.patch.object(mod.os.path, 'exists')
+@mock.patch.object(mod.shutil, 'move')
+@mock.patch.object(mod, 'backup')
+@mock.patch.object(mod.zipfile, 'ZipFile')
+@mock.patch.object(mod.content, 'to_path')
+def test_extract_fail(to_path, ZipFile, backup, move, exists, rmtree):
+    path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
+    target = '/srv/zipballs'
+    extract_path = '/srv/zipballs/202ab62b551f6d7fc002f65652525544'
+    content_path = '/srv/zipballs/202/ab6/2b5/51f/6d7/fc0/02f/656/525/255/44'
+
+    to_path.return_value = content_path
+    ZipFile.return_value.extractall.side_effect = OSError()
+    exists.return_value = True
+
+    with pytest.raises(OSError):
+        mod.extract(path, target)
+
+    ZipFile.assert_called_once_with(path)
+    ZipFile.return_value.extractall.assert_called_once_with(target)
+    exists.assert_called_once_with(extract_path)
+    rmtree.assert_called_once_with(extract_path)
+    assert not backup.called
+    assert not move.called
 
 
 def test_get_zip_path():
