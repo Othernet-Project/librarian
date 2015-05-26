@@ -3,8 +3,7 @@ import pytest
 
 import librarian.core.archive as mod
 
-
-MOD = mod.__name__
+from ..helpers import strip_wrappers
 
 
 @pytest.fixture
@@ -13,6 +12,41 @@ def mocked_backend():
     init_flag = '_{0}__initialized'.format(mod.BaseArchive.__name__)
     setattr(backend, init_flag, True)
     return backend
+
+
+@mock.patch.object(mod.os, 'unlink')
+@mock.patch.object(mod.os.path, 'exists')
+@mock.patch.object(mod.os, 'symlink')
+def test_content_extraction_marker_success(symlink, exists, unlink):
+    mocked_func = mock.Mock(__name__='myfunc')
+    mocked_func.return_value = True
+    exists.return_value = False
+    archive = mock.Mock()
+    archive.config = {'unpackdir': '/unpackdir'}
+    decorated = mod.content_extraction_marker(mocked_func)
+    assert decorated(archive,
+                     'content_id',
+                     '/spool/file.zip',
+                     {'title': 'some'})
+    symlink.assert_called_once_with('/spool/file.zip', '/unpackdir/file.zip')
+    unlink.assert_called_once_with('/unpackdir/file.zip')
+
+
+@mock.patch.object(mod.os, 'unlink')
+@mock.patch.object(mod.os.path, 'exists')
+@mock.patch.object(mod.os, 'symlink')
+def test_content_extraction_marker_fail(symlink, exists, unlink):
+    mocked_func = mock.Mock(__name__='myfunc')
+    mocked_func.side_effect = Exception()
+    exists.return_value = True  # also try out variation when symlink exists
+    archive = mock.Mock()
+    archive.config = {'unpackdir': '/unpackdir'}
+    with pytest.raises(Exception):
+        decorated = mod.content_extraction_marker(mocked_func)
+        decorated(archive, 'content_id', '/spool/file.zip', {'title': 'some'})
+
+    assert not symlink.called  # not called because symlink already existed
+    assert not unlink.called  # not called because extraction failed
 
 
 class TestArchive(object):
@@ -95,9 +129,10 @@ class TestArchive(object):
 
 @pytest.fixture
 def base_archive():
-    return mod.BaseArchive(contentdir='unimportant',
-                           spooldir='unimportant',
-                           meta_filename='unimportant')
+    return mod.BaseArchive(unpackdir='unpackdir',
+                           contentdir='contentdir',
+                           spooldir='spooldir',
+                           meta_filename='metafile.ext')
 
 
 class TestBaseArchive(object):
@@ -129,7 +164,8 @@ class TestBaseArchive(object):
             mod.BaseArchive()
 
     def test_base_archive_init_success(self):
-        archive = mod.BaseArchive(contentdir='test',
+        archive = mod.BaseArchive(unpackdir='test',
+                                  contentdir='test',
                                   spooldir='test',
                                   meta_filename='test')
         init_flag = '_{0}__initialized'.format(mod.BaseArchive.__name__)
@@ -201,7 +237,8 @@ class TestBaseArchive(object):
             return 1
 
         add_meta_to_db.side_effect = mocked_add_meta
-        assert base_archive.process_content(content_id, zip_path, meta) == 1
+        undecorated = strip_wrappers(base_archive.process_content)
+        assert undecorated(base_archive, content_id, zip_path, meta) == 1
         extract.assert_called_once_with(zip_path, contentdir)
         remove.assert_called_once_with(zip_path)
         get_content_size.assert_called_once_with(contentdir, content_id)
@@ -215,7 +252,8 @@ class TestBaseArchive(object):
     def test_process_content_fail(self, extract, remove, add_meta_to_db,
                                   delete_content_files, base_archive):
         extract.side_effect = IOError()
-        assert base_archive.process_content('some_id', 'zip/path', {}) is False
+        undecorated = strip_wrappers(base_archive.process_content)
+        assert undecorated(base_archive, 'some_id', 'zip/path', {}) is False
         delete_content_files.assert_called_once_with('some_id')
         assert not remove.called
         assert not add_meta_to_db.called
@@ -230,9 +268,9 @@ class TestBaseArchive(object):
         process_content.return_value = 1
         validate.return_value = {'md5': content_id, 'title': 'test'}
         assert base_archive._BaseArchive__add_to_archive(content_id)
-        get_zip_path.assert_called_once_with(content_id, 'unimportant')
+        get_zip_path.assert_called_once_with(content_id, 'spooldir')
         validate.assert_called_once_with('zipball path',
-                                         meta_filename='unimportant')
+                                         meta_filename='metafile.ext')
         process_content.assert_called_once_with(content_id,
                                                 get_zip_path.return_value,
                                                 validate.return_value)
@@ -245,9 +283,9 @@ class TestBaseArchive(object):
         get_zip_path.return_value = 'zipball path'
         validate.side_effect = mod.zipballs.ValidationError('/path', 'msg')
         assert not base_archive._BaseArchive__add_to_archive('some_id')
-        get_zip_path.assert_called_once_with('some_id', 'unimportant')
+        get_zip_path.assert_called_once_with('some_id', 'spooldir')
         validate.assert_called_once_with('zipball path',
-                                         meta_filename='unimportant')
+                                         meta_filename='metafile.ext')
         assert not process_content.called
 
     @mock.patch.object(mod.BaseArchive, '_BaseArchive__add_to_archive')
@@ -285,8 +323,8 @@ class TestBaseArchive(object):
     def test_reload_content(self, find_content_dirs, to_md5, process_content,
                             base_archive):
         to_md5.side_effect = lambda x: x.strip('/')
-        find_content_dirs.return_value = ['unimportant/contentid',
-                                          'unimportant/otherid']
+        find_content_dirs.return_value = ['contentdir/contentid',
+                                          'contentdir/otherid']
         process_content.return_value = 1
         assert base_archive.reload_content() == 2
         to_md5.assert_has_calls([mock.call('contentid'), mock.call('otherid')])

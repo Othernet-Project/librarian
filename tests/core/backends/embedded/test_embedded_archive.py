@@ -14,9 +14,10 @@ def archive():
     mocked_db = mock.Mock()
     mocked_db.sqlin = Database.sqlin
     return mod.EmbeddedArchive(mocked_db,
-                               contentdir='unimportant',
-                               spooldir='unimportant',
-                               meta_filename='unimportant')
+                               unpackdir='unpackdir',
+                               contentdir='contentdir',
+                               spooldir='spooldir',
+                               meta_filename='metafile.ext')
 
 
 def mock_cursor(func):

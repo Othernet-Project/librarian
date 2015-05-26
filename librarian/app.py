@@ -222,6 +222,7 @@ def prestart(config, logfile=None, debug=False):
 
     ensure_dir(config['content.spooldir'])
     ensure_dir(config['content.appdir'])
+    ensure_dir(config['content.unpackdir'])
     ensure_dir(config['content.contentdir'])
     ensure_dir(config['content.covers'])
 

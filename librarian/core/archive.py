@@ -36,6 +36,24 @@ def content_id_list(func):
     return wrapper
 
 
+def content_extraction_marker(func):
+    """Before content extraction begins, symlink the extractedable zipball into
+    `unpackdir`, and remove the symlink only if the extraction was successful.
+    Startup hooks will look for symlinks that were not removed, which means a
+    zipball extraction failed and will attempt to resolve the issue."""
+    @functools.wraps(func)
+    def wrapper(self, content_id, zip_path, meta):
+        filename = os.path.basename(zip_path)
+        symlink_path = os.path.join(self.config['unpackdir'], filename)
+        if not os.path.exists(symlink_path):
+            os.symlink(zip_path, symlink_path)
+
+        result = func(self, content_id, zip_path, meta)
+        os.unlink(symlink_path)
+        return result
+    return wrapper
+
+
 class Archive(object):
 
     def __init__(self, backend):
@@ -84,6 +102,7 @@ class Archive(object):
 class BaseArchive(object):
 
     required_config_params = (
+        'unpackdir',
         'contentdir',
         'spooldir',
         'meta_filename',
@@ -238,6 +257,7 @@ class BaseArchive(object):
         else:
             return True
 
+    @content_extraction_marker
     def process_content(self, content_id, zip_path, meta):
         """Extract zipball and add it's metadata to the database.
         - If extraction fails, it deletes the content folder.
