@@ -144,6 +144,37 @@ class Siege(Command):
             subprocess.check_call(cmd)
 
 
+class Phantom(Command):
+    description = 'perform load testing with phantomjs'
+    user_options = [('target=', None, 'Target URL'),
+                    ('workers=', None, 'Number of workers'),
+                    ('cycles=', None, 'Number of cycles'),
+                    ('silent', None, 'Disable verbose output')]
+    boolean_options = ['silent']
+    default_cycles = 10
+    default_workers = 10
+
+    def initialize_options(self):
+        self.target = None
+        self.workers = None
+        self.cycles = None
+        self.silent = 0
+
+    def finalize_options(self):
+        self.workers = int(self.workers or self.default_workers)
+        self.cycles = int(self.cycles or self.default_cycles)
+
+    def run(self):
+        from scripts import loadtest
+
+        if not self.target:
+            print("usage: setup.py phantom --target=http://domain.tld "
+                  "[--workers=10 --cycles=10]")
+            return
+
+        loadtest.perform(self.target, self.workers, self.cycles, self.silent)
+
+
 setup(
     name='librarian',
     version=VERSION,
@@ -174,5 +205,6 @@ setup(
         'sdist': Package,
         'uncache': Clean,
         'siege': Siege,
+        'phantom': Phantom,
     },
 )
