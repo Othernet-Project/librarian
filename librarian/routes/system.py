@@ -8,6 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import os
 import json
 import logging
 import datetime
@@ -28,6 +29,18 @@ try:
 except Exception:
     logging.warning('No hashed assets found.')
     ASSET_MAPPING = {}
+else:
+    # WORKAROUND: apps api has no access to `static_url` template helper, so if
+    # a request comes in with the old unhashed paths, the symlinks with unhased
+    # filenames will resolve to the hashed ones
+    for original, hashed in ASSET_MAPPING.items():
+        original_path = os.path.join(STATICDIR, original)
+        original_dir = os.path.dirname(original_path)
+        if not os.path.exists(original_dir):
+            os.makedirs(original_dir)
+        hashed_path = os.path.join(STATICDIR, HASHEDDIR, hashed)
+        if not os.path.exists(original_path):
+            os.symlink(hashed_path, original_path)
 
 
 @template_helper
@@ -41,14 +54,7 @@ def static_url(route, path):
 
 
 def send_static(path):
-    # WORKAROUND: apps api has no access to `static_url` template helper, so if
-    # a request comes in with the old unhashed paths, return a file to them
-    try:
-        actual_path = join(HASHEDDIR, ASSET_MAPPING[path])
-    except KeyError:
-        actual_path = path
-    # END WORKAROUND
-    return static_file(actual_path, root=STATICDIR)
+    return static_file(path, root=STATICDIR)
 
 
 def send_favicon():
