@@ -67,7 +67,7 @@ def report(responses, elapsed_time):
     print("Average response time:   {0}".format(ms2sec(average_response_time)))
     print("Slowest response time:   {0}".format(ms2sec(slowest)))
     print("Fastest response time:   {0}".format(ms2sec(fastest)))
-    print("Transaction rate:        {0}".format(transaction_rate))
+    print("Transaction rate:        {0} trans/sec".format(transaction_rate))
 
 
 def perform(target, worker_count, cycle_count, silent):
