@@ -121,6 +121,7 @@ class InMemoryCache(BaseCache):
             (expires, data) = self._cache[key]
             if not self.has_expired(expires):
                 return data
+            self._cache.pop(key, None)  # delete expired data from cache
         except KeyError:
             return None
 
