@@ -110,16 +110,16 @@ class Clean(Command):
         clean_pyc()
 
 
-class Benchmark(Command):
-    description = 'run siege against the specified path'
-    user_options = [('siege-target=', None, 'Target URL'),
-                    ('siege-args=', None, 'Arguments for siege')]
+class Siege(Command):
+    description = 'perform load testing with siege'
+    user_options = [('target=', None, 'Target URL'),
+                    ('args=', None, 'Arguments for siege')]
     default_args = ['-d1', '-r10']
     default_concurrent = [10, 20, 30, 40]
 
     def initialize_options(self):
-        self.siege_target = None
-        self.siege_args = None
+        self.target = None
+        self.args = None
 
     def finalize_options(self):
         pass
@@ -127,19 +127,20 @@ class Benchmark(Command):
     def run(self):
         import subprocess
 
-        if not self.siege_target:
-            print('siege-target (target URL) must be specified.')
+        if not self.target:
+            print("usage: setup.py siege --target=http://domain.tld "
+                  "[--args='-c10 -d1 -r10']")
             return
 
-        if not self.siege_args:
+        if not self.args:
             for concurrent in self.default_concurrent:
                 cmd = ['siege',
-                       self.siege_target,
+                       self.target,
                        '-c{0}'.format(concurrent)] + self.default_args
                 subprocess.check_call(cmd)
                 print("=" * 80)
         else:
-            cmd = ['siege', self.siege_target] + self.siege_args.split()
+            cmd = ['siege', self.target] + self.args.split()
             subprocess.check_call(cmd)
 
 
@@ -172,6 +173,6 @@ setup(
         'develop': Develop,
         'sdist': Package,
         'uncache': Clean,
-        'benchmark': Benchmark,
+        'siege': Siege,
     },
 )
