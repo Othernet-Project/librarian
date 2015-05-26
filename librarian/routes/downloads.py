@@ -37,14 +37,9 @@ def get_download_paths():
 def filter_downloads(lang):
     conf = request.app.config
     zballs = get_download_paths()
-    if zballs:
-        last_zip = datetime.fromtimestamp(zballs[0][1])
-        nzipballs = len(zballs)
-        logging.info('Found %s updates', nzipballs)
-    else:
-        last_zip = None
-        nzipballs = 0
-        logging.info('No updates found')
+    zball_count = len(zballs)
+    last_zball = datetime.fromtimestamp(zballs[0][1]) if zballs else None
+    logging.info('Found {0} updates'.format(zball_count))
     # Collect metadata of valid zipballs. If a language filter is specified
     # filter the list based on that.
     meta_filename = conf['content.metadata']
@@ -71,8 +66,8 @@ def filter_downloads(lang):
     archive.add_replacement_data(metas, needed_keys=('title',))
 
     return dict(metadata=metas,
-                nzipballs=nzipballs,
-                last_zip=last_zip)
+                nzipballs=zball_count,
+                last_zip=last_zball)
 
 
 @view('downloads', vals={})
