@@ -9,13 +9,13 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
-import stat
 import logging
 
 from fdsend import send_file
 from bottle import request, abort
 
 from ..core import apps
+from ..core import zipballs
 from ..utils.template import view
 
 
@@ -48,10 +48,14 @@ def send_app_file(appid, path='index.html'):
     if not os.path.exists(appdir):
         abort(404)
     try:
-        metadata, content = apps.extract_file(app_path, path, no_read=True)
-    except KeyError as err:
-        logging.error("<%s> Coult not extract '%s': %s", app_path, path, err)
+        content = zipballs.get_file(app_path, path)
+    except zipballs.ValidationError as exc:
+        logging.error("<{0}> Coult not extract '{1}': {2}".format(app_path,
+                                                                  path,
+                                                                  exc))
         abort(404)
-    filename = os.path.basename(path)
-    return send_file(content, filename, metadata.file_size,
-                     os.stat(app_path)[stat.ST_MTIME])
+    else:
+        filename = os.path.basename(path)
+        timestamp = os.stat(app_path).st_mtime
+        content_file = zipballs.StringIO(content)
+        return send_file(content_file, filename, len(content), timestamp)
