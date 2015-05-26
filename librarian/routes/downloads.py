@@ -33,6 +33,7 @@ def get_download_paths():
     return list(reversed(downloads.order_downloads(paths)))
 
 
+@cached(prefix='downloads', timeout=30)
 def filter_downloads(lang):
     conf = request.app.config
     zballs = get_download_paths()
