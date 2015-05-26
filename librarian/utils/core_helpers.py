@@ -22,6 +22,7 @@ def open_archive():
     conf = request.app.config
     return Archive.setup(conf['librarian.backend'],
                          request.db.main,
+                         unpackdir=conf['content.unpackdir'],
                          contentdir=conf['content.contentdir'],
                          spooldir=conf['content.spooldir'],
                          meta_filename=conf['content.metadata'])

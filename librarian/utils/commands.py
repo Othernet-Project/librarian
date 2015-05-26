@@ -77,6 +77,7 @@ def refill_command(arg, databases, config):
     print('Begin content refill.')
     archive = Archive.setup(config['librarian.backend'],
                             databases.main,
+                            unpackdir=config['content.unpackdir'],
                             contentdir=config['content.contentdir'],
                             spooldir=config['content.spooldir'],
                             meta_filename=config['content.metadata'])

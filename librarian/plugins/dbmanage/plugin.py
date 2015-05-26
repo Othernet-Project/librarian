@@ -112,6 +112,7 @@ def rebuild():
         logging.debug('Prepared new database')
         archive = Archive.setup(conf['librarian.backend'],
                                 db,
+                                unpackdir=conf['content.unpackdir'],
                                 contentdir=conf['content.contentdir'],
                                 spooldir=conf['content.spooldir'],
                                 meta_filename=conf['content.metadata'])
