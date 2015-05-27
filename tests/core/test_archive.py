@@ -315,18 +315,55 @@ class TestBaseArchive(object):
         __remove_from_archive.assert_has_calls([mock.call('some_id'),
                                                 mock.call('other_id')])
 
-    @mock.patch.object(mod.BaseArchive, '_BaseArchive__add_to_archive')
+    @mock.patch.object(mod.BaseArchive, 'add_meta_to_db')
+    @mock.patch.object(mod.BaseArchive, '_BaseArchive__add_auto_fields')
+    @mock.patch.object(mod.metadata, 'process_meta')
+    @mock.patch.object(mod.content, 'get_meta')
+    def test___reload_content_success(self, get_meta, process_meta,
+                                      __add_auto_fields, add_meta_to_db,
+                                      base_archive):
+        contentdir = 'contentdir'
+        content_id = 'cid'
+        add_meta_to_db.return_value = True
+        assert base_archive._BaseArchive__reload_content(content_id,
+                                                         contentdir)
+        get_meta.assert_called_once_with(contentdir,
+                                         content_id,
+                                         'metafile.ext')
+        process_meta.assert_called_once_with(get_meta.return_value)
+        __add_auto_fields.assert_called_once_with(process_meta.return_value,
+                                                  contentdir,
+                                                  content_id)
+        add_meta_to_db.assert_called_once_with(process_meta.return_value)
+
+    @mock.patch.object(mod.BaseArchive, 'add_meta_to_db')
+    @mock.patch.object(mod.metadata, 'process_meta')
+    @mock.patch.object(mod.content, 'get_meta')
+    def test___reload_content_fail(self, get_meta, process_meta,
+                                   add_meta_to_db, base_archive):
+        contentdir = 'contentdir'
+        content_id = 'cid'
+        process_meta.side_effect = mod.metadata.MetadataError('msg', [])
+        assert not base_archive._BaseArchive__reload_content(content_id,
+                                                             contentdir)
+        get_meta.assert_called_once_with(contentdir,
+                                         content_id,
+                                         'metafile.ext')
+        process_meta.assert_called_once_with(get_meta.return_value)
+        assert not add_meta_to_db.called
+
+    @mock.patch.object(mod.BaseArchive, '_BaseArchive__reload_content')
     @mock.patch.object(mod.content, 'to_md5')
     @mock.patch.object(mod.content, 'find_content_dirs')
-    def test_reload_content(self, find_content_dirs, to_md5, __add_to_archive,
+    def test_reload_content(self, find_content_dirs, to_md5, __reload_content,
                             base_archive):
         to_md5.side_effect = lambda x: x.strip('/')
         find_content_dirs.return_value = ['contentdir/contentid',
                                           'contentdir/otherid']
-        __add_to_archive.return_value = 1
+        __reload_content.return_value = 1
         assert base_archive.reload_content() == 2
         to_md5.assert_has_calls([mock.call('contentid'), mock.call('otherid')])
 
         calls = [mock.call('contentid', 'contentdir'),
                  mock.call('otherid', 'contentdir')]
-        __add_to_archive.assert_has_calls(calls)
+        __reload_content.assert_has_calls(calls)

@@ -262,6 +262,12 @@ class BaseArchive(object):
         else:
             return True
 
+    def __add_auto_fields(self, meta, contentdir, content_id):
+        # add auto-generated values to metadata before writing into db
+        meta['md5'] = content_id
+        meta['updated'] = datetime.datetime.now()
+        meta['size'] = content.get_content_size(contentdir, content_id)
+
     def process_content(self, content_id, zip_path, meta):
         """Extract zipball and add it's metadata to the database.
         - If extraction fails, it deletes the content folder.
@@ -284,10 +290,7 @@ class BaseArchive(object):
         else:
             # extraction successful, delete zipball
             os.remove(zip_path)
-            # add auto-generated values to metadata before writing into db
-            meta['md5'] = content_id
-            meta['updated'] = datetime.datetime.now()
-            meta['size'] = content.get_content_size(contentdir, content_id)
+            self.__add_auto_fields(meta, contentdir, content_id)
             return self.add_meta_to_db(meta)
 
     def __add_to_archive(self, content_id, src_dir):
@@ -336,12 +339,25 @@ class BaseArchive(object):
         :returns:            int: successfully removed content count"""
         return sum([self.__remove_from_archive(cid) for cid in content_ids])
 
+    def __reload_content(self, content_id, contentdir):
+        meta_filename = self.config['meta_filename']
+        try:
+            raw_meta = content.get_meta(contentdir, content_id, meta_filename)
+            meta = metadata.process_meta(raw_meta)
+        except metadata.MetadataError as exc:
+            logging.debug("Metadata of '{0}' is invalid: "
+                          "'{1}'".format(content_id, exc))
+            return False
+        else:
+            self.__add_auto_fields(meta, contentdir, content_id)
+            return self.add_meta_to_db(meta)
+
     def reload_content(self):
         """Reload all existing content from `contentdir` into database."""
         contentdir = self.config['contentdir']
         cont_ids = [content.to_md5(os.path.relpath(content_path, contentdir))
                     for content_path in content.find_content_dirs(contentdir)]
-        return sum([self.__add_to_archive(cid, contentdir)
+        return sum([self.__reload_content(cid, contentdir)
                     for cid in cont_ids if cid])
 
     def clear_and_reload(self):
