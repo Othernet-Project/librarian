@@ -257,10 +257,12 @@ def test_find_image_no_files(scandir):
     assert meta.find_image() is None
 
 
+@mock.patch.object(mod.os.path, 'exists')
 @mock.patch.object(mod, 'scandir')
-def test_find_image_success(scandir):
+def test_find_image_success(scandir, exists):
     mocked_entry = mock.Mock()
     mocked_entry.name = 'image.jpg'
+    exists.return_value = True
     scandir.scandir.return_value = [mocked_entry]
     meta = mod.Meta({'foo': 'bar'}, '/content/path')
     assert meta.find_image() == 'image.jpg'
