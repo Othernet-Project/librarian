@@ -12,41 +12,6 @@ def mocked_backend():
     return backend
 
 
-@mock.patch.object(mod.os, 'unlink')
-@mock.patch.object(mod.os.path, 'exists')
-@mock.patch.object(mod.os, 'symlink')
-def test_content_extraction_marker_success(symlink, exists, unlink):
-    mocked_func = mock.Mock(__name__='myfunc')
-    mocked_func.return_value = True
-    exists.return_value = False
-    archive = mock.Mock()
-    archive.config = {'unpackdir': '/unpackdir'}
-    decorated = mod.content_extraction_marker(mocked_func)
-    assert decorated(archive,
-                     'content_id',
-                     '/spool/file.zip',
-                     {'title': 'some'})
-    symlink.assert_called_once_with('/spool/file.zip', '/unpackdir/file.zip')
-    unlink.assert_called_once_with('/unpackdir/file.zip')
-
-
-@mock.patch.object(mod.os, 'unlink')
-@mock.patch.object(mod.os.path, 'exists')
-@mock.patch.object(mod.os, 'symlink')
-def test_content_extraction_marker_fail(symlink, exists, unlink):
-    mocked_func = mock.Mock(__name__='myfunc')
-    mocked_func.side_effect = Exception()
-    exists.return_value = True  # also try out variation when symlink exists
-    archive = mock.Mock()
-    archive.config = {'unpackdir': '/unpackdir'}
-    with pytest.raises(Exception):
-        decorated = mod.content_extraction_marker(mocked_func)
-        decorated(archive, 'content_id', '/spool/file.zip', {'title': 'some'})
-
-    assert not symlink.called  # not called because symlink already existed
-    assert not unlink.called  # not called because extraction failed
-
-
 class TestArchive(object):
 
     def test_init_invalid_backend(self):
@@ -215,11 +180,39 @@ class TestBaseArchive(object):
         assert not base_archive.delete_content_files('some_id')
         shutil.rmtree.assert_called_once_with('/content_root/some_id/')
 
+    @mock.patch.object(mod.os, 'unlink')
+    @mock.patch.object(mod.os.path, 'exists')
+    @mock.patch.object(mod.zipballs, 'extract')
+    @mock.patch.object(mod.os, 'symlink')
+    def test_extract_zipball_success(self, symlink, extract, exists, unlink,
+                                     base_archive):
+        exists.return_value = False
+        base_archive.extract_zipball('/spool/file.zip', '/content/path')
+        symlink.assert_called_once_with('/spool/file.zip',
+                                        'unpackdir/file.zip')
+        extract.assert_called_once_with('/spool/file.zip', '/content/path')
+        unlink.assert_called_once_with('unpackdir/file.zip')
+
+    @mock.patch.object(mod.os, 'unlink')
+    @mock.patch.object(mod.os.path, 'exists')
+    @mock.patch.object(mod.zipballs, 'extract')
+    @mock.patch.object(mod.os, 'symlink')
+    def test_extract_zipball_fail(self, symlink, extract, exists, unlink,
+                                  base_archive):
+        exists.return_value = True  # try out variation when symlink exists
+        extract.side_effect = Exception()
+        with pytest.raises(Exception):
+            base_archive.extract_zipball('/spool/file.zip', '/content/path')
+
+        extract.assert_called_once_with('/spool/file.zip', '/content/path')
+        assert not symlink.called  # not called because symlink already existed
+        assert not unlink.called  # not called because extraction failed
+
     @mock.patch.object(mod.BaseArchive, 'delete_content_files')
     @mock.patch.object(mod.BaseArchive, 'add_meta_to_db')
     @mock.patch.object(mod.os, 'remove')
     @mock.patch.object(mod.content, 'get_content_size')
-    @mock.patch.object(mod, 'extract_zipball')
+    @mock.patch.object(mod.BaseArchive, 'extract_zipball')
     def test_process_content_success(self, extract, get_content_size, remove,
                                      add_meta_to_db, delete_content_files,
                                      base_archive):
@@ -245,7 +238,7 @@ class TestBaseArchive(object):
     @mock.patch.object(mod.BaseArchive, 'delete_content_files')
     @mock.patch.object(mod.BaseArchive, 'add_meta_to_db')
     @mock.patch.object(mod.os, 'remove')
-    @mock.patch.object(mod, 'extract_zipball')
+    @mock.patch.object(mod.BaseArchive, 'extract_zipball')
     def test_process_content_fail(self, extract, remove, add_meta_to_db,
                                   delete_content_files, base_archive):
         extract.side_effect = IOError()

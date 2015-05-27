@@ -36,29 +36,6 @@ def content_id_list(func):
     return wrapper
 
 
-def content_extraction_marker(func):
-    """Before content extraction begins, symlink the extractedable zipball into
-    `unpackdir`, and remove the symlink only if the extraction was successful.
-    Startup hooks will look for symlinks that were not removed, which means a
-    zipball extraction failed and will attempt to resolve the issue."""
-    @functools.wraps(func)
-    def wrapper(self, content_id, zip_path, meta):
-        filename = os.path.basename(zip_path)
-        symlink_path = os.path.join(self.config['unpackdir'], filename)
-        if not os.path.exists(symlink_path):
-            os.symlink(zip_path, symlink_path)
-
-        result = func(self, content_id, zip_path, meta)
-        os.unlink(symlink_path)
-        return result
-    return wrapper
-
-
-# zipball extraction function wrapped specifically to suit extractions
-# initiated by the archive
-extract_zipball = content_extraction_marker(zipballs.extract)
-
-
 class Archive(object):
 
     def __init__(self, backend):
@@ -268,6 +245,22 @@ class BaseArchive(object):
         meta['updated'] = datetime.datetime.now()
         meta['size'] = content.get_content_size(contentdir, content_id)
 
+    def extract_zipball(self, zip_path, contentdir):
+        """Extract zipball found on `zip_path` into `contentdir`.
+        Before content extraction begins, symlink the extractedable zipball
+        into `unpackdir`, and remove the symlink only if extraction was
+        successful.
+        Startup hooks will look for symlinks that were not removed, which means
+        a zipball extraction failed and will attempt to resolve the issue."""
+        filename = os.path.basename(zip_path)
+        symlink_path = os.path.join(self.config['unpackdir'], filename)
+        if not os.path.exists(symlink_path):
+            os.symlink(zip_path, symlink_path)
+
+        zipballs.extract(zip_path, contentdir)
+        # if extract didn't raise an exception, it's safe to remove the symlink
+        os.unlink(symlink_path)
+
     def process_content(self, content_id, zip_path, meta):
         """Extract zipball and add it's metadata to the database.
         - If extraction fails, it deletes the content folder.
@@ -281,7 +274,7 @@ class BaseArchive(object):
         """
         contentdir = self.config['contentdir']
         try:
-            extract_zipball(zip_path, contentdir)
+            self.extract_zipball(zip_path, contentdir)
         except Exception as exc:
             logging.debug("Extraction of '{0}' failed: "
                           "'{1}'".format(zip_path, exc))
