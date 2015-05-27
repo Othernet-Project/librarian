@@ -193,7 +193,7 @@ class Meta(object):
         return self.meta.get(key, default)
 
     def find_image(self):
-        if not self.content_path:
+        if not self.content_path or not os.path.exists(self.content_path):
             return None
 
         for entry in scandir.scandir(self.content_path):
