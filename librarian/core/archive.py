@@ -54,6 +54,11 @@ def content_extraction_marker(func):
     return wrapper
 
 
+# zipball extraction function wrapped specifically to suit extractions
+# initiated by the archive
+extract_zipball = content_extraction_marker(zipballs.extract)
+
+
 class Archive(object):
 
     def __init__(self, backend):
@@ -257,7 +262,6 @@ class BaseArchive(object):
         else:
             return True
 
-    @content_extraction_marker
     def process_content(self, content_id, zip_path, meta):
         """Extract zipball and add it's metadata to the database.
         - If extraction fails, it deletes the content folder.
@@ -271,7 +275,7 @@ class BaseArchive(object):
         """
         contentdir = self.config['contentdir']
         try:
-            zipballs.extract(zip_path, contentdir)
+            extract_zipball(zip_path, contentdir)
         except Exception as exc:
             logging.debug("Extraction of '{0}' failed: "
                           "'{1}'".format(zip_path, exc))
