@@ -2,7 +2,6 @@ import errno
 import os
 import re
 import shutil
-import tempfile
 import zipfile
 
 import scandir
@@ -19,6 +18,7 @@ def get_hash(filename):
 
 def unpack_zipball(md5, zip_path, content_dir):
     path_components = COMP_RE.findall(md5)
+    content_src = os.path.join(content_dir, md5)
     content_dest = os.path.join(content_dir, *path_components)
     # make sure previous folder does not exists from a previous possibly
     # failed migratio
@@ -26,10 +26,8 @@ def unpack_zipball(md5, zip_path, content_dir):
         shutil.rmtree(content_dest)
 
     try:
-        # extract zip to a temporary location
-        tmp_dir = tempfile.mkdtemp()
         with zipfile.ZipFile(zip_path, 'r') as zip_file:
-            zip_file.extractall(tmp_dir)
+            zip_file.extractall(content_dir)
     except IOError as exc:
         if exc.errno == errno.ENOSPC:
             # no space left on drive, do not try unpacking other zipballs
@@ -37,14 +35,14 @@ def unpack_zipball(md5, zip_path, content_dir):
         raise
     else:
         # move folder contents to new content path (ignore top level dir)
-        content_src = os.path.join(tmp_dir, md5)
         shutil.move(content_src, content_dest)
         # remove zip file
         os.remove(zip_path)
         return True
     finally:
-        # remove tmp folder
-        shutil.rmtree(tmp_dir)
+        # cleanup if needed
+        if os.path.exists(content_src):
+            shutil.rmtree(content_src)
 
 
 def up(db, conf):
