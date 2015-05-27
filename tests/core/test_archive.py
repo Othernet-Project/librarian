@@ -339,8 +339,8 @@ class TestBaseArchive(object):
     @mock.patch.object(mod.BaseArchive, 'add_meta_to_db')
     @mock.patch.object(mod.metadata, 'process_meta')
     @mock.patch.object(mod.content, 'get_meta')
-    def test___reload_content_fail(self, get_meta, process_meta,
-                                   add_meta_to_db, base_archive):
+    def test___reload_content_bad_meta(self, get_meta, process_meta,
+                                       add_meta_to_db, base_archive):
         contentdir = 'contentdir'
         content_id = 'cid'
         process_meta.side_effect = mod.metadata.MetadataError('msg', [])
@@ -350,6 +350,21 @@ class TestBaseArchive(object):
                                          content_id,
                                          'metafile.ext')
         process_meta.assert_called_once_with(get_meta.return_value)
+        assert not add_meta_to_db.called
+
+    @mock.patch.object(mod.BaseArchive, 'add_meta_to_db')
+    @mock.patch.object(mod.metadata, 'process_meta')
+    @mock.patch.object(mod.content, 'get_meta')
+    def test___reload_content_inaccessible_meta(self, get_meta, process_meta,
+                                                add_meta_to_db, base_archive):
+        contentdir = 'contentdir'
+        content_id = 'cid'
+        get_meta.side_effect = OSError()
+        assert not base_archive._BaseArchive__reload_content(content_id,
+                                                             contentdir)
+        get_meta.assert_called_once_with(contentdir,
+                                         content_id,
+                                         'metafile.ext')
         assert not add_meta_to_db.called
 
     @mock.patch.object(mod.BaseArchive, '_BaseArchive__reload_content')

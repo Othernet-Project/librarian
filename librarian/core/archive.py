@@ -348,6 +348,10 @@ class BaseArchive(object):
             logging.debug("Metadata of '{0}' is invalid: "
                           "'{1}'".format(content_id, exc))
             return False
+        except (OSError, IOError) as exc:
+            logging.debug("Error opening metadata: '{1}'".format(content_id,
+                                                                 exc))
+            return False
         else:
             self.__add_auto_fields(meta, contentdir, content_id)
             return self.add_meta_to_db(meta)
