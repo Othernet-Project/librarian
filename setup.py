@@ -114,8 +114,7 @@ class Siege(Command):
     description = 'perform load testing with siege'
     user_options = [('target=', None, 'Target URL'),
                     ('args=', None, 'Arguments for siege')]
-    default_args = ['-d1', '-r10']
-    default_concurrent = [10, 20, 30, 40]
+    default_args = ['-c10', '-d1', '-r10']
 
     def initialize_options(self):
         self.target = None
@@ -132,16 +131,9 @@ class Siege(Command):
                   "[--args='-c10 -d1 -r10']")
             return
 
-        if not self.args:
-            for concurrent in self.default_concurrent:
-                cmd = ['siege',
-                       self.target,
-                       '-c{0}'.format(concurrent)] + self.default_args
-                subprocess.check_call(cmd)
-                print("=" * 80)
-        else:
-            cmd = ['siege', self.target] + self.args.split()
-            subprocess.check_call(cmd)
+        args = self.args.split() if self.args else self.default_args
+        cmd = ['siege', self.target] + args
+        subprocess.check_call(cmd)
 
 
 class Phantom(Command):
