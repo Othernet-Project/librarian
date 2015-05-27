@@ -12,7 +12,7 @@ import os
 import json
 import logging
 import datetime
-from os.path import dirname, join, basename
+from os.path import abspath, dirname, join, basename
 
 from bottle import request, static_file, abort
 
@@ -21,7 +21,7 @@ from ..utils.template import view
 from ..utils.template_helpers import template_helper
 
 
-STATIC_ROOT = join(dirname(dirname(__file__)), 'static')
+STATIC_ROOT = join(dirname(dirname(abspath(__file__))), 'static')
 HASHED_DIR = 'dist'
 
 
@@ -33,7 +33,7 @@ def symlink_hashed_files_to_unhashed_paths(asset_map):
         if not os.path.exists(original_dir):
             os.makedirs(original_dir)
         # if a previous symlink exists, remove it
-        if os.path.exists(original_path) and os.path.islink(original_path):
+        if os.path.islink(original_path):
             os.unlink(original_path)
         # if it still exists, it's not a symlink but a real file so keep it
         if not os.path.exists(original_path):
