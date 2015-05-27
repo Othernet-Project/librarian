@@ -161,7 +161,7 @@ def extract(path, target):
     shutil.move(extract_path, target_path)
 
     # Remove the backup
-    if os.path.exists(backup_path):
+    if backup_path and os.path.exists(backup_path):
         shutil.rmtree(backup_path)
 
     return target_path
