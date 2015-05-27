@@ -17,7 +17,7 @@ import scandir
 
 COMP_RE = re.compile(r'([0-9a-f]{2,3})')  # path component
 MD5_RE = re.compile(r'[0-9a-f]{32}')  # complete md5 hexdigest
-HEX_PATH = r'(/[0-9a-f]{3}){10}/[0-9a-f]{2}'  # md5-based dir path
+HEX_PATH = r'(/[0-9a-f]{3}){10}/[0-9a-f]{2}$'  # md5-based dir path
 
 
 def fnwalk(path, fn, shallow=False):

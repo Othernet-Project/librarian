@@ -202,9 +202,16 @@ def test_fnwalk_match_self(mock_scandir):
 def test_find_content_dir(md5dirs):
     """ Should return only well-formed MD5-base paths """
     hashes, dirs, tmpdir = md5dirs
-    bogus_dirs = [os.path.join(tmpdir, n) for n in ['foo', 'bar', 'baz']]
+    bogus_dirs = [os.path.join(tmpdir, n) for n in ['abc',
+                                                    'foo',
+                                                    'bar',
+                                                    'baz']]
     for d in bogus_dirs:
         os.makedirs(d)
+
+    for d in dirs:
+        os.makedirs(os.path.join(d, 'abc'))  # add subdirectories into content
+
     ret = list(mod.find_content_dirs(tmpdir))
     dirs.sort()
     ret.sort()
