@@ -45,7 +45,6 @@ def filter_downloads(lang):
     meta_filename = conf['content.metadata']
     metas = []
     for zipball_path, timestamp in zballs:
-        logging.debug("Reading zipball: {0}".format(zipball_path))
         try:
             meta = read_meta(zipball_path, meta_filename=meta_filename)
         except zipballs.ValidationError as exc:
