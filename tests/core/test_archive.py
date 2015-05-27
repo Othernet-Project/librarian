@@ -263,7 +263,8 @@ class TestBaseArchive(object):
         get_zip_path.return_value = 'zipball path'
         process_content.return_value = 1
         validate.return_value = {'md5': content_id, 'title': 'test'}
-        assert base_archive._BaseArchive__add_to_archive(content_id)
+        assert base_archive._BaseArchive__add_to_archive(content_id,
+                                                         'spooldir')
         get_zip_path.assert_called_once_with(content_id, 'spooldir')
         validate.assert_called_once_with('zipball path',
                                          meta_filename='metafile.ext')
@@ -278,7 +279,8 @@ class TestBaseArchive(object):
                                    process_content, base_archive):
         get_zip_path.return_value = 'zipball path'
         validate.side_effect = mod.zipballs.ValidationError('/path', 'msg')
-        assert not base_archive._BaseArchive__add_to_archive('some_id')
+        assert not base_archive._BaseArchive__add_to_archive('some_id',
+                                                             'spooldir')
         get_zip_path.assert_called_once_with('some_id', 'spooldir')
         validate.assert_called_once_with('zipball path',
                                          meta_filename='metafile.ext')
@@ -288,11 +290,11 @@ class TestBaseArchive(object):
     def test_add_to_archive(self, __add_to_archive, base_archive):
         __add_to_archive.return_value = 1
         assert base_archive.add_to_archive('some_id') == 1
-        __add_to_archive.assert_called_once_with('some_id')
+        __add_to_archive.assert_called_once_with('some_id', 'spooldir')
 
         assert base_archive.add_to_archive(['some_id', 'other_id']) == 2
-        __add_to_archive.assert_has_calls([mock.call('some_id'),
-                                           mock.call('other_id')])
+        __add_to_archive.assert_has_calls([mock.call('some_id', 'spooldir'),
+                                           mock.call('other_id', 'spooldir')])
 
     @mock.patch.object(mod.BaseArchive, 'remove_meta_from_db')
     @mock.patch.object(mod.BaseArchive, 'delete_content_files')
@@ -313,16 +315,18 @@ class TestBaseArchive(object):
         __remove_from_archive.assert_has_calls([mock.call('some_id'),
                                                 mock.call('other_id')])
 
-    @mock.patch.object(mod.BaseArchive, 'process_content')
+    @mock.patch.object(mod.BaseArchive, '_BaseArchive__add_to_archive')
     @mock.patch.object(mod.content, 'to_md5')
     @mock.patch.object(mod.content, 'find_content_dirs')
-    def test_reload_content(self, find_content_dirs, to_md5, process_content,
+    def test_reload_content(self, find_content_dirs, to_md5, __add_to_archive,
                             base_archive):
         to_md5.side_effect = lambda x: x.strip('/')
         find_content_dirs.return_value = ['contentdir/contentid',
                                           'contentdir/otherid']
-        process_content.return_value = 1
+        __add_to_archive.return_value = 1
         assert base_archive.reload_content() == 2
         to_md5.assert_has_calls([mock.call('contentid'), mock.call('otherid')])
-        process_content.assert_has_calls([mock.call('contentid'),
-                                          mock.call('otherid')])
+
+        calls = [mock.call('contentid', 'contentdir'),
+                 mock.call('otherid', 'contentdir')]
+        __add_to_archive.assert_has_calls(calls)

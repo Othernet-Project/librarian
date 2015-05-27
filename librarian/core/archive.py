@@ -290,10 +290,12 @@ class BaseArchive(object):
             meta['size'] = content.get_content_size(contentdir, content_id)
             return self.add_meta_to_db(meta)
 
-    def __add_to_archive(self, content_id):
+    def __add_to_archive(self, content_id, src_dir):
+        # Validate specified zipball found in `src_dir` by it's `content_id`
+        # extract it and add it to archive database.
         logging.debug("Adding content '{0}' to archive.".format(content_id))
         meta_filename = self.config['meta_filename']
-        zip_path = zipballs.get_zip_path(content_id, self.config['spooldir'])
+        zip_path = zipballs.get_zip_path(content_id, src_dir)
         try:
             meta = zipballs.validate(zip_path, meta_filename=meta_filename)
         except zipballs.ValidationError as exc:
@@ -314,7 +316,8 @@ class BaseArchive(object):
                              iterable: an iterable of content ids to be added
         :returns:            int: successfully added content count
         """
-        return sum([self.__add_to_archive(cid) for cid in content_ids])
+        return sum([self.__add_to_archive(cid, self.config['spooldir'])
+                    for cid in content_ids])
 
     def __remove_from_archive(self, content_id):
         msg = "Removing content '{0}' from archive.".format(content_id)
@@ -338,7 +341,8 @@ class BaseArchive(object):
         contentdir = self.config['contentdir']
         cont_ids = [content.to_md5(os.path.relpath(content_path, contentdir))
                     for content_path in content.find_content_dirs(contentdir)]
-        return sum([self.process_content(cid) for cid in cont_ids if cid])
+        return sum([self.__add_to_archive(cid, contentdir)
+                    for cid in cont_ids if cid])
 
     def clear_and_reload(self):
         raise NotImplementedError()
