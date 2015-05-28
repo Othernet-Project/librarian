@@ -245,27 +245,42 @@ def test_meta_get_key(*ignored):
     assert meta.get('missing') is None
 
 
-def test_find_image_no_content_path():
+@mock.patch.object(mod.scandir, 'scandir')
+def test_find_image_no_content_path(scandir):
     meta = mod.Meta({'foo': 'bar'}, '')
     assert meta.find_image() is None
+    assert not scandir.called
 
 
-@mock.patch.object(mod, 'scandir')
-def test_find_image_no_files(scandir):
+@mock.patch.object(mod.scandir, 'scandir')
+@mock.patch.object(mod.os.path, 'exists')
+def test_find_image_content_path_does_not_exist(exists, scandir):
+    exists.return_value = False
+    meta = mod.Meta({'foo': 'bar'}, '/content/path')
+    assert meta.find_image() is None
+    assert not scandir.called
+
+
+@mock.patch.object(mod.scandir, 'scandir')
+@mock.patch.object(mod.os.path, 'exists')
+def test_find_image_no_files(exists, scandir):
+    exists.return_value = True
     scandir.scandir.return_value = []
     meta = mod.Meta({'foo': 'bar'}, '/content/path')
     assert meta.find_image() is None
+    scandir.assert_called_once_with('/content/path')
 
 
 @mock.patch.object(mod.os.path, 'exists')
-@mock.patch.object(mod, 'scandir')
+@mock.patch.object(mod.scandir, 'scandir')
 def test_find_image_success(scandir, exists):
     mocked_entry = mock.Mock()
     mocked_entry.name = 'image.jpg'
     exists.return_value = True
-    scandir.scandir.return_value = [mocked_entry]
+    scandir.return_value = [mocked_entry]
     meta = mod.Meta({'foo': 'bar'}, '/content/path')
     assert meta.find_image() == 'image.jpg'
+    scandir.assert_called_once_with('/content/path')
 
 
 @mock.patch(MOD + '.json', autospec=True)

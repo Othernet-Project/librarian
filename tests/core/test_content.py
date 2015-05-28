@@ -199,6 +199,28 @@ def test_fnwalk_match_self(mock_scandir):
     ]
 
 
+@mock.patch.object(mod.scandir, 'scandir')
+def test_filewalk(scandir):
+    mocked_dir = mock.Mock()
+    mocked_dir.is_dir.return_value = True
+    mocked_dir.path = '/path/dir/'
+
+    mocked_file = mock.Mock()
+    mocked_file.is_dir.return_value = False
+    mocked_file.path = '/path/dir/file.ext'
+
+    root_dir = '/path/'
+
+    def mocked_scandir(path):
+        if path == root_dir:
+            yield mocked_dir
+        else:
+            yield mocked_file
+
+    scandir.side_effect = mocked_scandir
+    assert list(mod.filewalk(root_dir)) == ['/path/dir/file.ext']
+
+
 def test_find_content_dir(md5dirs):
     """ Should return only well-formed MD5-base paths """
     hashes, dirs, tmpdir = md5dirs
@@ -228,6 +250,15 @@ def test_find_infos(md5dirs, metadata):
         assert os.path.dirname(infopath) in dirs
         assert infopath.endswith('info.json')
         assert data == metadata
+
+
+@mock.patch.object(mod.os.path, 'exists')
+@mock.patch.object(mod, 'find_content_dirs')
+def test_find_info_no_results(find_content_dirs, exists):
+    find_content_dirs.return_value = ['/contentdir/cid/']
+    exists.return_value = False
+    assert list(mod.find_infos('/contentdir/')) == []
+    find_content_dirs.assert_called_once_with('/contentdir/')
 
 
 def test_get_meta(metadata_dir, metadata):
