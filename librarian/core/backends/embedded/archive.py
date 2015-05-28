@@ -49,7 +49,9 @@ class EmbeddedArchive(BaseArchive):
 
         if terms:
             terms = '%' + terms.lower() + '%'
-            q.where += 'title LIKE :terms'
+            q.where += ('title LIKE :terms OR '
+                        'publisher LIKE :terms OR '
+                        'keywords LIKE :terms')
 
         self.db.query(q,
                       terms=terms,
@@ -77,7 +79,9 @@ class EmbeddedArchive(BaseArchive):
 
         if terms:
             terms = '%' + terms.lower() + '%'
-            q.where += 'title LIKE :terms'
+            q.where += ('title LIKE :terms OR '
+                        'publisher LIKE :terms OR '
+                        'keywords LIKE :terms')
 
         self.db.query(q,
                       terms=terms,
