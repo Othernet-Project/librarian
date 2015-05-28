@@ -5,5 +5,5 @@
 <textarea>${''.join(logs)}</textarea>
 <p>
     <a class="button" href="${url('sys:librarian_log')}">${_('Download application log')}</a>
-    <a class="button" href="${url('sys:syslog')}">${_('Download syslog')}</a>
+    <a class="button" href="${url('sys:syslog')}">${_('Download system log')}</a>
 </p>
