@@ -251,12 +251,6 @@ def setup_ondd():
 
 
 def install(app, route):
-    try:
-        # Test connection
-        ipc.connect(app.config['ondd.socket'])
-    except Exception as err:
-        logging.error('ONDD: connection failed: %s', err)
-        raise NotSupportedError('ONDD socket refused connection')
     route(
         ('status', get_signal_status,
          'GET', '/status', dict(unlocked=True, skip=['setup'])),
