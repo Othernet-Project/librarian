@@ -11,6 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import calendar
 import datetime
 import os
+import platform
 
 import pytz
 from bottle import request, mako_template as template
@@ -33,6 +34,7 @@ DATE_CONSTS = dict(months=MONTHS,
                    hours=HOURS,
                    minutes=MINUTES,
                    timezones=TIMEZONES)
+LINUX = 'Linux'
 
 
 class SetupWizard(wizard.Wizard):
@@ -102,8 +104,12 @@ def setup_language():
     return dict(successful=True, language=lang)
 
 
+def is_linux():
+    return platform.system() == LINUX
+
+
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
-                            method='GET', index=2)
+                            method='GET', index=2, test=is_linux)
 def setup_datetime_form():
     now = datetime.datetime.now()
     date = '{0:04d}-{1:02d}-{2:02d}'.format(now.year, now.month, now.day)
@@ -124,7 +130,7 @@ def validate_datetime(dt_str):
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
-                            method='POST', index=2)
+                            method='POST', index=2, test=is_linux)
 def setup_datetime():
     datetime_template = '{date} {hour}:{minute}'
     entered_dt = dict((key, request.forms.get(key, ''))
