@@ -114,7 +114,7 @@ def manage_downloads():
         request.app.cache.invalidate(prefix='downloads')
     if action == 'delete':
         downloads.remove_downloads(conf['content.spooldir'],
-                                   md5s=file_list)
+                                   content_ids=file_list)
         request.app.cache.invalidate(prefix='downloads')
     if action == 'deleteall':
         downloads.remove_downloads(conf['content.spooldir'],
