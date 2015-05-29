@@ -194,7 +194,8 @@ class ONDDForm(forms.Form):
         if not response.startswith('2'):
             # Translators, error message shown when setting transponder
             # configuration is not successful
-            msg = _('Transponder configuration could not be set')
+            msg = _("Tuner configuration could not be saved. "
+                    "Please make sure that the tuner is connected.")
             raise forms.ValidationError(msg, {})
 
 
