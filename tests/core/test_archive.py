@@ -147,7 +147,7 @@ class TestBaseArchive(object):
                           'replaces': '123',
                           'replaces_title': 'old_content'},
                          {'md5': 'abc', 'title': 'second'}]
-        get_multiple.assert_called_once_with(['123'], fields=('title',))
+        get_multiple.assert_called_once_with(['123'], fields=('md5', 'title'))
 
     @mock.patch.object(mod.BaseArchive, 'get_multiple')
     def test_add_repacement_data_no_match(self, get_multiple, base_archive):

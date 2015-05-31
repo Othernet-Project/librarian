@@ -207,7 +207,8 @@ class BaseArchive(object):
         if not replaceable_ids:
             return
 
-        replaceables = self.get_multiple(replaceable_ids, fields=needed_keys)
+        needed_fields = tuple(sorted(set(tuple(needed_keys) + ('md5',))))
+        replaceables = self.get_multiple(replaceable_ids, fields=needed_fields)
         get_needed_data = lambda d: dict((key, d[key]) for key in needed_keys)
         replaceable_metas = dict((data['md5'], get_needed_data(data))
                                  for data in replaceables)

@@ -119,8 +119,7 @@ class EmbeddedArchive(BaseArchive):
             if replaces:
                 msg = "Removing replaced content from archive database."
                 logging.debug(msg)
-                q = self.db.Delete('zipballs',
-                                   where=self.sqlin('md5', replaces))
+                q = self.db.Delete('zipballs', where='md5 = ?')
                 self.db.query(q, replaces)
 
         return rowcount
