@@ -10,7 +10,7 @@ msgstr ""
 
 #: librarian/views/base.tpl:8 librarian/views/base.tpl:67
 msgid "Librarian"
-msgstr "Bibliothecaris"
+msgstr "Librarian"
 
 #: librarian/views/base.tpl:32 librarian/views/dashboard.tpl:5
 #: librarian/views/dashboard.tpl:10
@@ -24,11 +24,11 @@ msgstr "Updates"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:20
 msgid "%s more space should be freed."
-msgstr "er moet %s meer ruimte vrijgemaakt worden."
+msgstr "er moet nog %s vrijgemaakt worden."
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:25
 msgid "There is enough free space on storage"
-msgstr "Er is genoeg ruimte vrij op het opslagmedium."
+msgstr "Er is genoeg ruimte op het opslagmedium."
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:33
 msgid "delete?"
@@ -49,7 +49,7 @@ msgstr "grootte"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:55
 msgid "There is enough free space. No clean-up needed."
-msgstr "Er is genoeg ruimte beschikbaar. Opschonen is niet nodig."
+msgstr "Er is genoeg ruimte. Opschonen is niet nodig."
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:62
 msgid "How much space does this free up?"
@@ -69,7 +69,7 @@ msgstr "Laatste update"
 
 #: librarian/plugins/diskspace/views/diskspace.tpl:11
 msgid "You are running low on disk space."
-msgstr "Er is weinig ruimte beschikbaar op de schijf."
+msgstr "Er is bijna te weinig ruimte."
 
 #: librarian/plugins/diskspace/views/diskspace.tpl:13
 msgid "Free some space now"
@@ -93,7 +93,7 @@ msgstr "Bibliotheek"
 
 #: librarian/views/content_list.tpl:49
 msgid "Content library is currently empty"
-msgstr "De bibliotheek is op dit moment leeg"
+msgstr "De bibliotheek is leeg"
 
 #: librarian/views/content_list.tpl:25
 msgid "search titles"
@@ -189,9 +189,8 @@ msgstr "totale ruimte (%s vrij)"
 
 #. Translators, used as button label on updates page for adding marked content to library
 #: librarian/views/_list_controls.tpl:7
-#, fuzzy
 msgid "Add selected to library"
-msgstr "Voeg geselecteerd toe aan bibliotheek"
+msgstr "Voeg selectie aan bibliotheek toe."
 
 #. Translators, used as 'content belongs to core archive' badge
 #: librarian/views/reader.tpl:30
@@ -495,7 +494,7 @@ msgstr "Toegang TVHeadend"
 
 #: librarian/views/file_list.tpl:40
 msgid "There are currently no files or folders here."
-msgstr "Er zijn op dit moment geen bestanden of folders gevonden"
+msgstr "Er zijn op dit moment geen bestanden of mappen gevonden"
 
 #. Translators, used as page title
 #. Translators, used as page heading
@@ -509,7 +508,7 @@ msgstr "Tag cloud"
 #. database rebuild
 #: librarian/plugins/dbmanage/plugin.py:145
 msgid "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
-msgstr "Bibliothecaris kon de onderhoudsmodus niet activeren en heeft het opnieuw creëeren van de database geannuleerd. Zorg ervoor dat niemand gebruik maakt van de Bibliothecaris en probeer opnieuw."
+msgstr "Librarian kon de onderhoudsmodus niet activeren en heeft het opnieuw creëeren van de database geannuleerd. Zorg ervoor dat niemand gebruik maakt van Librarian en probeer opnieuw."
 
 #. Translators, used as dashboard section title
 #. Translators, used as dashboard section title
@@ -647,7 +646,7 @@ msgstr "Opnieuw aanmaken"
 #. Translators, note about database rebuild shown on dashboard
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:22
 msgid "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
-msgstr "Het opnieuw creëeren van de database zal alle tags verwijderen. De Bibliothecaris zal in onderhoudsmodus gaan en blokkeert de toegang tot de content."
+msgstr "Het opnieuw creëeren van de database zal alle tags verwijderen. Librarian zal in onderhoudsmodus gaan en blokkeert de toegang tot de content."
 
 #. Translators, used as page heading
 #: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:5
@@ -776,7 +775,7 @@ msgstr "Fout"
 
 #: librarian/views/500.tpl:13
 msgid "Librarian has failed to fulfill your request due to unexpected error in the program. Details are provided below."
-msgstr "De Bibliothecaris kon uw verzoek niet uitvoeren door een onverwachte fout in het programma. De details staan hieronder."
+msgstr "Librarian kon uw verzoek niet uitvoeren door een onverwachte fout in het programma. De details staan hieronder."
 
 #. Translators, used as page title
 #. Translators, used as maintenance page heading
@@ -786,7 +785,7 @@ msgstr "In onderhoud"
 
 #: librarian/views/503.tpl:14
 msgid "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
-msgstr "De Bibliothecaris is in onderhoudsmodus. Probeert u het later nogmaals."
+msgstr "Librarian is in onderhoudsmodus. Probeert u het later nogmaals."
 
 #. Translators, used as label for link that leads to file list
 #: librarian/views/file_list.tpl:34
@@ -920,23 +919,23 @@ msgstr "Interface naam:"
 
 #: librarian/routes/setup.py:57
 msgid "Please select a valid language."
-msgstr "Please select a valid language."
+msgstr "Kies een correcte taal."
 
 #: librarian/routes/setup.py:89
 msgid "Please select a valid date and time."
-msgstr "Please select a valid date and time."
+msgstr "Kies een correcte datum en tijd."
 
 #: librarian/routes/setup.py:113
 msgid "The entered passwords do not match."
-msgstr "The entered passwords do not match."
+msgstr "Wachtwoorden komen niet overeen."
 
 #: librarian/routes/setup.py:122
 msgid "This username is already taken."
-msgstr "This username is already taken."
+msgstr "Gebruikersnaam al in gebruik."
 
 #: librarian/routes/setup.py:125
 msgid "Invalid user credentials, please try again."
-msgstr "Invalid user credentials, please try again."
+msgstr "Fout in invoer, probeer nog eens."
 
 #: librarian/views/reader.tpl:21
 msgid "partner"
@@ -946,68 +945,68 @@ msgstr "partner"
 #. Translators, note that appears in table on updates page when there is no new downloaded content for a given language
 #: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
 msgid "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
-msgstr "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
+msgstr "Taal filter voor '%(lang)s' draait. Klik %(link)s voor alle updates"
 
 #: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
 msgid "here"
-msgstr "here"
+msgstr "hier"
 
 #: librarian/views/setup/step_superuser.tpl:4
 msgid "Please enter the desired credentials for the superuser account."
-msgstr "Please enter the desired credentials for the superuser account."
+msgstr "Voer de gevraagde gegevens in voor het superuser account."
 
 #. Translators, used as label for a password field
 #: librarian/views/setup/step_superuser.tpl:22
 msgid "Confirm Password:"
-msgstr "Confirm Password:"
+msgstr "Bevestig wachtwoord:"
 
 #. Translators, used as placeholder in the password field
 #: librarian/views/setup/step_superuser.tpl:24
 msgid "confirm password"
-msgstr "confirm password"
+msgstr "bevestig wachtwoord"
 
 #. Translators, used as page title
 #: librarian/views/setup/main.tpl:5
 msgid "Setup Wizard"
-msgstr "Setup Wizard"
+msgstr "Instel hulp"
 
 #. Translators, used as page heading
 #: librarian/views/setup/main.tpl:10
 msgid "Setup Wizard: Step %s of %s"
-msgstr "Setup Wizard: Step %s of %s"
+msgstr "Instel hulp: Stap %s van %s"
 
 #: librarian/views/setup/main.tpl:20
 msgid "Next"
-msgstr "Next"
+msgstr "Volgende"
 
 #: librarian/views/setup/step_datetime.tpl:4
 msgid "Please set the current date and time."
-msgstr "Please set the current date and time."
+msgstr "Voer huidige datum en tijd in."
 
 #: librarian/views/setup/step_language.tpl:4
 msgid "Please select the interface language."
-msgstr "Please select the interface language."
+msgstr "Selecteer taal."
 
 #. Translators, used as label for language
 #: librarian/views/setup/step_language.tpl:8
 msgid "Language:"
-msgstr "Language:"
+msgstr "Taal:"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian/views/setup/finished.tpl:5 librarian/views/setup/finished.tpl:10
 msgid "Setup Completed"
-msgstr "Setup Completed"
+msgstr "Instellingen ingevoerd."
 
 #: librarian/views/setup/finished.tpl:14
 msgid "Libriran has been set up successfully."
-msgstr "Libriran has been set up successfully."
+msgstr "Librarian is succesvol ingesteld"
 
 #: librarian/views/setup/finished.tpl:15
 msgid "Start using Librarian"
-msgstr "Start using Librarian"
+msgstr "Start gebruik Librarian"
 
 #: librarian/plugins/ondd/views/ondd_wizard.tpl:6
 msgid "Please select the satellite you'd like to receive data from."
-msgstr "Please select the satellite you'd like to receive data from."
+msgstr "Selecteer de satelliet die voor de data gebruikt moet worden."
 
