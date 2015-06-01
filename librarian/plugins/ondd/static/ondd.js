@@ -53,7 +53,7 @@
         var key;
         for (key in obj) {
             if (obj.hasOwnProperty(key)) {
-                settingsForm.find('#' + key).val(obj[key]);
+                settingsForm.find('#id_' + key).val(obj[key]);
             }
         }
     };
@@ -103,7 +103,7 @@
                 value = el.attr('value');
 
             if (value !== undefined) {
-                currentData[el.attr('id')] = value;
+                currentData[el.attr('name')] = value;
             }
         });
 
@@ -113,7 +113,7 @@
                 value = selectedOption.val();
 
             if (value !== undefined) {
-                currentData[select.attr('id')] = value;
+                currentData[select.attr('name')] = value;
             }
         });
 
@@ -130,7 +130,6 @@
         for (i = 0; i < options.length; i += 1) {
             opt = $(options[i]);
             isEqual = self.equalObjects(opt.data(), currentData, true);
-
             if (isEqual) {
                 satSelector.val(opt.val());
                 break;

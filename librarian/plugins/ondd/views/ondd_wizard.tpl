@@ -13,8 +13,10 @@
     </p>
 
     <div id="settings-form">
-        ${h.form_errors(errors)}
         ${settings_fields.body()}
+        % if form.error:
+        ${form.error}
+        % endif
     </div>
 </div>
 ${presets.body()}

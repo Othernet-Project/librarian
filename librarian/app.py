@@ -183,6 +183,7 @@ app = bottle.default_app()
 app.APP_ONLY_PLUGINS = APP_ONLY_PLUGINS
 # register session secret auto configurator
 setup.autoconfigurator('session.secret')(sessions.generate_secret_key)
+setup.autoconfigurator('csrf.secret')(sessions.generate_secret_key)
 
 
 def prestart(config, logfile=None, debug=False):
@@ -362,7 +363,10 @@ def configure_argparse(parser):
 def main(args):
     app.config = ConfDict.from_file(args.conf, catchall=True, autojson=True)
     conf = app.config
+
     app.setup = setup.Setup(conf['setup.file'])
+    # bottle csrf needs secret in app config
+    app.config['csrf.secret'] = app.setup.get('csrf.secret')
 
     if args.debug_conf:
         print('Configuration file path: %s' % args.conf)

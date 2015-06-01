@@ -8,32 +8,18 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import calendar
-import datetime
 import os
 
+import dateutil.parser
 import pytz
-from bottle import request
-from bottle_utils.i18n import lazy_gettext as _
-from dateutil.parser import parse as parse_datetime
 
+from bottle import request
+
+from ..forms.auth import RegistrationForm
+from ..forms.setup import SetupLanguageForm,  SetupDateTimeForm
 from ..lib import auth
 from ..lib import wizard
-from ..utils.lang import UI_LOCALES, DEFAULT_LOCALE
 from ..utils.template import template
-
-
-DATETIME_KEYS = ('date', 'hour', 'minute')
-MONTHS = [(idx, idx) for idx, nm in enumerate(calendar.month_name) if idx > 0]
-HOURS = [(i, i) for i in range(24)]
-MINUTES = [(i, str(i).zfill(2)) for i in range(60)]
-TIMEZONES = [(tzname, tzname) for tzname in pytz.common_timezones]
-DEFAULT_TIMEZONE = pytz.common_timezones[0]
-
-DATE_CONSTS = dict(months=MONTHS,
-                   hours=HOURS,
-                   minutes=MINUTES,
-                   timezones=TIMEZONES)
 
 
 class SetupWizard(wizard.Wizard):
@@ -87,19 +73,17 @@ setup_wizard = SetupWizard(name='setup')
 @setup_wizard.register_step('language', template='setup/step_language.tpl',
                             method='GET', index=1)
 def setup_language_form():
-    return dict(errors={}, language={'language': DEFAULT_LOCALE})
+    return dict(form=SetupLanguageForm())
 
 
 @setup_wizard.register_step('language', template='setup/step_language.tpl',
                             method='POST', index=1)
 def setup_language():
-    lang = request.forms.get('language')
-    if lang not in UI_LOCALES:
-        errors = {'language': _('Please select a valid language.')}
-        return dict(successful=False,
-                    errors=errors,
-                    language={'language': DEFAULT_LOCALE})
+    form = SetupLanguageForm(request.forms)
+    if not form.is_valid():
+        return dict(successful=False, form=form)
 
+    lang = form.processed_data['language']
     request.app.setup.append({'language': lang})
     return dict(successful=True, language=lang)
 
@@ -107,64 +91,25 @@ def setup_language():
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
                             method='GET', index=2)
 def setup_datetime_form():
-    now = datetime.datetime.now()
-    date = '{0:04d}-{1:02d}-{2:02d}'.format(now.year, now.month, now.day)
-    current_dt = dict(date=date, hour=now.hour, minute=now.minute)
-    return dict(errors={},
-                datetime=current_dt,
-                tz=DEFAULT_TIMEZONE,
-                **DATE_CONSTS)
-
-
-def validate_datetime(dt_str):
-    try:
-        parse_datetime(dt_str)
-    except ValueError as exc:
-        return str(exc)
-    except TypeError:
-        return _("Invalid input.")
+    return dict(form=SetupDateTimeForm())
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
                             method='POST', index=2)
 def setup_datetime():
-    datetime_template = '{date} {hour}:{minute}'
-    entered_dt = dict((key, request.forms.get(key, ''))
-                      for key in DATETIME_KEYS)
-    datetime_str = datetime_template.format(**entered_dt)
+    form = SetupDateTimeForm(request.forms)
+    if not form.is_valid():
+        return dict(successful=False, form=form)
 
-    tz_id = request.forms.get('timezone')
-    if tz_id not in pytz.all_timezones:
-        errors = {'timezone': _("Please select a valid timezone.")}
-        return dict(successful=False,
-                    errors=errors,
-                    datetime=entered_dt,
-                    tz=tz_id,
-                    **DATE_CONSTS)
-
-    time_error = validate_datetime('{hour}:{minute}'.format(**entered_dt))
-    if time_error:
-        return dict(successful=False,
-                    errors={'time': time_error},
-                    datetime=entered_dt,
-                    tz=tz_id,
-                    **DATE_CONSTS)
-
-    date_error = validate_datetime('{date}'.format(**entered_dt))
-    if date_error:
-        return dict(successful=False,
-                    errors={'date': date_error},
-                    datetime=entered_dt,
-                    tz=tz_id,
-                    **DATE_CONSTS)
-
-    local_dt = parse_datetime(datetime_str)
-    tz_aware_dt = pytz.timezone(tz_id).localize(local_dt)
+    timezone = form.processed_data['timezone']
+    datetime_str = '{date} {hour}:{minute}'.format(**form.processed_data)
+    local_dt = dateutil.parser.parse(datetime_str)
+    tz_aware_dt = pytz.timezone(timezone).localize(local_dt)
     # Linux only!
     dt_format = '%Y-%m-%d %T'
     os.system("date +'{0}' -s '{1}'".format(dt_format,
                                             tz_aware_dt.strftime(dt_format)))
-    request.app.setup.append({'timezone': tz_id, 'datetime': True})
+    request.app.setup.append({'timezone': timezone, 'datetime': True})
     return dict(successful=True)
 
 
@@ -178,31 +123,20 @@ def has_no_superuser():
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
                             method='GET', index=3, test=has_no_superuser)
 def setup_superuser_form():
-    return dict(errors={}, username='')
+    return dict(form=RegistrationForm())
 
 
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
                             method='POST', index=3, test=has_no_superuser)
 def setup_superuser():
-    username = request.forms.get('username')
-    password1 = request.forms.get('password1')
-    password2 = request.forms.get('password2')
-    if password1 != password2:
-        errors = {'_': _("The entered passwords do not match.")}
-        return dict(successful=False, errors=errors, username=username)
+    form = RegistrationForm(request.forms)
+    if not form.is_valid():
+        return dict(successful=False, form=form)
 
-    try:
-        auth.create_user(username,
-                         password1,
-                         is_superuser=True,
-                         db=request.db.sessions,
-                         overwrite=True)
-    except auth.UserAlreadyExists:
-        errors = {'username': _("This username is already taken.")}
-        return dict(successful=False, errors=errors, username='')
-    except auth.InvalidUserCredentials:
-        errors = {'_': _("Invalid user credentials, please try again.")}
-        return dict(successful=False, errors=errors, username=username)
-
+    auth.create_user(form.processed_data['username'],
+                     form.processed_data['password1'],
+                     is_superuser=True,
+                     db=request.db.sessions,
+                     overwrite=True)
     request.app.setup.append({'superuser': True})
     return dict(successful=True)

@@ -4,26 +4,28 @@
 <h3>${_('Please enter the desired credentials for the superuser account.')}</h3>
 <div class="step-superuser-form">
     <p>
-        ## Translators, used as label for a username field
-        <label for="username">${_('Username:')}</label>
-        ## Translators, used as placeholder in the username field
-        ${h.vinput('username', {'username': username}, _type='text', placeholder=_('username'))}
-        ${h.field_error('username', errors)}
+        ${form.username.label}
+        ${form.username}
+        % if form.username.error:
+        ${form.username.error}
+        % endif
     </p>
     <p>
-        ## Translators, used as label for a password field
-        <label for="password">${_('Password:')}</label>
-        ## Translators, used as placeholder in the password field
-        ${h.vinput('password1', {}, _type='password', placeholder=_('password'))}
-        ${h.field_error('password1', errors)}
+        ${form.password1.label}
+        ${form.password1}
+        % if form.password1.error:
+        ${form.password1.error}
+        % endif
     </p>
     <p>
-        ## Translators, used as label for a password field
-        <label for="password">${_('Confirm Password:')}</label>
-        ## Translators, used as placeholder in the password field
-        ${h.vinput('password2', {}, _type='password', placeholder=_('confirm password'))}
-        ${h.field_error('password2', errors)}
+        ${form.password2.label}
+        ${form.password2}
+        % if form.password2.error:
+        ${form.password2.error}
+        % endif
     </p>
-    ${h.form_errors(errors)}
+    % if form.error:
+    ${form.error}
+    % endif
 </div>
 </%block>

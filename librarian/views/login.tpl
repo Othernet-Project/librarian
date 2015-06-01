@@ -11,25 +11,25 @@ ${_('Login')}
 </%block>
 
 ${h.form('post')}
-    % if errors:
-    ${h.form_errors(errors)}
+    % if form.error:
+    ${form.error}
     % endif
 
+    ${th.csrf_tag()}
     <input type="hidden" name="next" value="${next_path}">
-
     <p>
-        ## Translators, used as label for a login field
-        <label for="username">${_('Username:')}</label>
-        ## Translators, used as placeholder in the login field
-        ${h.vinput('username', vals, _type='text', placeholder=_('username'))}
-        ${h.field_error('username', errors)}
+        ${form.username.label}
+        ${form.username}
+        % if form.username.error:
+        ${form.username.error}
+        % endif
     </p>
     <p>
-        ## Translators, used as label for a login field
-        <label for="password">${_('Password:')}</label>
-        ## Translators, used as placeholder in the password field
-        ${h.vinput('password', vals, _type='password', placeholder=_('password'))}
-        ${h.field_error('password', errors)}
+        ${form.password.label}
+        ${form.password}
+        % if form.password.error:
+        ${form.password.error}
+        % endif
     </p>
     <p>
         <button type="submit"><span class="icon"></span> ${_('Login')}</button>
