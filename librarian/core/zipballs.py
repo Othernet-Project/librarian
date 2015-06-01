@@ -75,6 +75,9 @@ def validate(path, meta_filename='info.json'):
     :param meta_filename:  Optional - name of file containing metadata
     :returns:              dict: validated and cleaned meta data
     """
+    # Inspect path
+    if not path or not os.path.exists(path):
+        raise ValidationError(path, 'invalid path')
     # Inspect extension
     if not path.endswith('.zip'):
         raise ValidationError(path, 'invalid extension')

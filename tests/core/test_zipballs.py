@@ -34,6 +34,22 @@ def test_get_metadata(load, ZipFile, process_meta):
     assert ret == process_meta.return_value
 
 
+def test_validate_no_path(*ignored):
+    """ If path is empty or None, raise ValidationError """
+    for path in ('', None):
+        with pytest.raises(mod.ValidationError):
+            mod.validate(path)
+
+
+@mock.patch.object(mod.os.path, 'exists')
+def test_validate_path_does_not_exists(exists):
+    """ If path does not exist, raise ValidationError """
+    path = '/var/spool/downloads/foo.txt'
+    exists.return_value = False
+    with pytest.raises(mod.ValidationError):
+        mod.validate(path)
+
+
 @mock.patch.object(mod, 'get_metadata')
 def test_validate_wrong_extension(*ignored):
     """ If extension isn't .zip, returns False """
@@ -164,7 +180,10 @@ def test_validate_zipball_contains_wrong_index_html(ZipFile, is_zipfile,
 @mock.patch.object(mod, 'get_metadata')
 @mock.patch.object(mod.zipfile, 'is_zipfile')
 @mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
-def test_validate_zipball_valid(ZipFile, is_zipfile, get_metadata, metadata):
+@mock.patch.object(mod.os.path, 'exists')
+def test_validate_zipball_valid(exists, ZipFile, is_zipfile, get_metadata,
+                                metadata):
+    exists.return_value = True
     is_zipfile.return_value = True
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
@@ -177,8 +196,10 @@ def test_validate_zipball_valid(ZipFile, is_zipfile, get_metadata, metadata):
 @mock.patch.object(mod, 'get_metadata')
 @mock.patch.object(mod.zipfile, 'is_zipfile')
 @mock.patch.object(mod.zipfile, 'ZipFile', autospec=True)
-def test_validate_zipball_valid_with_index(ZipFile, is_zipfile, get_metadata,
-                                           metadata):
+@mock.patch.object(mod.os.path, 'exists')
+def test_validate_zipball_valid_with_index(exists, ZipFile, is_zipfile,
+                                           get_metadata, metadata):
+    exists.return_value = True
     is_zipfile.return_value = True
     path = '/var/spool/downloads/content/202ab62b551f6d7fc002f65652525544.zip'
     ZipFile.return_value.namelist.return_value = [
