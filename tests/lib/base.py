@@ -1,10 +1,17 @@
 import mock
+import os
 import shutil
 import tempfile
 
-from librarian.app import in_pkg
+import librarian
+
 from librarian.lib import squery
 from librarian.utils import migrations
+
+
+def in_pkg(*paths):
+    MODDIR = os.path.dirname(os.path.abspath(librarian.__file__))
+    return os.path.normpath(os.path.join(MODDIR, *paths))
 
 
 def transaction_test(bottle_request_paths):
