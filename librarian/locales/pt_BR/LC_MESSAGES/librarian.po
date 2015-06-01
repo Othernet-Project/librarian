@@ -919,94 +919,94 @@ msgstr "Nome da interface"
 
 #: librarian/routes/setup.py:57
 msgid "Please select a valid language."
-msgstr "Please select a valid language."
+msgstr "Por favor selecione um idioma válido."
 
 #: librarian/routes/setup.py:89
 msgid "Please select a valid date and time."
-msgstr "Please select a valid date and time."
+msgstr "Por favor, selecione uma data e hora válida."
 
 #: librarian/routes/setup.py:113
 msgid "The entered passwords do not match."
-msgstr "The entered passwords do not match."
+msgstr "As senhas digitadas não correspondem."
 
 #: librarian/routes/setup.py:122
 msgid "This username is already taken."
-msgstr "This username is already taken."
+msgstr "Este nome de usuário já está em uso."
 
 #: librarian/routes/setup.py:125
 msgid "Invalid user credentials, please try again."
-msgstr "Invalid user credentials, please try again."
+msgstr "Credenciais de usuário inválido, por favor, tente novamente. "
 
 #: librarian/views/reader.tpl:21
 msgid "partner"
-msgstr "partner"
+msgstr "parceiro"
 
 #. Translators, used as not on library page when there is no content for given language
 #. Translators, note that appears in table on updates page when there is no new downloaded content for a given language
 #: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
 msgid "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
-msgstr "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
+msgstr "Filtro de idioma para '%(lang)s' está ativo. Clique %(link)s para ver todas as atualizações"
 
 #: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
 msgid "here"
-msgstr "here"
+msgstr "aqui"
 
 #: librarian/views/setup/step_superuser.tpl:4
 msgid "Please enter the desired credentials for the superuser account."
-msgstr "Please enter the desired credentials for the superuser account."
+msgstr "Por favor, insira as credenciais desejadas para a conta de superusuário."
 
 #. Translators, used as label for a password field
 #: librarian/views/setup/step_superuser.tpl:22
 msgid "Confirm Password:"
-msgstr "Confirm Password:"
+msgstr "Confirmar Senha: "
 
 #. Translators, used as placeholder in the password field
 #: librarian/views/setup/step_superuser.tpl:24
 msgid "confirm password"
-msgstr "confirm password"
+msgstr "Confirme sua senha"
 
 #. Translators, used as page title
 #: librarian/views/setup/main.tpl:5
 msgid "Setup Wizard"
-msgstr "Setup Wizard"
+msgstr "Assistente de Configuração"
 
 #. Translators, used as page heading
 #: librarian/views/setup/main.tpl:10
 msgid "Setup Wizard: Step %s of %s"
-msgstr "Setup Wizard: Step %s of %s"
+msgstr "Assistente de Instalação: Passo %s de %s"
 
 #: librarian/views/setup/main.tpl:20
 msgid "Next"
-msgstr "Next"
+msgstr "Próximo"
 
 #: librarian/views/setup/step_datetime.tpl:4
 msgid "Please set the current date and time."
-msgstr "Please set the current date and time."
+msgstr "Por favor, defina a data e a hora atual."
 
 #: librarian/views/setup/step_language.tpl:4
 msgid "Please select the interface language."
-msgstr "Please select the interface language."
+msgstr "Por favor, selecione o idioma da interface."
 
 #. Translators, used as label for language
 #: librarian/views/setup/step_language.tpl:8
 msgid "Language:"
-msgstr "Language:"
+msgstr "Idioma:"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian/views/setup/finished.tpl:5 librarian/views/setup/finished.tpl:10
 msgid "Setup Completed"
-msgstr "Setup Completed"
+msgstr "Instalação Completa"
 
 #: librarian/views/setup/finished.tpl:14
 msgid "Libriran has been set up successfully."
-msgstr "Libriran has been set up successfully."
+msgstr "Libriran foi criado com sucesso."
 
 #: librarian/views/setup/finished.tpl:15
 msgid "Start using Librarian"
-msgstr "Start using Librarian"
+msgstr "Comece a usar o Bibliotecário"
 
 #: librarian/plugins/ondd/views/ondd_wizard.tpl:6
 msgid "Please select the satellite you'd like to receive data from."
-msgstr "Please select the satellite you'd like to receive data from."
+msgstr "Por favor, selecione o satélite que você gostaria de receber os dados."
 

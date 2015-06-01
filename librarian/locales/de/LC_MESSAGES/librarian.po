@@ -24,7 +24,7 @@ msgstr "Aktualisierungen"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:20
 msgid "%s more space should be freed."
-msgstr "Es muss %s mehr Platz verfügbar gemacht werden."
+msgstr "Es muss %s mehr Speicherplatz verfügbar gemacht werden."
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:25
 msgid "There is enough free space on storage"
@@ -62,7 +62,7 @@ msgstr "Auswahl jetzt löschen"
 
 #: librarian/plugins/diskspace/views/diskspace.tpl:27
 msgid "used space"
-msgstr "benutzter Platz"
+msgstr "benutzter Speicherplatz"
 
 #: librarian/views/downloads.tpl:26
 msgid "last update"
@@ -865,11 +865,11 @@ msgstr "Alles löschen"
 
 #: librarian/views/content_list.tpl:34 librarian/views/downloads.tpl:37
 msgid "filter"
-msgstr "filter"
+msgstr "Filter"
 
 #: librarian/views/downloads.tpl:59
 msgid "language"
-msgstr "language"
+msgstr "Sprache"
 
 #: librarian/views/remove_error.tpl:5 librarian/views/remove_error.tpl:10
 msgid "Content file missing"

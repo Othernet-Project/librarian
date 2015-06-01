@@ -516,7 +516,7 @@ msgstr "اوسم السحابة"
 #. database rebuild
 #: librarian/plugins/dbmanage/plugin.py:145
 msgid "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
-msgstr "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
+msgstr "البرنامج لا يستطيع دخول وضع الصيانة وتم إلغاء أعادة بناء قاعدة البيانات. الرجاء التأكد أنه لا يوجد شخص أخر يستخدم البرنامج و حاول مرة أخرى"
 
 #. Translators, used as dashboard section title
 #. Translators, used as dashboard section title
@@ -546,7 +546,7 @@ msgstr "أفقي"
 #. Translators, this is a type of LNB
 #: librarian/plugins/ondd/plugin.py:60
 msgid "Universal"
-msgstr "Universal"
+msgstr "عالمي"
 
 #. Translators, this is a type of LNB
 #. Translators, this is a type of LNB
@@ -558,7 +558,7 @@ msgstr "North America Ku band"
 #. Translators, error message when LNB type is incorrect
 #: librarian/plugins/ondd/plugin.py:121 librarian/plugins/ondd/plugin.py:189
 msgid "Invalid choice for LNB type"
-msgstr "Invalid choice for LNB type"
+msgstr "أختيار لنوع LNB غير صالح"
 
 #. Translators, error message when frequency value is
 #. wrong
@@ -579,7 +579,7 @@ msgstr "الاشارة يجب ان تكون رقم موجب"
 #: librarian/plugins/ondd/plugin.py:128 librarian/plugins/ondd/plugin.py:135
 #: librarian/plugins/ondd/plugin.py:196 librarian/plugins/ondd/plugin.py:203
 msgid "Please type in a number"
-msgstr "Please type in a number"
+msgstr "الرجاء إدخال رقم"
 
 #. Translators, error message when symbolrate value is
 #. wrong
@@ -587,7 +587,7 @@ msgstr "Please type in a number"
 #. wrong
 #: librarian/plugins/ondd/plugin.py:132 librarian/plugins/ondd/plugin.py:200
 msgid "Symbolrate must be a positive number"
-msgstr "Symbolrate must be a positive number"
+msgstr "معدل الترميز يجب أن يكون رقم موجب"
 
 #. Translators, error message shown when wrong delivery
 #. system is selected
@@ -595,7 +595,7 @@ msgstr "Symbolrate must be a positive number"
 #. system is selected
 #: librarian/plugins/ondd/plugin.py:139 librarian/plugins/ondd/plugin.py:207
 msgid "Invalid choice for delivery system"
-msgstr "Invalid choice for delivery system"
+msgstr "أختيار غير صالح لنظام التوصيل"
 
 #. Translators, error message shown when wrong modulation
 #. mode is selected
@@ -603,7 +603,7 @@ msgstr "Invalid choice for delivery system"
 #. mode is selected
 #: librarian/plugins/ondd/plugin.py:143 librarian/plugins/ondd/plugin.py:211
 msgid "Invalid choice for modulation mode"
-msgstr "Invalid choice for modulation mode"
+msgstr "أختيار غير صالح لوضع التعديل"
 
 #. Translators, error message shown when wrong
 #. polarization is selected
@@ -611,7 +611,7 @@ msgstr "Invalid choice for modulation mode"
 #. polarization is selected
 #: librarian/plugins/ondd/plugin.py:147 librarian/plugins/ondd/plugin.py:215
 msgid "Invalid choice for polarization"
-msgstr "Invalid choice for polarization"
+msgstr "أختيار غير صالح للإستقطاب"
 
 #. Translators, error message shown when setting transponder
 #. configuration is not successful
@@ -619,7 +619,7 @@ msgstr "Invalid choice for polarization"
 #. configuration is not successful
 #: librarian/plugins/ondd/plugin.py:166 librarian/plugins/ondd/plugin.py:238
 msgid "Transponder configuration could not be set"
-msgstr "Transponder configuration could not be set"
+msgstr "لا يمكن إعداد ترتيب المستجيب"
 
 #: librarian/routes/content.py:206
 msgid "The files you were looking for could not be found"
@@ -627,73 +627,74 @@ msgstr "الملفات غير متاحة"
 
 #: librarian/routes/content.py:208
 msgid "This list represents the search results"
-msgstr "This list represents the search results"
+msgstr "هذه القائمة تمثل نتائج البحث"
 
 #: librarian/routes/content.py:219
 msgid "This folder does not exist"
-msgstr "This folder does not exist"
+msgstr "المجلد غير موجود"
 
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:4
 msgid "Database size"
-msgstr "Database size"
+msgstr "حجم قاعدة البيانات"
 
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:5
 msgid "download"
-msgstr "download"
+msgstr "تحميل"
 
 #. Translators, refers to database backup
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:11
 msgid "Backup"
-msgstr "Backup"
+msgstr "نسخة احتياطية"
 
 #. Translators, refers to database rebuild feature
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:16
 msgid "Rebuild"
-msgstr "Rebuild"
+msgstr "اعادة بناء"
 
 #. Translators, note about database rebuild shown on dashboard
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:22
 msgid "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
-msgstr "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
+msgstr "إعادة بناء القاعدة سيحذف جميع العلامات. سوف تضع البرنامج في وضع الصيانة و أمنع المستخدمين من الدخول إلى البرنامج."
 
 #. Translators, used as page heading
 #: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:5
 #: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:10
 msgid "Database backup"
-msgstr "Database backup"
+msgstr "نسخة من قاعدة البيانات"
 
 #: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:14
 msgid "Database backup has been completed successfully. You will be taken to the backup folder in 10 seconds."
-msgstr "Database backup has been completed successfully. You will be taken to the backup folder in 10 seconds."
+msgstr "النسخ الأحتياطي لقاعدة البيانات تم بنجاح.\n"
+"سيتم أخذك إلى مجلد النسخ الأحتياطي خلال 10 ثوان."
 
 #: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:16
 #: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:16
 msgid "The operation took %s second"
 msgid_plural "The operation took %s seconds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "العملية أخذت %s لا شيء"
+msgstr[1] "العملية أخذت %s ثانية"
+msgstr[2] "العملية أخذت %s ثانيتين"
+msgstr[3] "العملية أخذت %s لحظات"
+msgstr[4] "العملية أخذت %s العديد"
+msgstr[5] "العملية أخذت %s أخرى"
 
 #: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:19
 msgid "Database backup could not be completed. The following error occurred:"
-msgstr "Database backup could not be completed. The following error occurred:"
+msgstr "النسخ الأحتياطي لقاعدة البيانات لم يكتمل. تم ظهور الخطأ التالي:"
 
 #. Translators, used as page heading
 #: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:5
 #: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:10
 msgid "Database rebuild"
-msgstr "Database rebuild"
+msgstr "أعادة بناء قاعدة البيانات"
 
 #: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:14
 msgid "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
-msgstr "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
+msgstr "محتويات قاعدة البيانات تمت إعادة بنائها من البداية. تم عمل نسخ إحتياطية من قاعدة البيانات. ستجدها في قسم الملفات."
 
 #: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:19
 msgid "Database could not be rebuilt. The following error occurred:"
-msgstr "Database could not be rebuilt. The following error occurred:"
+msgstr "لا يمكن إعادة بناء قاعدة البيانات. تم ظهور الخطأ التالي:"
 
 #: librarian/plugins/license/views/license.tpl:5
 msgid "\n"
@@ -702,82 +703,79 @@ msgid "\n"
 "Free Software Foundation, either version 3 of the License, or (at your\n"
 "option) any later version.\n"
 ""
-msgstr "\n"
-"This program is free software: you can redistribute it and/or modify it\n"
-"under the terms of the GNU General Public License as published by the\n"
-"Free Software Foundation, either version 3 of the License, or (at your\n"
-"option) any later version.\n"
-""
+msgstr "هذا البرنامج هو مجاني: بإمكانك إعادة توزيعه (نشره) أو التعديل عليه.\n"
+"تحت شروط GNU الرخصة العمومية العامة منشور من قبل مؤسسة البرمجيات الحرة, أما على ثلاث نسخ من الرخصة \n"
+"أو (تحت تصرفك) على أي نسخة حديثة."
 
 #: librarian/views/500.tpl:18 librarian/plugins/logs/views/logs.tpl:6
 msgid "Download application log"
-msgstr "Download application log"
+msgstr "تنزيل ملخص التطبيق"
 
 #. Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
 #: librarian/plugins/ondd/views/ondd.tpl:17
 msgid "Downloads in progress"
-msgstr "Downloads in progress"
+msgstr "التنزيل يعمل"
 
 #. Translators, label for select list that allows user to pick a satellite to tune into
 #: librarian/plugins/ondd/views/ondd.tpl:27
 #: librarian/plugins/ondd/views/ondd_wizard.tpl:22
 msgid "Satellite:"
-msgstr "Satellite:"
+msgstr "القمر:"
 
 #. Translators, placeholder for satellite selection select list
 #: librarian/plugins/ondd/views/ondd.tpl:30
 #: librarian/plugins/ondd/views/ondd_wizard.tpl:25
 msgid "Select a satellite"
-msgstr "Select a satellite"
+msgstr "أختار القمر"
 
 #. Translators, label for option that allows user to set custom transponder parameters
 #: librarian/plugins/ondd/views/ondd.tpl:40
 #: librarian/plugins/ondd/views/ondd_wizard.tpl:35
 msgid "Custom..."
-msgstr "Custom..."
+msgstr "مخصص..."
 
 #. Translators, form label for transponder frequency
 #: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:13
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:16
 msgid "Frequency:"
-msgstr "Frequency:"
+msgstr "التردد"
 
 #. Translators, form label for transponder symbol rate
 #: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:19
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:22
 msgid "Symbol rate:"
-msgstr "Symbol rate:"
+msgstr "الرمز"
 
 #. Translators, form label for transponder delivery system (DVB-S or DVB-S2)
 #: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:25
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:28
 msgid "Delivery system:"
-msgstr "Delivery system:"
+msgstr "نظام التسليم"
 
 #. Translators, form label for transponder modulation mode (QPSK, etc)
 #: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:31
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:34
 msgid "Modulation:"
-msgstr "Modulation:"
+msgstr "التعديلات:"
 
 #: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:37
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:40
 msgid "Polarization:"
-msgstr "Polarization:"
+msgstr "الأستقطاب:"
 
 #. Translators, button label that confirms tuner settings
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:48
 msgid "Tune in"
-msgstr "Tune in"
+msgstr "التوجيه"
 
 #. Translators, whether tuner has a lock on the signal or not (note: technical term)
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:3
 msgid "has lock"
-msgstr "has lock"
+msgstr "تم الاقفال"
 
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:3
 msgid "no lock"
-msgstr "no lock"
+msgstr "غير مقفل"
 
 #. Translators, short for 'signal/noise ratio'
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:14
@@ -853,12 +851,12 @@ msgstr "ليس مسوح لك لدخول هذه الصفحة"
 
 #: librarian/views/base.tpl:35
 msgid "Log out"
-msgstr "Log out"
+msgstr "خروج"
 
 #: librarian/views/login.tpl:5 librarian/views/login.tpl:10
 #: librarian/views/login.tpl:35
 msgid "Login"
-msgstr "Login"
+msgstr "دخول"
 
 #: librarian/views/login.tpl:22 librarian/views/setup/step_superuser.tpl:8
 msgid "Username:"
@@ -886,7 +884,7 @@ msgstr "مسح الكل"
 
 #: librarian/views/content_list.tpl:34 librarian/views/downloads.tpl:37
 msgid "filter"
-msgstr "filter"
+msgstr "تصفية"
 
 #: librarian/views/downloads.tpl:59
 msgid "language"
@@ -936,94 +934,94 @@ msgstr "اسم الاتصال"
 
 #: librarian/routes/setup.py:57
 msgid "Please select a valid language."
-msgstr "Please select a valid language."
+msgstr "الرجاء اختيار لغة صحيحة"
 
 #: librarian/routes/setup.py:89
 msgid "Please select a valid date and time."
-msgstr "Please select a valid date and time."
+msgstr "الرجاء اختيار وقت و تاريخ مناسب"
 
 #: librarian/routes/setup.py:113
 msgid "The entered passwords do not match."
-msgstr "The entered passwords do not match."
+msgstr "كلمة السر المدخلة غير مطابقة"
 
 #: librarian/routes/setup.py:122
 msgid "This username is already taken."
-msgstr "This username is already taken."
+msgstr "اسم المستخدم مسجل من قبل"
 
 #: librarian/routes/setup.py:125
 msgid "Invalid user credentials, please try again."
-msgstr "Invalid user credentials, please try again."
+msgstr "مدخلات مستخدم غير صالحة, الرجاء المحاولة مرة أخرى"
 
 #: librarian/views/reader.tpl:21
 msgid "partner"
-msgstr "partner"
+msgstr "شريك"
 
 #. Translators, used as not on library page when there is no content for given language
 #. Translators, note that appears in table on updates page when there is no new downloaded content for a given language
 #: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
 msgid "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
-msgstr "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
+msgstr "لغة المصفي لـ '%(lang)s' فعال. أضغط %(link)s لرؤية التحديثات"
 
 #: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
 msgid "here"
-msgstr "here"
+msgstr "هنا"
 
 #: librarian/views/setup/step_superuser.tpl:4
 msgid "Please enter the desired credentials for the superuser account."
-msgstr "Please enter the desired credentials for the superuser account."
+msgstr "الرجاء إدخال الأعتمادات المرغوبة للمستخدم الرئيسي للحساب."
 
 #. Translators, used as label for a password field
 #: librarian/views/setup/step_superuser.tpl:22
 msgid "Confirm Password:"
-msgstr "Confirm Password:"
+msgstr "تأكيد كلمة المرور:"
 
 #. Translators, used as placeholder in the password field
 #: librarian/views/setup/step_superuser.tpl:24
 msgid "confirm password"
-msgstr "confirm password"
+msgstr "تأكيد كلمة المرور"
 
 #. Translators, used as page title
 #: librarian/views/setup/main.tpl:5
 msgid "Setup Wizard"
-msgstr "Setup Wizard"
+msgstr "معالج الإعداد"
 
 #. Translators, used as page heading
 #: librarian/views/setup/main.tpl:10
 msgid "Setup Wizard: Step %s of %s"
-msgstr "Setup Wizard: Step %s of %s"
+msgstr "معالج الإعداد: خطوة %s من %s"
 
 #: librarian/views/setup/main.tpl:20
 msgid "Next"
-msgstr "Next"
+msgstr "التالي"
 
 #: librarian/views/setup/step_datetime.tpl:4
 msgid "Please set the current date and time."
-msgstr "Please set the current date and time."
+msgstr "الرجاء أعداد التاريخ و الوقت الحالي"
 
 #: librarian/views/setup/step_language.tpl:4
 msgid "Please select the interface language."
-msgstr "Please select the interface language."
+msgstr "الرجاء أختيار لغة الإستخدام"
 
 #. Translators, used as label for language
 #: librarian/views/setup/step_language.tpl:8
 msgid "Language:"
-msgstr "Language:"
+msgstr "اللغة:"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian/views/setup/finished.tpl:5 librarian/views/setup/finished.tpl:10
 msgid "Setup Completed"
-msgstr "Setup Completed"
+msgstr "تم التنزيل"
 
 #: librarian/views/setup/finished.tpl:14
 msgid "Libriran has been set up successfully."
-msgstr "Libriran has been set up successfully."
+msgstr "تم إعداد البرنامج بنجاح."
 
 #: librarian/views/setup/finished.tpl:15
 msgid "Start using Librarian"
-msgstr "Start using Librarian"
+msgstr "بدء أستخدام البرنامج"
 
 #: librarian/plugins/ondd/views/ondd_wizard.tpl:6
 msgid "Please select the satellite you'd like to receive data from."
-msgstr "Please select the satellite you'd like to receive data from."
+msgstr "الرجاء أختيار القمر الذي ترغب بأستقبال البيانات منه."
 

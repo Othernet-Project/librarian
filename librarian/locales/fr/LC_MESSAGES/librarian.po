@@ -165,8 +165,7 @@ msgstr "nettoyer"
 #: librarian/views/downloads.tpl:20
 msgid "update available"
 msgid_plural "updates available"
-msgstr[0] "une mise à jour disponible\n"
-"Plusieurs mise à jour disponibles"
+msgstr[0] "mise à jour disponible"
 msgstr[1] "mises à jour disponibles"
 
 #: librarian/plugins/diskspace/plugin.py:94
@@ -981,94 +980,94 @@ msgstr "nom de l'interface"
 
 #: librarian/routes/setup.py:57
 msgid "Please select a valid language."
-msgstr "Please select a valid language."
+msgstr "Choisissez un langage valide"
 
 #: librarian/routes/setup.py:89
 msgid "Please select a valid date and time."
-msgstr "Please select a valid date and time."
+msgstr "Choisissez une date une heure valable"
 
 #: librarian/routes/setup.py:113
 msgid "The entered passwords do not match."
-msgstr "The entered passwords do not match."
+msgstr "Les mots de passes ne correspondent aps"
 
 #: librarian/routes/setup.py:122
 msgid "This username is already taken."
-msgstr "This username is already taken."
+msgstr "Ce surnom est déjà pris"
 
 #: librarian/routes/setup.py:125
 msgid "Invalid user credentials, please try again."
-msgstr "Invalid user credentials, please try again."
+msgstr "Informations de profil invalides, réessayez "
 
 #: librarian/views/reader.tpl:21
 msgid "partner"
-msgstr "partner"
+msgstr "partenaire"
 
 #. Translators, used as not on library page when there is no content for given language
 #. Translators, note that appears in table on updates page when there is no new downloaded content for a given language
 #: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
 msgid "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
-msgstr "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
+msgstr "Le filtre du langage '%(lang)s' is active. Cliquez sur %(link)s to see all updates"
 
 #: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
 msgid "here"
-msgstr "here"
+msgstr "ici"
 
 #: librarian/views/setup/step_superuser.tpl:4
 msgid "Please enter the desired credentials for the superuser account."
-msgstr "Please enter the desired credentials for the superuser account."
+msgstr "Entrez les informations attendues pour le compte super-utilisateur."
 
 #. Translators, used as label for a password field
 #: librarian/views/setup/step_superuser.tpl:22
 msgid "Confirm Password:"
-msgstr "Confirm Password:"
+msgstr "Confirmez le mot de passe:"
 
 #. Translators, used as placeholder in the password field
 #: librarian/views/setup/step_superuser.tpl:24
 msgid "confirm password"
-msgstr "confirm password"
+msgstr "confirmez le mot de passe:"
 
 #. Translators, used as page title
 #: librarian/views/setup/main.tpl:5
 msgid "Setup Wizard"
-msgstr "Setup Wizard"
+msgstr "Logiciel d'installation"
 
 #. Translators, used as page heading
 #: librarian/views/setup/main.tpl:10
 msgid "Setup Wizard: Step %s of %s"
-msgstr "Setup Wizard: Step %s of %s"
+msgstr "Logiciel d'installation : Etape %s sur %s"
 
 #: librarian/views/setup/main.tpl:20
 msgid "Next"
-msgstr "Next"
+msgstr "Suivant"
 
 #: librarian/views/setup/step_datetime.tpl:4
 msgid "Please set the current date and time."
-msgstr "Please set the current date and time."
+msgstr "Sélectionnez la date et l'heure actuelle"
 
 #: librarian/views/setup/step_language.tpl:4
 msgid "Please select the interface language."
-msgstr "Please select the interface language."
+msgstr "Sélectionnez la langue de l'interface"
 
 #. Translators, used as label for language
 #: librarian/views/setup/step_language.tpl:8
 msgid "Language:"
-msgstr "Language:"
+msgstr "Langage:"
 
 #. Translators, used as page title
 #. Translators, used as page heading
 #: librarian/views/setup/finished.tpl:5 librarian/views/setup/finished.tpl:10
 msgid "Setup Completed"
-msgstr "Setup Completed"
+msgstr "Installation terminée"
 
 #: librarian/views/setup/finished.tpl:14
 msgid "Libriran has been set up successfully."
-msgstr "Libriran has been set up successfully."
+msgstr "Libriran a bien été installé avec succès"
 
 #: librarian/views/setup/finished.tpl:15
 msgid "Start using Librarian"
-msgstr "Start using Librarian"
+msgstr "Commencer à utiliser Librarian"
 
 #: librarian/plugins/ondd/views/ondd_wizard.tpl:6
 msgid "Please select the satellite you'd like to receive data from."
-msgstr "Please select the satellite you'd like to receive data from."
+msgstr "Sélectionnez le satellite depuis lequel vous souhaitez recevoir les données."
 

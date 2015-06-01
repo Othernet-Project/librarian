@@ -925,7 +925,7 @@ msgstr "The entered passwords do not match."
 
 #: librarian/routes/setup.py:122
 msgid "This username is already taken."
-msgstr "This username is already taken."
+msgstr "此用户名已被选用。"
 
 #: librarian/routes/setup.py:125
 msgid "Invalid user credentials, please try again."
@@ -943,7 +943,7 @@ msgstr "Language filter for '%(lang)s' is active. Click %(link)s to see all upda
 
 #: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
 msgid "here"
-msgstr "here"
+msgstr "这里"
 
 #: librarian/views/setup/step_superuser.tpl:4
 msgid "Please enter the desired credentials for the superuser account."
@@ -971,7 +971,7 @@ msgstr "Setup Wizard: Step %s of %s"
 
 #: librarian/views/setup/main.tpl:20
 msgid "Next"
-msgstr "Next"
+msgstr "下一步"
 
 #: librarian/views/setup/step_datetime.tpl:4
 msgid "Please set the current date and time."
@@ -984,7 +984,7 @@ msgstr "Please select the interface language."
 #. Translators, used as label for language
 #: librarian/views/setup/step_language.tpl:8
 msgid "Language:"
-msgstr "Language:"
+msgstr "语言："
 
 #. Translators, used as page title
 #. Translators, used as page heading
