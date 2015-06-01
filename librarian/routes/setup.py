@@ -9,6 +9,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
+import platform
 
 import dateutil.parser
 import pytz
@@ -20,6 +21,9 @@ from ..forms.setup import SetupLanguageForm,  SetupDateTimeForm
 from ..lib import auth
 from ..lib import wizard
 from ..utils.template import template
+
+
+LINUX = 'Linux'
 
 
 class SetupWizard(wizard.Wizard):
@@ -88,14 +92,18 @@ def setup_language():
     return dict(successful=True, language=lang)
 
 
+def is_linux():
+    return platform.system() == LINUX
+
+
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
-                            method='GET', index=2)
+                            method='GET', index=2, test=is_linux)
 def setup_datetime_form():
     return dict(form=SetupDateTimeForm())
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
-                            method='POST', index=2)
+                            method='POST', index=2, test=is_linux)
 def setup_datetime():
     form = SetupDateTimeForm(request.forms)
     if not form.is_valid():

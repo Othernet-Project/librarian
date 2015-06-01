@@ -190,6 +190,7 @@ setup.autoconfigurator('csrf.secret')(sessions.generate_secret_key)
 
 
 def prestart(config, logfile=None, debug=False):
+    ensure_dir(dirname(config['logging.output']))
     log_config({
         'version': 1,
         'root': {
@@ -220,7 +221,6 @@ def prestart(config, logfile=None, debug=False):
         logging.debug('Using database {}'.format(db_path))
 
     # Make sure all necessary directories are present
-    ensure_dir(dirname(config['logging.output']))
     for db_path in database_configs.values():
         ensure_dir(dirname(db_path))
 
