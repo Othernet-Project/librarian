@@ -60,9 +60,11 @@ VOLTS = {
 
 LNB_TYPES = (
     # Translators, this is a type of LNB
-    ('u', _('Universal')),
+    (ipc.UNIVERSAL, _('Universal')),
     # Translators, this is a type of LNB
-    ('k', _('North America Ku band')),
+    (ipc.KU_BAND, _('North America Ku band')),
+    # Translators, this is a type of LNB
+    (ipc.C_BAND, _('C band')),
 )
 
 PRESETS = [
