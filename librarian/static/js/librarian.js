@@ -54,7 +54,7 @@
       path = path.slice(1);
     }
     var res = $.getJSON(
-      $.librarian.lang.prefix('/files/' + path), 
+      $.librarian.lang.prefix('/files/' + path),
       {f: 'json'}
     );
     res.done(function (data) { cb(data); });
