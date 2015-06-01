@@ -181,7 +181,7 @@ class MemcachedCache(BaseCache):
     def _new_prefix(self, prefix):
         prefix_key = '{0}{1}'.format(self.prefixes_key, prefix)
         new_prefix = '{0}{1}'.format(prefix, uuid.uuid4())
-        self._cache.set(prefix_key, new_prefix, timeout=0)
+        self.set(prefix_key, new_prefix, timeout=0)
         return new_prefix
 
     def parse_prefix(self, prefix):
