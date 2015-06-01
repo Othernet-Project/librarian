@@ -156,7 +156,7 @@ class Meta(object):
         :param meta:          dict: Raw metadata as dict
         :param content_path:  str: Absolute path to specific content
         """
-        self.meta = meta
+        self.meta = dict((key, meta[key]) for key in meta.keys())
         # We use ``or`` in the following line because 'tags' can be an empty
         # string, which is treated as invalid JSON
         self.tags = json.loads(meta.get('tags') or '{}')
