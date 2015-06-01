@@ -12,7 +12,8 @@ import os
 import json
 import logging
 import datetime
-from os.path import abspath, dirname, join, basename
+
+from os.path import abspath, dirname, join, basename, splitext
 
 from bottle import request, static_file, abort
 
@@ -77,14 +78,24 @@ def send_favicon():
     return send_static('img/favicon.ico')
 
 
-def send_logfile():
-    conf = request.app.config
-    log_path = conf['logging.output']
+def send_logfile(log_path):
     log_dir = dirname(log_path)
     filename = basename(log_path)
-    new_filename = datetime.datetime.now().strftime(
-        'librarian_%%s_%Y-%m-%d_%H-%M-%S.log') % __version__
+    (name, ext) = splitext(filename)
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    params = dict(name=name, version=__version__, timestamp=timestamp, ext=ext)
+    new_filename = '{name}_{version}_{timestamp}{ext}'.format(**params)
     return static_file(filename, root=log_dir, download=new_filename)
+
+
+def send_librarian_log():
+    log_path = request.app.config['logging.output']
+    return send_logfile(log_path)
+
+
+def send_syslog():
+    log_path = request.app.config['logging.syslog']
+    return send_logfile(log_path)
 
 
 @view('500')

@@ -168,8 +168,11 @@ ROUTES = (
     ('sys:favicon', system.send_favicon,
      'GET', '/favicon.ico',
      dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
-    ('sys:logs', system.send_logfile,
+    ('sys:librarian_log', system.send_librarian_log,
      'GET', '/librarian.log',
+     dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
+    ('sys:syslog', system.send_syslog,
+     'GET', '/syslog',
      dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
 
     # This route handler is added because unhandled missing pages cause bottle
