@@ -46,9 +46,6 @@ def cached(prefix='', timeout=None):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             backend = request.app.cache
-            if backend is None:  # no caching backend installed
-                return func(*args, **kwargs)
-
             generated = generate_key(func.__name__, *args, **kwargs)
             parsed_prefix = backend.parse_prefix(prefix)
             key = '{0}{1}'.format(parsed_prefix, generated)
@@ -108,6 +105,27 @@ class BaseCache(object):
 
     def has_expired(self, expires):
         return expires > 0 and expires < time.time()
+
+
+class NoOpCache(BaseCache):
+    """Dummy cache which does not perform anything"""
+    def get(self, key):
+        return
+
+    def set(self, key, value, timeout=None):
+        return
+
+    def delete(self, key):
+        return
+
+    def clear(self):
+        return
+
+    def parse_prefix(self, prefix):
+        return
+
+    def invalidate(self, prefix):
+        return
 
 
 class InMemoryCache(BaseCache):
@@ -209,7 +227,7 @@ def setup(backend, timeout, servers):
     try:
         backend_cls = backends[backend]
     except KeyError:
-        return None  # caching will be disabled
+        return NoOpCache()  # caching will be disabled
     else:
         return backend_cls(default_timeout=timeout,
                            servers=servers)

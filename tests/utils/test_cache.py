@@ -42,10 +42,9 @@ def test_generate_key(base_cache):
     assert generated_md5 == known_md5
 
 
-@mock.patch.object(mod.BaseCache, 'get')
 @mock.patch.object(mod, 'request')
-def test_cached_no_backend(request, get):
-    request.app.cache = None
+def test_cached_no_backend(request):
+    request.app.cache = mod.NoOpCache()
     orig_func = mock.Mock(__name__='orig_func')
     orig_func.return_value = 'data'
     cached_func = mod.cached()(orig_func)
@@ -53,7 +52,6 @@ def test_cached_no_backend(request, get):
     result = cached_func('test', a=3)
     assert result == 'data'
     orig_func.assert_called_once_with('test', a=3)
-    assert not get.called
 
 
 @mock.patch.object(mod.BaseCache, 'set')
@@ -295,4 +293,4 @@ def test_setup(im_cache_cls, mc_cache_cls):
     assert cache is mc_cache
 
     no_cache = mod.setup('invalid', 100, ['server3'])
-    assert no_cache is None
+    assert isinstance(no_cache, mod.NoOpCache)
