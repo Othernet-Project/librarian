@@ -72,7 +72,8 @@ def dump_tables(arg, databases, config):
     sys.exit(0)
 
 
-@command('refill', '--refill', action='store_true')
+@command('refill', '--refill', action='store_true',
+         help="Empty database and then reload zipballs into it.")
 def refill_command(arg, databases, config):
     print('Begin content refill.')
     archive = Archive.setup(config['librarian.backend'],
@@ -83,6 +84,20 @@ def refill_command(arg, databases, config):
                             meta_filename=config['content.metadata'])
     archive.clear_and_reload()
     print('Content refill finished.')
+    sys.exit(0)
+
+
+@command('reload', '--reload', action='store_true',
+         help="Reload zipballs into database without clearing it previously.")
+def reload_command(arg, databases, config):
+    print('Begin content reload.')
+    archive = Archive.setup(config['librarian.backend'],
+                            databases.main,
+                            contentdir=config['content.contentdir'],
+                            spooldir=config['content.spooldir'],
+                            meta_filename=config['content.metadata'])
+    archive.reload_data()
+    print('Content reload finished.')
     sys.exit(0)
 
 
