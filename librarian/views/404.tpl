@@ -7,7 +7,7 @@ ${_('Page not found')}
 
 <%block name="heading">
 ## Translators, used as error page heading
-400: ${_('Page not found')}
+404: ${_('Page not found')}
 </%block>
 
 <p>${_('The page you were looking for could not be found')}</p>
