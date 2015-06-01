@@ -12,15 +12,13 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import logging
 
-from bottle import (mako_view as view,
-                    mako_template as template,
-                    request,
-                    redirect)
+from bottle import request, redirect
 from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ...lib.validate import posint, keyof
 from ...routes.setup import setup_wizard
+from ...utils.template import template, view
 from ...utils.template_helpers import template_helper
 
 from ..exceptions import NotSupportedError

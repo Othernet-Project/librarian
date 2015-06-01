@@ -10,7 +10,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import json
 
-from .downloads import ContentError, extract_file
+from . import zipballs
 
 
 class AppError(Exception):
@@ -42,8 +42,8 @@ class AppInfo(object):
 
 def get_app_info(path):
     try:
-        metadata, info = extract_file(path, 'app.json')
-    except ContentError:
+        info = zipballs.get_file(path, 'app.json')
+    except zipballs.ValidationError:
         raise MetadataError('Could not extract metadata')
     try:
         info = str(info.decode('utf8'))

@@ -6,7 +6,7 @@
     <p class="thumbnail">
     <a href="${i18n_url('content:reader', content_id=meta.md5)}">
     % if meta.images > 0 and meta.image:
-        <img class="thumb-image" src="${url('content:cover', path=meta.image)}">
+        <img class="thumb-image" src="${url('content:file', content_path=th.get_content_path(meta.md5), filename=meta.image)}">
     % else:
         <span class="thumb-image thumb-placeholder"></span>
     % endif

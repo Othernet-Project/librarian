@@ -35,7 +35,7 @@ from bottle_utils.i18n import I18NPlugin, lazy_gettext as _, i18n_url
 from bottle_utils.common import to_unicode
 
 from librarian.core.metadata import LICENSES
-from librarian.core.downloads import get_zipballs
+from librarian.core.downloads import get_downloads
 
 from librarian.lib import auth
 from librarian.lib import sessions
@@ -44,6 +44,7 @@ from librarian.lib.lock import lock_plugin
 from librarian.lib.confloader import ConfDict
 
 from librarian.utils import lang
+from librarian.utils import cache
 from librarian.utils import setup
 from librarian.utils import commands
 from librarian.utils import migrations
@@ -106,18 +107,16 @@ ROUTES = (
      'GET', '/', {}),
     ('content:sites_list', content.content_sites_list,
      'GET', '/sites/', {}),
-    ('content:file', content.content_file,
-     'GET', '/pages/<content_id>/<filename:path>',
-     dict(no_i18n=True, skip=APP_ONLY_PLUGINS)),
     ('content:zipball', content.content_zipball,
      'GET', '/pages/<content_id>.zip',
      dict(no_i18n=True, unlocked=True, skip=APP_ONLY_PLUGINS)),
     ('content:reader', content.content_reader,
      'GET', '/pages/<content_id>', {}),
-    ('content:cover', content.cover_image,
-     'GET', '/covers/<path>', dict(no_i18n=True, skip=APP_ONLY_PLUGINS)),
     ('content:delete', content.remove_content,
      'POST', '/delete/<content_id>', {}),
+    ('content:file', content.content_file,
+     'GET', '/content/<content_path:re:[0-9a-f]{3}(/[0-9a-f]{3}){9}/[0-9a-f]{2}>/<filename:path>',
+     dict(no_i18n=True, skip=APP_ONLY_PLUGINS)),  # shadowed by static server
 
     # Files
 
@@ -223,6 +222,7 @@ def prestart(config, logfile=None, debug=False):
 
     ensure_dir(config['content.spooldir'])
     ensure_dir(config['content.appdir'])
+    ensure_dir(config['content.unpackdir'])
     ensure_dir(config['content.contentdir'])
     ensure_dir(config['content.covers'])
 
@@ -263,7 +263,7 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         'style': 'screen',  # Default stylesheet
         'h': helpers,
         'th': template_helper,
-        'updates': Lazy(lambda: len(list(get_zipballs(
+        'updates': Lazy(lambda: len(list(get_downloads(
             config['content.spooldir'],
             config['content.output_ext']
         )))),
@@ -295,6 +295,10 @@ def start(databases, config, no_auth=False, repl=False, debug=False):
         ap_client_ip_range=config['librarian.ap_client_ip_range']
     ))
     app.install(request_timer('Handler'))
+    # setup cache backend
+    app.cache = cache.setup(backend=config['cache.backend'],
+                            timeout=config['cache.timeout'],
+                            servers=config['cache.servers'])
 
     # Install routes
     add_routes(app, ROUTES)

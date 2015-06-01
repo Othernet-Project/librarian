@@ -16,7 +16,7 @@ import logging
 import datetime
 from os.path import dirname, join
 
-from bottle import mako_view as view, request, static_file
+from bottle import request, static_file
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ...core.archive import Archive
@@ -24,6 +24,7 @@ from ...core.archive import Archive
 from ...lib.lock import global_lock, LockFailureError
 
 from ...utils import migrations, databases
+from ...utils.template import view
 
 from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError
@@ -111,10 +112,11 @@ def rebuild():
         logging.debug('Prepared new database')
         archive = Archive.setup(conf['librarian.backend'],
                                 db,
+                                unpackdir=conf['content.unpackdir'],
                                 contentdir=conf['content.contentdir'],
                                 spooldir=conf['content.spooldir'],
                                 meta_filename=conf['content.metadata'])
-        rows = archive.reload_data()
+        rows = archive.reload_content()
         logging.info('Restored metadata for %s pieces of content', rows)
     logging.debug('Released global lock')
     end = time.time()

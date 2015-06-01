@@ -13,13 +13,14 @@ import datetime
 import os
 
 import pytz
-from bottle import request, mako_template as template
+from bottle import request
 from bottle_utils.i18n import lazy_gettext as _
 from dateutil.parser import parse as parse_datetime
 
 from ..lib import auth
 from ..lib import wizard
 from ..utils.lang import UI_LOCALES, DEFAULT_LOCALE
+from ..utils.template import template
 
 
 DATETIME_KEYS = ('date', 'hour', 'minute')
@@ -39,6 +40,7 @@ class SetupWizard(wizard.Wizard):
     finished_template = 'setup/finished.tpl'
     allow_override = True
     start_index = 1
+    template_func = template
 
     def wizard_finished(self, data):
         setup_data = dict()

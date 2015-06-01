@@ -22,6 +22,7 @@ def get_content_url(root_url, domain):
     conf = request.app.config
     archive = Archive.setup(conf['librarian.backend'],
                             request.db.main,
+                            unpackdir=conf['content.unpackdir'],
                             contentdir=conf['content.contentdir'],
                             spooldir=conf['content.spooldir'],
                             meta_filename=conf['content.metadata'])

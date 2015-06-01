@@ -12,12 +12,13 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
 
-from bottle import request, mako_view as view, redirect, MultiDict, abort
-
-from ...core.archive import Archive
+from bottle import request, redirect, MultiDict, abort
 
 from bottle_utils.html import hsize
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
+
+from ...core.archive import Archive
+from ...utils.template import view
 
 from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError
@@ -63,11 +64,13 @@ def cleanup():
         conf = request.app.config
         archive = Archive.setup(conf['librarian.backend'],
                                 request.db.main,
+                                unpackdir=conf['content.unpackdir'],
                                 contentdir=conf['content.contentdir'],
                                 spooldir=conf['content.spooldir'],
                                 meta_filename=conf['content.metadata'])
         if selected:
             archive.remove_from_archive([z['md5'] for z in selected])
+            request.app.cache.invalidate(prefix='content')
             redirect(i18n_url('content:list'))
         else:
             # Translators, error message shown on clean-up page when there was

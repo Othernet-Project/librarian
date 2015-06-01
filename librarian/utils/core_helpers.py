@@ -12,7 +12,7 @@ from functools import wraps
 
 from bottle import request, abort
 
-from ..core import downloads
+from ..core import content as content_mod
 from ..core import metadata
 from ..core.archive import Archive
 from ..core.files import FileManager
@@ -22,6 +22,7 @@ def open_archive():
     conf = request.app.config
     return Archive.setup(conf['librarian.backend'],
                          request.db.main,
+                         unpackdir=conf['content.unpackdir'],
                          contentdir=conf['content.contentdir'],
                          spooldir=conf['content.spooldir'],
                          meta_filename=conf['content.metadata'])
@@ -43,8 +44,7 @@ def with_content(func):
         if not content:
             abort(404)
         content_dir = conf['content.contentdir']
-        zip_path = downloads.get_zip_path(content_id, content_dir)
-        assert zip_path is not None, 'Expected zipball to exist'
-        meta = metadata.Meta(content, conf['content.covers'], zip_path)
+        content_path = content_mod.to_path(content_id, prefix=content_dir)
+        meta = metadata.Meta(content, content_path)
         return func(meta=meta, **kwargs)
     return wrapper

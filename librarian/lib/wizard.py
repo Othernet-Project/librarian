@@ -8,7 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from bottle import request, redirect, mako_template as template
+from bottle import request, redirect, template
 
 from bottle_utils.common import basestring
 
@@ -26,6 +26,7 @@ class Wizard(object):
     step_param = 'step'
     start_index = 0
     allow_override = False
+    template_func = template
 
     def __init__(self, name):
         self.name = name
@@ -127,12 +128,12 @@ class Wizard(object):
             return self.wizard_finished(self.state['data'])
         else:
             step_context = step['handler']()
-            return template(step['template'],
-                            step_index=self.current_step_index,
-                            step_count=self.step_count,
-                            step_param=self.step_param,
-                            start_index=self.start_index,
-                            **step_context)
+            return self.template_func(step['template'],
+                                      step_index=self.current_step_index,
+                                      step_count=self.step_count,
+                                      step_param=self.step_param,
+                                      start_index=self.start_index,
+                                      **step_context)
 
     def process_current_step(self):
         # could happen in case the saved state points to a higher step and in
@@ -149,12 +150,12 @@ class Wizard(object):
 
         step_result = step['handler']()
         if not step_result.pop('successful', False):
-            return template(step['template'],
-                            step_index=self.current_step_index,
-                            step_count=self.step_count,
-                            step_param=self.step_param,
-                            start_index=self.start_index,
-                            **step_result)
+            return self.template_func(step['template'],
+                                      step_index=self.current_step_index,
+                                      step_count=self.step_count,
+                                      step_param=self.step_param,
+                                      start_index=self.start_index,
+                                      **step_result)
 
         self.state['data'][self.current_step_index] = step_result
         self.set_step_index(self.current_step_index + 1)

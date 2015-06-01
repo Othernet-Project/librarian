@@ -10,10 +10,11 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import re
 
-from bottle import request, redirect, mako_template as template
+from bottle import request, redirect
 from bottle_utils.ajax import roca_view
 
 from ..utils.core_helpers import open_archive, with_content
+from ..utils.template import template
 
 
 WS = re.compile(r'\s', re.M)
