@@ -67,7 +67,7 @@ ${_('Updates')}
                         <input id="check-${meta['md5']}" type="checkbox" name="selection" value="${meta['md5']}"${' checked' if selection else ''}>
                     </td>
                     <td class="downloads-title">
-                        <p><label for="check-${meta['md5']}"><span${meta.i18n_attrs}>${meta['title'] | h}</span></label></p>
+                        <p><label for="check-${meta['md5']}"><span${th.i18n_attrs(meta.lang)}>${meta['title'] | h}</span></label></p>
                         % if meta.get('replaces_title'):
                         <p class="downloads-replaces">
                         ${_('replaces:')}

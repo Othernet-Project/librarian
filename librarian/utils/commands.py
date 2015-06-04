@@ -8,13 +8,17 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import re
 import sys
+import pprint
 import getpass
 
-from .. import __version__
+import hooks
+
 from ..core.archive import Archive
 from ..lib import auth
-from .version import full_version_info
+from .repl import start_repl
+from .version import get_version
 
 
 COMMANDS = {}
@@ -26,13 +30,13 @@ def command(name, *args, **kwargs):
         COMMANDS[name] = fn
         if fn.__doc__:
             kwargs.setdefault('help', fn.__doc__.strip())
-        PARSER_ARGS.append((args, kwargs))
+        PARSER_ARGS.append((name, args, kwargs))
         return fn
     return registrator
 
 
 @command('su', '--su', action='store_true')
-def create_superuser(arg, databases, config):
+def create_superuser(arg, app):
     """ create superuser and quit """
     print("Press ctrl-c to abort")
     try:
@@ -46,24 +50,32 @@ def create_superuser(arg, databases, config):
         auth.create_user(username=username,
                          password=password,
                          is_superuser=True,
-                         db=databases.sessions,
+                         db=app.databases.sessions,
                          overwrite=True)
         print("User created.")
     except auth.UserAlreadyExists:
         print("User already exists, please try a different username.")
-        create_superuser(arg, databases, config)
+        create_superuser(arg, app)
     except auth.InvalidUserCredentials:
         print("Invalid user credentials, please try again.")
-        create_superuser(arg, databases, config)
+        create_superuser(arg, app)
 
     sys.exit(0)
 
 
+@command('debug_conf', '--debug-conf', action='store_true',
+         help='print out the configuration in use and exit')
+def debug_conf(arg, app):
+    print('Configuration file path: %s' % app.args.conf)
+    pprint.pprint(app.config, indent=4)
+    sys.exit(0)
+
+
 @command('dump_tables', '--dump-tables', action='store_true')
-def dump_tables(arg, databases, config):
+def dump_tables(arg, app):
     """ dump table schema as SQL """
     schema = []
-    for db in databases.values():
+    for db in app.databases.values():
         db.query(db.Select('*', sets='sqlite_master'))
         for r in db.results:
             if r.type == 'table':
@@ -74,14 +86,14 @@ def dump_tables(arg, databases, config):
 
 @command('refill', '--refill', action='store_true',
          help="Empty database and then reload zipballs into it.")
-def refill_command(arg, databases, config):
+def refill_command(arg, app):
     print('Begin content refill.')
-    archive = Archive.setup(config['librarian.backend'],
-                            databases.main,
-                            unpackdir=config['content.unpackdir'],
-                            contentdir=config['content.contentdir'],
-                            spooldir=config['content.spooldir'],
-                            meta_filename=config['content.metadata'])
+    archive = Archive.setup(app.config['librarian.backend'],
+                            app.databases.main,
+                            unpackdir=app.config['content.unpackdir'],
+                            contentdir=app.config['content.contentdir'],
+                            spooldir=app.config['content.spooldir'],
+                            meta_filename=app.config['content.metadata'])
     archive.clear_and_reload()
     print('Content refill finished.')
     sys.exit(0)
@@ -89,35 +101,71 @@ def refill_command(arg, databases, config):
 
 @command('reload', '--reload', action='store_true',
          help="Reload zipballs into database without clearing it previously.")
-def reload_command(arg, databases, config):
+def reload_command(arg, app):
     print('Begin content reload.')
-    archive = Archive.setup(config['librarian.backend'],
-                            databases.main,
-                            unpackdir=config['content.unpackdir'],
-                            contentdir=config['content.contentdir'],
-                            spooldir=config['content.spooldir'],
-                            meta_filename=config['content.metadata'])
+    archive = Archive.setup(app.config['librarian.backend'],
+                            app.databases.main,
+                            unpackdir=app.config['content.unpackdir'],
+                            contentdir=app.config['content.contentdir'],
+                            spooldir=app.config['content.spooldir'],
+                            meta_filename=app.config['content.metadata'])
     archive.reload_data()
     print('Content reload finished.')
     sys.exit(0)
 
 
+def repl_start(app):
+    namespace = dict(app=app)
+    message = 'Press Ctrl-C to shut down Librarian.'
+    app.repl_thread = start_repl(namespace, message)
+
+
+def repl_shutdown(app):
+    app.repl_thread.join()
+
+
+@command('repl', '--repl', action='store_true',
+         help='start interactive shell after servers start')
+def repl(arg, app):
+    app.events.subscribe(hooks.POST_START, repl_start)
+    app.events.subscribe(hooks.SHUTDOWN, repl_shutdown)
+
+
 @command('version', '--version', action='store_true',
          help='print out version number and exit')
-def version(arg, databases, config):
-    ver = full_version_info(__version__, config)
+def version(arg, app):
+    ver = get_version(app.version, app.config)
     print('v%s' % ver)
-    sys.exit()
+    sys.exit(0)
 
 
-def add_command_switches(parser):
-    for args, kwargs in PARSER_ARGS:
-        parser.add_argument(*args, **kwargs)
+def register_commands(parser, app):
+    # conf is handled actually by a separate parser, but in order to show up
+    # in help, it's added here as well
+    parser.add_argument('--conf', metavar='PATH', default=app.CONFPATH,
+                        help='path to configuration file')
+    parser.add_argument('--debug', action='store_true',
+                        help='enable debugging')
+    parser.add_argument('--log', metavar='PATH', default=None,
+                        help='log file path (default: specified in .ini file)')
+    parser.add_argument('--no-auth', action='store_true',
+                        help='disable authentication')
+
+    for (name, args, kwargs) in PARSER_ARGS:
+        if name in app.config['librarian.commands']:
+            parser.add_argument(*args, **kwargs)
 
 
-def select_command(args, databases, config):
+def select_command(app):
     """ Select one of the registered commands and execute it """
-    for cmd, fn in COMMANDS.items():
-        arg = getattr(args, cmd, None)
+    for name, fn in COMMANDS.items():
+        arg = getattr(app.args, name, None)
         if arg:
-            fn(arg, databases, config)
+            fn(arg, app)
+
+
+def get_config_path():
+    regex = r'--conf[=\s]{1}["\']{0,1}([\\/\.\w]+)["\']{0,1}\s*'
+    arg_str = ' '.join(sys.argv[1:])
+    result = re.search(regex, arg_str)
+    return result.group(1) if result else None

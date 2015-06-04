@@ -13,6 +13,8 @@ from __future__ import unicode_literals
 
 from bottle_utils.i18n import lazy_gettext as _
 
+from .template_helpers import template_helper
+
 # Helper functions are defined above the constants because we used them to
 # generate runtime constants.
 
@@ -22,11 +24,22 @@ def lang_name(code):
     return LOCALES[code]
 
 
+@template_helper
 def lang_name_safe(code):
     """ Return native language name for locale code """
     if not code:
         return _('unknown')
     return lang_name(code)
+
+
+@template_helper
+def is_rtl(code):
+    return code in RTL_LANGS
+
+
+@template_helper
+def dir(code):
+    return 'rtl' if code in RTL_LANGS else 'auto'
 
 
 def lang_name_getter(ltuple):

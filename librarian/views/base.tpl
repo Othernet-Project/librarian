@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="${request.locale}"${' dir="rtl"' if is_rtl == True else ''}>
+<html lang="${request.locale}"${' dir="rtl"' if th.is_rtl(request.locale) == True else ''}>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -27,7 +27,7 @@
                 ## Translators, used main navigation menu
                 ${h.link_other(icon + _('Apps'), i18n_url('apps:list'), request.original_path, h.SPAN, _class="apps navicon")}
                 ## Translators, used main navigation menu
-                ${h.link_other(icon + _('Updates') + (' (%s)' % updates if updates > 0 else ''), i18n_url('downloads:list'), i18n_path(request.path), h.SPAN, _class="updates navicon" + (updates > 0 and ' notice' or ''))}
+                ${h.link_other(icon + _('Updates') + (' (%s)' % th.updates() if th.updates() > 0 else ''), i18n_url('downloads:list'), i18n_path(request.path), h.SPAN, _class="updates navicon" + (th.updates() > 0 and ' notice' or ''))}
                 ## Translators, used main navigation menu
                 ${h.link_other(icon + _('Dashboard'), i18n_url('dashboard:main'), request.original_path, h.SPAN, _class="dashboard navicon")}
                 ## Translators, used main navigation menu
@@ -54,9 +54,9 @@
         <div id="languages" class="languages">
             % for locale, lang in languages:
                 % if locale != request.locale:
-                <a href="${i18n_path(locale=locale)}" dir="${dir(locale)}" lang="${locale}">${lang}</a>
+                <a href="${i18n_path(locale=locale)}" dir="${th.dir(locale)}" lang="${locale}">${lang}</a>
                 % else:
-                <span class="current" dir="${dir(locale)}" lang="${locale}">${lang}</span>
+                <span class="current" dir="${th.dir(locale)}" lang="${locale}">${lang}</span>
                 % endif
             % endfor
         </div>

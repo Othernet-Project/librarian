@@ -9,7 +9,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 
-def full_version_info(version, config):
+def get_version(version, config):
     platform_name = config.get('platform.name', '')
     version_file = config.get('platform.version_file', '')
     try:

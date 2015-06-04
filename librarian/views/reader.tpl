@@ -32,7 +32,7 @@ ${meta.title}
             </strong>
             <a class="button small" href="${url('content:zipball', content_id=meta.md5)}">${_('Download')}</a>
             </p>
-            <p class="licensing">${readable_license(meta.license)}</p>
+            <p class="licensing">${th.readable_license(meta.license)}</p>
             ${tags.tags(meta)}
         </div>
     </div>

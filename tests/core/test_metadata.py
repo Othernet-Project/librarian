@@ -176,11 +176,11 @@ def test_process_meta_fail(validate, replace_aliases, add_missing_keys,
 def test_meta_class_init(json, os):
     """ Initializing the Meta class must give the instance correct props """
     os.path.normpath.side_effect = noop
-    data = mock.Mock()
+    data = {'md5': 'test', 'tags': 'tag json data'}
     meta = mod.Meta(data, 'foo')
     assert meta.meta == data
-    data.get.assert_called_once_with('tags')
-    json.loads.assert_called_once_with(data.get.return_value)
+    assert meta.meta is not data
+    json.loads.assert_called_once_with('tag json data')
     assert meta.tags == json.loads.return_value
     assert meta.content_path == 'foo'
 
@@ -228,12 +228,12 @@ def test_meta_set_key(*ignored):
 
 @mock.patch(MOD + '.os', autospec=True)
 @mock.patch(MOD + '.json', autospec=True)
-def test_meta_set_key_updates_original(*ignored):
+def test_meta_set_key_does_not_update_original(*ignored):
     """ The original mod dict is updated when Meta object is updated """
     data = {}
     meta = mod.Meta(data, 'foo')
     meta['missing'] = 'not anymore'
-    assert data['missing'] == 'not anymore'
+    assert data == {}
 
 
 @mock.patch(MOD + '.os', autospec=True)
@@ -303,29 +303,6 @@ def test_lang_with_missing_language(*ignored):
 
 @mock.patch(MOD + '.json', autospec=True)
 @mock.patch(MOD + '.os', autospec=True)
-def test_rtl_property(*ignored):
-    """ RTL property returns True for RTL languages """
-    meta = mod.Meta({}, 'content_dir')
-    meta['language'] = 'en'
-    assert meta.rtl is False
-    meta['language'] = 'ar'
-    assert meta.rtl is True
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-def test_i18n_attrs_property(*ignored):
-    """ I18n attributes are returned when langauge is specified """
-    meta = mod.Meta({}, 'content_dir')
-    assert meta.i18n_attrs == ''
-    meta['language'] = 'en'
-    assert meta.i18n_attrs == ' lang="en"'
-    meta['language'] = 'ar'
-    assert meta.i18n_attrs == ' lang="ar" dir="rtl"'
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
 def test_label_property_default(*ignored):
     """ Label is 'core' if there is no archive key """
     meta = mod.Meta({}, 'content_dir')
@@ -358,21 +335,6 @@ def test_label_property_with_key_combinations(*ignored):
         assert meta.label == 'core'
     with key_overrides(meta, archive='ephem', is_partner=True):
         assert meta.label == 'partner'
-
-
-@mock.patch(MOD + '.json', autospec=True)
-@mock.patch(MOD + '.os', autospec=True)
-def test_free_license_property(*ignored):
-    """ Free license is True for free licenses """
-    meta = mod.Meta({}, 'content_dir')
-    with key_overrides(meta, license='ARL'):
-        assert meta.free_license is False
-    with key_overrides(meta, license='ON'):
-        assert meta.free_license is False
-    with key_overrides(meta, license='GFDL'):
-        assert meta.free_license is True
-    with key_overrides(meta, license='CC-BY'):
-        assert meta.free_license is True
 
 
 @mock.patch.object(mod, 'json', autospec=True)

@@ -18,30 +18,6 @@ import scandir
 from outernet_metadata import validator
 
 
-RTL_LANGS = ['ar', 'he', 'ur', 'yi', 'ji', 'iw', 'fa']
-
-# FIXME: This is a dummy gettext to cause the strings to be extracted.
-_ = lambda x: x
-
-LICENSES = (
-    (None, _('Unknown license')),
-    ('CC-BY', _('Creative Commons Attribution')),
-    ('CC-BY-ND', _('Creative Commons Attribution-NoDerivs')),
-    ('CC-BY-NC', _('Creative Commons Attribution-NonCommercial')),
-    ('CC-BY-ND-NC', _('Creative Commons Attribution-NonCommercial-NoDerivs')),
-    ('CC-BY-SA', _('Creative Commons Attribution-ShareAlike')),
-    ('CC-BY-NC-SA', _('Creative Commons Attribution-NonCommercial-ShareAlike')),
-    ('GFDL', _('GNU Free Documentation License')),
-    ('OPL', _('Open Publication License')),
-    ('OCL', _('Open Content License')),
-    ('ADL', _('Against DRM License')),
-    ('FAL', _('Free Art License')),
-    ('PD', _('Public Domain')),
-    ('OF', _('Other free license')),
-    ('ARL', _('All rights reserved')),
-    ('ON', _('Other non-free license')),
-)
-
 ALIASES = {
     'publisher': ['partner'],
     'entry_point': ['index']
@@ -209,20 +185,6 @@ class Meta(object):
         return self.meta.get('language')
 
     @property
-    def rtl(self):
-        return self.lang in RTL_LANGS
-
-    @property
-    def i18n_attrs(self):
-        s = ''
-        if self.lang:
-            # XXX: Do we want to keep the leading space?
-            s += ' lang="%s"' % self.lang
-        if self.rtl:
-            s += ' dir="rtl"'
-        return s
-
-    @property
     def label(self):
         if self.meta.get('archive') == 'core':
             return 'core'
@@ -231,10 +193,6 @@ class Meta(object):
         elif self.meta.get('is_partner'):
             return 'partner'
         return 'core'
-
-    @property
-    def free_license(self):
-        return self.license not in ['ARL', 'ON']
 
     @property
     def image(self):
