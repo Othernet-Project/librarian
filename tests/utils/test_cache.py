@@ -249,15 +249,14 @@ class TestMemcachedCache(object):
         mc_cache.clear()
         mc_cache._cache.flush_all.assert_called_once_with()
 
+    @mock.patch.object(mod.MemcachedCache, 'set')
     @mock.patch.object(mod.uuid, 'uuid4')
-    def test__new_prefix(self, uuid4, mc_cache):
+    def test__new_prefix(self, uuid4, setfunc, mc_cache):
         uuid4.return_value = 'some-uuid-value'
         prefix = mc_cache._new_prefix('pre_')
         assert prefix == 'pre_some-uuid-value'
         prefix_key = mc_cache.prefixes_key + 'pre_'
-        mc_cache._cache.set.assert_called_once_with(prefix_key,
-                                                    prefix,
-                                                    timeout=0)
+        setfunc.assert_called_once_with(prefix_key, prefix, timeout=0)
 
     @mock.patch.object(mod.MemcachedCache, '_new_prefix')
     def test_parse_prefix(self, _new_prefix, mc_cache):
