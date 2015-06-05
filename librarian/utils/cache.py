@@ -231,3 +231,9 @@ def setup(backend, timeout, servers):
     else:
         return backend_cls(default_timeout=timeout,
                            servers=servers)
+
+
+def cache_plugin(app):
+    app.cache = setup(backend=app.config['cache.backend'],
+                      timeout=app.config['cache.timeout'],
+                      servers=app.config['cache.servers'])

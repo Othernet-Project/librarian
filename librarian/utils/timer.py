@@ -47,3 +47,11 @@ def request_timer(label):
             return res
         return wrapper
     return _timer
+
+
+def total_timer_plugin(app):
+    app.install(request_timer('Total'))
+
+
+def handler_timer_plugin(app):
+    app.install(request_timer('Handler'))

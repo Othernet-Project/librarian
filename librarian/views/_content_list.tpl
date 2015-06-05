@@ -22,7 +22,7 @@
             ${meta.timestamp.strftime('%Y-%m-%d')}
             </span>
         </p>
-        <h2 class="title"${meta.i18n_attrs}>
+        <h2 class="title"${th.i18n_attrs(meta.lang)}>
             <a href="${i18n_url('content:reader', content_id=meta.md5)}">${meta.title | h}</a>
         </h2>
         % if meta.publisher:

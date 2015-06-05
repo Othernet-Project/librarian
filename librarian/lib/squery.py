@@ -17,7 +17,9 @@ from functools import wraps
 from contextlib import contextmanager
 
 import dateutil.parser
+
 from bottle import request
+from bottle_utils.common import basestring
 from bottle_utils.lazy import CachingLazy
 from sqlize import (From, Where, Group, Order, Limit, Select, Update, Delete,
                     Insert, Replace, sqlin, sqlarray)
@@ -230,7 +232,7 @@ def get_databases(db_confs, debug=False):
     return DatabaseContainer(conns, debug=debug)
 
 
-def database_plugin(databases, debug=False):
+def database_plugin(databases):
     def plugin(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):

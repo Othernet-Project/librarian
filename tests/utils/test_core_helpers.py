@@ -26,3 +26,19 @@ def test_with_content(request, open_archive, metadata_class):
     mocked_archive.get_single.assert_called_once_with(content_id)
     mocked_route.assert_called_once_with(meta=mocked_meta_obj)
     metadata_class.assert_called_once_with({'md5': content_id}, content_path)
+
+
+def test_is_free_license(*ignored):
+    """ Free license is True for free licenses """
+    assert not mod.is_free_license('ARL')
+    assert not mod.is_free_license('ON')
+
+    assert mod.is_free_license('GFDL')
+    assert mod.is_free_license('CC-BY')
+
+
+def test_i18n_attrs_property(*ignored):
+    """ I18n attributes are returned for specified language """
+    assert mod.i18n_attrs('') == ''
+    assert mod.i18n_attrs('en') == ' lang="en"'
+    assert mod.i18n_attrs('ar') == ' lang="ar" dir="rtl"'

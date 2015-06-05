@@ -102,7 +102,7 @@ def install_static(app, mod):
               _route_plugin_static,
               name='plugins:%s:static' % mod,
               no_i18n=True,
-              skip=app.APP_ONLY_PLUGINS)
+              skip=app.config['librarian.skip_plugins'])
 
 
 def install_plugins(app):

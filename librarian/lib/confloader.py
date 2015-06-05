@@ -67,6 +67,7 @@ class ConfigurationFormatError(ConfigurationError):
 
 
 class ConfDict(dict):
+
     def __getitem__(self, key):
         try:
             return super(ConfDict, self).__getitem__(key)
@@ -83,13 +84,26 @@ class ConfDict(dict):
         if not sections:
             raise ConfigurationError(
                 "Missing or empty configuration file at '{}'".format(path))
+
+        children = []
         for section in sections:
             for key, value in parser.items(section):
                 if section not in ('DEFAULT', 'bottle'):
-                    key = '{}.{}'.format(section, key)
+                    compound_key = '{}.{}'.format(section, key)
+                else:
+                    compound_key = key
+
                 if not skip_clean:
                     value = self.clean_value(value)
-                self[key] = value
+
+                if section == 'config' and key == 'include':
+                    children = value
+                else:
+                    self[compound_key] = value
+
+        for child in children:
+            self.update(cls.from_file(child, skip_clean=skip_clean))
+
         return self
 
     @staticmethod

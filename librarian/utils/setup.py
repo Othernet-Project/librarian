@@ -14,6 +14,7 @@ import logging
 import os
 
 from bottle import request, redirect
+from bottle_utils.i18n import i18n_url
 
 
 logger = logging.getLogger(__name__)
@@ -21,7 +22,11 @@ logger = logging.getLogger(__name__)
 AUTO_CONFIGURATORS = dict()
 
 
-def autoconfigurator(name):
+def autoconfigure(name):
+    """Register functions that will be automatically ran in case a setup file
+    was not found. The value these functions return will be associated with the
+    passed in `name` parameter, and the resulting pair will be added to the
+    setup data."""
     def decorator(func):
         AUTO_CONFIGURATORS[name] = func
         return func
@@ -45,6 +50,9 @@ class Setup(object):
 
     def get(self, key, default=None):
         return self.data.get(key, default)
+
+    def items(self):
+        return self.data.items()
 
     def load(self):
         """Attempt loading the setup data file."""
@@ -85,3 +93,14 @@ def setup_plugin(setup_path):
         return wrapper
     plugin.name = 'setup'
     return plugin
+
+
+def load_setup(app):
+    # install app-wide access to setup parameters
+    app.setup = Setup(app.config['setup.file'])
+    # merge setup parameters into app config
+    app.config.update(dict(app.setup.items()))
+
+
+def setup_wizard_plugin(app):
+    app.install(setup_plugin(setup_path=i18n_url('setup:main')))
