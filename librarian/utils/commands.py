@@ -17,7 +17,6 @@ import hooks
 
 from ..core.archive import Archive
 from ..lib import auth
-from .repl import start_repl
 from .version import get_version
 
 
@@ -35,9 +34,7 @@ def command(name, *args, **kwargs):
     return registrator
 
 
-@command('su', '--su', action='store_true')
-def create_superuser(arg, app):
-    """ create superuser and quit """
+def create_superuser(app):
     print("Press ctrl-c to abort")
     try:
         username = raw_input('Username: ')
@@ -55,12 +52,18 @@ def create_superuser(arg, app):
         print("User created.")
     except auth.UserAlreadyExists:
         print("User already exists, please try a different username.")
-        create_superuser(arg, app)
+        create_superuser(app)
     except auth.InvalidUserCredentials:
         print("Invalid user credentials, please try again.")
-        create_superuser(arg, app)
+        create_superuser(app)
 
     sys.exit(0)
+
+
+@command('su', '--su', action='store_true')
+def create_superuser_command(arg, app):
+    """ create superuser and quit """
+    app.events.subscribe(hooks.START, create_superuser)
 
 
 @command('debug_conf', '--debug-conf', action='store_true',
@@ -71,9 +74,7 @@ def debug_conf(arg, app):
     sys.exit(0)
 
 
-@command('dump_tables', '--dump-tables', action='store_true')
-def dump_tables(arg, app):
-    """ dump table schema as SQL """
+def dump_tables(app):
     schema = []
     for db in app.databases.values():
         db.query(db.Select('*', sets='sqlite_master'))
@@ -84,9 +85,13 @@ def dump_tables(arg, app):
     sys.exit(0)
 
 
-@command('refill', '--refill', action='store_true',
-         help="Empty database and then reload zipballs into it.")
-def refill_command(arg, app):
+@command('dump_tables', '--dump-tables', action='store_true')
+def dump_tables_command(arg, app):
+    """ dump table schema as SQL """
+    app.events.subscribe(hooks.START, dump_tables)
+
+
+def refill_db(app):
     print('Begin content refill.')
     archive = Archive.setup(app.config['librarian.backend'],
                             app.databases.main,
@@ -99,9 +104,13 @@ def refill_command(arg, app):
     sys.exit(0)
 
 
-@command('reload', '--reload', action='store_true',
-         help="Reload zipballs into database without clearing it previously.")
-def reload_command(arg, app):
+@command('refill', '--refill', action='store_true',
+         help="Empty database and then reload zipballs into it.")
+def refill_command(arg, app):
+    app.events.subscribe(hooks.START, refill_db)
+
+
+def reload_db(app):
     print('Begin content reload.')
     archive = Archive.setup(app.config['librarian.backend'],
                             app.databases.main,
@@ -114,7 +123,14 @@ def reload_command(arg, app):
     sys.exit(0)
 
 
+@command('reload', '--reload', action='store_true',
+         help="Reload zipballs into database without clearing it previously.")
+def reload_command(arg, app):
+    app.events.subscribe(hooks.START, reload_db)
+
+
 def repl_start(app):
+    from .repl import start_repl
     namespace = dict(app=app)
     message = 'Press Ctrl-C to shut down Librarian.'
     app.repl_thread = start_repl(namespace, message)
