@@ -102,7 +102,7 @@ class ConfDict(dict):
                     self[compound_key] = value
 
         for child in children:
-            self.update(cls.from_file(child))
+            self.update(cls.from_file(child, skip_clean=skip_clean))
 
         return self
 
