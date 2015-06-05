@@ -68,8 +68,6 @@ def prestart():
 def start():
     """ Start the application """
     logging.info('===== Starting Librarian v%s =====', app.version)
-    # run start hooks
-    app.events.publish(hooks.START, app)
     # We are passing the ``wsgiapp`` object here because that's the one that
     # contains the I18N middleware. If we pass ``app`` object, then we won't
     # have the I18N middleware active at all.
@@ -78,6 +76,8 @@ def start():
                          default_locale=lang.DEFAULT_LOCALE,
                          domain='librarian',
                          locale_dir=app.in_pkg('locales'))
+    # run start hooks
+    app.events.publish(hooks.START, app)
     # Start the server
     servers.start_server('librarian', app.config, wsgiapp)
     # run post-start hooks
