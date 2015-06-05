@@ -181,7 +181,7 @@ def select_command(app):
 
 
 def get_config_path():
-    regex = r'--conf[=\s]{1}["\']{0,1}([\\/\.\w]+)["\']{0,1}\s*'
+    regex = r'--conf[=\s]{1}((["\']{1}(.+)["\']{1})|([^\s]+))\s*'
     arg_str = ' '.join(sys.argv[1:])
     result = re.search(regex, arg_str)
-    return result.group(1) if result else None
+    return result.group(1).strip(' \'"') if result else None
