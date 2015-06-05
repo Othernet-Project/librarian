@@ -19,6 +19,11 @@
             <div id="toolbar" class="toolbar">
                 <% icon = '<span class="icon"></span>' %>
                 ## Translators, used main navigation menu
+                % for mi in menu_group('main'):
+                    % if mi.is_visible():
+                        ${mi}
+                    % endif
+                % endfor
                 ${h.link_other(icon + _('Library'), i18n_url('content:list'), request.original_path, h.SPAN, _class="archive navicon")}
                 ## Translators, used main navigation menu
                 ${h.link_other(icon + _('Files'), i18n_url('files:list'), request.original_path, h.SPAN, _class="files navicon")}
