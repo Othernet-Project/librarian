@@ -32,6 +32,11 @@ class MenuItem(object):
         mod_file = sys.modules[self.__class__.__module__].__file__
         pkg_path = os.path.dirname(os.path.abspath(mod_file))
         self.name = os.path.basename(pkg_path)
+        if self.icon_class is None:
+            raise ValueError("icon_class parameter is not set.")
+
+        if self.is_alt_icon_visible() and self.alt_icon_class is None:
+            raise ValueError("alt_icon_class parameter is not set.")
 
     def is_alt_icon_visible(self):
         return False
