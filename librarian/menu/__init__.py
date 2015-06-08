@@ -35,14 +35,14 @@ class MenuItem(object):
         if self.icon_class is None:
             raise ValueError("icon_class parameter is not set.")
 
-        if self.is_alt_icon_visible() and self.alt_icon_class is None:
-            raise ValueError("alt_icon_class parameter is not set.")
-
     def is_alt_icon_visible(self):
         return False
 
     def is_visible(self):
         return True
+
+    def get_path(self):
+        return i18n_url(self.route)
 
     def render(self):
         icon = html.SPAN(_class="icon")
@@ -53,7 +53,7 @@ class MenuItem(object):
 
         item_class = ' '.join(tuple(self.default_classes) + (icon_class,))
         return html.link_other(icon + self.label,
-                               i18n_url(self.route),
+                               self.get_path(),
                                bottle.request.original_path,
                                html.SPAN,
                                _class=item_class)
