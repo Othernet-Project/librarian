@@ -28,7 +28,7 @@ class MenuItem(object):
     route = None
     default_classes = ('navicon',)
 
-    def __init__(self, app):
+    def __init__(self):
         mod_file = sys.modules[self.__class__.__module__].__file__
         pkg_path = os.path.dirname(os.path.abspath(mod_file))
         self.name = os.path.basename(pkg_path)
@@ -74,7 +74,7 @@ def install_menuitems(app):
             __import__(rel_path)  # attempt local import
 
     for menu_item_cls in MenuItem.__subclasses__():
-        MENU_ITEMS.append(menu_item_cls(app))
+        MENU_ITEMS.append(menu_item_cls)
 
     bottle.BaseTemplate.defaults.update({'menu_group': menu_group,
                                          'menu_item': menu_item})
@@ -84,7 +84,7 @@ def menu_group(group):
     """Return list of menu items that belong to the specified `group`"""
     for item in MENU_ITEMS:
         if item.group == group:
-            yield item
+            yield item()
 
 
 def menu_item(name, group=None):
@@ -94,4 +94,4 @@ def menu_item(name, group=None):
     items = menu_group(group) if group else MENU_ITEMS
     for item in items:
         if item.name == name:
-            return item
+            return item()
