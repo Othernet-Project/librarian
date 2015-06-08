@@ -13,12 +13,10 @@ from urlparse import urljoin
 
 from bottle import request, redirect, abort
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
-from bottle_utils.lazy import Lazy
 
 from ..core import content as content_mod
 from ..core import metadata
 from ..core.archive import Archive
-from ..core.downloads import get_downloads
 from ..core.files import FileManager
 
 from .netutils import IPv4Range, get_target_host
@@ -131,14 +129,6 @@ def content_domain_plugin(app):
         root_url=app.config['librarian.root_url'],
         ap_client_ip_range=app.config['librarian.ap_client_ip_range']
     ))
-
-
-@template_helper
-def updates():
-    return Lazy(lambda: len(list(get_downloads(
-        request.app.config['content.spooldir'],
-        request.app.config['content.output_ext']
-    ))))
 
 
 @template_helper
