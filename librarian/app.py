@@ -31,6 +31,7 @@ from bottle_utils.i18n import I18NPlugin
 
 from librarian.lib.confloader import ConfDict
 
+from librarian.utils import exts
 from librarian.utils import lang
 from librarian.utils import hooks
 from librarian.utils import pubsub
@@ -53,6 +54,7 @@ servers = ServerManager()
 
 app = bottle.default_app()
 app.events = pubsub.PubSub()
+app.exts = exts.ExtContainer()
 app.in_pkg = in_pkg
 
 app.CONFPATH = in_pkg('librarian.ini')
