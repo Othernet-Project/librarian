@@ -20,7 +20,6 @@ from ..core import zipballs
 from ..lib.paginator import Paginator
 from ..utils.cache import cached
 from ..utils.core_helpers import open_archive
-from ..utils.notifications import notifies
 from ..utils.template import view
 
 
@@ -97,7 +96,6 @@ def list_downloads():
 
 
 @view('downloads_error')  # TODO: Add this view
-@notifies(_('Content added.'), category='content')
 def manage_downloads():
     """ Manage the downloaded content """
     forms = request.forms
@@ -114,6 +112,8 @@ def manage_downloads():
         archive.add_to_archive(file_list)
         request.app.exts.cache.invalidate(prefix='content')
         request.app.exts.cache.invalidate(prefix='downloads')
+        request.app.exts.notifications.send(_('Content added.'),
+                                            category='content')
     if action == 'delete':
         downloads.remove_downloads(conf['content.spooldir'],
                                    content_ids=file_list)
