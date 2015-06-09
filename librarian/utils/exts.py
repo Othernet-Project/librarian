@@ -23,23 +23,31 @@ class ExtContainer(object):
     the dependencies in question are not installed. Mainly meant to avoid
     putting boilerplate checks in such code to check for their existence.
     """
+    _ext_container_name = '_extensions'
+
     def __init__(self):
-        self._extensions = dict()
+        setattr(self, self._ext_container_name, dict())
 
     def __get_extension(self, name):
+        exts = object.__getattribute__(self, '_extensions')
         try:
-            return self._extensions[name]
+            return exts[name]
         except KeyError:
-            return Placeholder
+            return Placeholder()
 
     def __setattr__(self, name, extension):
-        self._extensions[name] = extension
+        if name == self._ext_container_name:
+            super(ExtContainer, self).__setattr__(name, extension)
+        else:
+            self._extensions[name] = extension
 
     def __getattr__(self, name):
         return self.__get_extension(name)
 
     def __getitem__(self, name):
         return self.__get_extension(name)
+
+    __setitem__ = __setattr__
 
     def is_installed(self, name):
         """Check whether extension known by `name` is installed or not."""
