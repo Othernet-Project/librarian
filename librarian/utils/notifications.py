@@ -166,13 +166,6 @@ class NotificationGroup(object):
     def __init__(self, notifications=None):
         self.notifications = notifications or []
 
-    def add(self, notification):
-        self.notifications.append(notification)
-
-    @property
-    def count(self):
-        return len(self.notifications)
-
     def __getattr__(self, name):
         if name in self.proxied_attrs:
             try:
@@ -181,6 +174,43 @@ class NotificationGroup(object):
                 raise ValueError('Notification group has 0 notifications.')
 
         return super(NotificationGroup, self).__getattr__(name)
+
+    def add(self, notification):
+        self.notifications.append(notification)
+
+    @property
+    def count(self):
+        return len(self.notifications)
+
+    def is_similar(self, notification, attrs):
+        """Returns whether `notification` is similar to existing members of the
+        group or not."""
+        are_equal = lambda n: getattr(notification, n) == getattr(self, n)
+        return all([are_equal(attr_name) for attr_name in attrs])
+
+    @classmethod
+    def group_by(cls, notifications, by):
+        """Return list of notification groups, grouped by the `by` param.
+
+        :param notifications:  iterator yielding `Notification` objects
+        :param by:             tuple containing names of attributes to use in
+                               similarity comparison.
+        """
+        group_list = []
+        try:
+            group = cls([next(notifications)])
+        except StopIteration:
+            return group_list
+        else:
+            group_list.append(group)
+            for notification in notifications:
+                if not group.is_similar(notification, attrs=by):
+                    group = cls()
+                    group_list.append(group)
+
+                group.add(notification)
+
+            return group_list
 
 
 def to_dict(row):

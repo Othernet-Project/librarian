@@ -240,3 +240,48 @@ class TestNotificationGroup(object):
         group = mod.NotificationGroup()
         group.add(notification)
         assert group.notifications == [notification]
+
+    def test_is_similar_default(self):
+        notification = mod.Notification('uid',
+                                        'msg',
+                                        'now',
+                                        category='content',
+                                        read_at='now',
+                                        user='joe')
+        group = mod.NotificationGroup([notification])
+        similar = mod.Notification('uid',
+                                   'msg',
+                                   'now',
+                                   category='content',
+                                   read_at='now',
+                                   user='joe')
+        different1 = mod.Notification('uid',
+                                      'msg',
+                                      'now',
+                                      category='other',
+                                      read_at='now',
+                                      user='joe')
+        different2 = mod.Notification('uid',
+                                      'msg',
+                                      'now',
+                                      category='content',
+                                      read_at='yesterday',
+                                      user='joe')
+        assert group.is_similar(similar, attrs=('category', 'read_at'))
+        assert not group.is_similar(different1, attrs=('category', 'read_at'))
+        assert not group.is_similar(different2, attrs=('category', 'read_at'))
+
+    def test_group_by(self):
+        notifications = []
+        categories = ['content', 'content', 'alarm', 'alarm']
+        for idx, category in enumerate(categories):
+            notifications.append(mod.Notification('uid' + str(idx),
+                                                  'msg',
+                                                  'now',
+                                                  user='joe',
+                                                  category=category))
+        groups = mod.NotificationGroup.group_by(iter(notifications),
+                                                by=('category', 'read_at'))
+        assert len(groups) == 2
+        assert groups[0].count == 2
+        assert groups[1].count == 2
