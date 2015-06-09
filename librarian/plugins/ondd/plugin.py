@@ -17,7 +17,7 @@ from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ...lib import forms
-from ...routes.setup import setup_wizard
+from ...utils.setup import setup_wizard
 from ...utils.template import template, view
 from ...utils.template_helpers import template_helper
 

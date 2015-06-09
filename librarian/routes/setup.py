@@ -19,69 +19,25 @@ from bottle import request
 from ..forms.auth import RegistrationForm
 from ..forms.setup import SetupLanguageForm,  SetupDateTimeForm
 from ..lib import auth
-from ..lib import wizard
-from ..utils.template import template
+from ..utils.lang import UI_LOCALES
+from ..utils.setup import setup_wizard
 
 
 LINUX = 'Linux'
 
 
-class SetupWizard(wizard.Wizard):
-    finished_template = 'setup/finished.tpl'
-    allow_override = True
-    start_index = 1
-    template_func = template
-
-    def wizard_finished(self, data):
-        setup_data = dict()
-        for step, step_result in data.items():
-            setup_data.update(step_result)
-
-        request.app.setup.save(setup_data)
-        result = template(self.finished_template, setup=request.app.setup)
-        return result
-
-    def get_next_setup_step_index(self):
-        for step_index, step in sorted(self.steps.items(), key=lambda x: x[0]):
-            try:
-                request.app.setup[step['name']]
-            except KeyError:
-                return step_index
-
-        return self.step_count + self.start_index
-
-    def override_next_step(self):
-        next_setup_step_index = self.get_next_setup_step_index()
-        try:
-            wanted_step_index = request.params[self.step_param]
-        except KeyError:
-            self.set_step_index(next_setup_step_index)
-            return
-        else:
-            try:
-                wanted_step_index = int(wanted_step_index)
-            except ValueError:
-                self.set_step_index(next_setup_step_index)
-                return
-            else:
-                if (wanted_step_index not in self.steps or
-                        wanted_step_index > next_setup_step_index):
-                    self.set_step_index(next_setup_step_index)
-                else:
-                    self.set_step_index(wanted_step_index)
-
-
-setup_wizard = SetupWizard(name='setup')
+def is_language_invalid():
+    return request.app.setup.get('language') not in UI_LOCALES
 
 
 @setup_wizard.register_step('language', template='setup/step_language.tpl',
-                            method='GET', index=1)
+                            method='GET', index=1, test=is_language_invalid)
 def setup_language_form():
     return dict(form=SetupLanguageForm())
 
 
 @setup_wizard.register_step('language', template='setup/step_language.tpl',
-                            method='POST', index=1)
+                            method='POST', index=1, test=is_language_invalid)
 def setup_language():
     form = SetupLanguageForm(request.forms)
     if not form.is_valid():
@@ -92,18 +48,19 @@ def setup_language():
     return dict(successful=True, language=lang)
 
 
-def is_linux():
-    return platform.system() == LINUX
+def is_linux_and_bad_tz():
+    return (platform.system() == LINUX and
+            request.app.setup.get('timezone') not in pytz.common_timezones)
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
-                            method='GET', index=2, test=is_linux)
+                            method='GET', index=2, test=is_linux_and_bad_tz)
 def setup_datetime_form():
     return dict(form=SetupDateTimeForm())
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
-                            method='POST', index=2, test=is_linux)
+                            method='POST', index=2, test=is_linux_and_bad_tz)
 def setup_datetime():
     form = SetupDateTimeForm(request.forms)
     if not form.is_valid():
@@ -117,7 +74,7 @@ def setup_datetime():
     dt_format = '%Y-%m-%d %T'
     os.system("date +'{0}' -s '{1}'".format(dt_format,
                                             tz_aware_dt.strftime(dt_format)))
-    request.app.setup.append({'timezone': timezone, 'datetime': True})
+    request.app.setup.append({'timezone': timezone})
     return dict(successful=True)
 
 
@@ -146,5 +103,4 @@ def setup_superuser():
                      is_superuser=True,
                      db=request.db.sessions,
                      overwrite=True)
-    request.app.setup.append({'superuser': True})
     return dict(successful=True)

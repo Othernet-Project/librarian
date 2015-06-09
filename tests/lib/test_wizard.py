@@ -305,10 +305,14 @@ def test_process_current_step_missing_post_handler(wizard):
 
 def test_register_step_autoindex(wizard):
     mocked_step = mock.Mock()
-    decorator = wizard.register_step('test_step', 'step_tmp.tpl')
+    test_func = lambda: True
+    decorator = wizard.register_step('test_step',
+                                     'step_tmp.tpl',
+                                     test=test_func)
     decorator(mocked_step)
     assert len(wizard.steps) == 1
     assert wizard.steps[0] == {'name': 'test_step',
+                               'test': test_func,
                                'GET': {'handler': mocked_step,
                                        'template': 'step_tmp.tpl'},
                                'POST': {'handler': mocked_step,
@@ -318,12 +322,20 @@ def test_register_step_autoindex(wizard):
 def test_register_step_autoindex_separate_handlers(wizard):
     mocked_step_get = mock.Mock()
     mocked_step_post = mock.Mock()
-    decor = wizard.register_step('test_step', 'step_tmp1.tpl', method='GET')
+    test_func = lambda: True
+    decor = wizard.register_step('test_step',
+                                 'step_tmp1.tpl',
+                                 method='GET',
+                                 test=test_func)
     decor(mocked_step_get)
-    decor = wizard.register_step('test_step', 'step_tmp2.tpl', method='POST')
+    decor = wizard.register_step('test_step',
+                                 'step_tmp2.tpl',
+                                 method='POST',
+                                 test=test_func)
     decor(mocked_step_post)
     assert len(wizard.steps) == 1
     assert wizard.steps[0] == {'name': 'test_step',
+                               'test': test_func,
                                'GET': {'handler': mocked_step_get,
                                        'template': 'step_tmp1.tpl'},
                                'POST': {'handler': mocked_step_post,
@@ -332,10 +344,15 @@ def test_register_step_autoindex_separate_handlers(wizard):
 
 def test_register_step_manualindex(wizard):
     mocked_step = mock.Mock()
-    decorator = wizard.register_step('test_step', 'step_tmp.tpl', index=3)
+    test_func = lambda: True
+    decorator = wizard.register_step('test_step',
+                                     'step_tmp.tpl',
+                                     index=3,
+                                     test=test_func)
     decorator(mocked_step)
     assert len(wizard.steps) == 1
     assert wizard.steps[3] == {'name': 'test_step',
+                               'test': test_func,
                                'GET': {'handler': mocked_step,
                                        'template': 'step_tmp.tpl'},
                                'POST': {'handler': mocked_step,
@@ -345,12 +362,17 @@ def test_register_step_manualindex(wizard):
 def test_register_step_index_conflict(wizard):
     wizard.steps[3] = {'name': 'intruder'}
     mocked_step = mock.Mock()
+    test_func = lambda: True
     assert len(wizard.steps) == 1
-    decorator = wizard.register_step('test_step', 'step_tmp.tpl', index=3)
+    decorator = wizard.register_step('test_step',
+                                     'step_tmp.tpl',
+                                     index=3,
+                                     test=test_func)
     decorator(mocked_step)
     assert len(wizard.steps) == 2
     assert wizard.steps[4] == {'name': 'intruder'}
     assert wizard.steps[3] == {'name': 'test_step',
+                               'test': test_func,
                                'GET': {'handler': mocked_step,
                                        'template': 'step_tmp.tpl'},
                                'POST': {'handler': mocked_step,
