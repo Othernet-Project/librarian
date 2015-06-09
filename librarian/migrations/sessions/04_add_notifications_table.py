@@ -10,7 +10,7 @@ create table notifications
     read_at timestamp,                                     -- timestamp when notification was read
     expires_at timestamp,                                  -- timestamp when notification expires
     dismissable boolean not null default 0,                -- indicates whether notification can be marked as read
-    user varchar,                                          -- username of recipient
+    user varchar                                           -- username of recipient
 );
 """
 
