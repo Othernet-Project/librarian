@@ -151,6 +151,18 @@ class Notification(object):
 
 class NotificationGroup(object):
 
+    proxied_attrs = (
+        'message',
+        'created_at',
+        'expires_at',
+        'read_at',
+        'is_read',
+        'dismissable',
+        'icon',
+        'category',
+        'priority',
+    )
+
     def __init__(self, notifications=None):
         self.notifications = notifications or []
 
@@ -161,29 +173,14 @@ class NotificationGroup(object):
     def count(self):
         return len(self.notifications)
 
-    @property
-    def message(self):
-        return self.notifications[0].message
+    def __getattr__(self, name):
+        if name in self.proxied_attrs:
+            try:
+                return getattr(self.notifications[0], name)
+            except IndexError:
+                raise ValueError('Notification group has 0 notifications.')
 
-    @property
-    def created(self):
-        return self.notifications[0].created
-
-    @property
-    def read_at(self):
-        return self.notifications[0].read_at
-
-    @property
-    def icon(self):
-        return self.notifications[0].icon
-
-    @property
-    def category(self):
-        return self.notifications[0].category
-
-    @property
-    def priority(self):
-        return self.notifications[0].priority
+        return super(NotificationGroup, self).__getattr__(name)
 
 
 def to_dict(row):

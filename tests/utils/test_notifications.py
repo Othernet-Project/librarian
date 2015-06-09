@@ -1,6 +1,7 @@
 import datetime
 
 import mock
+import pytest
 
 from librarian.utils import notifications as mod
 
@@ -212,3 +213,30 @@ class TestNotification(object):
     def test_calc_expiry(self):
         assert mod.Notification.calc_expiry(0) is None
         assert isinstance(mod.Notification.calc_expiry(10), datetime.datetime)
+
+
+class TestNotificationGroup(object):
+
+    @mock.patch.object(mod, 'request')
+    def test_notification_attrs(self, request):
+        notification = mod.Notification('uid', 'msg', 'now')
+        group = mod.NotificationGroup([notification])
+        for attr in mod.NotificationGroup.proxied_attrs:
+            assert getattr(group, attr) == getattr(notification, attr)
+
+    def test_empty_group(self):
+        group = mod.NotificationGroup()
+        with pytest.raises(ValueError):
+            group.message
+
+    def test_count(self):
+        notification = mod.Notification('uid', 'msg', 'now')
+        notification2 = mod.Notification('uid2', 'msg', 'now')
+        group = mod.NotificationGroup([notification, notification2])
+        assert group.count == 2
+
+    def test_add(self):
+        notification = mod.Notification('uid', 'msg', 'now')
+        group = mod.NotificationGroup()
+        group.add(notification)
+        assert group.notifications == [notification]
