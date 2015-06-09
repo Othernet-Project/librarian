@@ -45,7 +45,7 @@ class Notification(object):
         self.priority = priority
         self.expires_at = expires_at
         self.dismissable = dismissable
-        self.read_at = read_at
+        self._read_at = read_at
         self.user = user
 
     @classmethod
@@ -67,31 +67,24 @@ class Notification(object):
 
     @property
     def has_expired(self):
-        return self.expires_at < datetime.datetime.utcnow()
+        return (self.expires_at is not None and
+                self.expires_at < datetime.datetime.utcnow())
 
     @property
     def is_shared(self):
         return not self.user
 
-    def _is_shared_read(self):
-        read_data = request.user.options.get('notifications', {})
-        read_at = read_data.get(self.notification_id, None)
-        if read_at:
-            return read_at > self.created_at
+    @property
+    def read_at(self):
+        if self.is_shared:
+            read_data = request.user.options.get('notifications', {})
+            return read_data.get(self.notification_id, None)
 
-        return False
-
-    def _is_private_read(self):
-        return self.read_at is not None
+        return self._read_at
 
     @property
     def is_read(self):
-        if self.is_shared:
-            # shared notifications must be checked by date to find out whether
-            # they have been read or not
-            return self._is_shared_read()
-
-        return self._is_private_read()
+        return self.read_at is not None
 
     def _mark_shared_read(self, read_at):
         if 'notifications' not in request.user.options:
@@ -107,7 +100,7 @@ class Notification(object):
         db.query(query,
                  notification_id=self.notification_id,
                  read_at=read_at)
-        self.read_at = read_at
+        self._read_at = read_at
 
     def mark_read(self, read_at=None):
         read_at = datetime.datetime.now() if read_at is None else read_at
@@ -128,13 +121,13 @@ class Notification(object):
         db.query(query,
                  notification_id=self.notification_id,
                  message=self.message,
-                 created=self.created,
+                 created_at=self.created_at,
                  category=self.category,
                  icon=self.icon,
                  priority=self.priority,
-                 expires=self.expires,
+                 expires_at=self.expires_at,
                  dismissable=self.dismissable,
-                 read_at=self.read_at,
+                 read_at=self._read_at,
                  user=self.user)
         return self
 
@@ -150,13 +143,23 @@ class Notification(object):
 
     @staticmethod
     def calc_expiry(expiration):
+        if expiration == 0:
+            return None
+
         return datetime.datetime.utcnow() + datetime.timedelta(expiration)
 
 
 class NotificationGroup(object):
 
-    def __init__(self, notifications):
-        self.notifications = notifications
+    def __init__(self, notifications=None):
+        self.notifications = notifications or []
+
+    def add(self, notification):
+        self.notifications.append(notification)
+
+    @property
+    def count(self):
+        return len(self.notifications)
 
     @property
     def message(self):
@@ -167,8 +170,16 @@ class NotificationGroup(object):
         return self.notifications[0].created
 
     @property
+    def read_at(self):
+        return self.notifications[0].read_at
+
+    @property
     def icon(self):
         return self.notifications[0].icon
+
+    @property
+    def category(self):
+        return self.notifications[0].category
 
     @property
     def priority(self):
@@ -194,4 +205,4 @@ def get_notifications(notification_ids=None):
         query.where += db.sqlin('notification_id', notification_ids)
 
     db.query(query, user=user)
-    return [Notification(**to_dict(row)) for row in db.results]
+    return (Notification(**to_dict(row)) for row in db.results)
