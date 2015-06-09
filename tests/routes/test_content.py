@@ -21,4 +21,4 @@ def test_remove(open_archive, i18n_url, redirect, request):
     archive.remove_from_archive.assert_called_once_with(['foo'])
     assert ret is None
     redirect.assert_called_once_with('content:list')
-    request.app.cache.invalidate.assert_called_once_with(prefix='content')
+    request.app.exts.cache.invalidate.assert_called_once_with(prefix='content')

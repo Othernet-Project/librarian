@@ -44,7 +44,7 @@ def test_generate_key(base_cache):
 
 @mock.patch.object(mod, 'request')
 def test_cached_no_backend(request):
-    request.app.cache = mod.NoOpCache()
+    request.app.exts.cache = mod.NoOpCache()
     orig_func = mock.Mock(__name__='orig_func')
     orig_func.return_value = 'data'
     cached_func = mod.cached()(orig_func)
@@ -61,7 +61,7 @@ def test_cached_no_backend(request):
 @mock.patch.object(mod, 'request')
 def test_cached_found(request, generate_key, parse_prefix, get, setfunc,
                       base_cache):
-    request.app.cache = base_cache
+    request.app.exts.cache = base_cache
     orig_func = mock.Mock(__name__='orig_func')
     generate_key.return_value = 'md5_key'
     parse_prefix.return_value = ''
@@ -82,7 +82,7 @@ def test_cached_found(request, generate_key, parse_prefix, get, setfunc,
 @mock.patch.object(mod, 'request')
 def test_cached_not_found(request, generate_key, parse_prefix, get, setfunc,
                           base_cache):
-    request.app.cache = base_cache
+    request.app.exts.cache = base_cache
     orig_func = mock.Mock(__name__='orig_func')
     orig_func.return_value = 'fresh'
     parse_prefix.return_value = ''
@@ -106,7 +106,7 @@ def test_cached_not_found(request, generate_key, parse_prefix, get, setfunc,
 @mock.patch.object(mod, 'request')
 def test_cached_not_found_no_timeout(request, generate_key, parse_prefix, get,
                                      setfunc, base_cache):
-    request.app.cache = base_cache
+    request.app.exts.cache = base_cache
     orig_func = mock.Mock(__name__='orig_func')
     orig_func.return_value = 'fresh'
     parse_prefix.return_value = ''
@@ -125,7 +125,7 @@ def test_cached_not_found_no_timeout(request, generate_key, parse_prefix, get,
 @mock.patch.object(mod, 'request')
 def test_cached_not_found_custom_timeout(request, generate_key, parse_prefix,
                                          get, setfunc, base_cache):
-    request.app.cache = base_cache
+    request.app.exts.cache = base_cache
     orig_func = mock.Mock(__name__='orig_func')
     orig_func.return_value = 'fresh'
     parse_prefix.return_value = ''
@@ -144,7 +144,7 @@ def test_cached_not_found_custom_timeout(request, generate_key, parse_prefix,
 @mock.patch.object(mod, 'request')
 def test_cached_not_found_custom_prefix(request, generate_key, parse_prefix,
                                         get, setfunc, base_cache):
-    request.app.cache = base_cache
+    request.app.exts.cache = base_cache
     orig_func = mock.Mock(__name__='orig_func')
     orig_func.return_value = 'fresh'
     parse_prefix.return_value = 'test_'
