@@ -119,7 +119,7 @@ def remove_content(content_id):
     redir_path = i18n_url('content:list')
     archive = open_archive()
     archive.remove_from_archive([content_id])
-    request.app.cache.invalidate(prefix='content')
+    request.app.exts.cache.invalidate(prefix='content')
     redirect(redir_path)
 
 

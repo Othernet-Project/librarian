@@ -45,7 +45,10 @@ def cached(prefix='', timeout=None):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            backend = request.app.cache
+            if not request.app.exts.is_installed('cache'):
+                return func(*args, **kwargs)
+
+            backend = request.app.exts.cache
             generated = generate_key(func.__name__, *args, **kwargs)
             parsed_prefix = backend.parse_prefix(prefix)
             key = '{0}{1}'.format(parsed_prefix, generated)
@@ -234,6 +237,6 @@ def setup(backend, timeout, servers):
 
 
 def cache_plugin(app):
-    app.cache = setup(backend=app.config['cache.backend'],
-                      timeout=app.config['cache.timeout'],
-                      servers=app.config['cache.servers'])
+    app.exts.cache = setup(backend=app.config['cache.backend'],
+                           timeout=app.config['cache.timeout'],
+                           servers=app.config['cache.servers'])
