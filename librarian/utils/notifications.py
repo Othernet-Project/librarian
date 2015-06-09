@@ -13,6 +13,7 @@ import functools
 import uuid
 
 from bottle import request
+from bottle_utils.common import unicode
 
 
 NOTIFICATION_COLS = (
@@ -39,7 +40,7 @@ class Notification(object):
                  icon=None, priority=NORMAL, expires_at=None, dismissable=True,
                  read_at=None, user=None):
         self.notification_id = notification_id
-        self.message = message
+        self.message = unicode(message)
         self.created_at = created_at
         self.category = category
         self.icon = icon
