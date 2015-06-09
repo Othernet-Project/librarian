@@ -252,9 +252,11 @@ def notifies(message, **params):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
-            options = dict((name, value() if callable(value) else value)
-                           for name, value in params.items())
-            Notification.send(message=message, **options)
+            if request.app.exts.is_installed('notifications'):
+                options = dict((name, value() if callable(value) else value)
+                               for name, value in params.items())
+                Notification.send(message=message, **options)
+
             return result
         return wrapper
     return decorator
