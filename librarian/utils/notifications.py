@@ -9,6 +9,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import datetime
+import functools
 import uuid
 
 from bottle import request
@@ -234,3 +235,30 @@ def get_notifications(notification_ids=None):
 
     db.query(query, *notification_ids, user=user)
     return (Notification(**to_dict(row)) for row in db.results)
+
+
+def notifies(message, **params):
+    """Decorator that creates a notification upon the successful return of it's
+    wrapped function. E.g.:
+
+    @notifies("They're together",
+              category="joined",
+              user=lambda: request.user.username)
+    def join(a, b):
+        return a + b
+
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            options = dict((name, value() if callable(value) else value)
+                           for name, value in params.items())
+            Notification.send(message=message, **options)
+            return result
+        return wrapper
+    return decorator
+
+
+def notification_plugin(app):
+    app.exts.notifications = Notification
