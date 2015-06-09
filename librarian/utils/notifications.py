@@ -223,13 +223,14 @@ def get_notifications(notification_ids=None):
     the specified ids."""
     db = request.db.sessions
     user = request.user.username if request.user.is_authenticated else None
+    notification_ids = notification_ids or []
 
     query = db.Select(sets='notifications', where='user IS NULL')
     if user:
         query.where |= 'user = :user'
 
     if notification_ids:
-        query.where += db.sqlin('notification_id', notification_ids)
+        query.where += db.sqlin.__func__('notification_id', notification_ids)
 
-    db.query(query, user=user)
+    db.query(query, *notification_ids, user=user)
     return (Notification(**to_dict(row)) for row in db.results)
