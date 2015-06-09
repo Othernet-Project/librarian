@@ -21,7 +21,7 @@ class NotificationsMenuItem(MenuItem):
 
     def __init__(self, *args, **kwargs):
         super(NotificationsMenuItem, self).__init__(*args, **kwargs)
-        self.notifications = get_notifications()
+        self.notifications = list(get_notifications())
         self.unread_count = len([notification
                                  for notification in self.notifications
                                  if not notification.is_read])
