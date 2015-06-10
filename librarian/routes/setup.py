@@ -9,7 +9,6 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
-import platform
 
 import dateutil.parser
 import pytz
@@ -21,9 +20,6 @@ from ..forms.setup import SetupLanguageForm,  SetupDateTimeForm
 from ..lib import auth
 from ..utils.lang import UI_LOCALES
 from ..utils.setup import setup_wizard
-
-
-LINUX = 'Linux'
 
 
 def is_language_invalid():
@@ -48,34 +44,26 @@ def setup_language():
     return dict(successful=True, language=lang)
 
 
-def is_linux_and_bad_tz():
-    return (platform.system() == LINUX and
-            request.app.setup.get('timezone') not in pytz.common_timezones)
+def has_bad_tz():
+    return request.app.setup.get('timezone') not in pytz.common_timezones
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
-                            method='GET', index=2, test=is_linux_and_bad_tz)
+                            method='GET', index=2, test=has_bad_tz)
 def setup_datetime_form():
     return dict(form=SetupDateTimeForm())
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
-                            method='POST', index=2, test=is_linux_and_bad_tz)
+                            method='POST', index=2, test=has_bad_tz)
 def setup_datetime():
     form = SetupDateTimeForm(request.forms)
     if not form.is_valid():
         return dict(successful=False, form=form)
 
     timezone = form.processed_data['timezone']
-    datetime_str = '{date} {hour}:{minute}'.format(**form.processed_data)
-    local_dt = dateutil.parser.parse(datetime_str)
-    tz_aware_dt = pytz.timezone(timezone).localize(local_dt)
-    # Linux only!
-    dt_format = '%Y-%m-%d %T'
-    os.system("date +'{0}' -s '{1}'".format(dt_format,
-                                            tz_aware_dt.strftime(dt_format)))
     request.app.setup.append({'timezone': timezone})
-    return dict(successful=True)
+    return dict(successful=True, timezone=timezone)
 
 
 def has_no_superuser():

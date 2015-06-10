@@ -15,7 +15,7 @@ module.exports = function (grunt) {
             dashboard: ['collapsible_dash_sections.js'],
             reader: ['jquery.js', 'lodash.js', 'templates.js', 'tags.js', 'patcher.js'],
             ui: ['jquery.js', 'lodash.js', 'templates.js', 'URI.js'],
-            setupdatetime: ['pikaday.js', 'setdt.js']
+            setupdatetime: ['setdt.js']
         },
         uglifyConfig;
 
