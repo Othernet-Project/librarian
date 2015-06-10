@@ -219,9 +219,15 @@ def show_file_list():
     return dict(files=get_file_list())
 
 
+def read_ondd_setup():
+    initial_data = request.app.setup.get('ondd', {})
+    return {} if isinstance(initial_data, bool) else initial_data
+
+
 def has_no_lock():
     status = ipc.get_status()
-    return not status['has_lock']
+    form = ONDDForm(read_ondd_setup())
+    return not status['has_lock'] or not form.is_valid()
 
 
 @setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='GET',
@@ -260,8 +266,7 @@ class Dashboard(DashboardPlugin):
     javascript = ['ondd.js']
 
     def get_context(self):
-        initial_data = request.app.setup.get('ondd', {})
-        initial_data = {} if isinstance(initial_data, bool) else initial_data
+        initial_data = read_ondd_setup()
         return dict(status=ipc.get_status(),
                     form=ONDDForm(initial_data),
                     files=[])
