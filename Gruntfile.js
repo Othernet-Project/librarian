@@ -14,7 +14,16 @@ module.exports = function (grunt) {
             content: ['tags.js', 'list.js'],
             dashboard: ['collapsible_dash_sections.js'],
             reader: ['jquery.js', 'lodash.js', 'templates.js', 'tags.js', 'patcher.js'],
-            ui: ['jquery.js', 'lodash.js', 'templates.js', 'URI.js'],
+            ui: [
+                'jquery.js',
+                'lodash.js',
+                'templates.js',
+                'URI.js',
+                'widgets/accordion.js',
+                'widgets/dropdown.js',
+                'widgets/forms.js',
+                'widgets/progress.js'
+            ],
             setupdatetime: ['pikaday.js', 'setdt.js']
         },
         uglifyConfig;
@@ -92,6 +101,7 @@ module.exports = function (grunt) {
                     sassDir: '../../' + cssSrc,
                     imagesDir: '../../' + imgSrc,
                     generatedImagesDir: 'img',
+                    httpImagesPath: '/static/img/',
                     httpGeneratedImagesPath: '/static/img/',
                     javascriptsDir: 'js',
                     relativeAssets: false,
@@ -118,10 +128,9 @@ module.exports = function (grunt) {
                     filter: 'isFile'
                 }, {
                     expand: true,
-                    flatten: true,
-                    src: [imgSrc + '*'],
-                    dest: imgDest,
-                    filter: 'isFile'
+                    cwd: imgSrc,
+                    src: ['**'],
+                    dest: imgDest
                 }]
             }
         },
