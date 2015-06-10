@@ -11,9 +11,11 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import os
 import re
 import sys
-import imp
 import sqlite3
 import logging
+import importlib
+
+from ..lib.squery import Database
 
 
 MTABLE = 'migrations'   # SQL table in which migration data is stored
@@ -30,18 +32,20 @@ MIGRATION_FILE_RE = re.compile('^\d{2}_[^.]+\.sql$')
 PYMOD_RE = re.compile(r'^\d+_[^.]+\.pyc?$', re.I)
 
 
-def get_mods(path):
+def get_mods(package):
     """ List all loadable python modules in a directory
 
     This function looks inside the specified directory for all files that look
     like Python modules with a numeric prefix and returns them. It will omit
     any duplicates and return file names without extension.
 
-    :param path:    directory to search in
+    :param package: package object
     :returns:       generator containing file names without extension
     """
-    return set(os.path.splitext(f)[0] for f in os.listdir(path)
-               if PYMOD_RE.match(f))
+    pkgdir = package.__path__[0]
+    unique = set(os.path.splitext(f)[0] for f in os.listdir(pkgdir)
+                 if PYMOD_RE.match(f))
+    return sorted(list(unique))
 
 
 def get_new(modules, min_ver=0):
@@ -61,7 +65,7 @@ def get_new(modules, min_ver=0):
         yield mod
 
 
-def load_mod(module, path, prefix='db_migrations'):
+def load_mod(module, package):
     """ Load a module named ``module`` from given search``path``
 
     The module path prefix is set according to the ``prefix`` argument.
@@ -75,20 +79,13 @@ def load_mod(module, path, prefix='db_migrations'):
     This function raises an ``ImportError`` exception if module is not found.
 
     :param module:  name of the module to load
-    :param path:    search path of the module
-    :param prefix:  module path prefix (e.g., 'librarian.migrations')
+    :param package: package object
     :returns:       module object
     """
-    path = [path]
-    if prefix not in sys.modules:
-        # Import package before the module to allow relative imports
-        file, pkgpath, desc = imp.find_module('__init__', path)
-        imp.load_module(prefix, file, pkgpath, desc)
-    name = '%s.%s' % (prefix, module)
+    name = '%s.%s' % (package.__name__, module)
     if name in sys.modules:
         return sys.modules[name]
-    file, path, desc = imp.find_module(module, path)
-    return imp.load_module(name, file, path, desc)
+    return importlib.import_module(name, package=package.__name__)
 
 
 def get_version(db):
@@ -121,22 +118,22 @@ def run_migration(version, db, mod, conf={}):
         db.query(REPLACE_SQL, version)
 
 
-def migrate(db, path, package_prefix=None, conf={}):
+def migrate(db, package, conf={}):
     """ Run all migrations that have not been run
 
     Migrations will be run inside a transaction.
 
     :param db:              database connection object
-    :param path:            path that contains migrations
-    :param package_prefix:  prefxi under which to load migration modules
+    :param package:         package that contains the migrations
     :param conf:            application configuration object
     """
     ver = get_version(db)
-    logging.debug('Migration version is %s', ver)
-    mods = get_mods(path)
+    package = importlib.import_module(package)
+    logging.debug('Migration version for %s is %s', package.__package__, ver)
+    mods = get_mods(package)
     migrations = get_new(mods, ver + 1)
     for name, version in migrations:
-        mod = load_mod(name, path, package_prefix)
+        mod = load_mod(name, package)
         run_migration(version, db, mod, conf)
         logging.debug("Finished migrating to %s", name)
     db.refresh_table_stats()
