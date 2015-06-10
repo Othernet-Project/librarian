@@ -1,2 +1,0 @@
-!function(a,b){function c(a){a.preventDefault(),b(a.target).parents(".dash-collapsible").toggleClass("dash-collapsed")}function d(a){b(a).prepend(templates.collapseIcon)}{var e=b(".dash-section h2");b(".dash-collapsible")}_.each(e,d),e.on("click",c)}(this,jQuery);
-//# sourceMappingURL=dashboard.js.map

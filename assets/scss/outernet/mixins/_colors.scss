@@ -1,0 +1,130 @@
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+//Base colors
+$sky:       #3584cf;
+$ocean:     #134e87;
+$sun:       #e17502;
+$forest:    #058120;
+$fire:      #c41414;
+$white:     #ffffff;
+
+//Base Greyscales
+$universe:  #333333;
+$base:      #555555;
+$sub:       #888888;
+$iconic:    #bbbbbb;
+$border:    #dddddd;
+$earth:     #eeeeee;
+$input:     #fafafa;
+
+//Shades of Sky
+$sky25d:  #28639b;
+$sky75:   #68a3db;
+$sky50:   #9ac2e6;
+$sky25:   #cddff3;
+$sky10:   #ebf2fa;
+$sky6:    #f3f8fc;
+
+//shades of ocean
+$ocean25d: #0f3a65;
+$ocean75: #4f7aa5;
+$ocean50: #89a7c3;
+$ocean25: #c3d3e2;
+$ocean10: #e8edf3;
+$ocean6: #f0f5f8;
+
+//shades of sun
+$sun25d: #a95902;
+$sun75: #ec973c;
+$sun50: #f1ba81;
+$sun25: #f7dcc1;
+$sun10: #fbf1e5;
+$sun6: #fef7f1;
+
+//shades of forest
+$forest25d: #056118;
+$forest75: #45a158;
+$forest50: #82c08f;
+$forest25: #c1dfc7;
+$forest10: #e7f3e9;
+$forest6: #f1f8f1;
+
+//shades of fire
+$fire25d: #931010;
+$fire75: #d24f4f;
+$fire50: #e18988;
+$fire25: #f0c4c5;
+$fire10: #fae8e8;
+$fire6: #fbf1f0;
+
+$sky-colors: (
+  25d: $sky25d,
+  100: $sky,
+  75: $sky75,
+  50: $sky50,
+  25: $sky25,
+  10: $sky10,
+  6: $sky6
+);
+
+$ocean-colors:(
+  25d: $ocean25d,
+  100: $ocean,
+  75: $ocean75,
+  50: $ocean50,
+  25: $ocean25,
+  10: $ocean10,
+  6: $ocean6
+);
+
+$sun-colors:(
+  25d: $sun25d,
+  100: $sun,
+  75: $sun75,
+  50: $sun50,
+  25: $sun25,
+  10: $sun10,
+  6: $sun6
+);
+
+$forest-colors: (
+  25d: $forest25d,
+  100: $forest,
+  75: $forest75,
+  50: $forest50,
+  25: $forest25,
+  10: $forest10,
+  6: $forest6
+);
+
+$fire-colors: (
+  25d: $fire25d,
+  100: $fire, 
+  75: $fire75,
+  50: $fire50,
+  25: $fire25,
+  10: $fire10,
+  6: $fire6
+);
+
+$colors: (
+  sky: $sky-colors, 
+  ocean: $ocean-colors, 
+  sun: $sun-colors, 
+  forest: $forest-colors, 
+  fire: $fire-colors
+);
+
+@function color-by-name($name, $variant: 100) {
+  $color-map: map-get($colors, $name);
+  @return map-get($color-map, $variant);
+}

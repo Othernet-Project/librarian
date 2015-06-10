@@ -1,0 +1,92 @@
+/**
+ * _tables.scss: table and table cell content styling
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+$row-border: 1px solid $border;
+
+@mixin table-cell {
+  vertical-align: middle;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  height: 32px;
+}
+
+@mixin table-row {
+  border-top: $row-border;
+  border-bottom: $row-border;
+}
+
+@mixin table {
+  width: 100%;
+  table-layout: fixed;
+
+  th {
+    @include bold;
+  }
+
+  tbody tr {
+    @include table-row;
+
+    &:hover {
+      background: $input;
+    }
+  }
+
+  th, td {
+    @include table-cell;
+
+    &:nth-child(1) {
+      padding-left: 20px;
+    }
+
+    &:last-child {
+      padding-right: 20px;
+    }
+  }
+}
+
+@mixin table-flat {
+  thead {
+    display: none;
+  }
+
+  tr {
+    display: block;
+    padding-top: 0.5em;
+    border-bottom: 0;
+
+    &:last-child {
+      border-bottom: $row-border;
+    }
+  }
+
+  tbody tr {
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  th, td {
+    display: block;
+    padding: 0 0 0.5em;
+  }
+}
+
+@mixin table-col-width($col, $width) {
+  th:nth-of-type(#{$col}) {
+    width: $width;
+  }
+
+  td:nth-of-type(#{$col}) {
+    width: $width;
+  }
+}

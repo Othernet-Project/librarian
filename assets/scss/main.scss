@@ -1,0 +1,19 @@
+@import "outernet/ui";
+@import "outernet/mixins/media_query";
+@import "mixins/utils";
+@import "partials/mainmenu";
+
+$wide: 976px;
+$medium: 728px;
+$narrow: 560px;
+
+body {
+  background: $white;
+}
+
+.section, header {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: $white;
+  margin-bottom: $base-size;
+}
