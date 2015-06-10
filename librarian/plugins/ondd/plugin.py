@@ -224,20 +224,19 @@ def read_ondd_setup():
     return {} if isinstance(initial_data, bool) else initial_data
 
 
-def has_no_lock():
-    status = ipc.get_status()
+def has_invalid_config():
     form = ONDDForm(read_ondd_setup())
-    return not status['has_lock'] or not form.is_valid()
+    return not form.is_valid()
 
 
 @setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='GET',
-                            test=has_no_lock)
+                            test=has_invalid_config)
 def setup_ondd_form():
     return dict(status=ipc.get_status(), form=ONDDForm())
 
 
 @setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='POST',
-                            test=has_no_lock)
+                            test=has_invalid_config)
 def setup_ondd():
     form = ONDDForm(request.forms)
     if not form.is_valid():
