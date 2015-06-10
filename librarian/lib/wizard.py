@@ -233,10 +233,6 @@ class Wizard(object):
         return [idx for idx, step in self.steps.items()
                 if step.get('test', lambda: True)()]
 
-    @property
-    def is_completed(self):
-        return not self.get_needed_steps()
-
     def skip_needless_steps(self, needed_steps):
         self.steps = dict((idx, step) for idx, step in self.steps.items()
                           if idx in needed_steps)

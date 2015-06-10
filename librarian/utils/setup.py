@@ -88,6 +88,16 @@ class SetupWizard(wizard.Wizard):
     start_index = 1
     template_func = template
 
+    def __init__(self, *args, **kwargs):
+        super(SetupWizard, self).__init__(*args, **kwargs)
+        self._is_completed = False
+
+    @property
+    def is_completed(self):
+        if not self._is_completed:
+            self._is_completed = not self.get_needed_steps()
+        return self._is_completed
+
     def wizard_finished(self, data):
         setup_data = dict()
         for step, step_result in data.items():
