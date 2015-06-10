@@ -1,0 +1,57 @@
+@import "outernet/widgets/dropdown";
+
+header.main-menu {
+  background-color: $universe;
+  color: $sub;
+  padding: 20px 20px 0 20px;
+  text-align: justify;
+
+  a {
+    color: $sub;
+    text-decoration: none;
+  }
+
+  .left {
+    display: inline-block;
+    margin-top: 0.321em;
+
+    .banner {
+      color: $white;
+      vertical-align: middle;
+      @include heading-1;
+    }
+
+    .dropdown.languages {
+      display: inline-block;
+      @include dropdown('dropdown_open_sub');
+      .dropdown-item {
+        white-space: nowrap;
+      }
+      .dropdown-item .language {
+        padding: 10px 20px 10px 20px;
+        text-align: center;
+        display: block;
+      }
+      .dropdown-item span.selected {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+        @include with-hdpi(icons, 'checkmark_active', $include-size: yes);
+      }
+    }
+  }
+
+  .toolbar {
+    display: inline-block;
+    vertical-align: baseline;
+  }
+}
+/* Allows text-align: justify to work */
+header.main-menu:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 0;
+  font-size: 0;
+  line-height: 0;
+}

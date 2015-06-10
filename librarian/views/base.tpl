@@ -6,16 +6,35 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         ## Translators, used in page title
         <title><%block name="title">Outernet</%block> :: ${_('Librarian')} v${app_version}</title>
-        <link rel="stylesheet" href="${th.static_url('sys:static', path="css/%s.css" %  style)}">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="${th.static_url('sys:static', path="css/main.css")}" />
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
         % if redirect is not UNDEFINED:
-        <meta http-equiv="refresh" content="5; url=${redirect}">
+        <meta http-equiv="refresh" content="5; url=${redirect}" />
         % endif
         <%block name="extra_head"/>
     </head>
     <body>
         <%block name="header">
-        <header>
+        <header class="main-menu">
+            <div class="left">
+                <span class="banner">OUTERNET</span>
+
+                <div class="dropdown languages">
+                    <a class="dropdown-toggle" href="#"><span class="down-arrow"></span> ${th.lang_name_safe(request.locale)}</a>
+                    <ul class="dropdown-body">
+                    % for locale, lang in languages:
+                        <li class="dropdown-item">
+                            % if locale != request.locale:
+                            <a class="language" href="${i18n_path(locale=locale)}" dir="${th.dir(locale)}" lang="${locale}">${lang}</a>
+                            % else:
+                            <span class="language current" dir="${th.dir(locale)}" lang="${locale}"><span class="selected"></span>${lang}</span>
+                            % endif
+                        </li>
+                    % endfor
+                    </ul>
+                </div>
+            </div>
+
             <div id="toolbar" class="toolbar">
                 <% icon = '<span class="icon"></span>' %>
                 ## Translators, used main navigation menu
@@ -38,7 +57,7 @@
         </header>
         </%block>
 
-        <div class="body">
+        <div class="section body">
         <%block name="main">
             <h1><%block name="heading"/></h1>
             <%block name="content">
@@ -49,16 +68,6 @@
                 </div>
             </%block>
         </%block>
-        </div>
-
-        <div id="languages" class="languages">
-            % for locale, lang in languages:
-                % if locale != request.locale:
-                <a href="${i18n_path(locale=locale)}" dir="${th.dir(locale)}" lang="${locale}">${lang}</a>
-                % else:
-                <span class="current" dir="${th.dir(locale)}" lang="${locale}">${lang}</span>
-                % endif
-            % endfor
         </div>
 
         <div class="footer">
