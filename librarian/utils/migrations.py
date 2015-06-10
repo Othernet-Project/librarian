@@ -15,8 +15,6 @@ import sqlite3
 import logging
 import importlib
 
-from ..lib.squery import Database
-
 
 MTABLE = 'migrations'   # SQL table in which migration data is stored
 VERSION_SQL = 'select version from %s where id == 0;' % MTABLE
