@@ -228,13 +228,16 @@ def get_notifications(notification_ids=None):
     notification_ids = notification_ids or []
 
     query = db.Select(sets='notifications', where='user IS NULL')
+    args = []
     if user:
-        query.where |= 'user = :user'
+        query.where |= 'user = ?'
+        args += [user]
 
     if notification_ids:
         query.where += db.sqlin.__func__('notification_id', notification_ids)
+        args += notification_ids
 
-    db.query(query, *notification_ids, user=user)
+    db.query(query, *args)
     return (Notification(**to_dict(row)) for row in db.results)
 
 
