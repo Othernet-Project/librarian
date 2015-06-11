@@ -19,21 +19,11 @@
             <div id="toolbar" class="toolbar">
                 <% icon = '<span class="icon"></span>' %>
                 ## Translators, used main navigation menu
-                ${h.link_other(icon + _('Library'), i18n_url('content:list'), request.original_path, h.SPAN, _class="archive navicon")}
-                ## Translators, used main navigation menu
-                ${h.link_other(icon + _('Files'), i18n_url('files:list'), request.original_path, h.SPAN, _class="files navicon")}
-                ## Translators, used main navigation menu
-                ${h.link_other(icon + _('Sites'), i18n_url('content:sites_list'), request.original_path, h.SPAN, _class="sites navicon")}
-                ## Translators, used main navigation menu
-                ${h.link_other(icon + _('Apps'), i18n_url('apps:list'), request.original_path, h.SPAN, _class="apps navicon")}
-                ## Translators, used main navigation menu
-                ${h.link_other(icon + _('Updates') + (' (%s)' % th.updates() if th.updates() > 0 else ''), i18n_url('downloads:list'), i18n_path(request.path), h.SPAN, _class="updates navicon" + (th.updates() > 0 and ' notice' or ''))}
-                ## Translators, used main navigation menu
-                ${h.link_other(icon + _('Dashboard'), i18n_url('dashboard:main'), request.original_path, h.SPAN, _class="dashboard navicon")}
-                ## Translators, used main navigation menu
-                % if hasattr(request, 'user') and request.user.is_authenticated:
-                ${h.link_other(icon + _('Log out'), i18n_url('auth:logout') + '?next=' + request.fullpath, request.original_path, h.SPAN, _class="exit navicon")}
-                % endif
+                % for mi in menu_group('main'):
+                    % if mi.is_visible():
+                        ${mi}
+                    % endif
+                % endfor
             </div>
         </header>
         </%block>
