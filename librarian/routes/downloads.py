@@ -110,15 +110,17 @@ def manage_downloads():
     if action == 'add':
         archive = open_archive()
         archive.add_to_archive(file_list)
-        request.app.cache.invalidate(prefix='content')
-        request.app.cache.invalidate(prefix='downloads')
+        request.app.exts.cache.invalidate(prefix='content')
+        request.app.exts.cache.invalidate(prefix='downloads')
+        request.app.exts.notifications.send(_('Content added.'),
+                                            category='content')
     if action == 'delete':
         downloads.remove_downloads(conf['content.spooldir'],
                                    content_ids=file_list)
-        request.app.cache.invalidate(prefix='downloads')
+        request.app.exts.cache.invalidate(prefix='downloads')
     if action == 'deleteall':
         downloads.remove_downloads(conf['content.spooldir'],
                                    extension=conf['content.output_ext'])
-        request.app.cache.invalidate(prefix='downloads')
+        request.app.exts.cache.invalidate(prefix='downloads')
 
     redirect(i18n_url('downloads:list'))

@@ -44,7 +44,6 @@ def apply_migrations(app):
     app.databases = squery.get_databases(database_configs, debug=bottle.DEBUG)
     for db_name, db in app.databases.items():
         migrate(db,
-                app.in_pkg('migrations', db_name),
                 'librarian.migrations.{0}'.format(db_name),
                 app.config)
 

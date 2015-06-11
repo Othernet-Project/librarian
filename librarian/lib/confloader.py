@@ -8,6 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import os
 import re
 
 try:
@@ -75,7 +76,8 @@ class ConfDict(dict):
             raise ConfigurationFormatError(err)
 
     @classmethod
-    def from_file(cls, path, skip_clean=False, **defaults):
+    def from_file(cls, path, skip_clean=False, base_dir='.', **defaults):
+        path = os.path.normpath(os.path.join(base_dir, path))
         self = cls()
         self.update(defaults)
         parser = ConfigParser()
@@ -86,6 +88,7 @@ class ConfDict(dict):
                 "Missing or empty configuration file at '{}'".format(path))
 
         children = []
+        defaults = []
         for section in sections:
             for key, value in parser.items(section):
                 if section not in ('DEFAULT', 'bottle'):
@@ -96,15 +99,28 @@ class ConfDict(dict):
                 if not skip_clean:
                     value = self.clean_value(value)
 
-                if section == 'config' and key == 'include':
+                if section == 'config' and key == 'defaults':
+                    defaults = value
+                elif section == 'config' and key == 'include':
                     children = value
                 else:
                     self[compound_key] = value
 
-        for child in children:
-            self.update(cls.from_file(child, skip_clean=skip_clean))
+        incl_basedir = os.path.dirname(path)
 
+        for default in defaults:
+            self.setdefaults(cls.from_file(default, skip_clean=skip_clean,
+                                           base_dir=incl_basedir))
+        for child in children:
+            self.update(cls.from_file(child, skip_clean=skip_clean,
+                                      base_dir=incl_basedir))
         return self
+
+    def setdefaults(self, other):
+        for k in other:
+            if k in self:
+                continue
+            self[k] = other[k]
 
     @staticmethod
     def clean_value(val):
