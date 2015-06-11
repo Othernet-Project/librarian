@@ -1,6 +1,6 @@
-@import "outernet/widgets/dropdown";
+@import "dropdown";
 
-header.main-menu {
+header.menu {
   background-color: $universe;
   color: $sub;
   padding: 20px 20px 0 20px;
@@ -22,7 +22,7 @@ header.main-menu {
 
   .dropdown.languages {
     display: inline-block;
-    @include dropdown('dropdown_open_sub');
+    @include dropdown('dropdown_open_disabled');
     .dropdown-item {
       white-space: nowrap;
     }
