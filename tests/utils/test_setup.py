@@ -9,7 +9,6 @@ def test_setup_init_already_completed(load, auto_configure):
     load.return_value = {'some': 'data', 'completed': True}
     setup = mod.Setup('setup.json')
     assert setup.data == {'some': 'data', 'completed': True}
-    assert setup.is_completed is True
     assert not auto_configure.called
 
 
@@ -20,7 +19,6 @@ def test_setup_init_not_completed(load, auto_configure):
     auto_configure.return_value = {'auto': 'configured'}
     setup = mod.Setup('setup.json')
     assert setup.data == {'auto': 'configured'}
-    assert setup.is_completed is False
     auto_configure.assert_called_once_with()
 
 
@@ -41,7 +39,7 @@ def test_load_does_not_exist(init, exists):
     init.return_value = None
     setup = mod.Setup()
     setup.setup_file = '/path/to/setup.json'
-    assert setup.load() is None
+    assert setup.load() == {}
     exists.assert_called_once_with('/path/to/setup.json')
 
 
@@ -62,7 +60,7 @@ def test_load_invalid_config(init, exists, f_open, json_load):
 
     json_load.side_effect = ValueError()
 
-    assert setup.load() is None
+    assert setup.load() == {}
 
     exists.assert_called_once_with('/path/to/setup.json')
     json_load.assert_called_once_with(mocked_file)
@@ -82,12 +80,9 @@ def test_save_config(init, f_open, json_dump):
     ctx_manager.__enter__.return_value = mocked_file
     f_open.return_value = ctx_manager
 
-    setup.save({'setup': 'result', 'another': 1})
+    setup.append({'setup': 'result', 'another': 1})
 
     merged_data = {'auto': 'configured',
                    'setup': 'result',
-                   'another': 1,
-                   'completed': True}
+                   'another': 1}
     json_dump.assert_called_once_with(merged_data, mocked_file)
-
-    assert setup.is_completed is True

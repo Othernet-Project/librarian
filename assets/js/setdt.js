@@ -1,34 +1,7 @@
 /*jslint browser: true*/
-(function ($, Pikaday) {
+(function ($) {
     'use strict';
     var self = {};
-
-    self.zeroPad = function (str, count) {
-        str = str.toString();
-        return str.length < count ? self.zeroPad("0" + str, count) : str;
-    };
-
-    self.initDatePicker = function () {
-        var dateStr = $('#id_date').val(),
-            picker = new Pikaday({
-                field: document.getElementById('datepicker'),
-                container: document.getElementById('pikaday-container'),
-                onSelect: function (date) {
-                    var sDate = '{0}-{1}-{2}'.replace('{0}', date.getFullYear())
-                                             .replace('{1}', self.zeroPad(date.getMonth() + 1, 2))
-                                             .replace('{2}', self.zeroPad(date.getDate(), 2));
-                    $('#id_date').val(sDate);
-                },
-                onClose: function () {
-                    picker.setDate(picker.toString());
-                }
-            });
-
-        $('#noscript-picker').hide();
-        picker.hide = function () {};  // disable hide
-        picker.setDate(dateStr);
-        picker.show();
-    };
 
     self.timezoneSelected = function () {
         // when second select is chosen, populate the hidden select field
@@ -90,11 +63,9 @@
         self.timezoneRegionSelected.call(regionSelector);
     };
 
-    self.initDatePicker();
-
     $('.js-error').show();
     self.timezoneContainer = $('.timezone-container');
     self.timezone = $('#id_timezone');
     self.tzOptions = self.timezone.find('option');
     self.initTimezoneSelector();
-}(this.jQuery, this.Pikaday));
+}(this.jQuery));

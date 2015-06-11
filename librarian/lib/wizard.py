@@ -44,11 +44,13 @@ class Wizard(object):
     def dispatch(self):
         # entry-point of a wizard instance, load wizard state from session
         created = self.load_state()
+        currently_needed_steps = self.get_needed_steps()
         if created:
-            needed_steps = self.get_needed_steps()
-            self.state['needed_steps'] = needed_steps
+            needed_steps = self.state['needed_steps'] = currently_needed_steps
         else:
             needed_steps = self.state['needed_steps']
+            needed_steps += [idx for idx in currently_needed_steps
+                             if idx not in needed_steps]
 
         self.skip_needless_steps(needed_steps)
         self.remove_gaps()
@@ -125,6 +127,8 @@ class Wizard(object):
         try:
             step = next(self)
         except StopIteration:
+            self.state['needed_steps'] = []
+            self.save_state()
             return self.wizard_finished(self.state['data'])
         else:
             step_context = step['handler']()
@@ -206,10 +210,9 @@ class Wizard(object):
                     raise ValueError(msg)
                 self.steps.setdefault(use_index, dict(name=name))
 
-                if test is not None:
-                    if not callable(test):
-                        raise TypeError('`test` parameter must be a callable.')
-                    self.steps[use_index]['test'] = test
+                if not callable(test):
+                    raise TypeError('`test` parameter must be a callable.')
+                self.steps[use_index]['test'] = test
 
                 self.steps[use_index][method_name] = {'handler': func,
                                                       'template': template}

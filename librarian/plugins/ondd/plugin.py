@@ -17,7 +17,7 @@ from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ...lib import forms
-from ...routes.setup import setup_wizard
+from ...utils.setup import setup_wizard
 from ...utils.template import template, view
 from ...utils.template_helpers import template_helper
 
@@ -219,19 +219,24 @@ def show_file_list():
     return dict(files=get_file_list())
 
 
-def has_no_lock():
-    status = ipc.get_status()
-    return not status['has_lock']
+def read_ondd_setup():
+    initial_data = request.app.setup.get('ondd', {})
+    return {} if isinstance(initial_data, bool) else initial_data
+
+
+def has_invalid_config():
+    form = ONDDForm(read_ondd_setup())
+    return not form.is_valid()
 
 
 @setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='GET',
-                            test=has_no_lock)
+                            test=has_invalid_config)
 def setup_ondd_form():
     return dict(status=ipc.get_status(), form=ONDDForm())
 
 
 @setup_wizard.register_step('ondd', template='ondd_wizard.tpl', method='POST',
-                            test=has_no_lock)
+                            test=has_invalid_config)
 def setup_ondd():
     form = ONDDForm(request.forms)
     if not form.is_valid():
@@ -260,8 +265,7 @@ class Dashboard(DashboardPlugin):
     javascript = ['ondd.js']
 
     def get_context(self):
-        initial_data = request.app.setup.get('ondd', {})
-        initial_data = {} if isinstance(initial_data, bool) else initial_data
+        initial_data = read_ondd_setup()
         return dict(status=ipc.get_status(),
                     form=ONDDForm(initial_data),
                     files=[])
