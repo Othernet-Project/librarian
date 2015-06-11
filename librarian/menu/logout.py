@@ -18,7 +18,6 @@ class LogoutMenuItem(MenuItem):
     label = _("Log out")
     icon_class = 'exit'
     route = 'auth:logout'
-    group = 'main'
 
     def is_visible(self):
         return hasattr(request, 'user') and request.user.is_authenticated
