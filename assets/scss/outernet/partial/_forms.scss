@@ -118,7 +118,11 @@ select {
   background-repeat: no-repeat;
   background-position: right 10px top 50%;
 
-  @include with-hdpi(icons, dropdown_open_sky);
+  @include with-hdpi(icons, dropdown_open);
+
+  &:hover {
+    @include with-hdpi(icons, dropdown_open_hover);
+  }
 
   option {
     @include select-option-styling;

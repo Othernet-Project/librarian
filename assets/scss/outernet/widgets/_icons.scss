@@ -1,0 +1,51 @@
+/**
+ * _icons.scss: simple icon widget
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "compass/typography/text/replacement";
+@import "outernet/mixins/fonts";
+@import "outernet/mixins/sprites";
+
+
+@mixin icon-button($image, $label-color: $sun, $no-label: no) {
+  display: inline-block;
+  position: relative;
+  @include icon($image, $dimensions: yes);
+
+  &:hover {
+    @include icon(#{$image}_hover);
+  }
+
+  &.no-label {
+    @include hide-text;
+  }
+
+  @if $no-label == yes {
+    @include hide-text;
+  }
+
+  .label {
+    display: inline-block;
+    position: absolute;
+    @include sub;
+    bottom: -4px;
+    right: -12px;
+    width: 1.55em;
+    line-height: 1.4em;
+    padding: 0;
+    text-align: center;
+    background: $white;
+    color: $label-color;
+    border: 1px solid $border;
+    @include border-radius(1000px);  // fully-rounded
+    @include box-sizing(border-box);
+    @include bold;
+  }
+}

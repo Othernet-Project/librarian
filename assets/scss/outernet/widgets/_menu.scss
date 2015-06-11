@@ -1,0 +1,162 @@
+/**
+ * _menu.scss: menubar and hamburger menu
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "outernet/widgets/icons";
+@import "outernet/mixins/media_query";
+
+@mixin menu-link-rev {
+  color: $base;
+
+  &:hover,
+  &:focus {
+    color: $sky;
+  }
+
+  &:visited {
+    color: $base;
+  }
+}
+
+.menu {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid $border;
+  height: 60px;
+  padding: 0 20px;
+  background: $universe;
+  color: $earth;
+
+  a {
+    color: $sub;
+
+    &:hover {
+      color: $white;
+      text-decoration: none;
+    }
+
+    &:visited {
+      color: $sub;
+    }
+
+    &:focus {
+      color: $sky;
+    }
+  }
+
+  &.reverse {
+    background: $white;
+    color: $iconic;
+
+    a {
+      @include menu-link-rev;
+    }
+  }
+
+  .menu-block-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .menu-subblock {
+    display: inline-block;
+    padding-top: 18px;
+    margin-right: 2em;
+    vertical-align: top;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    @include phone-portrait-wide {
+      margin-right: 0.5em;
+    }
+  }
+
+  #nav {
+    a {
+      font-size: 18px;
+      margin-right: 2em;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      .phone-only {
+        display: none;
+
+        @include phone-portrait-wide {
+          display: inline-block;
+        }
+      }
+    }
+
+    @include phone-portrait-wide {
+      position: fixed;
+      top: 60px;
+      right: 0;
+      left: 0;
+      background: $white;
+      padding: 0 20px;
+      border-bottom: 2px solid $border;
+      margin-right: 0;
+      max-height: 0;
+      overflow: hidden;
+      height: 100%;
+      @include transition(max-height 0.5s);
+
+      &.open {
+        max-height: 2000px;
+        overflow-y: scroll;
+      }
+
+      a {
+        display: block;
+        color: $base;
+        line-height: 60px;
+        border-bottom: 1px solid $border;
+        @include menu-link-rev;
+        margin: 0;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  .hamburger {
+    width: 60px;
+    line-height: 60px;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    display: none;
+
+    @include phone-portrait-wide {
+      display: inline-block;
+    }
+
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      @include hide-text;
+      background-position: center center;
+      background-repeat: no-repeat;
+      @include with-hdpi(icons, hamburger);
+    }
+  }
+}

@@ -73,7 +73,7 @@
 
         .accordion-icon {
           display: inline-block;
-          @include icon(accordion_open_sky);
+          @include icon(accordion_open);
           vertical-align: middle;
           margin: 0 12.5px;
         }
@@ -82,7 +82,7 @@
           background: $input;
 
           .accordion-icon {
-            @include icon(accordion_open_sky25d);
+            @include icon(accordion_open_hover);
           }
         }
       }
@@ -114,7 +114,7 @@
           background: $white;
 
           span.accordion-icon {
-            @include icon(accordion_close_sky);
+            @include icon(accordion_close);
           }
         }
 
@@ -134,12 +134,12 @@
       // HEADER
       & > :nth-child(1) {
         .accordion-icon {
-          @include icon(accordion_close_sky);
+          @include icon(accordion_close);
         }
 
         &:hover {
           .accordion-icon {
-            @include icon(accordion_close_sky25d);
+            @include icon(accordion_close_hover);
           }
         }
       }
