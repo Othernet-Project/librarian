@@ -1,0 +1,22 @@
+@import "dropdown";
+
+header.menu {
+  .dropdown.languages {
+    display: inline-block;
+    @include dropdown('dropdown_open_disabled');
+    .dropdown-item {
+      white-space: nowrap;
+    }
+    .dropdown-item .language {
+      padding: 10px 20px 10px 20px;
+      text-align: center;
+      display: block;
+    }
+    .dropdown-item span.selected {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+      @include with-hdpi(icons, 'checkmark_active', $include-size: yes);
+    }
+  }
+}

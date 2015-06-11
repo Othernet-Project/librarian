@@ -13,3 +13,4 @@ bottle-fdsend==0.1.1
 sqlize==0.1
 scandir==0.9
 outernet-metadata==0.5.post3
+webassets==0.10.1

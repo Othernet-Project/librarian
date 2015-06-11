@@ -1,0 +1,18 @@
+@import "outernet/ui";
+@import "outernet/mixins/media_query";
+@import "partials/dropdown";
+@import "partials/mainmenu";
+
+$wide: 976px;
+$medium: 728px;
+$narrow: 560px;
+
+body {
+  background: $white;
+}
+
+.section, header {
+  margin: 0 auto;
+  background: $white;
+  margin-bottom: $base-size;
+}
