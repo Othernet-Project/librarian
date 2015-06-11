@@ -15,6 +15,7 @@ import auth
 import content
 import dashboard
 import downloads
+import notifications
 import setup
 import system
 import tags
@@ -99,6 +100,13 @@ def install_routes(app):
          'GET', '/apps/<appid>/', dict(unlocked=True)),
         ('apps:asset', apps.send_app_file,
          'GET', '/apps/<appid>/<path:path>', dict(unlocked=True)),
+
+        # Notifications
+
+        ('notifications:list', notifications.notification_list,
+         'GET', '/notifications/', {}),
+        ('notifications:read', notifications.notifications_read,
+         'POST', '/notifications/', {}),
 
         # System
 

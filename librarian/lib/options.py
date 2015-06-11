@@ -9,11 +9,40 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import copy
+import datetime
 import json
 
 from bottle import request, redirect
 
 from bottle_utils.i18n import i18n_path
+
+
+class DateTimeEncoder(json.JSONEncoder):
+
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+
+        return super(DateTimeEncoder, self).default(obj)
+
+
+class DateTimeDecoder(json.JSONDecoder):
+
+    def __init__(self, *args, **kargs):
+        super(DateTimeDecoder, self).__init__(object_hook=self.object_hook,
+                                              *args,
+                                              **kargs)
+
+    def object_hook(self, obj):
+        if '__type__' not in obj:
+            return obj
+
+        obj_type = obj.pop('__type__')
+        try:
+            return datetime(**obj)
+        except Exception:
+            obj['__type__'] = obj_type
+            return obj
 
 
 class Options(object):
@@ -24,7 +53,7 @@ class Options(object):
         if isinstance(data, dict):
             self.__data = data
         else:
-            self.__data = json.loads(data or '{}')
+            self.__data = json.loads(data or '{}', cls=DateTimeDecoder)
 
     def get(self, key, default=None):
         return self.__data.get(key, default)
@@ -50,7 +79,7 @@ class Options(object):
         return len(self.__data)
 
     def to_json(self):
-        return json.dumps(self.__data)
+        return json.dumps(self.__data, cls=DateTimeEncoder)
 
     def to_native(self):
         return copy.copy(self.__data)
