@@ -15,5 +15,4 @@ from bottle_utils.i18n import lazy_gettext as _
 
 class AppsMenuItem(MenuItem):
     label = _("Apps")
-    icon_class = 'apps'
     route = 'apps:list'

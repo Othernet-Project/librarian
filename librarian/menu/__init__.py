@@ -41,18 +41,22 @@ class MenuItem(object):
     def render(self):
         if not self.is_visible():
             return ''
-        icon = html.SPAN(_class="icon")
         if self.is_alt_icon_visible():
             icon_class = self.alt_icon_class
         else:
             icon_class = self.icon_class
+        if icon_class:
+            icon = html.SPAN(_class="icon")
+        else:
+            icon = ''
 
-        item_class = ' '.join(tuple(self.default_classes) + (icon_class,))
-        return html.link_other(icon + self.label,
-                               self.get_path(),
-                               bottle.request.original_path,
-                               html.SPAN,
-                               _class=item_class)
+        item_class = ' '.join(
+            tuple(self.default_classes) + (icon_class,)).strip()
+        return html.link_other(
+            ' '.join([icon + html.SPAN(self.label, _class="label")]),
+            self.get_path(), bottle.request.original_path,
+            lambda s, _class: html.SPAN(s, _class='active ' + item_class),
+            _class=item_class)
 
     def __str__(self):
         return self.render()

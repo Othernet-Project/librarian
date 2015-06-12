@@ -15,5 +15,4 @@ from bottle_utils.i18n import lazy_gettext as _
 
 class ContentMenuItem(MenuItem):
     label = _("Library")
-    icon_class = 'archive'
     route = 'content:list'
