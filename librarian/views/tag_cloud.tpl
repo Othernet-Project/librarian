@@ -1,9 +1,9 @@
-%# Translators, used as page title
-% rebase('base', title=_('Tag cloud'))
+<%inherit file='base.tpl'/>
+<%namespace name='tcloud' file='_tag_cloud.tpl'/>
 
-%# Translators, used as page heading
-<h1>{{ _('Tag cloud') }}</h1>
+<%block name="title">
+## Translators, used as page title
+${_('Tag cloud')}
+</%block>
 
-<div class="inner">
-    % include('_tag_cloud')
-</div>
+${tcloud.body()}
