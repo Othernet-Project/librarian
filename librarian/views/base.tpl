@@ -63,13 +63,6 @@
         </%block>
         </div>
 
-        <div class="footer">
-        <p class="logo"><img src="${th.static_url('sys:static', path='img/outernet_logo.png')}" alt="Outernet: Humanity's Public Library"></p>
-        ## Translators, used in footer
-        <p class="appver">${_('Librarian')} v${app_version}</p>
-        <p class="copy">2014 Outernet Inc</p>
-        </div>
-
         <%block name="script_templates"/>
         <script src="${assets['js/ui']}"></script>
         <%block name="extra_scripts"/>
