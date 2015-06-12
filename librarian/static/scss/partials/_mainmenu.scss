@@ -1,17 +1,54 @@
+@import "compass/typography";
 @import "dropdown";
+@import "outernet/mixins/media_query";
+@import "outernet/mixins/sprites";
 
 header.menu {
+  .logo {
+    @include hide-text;
+    @include icon('outernet_logo', yes);  
+  }
+
+  #nav .icon + .label {
+    display: none;
+
+    @include phone-portrait-wide {
+      display: inline-block;
+    }
+  }
+
+  .settings .icon {
+    @include icon(settings);
+
+    &:hover {
+      @include icon(settings_hover);
+    }
+  }
+
+  .notifications {
+    .icon {
+      @include icon-button(alert);
+    }
+
+    .label {
+      display: none;
+    }
+  }
+
   .dropdown.languages {
     display: inline-block;
-    @include dropdown('dropdown_open_disabled');
+    @include dropdown(arrow_down);
+
     .dropdown-item {
       white-space: nowrap;
     }
+
     .dropdown-item .language {
       padding: 10px 20px 10px 20px;
       text-align: center;
       display: block;
     }
+
     .dropdown-item span.selected {
       display: inline-block;
       vertical-align: middle;

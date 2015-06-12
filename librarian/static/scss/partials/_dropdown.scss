@@ -1,13 +1,16 @@
 @mixin dropdown($icon) {
   position: relative;
+
   .down-arrow {
-    background-size: 50%;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
     display: inline-block;
     vertical-align: middle;
-    @include with-hdpi(icons, $icon, $include-size: yes);
+    @include icon($icon, yes);
+
+    &:hover {
+      @incldue icon(#{$icon}_hover, yes);
+    }
   }
+
   .dropdown-body {
     display: none;
     position: absolute;
@@ -15,8 +18,9 @@
     border: 1px solid $border;
     overflow: hidden;
     @include border-radius(7px);
-  }
-  .dropdown-body > li:hover {
-    background-color: $sun25;
+
+    li:hover {
+      background-color: $sun25;
+    }
   }
 }
