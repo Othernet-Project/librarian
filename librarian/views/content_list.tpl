@@ -1,12 +1,10 @@
 <%inherit file='base.tpl'/>
-<%namespace name='tloud' file='_tag_cloud.tpl'/>
 <%namespace name='simple_pager' file='_simple_pager.tpl'/>
 <%namespace name='content_list' file='_content_list.tpl'/>
 <%namespace name='library_submenu' file='_library_submenu.tpl'/>
 <%namespace name='tag_js_templates' file='_tag_js_templates.tpl'/>
 
 <%block name="title">
-## Translators, used as page title
 ${page_title}
 </%block>
 
