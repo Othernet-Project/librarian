@@ -1,23 +1,23 @@
 <%inherit file="base.tpl"/>
+<%namespace name='library_submenu' file='_library_submenu.tpl'/>
 
 <%block name="title">
 ## Translators, used as page title
 ${_('Files')}
 </%block>
 
-<%block name="heading">
-## Translators, used as page heading
-${_('Files')}
-</%block>
+${library_submenu.body()}
+
+<div class="h-top-bar">
+    ${h.form('get', _class='location-bar inline')}
+        ## Translators, used in file search box
+        <input type="text" name="p" class="search" value="${path if path != '.' else ''}" placeholder="${_('Search')}">
+        ## Translators, used as button in file view address bar
+        <button type="submit" class="fake-go">${_('go')}</button>
+    </form>
+</div>
 
 <div class="file-list">
-    ${h.form('get', _class='location-bar')}
-        <p class="path">
-        <input type="text" name="p" class="search" value="${path if path != '.' else ''}"><button
-        ## Translators, used as button in file view address bar
-            type="submit" class="fake-go"><span class="icon">${_('go')}</span></button>
-        </p>
-    </form>
 
     <table class="file-list-listing">
         % if path != '.':
