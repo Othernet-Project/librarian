@@ -174,8 +174,8 @@
     url = contentPath + contentQuery.search();
 
     // Fetch the HTML data
-    loadLink.hide();
-    loader.show();
+    loadLink.addClass('active');
+    loadLink.text(loadLink.data('active'));
     xhr = $.get(url);
     xhr.done(insertContent);
     xhr.fail(insertFailure);
@@ -186,8 +186,8 @@
     if (res === '') { return loadEmpty(); }
     res = $(res);
     contentList.append(res);
-    loader.hide();
-    loadLink.show();
+    loadLink.removeClass('active');
+    loadLink.text(loadLink.data('normal'));
     win.trigger('listUpdate', [res]);
     loading = false;
   }

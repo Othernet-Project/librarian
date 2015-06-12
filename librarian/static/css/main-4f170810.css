@@ -2533,6 +2533,39 @@ form.search .icon {
 .content-list li.has-thumb .details {
   background: rgba(255, 255, 255, 0.8); }
 
+/* line 157, ../scss/partials/_content_list.scss */
+.load-more {
+  text-align: center;
+  padding-top: 2em; }
+/* line 162, ../scss/partials/_content_list.scss */
+.load-more button .icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/animated/1x/loader.gif?1434106352');
+  width: 21px;
+  height: 5px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 162, ../scss/partials/_content_list.scss */
+  .load-more button .icon {
+    background-image: url('../img/animated/2x/loader.gif?1434106352');
+    -moz-background-size: 21px, 5px;
+    -o-background-size: 21px, 5px;
+    -webkit-background-size: 21px, 5px;
+    background-size: 21px, 5px; } }
+/* line 168, ../scss/partials/_content_list.scss */
+.load-more button.active .icon {
+  background-image: url('../img/animated/1x/loader_active.gif?1434108311');
+  width: 21px;
+  height: 5px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 168, ../scss/partials/_content_list.scss */
+  .load-more button.active .icon {
+    background-image: url('../img/animated/2x/loader_active.gif?1434108311');
+    -moz-background-size: 21px, 5px;
+    -o-background-size: 21px, 5px;
+    -webkit-background-size: 21px, 5px;
+    background-size: 21px, 5px; } }
+
 /* line 12, ../scss/main.scss */
 body {
   padding-top: 60px;
