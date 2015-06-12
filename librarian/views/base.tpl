@@ -16,8 +16,10 @@
     <body>
         <%block name="header">
         <header class="menu">
-            <div class="logo">OUTERNET</div>
-            <div class="dropdown languages">
+            <div class="menu-subblock">
+                <span class="logo">OUTERNET</span>
+            </div>
+            <div class="dropdown languages menu-subblock">
                 <a class="dropdown-toggle" href="#"><span class="down-arrow"></span> ${th.lang_name_safe(request.locale)}</a>
                 <ul class="dropdown-body">
                 % for locale, lang in languages:
@@ -31,21 +33,26 @@
                 % endfor
                 </ul>
             </div>
-            <nav id="toolbar" class="menu-block-right toolbar">
-                <% icon = '<span class="icon"></span>' %>
-                % for mi in menu_group('main'):
-                    % if mi.is_visible():
+            <div class="menu-block-right">
+                <nav id="nav" class="menu-subblock toolbar">
+                    % for mi in menu_group('main'):
                         ${mi}
-                    % endif
-                % endfor
-            </nav>
+                    % endfor
+                </nav>
+                <div class="notifications menu-subblock">
+                    % for mi in menu_group('notifications'):
+                        ${mi}
+                    % endfor
+                </div>
+                <div class="hamburger">
+                    <a href="#nav">Site menu</a>
+                </div>
             </div>
         </header>
         </%block>
 
         <div class="section body">
         <%block name="main">
-            <h1><%block name="heading"/></h1>
             <%block name="content">
                 <div class="inner">
                 <%block name="inner">
