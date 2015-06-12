@@ -1,0 +1,51 @@
+@import "outernet/mixins/colors";
+
+@mixin h-bar {
+  background: $earth;
+  border-top: 1px solid $border;
+  border-bottom: 1px solid $border;
+}
+
+.h-bar {
+  padding: 20px;
+  text-align: center;
+  @include h-bar;
+}
+
+.h-top-bar {
+  padding: 10px;
+  text-align: right;
+  @include h-bar; 
+}
+
+.tabbed-menu {
+  padding: 0 20px;
+
+  a, .active {
+    display: inline-block;
+    line-height: 58px;
+    margin-right: 2em;
+    border-bottom: 3px solid transparent;
+  }
+
+  a {
+    &:visited {
+      color: $sky;
+    }
+
+    &:hover {
+      text-decoration: none;
+      border-bottom-color: $sky25d;
+    }
+  }
+
+  .active {
+    color: $iconic;
+    border-bottom-color: $iconic;
+  }
+}
+
+form.inline {
+  @include single-input-form;
+  @include single-input-inline;
+}
