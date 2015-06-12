@@ -23,15 +23,11 @@ MENU_GROUPS = {}
 class MenuItem(object):
     label = ''
     group = None
-    icon_class = None
-    alt_icon_class = None
+    icon_class = ''
+    alt_icon_class = ''
     route = None
     default_classes = ('navicon',)
     name = None
-
-    def __init__(self):
-        if self.icon_class is None:
-            raise ValueError("icon_class parameter is not set.")
 
     def is_alt_icon_visible(self):
         return False
