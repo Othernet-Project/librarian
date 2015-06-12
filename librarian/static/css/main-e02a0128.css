@@ -1691,20 +1691,20 @@ header.menu .logo {
   text-transform: capitalize;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s4e005fc0a7.png');
-  background-position: 0 -2030px;
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
+  background-position: 0 -2228px;
   background-repeat: no-repeat;
   width: 152px;
   height: 22px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 7, ../scss/partials/_mainmenu.scss */
   header.menu .logo {
-    background-image: url('../img/icons/2x-s6376508c6c.png');
-    background-position: 0 -2030px;
-    -moz-background-size: 152px 2543px;
-    -o-background-size: 152px 2543px;
-    -webkit-background-size: 152px 2543px;
-    background-size: 152px 2543px; } }
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
+    background-position: 0 -2228px;
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
 /* line 12, ../scss/partials/_mainmenu.scss */
 header.menu #nav .icon + .label {
   display: none; }
@@ -1716,45 +1716,45 @@ header.menu #nav .icon + .label {
 header.menu .settings .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s4e005fc0a7.png');
-  background-position: 0 -2137px;
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
+  background-position: 0 -2335px;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 20, ../scss/partials/_mainmenu.scss */
   header.menu .settings .icon {
-    background-image: url('../img/icons/2x-s6376508c6c.png');
-    background-position: 0 -2137px;
-    -moz-background-size: 152px 2543px;
-    -o-background-size: 152px 2543px;
-    -webkit-background-size: 152px 2543px;
-    background-size: 152px 2543px; } }
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
+    background-position: 0 -2335px;
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
 /* line 23, ../scss/partials/_mainmenu.scss */
 header.menu .settings .icon:hover {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s4e005fc0a7.png');
-  background-position: 0 -2192px;
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
+  background-position: 0 -2390px;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 23, ../scss/partials/_mainmenu.scss */
   header.menu .settings .icon:hover {
-    background-image: url('../img/icons/2x-s6376508c6c.png');
-    background-position: 0 -2192px;
-    -moz-background-size: 152px 2543px;
-    -o-background-size: 152px 2543px;
-    -webkit-background-size: 152px 2543px;
-    background-size: 152px 2543px; } }
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
+    background-position: 0 -2390px;
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
 /* line 29, ../scss/partials/_mainmenu.scss */
 header.menu .notifications .icon {
   display: inline-block;
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s4e005fc0a7.png');
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
   background-position: 0 -220px;
   background-repeat: no-repeat;
   width: 25px;
@@ -1762,37 +1762,37 @@ header.menu .notifications .icon {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 29, ../scss/partials/_mainmenu.scss */
   header.menu .notifications .icon {
-    background-image: url('../img/icons/2x-s6376508c6c.png');
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
     background-position: 0 -220px;
-    -moz-background-size: 152px 2543px;
-    -o-background-size: 152px 2543px;
-    -webkit-background-size: 152px 2543px;
-    background-size: 152px 2543px; } }
-/* line 22, ../scss/outernet/widgets/_icons.scss */
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
+/* line 33, ../scss/outernet/widgets/_icons.scss */
 header.menu .notifications .icon:hover {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s4e005fc0a7.png');
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
   background-position: 0 -385px;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 22, ../scss/outernet/widgets/_icons.scss */
+  /* line 33, ../scss/outernet/widgets/_icons.scss */
   header.menu .notifications .icon:hover {
-    background-image: url('../img/icons/2x-s6376508c6c.png');
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
     background-position: 0 -385px;
-    -moz-background-size: 152px 2543px;
-    -o-background-size: 152px 2543px;
-    -webkit-background-size: 152px 2543px;
-    background-size: 152px 2543px; } }
-/* line 26, ../scss/outernet/widgets/_icons.scss */
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
+/* line 37, ../scss/outernet/widgets/_icons.scss */
 header.menu .notifications .icon.no-label {
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
   text-transform: capitalize; }
-/* line 34, ../scss/outernet/widgets/_icons.scss */
+/* line 45, ../scss/outernet/widgets/_icons.scss */
 header.menu .notifications .icon .label {
   display: inline-block;
   position: absolute;
@@ -1827,7 +1827,7 @@ header.menu .dropdown.languages .down-arrow {
   vertical-align: middle;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s4e005fc0a7.png');
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
   background-position: 0 -440px;
   background-repeat: no-repeat;
   width: 13px;
@@ -1835,12 +1835,12 @@ header.menu .dropdown.languages .down-arrow {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 4, ../scss/partials/_dropdown.scss */
   header.menu .dropdown.languages .down-arrow {
-    background-image: url('../img/icons/2x-s6376508c6c.png');
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
     background-position: 0 -440px;
-    -moz-background-size: 152px 2543px;
-    -o-background-size: 152px 2543px;
-    -webkit-background-size: 152px 2543px;
-    background-size: 152px 2543px; } }
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
 /* line 9, ../scss/partials/_dropdown.scss */
 header.menu .dropdown.languages .down-arrow:hover {
   @incldue icon(arrow_down_hover, yes); }
@@ -1892,7 +1892,7 @@ header.menu .dropdown.languages .dropdown-item span.selected {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 9, ../scss/partials/common_elements.scss */
+/* line 9, ../scss/partials/_common_elements.scss */
 .h-bar {
   padding: 20px;
   text-align: center;
@@ -1900,7 +1900,7 @@ header.menu .dropdown.languages .dropdown-item span.selected {
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd; }
 
-/* line 15, ../scss/partials/common_elements.scss */
+/* line 15, ../scss/partials/_common_elements.scss */
 .h-top-bar {
   padding: 10px;
   text-align: right;
@@ -1908,28 +1908,28 @@ header.menu .dropdown.languages .dropdown-item span.selected {
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd; }
 
-/* line 21, ../scss/partials/common_elements.scss */
+/* line 21, ../scss/partials/_common_elements.scss */
 .tabbed-menu {
   padding: 0 20px; }
-/* line 24, ../scss/partials/common_elements.scss */
+/* line 24, ../scss/partials/_common_elements.scss */
 .tabbed-menu a, .tabbed-menu .active {
   display: inline-block;
   line-height: 58px;
   margin-right: 2em;
   border-bottom: 3px solid transparent; }
-/* line 32, ../scss/partials/common_elements.scss */
+/* line 32, ../scss/partials/_common_elements.scss */
 .tabbed-menu a:visited {
   color: #3584cf; }
-/* line 36, ../scss/partials/common_elements.scss */
+/* line 36, ../scss/partials/_common_elements.scss */
 .tabbed-menu a:hover {
   text-decoration: none;
   border-bottom-color: #28639b; }
-/* line 42, ../scss/partials/common_elements.scss */
+/* line 42, ../scss/partials/_common_elements.scss */
 .tabbed-menu .active {
   color: #bbbbbb;
   border-bottom-color: #bbbbbb; }
 
-/* line 48, ../scss/partials/common_elements.scss */
+/* line 48, ../scss/partials/_common_elements.scss */
 form.inline {
   display: inline-block;
   border: 1px solid #dddddd;
@@ -2298,20 +2298,20 @@ form.search .icon {
   text-transform: capitalize;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s4e005fc0a7.png');
-  background-position: 0 -2082px;
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
+  background-position: 0 -2280px;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 30, ../scss/partials/_content_list.scss */
   form.search .icon {
-    background-image: url('../img/icons/2x-s6376508c6c.png');
-    background-position: 0 -2082px;
-    -moz-background-size: 152px 2543px;
-    -o-background-size: 152px 2543px;
-    -webkit-background-size: 152px 2543px;
-    background-size: 152px 2543px; } }
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
+    background-position: 0 -2280px;
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
 
 /* line 36, ../scss/outernet/mixins/_grid.scss */
 .content-list:after {
@@ -2354,7 +2354,7 @@ form.search .icon {
     transition: width 0.5s;
     width: 100%;
     padding: 0; } }
-/* line 53, ../scss/partials/_content_list.scss */
+/* line 52, ../scss/partials/_content_list.scss */
 .content-list li .details {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -2364,10 +2364,106 @@ form.search .icon {
   min-height: 200px;
   text-align: center; }
 @media only screen and (max-width: 640px) {
-  /* line 53, ../scss/partials/_content_list.scss */
+  /* line 52, ../scss/partials/_content_list.scss */
   .content-list li .details {
     text-align: left; } }
-/* line 66, ../scss/partials/_content_list.scss */
+/* line 65, ../scss/partials/_content_list.scss */
+.content-list li .tag-icon {
+  display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
+  background-position: 0 -2555px;
+  background-repeat: no-repeat;
+  width: 32px;
+  height: 19px;
+  width: 0;
+  heigth: 19px;
+  overflow: hidden;
+  padding: 0 0 0 32px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 65, ../scss/partials/_content_list.scss */
+  .content-list li .tag-icon {
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
+    background-position: 0 -2555px;
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
+/* line 70, ../scss/partials/_content_list.scss */
+.content-list li .tags a {
+  color: #888888;
+  margin: 0 0.2em; }
+/* line 75, ../scss/partials/_content_list.scss */
+.content-list li .tags form.inline {
+  vertical-align: middle; }
+/* line 79, ../scss/partials/_content_list.scss */
+.content-list li .tags .tag-button {
+  background: transparent;
+  display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
+  background-position: 0 -1248px;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+  width: 0;
+  heigth: 20px;
+  overflow: hidden;
+  padding: 0 0 0 20px;
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  text-transform: capitalize;
+  padding-left: 40px;
+  border: none;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  min-width: 0;
+  margin: 0;
+  color: #3584cf;
+  position: relative; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 79, ../scss/partials/_content_list.scss */
+  .content-list li .tags .tag-button {
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
+    background-position: 0 -1248px;
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
+/* line 66, ../scss/partials/_common_elements.scss */
+.content-list li .tags .tag-button:hover {
+  display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
+  background-position: 0 -1298px;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+  width: 0;
+  heigth: 20px;
+  overflow: hidden;
+  padding: 0 0 0 20px;
+  padding-left: 40px;
+  text-indent: 0;
+  overflow: visible;
+  color: #28639b;
+  text-decoration: underline;
+  background-color: transparent; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 66, ../scss/partials/_common_elements.scss */
+  .content-list li .tags .tag-button:hover {
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
+    background-position: 0 -1298px;
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
+/* line 84, ../scss/partials/_content_list.scss */
 .content-list li .label-archive {
   position: absolute;
   right: 0;
@@ -2375,47 +2471,35 @@ form.search .icon {
   line-height: 40px;
   padding: 0 20px;
   color: #ffffff; }
-/* line 74, ../scss/partials/_content_list.scss */
+/* line 92, ../scss/partials/_content_list.scss */
 .content-list li .label-archive.label-partner {
   background: #058120; }
-/* line 78, ../scss/partials/_content_list.scss */
+/* line 96, ../scss/partials/_content_list.scss */
 .content-list li .label-archive.label-sponsored {
   background: #e17502; }
-/* line 83, ../scss/partials/_content_list.scss */
+/* line 100, ../scss/partials/_content_list.scss */
+.content-list li .label-archive.label-core {
+  background: #3584cf; }
+/* line 105, ../scss/partials/_content_list.scss */
 .content-list li h2 {
   font-size: 137.5%;
   line-height: 127%;
   max-width: 80%;
   margin: 0 auto 0.5em; }
 @media only screen and (max-width: 640px) {
-  /* line 83, ../scss/partials/_content_list.scss */
+  /* line 105, ../scss/partials/_content_list.scss */
   .content-list li h2 {
     max-width: none;
     font-size: 125%;
     line-height: 130%; } }
-/* line 96, ../scss/partials/_content_list.scss */
+/* line 144, ../scss/partials/_content_list.scss */
 .content-list li:nth-child(4n+2), .content-list li:nth-child(4n+3) {
   background-color: #eeeeee; }
-/* line 100, ../scss/partials/_content_list.scss */
+/* line 121, ../scss/partials/_content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details, .content-list li:nth-child(4n+3).has-thumb .details {
   background: rgba(0, 0, 0, 0.6);
   color: #bbbbbb; }
-/* line 104, ../scss/partials/_content_list.scss */
-.content-list li:nth-child(4n+2).has-thumb .details button, .content-list li:nth-child(4n+2).has-thumb .details .button, .content-list li:nth-child(4n+3).has-thumb .details button, .content-list li:nth-child(4n+3).has-thumb .details .button {
-  color: #ffffff;
-  background-color: transparent;
-  border-color: #ffffff; }
-/* line 51, ../scss/outernet/mixins/_buttons.scss */
-.content-list li:nth-child(4n+2).has-thumb .details button:visited, .content-list li:nth-child(4n+2).has-thumb .details .button:visited, .content-list li:nth-child(4n+3).has-thumb .details button:visited, .content-list li:nth-child(4n+3).has-thumb .details .button:visited {
-  color: #ffffff; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
-.content-list li:nth-child(4n+2).has-thumb .details button:focus, .content-list li:nth-child(4n+2).has-thumb .details button:hover, .content-list li:nth-child(4n+2).has-thumb .details .button:focus, .content-list li:nth-child(4n+2).has-thumb .details .button:hover, .content-list li:nth-child(4n+3).has-thumb .details button:focus, .content-list li:nth-child(4n+3).has-thumb .details button:hover, .content-list li:nth-child(4n+3).has-thumb .details .button:focus, .content-list li:nth-child(4n+3).has-thumb .details .button:hover {
-  text-decoration: none;
-  color: #3584cf;
-  background-color: #ffffff;
-  border-color: #ffffff;
-  opacity: 0.75; }
-/* line 108, ../scss/partials/_content_list.scss */
+/* line 125, ../scss/partials/_content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details a, .content-list li:nth-child(4n+3).has-thumb .details a {
   color: #bbbbbb; }
 /* line 60, ../scss/outernet/mixins/_hyperlinks.scss */
@@ -2424,13 +2508,13 @@ form.search .icon {
 /* line 64, ../scss/outernet/mixins/_hyperlinks.scss */
 .content-list li:nth-child(4n+2).has-thumb .details a:visited, .content-list li:nth-child(4n+3).has-thumb .details a:visited {
   color: #888888; }
-/* line 112, ../scss/partials/_content_list.scss */
+/* line 129, ../scss/partials/_content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details h2 a, .content-list li:nth-child(4n+3).has-thumb .details h2 a {
   color: #ffffff; }
-/* line 115, ../scss/partials/_content_list.scss */
+/* line 132, ../scss/partials/_content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details h2 a:visited, .content-list li:nth-child(4n+3).has-thumb .details h2 a:visited {
   color: #bbbbbb; }
-/* line 120, ../scss/partials/_content_list.scss */
+/* line 137, ../scss/partials/_content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details .delete, .content-list li:nth-child(4n+3).has-thumb .details .delete {
   color: #ffffff;
   background-color: transparent;
@@ -2445,7 +2529,7 @@ form.search .icon {
   background-color: #ffffff;
   border-color: #ffffff;
   opacity: 0.75; }
-/* line 127, ../scss/partials/_content_list.scss */
+/* line 150, ../scss/partials/_content_list.scss */
 .content-list li.has-thumb .details {
   background: rgba(255, 255, 255, 0.8); }
 
