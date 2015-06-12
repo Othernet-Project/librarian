@@ -52,7 +52,7 @@ ${library_submenu.body()}
                 </td>
                 <td class="delete">
                     ${h.form('post', action=dpath)}
-                        <button class="danger" name="action" value="delete" type="submit">${_('Delete')}
+                        <button class="delete" name="action" value="delete" type="submit">${_('Delete')}
                     </form>
                 </td>
                 <td>
