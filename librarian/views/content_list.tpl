@@ -68,7 +68,7 @@ ${library_submenu.body()}
 % endif
 
 <%block name="extra_scripts">
-<script src="${th.static_url('sys:static', path='js/content.js')}"></script>
+<script src="${assets['js/content']}"></script>
 </%block>
 
 <%block name="script_templates">

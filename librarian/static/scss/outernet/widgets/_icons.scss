@@ -14,6 +14,17 @@
 @import "outernet/mixins/sprites";
 
 
+@mixin icon-plain($image) {
+  $sfile: sprite-file($icons, $image);
+  display: inline-block;
+  @include icon($image);
+  width: 0;
+  heigth: image-height($sfile);
+  overflow: hidden;
+  padding: 0 0 0 image-width($sfile);
+}
+
+
 @mixin icon-button($image, $label-color: $sun, $no-label: no) {
   display: inline-block;
   position: relative;

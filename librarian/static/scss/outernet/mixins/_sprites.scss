@@ -41,3 +41,13 @@ $icons-2x: sprite-map('icons/2x/*.png', $spacing: 60px);
   @include named-sprite($icons, $icons-2x, $name, $dimensions);
 }
 
+
+$sections: sprite-map('sections/1x/*.png', $spacing: 30px);
+$sections-2x: sprite-map('sections/2x/*.png', $spacing: 60px);
+@mixin section-icon($name, $dimensions: yes) {
+  @if $dimensions == yes {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  @include named-sprite($sections, $sections-2x, $name, $dimensions);
+}

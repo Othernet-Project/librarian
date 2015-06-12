@@ -49,7 +49,6 @@ form.search {
       padding: 0;
     }
 
-
     .details {
       // Delegate gutter padding to inner container
       @include grid-padding;
@@ -60,6 +59,25 @@ form.search {
 
       @include phone-portrait-wide {
         text-align: left;
+      }
+    }
+
+    .tag-icon {
+      @include icon-plain(tags);
+    }
+
+    .tags {
+      a {
+        color: $sub;
+        margin: 0 0.2em;
+      }
+
+      form.inline {
+        vertical-align: middle;
+      }
+
+      .tag-button {
+        @include icon-link-button(edit);
       }
     }
 
@@ -78,6 +96,10 @@ form.search {
       &.label-sponsored {
         background: $sun;
       }
+
+      &.label-core {
+        background: $sky;
+      }
     }
 
     h2 {
@@ -93,17 +115,12 @@ form.search {
 
     backgound-color: $white;
 
-    &:nth-child(4n+2),
-    &:nth-child(4n+3), {
+    @mixin alternating-background {
       background-color: $earth;
 
       &.has-thumb .details {
         background: transparentize(black, 0.4);
         color: $iconic;
-
-        button, .button {
-          @include button-normal-color(reverse-outline);
-        }
 
         a {
           @include link-reverse;
@@ -121,6 +138,12 @@ form.search {
           @include button-delete-color(reverse-outline);
         }
       }
+    }
+
+    // Background color sequence
+    &:nth-child(4n+2),
+    &:nth-child(4n+3), {
+      @include alternating-background;
     }
 
     &.has-thumb {

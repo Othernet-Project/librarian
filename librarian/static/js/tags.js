@@ -19,8 +19,9 @@
   function initTagUIState() {
     var el = $(this);
     var form = el.find('.tag-form');
-    form.find('p:first').append(templates.closeTagButton);
+    form.append(templates.closeTagButton);
     form.hide();
+    el.find('.tags-help').hide();
     el.find('.tags').append(templates.tagButton);
   }
 
@@ -28,8 +29,10 @@
     var el = $(this);
     var tags = el.parent();
     var tagForm = tags.next('.tag-form');
+    var tagHelp = tagForm.next('.tags-help');
     tags.hide();
     tagForm.show();
+    tagHelp.show();
     tagForm.find('input').focus();
     if (contentList != null && contentList.masonry != null) {
       contentList.masonry();
@@ -40,7 +43,9 @@
     var el = $(this);
     var form = el.parents('.tag-form');
     var tags = form.prev();
+    var tagHelp = form.next('.tags-help');
     form.hide();
+    tagHelp.hide();
     tags.show();
     form.find('input').val(getTags(tags));
     if (contentList != null && contentList.masonry != null) {
@@ -64,23 +69,9 @@
       tagList.html(res + templates.tagButton);
       form.data('original', getTags(tagList));
       closeTagForm.call(buttons);
-      updateTagCloud();
     });
     xhr.fail(updateError);
     xhr.always(function () { buttons.prop('disabled', false); });
-  }
-
-  function updateTagCloud() {
-    if (!tagCloud.length) {
-        return;
-    }
-    tagCloud.load(
-        tagCloud.data('url') +
-        '?tag=' +
-        tagCloud.data('current') +
-        '&base_path=' +
-        tagCloud.data('base-path')
-    );
   }
 
   function updateError() {
