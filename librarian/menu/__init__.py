@@ -41,11 +41,14 @@ class MenuItem(object):
     def render(self):
         if not self.is_visible():
             return ''
-        icon = html.SPAN(_class="icon")
         if self.is_alt_icon_visible():
             icon_class = self.alt_icon_class
         else:
             icon_class = self.icon_class
+        if icon_class:
+            icon = html.SPAN(_class="icon")
+        else:
+            icon = ''
 
         item_class = ' '.join(tuple(self.default_classes) + (icon_class,))
         return html.link_other(icon + self.label,
