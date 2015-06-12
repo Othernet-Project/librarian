@@ -2,12 +2,15 @@
 @import "outernet/mixins/media_query";
 @import "partials/dropdown";
 @import "partials/mainmenu";
+@import "partials/common_elements";
+@import "partials/content_list";
 
 $wide: 976px;
 $medium: 728px;
 $narrow: 560px;
 
 body {
+  padding-top: 60px;
   background: $white;
 }
 
