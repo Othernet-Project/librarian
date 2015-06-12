@@ -53,3 +53,15 @@ $link-delete-color: fire;
 @mixin link-delete {
   @include link-color($link-delete-color, 100);
 }
+
+@mixin link-reverse {
+  color: $iconic;
+
+  &:hover {
+    color: $white;
+  }
+
+  &:visited {
+    color: $sub;
+  }
+}

@@ -25,6 +25,11 @@
   }
 }
 
+@mixin menu-link-base {
+  font-size: 18px;
+  margin-right: 2em;
+}
+
 .menu {
   position: fixed;
   z-index: 1000;
@@ -86,8 +91,11 @@
 
   #nav {
     a {
-      font-size: 18px;
-      margin-right: 2em;
+      @include menu-link-base;
+
+      &:hover {
+        color: $white;
+      }
 
       &:last-child {
         margin-right: 0;
@@ -100,6 +108,10 @@
           display: inline-block;
         }
       }
+    }
+
+    .active {
+      @include menu-link-base;
     }
 
     @include phone-portrait-wide {

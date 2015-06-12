@@ -20,68 +20,64 @@ button,
     @include button-geometry-s;
   }
 
-  &.secondary {
-    @include button-normal-color(outline);
+  &.primary {
+    @include button-normal-color(normal);
   }
 
   &.cta {
     @include button-cta-color;
 
-    &.secondary {
-      @include button-cta-color(outline);
+    &.primary {
+      @include button-cta-color(normal);
     }
   }
 
   &.delete {
     @include button-delete-color;
 
-    &.secondary {
-      @include button-delete-color(outline);
+    &.primary {
+      @include button-delete-color(normal);
     }
   }
 
   &.confirm {
-    @include button-confirm-color;
-
-    &.secondary {
-      @include button-confirm-color(outline);
-    }
+    @include button-confirm-color(normal);
   }
 
   &.reverse {
-    @include button-color($style: reverse); 
+    @include button-color($style: reverse-outline); 
 
-    &.secondary {
-      @include button-color($style: reverse-outline);
+    &.primary {
+      @include button-color($style: reverse);
     }
 
     &.cta {
-      @include button-cta-color($style: reverse);
+      @include button-cta-color($style: reverse-outline);
 
-      &.secondary {
-        @include button-cta-color($style: reverse-outline);
+      &.primary {
+        @include button-cta-color($style: reverse);
       }
     }
 
     &.delete {
-      @include button-delete-color($style: reverse);
+      @include button-delete-color($style: reverse-outline);
 
-      &.secondary {
-        @include button-delete-color($style: reverse-outline);
+      &.primary {
+        @include button-delete-color($style: reverse);
       }
     }
 
     &.confirm {
-      @include button-confirm-color($style: reverse);
+      @include button-confirm-color($style: reverse-outline);
 
-      &.secondary {
-        @include button-confirm-color($style: reverse-outline);
+      &.primary {
+        @include button-confirm-color($style: reverse);
       }
     }
 
     &[disabled],
     &.disabled {
-      @include button-inactive-color($style: reverse);
+      @include button-inactive-color($style: reverse-outline);
       opacity: 0.5;
     }
   }
@@ -91,8 +87,8 @@ button,
     @include button-inactive-color;
     cursor: default;
 
-    &.secondary {
-      @include button-inactive-color($style: outline);
+    &.primary {
+      @include button-inactive-color($style: normal);
     }
   }
 }
