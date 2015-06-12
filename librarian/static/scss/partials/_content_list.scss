@@ -153,3 +153,20 @@ form.search {
     }
   }
 }
+
+.load-more {
+  text-align: center;
+  padding-top: 2em;
+
+  button {
+    .icon {
+      display: inline-block;
+      vertical-align: middle;
+      @include with-hdpi(animated, loader, $include-size: yes, $extension: gif);
+    }
+
+    &.active .icon {
+      @include with-hdpi(animated, loader_active, $include-size: yes, $extension: gif);
+    }
+  }
+}

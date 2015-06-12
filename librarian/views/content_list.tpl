@@ -73,17 +73,16 @@ ${library_submenu.body()}
 
 <%block name="script_templates">
 <script id="loadLink" type="text/template">
-    <p id="more" class="loading">
-        ## Translators, link that loads more content in infinite scrolling page
-        <span><button class="large special">${_('Load more content')}</button></span>
-    </p>
-</script>
-
-<script id="loading" type="text/template">
-    <p id="loading" class="loading">
-        <img src="/static/img/loading.gif">
-        ## Translators, used as placeholder while infinite scrolling content is being loaded
-        <span>${_('Loading...')}</span>
+    <p id="more" class="load-more">
+        <button 
+            class="primary"
+            ## Translators, link that loads more content in infinite scrolling page
+            data-active="${_('Load more content')}"
+            ## Translators, label on link that loads more content, while content is being loaded
+            data-normal="${_('Loading...')}">
+                <span class="icon"></span>
+                ${_('Load more content')}
+        </button>
     </p>
 </script>
 
