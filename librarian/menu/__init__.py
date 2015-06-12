@@ -91,7 +91,6 @@ def install_menuitems(app):
                 mod = importlib.import_module(rel_path)
 
             menu_cls = find_menu_cls(mod)
-            print(menu_cls)
             menu_cls.name = name
             MENU_ITEMS.append(menu_cls)
             MENU_GROUPS.setdefault(group_name, [])
