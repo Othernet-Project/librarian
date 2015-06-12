@@ -17,4 +17,3 @@ class AppsMenuItem(MenuItem):
     label = _("Apps")
     icon_class = 'apps'
     route = 'apps:list'
-    group = 'main'

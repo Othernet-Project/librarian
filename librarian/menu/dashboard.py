@@ -17,4 +17,3 @@ class DashboardMenuItem(MenuItem):
     label = _("Dashboard")
     icon_class = 'dashboard'
     route = 'dashboard:main'
-    group = 'main'

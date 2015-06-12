@@ -17,4 +17,3 @@ class ContentMenuItem(MenuItem):
     label = _("Library")
     icon_class = 'archive'
     route = 'content:list'
-    group = 'main'

@@ -17,4 +17,3 @@ class FilesMenuItem(MenuItem):
     label = _("Files")
     icon_class = 'files'
     route = 'files:list'
-    group = 'main'

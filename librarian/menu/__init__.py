@@ -66,18 +66,22 @@ class MenuItem(object):
 
 
 def install_menuitems(app):
-    for mod_path in app.config.get('menu.items', []):
-        try:
-            __import__(mod_path)  # attempt import from pythonpath
-        except ImportError:
-            rel_path = 'librarian.menu.{0}'.format(mod_path)
-            __import__(rel_path)  # attempt local import
+    for (name, group) in app.config.items():
+        if name.startswith('menu.'):
+            group_name = name.replace('menu.', '')
+            for mod_path in group:
+                try:
+                    __import__(mod_path)  # attempt import from pythonpath
+                except ImportError:
+                    rel_path = 'librarian.menu.{0}'.format(mod_path)
+                    __import__(rel_path)  # attempt local import
 
-    for menu_item_cls in MenuItem.__subclasses__():
-        MENU_ITEMS.append(menu_item_cls)
+            for menu_item_cls in MenuItem.__subclasses__():
+                menu_item_cls.group = group_name
+                MENU_ITEMS.append(menu_item_cls)
 
-    bottle.BaseTemplate.defaults.update({'menu_group': menu_group,
-                                         'menu_item': menu_item})
+            bottle.BaseTemplate.defaults.update({'menu_group': menu_group,
+                                                 'menu_item': menu_item})
 
 
 def menu_group(group):

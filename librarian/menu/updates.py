@@ -21,7 +21,6 @@ class UpdatesMenuItem(MenuItem):
     icon_class = 'updates'
     alt_icon_class = 'updates notice'
     route = 'downloads:list'
-    group = 'main'
 
     def _updates(self):
         return Lazy(lambda: len(list(get_downloads(
