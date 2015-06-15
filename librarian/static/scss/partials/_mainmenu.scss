@@ -4,19 +4,9 @@
 @import "outernet/mixins/sprites";
 
 @mixin navicon-icon($name) {
-  .#{$name} {
-    .icon {
-      @include section-icon($name);
-    }
-
-    &:hover .icon,
-    &.active .icon {
-      @include section-icon(#{$name}_hover);
-    }
-  }
 }
 
-header.menu {
+.menu {
   .logo {
     @include hide-text;
     @include icon('outernet_logo', yes);  
@@ -84,8 +74,35 @@ header.menu {
       @include with-hdpi(icons, 'checkmark_active', $include-size: yes);
     }
   }
+}
 
-  @each $navicon in (library, files, sites, apps, updates, logout, settings) {
-    @include navicon-icon($navicon);
+.alt-menu {
+  .icon {
+    width: 30px;
+    margin-right: 0.5em;
+  }
+
+  .label {
+    display: inline-block;
+  }
+
+  @include wider-than($phone-portrait-wide) {
+    display: none;
+  }
+}
+
+@each $navicon in (library, files, sites, apps, updates, logout, settings) {
+  #nav .#{$navicon},
+  .alt-menu .#{$navicon} {
+    .icon {
+      @include section-icon($navicon);
+    }
+  }
+
+  #nav .#{$navicon} {
+    &:hover .icon,
+    &.active .icon {
+      @include section-icon(#{$navicon}_hover);
+    }
   }
 }

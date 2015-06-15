@@ -1,32 +1,31 @@
 (function (window, $) {
-  var menu = $('#nav');
+  var body = $('body');
   var hamburger = $('.hamburger');
+  var menu = $(window.templates.menu);
+  var lvl2triggers = menu.find('.level2-trigger');
+  var lvl1triggers = menu.find('.top-trigger');
+  var lvl2containers = menu.find('.level2');
+
+  body.append(menu);
 
   hamburger.on('click', toggleMenu);
-
-  function switchMenu(e) {
-    if (isDesktop()) {
-      desktopMenu();
-    } else {
-      mobileMenu();
-    }
-  }
-
-  function mobileMenu() {
-
-  }
-
-  function desktopMenu() {
-
-  }
-
-  function isDesktop() {
-    return hamburger.style('display') == 'none';
-  }
+  lvl2triggers.on('click', toggleLvl2);
+  lvl1triggers.on('click', closeLevel2);
 
   function toggleMenu(e) {
     e.preventDefault();
+    closeLevel2();
     menu.toggleClass('open');
   }
 
+  function toggleLvl2(e) {
+    var tgt = $(this);
+    e.preventDefault();
+    closeLevel2();
+    $(tgt.attr('href')).addClass('open');
+  }
+
+  function closeLevel2() {
+    lvl2containers.removeClass('open');
+  }
 }(this, this.jQuery));

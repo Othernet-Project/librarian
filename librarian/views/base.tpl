@@ -71,6 +71,28 @@
         </footer>
         </%block>
 
+        <script type="text/template" id="menu">
+            <nav class="alt-menu">
+                <div class="level1" id="top">
+                <a href="#alt-menu-lang" class="level2-trigger level2-trigger-lang">
+                    <span class="language current" dir="${th.dir(request.locale)}" lang="${request.locale}">
+                        ${th.lang_name_safe(request.locale)}
+                    </span>
+                    <span class="level2-icon">
+                    </span>
+                </a>
+                % for mi in menu_group('main'):
+                    ${mi}
+                % endfor
+                </div>
+                <div class="level2" id="alt-menu-lang">
+                    <a class="top-trigger">${_('Back')}</a>
+                    % for locale, lang in languages:
+                    <a class="language" href="${i18n_path(locale=locale)}" dir="${th.dir(locale)}" lang="${locale}">${lang}</a>
+                    % endfor
+                </div>
+            </nav>
+        </script>
         <%block name="script_templates"/>
         <script src="${assets['js/ui']}"></script>
         <%block name="extra_scripts"/>

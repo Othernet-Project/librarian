@@ -102,14 +102,6 @@ $menu-item-margin: 1.2em;
       &:last-child {
         margin-right: 0;
       }
-
-      .phone-only {
-        display: none;
-
-        @include phone-portrait-wide {
-          display: inline-block;
-        }
-      }
     }
 
     .active {
@@ -117,36 +109,7 @@ $menu-item-margin: 1.2em;
     }
 
     @include phone-portrait-wide {
-      position: fixed;
-      top: 60px;
-      right: 0;
-      left: 0;
-      background: $white;
-      padding: 0 20px;
-      border-bottom: 2px solid $border;
-      margin-right: 0;
-      max-height: 0;
-      overflow: hidden;
-      height: 100%;
-      @include transition(max-height 0.5s);
-
-      &.open {
-        max-height: 2000px;
-        overflow-y: scroll;
-      }
-
-      a {
-        display: block;
-        color: $base;
-        line-height: 60px;
-        border-bottom: 1px solid $border;
-        @include menu-link-rev;
-        margin: 0;
-
-        &:last-child {
-          border-bottom: none;
-        }
-      }
+      display: none;
     }
   }
 
@@ -172,5 +135,62 @@ $menu-item-margin: 1.2em;
       background-repeat: no-repeat;
       @include with-hdpi(icons, hamburger);
     }
+  }
+}
+
+.alt-menu {
+  position: fixed;
+  z-index: 2000;
+  top: 60px;
+  bottom: 0;
+  left: 100%;
+  width: 100%;
+  opacity: 0;
+  @include transition(left 0.3s ease-out, opacity 0.3s ease-out);
+
+  .active .icon,
+  .active .label {
+    opacity: 0.5;
+  }
+
+  .level2-trigger,
+  .top-trigger {
+    color: $sub;
+  }
+
+  .level2-icon {
+  }
+
+  .level1, .level2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    overflow-y: scroll;
+    background: $white;
+  }
+
+  .level2 {
+    left: 100%;
+    border-left: 3px solid $border;
+    @include transition(left 0.3s ease-out);
+
+    &.open {
+      left: 0;
+    }
+  }
+
+  &.open {
+    left: 0; 
+    opacity: 1;
+  }
+
+  a, .active {
+    display: block;
+    line-height: 60px;
+    padding: 0 20px;
+    border-bottom: 1px solid $border;
+    color: $base;
   }
 }
