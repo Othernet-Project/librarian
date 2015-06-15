@@ -92,3 +92,11 @@ button,
     }
   }
 }
+
+a.button {
+  @include button-geometry-anchor-fix;
+
+  &.small {
+    @include button-geometry-anchor-fix-s;
+  }
+}

@@ -22,6 +22,12 @@ $default-button-style: outline;
   cursor: pointer;
   vertical-align: middle;
   border: 1px solid transparent;
+  line-height: inherit;
+
+  ::-moz-focus-inner {
+      padding: 0 !important;
+      border: none !important;
+  }
 }
 
 @mixin button-color($color: $sky, $hover: $sky25d, $style: $default-button-style) {
@@ -97,7 +103,6 @@ $default-button-style: outline;
 }
 
 @mixin button-geometry {
-  padding: 0.6em 20px;
   width: auto;
   min-width: 170px;
   height: 40px;
@@ -109,11 +114,18 @@ $default-button-style: outline;
   }
 }
 
+@mixin button-geometry-anchor-fix {
+  padding: 12px 20px 0;
+}
+
 @mixin button-geometry-s {
-  padding: 0.2em 20px;
   width: auto;
   min-width: 0;
   height: 24px;
+}
+
+@mixin button-geometry-anchor-fix-s {
+  padding: 5px 20px 0;
 }
 
 // Default buttons
