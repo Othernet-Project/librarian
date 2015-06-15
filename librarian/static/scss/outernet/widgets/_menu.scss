@@ -12,6 +12,8 @@
 @import "outernet/widgets/icons";
 @import "outernet/mixins/media_query";
 
+$menu-item-margin: 1.2em;
+
 @mixin menu-link-rev {
   color: $base;
 
@@ -27,7 +29,7 @@
 
 @mixin menu-link-base {
   font-size: 18px;
-  margin-right: 2em;
+  margin-right: $menu-item-margin;
 }
 
 .menu {
@@ -77,7 +79,7 @@
   .menu-subblock {
     display: inline-block;
     padding-top: 18px;
-    margin-right: 2em;
+    margin-right: $menu-item-margin;
     vertical-align: top;
 
     &:last-child {
