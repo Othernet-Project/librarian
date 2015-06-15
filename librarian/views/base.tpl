@@ -75,6 +75,8 @@
             <nav class="alt-menu">
                 <div class="level1" id="top">
                 <a href="#alt-menu-lang" class="level2-trigger level2-trigger-lang">
+                    ## Translators, appears in the mobile menu in front of language name
+                    ${_('Language:')}
                     <span class="language current" dir="${th.dir(request.locale)}" lang="${request.locale}">
                         ${th.lang_name_safe(request.locale)}
                     </span>
@@ -85,10 +87,18 @@
                     ${mi}
                 % endfor
                 </div>
-                <div class="level2" id="alt-menu-lang">
+                <div class="level2 level2-lang" id="alt-menu-lang">
                     <a class="top-trigger">${_('Back')}</a>
+
+                    ## NOTE that this for loop is a bit different from the for
+                    ## loop at the top of the document. Do not factor out into
+                    ## partial template.
                     % for locale, lang in languages:
-                    <a class="language" href="${i18n_path(locale=locale)}" dir="${th.dir(locale)}" lang="${locale}">${lang}</a>
+                        % if locale != request.locale:
+                        <a class="language" href="${i18n_path(locale=locale)}" dir="${th.dir(locale)}" lang="${locale}">${lang}</a>
+                        % else:
+                        <span class="active selected" dir="${th.dir(locale)}" lang="${locale}">${lang}</span>
+                        % endif
                     % endfor
                 </div>
             </nav>

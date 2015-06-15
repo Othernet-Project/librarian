@@ -73,6 +73,10 @@
       margin-right: 10px;
       @include with-hdpi(icons, 'checkmark_active', $include-size: yes);
     }
+
+    @include phone-portrait-wide {
+      display: none;
+    }
   }
 }
 
@@ -88,6 +92,14 @@
 
   @include wider-than($phone-portrait-wide) {
     display: none;
+  }
+
+  .level2-lang .selected {
+    background: $forest10;
+    @include with-hdpi(icons, form_positive);
+    background-repeat: no-repeat;
+    background-position: right 20px top 50%;
+    color: $forest;
   }
 }
 
