@@ -25,7 +25,7 @@ ${library_submenu.body()}
             <% uppath = i18n_url('files:path', path=up) %>
             <td class="icon"><a href="${uppath}"><span class="icon"></span></a></td>
             ## Translators, used as label for link that leads to parent directory in file listing
-            <td colspan="4"><a href="${uppath}">${_('(go up one level)')}<a></td>
+            <td colspan="4"><a href="${uppath}" class="upone">${_('Go up one level')}<a></td>
         </tr>
         % elif is_missing or is_search:
         <tr class="up">
@@ -35,7 +35,7 @@ ${library_submenu.body()}
         </tr>
         % endif
         % if (not dirs) and (not files):
-        <tr>
+        <tr class="empty">
             ## Tanslators, shown in files section when current folder is empty
             <td class="empty" colspan="6">${_('There are currently no files or folders here.')}</td>
         </tr>

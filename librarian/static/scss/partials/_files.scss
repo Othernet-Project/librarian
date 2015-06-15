@@ -4,9 +4,9 @@
 .file-list {
   table {
     @include table-col-width(1, 20px);
-    @include table-col-width(3, 200px);
-    @include table-col-width(4, 100px);
-    @include table-col-width(5, 100px);
+    @include table-col-width(3, 320px);
+    @include table-col-width(4, 160px);
+    @include table-col-width(5, 160px);
 
     td:nth-child(1) {
       padding-right: 0;
@@ -16,9 +16,28 @@
       padding-left: 2px;
     }
 
+    td:nth-child(3),
+    td:nth-child(4),
+    td:nth-child(5),
+    {
+      text-align: right;
+    }
+
+    tr.empty {
+      background: $input;
+      text-align: center;
+      color: $sub;
+      padding: 20px;
+    }
+
     @include narrower-than(800px) {
       td:nth-child(1) {
         display: none;
+
+        &.empty {
+          display: block;
+          width: auto;
+        }
       }
 
       td:nth-child(2) {
@@ -30,6 +49,8 @@
       td:nth-child(5),
       {
         display: inline-block;
+        width: auto;
+        text-align: left;
       }
   
       tr {
@@ -38,6 +59,10 @@
 
       @include table-flat;
     }
+  }
+
+  .upone {
+    @include sub;
   }
 }
 
