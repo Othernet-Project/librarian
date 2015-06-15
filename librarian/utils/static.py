@@ -20,7 +20,7 @@ class Assets:
                                          debug=debug, url_expire=False)
 
         self.env.versions = 'hash'
-        self.env.manifest = 'file'
+        self.env.manifest = 'json'
         self.env.auto_rebuild = debug
 
         # Configure Compass
