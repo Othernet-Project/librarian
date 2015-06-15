@@ -16,6 +16,7 @@
     e.preventDefault();
     closeLevel2();
     menu.toggleClass('open');
+    hamburger.toggleClass('open');
   }
 
   function toggleLvl2(e) {
