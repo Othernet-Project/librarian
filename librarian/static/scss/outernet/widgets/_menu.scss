@@ -122,6 +122,10 @@ $menu-item-margin: 1.2em;
     vertical-align: top;
     display: none;
 
+    &.open {
+      background: $white;
+    }
+
     @include phone-portrait-wide {
       display: inline-block;
     }
@@ -155,7 +159,7 @@ $menu-item-margin: 1.2em;
 
   .level2-trigger,
   .top-trigger {
-    color: $sub;
+    color: $iconic;
   }
 
   .level2-icon {
