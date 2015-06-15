@@ -96,7 +96,7 @@ ${library_submenu.body()}
 <script id="toTop" type="text/template">
     <div id="to-top" class="to-top">
         ## Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
-        <a href="#content-list">${_('Go to top')}</a>
+        <a href="#content-list" class="button small">${_('Go to top')}</a>
     </div>
 </script>
 
