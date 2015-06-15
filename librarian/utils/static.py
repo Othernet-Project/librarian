@@ -17,7 +17,7 @@ class Assets:
         self.url = url
         self.debug = debug
         self.env = webassets.Environment(directory=self.directory, url=url,
-                                         debug=debug, url_expire=True)
+                                         debug=debug, url_expire=False)
 
         self.env.versions = 'hash'
         self.env.manifest = 'file'
