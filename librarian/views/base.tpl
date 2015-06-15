@@ -17,7 +17,7 @@
         <%block name="header">
         <header class="menu">
             <div class="menu-subblock">
-                <span class="logo"><span lang="en">Outernet</span></span>
+                <a class="logo" href="${i18n_url('content:list')}"><span lang="en">Outernet</span></a>
             </div>
             <div class="dropdown languages menu-subblock">
                 <a class="dropdown-toggle" href="#"><span class="down-arrow"></span> ${th.lang_name_safe(request.locale)}</a>
