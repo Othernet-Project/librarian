@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         ## Translators, used in page title
-        <title><%block name="title">Outernet</%block> :: ${_('Librarian')} v${app_version}</title>
+        <title><%block name="title">Outernet</%block> - Librarian v${app_version}</title>
         <link rel="stylesheet" href="${assets['css/main']}" />
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
         % if redirect is not UNDEFINED:
@@ -17,7 +17,7 @@
         <%block name="header">
         <header class="menu">
             <div class="menu-subblock">
-                <span class="logo">OUTERNET</span>
+                <span class="logo"><span lang="en">Outernet</span></span>
             </div>
             <div class="dropdown languages menu-subblock">
                 <a class="dropdown-toggle" href="#"><span class="down-arrow"></span> ${th.lang_name_safe(request.locale)}</a>
@@ -62,6 +62,14 @@
             </%block>
         </%block>
         </div>
+
+        <%block name="footer">
+        <footer>
+            <p class="logo"><span lang="en">Outernet</span>: ${_("Humanity's public library")}</p>
+            <p class="progver" lang="en">Librarian</span> <span dir="ltr">v${app_version}</span></p>
+            <p class="copyright">2014-2015 <span lang="en">Outernet Inc</span></p>
+        </footer>
+        </%block>
 
         <%block name="script_templates"/>
         <script src="${assets['js/ui']}"></script>
