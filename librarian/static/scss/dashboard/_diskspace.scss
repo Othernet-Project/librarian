@@ -1,0 +1,17 @@
+@import "outernet/mixins/grid";
+@import "outernet/mixins/fonts";
+
+#diskspace {
+  .progress {
+    max-width: 100%;
+    margin-bottom: 0;
+  }
+
+  .stat {
+    margin-bottom: 0.5em;
+
+    .number {
+      @include heading-1;
+    }
+  }
+}
