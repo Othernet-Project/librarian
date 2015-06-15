@@ -38,22 +38,8 @@
   @include named-sprite($map, $map-2x, $name, $dimensions);
 }
 
-
 $icons: sprite-map('icons/1x/*.png', $spacing: 30px);
 $icons-2x: sprite-map('icons/2x/*.png', $spacing: 60px);
 @mixin icon($name, $dimensions: yes) {
   @include sprite($icons, $icons-2x, $name, $dimensions);
-}
-
-
-$sections: sprite-map('sections/1x/*.png', $spacing: 30px);
-$sections-2x: sprite-map('sections/2x/*.png', $spacing: 60px);
-@mixin section-icon($name, $dimensions: yes) {
-  @include sprite($sections, $sections-2x, $name, $dimensions);
-}
-
-$misc: sprite-map('misc/1x/*.png', $spacing: 30px);
-$misc-2x: sprite-map('misc/2x/*.png', $spacing: 60px);
-@mixin misc-icon($name, $dimensions: yes) {
-  @include sprite($misc, $misc-2x, $name, $dimensions);
 }

@@ -93,6 +93,7 @@ $default-button-style: outline;
 }
 
 @mixin button-label {
+  font-family: $base-font;
   font-size: $base-size;
   line-height: 100%;
 }
@@ -115,7 +116,7 @@ $default-button-style: outline;
 }
 
 @mixin button-geometry-anchor-fix {
-  padding: 12px 20px 0;
+  padding: 11px 20px 0;
 }
 
 @mixin button-geometry-s {
@@ -125,7 +126,7 @@ $default-button-style: outline;
 }
 
 @mixin button-geometry-anchor-fix-s {
-  padding: 5px 20px 0;
+  padding: 4px 20px 0;
 }
 
 // Default buttons

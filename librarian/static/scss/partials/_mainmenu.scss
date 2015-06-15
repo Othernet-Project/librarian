@@ -1,10 +1,8 @@
 @import "compass/typography";
-@import "dropdown";
 @import "outernet/mixins/media_query";
 @import "outernet/mixins/sprites";
-
-@mixin navicon-icon($name) {
-}
+@import "dropdown";
+@import "sprites";
 
 .menu {
   .logo {
@@ -88,10 +86,6 @@
 
   .label {
     display: inline-block;
-  }
-
-  @include wider-than($phone-portrait-wide) {
-    display: none;
   }
 
   .level2-lang .selected {

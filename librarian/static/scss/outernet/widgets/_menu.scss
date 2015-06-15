@@ -10,6 +10,7 @@
  */
 
 @import "outernet/widgets/icons";
+@import "outernet/mixins/colors";
 @import "outernet/mixins/media_query";
 
 $menu-item-margin: 1.2em;
@@ -85,10 +86,6 @@ $menu-item-margin: 1.2em;
     &:last-child {
       margin-right: 0;
     }
-
-    @include phone-portrait-wide {
-      margin-right: 0.5em;
-    }
   }
 
   #nav {
@@ -150,7 +147,12 @@ $menu-item-margin: 1.2em;
   left: 100%;
   width: 100%;
   opacity: 0;
+  background: $white;
   @include transition(left 0.3s ease-out, opacity 0.3s ease-out);
+
+  @include wider-than($phone-portrait-wide) {
+    display: none;
+  }
 
   .active .icon,
   .active .label {
@@ -167,6 +169,7 @@ $menu-item-margin: 1.2em;
 
   .level1, .level2 {
     position: absolute;
+    background: $white;
     top: 0;
     left: 0;
     bottom: 0;
