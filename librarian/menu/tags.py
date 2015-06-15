@@ -15,4 +15,5 @@ from bottle_utils.i18n import lazy_gettext as _
 
 class TagsMenuItem(MenuItem):
     label = _("Tags")
+    icon_class = 'tags'
     route = 'tags:list'

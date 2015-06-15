@@ -3,25 +3,53 @@
 @import "outernet/mixins/media_query";
 @import "outernet/mixins/sprites";
 
+@mixin navicon-icon($name) {
+  .#{$name} {
+    .icon {
+      @include section-icon($name);
+    }
+
+    &:hover .icon,
+    &.active .icon {
+      @include section-icon(#{$name}_hover);
+    }
+  }
+}
+
 header.menu {
   .logo {
     @include hide-text;
     @include icon('outernet_logo', yes);  
   }
 
-  #nav .icon + .label {
-    display: none;
+  #nav .navicon {
+    display: inline-block;
+    height: 24px;
 
-    @include phone-portrait-wide {
-      display: inline-block;
+    .icon {
+      margin-right: 0.2em;
     }
-  }
 
-  .settings .icon {
-    @include icon(settings);
+    .label {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .icon + .label {
+      overflow: hidden;
+      max-width: 0;
+      @include transition(max-width 0.3s);
+
+      @include phone-portrait-wide {
+        max-width: none;
+      }
+    }
 
     &:hover {
-      @include icon(settings_hover);
+      .icon + .label {
+        display: inline-block;
+        max-width: 200px;
+      }
     }
   }
 
@@ -55,5 +83,9 @@ header.menu {
       margin-right: 10px;
       @include with-hdpi(icons, 'checkmark_active', $include-size: yes);
     }
+  }
+
+  @each $navicon in (library, files, sites, apps, updates, logout, settings) {
+    @include navicon-icon($navicon);
   }
 }
