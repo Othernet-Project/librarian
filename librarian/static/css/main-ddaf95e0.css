@@ -329,9 +329,10 @@ button, .button {
   cursor: pointer;
   vertical-align: middle;
   border: 1px solid transparent;
+  line-height: inherit;
+  font-family: Arial, Helvetica, "Liberation Sans", sans-serif;
   font-size: 16px;
   line-height: 100%;
-  padding: 0.6em 20px;
   width: auto;
   min-width: 170px;
   height: 40px;
@@ -344,14 +345,18 @@ button, .button {
   color: #3584cf;
   background-color: transparent;
   border-color: #3584cf; }
+/* line 27, ../scss/outernet/mixins/_buttons.scss */
+button ::-moz-focus-inner, .button ::-moz-focus-inner {
+  padding: 0 !important;
+  border: none !important; }
 @media only screen and (max-width: 320px) {
   /* line 14, ../scss/outernet/partial/_buttons.scss */
   button, .button {
     width: 100%; } }
-/* line 42, ../scss/outernet/mixins/_buttons.scss */
+/* line 48, ../scss/outernet/mixins/_buttons.scss */
 button:visited, .button:visited {
   color: #3584cf; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button:focus, button:hover, .button:focus, .button:hover {
   text-decoration: none;
   color: #ffffff;
@@ -362,7 +367,6 @@ button.small, .button.small {
   font-size: 87.5%;
   line-height: 137.5%;
   line-height: 100%;
-  padding: 0.2em 20px;
   width: auto;
   min-width: 0;
   height: 24px; }
@@ -371,10 +375,10 @@ button.primary, .button.primary {
   color: #ffffff;
   background-color: #3584cf;
   border-color: #3584cf; }
-/* line 60, ../scss/outernet/mixins/_buttons.scss */
+/* line 66, ../scss/outernet/mixins/_buttons.scss */
 button.primary:visited, .button.primary:visited {
   color: #ffffff; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.primary:focus, button.primary:hover, .button.primary:focus, .button.primary:hover {
   text-decoration: none;
   color: #ffffff;
@@ -385,10 +389,10 @@ button.cta, .button.cta {
   color: #e17502;
   background-color: transparent;
   border-color: #e17502; }
-/* line 42, ../scss/outernet/mixins/_buttons.scss */
+/* line 48, ../scss/outernet/mixins/_buttons.scss */
 button.cta:visited, .button.cta:visited {
   color: #e17502; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.cta:focus, button.cta:hover, .button.cta:focus, .button.cta:hover {
   text-decoration: none;
   color: #ffffff;
@@ -399,10 +403,10 @@ button.cta.primary, .button.cta.primary {
   color: #ffffff;
   background-color: #e17502;
   border-color: #e17502; }
-/* line 60, ../scss/outernet/mixins/_buttons.scss */
+/* line 66, ../scss/outernet/mixins/_buttons.scss */
 button.cta.primary:visited, .button.cta.primary:visited {
   color: #ffffff; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.cta.primary:focus, button.cta.primary:hover, .button.cta.primary:focus, .button.cta.primary:hover {
   text-decoration: none;
   color: #ffffff;
@@ -413,10 +417,10 @@ button.delete, .button.delete {
   color: #c41414;
   background-color: transparent;
   border-color: #c41414; }
-/* line 42, ../scss/outernet/mixins/_buttons.scss */
+/* line 48, ../scss/outernet/mixins/_buttons.scss */
 button.delete:visited, .button.delete:visited {
   color: #c41414; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.delete:focus, button.delete:hover, .button.delete:focus, .button.delete:hover {
   text-decoration: none;
   color: #ffffff;
@@ -427,10 +431,10 @@ button.delete.primary, .button.delete.primary {
   color: #ffffff;
   background-color: #c41414;
   border-color: #c41414; }
-/* line 60, ../scss/outernet/mixins/_buttons.scss */
+/* line 66, ../scss/outernet/mixins/_buttons.scss */
 button.delete.primary:visited, .button.delete.primary:visited {
   color: #ffffff; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.delete.primary:focus, button.delete.primary:hover, .button.delete.primary:focus, .button.delete.primary:hover {
   text-decoration: none;
   color: #ffffff;
@@ -441,10 +445,10 @@ button.confirm, .button.confirm {
   color: #ffffff;
   background-color: #058120;
   border-color: #058120; }
-/* line 60, ../scss/outernet/mixins/_buttons.scss */
+/* line 66, ../scss/outernet/mixins/_buttons.scss */
 button.confirm:visited, .button.confirm:visited {
   color: #ffffff; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.confirm:focus, button.confirm:hover, .button.confirm:focus, .button.confirm:hover {
   text-decoration: none;
   color: #ffffff;
@@ -455,10 +459,10 @@ button.reverse, .button.reverse {
   color: #ffffff;
   background-color: transparent;
   border-color: #ffffff; }
-/* line 51, ../scss/outernet/mixins/_buttons.scss */
+/* line 57, ../scss/outernet/mixins/_buttons.scss */
 button.reverse:visited, .button.reverse:visited {
   color: #ffffff; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.reverse:focus, button.reverse:hover, .button.reverse:focus, .button.reverse:hover {
   text-decoration: none;
   color: #3584cf;
@@ -470,10 +474,10 @@ button.reverse.primary, .button.reverse.primary {
   color: #3584cf;
   background-color: #ffffff;
   border-color: #ffffff; }
-/* line 33, ../scss/outernet/mixins/_buttons.scss */
+/* line 39, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.primary:visited, .button.reverse.primary:visited {
   color: #3584cf; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.primary:focus, button.reverse.primary:hover, .button.reverse.primary:focus, .button.reverse.primary:hover {
   text-decoration: none;
   opacity: 0.75; }
@@ -482,10 +486,10 @@ button.reverse.cta, .button.reverse.cta {
   color: #ffffff;
   background-color: transparent;
   border-color: #ffffff; }
-/* line 51, ../scss/outernet/mixins/_buttons.scss */
+/* line 57, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.cta:visited, .button.reverse.cta:visited {
   color: #ffffff; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.cta:focus, button.reverse.cta:hover, .button.reverse.cta:focus, .button.reverse.cta:hover {
   text-decoration: none;
   color: #e17502;
@@ -497,10 +501,10 @@ button.reverse.cta.primary, .button.reverse.cta.primary {
   color: #e17502;
   background-color: #ffffff;
   border-color: #ffffff; }
-/* line 33, ../scss/outernet/mixins/_buttons.scss */
+/* line 39, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.cta.primary:visited, .button.reverse.cta.primary:visited {
   color: #e17502; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.cta.primary:focus, button.reverse.cta.primary:hover, .button.reverse.cta.primary:focus, .button.reverse.cta.primary:hover {
   text-decoration: none;
   opacity: 0.75; }
@@ -509,10 +513,10 @@ button.reverse.delete, .button.reverse.delete {
   color: #ffffff;
   background-color: transparent;
   border-color: #ffffff; }
-/* line 51, ../scss/outernet/mixins/_buttons.scss */
+/* line 57, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.delete:visited, .button.reverse.delete:visited {
   color: #ffffff; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.delete:focus, button.reverse.delete:hover, .button.reverse.delete:focus, .button.reverse.delete:hover {
   text-decoration: none;
   color: #c41414;
@@ -524,10 +528,10 @@ button.reverse.delete.primary, .button.reverse.delete.primary {
   color: #c41414;
   background-color: #ffffff;
   border-color: #ffffff; }
-/* line 33, ../scss/outernet/mixins/_buttons.scss */
+/* line 39, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.delete.primary:visited, .button.reverse.delete.primary:visited {
   color: #c41414; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.delete.primary:focus, button.reverse.delete.primary:hover, .button.reverse.delete.primary:focus, .button.reverse.delete.primary:hover {
   text-decoration: none;
   opacity: 0.75; }
@@ -536,10 +540,10 @@ button.reverse.confirm, .button.reverse.confirm {
   color: #ffffff;
   background-color: transparent;
   border-color: #ffffff; }
-/* line 51, ../scss/outernet/mixins/_buttons.scss */
+/* line 57, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.confirm:visited, .button.reverse.confirm:visited {
   color: #ffffff; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.confirm:focus, button.reverse.confirm:hover, .button.reverse.confirm:focus, .button.reverse.confirm:hover {
   text-decoration: none;
   color: #058120;
@@ -551,10 +555,10 @@ button.reverse.confirm.primary, .button.reverse.confirm.primary {
   color: #058120;
   background-color: #ffffff;
   border-color: #ffffff; }
-/* line 33, ../scss/outernet/mixins/_buttons.scss */
+/* line 39, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.confirm.primary:visited, .button.reverse.confirm.primary:visited {
   color: #058120; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 button.reverse.confirm.primary:focus, button.reverse.confirm.primary:hover, .button.reverse.confirm.primary:focus, .button.reverse.confirm.primary:hover {
   text-decoration: none;
   opacity: 0.75; }
@@ -564,7 +568,7 @@ button.reverse[disabled], button.reverse.disabled, .button.reverse[disabled], .b
   background-color: transparent;
   border-color: #ffffff;
   opacity: 0.5; }
-/* line 51, ../scss/outernet/mixins/_buttons.scss */
+/* line 57, ../scss/outernet/mixins/_buttons.scss */
 button.reverse[disabled]:visited, button.reverse.disabled:visited, .button.reverse[disabled]:visited, .button.reverse.disabled:visited {
   color: #ffffff; }
 /* line 85, ../scss/outernet/partial/_buttons.scss */
@@ -573,7 +577,7 @@ button[disabled], button.disabled, .button[disabled], .button.disabled {
   background-color: transparent;
   border-color: #bbbbbb;
   cursor: default; }
-/* line 42, ../scss/outernet/mixins/_buttons.scss */
+/* line 48, ../scss/outernet/mixins/_buttons.scss */
 button[disabled]:visited, button.disabled:visited, .button[disabled]:visited, .button.disabled:visited {
   color: #bbbbbb; }
 /* line 90, ../scss/outernet/partial/_buttons.scss */
@@ -581,9 +585,16 @@ button[disabled].primary, button.disabled.primary, .button[disabled].primary, .b
   color: #ffffff;
   background-color: #bbbbbb;
   border-color: #bbbbbb; }
-/* line 60, ../scss/outernet/mixins/_buttons.scss */
+/* line 66, ../scss/outernet/mixins/_buttons.scss */
 button[disabled].primary:visited, button.disabled.primary:visited, .button[disabled].primary:visited, .button.disabled.primary:visited {
   color: #ffffff; }
+
+/* line 96, ../scss/outernet/partial/_buttons.scss */
+a.button {
+  padding: 11px 20px 0; }
+/* line 99, ../scss/outernet/partial/_buttons.scss */
+a.button.small {
+  padding: 4px 20px 0; }
 
 /**
  * _hyperlinks.scss: link styling
@@ -1163,7 +1174,6 @@ table button, table .button {
   font-size: 87.5%;
   line-height: 137.5%;
   line-height: 100%;
-  padding: 0.2em 20px;
   width: auto;
   min-width: 0;
   height: 24px; }
@@ -1243,7 +1253,6 @@ table form input[type="text"], table form input[type="numeric"], table form inpu
   width: 100px; }
 /* line 251, ../scss/outernet/mixins/_forms.scss */
 table form button {
-  padding: 0.2em 20px;
   width: auto;
   min-width: 0;
   height: 24px;
@@ -1444,6 +1453,16 @@ table form button {
  * http://www.gnu.org/licenses/gpl.txt.
  */
 /**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
  * _media_query.scss: media query support
  *
  * Copyright 2014-2015, Outernet Inc.
@@ -1453,7 +1472,7 @@ table form button {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 35, ../scss/outernet/widgets/_menu.scss */
+/* line 36, ../scss/outernet/widgets/_menu.scss */
 .menu {
   position: fixed;
   z-index: 1000;
@@ -1465,69 +1484,65 @@ table form button {
   padding: 0 20px;
   background: #333333;
   color: #eeeeee; }
-/* line 47, ../scss/outernet/widgets/_menu.scss */
+/* line 48, ../scss/outernet/widgets/_menu.scss */
 .menu a {
   color: #888888; }
-/* line 50, ../scss/outernet/widgets/_menu.scss */
+/* line 51, ../scss/outernet/widgets/_menu.scss */
 .menu a:hover {
   color: #ffffff;
   text-decoration: none; }
-/* line 55, ../scss/outernet/widgets/_menu.scss */
+/* line 56, ../scss/outernet/widgets/_menu.scss */
 .menu a:visited {
   color: #888888; }
-/* line 59, ../scss/outernet/widgets/_menu.scss */
+/* line 60, ../scss/outernet/widgets/_menu.scss */
 .menu a:focus {
   color: #3584cf; }
-/* line 64, ../scss/outernet/widgets/_menu.scss */
+/* line 65, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse {
   background: #ffffff;
   color: #bbbbbb; }
-/* line 68, ../scss/outernet/widgets/_menu.scss */
+/* line 69, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse a {
   color: #555555; }
-/* line 20, ../scss/outernet/widgets/_menu.scss */
+/* line 21, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse a:hover, .menu.reverse a:focus {
   color: #3584cf; }
-/* line 25, ../scss/outernet/widgets/_menu.scss */
+/* line 26, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse a:visited {
   color: #555555; }
-/* line 73, ../scss/outernet/widgets/_menu.scss */
+/* line 74, ../scss/outernet/widgets/_menu.scss */
 .menu .menu-block-right {
   position: absolute;
   right: 0;
   top: 0; }
-/* line 79, ../scss/outernet/widgets/_menu.scss */
+/* line 80, ../scss/outernet/widgets/_menu.scss */
 .menu .menu-subblock {
   display: inline-block;
   padding-top: 18px;
   margin-right: 1.2em;
   vertical-align: top; }
-/* line 85, ../scss/outernet/widgets/_menu.scss */
+/* line 86, ../scss/outernet/widgets/_menu.scss */
 .menu .menu-subblock:last-child {
   margin-right: 0; }
-@media only screen and (max-width: 640px) {
-  /* line 79, ../scss/outernet/widgets/_menu.scss */
-  .menu .menu-subblock {
-    margin-right: 0.5em; } }
-/* line 95, ../scss/outernet/widgets/_menu.scss */
+/* line 92, ../scss/outernet/widgets/_menu.scss */
 .menu #nav a {
   font-size: 18px;
   margin-right: 1.2em; }
-/* line 98, ../scss/outernet/widgets/_menu.scss */
+/* line 95, ../scss/outernet/widgets/_menu.scss */
 .menu #nav a:hover {
   color: #ffffff; }
-/* line 102, ../scss/outernet/widgets/_menu.scss */
+/* line 99, ../scss/outernet/widgets/_menu.scss */
 .menu #nav a:last-child {
   margin-right: 0; }
-/* line 107, ../scss/outernet/widgets/_menu.scss */
+/* line 104, ../scss/outernet/widgets/_menu.scss */
 .menu #nav .active {
   font-size: 18px;
   margin-right: 1.2em; }
 @media only screen and (max-width: 640px) {
-  /* line 94, ../scss/outernet/widgets/_menu.scss */
+  /* line 91, ../scss/outernet/widgets/_menu.scss */
   .menu #nav {
     display: none; } }
-/* line 116, ../scss/outernet/widgets/_menu.scss */
+/* line 113, ../scss/outernet/widgets/_menu.scss */
 .menu .hamburger {
   width: 60px;
   line-height: 60px;
@@ -1536,11 +1551,14 @@ table form button {
   position: relative;
   vertical-align: top;
   display: none; }
+/* line 122, ../scss/outernet/widgets/_menu.scss */
+.menu .hamburger.open {
+  background: #ffffff; }
 @media only screen and (max-width: 640px) {
-  /* line 116, ../scss/outernet/widgets/_menu.scss */
+  /* line 113, ../scss/outernet/widgets/_menu.scss */
   .menu .hamburger {
     display: inline-block; } }
-/* line 129, ../scss/outernet/widgets/_menu.scss */
+/* line 130, ../scss/outernet/widgets/_menu.scss */
 .menu .hamburger a {
   display: block;
   width: 100%;
@@ -1553,7 +1571,7 @@ table form button {
   background-repeat: no-repeat;
   background-image: url('../img/icons/1x/hamburger.png?1434096013'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 129, ../scss/outernet/widgets/_menu.scss */
+  /* line 130, ../scss/outernet/widgets/_menu.scss */
   .menu .hamburger a {
     background-image: url('../img/icons/2x/hamburger.png?1434096013');
     -moz-background-size: 25px, 25px;
@@ -1561,7 +1579,7 @@ table form button {
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 
-/* line 141, ../scss/outernet/widgets/_menu.scss */
+/* line 142, ../scss/outernet/widgets/_menu.scss */
 .alt-menu {
   position: fixed;
   z-index: 2000;
@@ -1570,26 +1588,32 @@ table form button {
   left: 100%;
   width: 100%;
   opacity: 0;
+  background: #ffffff;
   -moz-transition: left 0.3s ease-out, opacity 0.3s ease-out;
   -o-transition: left 0.3s ease-out, opacity 0.3s ease-out;
   -webkit-transition: left 0.3s ease-out, opacity 0.3s ease-out;
   transition: left 0.3s ease-out, opacity 0.3s ease-out; }
-/* line 151, ../scss/outernet/widgets/_menu.scss */
+@media only screen and (min-width: 640px) {
+  /* line 142, ../scss/outernet/widgets/_menu.scss */
+  .alt-menu {
+    display: none; } }
+/* line 157, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .active .icon, .alt-menu .active .label {
   opacity: 0.5; }
-/* line 156, ../scss/outernet/widgets/_menu.scss */
+/* line 162, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2-trigger, .alt-menu .top-trigger {
-  color: #888888; }
-/* line 164, ../scss/outernet/widgets/_menu.scss */
+  color: #bbbbbb; }
+/* line 170, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level1, .alt-menu .level2 {
   position: absolute;
+  background: #ffffff;
   top: 0;
   left: 0;
   bottom: 0;
   width: 100%;
   overflow-y: scroll;
   background: #ffffff; }
-/* line 174, ../scss/outernet/widgets/_menu.scss */
+/* line 181, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2 {
   left: 100%;
   border-left: 3px solid #dddddd;
@@ -1597,14 +1621,14 @@ table form button {
   -o-transition: left 0.3s ease-out;
   -webkit-transition: left 0.3s ease-out;
   transition: left 0.3s ease-out; }
-/* line 179, ../scss/outernet/widgets/_menu.scss */
+/* line 186, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2.open {
   left: 0; }
-/* line 184, ../scss/outernet/widgets/_menu.scss */
+/* line 191, ../scss/outernet/widgets/_menu.scss */
 .alt-menu.open {
   left: 0;
   opacity: 1; }
-/* line 189, ../scss/outernet/widgets/_menu.scss */
+/* line 196, ../scss/outernet/widgets/_menu.scss */
 .alt-menu a, .alt-menu .active {
   display: block;
   line-height: 60px;
@@ -1692,7 +1716,27 @@ table form button {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 10, ../scss/partials/_mainmenu.scss */
+/**
+ * _sprites.scss: sprite images with high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _hdpi_images.scss: helpers for high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 8, ../scss/partials/_mainmenu.scss */
 .menu .logo {
   text-indent: -119988px;
   overflow: hidden;
@@ -1706,7 +1750,7 @@ table form button {
   width: 152px;
   height: 22px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 10, ../scss/partials/_mainmenu.scss */
+  /* line 8, ../scss/partials/_mainmenu.scss */
   .menu .logo {
     background-image: url('../img/icons/2x-s41b5e8441c.png');
     background-position: 0 -2228px;
@@ -1714,18 +1758,18 @@ table form button {
     -o-background-size: 152px 2790px;
     -webkit-background-size: 152px 2790px;
     background-size: 152px 2790px; } }
-/* line 15, ../scss/partials/_mainmenu.scss */
+/* line 13, ../scss/partials/_mainmenu.scss */
 .menu #nav .navicon {
   display: inline-block;
   height: 24px; }
-/* line 19, ../scss/partials/_mainmenu.scss */
+/* line 17, ../scss/partials/_mainmenu.scss */
 .menu #nav .navicon .icon {
   margin-right: 0.2em; }
-/* line 23, ../scss/partials/_mainmenu.scss */
+/* line 21, ../scss/partials/_mainmenu.scss */
 .menu #nav .navicon .label {
   display: inline-block;
   vertical-align: middle; }
-/* line 28, ../scss/partials/_mainmenu.scss */
+/* line 26, ../scss/partials/_mainmenu.scss */
 .menu #nav .navicon .icon + .label {
   overflow: hidden;
   max-width: 0;
@@ -1734,14 +1778,14 @@ table form button {
   -webkit-transition: max-width 0.3s;
   transition: max-width 0.3s; }
 @media only screen and (max-width: 640px) {
-  /* line 28, ../scss/partials/_mainmenu.scss */
+  /* line 26, ../scss/partials/_mainmenu.scss */
   .menu #nav .navicon .icon + .label {
     max-width: none; } }
-/* line 39, ../scss/partials/_mainmenu.scss */
+/* line 37, ../scss/partials/_mainmenu.scss */
 .menu #nav .navicon:hover .icon + .label {
   display: inline-block;
   max-width: 200px; }
-/* line 47, ../scss/partials/_mainmenu.scss */
+/* line 45, ../scss/partials/_mainmenu.scss */
 .menu .notifications .icon {
   display: inline-block;
   position: relative;
@@ -1753,7 +1797,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 47, ../scss/partials/_mainmenu.scss */
+  /* line 45, ../scss/partials/_mainmenu.scss */
   .menu .notifications .icon {
     background-image: url('../img/icons/2x-s41b5e8441c.png');
     background-position: 0 -220px;
@@ -1807,10 +1851,10 @@ table form button {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   font-weight: bold; }
-/* line 51, ../scss/partials/_mainmenu.scss */
+/* line 49, ../scss/partials/_mainmenu.scss */
 .menu .notifications .label {
   display: none; }
-/* line 56, ../scss/partials/_mainmenu.scss */
+/* line 54, ../scss/partials/_mainmenu.scss */
 .menu .dropdown.languages {
   display: inline-block;
   position: relative; }
@@ -1850,15 +1894,15 @@ table form button {
 /* line 22, ../scss/partials/_dropdown.scss */
 .menu .dropdown.languages .dropdown-body li:hover {
   background-color: #f7dcc1; }
-/* line 60, ../scss/partials/_mainmenu.scss */
+/* line 58, ../scss/partials/_mainmenu.scss */
 .menu .dropdown.languages .dropdown-item {
   white-space: nowrap; }
-/* line 64, ../scss/partials/_mainmenu.scss */
+/* line 62, ../scss/partials/_mainmenu.scss */
 .menu .dropdown.languages .dropdown-item .language {
   padding: 10px 20px 10px 20px;
   text-align: center;
   display: block; }
-/* line 70, ../scss/partials/_mainmenu.scss */
+/* line 68, ../scss/partials/_mainmenu.scss */
 .menu .dropdown.languages .dropdown-item span.selected {
   display: inline-block;
   vertical-align: middle;
@@ -1867,7 +1911,7 @@ table form button {
   width: 13px;
   height: 11px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 70, ../scss/partials/_mainmenu.scss */
+  /* line 68, ../scss/partials/_mainmenu.scss */
   .menu .dropdown.languages .dropdown-item span.selected {
     background-image: url('../img/icons/2x/checkmark_active.png?1434096013');
     -moz-background-size: 13px, 11px;
@@ -1875,22 +1919,18 @@ table form button {
     -webkit-background-size: 13px, 11px;
     background-size: 13px, 11px; } }
 @media only screen and (max-width: 640px) {
-  /* line 56, ../scss/partials/_mainmenu.scss */
+  /* line 54, ../scss/partials/_mainmenu.scss */
   .menu .dropdown.languages {
     display: none; } }
 
-/* line 84, ../scss/partials/_mainmenu.scss */
+/* line 82, ../scss/partials/_mainmenu.scss */
 .alt-menu .icon {
   width: 30px;
   margin-right: 0.5em; }
-/* line 89, ../scss/partials/_mainmenu.scss */
+/* line 87, ../scss/partials/_mainmenu.scss */
 .alt-menu .label {
   display: inline-block; }
-@media only screen and (min-width: 640px) {
-  /* line 83, ../scss/partials/_mainmenu.scss */
-  .alt-menu {
-    display: none; } }
-/* line 97, ../scss/partials/_mainmenu.scss */
+/* line 91, ../scss/partials/_mainmenu.scss */
 .alt-menu .level2-lang .selected {
   background: #e7f3e9;
   background-image: url('../img/icons/1x/form_positive.png?1434096013');
@@ -1898,7 +1938,7 @@ table form button {
   background-position: right 20px top 50%;
   color: #058120; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 97, ../scss/partials/_mainmenu.scss */
+  /* line 91, ../scss/partials/_mainmenu.scss */
   .alt-menu .level2-lang .selected {
     background-image: url('../img/icons/2x/form_positive.png?1434096013');
     -moz-background-size: 25px, 25px;
@@ -1906,7 +1946,7 @@ table form button {
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 
-/* line 109, ../scss/partials/_mainmenu.scss */
+/* line 103, ../scss/partials/_mainmenu.scss */
 #nav .library .icon, .alt-menu .library .icon {
   display: inline-block;
   vertical-align: middle;
@@ -1916,7 +1956,7 @@ table form button {
   width: 20px;
   height: 24px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 109, ../scss/partials/_mainmenu.scss */
+  /* line 103, ../scss/partials/_mainmenu.scss */
   #nav .library .icon, .alt-menu .library .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -314px;
@@ -1925,7 +1965,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 115, ../scss/partials/_mainmenu.scss */
+/* line 109, ../scss/partials/_mainmenu.scss */
 #nav .library:hover .icon, #nav .library.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -1935,7 +1975,7 @@ table form button {
   width: 20px;
   height: 24px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 115, ../scss/partials/_mainmenu.scss */
+  /* line 109, ../scss/partials/_mainmenu.scss */
   #nav .library:hover .icon, #nav .library.active .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -368px;
@@ -1944,7 +1984,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 109, ../scss/partials/_mainmenu.scss */
+/* line 103, ../scss/partials/_mainmenu.scss */
 #nav .files .icon, .alt-menu .files .icon {
   display: inline-block;
   vertical-align: middle;
@@ -1954,7 +1994,7 @@ table form button {
   width: 24px;
   height: 21px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 109, ../scss/partials/_mainmenu.scss */
+  /* line 103, ../scss/partials/_mainmenu.scss */
   #nav .files .icon, .alt-menu .files .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -108px;
@@ -1963,7 +2003,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 115, ../scss/partials/_mainmenu.scss */
+/* line 109, ../scss/partials/_mainmenu.scss */
 #nav .files:hover .icon, #nav .files.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -1973,7 +2013,7 @@ table form button {
   width: 24px;
   height: 21px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 115, ../scss/partials/_mainmenu.scss */
+  /* line 109, ../scss/partials/_mainmenu.scss */
   #nav .files:hover .icon, #nav .files.active .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -159px;
@@ -1982,7 +2022,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 109, ../scss/partials/_mainmenu.scss */
+/* line 103, ../scss/partials/_mainmenu.scss */
 #nav .sites .icon, .alt-menu .sites .icon {
   display: inline-block;
   vertical-align: middle;
@@ -1992,7 +2032,7 @@ table form button {
   width: 24px;
   height: 24px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 109, ../scss/partials/_mainmenu.scss */
+  /* line 103, ../scss/partials/_mainmenu.scss */
   #nav .sites .icon, .alt-menu .sites .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -640px;
@@ -2001,7 +2041,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 115, ../scss/partials/_mainmenu.scss */
+/* line 109, ../scss/partials/_mainmenu.scss */
 #nav .sites:hover .icon, #nav .sites.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2011,7 +2051,7 @@ table form button {
   width: 24px;
   height: 24px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 115, ../scss/partials/_mainmenu.scss */
+  /* line 109, ../scss/partials/_mainmenu.scss */
   #nav .sites:hover .icon, #nav .sites.active .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -694px;
@@ -2020,7 +2060,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 109, ../scss/partials/_mainmenu.scss */
+/* line 103, ../scss/partials/_mainmenu.scss */
 #nav .apps .icon, .alt-menu .apps .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2030,7 +2070,7 @@ table form button {
   width: 24px;
   height: 24px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 109, ../scss/partials/_mainmenu.scss */
+  /* line 103, ../scss/partials/_mainmenu.scss */
   #nav .apps .icon, .alt-menu .apps .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 0;
@@ -2039,7 +2079,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 115, ../scss/partials/_mainmenu.scss */
+/* line 109, ../scss/partials/_mainmenu.scss */
 #nav .apps:hover .icon, #nav .apps.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2049,7 +2089,7 @@ table form button {
   width: 24px;
   height: 24px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 115, ../scss/partials/_mainmenu.scss */
+  /* line 109, ../scss/partials/_mainmenu.scss */
   #nav .apps:hover .icon, #nav .apps.active .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -54px;
@@ -2058,7 +2098,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 109, ../scss/partials/_mainmenu.scss */
+/* line 103, ../scss/partials/_mainmenu.scss */
 #nav .updates .icon, .alt-menu .updates .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2068,7 +2108,7 @@ table form button {
   width: 24px;
   height: 20px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 109, ../scss/partials/_mainmenu.scss */
+  /* line 103, ../scss/partials/_mainmenu.scss */
   #nav .updates .icon, .alt-menu .updates .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -748px;
@@ -2077,7 +2117,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 115, ../scss/partials/_mainmenu.scss */
+/* line 109, ../scss/partials/_mainmenu.scss */
 #nav .updates:hover .icon, #nav .updates.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2087,7 +2127,7 @@ table form button {
   width: 24px;
   height: 20px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 115, ../scss/partials/_mainmenu.scss */
+  /* line 109, ../scss/partials/_mainmenu.scss */
   #nav .updates:hover .icon, #nav .updates.active .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -798px;
@@ -2096,7 +2136,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 109, ../scss/partials/_mainmenu.scss */
+/* line 103, ../scss/partials/_mainmenu.scss */
 #nav .logout .icon, .alt-menu .logout .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2106,7 +2146,7 @@ table form button {
   width: 24px;
   height: 24px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 109, ../scss/partials/_mainmenu.scss */
+  /* line 103, ../scss/partials/_mainmenu.scss */
   #nav .logout .icon, .alt-menu .logout .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -422px;
@@ -2115,7 +2155,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 115, ../scss/partials/_mainmenu.scss */
+/* line 109, ../scss/partials/_mainmenu.scss */
 #nav .logout:hover .icon, #nav .logout.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2125,7 +2165,7 @@ table form button {
   width: 24px;
   height: 24px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 115, ../scss/partials/_mainmenu.scss */
+  /* line 109, ../scss/partials/_mainmenu.scss */
   #nav .logout:hover .icon, #nav .logout.active .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -476px;
@@ -2134,7 +2174,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 109, ../scss/partials/_mainmenu.scss */
+/* line 103, ../scss/partials/_mainmenu.scss */
 #nav .settings .icon, .alt-menu .settings .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2144,7 +2184,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 109, ../scss/partials/_mainmenu.scss */
+  /* line 103, ../scss/partials/_mainmenu.scss */
   #nav .settings .icon, .alt-menu .settings .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -530px;
@@ -2153,7 +2193,7 @@ table form button {
     -webkit-background-size: 25px 818px;
     background-size: 25px 818px; } }
 
-/* line 115, ../scss/partials/_mainmenu.scss */
+/* line 109, ../scss/partials/_mainmenu.scss */
 #nav .settings:hover .icon, #nav .settings.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2163,7 +2203,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 115, ../scss/partials/_mainmenu.scss */
+  /* line 109, ../scss/partials/_mainmenu.scss */
   #nav .settings:hover .icon, #nav .settings.active .icon {
     background-image: url('../img/sections/2x-sb2b1c30568.png');
     background-position: 0 -585px;
@@ -2315,7 +2355,6 @@ form.inline input[type="text"], form.inline input[type="numeric"], form.inline i
   width: 100px; }
 /* line 251, ../scss/outernet/mixins/_forms.scss */
 form.inline button {
-  padding: 0.2em 20px;
   width: auto;
   min-width: 0;
   height: 24px;
@@ -2609,7 +2648,6 @@ form.search button {
     width: 100px; }
   /* line 251, ../scss/outernet/mixins/_forms.scss */
   form.search button {
-    padding: 0.2em 20px;
     width: auto;
     min-width: 0;
     height: 24px;
@@ -2641,7 +2679,7 @@ form.search .icon {
     -webkit-background-size: 152px 2790px;
     background-size: 152px 2790px; } }
 
-/* line 36, ../scss/outernet/mixins/_grid.scss */
+/* line 38, ../scss/outernet/mixins/_grid.scss */
 .content-list:after {
   content: '';
   display: block;
@@ -2847,10 +2885,10 @@ form.search .icon {
   color: #ffffff;
   background-color: transparent;
   border-color: #ffffff; }
-/* line 51, ../scss/outernet/mixins/_buttons.scss */
+/* line 57, ../scss/outernet/mixins/_buttons.scss */
 .content-list li:nth-child(4n+2).has-thumb .details .delete:visited, .content-list li:nth-child(4n+3).has-thumb .details .delete:visited {
   color: #ffffff; }
-/* line 67, ../scss/outernet/mixins/_buttons.scss */
+/* line 73, ../scss/outernet/mixins/_buttons.scss */
 .content-list li:nth-child(4n+2).has-thumb .details .delete:focus, .content-list li:nth-child(4n+2).has-thumb .details .delete:hover, .content-list li:nth-child(4n+3).has-thumb .details .delete:focus, .content-list li:nth-child(4n+3).has-thumb .details .delete:hover {
   text-decoration: none;
   color: #c41414;
@@ -3010,13 +3048,235 @@ form.search .icon {
   padding-left: 10px;
   padding-right: 10px; }
 
-/* line 14, ../scss/main.scss */
+/**
+ * _accordion.scss: accordion widget styling
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _hyperlinks.scss: link styling
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _sprites.scss: sprite images with high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _hdpi_images.scss: helpers for high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 26, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections .accordion-section {
+  background: #fafafa; }
+/* line 29, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections .accordion-section input[type="text"], .dashboard-sections .accordion-section input[type="numeric"], .dashboard-sections .accordion-section input[type="email"], .dashboard-sections .accordion-section input[type="file"], .dashboard-sections .accordion-section input[type="password"], .dashboard-sections .accordion-section textarea, .dashboard-sections .accordion-section select {
+  background-color: #eeeeee; }
+/* line 38, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections .accordion-section input[type="text"]:focus, .dashboard-sections .accordion-section input[type="numeric"]:focus, .dashboard-sections .accordion-section input[type="email"]:focus, .dashboard-sections .accordion-section input[type="file"]:focus, .dashboard-sections .accordion-section input[type="password"]:focus, .dashboard-sections .accordion-section textarea:focus, .dashboard-sections .accordion-section select:focus {
+  background-color: #f3f8fc; }
+/* line 44, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections .accordion-section > :nth-child(1) {
+  background: #ffffff;
+  line-height: 50px;
+  border-top: 1px solid #dddddd;
+  margin: 0;
+  cursor: pointer;
+  font-size: 20px; }
+/* line 54, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections .accordion-section > :nth-child(2) {
+  border-top: 1px solid #dddddd;
+  padding: 20px;
+  overflow: hidden;
+  margin: 0; }
+/* line 64, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .accordion-section:last-child > :nth-child(2) {
+  border-bottom: 1px solid #dddddd; }
+/* line 69, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .accordion-section > :nth-child(1) a {
+  position: relative;
+  top: 2px; }
+/* line 74, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .accordion-section > :nth-child(1) .accordion-icon {
+  display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
+  background-position: 0 -110px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+  margin: 0 12.5px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 74, ../scss/outernet/widgets/_accordion.scss */
+  .dashboard-sections.active .accordion-section > :nth-child(1) .accordion-icon {
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
+    background-position: 0 -110px;
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
+/* line 81, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .accordion-section > :nth-child(1):hover {
+  background: #fafafa; }
+/* line 84, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .accordion-section > :nth-child(1):hover .accordion-icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
+  background-position: 0 -165px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 84, ../scss/outernet/widgets/_accordion.scss */
+  .dashboard-sections.active .accordion-section > :nth-child(1):hover .accordion-icon {
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
+    background-position: 0 -165px;
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
+/* line 91, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .accordion-section > :nth-child(2) {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-top-width: 0;
+  -moz-transition: border-top-width 0.3s, padding-top 0.3s, max-height 0.5s, padding-bottom 0.3s;
+  -o-transition: border-top-width 0.3s, padding-top 0.3s, max-height 0.5s, padding-bottom 0.3s;
+  -webkit-transition: border-top-width 0.3s, padding-top 0.3s, max-height 0.5s, padding-bottom 0.3s;
+  transition: border-top-width 0.3s, padding-top 0.3s, max-height 0.5s, padding-bottom 0.3s; }
+/* line 106, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .non-collapsible > :nth-child(1) {
+  cursor: default; }
+/* line 109, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .non-collapsible > :nth-child(1) .accordion-icon {
+  opacity: 0.3; }
+/* line 113, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .non-collapsible > :nth-child(1):hover {
+  background: #ffffff; }
+/* line 116, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .non-collapsible > :nth-child(1):hover span.accordion-icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 116, ../scss/outernet/widgets/_accordion.scss */
+  .dashboard-sections.active .non-collapsible > :nth-child(1):hover span.accordion-icon {
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
+    background-position: 0 0;
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
+/* line 121, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .non-collapsible > :nth-child(1) a {
+  cursor: default;
+  color: #555555; }
+/* line 125, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .non-collapsible > :nth-child(1) a:hover {
+  text-decoration: none; }
+/* line 136, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .non-collapsible > :nth-child(1) .accordion-icon, .dashboard-sections.active .expanded > :nth-child(1) .accordion-icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 136, ../scss/outernet/widgets/_accordion.scss */
+  .dashboard-sections.active .non-collapsible > :nth-child(1) .accordion-icon, .dashboard-sections.active .expanded > :nth-child(1) .accordion-icon {
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
+    background-position: 0 0;
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
+/* line 141, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .non-collapsible > :nth-child(1):hover .accordion-icon, .dashboard-sections.active .expanded > :nth-child(1):hover .accordion-icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-sf91d4b23c2.png');
+  background-position: 0 -55px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 141, ../scss/outernet/widgets/_accordion.scss */
+  .dashboard-sections.active .non-collapsible > :nth-child(1):hover .accordion-icon, .dashboard-sections.active .expanded > :nth-child(1):hover .accordion-icon {
+    background-image: url('../img/icons/2x-s41b5e8441c.png');
+    background-position: 0 -55px;
+    -moz-background-size: 152px 2790px;
+    -o-background-size: 152px 2790px;
+    -webkit-background-size: 152px 2790px;
+    background-size: 152px 2790px; } }
+/* line 148, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .non-collapsible > :nth-child(2), .dashboard-sections.active .expanded > :nth-child(2) {
+  border-top-width: 1px;
+  max-height: 1500px;
+  padding: 20px; }
+
+/* line 15, ../scss/main.scss */
 body {
   padding-top: 60px;
   background: #ffffff; }
-
-/* line 19, ../scss/main.scss */
-.section, header {
-  margin: 0 auto;
-  background: #ffffff;
-  margin-bottom: 16px; }

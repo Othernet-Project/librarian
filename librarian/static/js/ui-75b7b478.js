@@ -9269,6 +9269,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
     e.preventDefault();
     closeLevel2();
     menu.toggleClass('open');
+    hamburger.toggleClass('open');
   }
 
   function toggleLvl2(e) {
