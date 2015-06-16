@@ -103,6 +103,10 @@ $menu-item-margin: 1.2em;
 
     .active {
       @include menu-link-base;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
 
     @include phone-portrait-wide {

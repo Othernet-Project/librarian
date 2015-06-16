@@ -24,6 +24,24 @@
   padding: 0 0 0 image-width($sfile);
 }
 
+@mixin icon-label($label-color) {
+    display: inline-block;
+    position: absolute;
+    font-size: 12px;
+    bottom: -4px;
+    right: -12px;
+    width: 1.55em;
+    line-height: 1.4em;
+    padding: 0;
+    text-align: center;
+    background: $white;
+    color: $label-color;
+    border: 1px solid $border;
+    @include border-radius(1000px);  // fully-rounded
+    @include box-sizing(border-box);
+    @include bold;
+}
+
 
 @mixin icon-button($image, $label-color: $sun, $no-label: no) {
   display: inline-block;
@@ -43,20 +61,6 @@
   }
 
   .label {
-    display: inline-block;
-    position: absolute;
-    @include sub;
-    bottom: -4px;
-    right: -12px;
-    width: 1.55em;
-    line-height: 1.4em;
-    padding: 0;
-    text-align: center;
-    background: $white;
-    color: $label-color;
-    border: 1px solid $border;
-    @include border-radius(1000px);  // fully-rounded
-    @include box-sizing(border-box);
-    @include bold;
+    @include icon-label($label-color);
   }
 }
