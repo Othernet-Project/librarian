@@ -253,3 +253,10 @@ $form-animation-delay: 0.3s;
     @include button-label-s;
   }
 }
+
+@mixin form-reset() {
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: block;
+}

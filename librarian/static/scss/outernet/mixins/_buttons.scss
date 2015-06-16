@@ -164,3 +164,21 @@ $default-button-style: outline;
   @include button-color($color: $forest, $hover: $forest25d, $style: $style);
 }
 
+// Removes button appearance
+@mixin button-reset() {
+  border: none;
+  background: transparent;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  @include border-radius(0);
+  padding: 0;
+  margin: 0;
+
+  &:focs,
+  &:hover {
+    background: transparent;
+    border: none;
+    opacity: 1;
+  }
+}

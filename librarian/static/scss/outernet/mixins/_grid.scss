@@ -43,6 +43,11 @@ $col-width: 100% / $col-count;
   }
 }
 
+@mixin single-cell-grid() {
+  @include row;
+  padding: $gutter;
+}
+
 @mixin simple-row {
   @include grid-padding;
 }
