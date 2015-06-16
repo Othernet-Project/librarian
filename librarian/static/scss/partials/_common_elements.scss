@@ -1,5 +1,10 @@
 @import "outernet/mixins/colors";
 
+body {
+  padding-top: 60px;
+  background: $white;
+}
+
 @mixin h-bar {
   background: $earth;
   border-top: 1px solid $border;
@@ -74,10 +79,14 @@ form.inline {
   }
 }
 
-.full-page-form {
+@mixin full-page-attn {
   max-width: 560px;
   margin: 0 auto;
   padding: 60px 20px;
+}
+
+.full-page-form {
+  @include full-page-attn;
 
   input[type="text"],
   input[type="numeric"],
@@ -95,5 +104,26 @@ form.inline {
   .buttons {
     padding-top: 1.5em;
     text-align: center;
+  }
+}
+
+.error-content {
+  @include full-page-attn;
+
+  .single {
+    @include heading-5;
+    text-align: center;
+  }
+
+  pre {
+    max-height: 300px;
+    overflow: scroll;
+    background: $universe;
+    color: $white;
+
+    code {
+      background: $universe;
+      color: $white;
+    }
   }
 }
