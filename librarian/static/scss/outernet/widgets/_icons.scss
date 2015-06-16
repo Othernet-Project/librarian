@@ -42,7 +42,6 @@
     @include bold;
 }
 
-
 @mixin icon-button($image, $label-color: $sun, $no-label: no) {
   display: inline-block;
   position: relative;

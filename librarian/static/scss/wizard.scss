@@ -1,0 +1,49 @@
+@import "outernet/ui";
+@import "outernet/mixins/media_query";
+@import "partials/common_elements";
+@import "partials/footer";
+@import "dashboard/ondd";
+
+.menu {
+  .logo {
+    @include hide-text;
+    @include icon('outernet_logo', yes);  
+  }
+
+  .steps {
+    margin-right: 20px;
+
+    .label {
+      @include phone-portrait-wide {
+        display: none;
+      }
+    }
+  }
+}
+
+.wizard-steps {
+  text-align: center;
+  color: $iconic;
+}
+
+.buttons {
+  a.button,
+  button 
+  {
+    margin-bottom: 0.5em;
+  }
+}
+
+.timezone-container {
+  select:nth-child(2),
+  select:nth-child(3) 
+  {
+    max-width: 48%;
+    margin-right: 0.2em;
+
+    @include phone-portrait-wide {
+      max-width: 100%;
+      margin-bottom: 0.2em;
+    }
+  }
+}

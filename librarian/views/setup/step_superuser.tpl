@@ -1,8 +1,14 @@
 <%inherit file='main.tpl'/>
 
+<%block name="step_title">
+<h2>${_('Please enter the desired credentials for the superuser account.')}</h2>
+</%block>
+
 <%block name="step">
-<h3>${_('Please enter the desired credentials for the superuser account.')}</h3>
 <div class="step-superuser-form">
+    % if form.error:
+    ${form.error}
+    % endif
     <p>
         ${form.username.label}
         ${form.username}
@@ -24,8 +30,5 @@
         ${form.password2.error}
         % endif
     </p>
-    % if form.error:
-    ${form.error}
-    % endif
 </div>
 </%block>

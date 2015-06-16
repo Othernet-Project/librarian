@@ -3,21 +3,25 @@
 <%namespace name="signal" file="ondd/_signal.tpl"/>
 <%namespace name="presets" file="ondd/_presets.tpl"/>
 
+<%block name="step_title">
+<h2>${_("Please select the satellite you'd like to receive data from.")}</h2>
+</%block>
+
 <%block name="step">
-<h3>${_("Please select the satellite you'd like to receive data from.")}</h3>
 <div class="step-ondd-form">
     <style>@import "${url('plugins:ondd:static', path='ondd.css')}";</style>
 
-    <p id="signal-status" class="signal-status" data-url="${i18n_url('plugins:ondd:status')}">
-        ${signal.body()}
-    </p>
-
     <div id="settings-form">
-        ${settings_fields.body()}
         % if form.error:
         ${form.error}
         % endif
+        ${settings_fields.body()}
     </div>
+
+    <p id="signal-status" class="signal-status ondd-status" data-url="${i18n_url('plugins:ondd:status')}">
+        ${signal.body()}
+    </p>
+
 </div>
 ${presets.body()}
 <script type="text/template" id="jsFieldError">

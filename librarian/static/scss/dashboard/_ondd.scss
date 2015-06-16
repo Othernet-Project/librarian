@@ -17,6 +17,11 @@
     }
   }
 
+  .progress {
+    max-width: 100%;
+    width: 100%;
+  }
+
   .progress .label {
     text-transform: uppercase;
   }
@@ -28,4 +33,8 @@
   .has-lock {
     color: $forest;
   }
+}
+
+.signal-status {
+  @include col1;
 }
