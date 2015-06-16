@@ -102,7 +102,7 @@ class Assets:
     @staticmethod
     def _js_path(s):
         if type(s) is str:
-            return 'js/' + s + '.js'
+            return 'src/' + s + '.js'
         return s
 
     @staticmethod
