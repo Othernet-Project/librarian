@@ -1,0 +1,31 @@
+@import "outernet/mixins/colors";
+@import "outernet/mixins/fonts";
+@import "outernet/mixins/grid";
+@import "outernet/mixins/media_query";
+
+.ondd-status,
+.ondd-settings {
+  @include col2;
+
+  @include phone-portrait-wide {
+    @include col1;
+  }
+
+  .bitrate {
+    .label {
+      color: $sub;
+    }
+  }
+
+  .progress .label {
+    text-transform: uppercase;
+  }
+
+  .no-lock {
+    color: $fire;
+  }
+
+  .has-lock {
+    color: $forest;
+  }
+}
