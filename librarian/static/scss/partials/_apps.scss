@@ -3,9 +3,7 @@
 @import "outernet/mixins/media_query";
 
 .app-list {
-  @include row;
-  @include grid-container;
-
+  @include single-cell-grid;
 
   li {
     @include col6;
