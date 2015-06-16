@@ -73,3 +73,27 @@ form.inline {
     background-color: transparent;
   }
 }
+
+.full-page-form {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 60px 20px;
+
+  input[type="text"],
+  input[type="numeric"],
+  input[type="email"],
+  input[type="file"],
+  input[type="password"],
+  select,
+  textarea
+  {
+    min-width: 200px;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .buttons {
+    padding-top: 1.5em;
+    text-align: center;
+  }
+}
