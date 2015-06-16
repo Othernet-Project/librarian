@@ -1,19 +1,10 @@
-<span class="lock ${h.yesno(status['has_lock'], 'has', '')}">
-    ## Translators, whether tuner has a lock on the signal or not (note: technical term)
-    ${h.yesno(status['has_lock'], _('has lock'), _('no lock'))}
-</span>
-<span class="signal">
-    <span class="signal-bar" style="right: ${100 - h.perc_range(status['snr'], 0.6, 0.9)}%">
-        <span>
-            ${h.perc_range(status['snr'], 0.6, 0.9)}%
-        </span>
-    </span>
-</span>
-<span class="snr">
-    ## Translators, short for 'signal/noise ratio'
-    ${_('SNR')} ${status['snr']}
-</span>
-<span class="bitrate">
+<%namespace name="widgets" file="../_widgets.tpl"/>
+
+<% snr_pct = h.perc_range(status['snr'], 0, 1.6) %>
+<% has_lock = h.yesno(status['has_lock'], h.SPAN(_('has lock'), _class='has-lock'), h.SPAN(_('no lock'), _class='no-lock')) %>
+${widgets.progress(has_lock, snr_pct, value=status['snr'], threshold=25)}
+
+<p class="bitrate">
     ## Translators, bitrate
-    ${_('Bitrate')} ${h.hsize(th.get_bitrate(status), unit='bit', step=1000)}
-</span>
+    <span class="label">${_('Bitrate')}</span> ${h.hsize(th.get_bitrate(status), unit='bps', step=1000)}
+</p>
