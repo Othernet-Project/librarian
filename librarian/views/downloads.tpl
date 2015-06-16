@@ -65,6 +65,7 @@ ${_('Updates')}
                 <tr class="data">
                     <td class="downloads-selection">
                         <input id="check-${meta['md5']}" type="checkbox" name="selection" value="${meta['md5']}"${' checked' if selection else ''}>
+                        <label for="check-${meta['md5']}"></label>
                     </td>
                     <td class="downloads-title">
                         <p><label for="check-${meta['md5']}"><span${th.i18n_attrs(meta.lang)}>${meta['title'] | h}</span></label></p>
