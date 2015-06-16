@@ -35,5 +35,5 @@ class UpdatesMenuItem(MenuItem):
         update_count = self._updates()
         lbl = _("Updates")
         if update_count > 0:
-            lbl += ' ({0})'.format(update_count)
+            lbl += ' <span class="count">{0}</span>'.format(update_count)
         return lbl

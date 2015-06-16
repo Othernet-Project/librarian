@@ -1,6 +1,7 @@
 @import "compass/typography";
 @import "outernet/mixins/media_query";
 @import "outernet/mixins/sprites";
+@import "outernet/widgets/icons";
 @import "dropdown";
 @import "sprites";
 
@@ -13,6 +14,7 @@
   #nav .navicon {
     display: inline-block;
     height: 24px;
+    position: relative;
 
     .icon {
       margin-right: 0.2em;
@@ -21,6 +23,11 @@
     .label {
       display: inline-block;
       vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .count {
+      @include icon-label($sun);
     }
 
     .icon + .label {
@@ -37,6 +44,12 @@
       .icon + .label {
         display: inline-block;
         max-width: 200px;
+      }
+    }
+
+    &.updates:hover {
+      .icon + .label {
+        padding-right: 0.5em;
       }
     }
   }
