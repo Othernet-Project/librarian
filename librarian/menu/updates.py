@@ -33,6 +33,8 @@ class UpdatesMenuItem(MenuItem):
     @property
     def label(self):
         update_count = self._updates()
+        if update_count > 99:
+            update_count = '!'
         lbl = _("Updates")
         if update_count > 0:
             lbl += ' <span class="count">{0}</span>'.format(update_count)
