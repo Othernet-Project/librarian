@@ -9,9 +9,10 @@
  * http://www.gnu.org/licenses/gpl.txt.
  */
 
-@import "outernet/widgets/icons";
+@import "outernet/mixins/sprites";
 @import "outernet/mixins/colors";
 @import "outernet/mixins/media_query";
+@import "outernet/widgets/icons";
 
 $menu-item-margin: 1.2em;
 $menu-cutoff: 800px;
@@ -167,9 +168,18 @@ $menu-cutoff: 800px;
   .level2-trigger,
   .top-trigger {
     color: $iconic;
+    background-repeat: no-repeat;
   }
 
-  .level2-icon {
+  .level2-trigger {
+    background-position: right 10px top 50%;
+    @include with-hdpi(icons, arrow_right);
+  }
+
+  .top-trigger {
+    background-position: left 10px top 50%;
+    @include with-hdpi(icons, arrow_left);
+    padding-left: 40px;
   }
 
   .level1, .level2 {
