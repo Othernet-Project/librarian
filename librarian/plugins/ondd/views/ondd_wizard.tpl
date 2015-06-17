@@ -18,9 +18,9 @@
         ${settings_fields.body()}
     </div>
 
-    <p id="signal-status" class="signal-status ondd-status" data-url="${i18n_url('plugins:ondd:status')}">
+    <div id="signal-status" class="signal-status ondd-status" data-url="${i18n_url('plugins:ondd:status')}">
         ${signal.body()}
-    </p>
+    </div>
 
 </div>
 ${presets.body()}
