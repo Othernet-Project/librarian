@@ -14,6 +14,7 @@
 @import "outernet/mixins/media_query";
 
 $menu-item-margin: 1.2em;
+$menu-cutoff: 800px;
 
 @mixin menu-link-rev {
   color: $base;
@@ -109,7 +110,7 @@ $menu-item-margin: 1.2em;
       }
     }
 
-    @include phone-portrait-wide {
+    @include narrower-than($menu-cutoff) {
       display: none;
     }
   }
@@ -127,7 +128,7 @@ $menu-item-margin: 1.2em;
       background: $white;
     }
 
-    @include phone-portrait-wide {
+    @include narrower-than($menu-cutoff) {
       display: inline-block;
     }
 
@@ -154,7 +155,7 @@ $menu-item-margin: 1.2em;
   background: $white;
   @include transition(left 0.3s ease-out, opacity 0.3s ease-out);
 
-  @include wider-than($phone-portrait-wide) {
+  @include wider-than($menu-cutoff) {
     display: none;
   }
 

@@ -35,7 +35,7 @@
       max-width: 0;
       @include transition(max-width 0.3s);
 
-      @include phone-portrait-wide {
+      @include narrower-than($menu-cutoff) {
         max-width: none;
       }
     }
@@ -85,7 +85,7 @@
       @include with-hdpi(icons, 'checkmark_active', $include-size: yes);
     }
 
-    @include phone-portrait-wide {
+    @include narrower-than($menu-cutoff) {
       display: none;
     }
   }

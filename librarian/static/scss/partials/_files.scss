@@ -71,8 +71,8 @@
 
     .files-rename-button {
       @include button-reset;
-      @include icon(edit);
       @include hide-text;
+      @include icon(edit);
 
       &:focus,
       &:hover {
@@ -86,8 +86,8 @@
 
       button {
         @include button-reset;
-        @include icon(delete);
         @include hide-text;
+        @include icon(delete);
 
         &:focus,
         &:hover {
