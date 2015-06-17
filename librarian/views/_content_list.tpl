@@ -10,12 +10,12 @@
         <h2 class="title"${th.i18n_attrs(meta.lang)}>
             <a href="${i18n_url('content:reader', content_id=meta.md5)}">${meta.title | h}</a>
         </h2>
-        % if meta.publisher:
-        % endif
         ${tags.tags(meta)}
         <p class="attrib">
+        ## Translators, used in place of publisher name if publsiher name is not known
+        <% publisher = meta.publisher or _('unknown publisher') %>
         ## Translators, attribution line appearing in the content list
-        ${_('%(date)s by %(publisher)s.') % dict(date=meta.timestamp.strftime('%Y-%m-%d'), publisher=meta.publisher)}
+        ${_('%(date)s by %(publisher)s.') % dict(date=meta.timestamp.strftime('%Y-%m-%d'), publisher=publisher)}
         ${th.readable_license(meta.license)}
         </p>
         % if th.is_authenticated():

@@ -1,0 +1,34 @@
+$reader-data-height: 120px;
+
+.reader-frame {
+  position: fixed;
+  top: 60px;
+  bottom: $reader-data-height;
+  left: 0;
+  right: 0;
+  background: $white;
+  overflow: hidden;
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.reader-meta {
+  position: fixed;
+  height: $reader-data-height - 1px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid $border;
+
+  .attrib {
+    @include sub;
+  }
+
+  .inner {
+    padding: 10px 20px;
+  }
+}
