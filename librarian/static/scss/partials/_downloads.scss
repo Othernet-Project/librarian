@@ -1,0 +1,62 @@
+@import "outernet/mixins/grid";
+@import "outernet/mixins/media_query";
+
+.space {
+  color: $sub;
+}
+
+.downloads-list {
+  @include single-cell-grid;
+
+  li {
+    margin-bottom: 2em;
+  }
+
+  .do {
+    @include sub;
+    color: $sub;
+    margin-bottom: 0.5em;
+
+    &:last-of-type {
+      margin-bottom: 1em;
+    }
+  }
+
+  .label {
+    @include bold;
+  }
+}
+
+.downloads-filters {
+  @include grid-container;
+  @include row;
+
+  #lang {
+    width: 260px;
+  }
+
+  form {
+    display: inline;
+  }
+
+  .langs {
+    @include col6(4);
+  }
+
+  .pager {
+    @include col6(2);
+    text-align: right;
+  }
+
+  @include narrower-than(732px) {
+    .langs, .pager {
+      @include col1;
+      text-align: left;
+    }
+  }
+}
+
+.bottom-pager {
+  text-align: center;
+  padding: 2em 20px;
+}
