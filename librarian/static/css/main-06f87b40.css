@@ -1423,26 +1423,6 @@ table form button {
  * http://www.gnu.org/licenses/gpl.txt.
  */
 /**
- * _icons.scss: simple icon widget
- *
- * Copyright 2014-2015, Outernet Inc.
- * Some rights reserved.
- *
- * This software is free software licensed under the terms of GPLv3. See
- * COPYING file that comes with the source code, or
- * http://www.gnu.org/licenses/gpl.txt.
- */
-/**
- * _fonts.scss: typography definitions
- * 
- * Copyright 2015, Outernet Inc.
- * Some rights reserved.
- * 
- * This software is free software licensed under the terms of GPLv3. See
- * COPYING file that comes with the source code, or
- * http://www.gnu.org/licenses/gpl.txt.
- */
-/**
  * _sprites.scss: sprite images with high-dpi display support
  *
  * Copyright 2014-2015, Outernet Inc.
@@ -1482,7 +1462,47 @@ table form button {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 37, ../scss/outernet/widgets/_menu.scss */
+/**
+ * _icons.scss: simple icon widget
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _sprites.scss: sprite images with high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _hdpi_images.scss: helpers for high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 38, ../scss/outernet/widgets/_menu.scss */
 .menu {
   position: fixed;
   z-index: 1000;
@@ -1494,68 +1514,68 @@ table form button {
   padding: 0 20px;
   background: #333333;
   color: #eeeeee; }
-/* line 49, ../scss/outernet/widgets/_menu.scss */
+/* line 50, ../scss/outernet/widgets/_menu.scss */
 .menu a {
   color: #888888; }
-/* line 52, ../scss/outernet/widgets/_menu.scss */
+/* line 53, ../scss/outernet/widgets/_menu.scss */
 .menu a:hover {
   color: #ffffff;
   text-decoration: none; }
-/* line 57, ../scss/outernet/widgets/_menu.scss */
+/* line 58, ../scss/outernet/widgets/_menu.scss */
 .menu a:visited {
   color: #888888; }
-/* line 61, ../scss/outernet/widgets/_menu.scss */
+/* line 62, ../scss/outernet/widgets/_menu.scss */
 .menu a:focus {
   color: #3584cf; }
-/* line 66, ../scss/outernet/widgets/_menu.scss */
+/* line 67, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse {
   background: #ffffff;
   color: #bbbbbb; }
-/* line 70, ../scss/outernet/widgets/_menu.scss */
+/* line 71, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse a {
   color: #555555; }
-/* line 22, ../scss/outernet/widgets/_menu.scss */
+/* line 23, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse a:hover, .menu.reverse a:focus {
   color: #3584cf; }
-/* line 27, ../scss/outernet/widgets/_menu.scss */
+/* line 28, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse a:visited {
   color: #555555; }
-/* line 75, ../scss/outernet/widgets/_menu.scss */
+/* line 76, ../scss/outernet/widgets/_menu.scss */
 .menu .menu-block-right {
   position: absolute;
   right: 0;
   top: 0; }
-/* line 81, ../scss/outernet/widgets/_menu.scss */
+/* line 82, ../scss/outernet/widgets/_menu.scss */
 .menu .menu-subblock {
   display: inline-block;
   padding-top: 18px;
   margin-right: 1.2em;
   vertical-align: top; }
-/* line 87, ../scss/outernet/widgets/_menu.scss */
+/* line 88, ../scss/outernet/widgets/_menu.scss */
 .menu .menu-subblock:last-child {
   margin-right: 0; }
-/* line 93, ../scss/outernet/widgets/_menu.scss */
+/* line 94, ../scss/outernet/widgets/_menu.scss */
 .menu #nav a {
   font-size: 18px;
   margin-right: 1.2em; }
-/* line 96, ../scss/outernet/widgets/_menu.scss */
+/* line 97, ../scss/outernet/widgets/_menu.scss */
 .menu #nav a:hover {
   color: #ffffff; }
-/* line 100, ../scss/outernet/widgets/_menu.scss */
+/* line 101, ../scss/outernet/widgets/_menu.scss */
 .menu #nav a:last-child {
   margin-right: 0; }
-/* line 105, ../scss/outernet/widgets/_menu.scss */
+/* line 106, ../scss/outernet/widgets/_menu.scss */
 .menu #nav .active {
   font-size: 18px;
   margin-right: 1.2em; }
-/* line 108, ../scss/outernet/widgets/_menu.scss */
+/* line 109, ../scss/outernet/widgets/_menu.scss */
 .menu #nav .active:last-child {
   margin-right: 0; }
 @media only screen and (max-width: 800px) {
-  /* line 92, ../scss/outernet/widgets/_menu.scss */
+  /* line 93, ../scss/outernet/widgets/_menu.scss */
   .menu #nav {
     display: none; } }
-/* line 118, ../scss/outernet/widgets/_menu.scss */
+/* line 119, ../scss/outernet/widgets/_menu.scss */
 .menu .hamburger {
   width: 60px;
   line-height: 60px;
@@ -1564,14 +1584,14 @@ table form button {
   position: relative;
   vertical-align: top;
   display: none; }
-/* line 127, ../scss/outernet/widgets/_menu.scss */
+/* line 128, ../scss/outernet/widgets/_menu.scss */
 .menu .hamburger.open {
   background: #ffffff; }
 @media only screen and (max-width: 800px) {
-  /* line 118, ../scss/outernet/widgets/_menu.scss */
+  /* line 119, ../scss/outernet/widgets/_menu.scss */
   .menu .hamburger {
     display: inline-block; } }
-/* line 135, ../scss/outernet/widgets/_menu.scss */
+/* line 136, ../scss/outernet/widgets/_menu.scss */
 .menu .hamburger a {
   display: block;
   width: 100%;
@@ -1584,7 +1604,7 @@ table form button {
   background-repeat: no-repeat;
   background-image: url('../img/icons/1x/hamburger.png?1434436250'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 135, ../scss/outernet/widgets/_menu.scss */
+  /* line 136, ../scss/outernet/widgets/_menu.scss */
   .menu .hamburger a {
     background-image: url('../img/icons/2x/hamburger.png?1434436348');
     -moz-background-size: 25px, 25px;
@@ -1592,7 +1612,7 @@ table form button {
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 
-/* line 147, ../scss/outernet/widgets/_menu.scss */
+/* line 148, ../scss/outernet/widgets/_menu.scss */
 .alt-menu {
   position: fixed;
   z-index: 2000;
@@ -1607,16 +1627,42 @@ table form button {
   -webkit-transition: left 0.3s ease-out, opacity 0.3s ease-out;
   transition: left 0.3s ease-out, opacity 0.3s ease-out; }
 @media only screen and (min-width: 800px) {
-  /* line 147, ../scss/outernet/widgets/_menu.scss */
+  /* line 148, ../scss/outernet/widgets/_menu.scss */
   .alt-menu {
     display: none; } }
-/* line 162, ../scss/outernet/widgets/_menu.scss */
+/* line 163, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .active .icon, .alt-menu .active .label {
   opacity: 0.5; }
-/* line 167, ../scss/outernet/widgets/_menu.scss */
+/* line 168, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2-trigger, .alt-menu .top-trigger {
-  color: #bbbbbb; }
-/* line 175, ../scss/outernet/widgets/_menu.scss */
+  color: #bbbbbb;
+  background-repeat: no-repeat; }
+/* line 174, ../scss/outernet/widgets/_menu.scss */
+.alt-menu .level2-trigger {
+  background-position: right 10px top 50%;
+  background-image: url('../img/icons/1x/arrow_right.png?1434436198'); }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 174, ../scss/outernet/widgets/_menu.scss */
+  .alt-menu .level2-trigger {
+    background-image: url('../img/icons/2x/arrow_right.png?1434436302');
+    -moz-background-size: 25px, 25px;
+    -o-background-size: 25px, 25px;
+    -webkit-background-size: 25px, 25px;
+    background-size: 25px, 25px; } }
+/* line 179, ../scss/outernet/widgets/_menu.scss */
+.alt-menu .top-trigger {
+  background-position: left 10px top 50%;
+  background-image: url('../img/icons/1x/arrow_left.png?1434436196');
+  padding-left: 40px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 179, ../scss/outernet/widgets/_menu.scss */
+  .alt-menu .top-trigger {
+    background-image: url('../img/icons/2x/arrow_left.png?1434436300');
+    -moz-background-size: 25px, 25px;
+    -o-background-size: 25px, 25px;
+    -webkit-background-size: 25px, 25px;
+    background-size: 25px, 25px; } }
+/* line 185, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level1, .alt-menu .level2 {
   position: absolute;
   background: #ffffff;
@@ -1626,7 +1672,7 @@ table form button {
   width: 100%;
   overflow-y: scroll;
   background: #ffffff; }
-/* line 186, ../scss/outernet/widgets/_menu.scss */
+/* line 196, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2 {
   left: 100%;
   border-left: 3px solid #dddddd;
@@ -1634,14 +1680,14 @@ table form button {
   -o-transition: left 0.3s ease-out;
   -webkit-transition: left 0.3s ease-out;
   transition: left 0.3s ease-out; }
-/* line 191, ../scss/outernet/widgets/_menu.scss */
+/* line 201, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2.open {
   left: 0; }
-/* line 196, ../scss/outernet/widgets/_menu.scss */
+/* line 206, ../scss/outernet/widgets/_menu.scss */
 .alt-menu.open {
   left: 0;
   opacity: 1; }
-/* line 201, ../scss/outernet/widgets/_menu.scss */
+/* line 211, ../scss/outernet/widgets/_menu.scss */
 .alt-menu a, .alt-menu .active {
   display: block;
   line-height: 60px;
@@ -3378,15 +3424,69 @@ form.search .icon {
   display: block;
   width: 100%;
   clear: left; }
-/* line 37, ../scss/partials/_files.scss */
+/* line 36, ../scss/partials/_files.scss */
+.file-list .dir span.icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -2045px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 36, ../scss/partials/_files.scss */
+  .file-list .dir span.icon {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -2045px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+/* line 40, ../scss/partials/_files.scss */
+.file-list .file span.icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -1935px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 40, ../scss/partials/_files.scss */
+  .file-list .file span.icon {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -1935px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+/* line 44, ../scss/partials/_files.scss */
+.file-list .up span.icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -2155px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 44, ../scss/partials/_files.scss */
+  .file-list .up span.icon {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -2155px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+/* line 49, ../scss/partials/_files.scss */
 .file-list h2 .section-name {
   color: #888888; }
 /* line 85, ../scss/outernet/mixins/_tables.scss */
 .file-list table th:nth-of-type(1) {
-  width: 20px; }
+  width: 30px; }
 /* line 89, ../scss/outernet/mixins/_tables.scss */
 .file-list table td:nth-of-type(1) {
-  width: 20px; }
+  width: 30px; }
 /* line 85, ../scss/outernet/mixins/_tables.scss */
 .file-list table th:nth-of-type(3) {
   width: 100px; }
@@ -3399,22 +3499,22 @@ form.search .icon {
 /* line 89, ../scss/outernet/mixins/_tables.scss */
 .file-list table td:nth-of-type(4) {
   width: 400px; }
-/* line 47, ../scss/partials/_files.scss */
+/* line 59, ../scss/partials/_files.scss */
 .file-list table th:nth-child(1), .file-list table td:nth-child(1) {
   padding-right: 0; }
-/* line 52, ../scss/partials/_files.scss */
+/* line 64, ../scss/partials/_files.scss */
 .file-list table th:nth-child(2), .file-list table td:nth-child(2) {
   padding-left: 2px; }
-/* line 57, ../scss/partials/_files.scss */
+/* line 69, ../scss/partials/_files.scss */
 .file-list table th:nth-child(3), .file-list table th:nth-child(4), .file-list table td:nth-child(3), .file-list table td:nth-child(4) {
   text-align: right; }
-/* line 65, ../scss/partials/_files.scss */
+/* line 77, ../scss/partials/_files.scss */
 .file-list table tr.empty {
   background: #fafafa;
   text-align: center;
   color: #888888;
   padding: 20px; }
-/* line 72, ../scss/partials/_files.scss */
+/* line 84, ../scss/partials/_files.scss */
 .file-list table .files-rename-button {
   border: none;
   background: transparent;
@@ -3443,7 +3543,7 @@ form.search .icon {
   border: none;
   opacity: 1; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 72, ../scss/partials/_files.scss */
+  /* line 84, ../scss/partials/_files.scss */
   .file-list table .files-rename-button {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -1835px;
@@ -3451,7 +3551,7 @@ form.search .icon {
     -o-background-size: 100px 3864px;
     -webkit-background-size: 100px 3864px;
     background-size: 100px 3864px; } }
-/* line 77, ../scss/partials/_files.scss */
+/* line 89, ../scss/partials/_files.scss */
 .file-list table .files-rename-button:focus, .file-list table .files-rename-button:hover {
   display: inline-block;
   vertical-align: middle;
@@ -3461,7 +3561,7 @@ form.search .icon {
   width: 20px;
   height: 20px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 77, ../scss/partials/_files.scss */
+  /* line 89, ../scss/partials/_files.scss */
   .file-list table .files-rename-button:focus, .file-list table .files-rename-button:hover {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -1885px;
@@ -3469,14 +3569,14 @@ form.search .icon {
     -o-background-size: 100px 3864px;
     -webkit-background-size: 100px 3864px;
     background-size: 100px 3864px; } }
-/* line 83, ../scss/partials/_files.scss */
+/* line 95, ../scss/partials/_files.scss */
 .file-list table .files-delete {
   border: none;
   background: transparent;
   padding: 0;
   display: block;
   display: inline-block; }
-/* line 87, ../scss/partials/_files.scss */
+/* line 99, ../scss/partials/_files.scss */
 .file-list table .files-delete button {
   border: none;
   background: transparent;
@@ -3505,7 +3605,7 @@ form.search .icon {
   border: none;
   opacity: 1; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 87, ../scss/partials/_files.scss */
+  /* line 99, ../scss/partials/_files.scss */
   .file-list table .files-delete button {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -1265px;
@@ -3513,7 +3613,7 @@ form.search .icon {
     -o-background-size: 100px 3864px;
     -webkit-background-size: 100px 3864px;
     background-size: 100px 3864px; } }
-/* line 92, ../scss/partials/_files.scss */
+/* line 104, ../scss/partials/_files.scss */
 .file-list table .files-delete button:focus, .file-list table .files-delete button:hover {
   display: inline-block;
   vertical-align: middle;
@@ -3523,7 +3623,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 92, ../scss/partials/_files.scss */
+  /* line 104, ../scss/partials/_files.scss */
   .file-list table .files-delete button:focus, .file-list table .files-delete button:hover {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -1320px;
@@ -3531,10 +3631,10 @@ form.search .icon {
     -o-background-size: 100px 3864px;
     -webkit-background-size: 100px 3864px;
     background-size: 100px 3864px; } }
-/* line 99, ../scss/partials/_files.scss */
+/* line 111, ../scss/partials/_files.scss */
 .file-list table .files-rename, .file-list table .files-rename-button, .file-list table .files-run {
   margin-right: 1em; }
-/* line 105, ../scss/partials/_files.scss */
+/* line 117, ../scss/partials/_files.scss */
 .file-list table .files-run {
   border: none;
   background: transparent;
@@ -3542,30 +3642,30 @@ form.search .icon {
   display: block;
   display: inline-block; }
 @media only screen and (max-width: 800px) {
-  /* line 119, ../scss/partials/_files.scss */
+  /* line 131, ../scss/partials/_files.scss */
   .file-list table td:nth-child(1) {
     display: none; }
-  /* line 122, ../scss/partials/_files.scss */
+  /* line 134, ../scss/partials/_files.scss */
   .file-list table td:nth-child(1).empty {
     display: block;
     width: auto; }
-  /* line 128, ../scss/partials/_files.scss */
+  /* line 140, ../scss/partials/_files.scss */
   .file-list table td:nth-child(2) {
     font-size: 125%;
     line-height: 130%; }
-  /* line 132, ../scss/partials/_files.scss */
+  /* line 144, ../scss/partials/_files.scss */
   .file-list table td:nth-child(3) {
     display: block;
     text-align: left;
     font-size: 87.5%;
     line-height: 137.5%;
     width: auto; }
-  /* line 139, ../scss/partials/_files.scss */
+  /* line 151, ../scss/partials/_files.scss */
   .file-list table td:nth-child(4) {
     display: inline-block;
     width: auto;
     text-align: left; }
-  /* line 146, ../scss/partials/_files.scss */
+  /* line 158, ../scss/partials/_files.scss */
   .file-list table tr {
     padding: 20px; }
   /* line 58, ../scss/outernet/mixins/_tables.scss */
@@ -3586,7 +3686,7 @@ form.search .icon {
   .file-list table th, .file-list table td {
     display: block;
     padding: 0 0 0.5em; } }
-/* line 154, ../scss/partials/_files.scss */
+/* line 166, ../scss/partials/_files.scss */
 .file-list .upone {
   font-size: 87.5%;
   line-height: 137.5%; }
@@ -3597,7 +3697,7 @@ form.search .icon {
 .file-list.active table td:nth-of-type(4) {
   width: 160px; }
 
-/* line 165, ../scss/partials/_files.scss */
+/* line 177, ../scss/partials/_files.scss */
 .files-readme {
   padding-top: 10px;
   padding-bottom: 10px;
