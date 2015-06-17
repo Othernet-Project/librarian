@@ -10,7 +10,7 @@
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
         <%block name="extra_head"/>
     </head>
-    <body>
+    <body class="step-${step_name}${' initial' if step_index == 1 else ''}">
         <%block name="header">
         <header class="menu">
             <div class="menu-subblock">

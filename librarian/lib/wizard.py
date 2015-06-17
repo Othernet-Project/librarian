@@ -132,10 +132,12 @@ class Wizard(object):
             return self.wizard_finished(self.state['data'])
         else:
             step_context = step['handler']()
+            step_index = self.current_step_index
             return self.template_func(step['template'],
                                       step_index=self.current_step_index,
                                       step_count=self.step_count,
                                       step_param=self.step_param,
+                                      step_name=self.steps[step_index]['name'],
                                       start_index=self.start_index,
                                       **step_context)
 
