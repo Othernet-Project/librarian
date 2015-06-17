@@ -33,6 +33,18 @@
 .file-list {
   @include single-cell-grid;
 
+  .dir span.icon {
+    @include icon(folder);
+  }
+
+  .file span.icon {
+    @include icon(file);
+  }
+
+  .up span.icon {
+    @include icon(folder_up);
+  }
+
   h2 {
     .section-name {
       color: $sub;
@@ -40,7 +52,7 @@
   }
 
   table {
-    @include table-col-width(1, 20px);
+    @include table-col-width(1, 30px);
     @include table-col-width(3, 100px);
     @include table-col-width(4, 400px);
 
