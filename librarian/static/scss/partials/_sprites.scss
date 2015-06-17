@@ -1,9 +1,9 @@
 @import "outernet/mixins/sprites";
 
-$sections: sprite-map('sections/1x/*.png', $spacing: 30px);
-$sections-2x: sprite-map('sections/2x/*.png', $spacing: 60px);
-@mixin section-icon($name, $dimensions: yes) {
-  @include sprite($sections, $sections-2x, $name, $dimensions);
+$librarian: sprite-map('librarian/1x/*.png', $spacing: 30px);
+$librarian-2x: sprite-map('librarian/2x/*.png', $spacing: 60px);
+@mixin app-icon($name, $dimensions: yes) {
+  @include sprite($librarian, $librarian-2x, $name, $dimensions);
 }
 
 $misc: sprite-map('misc/1x/*.png', $spacing: 30px);

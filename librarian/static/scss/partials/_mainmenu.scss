@@ -8,7 +8,7 @@
 .menu {
   .logo {
     @include hide-text;
-    @include icon('outernet_logo', yes);  
+    @include misc-icon(logo_menu, yes);  
   }
 
   #nav .navicon {
@@ -114,14 +114,14 @@
   #nav .#{$navicon},
   .alt-menu .#{$navicon} {
     .icon {
-      @include section-icon($navicon);
+      @include app-icon($navicon);
     }
   }
 
   #nav .#{$navicon} {
     &:hover .icon,
     &.active .icon {
-      @include section-icon(#{$navicon}_hover);
+      @include app-icon(#{$navicon}_hover);
     }
   }
 }
