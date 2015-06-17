@@ -1,13 +1,22 @@
+@import "compass/typography";
 @import "outernet/ui";
 @import "outernet/mixins/media_query";
 @import "partials/common_elements";
 @import "partials/footer";
 @import "dashboard/ondd";
 
+body.initial {
+  padding-top: 0;
+
+  .menu {
+    display: none;
+  }
+}
+
 .menu {
   .logo {
     @include hide-text;
-    @include icon('outernet_logo', yes);  
+    @include misc-icon('logo_menu', yes);  
   }
 
   .steps {
@@ -19,6 +28,13 @@
       }
     }
   }
+}
+
+.outernet-logo {
+  @include hide-text;
+  @include app-icon('logo_setup');
+  margin-top: 20px;
+  margin-bottom: 8px;
 }
 
 .wizard-steps {
@@ -46,4 +62,45 @@
       margin-bottom: 0.2em;
     }
   }
+}
+
+.steps {
+  display: inline-block;
+
+  span {
+    display: inline-block;
+  }
+
+  .step {
+    @include icon(step_next);
+  }
+
+  .previous {
+    @include icon(step_done);
+  }
+
+  .current {
+    @include icon(step_active);
+  }
+}
+
+.h-bar {
+  position: relative;
+
+  .step-logo {
+    display: block;
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  @each $step-name in (language, datetime, superuser, ondd) {
+    .step-#{$step-name} {
+      @include app-icon(step_#{$step_name});
+    }
+  }
+
+  padding-bottom: 50px;
 }

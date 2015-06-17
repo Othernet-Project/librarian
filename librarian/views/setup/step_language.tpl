@@ -1,6 +1,7 @@
 <%inherit file='main.tpl'/>
 
 <%block name="step_title">
+<p class="outernet-logo" lang="en" dir="ltr">Outernet</p>
 <h3>${_('Please select the interface language.')}</h3>
 </%block>
 

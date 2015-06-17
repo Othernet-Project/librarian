@@ -38,6 +38,7 @@
             <div class="h-bar">
             <%block name="step_title"/>
             <span class="wizard-steps">${_('Setup Wizard: Step %s of %s') % (step_index, step_count)}</span>
+            <span class="step-logo step-${step_name}"></span>
             </div>
             <div class="setup-wizard full-page-form">
                 ${h.form('POST', action=i18n_url('setup:main') + h.set_qparam(**{step_param: step_index}).to_qs())}
