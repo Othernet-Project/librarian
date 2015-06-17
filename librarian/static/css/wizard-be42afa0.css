@@ -163,6 +163,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
  * http://www.gnu.org/licenses/gpl.txt.
  */
 /**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
  * _fonts.scss: typography definitions
  * 
  * Copyright 2015, Outernet Inc.
@@ -172,72 +182,72 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 14, ../scss/outernet/partial/_fonts.scss */
+/* line 16, ../scss/outernet/partial/_fonts.scss */
 body {
   font-family: Arial, Helvetica, "Liberation Sans", sans-serif;
   font-size: 16px;
   line-height: 137.5%;
   color: #555555; }
 
-/* line 20, ../scss/outernet/partial/_fonts.scss */
+/* line 22, ../scss/outernet/partial/_fonts.scss */
 h1.first, h2.first, h3.first, h4.first, h5.first, h6.first {
   margin-top: 0; }
 
-/* line 25, ../scss/outernet/partial/_fonts.scss */
+/* line 27, ../scss/outernet/partial/_fonts.scss */
 h1 {
   font-size: 175%;
   line-height: 125%;
   margin-top: 1em;
   margin-bottom: 16px; }
 
-/* line 30, ../scss/outernet/partial/_fonts.scss */
+/* line 32, ../scss/outernet/partial/_fonts.scss */
 h2 {
   font-size: 162.5%;
   line-height: 123%;
   margin-top: 1em;
   margin-bottom: 16px; }
 
-/* line 35, ../scss/outernet/partial/_fonts.scss */
+/* line 37, ../scss/outernet/partial/_fonts.scss */
 h3 {
   font-size: 150%;
   line-height: 125%;
   margin-top: 1em;
   margin-bottom: 16px; }
 
-/* line 40, ../scss/outernet/partial/_fonts.scss */
+/* line 42, ../scss/outernet/partial/_fonts.scss */
 h4 {
   font-size: 137.5%;
   line-height: 127%;
   margin-top: 1em;
   margin-bottom: 16px; }
 
-/* line 45, ../scss/outernet/partial/_fonts.scss */
+/* line 47, ../scss/outernet/partial/_fonts.scss */
 h5 {
   font-size: 125%;
   line-height: 130%;
   margin-top: 1em;
   margin-bottom: 16px; }
 
-/* line 50, ../scss/outernet/partial/_fonts.scss */
+/* line 52, ../scss/outernet/partial/_fonts.scss */
 h6 {
   font-size: 112.5%;
   line-height: 116%;
   margin-top: 1em;
   margin-bottom: 16px; }
 
-/* line 55, ../scss/outernet/partial/_fonts.scss */
+/* line 57, ../scss/outernet/partial/_fonts.scss */
 p {
   margin-bottom: 1em; }
 
-/* line 59, ../scss/outernet/partial/_fonts.scss */
+/* line 61, ../scss/outernet/partial/_fonts.scss */
 b, strong {
   font-weight: bold; }
 
-/* line 63, ../scss/outernet/partial/_fonts.scss */
+/* line 65, ../scss/outernet/partial/_fonts.scss */
 i, em {
   font-style: italic; }
 
-/* line 67, ../scss/outernet/partial/_fonts.scss */
+/* line 69, ../scss/outernet/partial/_fonts.scss */
 pre {
   overflow: hidden;
   margin-bottom: 1em;
@@ -246,13 +256,13 @@ pre {
   -webkit-border-radius: 4px;
   border-radius: 4px;
   padding: 0.4em; }
-/* line 74, ../scss/outernet/partial/_fonts.scss */
+/* line 76, ../scss/outernet/partial/_fonts.scss */
 pre:hover {
   overflow: visible;
   position: relative;
   z-index: 1000; }
 
-/* line 81, ../scss/outernet/partial/_fonts.scss */
+/* line 83, ../scss/outernet/partial/_fonts.scss */
 code {
   display: inline-block;
   font-family: monospace;
@@ -263,10 +273,10 @@ code {
   padding: 0 0.4em;
   font-size: 80%; }
 
-/* line 90, ../scss/outernet/partial/_fonts.scss */
+/* line 92, ../scss/outernet/partial/_fonts.scss */
 ul.bullets {
   margin-bottom: 1em; }
-/* line 93, ../scss/outernet/partial/_fonts.scss */
+/* line 95, ../scss/outernet/partial/_fonts.scss */
 ul.bullets li {
   list-style: disc;
   margin-left: 1em; }
@@ -825,11 +835,11 @@ input[type="text"].positive, input[type="numeric"].positive, input[type="email"]
   padding-right: 50px;
   background-position: right 12.5px top 50%;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/form_positive.png?1434096013'); }
+  background-image: url('../img/icons/1x/form_positive.png?1434436248'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 63, ../scss/outernet/partial/_forms.scss */
   input[type="text"].positive, input[type="numeric"].positive, input[type="email"].positive, input[type="password"].positive, input[type="file"].positive {
-    background-image: url('../img/icons/2x/form_positive.png?1434096013');
+    background-image: url('../img/icons/2x/form_positive.png?1434436346');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -839,11 +849,11 @@ input[type="text"].negative, input[type="numeric"].negative, input[type="email"]
   padding-right: 50px;
   background-position: right 12.5px top 50%;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/form_negative.png?1434096013'); }
+  background-image: url('../img/icons/1x/form_negative.png?1434436244'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 67, ../scss/outernet/partial/_forms.scss */
   input[type="text"].negative, input[type="numeric"].negative, input[type="email"].negative, input[type="password"].negative, input[type="file"].negative {
-    background-image: url('../img/icons/2x/form_negative.png?1434096013');
+    background-image: url('../img/icons/2x/form_negative.png?1434436344');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -892,15 +902,15 @@ input[type="checkbox"]:checked + label:before {
   transition: color 0.3s, background-color 0.3s, border-color 0.3s;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/checkmark.png?1434096013'); }
+  background-image: url('../img/icons/1x/checkmark.png?1434436204'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 88, ../scss/outernet/partial/_forms.scss */
   input[type="checkbox"]:checked + label:before {
-    background-image: url('../img/icons/2x/checkmark.png?1434096013');
-    -moz-background-size: 13px, 11px;
-    -o-background-size: 13px, 11px;
-    -webkit-background-size: 13px, 11px;
-    background-size: 13px, 11px; } }
+    background-image: url('../img/icons/2x/checkmark.png?1434436306');
+    -moz-background-size: 25px, 25px;
+    -o-background-size: 25px, 25px;
+    -webkit-background-size: 25px, 25px;
+    background-size: 25px, 25px; } }
 /* line 93, ../scss/outernet/partial/_forms.scss */
 input[type="checkbox"]:focus + label {
   color: #3584cf; }
@@ -921,15 +931,15 @@ input[type="checkbox"]:focus + label:before {
 input[type="checkbox"]:focus:checked + label:before {
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/checkmark_active.png?1434096013'); }
+  background-image: url('../img/icons/1x/checkmark_active.png?1434436206'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 101, ../scss/outernet/partial/_forms.scss */
   input[type="checkbox"]:focus:checked + label:before {
-    background-image: url('../img/icons/2x/checkmark_active.png?1434096013');
-    -moz-background-size: 13px, 11px;
-    -o-background-size: 13px, 11px;
-    -webkit-background-size: 13px, 11px;
-    background-size: 13px, 11px; } }
+    background-image: url('../img/icons/2x/checkmark_active.png?1434436308');
+    -moz-background-size: 25px, 25px;
+    -o-background-size: 25px, 25px;
+    -webkit-background-size: 25px, 25px;
+    background-size: 25px, 25px; } }
 
 /* line 106, ../scss/outernet/partial/_forms.scss */
 textarea {
@@ -954,25 +964,25 @@ select {
   padding-right: 50px;
   background-repeat: no-repeat;
   background-position: right 10px top 50%;
-  background-image: url('../img/icons/1x/dropdown_open.png?1434096013'); }
+  background-image: url('../img/icons/1x/dropdown_open.png?1434436222'); }
 /* line 125, ../scss/outernet/mixins/_forms.scss */
 select::-ms-expand {
   display: none; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 115, ../scss/outernet/partial/_forms.scss */
   select {
-    background-image: url('../img/icons/2x/dropdown_open.png?1434096013');
+    background-image: url('../img/icons/2x/dropdown_open.png?1434436326');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 /* line 123, ../scss/outernet/partial/_forms.scss */
 select:hover {
-  background-image: url('../img/icons/1x/dropdown_open_hover.png?1434096013'); }
+  background-image: url('../img/icons/1x/dropdown_open_hover.png?1434436228'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 123, ../scss/outernet/partial/_forms.scss */
   select:hover {
-    background-image: url('../img/icons/2x/dropdown_open_hover.png?1434096013');
+    background-image: url('../img/icons/2x/dropdown_open_hover.png?1434436330');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -1472,7 +1482,7 @@ table form button {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 36, ../scss/outernet/widgets/_menu.scss */
+/* line 37, ../scss/outernet/widgets/_menu.scss */
 .menu {
   position: fixed;
   z-index: 1000;
@@ -1484,68 +1494,68 @@ table form button {
   padding: 0 20px;
   background: #333333;
   color: #eeeeee; }
-/* line 48, ../scss/outernet/widgets/_menu.scss */
+/* line 49, ../scss/outernet/widgets/_menu.scss */
 .menu a {
   color: #888888; }
-/* line 51, ../scss/outernet/widgets/_menu.scss */
+/* line 52, ../scss/outernet/widgets/_menu.scss */
 .menu a:hover {
   color: #ffffff;
   text-decoration: none; }
-/* line 56, ../scss/outernet/widgets/_menu.scss */
+/* line 57, ../scss/outernet/widgets/_menu.scss */
 .menu a:visited {
   color: #888888; }
-/* line 60, ../scss/outernet/widgets/_menu.scss */
+/* line 61, ../scss/outernet/widgets/_menu.scss */
 .menu a:focus {
   color: #3584cf; }
-/* line 65, ../scss/outernet/widgets/_menu.scss */
+/* line 66, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse {
   background: #ffffff;
   color: #bbbbbb; }
-/* line 69, ../scss/outernet/widgets/_menu.scss */
+/* line 70, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse a {
   color: #555555; }
-/* line 21, ../scss/outernet/widgets/_menu.scss */
+/* line 22, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse a:hover, .menu.reverse a:focus {
   color: #3584cf; }
-/* line 26, ../scss/outernet/widgets/_menu.scss */
+/* line 27, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse a:visited {
   color: #555555; }
-/* line 74, ../scss/outernet/widgets/_menu.scss */
+/* line 75, ../scss/outernet/widgets/_menu.scss */
 .menu .menu-block-right {
   position: absolute;
   right: 0;
   top: 0; }
-/* line 80, ../scss/outernet/widgets/_menu.scss */
+/* line 81, ../scss/outernet/widgets/_menu.scss */
 .menu .menu-subblock {
   display: inline-block;
   padding-top: 18px;
   margin-right: 1.2em;
   vertical-align: top; }
-/* line 86, ../scss/outernet/widgets/_menu.scss */
+/* line 87, ../scss/outernet/widgets/_menu.scss */
 .menu .menu-subblock:last-child {
   margin-right: 0; }
-/* line 92, ../scss/outernet/widgets/_menu.scss */
+/* line 93, ../scss/outernet/widgets/_menu.scss */
 .menu #nav a {
   font-size: 18px;
   margin-right: 1.2em; }
-/* line 95, ../scss/outernet/widgets/_menu.scss */
+/* line 96, ../scss/outernet/widgets/_menu.scss */
 .menu #nav a:hover {
   color: #ffffff; }
-/* line 99, ../scss/outernet/widgets/_menu.scss */
+/* line 100, ../scss/outernet/widgets/_menu.scss */
 .menu #nav a:last-child {
   margin-right: 0; }
-/* line 104, ../scss/outernet/widgets/_menu.scss */
+/* line 105, ../scss/outernet/widgets/_menu.scss */
 .menu #nav .active {
   font-size: 18px;
   margin-right: 1.2em; }
-/* line 107, ../scss/outernet/widgets/_menu.scss */
+/* line 108, ../scss/outernet/widgets/_menu.scss */
 .menu #nav .active:last-child {
   margin-right: 0; }
-@media only screen and (max-width: 640px) {
-  /* line 91, ../scss/outernet/widgets/_menu.scss */
+@media only screen and (max-width: 800px) {
+  /* line 92, ../scss/outernet/widgets/_menu.scss */
   .menu #nav {
     display: none; } }
-/* line 117, ../scss/outernet/widgets/_menu.scss */
+/* line 118, ../scss/outernet/widgets/_menu.scss */
 .menu .hamburger {
   width: 60px;
   line-height: 60px;
@@ -1554,14 +1564,14 @@ table form button {
   position: relative;
   vertical-align: top;
   display: none; }
-/* line 126, ../scss/outernet/widgets/_menu.scss */
+/* line 127, ../scss/outernet/widgets/_menu.scss */
 .menu .hamburger.open {
   background: #ffffff; }
-@media only screen and (max-width: 640px) {
-  /* line 117, ../scss/outernet/widgets/_menu.scss */
+@media only screen and (max-width: 800px) {
+  /* line 118, ../scss/outernet/widgets/_menu.scss */
   .menu .hamburger {
     display: inline-block; } }
-/* line 134, ../scss/outernet/widgets/_menu.scss */
+/* line 135, ../scss/outernet/widgets/_menu.scss */
 .menu .hamburger a {
   display: block;
   width: 100%;
@@ -1572,17 +1582,17 @@ table form button {
   text-transform: capitalize;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/hamburger.png?1434025885'); }
+  background-image: url('../img/icons/1x/hamburger.png?1434436250'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 134, ../scss/outernet/widgets/_menu.scss */
+  /* line 135, ../scss/outernet/widgets/_menu.scss */
   .menu .hamburger a {
-    background-image: url('../img/icons/2x/hamburger.png?1434025680');
+    background-image: url('../img/icons/2x/hamburger.png?1434436348');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 
-/* line 146, ../scss/outernet/widgets/_menu.scss */
+/* line 147, ../scss/outernet/widgets/_menu.scss */
 .alt-menu {
   position: fixed;
   z-index: 2000;
@@ -1596,17 +1606,17 @@ table form button {
   -o-transition: left 0.3s ease-out, opacity 0.3s ease-out;
   -webkit-transition: left 0.3s ease-out, opacity 0.3s ease-out;
   transition: left 0.3s ease-out, opacity 0.3s ease-out; }
-@media only screen and (min-width: 640px) {
-  /* line 146, ../scss/outernet/widgets/_menu.scss */
+@media only screen and (min-width: 800px) {
+  /* line 147, ../scss/outernet/widgets/_menu.scss */
   .alt-menu {
     display: none; } }
-/* line 161, ../scss/outernet/widgets/_menu.scss */
+/* line 162, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .active .icon, .alt-menu .active .label {
   opacity: 0.5; }
-/* line 166, ../scss/outernet/widgets/_menu.scss */
+/* line 167, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2-trigger, .alt-menu .top-trigger {
   color: #bbbbbb; }
-/* line 174, ../scss/outernet/widgets/_menu.scss */
+/* line 175, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level1, .alt-menu .level2 {
   position: absolute;
   background: #ffffff;
@@ -1616,7 +1626,7 @@ table form button {
   width: 100%;
   overflow-y: scroll;
   background: #ffffff; }
-/* line 185, ../scss/outernet/widgets/_menu.scss */
+/* line 186, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2 {
   left: 100%;
   border-left: 3px solid #dddddd;
@@ -1624,14 +1634,14 @@ table form button {
   -o-transition: left 0.3s ease-out;
   -webkit-transition: left 0.3s ease-out;
   transition: left 0.3s ease-out; }
-/* line 190, ../scss/outernet/widgets/_menu.scss */
+/* line 191, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2.open {
   left: 0; }
-/* line 195, ../scss/outernet/widgets/_menu.scss */
+/* line 196, ../scss/outernet/widgets/_menu.scss */
 .alt-menu.open {
   left: 0;
   opacity: 1; }
-/* line 200, ../scss/outernet/widgets/_menu.scss */
+/* line 201, ../scss/outernet/widgets/_menu.scss */
 .alt-menu a, .alt-menu .active {
   display: block;
   line-height: 60px;
@@ -1910,7 +1920,7 @@ footer {
 footer .logo {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/misc/1x-s2b658410ca.png');
+  background-image: url('../img/misc/1x-sa2c70d9bab.png');
   background-position: 0 0;
   background-repeat: no-repeat;
   width: 260px;
@@ -1923,12 +1933,12 @@ footer .logo {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 10, ../scss/partials/_footer.scss */
   footer .logo {
-    background-image: url('../img/misc/2x-sc5bff73e72.png');
+    background-image: url('../img/misc/2x-s8f76f1acdc.png');
     background-position: 0 0;
-    -moz-background-size: 260px 60px;
-    -o-background-size: 260px 60px;
-    -webkit-background-size: 260px 60px;
-    background-size: 260px 60px; } }
+    -moz-background-size: 260px 203px;
+    -o-background-size: 260px 203px;
+    -webkit-background-size: 260px 203px;
+    background-size: 260px 203px; } }
 /* line 16, ../scss/partials/_footer.scss */
 footer .progver {
   font-weight: bold;
@@ -2037,6 +2047,13 @@ footer .progver, footer .copyright {
   width: 100%; }
 
 /* line 8, ../scss/wizard.scss */
+body.initial {
+  padding-top: 0; }
+/* line 11, ../scss/wizard.scss */
+body.initial .menu {
+  display: none; }
+
+/* line 17, ../scss/wizard.scss */
 .menu .logo {
   text-indent: -119988px;
   overflow: hidden;
@@ -2044,43 +2061,214 @@ footer .progver, footer .copyright {
   text-transform: capitalize;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s3245d2597c.png');
-  background-position: 0 -2503px;
+  background-image: url('../img/misc/1x-sa2c70d9bab.png');
+  background-position: 0 -181px;
   background-repeat: no-repeat;
   width: 152px;
   height: 22px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 8, ../scss/wizard.scss */
+  /* line 17, ../scss/wizard.scss */
   .menu .logo {
-    background-image: url('../img/icons/2x-s299be13ff3.png');
-    background-position: 0 -2503px;
-    -moz-background-size: 152px 3065px;
-    -o-background-size: 152px 3065px;
-    -webkit-background-size: 152px 3065px;
-    background-size: 152px 3065px; } }
-/* line 13, ../scss/wizard.scss */
+    background-image: url('../img/misc/2x-s8f76f1acdc.png');
+    background-position: 0 -181px;
+    -moz-background-size: 260px 203px;
+    -o-background-size: 260px 203px;
+    -webkit-background-size: 260px 203px;
+    background-size: 260px 203px; } }
+/* line 22, ../scss/wizard.scss */
 .menu .steps {
   margin-right: 20px; }
 @media only screen and (max-width: 640px) {
-  /* line 16, ../scss/wizard.scss */
+  /* line 25, ../scss/wizard.scss */
   .menu .steps .label {
     display: none; } }
 
-/* line 24, ../scss/wizard.scss */
+/* line 33, ../scss/wizard.scss */
+.outernet-logo {
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  text-transform: capitalize;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/librarian/1x-s05f5323011.png');
+  background-position: 0 -440px;
+  background-repeat: no-repeat;
+  width: 250px;
+  height: 36px;
+  margin-top: 20px;
+  margin-bottom: 8px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 33, ../scss/wizard.scss */
+  .outernet-logo {
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
+    background-position: 0 -440px;
+    -moz-background-size: 250px 1276px;
+    -o-background-size: 250px 1276px;
+    -webkit-background-size: 250px 1276px;
+    background-size: 250px 1276px; } }
+
+/* line 40, ../scss/wizard.scss */
 .wizard-steps {
   text-align: center;
   color: #bbbbbb; }
 
-/* line 30, ../scss/wizard.scss */
+/* line 46, ../scss/wizard.scss */
 .buttons a.button, .buttons button {
   margin-bottom: 0.5em; }
 
-/* line 38, ../scss/wizard.scss */
+/* line 54, ../scss/wizard.scss */
 .timezone-container select:nth-child(2), .timezone-container select:nth-child(3) {
   max-width: 48%;
   margin-right: 0.2em; }
 @media only screen and (max-width: 640px) {
-  /* line 38, ../scss/wizard.scss */
+  /* line 54, ../scss/wizard.scss */
   .timezone-container select:nth-child(2), .timezone-container select:nth-child(3) {
     max-width: 100%;
     margin-bottom: 0.2em; } }
+
+/* line 67, ../scss/wizard.scss */
+.steps {
+  display: inline-block; }
+/* line 70, ../scss/wizard.scss */
+.steps span {
+  display: inline-block; }
+/* line 74, ../scss/wizard.scss */
+.steps .step {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -3575px;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 74, ../scss/wizard.scss */
+  .steps .step {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -3575px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+/* line 78, ../scss/wizard.scss */
+.steps .previous {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -3525px;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 78, ../scss/wizard.scss */
+  .steps .previous {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -3525px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+/* line 82, ../scss/wizard.scss */
+.steps .current {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -3475px;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 82, ../scss/wizard.scss */
+  .steps .current {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -3475px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+
+/* line 87, ../scss/wizard.scss */
+.h-bar {
+  position: relative;
+  padding-bottom: 50px; }
+/* line 90, ../scss/wizard.scss */
+.h-bar .step-logo {
+  display: block;
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  right: 0;
+  margin: 0 auto; }
+/* line 100, ../scss/wizard.scss */
+.h-bar .step-language {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/librarian/1x-s05f5323011.png');
+  background-position: 0 -926px;
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 100, ../scss/wizard.scss */
+  .h-bar .step-language {
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
+    background-position: 0 -926px;
+    -moz-background-size: 250px 1276px;
+    -o-background-size: 250px 1276px;
+    -webkit-background-size: 250px 1276px;
+    background-size: 250px 1276px; } }
+/* line 100, ../scss/wizard.scss */
+.h-bar .step-datetime {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/librarian/1x-s05f5323011.png');
+  background-position: 0 -836px;
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 100, ../scss/wizard.scss */
+  .h-bar .step-datetime {
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
+    background-position: 0 -836px;
+    -moz-background-size: 250px 1276px;
+    -o-background-size: 250px 1276px;
+    -webkit-background-size: 250px 1276px;
+    background-size: 250px 1276px; } }
+/* line 100, ../scss/wizard.scss */
+.h-bar .step-superuser {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/librarian/1x-s05f5323011.png');
+  background-position: 0 -1106px;
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 100, ../scss/wizard.scss */
+  .h-bar .step-superuser {
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
+    background-position: 0 -1106px;
+    -moz-background-size: 250px 1276px;
+    -o-background-size: 250px 1276px;
+    -webkit-background-size: 250px 1276px;
+    background-size: 250px 1276px; } }
+/* line 100, ../scss/wizard.scss */
+.h-bar .step-ondd {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/librarian/1x-s05f5323011.png');
+  background-position: 0 -1016px;
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 100, ../scss/wizard.scss */
+  .h-bar .step-ondd {
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
+    background-position: 0 -1016px;
+    -moz-background-size: 250px 1276px;
+    -o-background-size: 250px 1276px;
+    -webkit-background-size: 250px 1276px;
+    background-size: 250px 1276px; } }

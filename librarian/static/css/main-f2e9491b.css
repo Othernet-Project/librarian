@@ -163,6 +163,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
  * http://www.gnu.org/licenses/gpl.txt.
  */
 /**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
  * _fonts.scss: typography definitions
  * 
  * Copyright 2015, Outernet Inc.
@@ -172,72 +182,72 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 14, ../scss/outernet/partial/_fonts.scss */
+/* line 16, ../scss/outernet/partial/_fonts.scss */
 body {
   font-family: Arial, Helvetica, "Liberation Sans", sans-serif;
   font-size: 16px;
   line-height: 137.5%;
   color: #555555; }
 
-/* line 20, ../scss/outernet/partial/_fonts.scss */
+/* line 22, ../scss/outernet/partial/_fonts.scss */
 h1.first, h2.first, h3.first, h4.first, h5.first, h6.first {
   margin-top: 0; }
 
-/* line 25, ../scss/outernet/partial/_fonts.scss */
+/* line 27, ../scss/outernet/partial/_fonts.scss */
 h1 {
   font-size: 175%;
   line-height: 125%;
   margin-top: 1em;
   margin-bottom: 16px; }
 
-/* line 30, ../scss/outernet/partial/_fonts.scss */
+/* line 32, ../scss/outernet/partial/_fonts.scss */
 h2 {
   font-size: 162.5%;
   line-height: 123%;
   margin-top: 1em;
   margin-bottom: 16px; }
 
-/* line 35, ../scss/outernet/partial/_fonts.scss */
+/* line 37, ../scss/outernet/partial/_fonts.scss */
 h3 {
   font-size: 150%;
   line-height: 125%;
   margin-top: 1em;
   margin-bottom: 16px; }
 
-/* line 40, ../scss/outernet/partial/_fonts.scss */
+/* line 42, ../scss/outernet/partial/_fonts.scss */
 h4 {
   font-size: 137.5%;
   line-height: 127%;
   margin-top: 1em;
   margin-bottom: 16px; }
 
-/* line 45, ../scss/outernet/partial/_fonts.scss */
+/* line 47, ../scss/outernet/partial/_fonts.scss */
 h5 {
   font-size: 125%;
   line-height: 130%;
   margin-top: 1em;
   margin-bottom: 16px; }
 
-/* line 50, ../scss/outernet/partial/_fonts.scss */
+/* line 52, ../scss/outernet/partial/_fonts.scss */
 h6 {
   font-size: 112.5%;
   line-height: 116%;
   margin-top: 1em;
   margin-bottom: 16px; }
 
-/* line 55, ../scss/outernet/partial/_fonts.scss */
+/* line 57, ../scss/outernet/partial/_fonts.scss */
 p {
   margin-bottom: 1em; }
 
-/* line 59, ../scss/outernet/partial/_fonts.scss */
+/* line 61, ../scss/outernet/partial/_fonts.scss */
 b, strong {
   font-weight: bold; }
 
-/* line 63, ../scss/outernet/partial/_fonts.scss */
+/* line 65, ../scss/outernet/partial/_fonts.scss */
 i, em {
   font-style: italic; }
 
-/* line 67, ../scss/outernet/partial/_fonts.scss */
+/* line 69, ../scss/outernet/partial/_fonts.scss */
 pre {
   overflow: hidden;
   margin-bottom: 1em;
@@ -246,13 +256,13 @@ pre {
   -webkit-border-radius: 4px;
   border-radius: 4px;
   padding: 0.4em; }
-/* line 74, ../scss/outernet/partial/_fonts.scss */
+/* line 76, ../scss/outernet/partial/_fonts.scss */
 pre:hover {
   overflow: visible;
   position: relative;
   z-index: 1000; }
 
-/* line 81, ../scss/outernet/partial/_fonts.scss */
+/* line 83, ../scss/outernet/partial/_fonts.scss */
 code {
   display: inline-block;
   font-family: monospace;
@@ -263,10 +273,10 @@ code {
   padding: 0 0.4em;
   font-size: 80%; }
 
-/* line 90, ../scss/outernet/partial/_fonts.scss */
+/* line 92, ../scss/outernet/partial/_fonts.scss */
 ul.bullets {
   margin-bottom: 1em; }
-/* line 93, ../scss/outernet/partial/_fonts.scss */
+/* line 95, ../scss/outernet/partial/_fonts.scss */
 ul.bullets li {
   list-style: disc;
   margin-left: 1em; }
@@ -1472,7 +1482,7 @@ table form button {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 36, ../scss/outernet/widgets/_menu.scss */
+/* line 37, ../scss/outernet/widgets/_menu.scss */
 .menu {
   position: fixed;
   z-index: 1000;
@@ -1484,68 +1494,68 @@ table form button {
   padding: 0 20px;
   background: #333333;
   color: #eeeeee; }
-/* line 48, ../scss/outernet/widgets/_menu.scss */
+/* line 49, ../scss/outernet/widgets/_menu.scss */
 .menu a {
   color: #888888; }
-/* line 51, ../scss/outernet/widgets/_menu.scss */
+/* line 52, ../scss/outernet/widgets/_menu.scss */
 .menu a:hover {
   color: #ffffff;
   text-decoration: none; }
-/* line 56, ../scss/outernet/widgets/_menu.scss */
+/* line 57, ../scss/outernet/widgets/_menu.scss */
 .menu a:visited {
   color: #888888; }
-/* line 60, ../scss/outernet/widgets/_menu.scss */
+/* line 61, ../scss/outernet/widgets/_menu.scss */
 .menu a:focus {
   color: #3584cf; }
-/* line 65, ../scss/outernet/widgets/_menu.scss */
+/* line 66, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse {
   background: #ffffff;
   color: #bbbbbb; }
-/* line 69, ../scss/outernet/widgets/_menu.scss */
+/* line 70, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse a {
   color: #555555; }
-/* line 21, ../scss/outernet/widgets/_menu.scss */
+/* line 22, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse a:hover, .menu.reverse a:focus {
   color: #3584cf; }
-/* line 26, ../scss/outernet/widgets/_menu.scss */
+/* line 27, ../scss/outernet/widgets/_menu.scss */
 .menu.reverse a:visited {
   color: #555555; }
-/* line 74, ../scss/outernet/widgets/_menu.scss */
+/* line 75, ../scss/outernet/widgets/_menu.scss */
 .menu .menu-block-right {
   position: absolute;
   right: 0;
   top: 0; }
-/* line 80, ../scss/outernet/widgets/_menu.scss */
+/* line 81, ../scss/outernet/widgets/_menu.scss */
 .menu .menu-subblock {
   display: inline-block;
   padding-top: 18px;
   margin-right: 1.2em;
   vertical-align: top; }
-/* line 86, ../scss/outernet/widgets/_menu.scss */
+/* line 87, ../scss/outernet/widgets/_menu.scss */
 .menu .menu-subblock:last-child {
   margin-right: 0; }
-/* line 92, ../scss/outernet/widgets/_menu.scss */
+/* line 93, ../scss/outernet/widgets/_menu.scss */
 .menu #nav a {
   font-size: 18px;
   margin-right: 1.2em; }
-/* line 95, ../scss/outernet/widgets/_menu.scss */
+/* line 96, ../scss/outernet/widgets/_menu.scss */
 .menu #nav a:hover {
   color: #ffffff; }
-/* line 99, ../scss/outernet/widgets/_menu.scss */
+/* line 100, ../scss/outernet/widgets/_menu.scss */
 .menu #nav a:last-child {
   margin-right: 0; }
-/* line 104, ../scss/outernet/widgets/_menu.scss */
+/* line 105, ../scss/outernet/widgets/_menu.scss */
 .menu #nav .active {
   font-size: 18px;
   margin-right: 1.2em; }
-/* line 107, ../scss/outernet/widgets/_menu.scss */
+/* line 108, ../scss/outernet/widgets/_menu.scss */
 .menu #nav .active:last-child {
   margin-right: 0; }
-@media only screen and (max-width: 640px) {
-  /* line 91, ../scss/outernet/widgets/_menu.scss */
+@media only screen and (max-width: 800px) {
+  /* line 92, ../scss/outernet/widgets/_menu.scss */
   .menu #nav {
     display: none; } }
-/* line 117, ../scss/outernet/widgets/_menu.scss */
+/* line 118, ../scss/outernet/widgets/_menu.scss */
 .menu .hamburger {
   width: 60px;
   line-height: 60px;
@@ -1554,14 +1564,14 @@ table form button {
   position: relative;
   vertical-align: top;
   display: none; }
-/* line 126, ../scss/outernet/widgets/_menu.scss */
+/* line 127, ../scss/outernet/widgets/_menu.scss */
 .menu .hamburger.open {
   background: #ffffff; }
-@media only screen and (max-width: 640px) {
-  /* line 117, ../scss/outernet/widgets/_menu.scss */
+@media only screen and (max-width: 800px) {
+  /* line 118, ../scss/outernet/widgets/_menu.scss */
   .menu .hamburger {
     display: inline-block; } }
-/* line 134, ../scss/outernet/widgets/_menu.scss */
+/* line 135, ../scss/outernet/widgets/_menu.scss */
 .menu .hamburger a {
   display: block;
   width: 100%;
@@ -1574,7 +1584,7 @@ table form button {
   background-repeat: no-repeat;
   background-image: url('../img/icons/1x/hamburger.png?1434436250'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 134, ../scss/outernet/widgets/_menu.scss */
+  /* line 135, ../scss/outernet/widgets/_menu.scss */
   .menu .hamburger a {
     background-image: url('../img/icons/2x/hamburger.png?1434436348');
     -moz-background-size: 25px, 25px;
@@ -1582,7 +1592,7 @@ table form button {
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 
-/* line 146, ../scss/outernet/widgets/_menu.scss */
+/* line 147, ../scss/outernet/widgets/_menu.scss */
 .alt-menu {
   position: fixed;
   z-index: 2000;
@@ -1596,17 +1606,17 @@ table form button {
   -o-transition: left 0.3s ease-out, opacity 0.3s ease-out;
   -webkit-transition: left 0.3s ease-out, opacity 0.3s ease-out;
   transition: left 0.3s ease-out, opacity 0.3s ease-out; }
-@media only screen and (min-width: 640px) {
-  /* line 146, ../scss/outernet/widgets/_menu.scss */
+@media only screen and (min-width: 800px) {
+  /* line 147, ../scss/outernet/widgets/_menu.scss */
   .alt-menu {
     display: none; } }
-/* line 161, ../scss/outernet/widgets/_menu.scss */
+/* line 162, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .active .icon, .alt-menu .active .label {
   opacity: 0.5; }
-/* line 166, ../scss/outernet/widgets/_menu.scss */
+/* line 167, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2-trigger, .alt-menu .top-trigger {
   color: #bbbbbb; }
-/* line 174, ../scss/outernet/widgets/_menu.scss */
+/* line 175, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level1, .alt-menu .level2 {
   position: absolute;
   background: #ffffff;
@@ -1616,7 +1626,7 @@ table form button {
   width: 100%;
   overflow-y: scroll;
   background: #ffffff; }
-/* line 185, ../scss/outernet/widgets/_menu.scss */
+/* line 186, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2 {
   left: 100%;
   border-left: 3px solid #dddddd;
@@ -1624,14 +1634,14 @@ table form button {
   -o-transition: left 0.3s ease-out;
   -webkit-transition: left 0.3s ease-out;
   transition: left 0.3s ease-out; }
-/* line 190, ../scss/outernet/widgets/_menu.scss */
+/* line 191, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2.open {
   left: 0; }
-/* line 195, ../scss/outernet/widgets/_menu.scss */
+/* line 196, ../scss/outernet/widgets/_menu.scss */
 .alt-menu.open {
   left: 0;
   opacity: 1; }
-/* line 200, ../scss/outernet/widgets/_menu.scss */
+/* line 201, ../scss/outernet/widgets/_menu.scss */
 .alt-menu a, .alt-menu .active {
   display: block;
   line-height: 60px;
@@ -1843,7 +1853,7 @@ table form button {
   -o-transition: max-width 0.3s;
   -webkit-transition: max-width 0.3s;
   transition: max-width 0.3s; }
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
   /* line 33, ../scss/partials/_mainmenu.scss */
   .menu #nav .navicon .icon + .label {
     max-width: none; } }
@@ -1986,7 +1996,7 @@ table form button {
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
   /* line 67, ../scss/partials/_mainmenu.scss */
   .menu .dropdown.languages {
     display: none; } }
@@ -2018,7 +2028,7 @@ table form button {
 #nav .library .icon, .alt-menu .library .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -330px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2026,7 +2036,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 116, ../scss/partials/_mainmenu.scss */
   #nav .library .icon, .alt-menu .library .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -330px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2037,7 +2047,7 @@ table form button {
 #nav .library:hover .icon, #nav .library.active .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -385px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2045,7 +2055,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 122, ../scss/partials/_mainmenu.scss */
   #nav .library:hover .icon, #nav .library.active .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -385px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2056,7 +2066,7 @@ table form button {
 #nav .files .icon, .alt-menu .files .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -110px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2064,7 +2074,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 116, ../scss/partials/_mainmenu.scss */
   #nav .files .icon, .alt-menu .files .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -110px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2075,7 +2085,7 @@ table form button {
 #nav .files:hover .icon, #nav .files.active .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -165px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2083,7 +2093,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 122, ../scss/partials/_mainmenu.scss */
   #nav .files:hover .icon, #nav .files.active .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -165px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2094,7 +2104,7 @@ table form button {
 #nav .sites .icon, .alt-menu .sites .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -726px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2102,7 +2112,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 116, ../scss/partials/_mainmenu.scss */
   #nav .sites .icon, .alt-menu .sites .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -726px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2113,7 +2123,7 @@ table form button {
 #nav .sites:hover .icon, #nav .sites.active .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -781px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2121,7 +2131,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 122, ../scss/partials/_mainmenu.scss */
   #nav .sites:hover .icon, #nav .sites.active .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -781px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2132,7 +2142,7 @@ table form button {
 #nav .apps .icon, .alt-menu .apps .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 0;
   background-repeat: no-repeat;
   width: 25px;
@@ -2140,7 +2150,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 116, ../scss/partials/_mainmenu.scss */
   #nav .apps .icon, .alt-menu .apps .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 0;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2151,7 +2161,7 @@ table form button {
 #nav .apps:hover .icon, #nav .apps.active .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -55px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2159,7 +2169,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 122, ../scss/partials/_mainmenu.scss */
   #nav .apps:hover .icon, #nav .apps.active .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -55px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2170,7 +2180,7 @@ table form button {
 #nav .updates .icon, .alt-menu .updates .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -1196px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2178,7 +2188,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 116, ../scss/partials/_mainmenu.scss */
   #nav .updates .icon, .alt-menu .updates .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -1196px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2189,7 +2199,7 @@ table form button {
 #nav .updates:hover .icon, #nav .updates.active .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -1251px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2197,7 +2207,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 122, ../scss/partials/_mainmenu.scss */
   #nav .updates:hover .icon, #nav .updates.active .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -1251px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2208,7 +2218,7 @@ table form button {
 #nav .logout .icon, .alt-menu .logout .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -506px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2216,7 +2226,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 116, ../scss/partials/_mainmenu.scss */
   #nav .logout .icon, .alt-menu .logout .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -506px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2227,7 +2237,7 @@ table form button {
 #nav .logout:hover .icon, #nav .logout.active .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -561px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2235,7 +2245,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 122, ../scss/partials/_mainmenu.scss */
   #nav .logout:hover .icon, #nav .logout.active .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -561px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2246,7 +2256,7 @@ table form button {
 #nav .settings .icon, .alt-menu .settings .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -616px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2254,7 +2264,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 116, ../scss/partials/_mainmenu.scss */
   #nav .settings .icon, .alt-menu .settings .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -616px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2265,7 +2275,7 @@ table form button {
 #nav .settings:hover .icon, #nav .settings.active .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/librarian/1x-s673e4b0e44.png');
+  background-image: url('../img/librarian/1x-s05f5323011.png');
   background-position: 0 -671px;
   background-repeat: no-repeat;
   width: 25px;
@@ -2273,7 +2283,7 @@ table form button {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 122, ../scss/partials/_mainmenu.scss */
   #nav .settings:hover .icon, #nav .settings.active .icon {
-    background-image: url('../img/librarian/2x-sf74ed6c1b3.png');
+    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -671px;
     -moz-background-size: 250px 1276px;
     -o-background-size: 250px 1276px;
@@ -2863,102 +2873,6 @@ form.search .icon {
   .content-list li .details {
     text-align: left; } }
 /* line 65, ../scss/partials/_content_list.scss */
-.content-list li .tag-icon {
-  display: inline-block;
-  display: inline-block;
-  vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
-  background-position: 0 -3625px;
-  background-repeat: no-repeat;
-  width: 32px;
-  height: 19px;
-  width: 0;
-  heigth: 19px;
-  overflow: hidden;
-  padding: 0 0 0 32px; }
-@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 65, ../scss/partials/_content_list.scss */
-  .content-list li .tag-icon {
-    background-image: url('../img/icons/2x-sef02559bad.png');
-    background-position: 0 -3625px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
-/* line 70, ../scss/partials/_content_list.scss */
-.content-list li .tags a {
-  color: #888888;
-  margin: 0 0.2em; }
-/* line 75, ../scss/partials/_content_list.scss */
-.content-list li .tags form.inline {
-  vertical-align: middle; }
-/* line 79, ../scss/partials/_content_list.scss */
-.content-list li .tags .tag-button {
-  background: transparent;
-  display: inline-block;
-  display: inline-block;
-  vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
-  background-position: 0 -1835px;
-  background-repeat: no-repeat;
-  width: 20px;
-  height: 20px;
-  width: 0;
-  heigth: 20px;
-  overflow: hidden;
-  padding: 0 0 0 20px;
-  text-indent: -119988px;
-  overflow: hidden;
-  text-align: left;
-  text-transform: capitalize;
-  padding-left: 40px;
-  border: none;
-  -moz-border-radius: 0;
-  -webkit-border-radius: 0;
-  border-radius: 0;
-  min-width: 0;
-  margin: 0;
-  color: #3584cf;
-  position: relative; }
-@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 79, ../scss/partials/_content_list.scss */
-  .content-list li .tags .tag-button {
-    background-image: url('../img/icons/2x-sef02559bad.png');
-    background-position: 0 -1835px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
-/* line 71, ../scss/partials/_common_elements.scss */
-.content-list li .tags .tag-button:hover {
-  display: inline-block;
-  display: inline-block;
-  vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
-  background-position: 0 -1885px;
-  background-repeat: no-repeat;
-  width: 20px;
-  height: 20px;
-  width: 0;
-  heigth: 20px;
-  overflow: hidden;
-  padding: 0 0 0 20px;
-  padding-left: 40px;
-  text-indent: 0;
-  overflow: visible;
-  color: #28639b;
-  text-decoration: underline;
-  background-color: transparent; }
-@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 71, ../scss/partials/_common_elements.scss */
-  .content-list li .tags .tag-button:hover {
-    background-image: url('../img/icons/2x-sef02559bad.png');
-    background-position: 0 -1885px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
-/* line 84, ../scss/partials/_content_list.scss */
 .content-list li .label-archive {
   position: absolute;
   right: 0;
@@ -2966,35 +2880,35 @@ form.search .icon {
   line-height: 40px;
   padding: 0 20px;
   color: #ffffff; }
-/* line 92, ../scss/partials/_content_list.scss */
+/* line 73, ../scss/partials/_content_list.scss */
 .content-list li .label-archive.label-partner {
   background: #058120; }
-/* line 96, ../scss/partials/_content_list.scss */
+/* line 77, ../scss/partials/_content_list.scss */
 .content-list li .label-archive.label-sponsored {
   background: #e17502; }
-/* line 100, ../scss/partials/_content_list.scss */
+/* line 81, ../scss/partials/_content_list.scss */
 .content-list li .label-archive.label-core {
   background: #3584cf; }
-/* line 105, ../scss/partials/_content_list.scss */
+/* line 86, ../scss/partials/_content_list.scss */
 .content-list li h2 {
   font-size: 137.5%;
   line-height: 127%;
   max-width: 80%;
   margin: 0 auto 0.5em; }
 @media only screen and (max-width: 640px) {
-  /* line 105, ../scss/partials/_content_list.scss */
+  /* line 86, ../scss/partials/_content_list.scss */
   .content-list li h2 {
     max-width: none;
     font-size: 125%;
     line-height: 130%; } }
-/* line 144, ../scss/partials/_content_list.scss */
+/* line 125, ../scss/partials/_content_list.scss */
 .content-list li:nth-child(4n+2), .content-list li:nth-child(4n+3) {
   background-color: #eeeeee; }
-/* line 121, ../scss/partials/_content_list.scss */
+/* line 102, ../scss/partials/_content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details, .content-list li:nth-child(4n+3).has-thumb .details {
   background: rgba(0, 0, 0, 0.6);
   color: #bbbbbb; }
-/* line 125, ../scss/partials/_content_list.scss */
+/* line 106, ../scss/partials/_content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details a, .content-list li:nth-child(4n+3).has-thumb .details a {
   color: #bbbbbb; }
 /* line 60, ../scss/outernet/mixins/_hyperlinks.scss */
@@ -3003,13 +2917,13 @@ form.search .icon {
 /* line 64, ../scss/outernet/mixins/_hyperlinks.scss */
 .content-list li:nth-child(4n+2).has-thumb .details a:visited, .content-list li:nth-child(4n+3).has-thumb .details a:visited {
   color: #888888; }
-/* line 129, ../scss/partials/_content_list.scss */
+/* line 110, ../scss/partials/_content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details h2 a, .content-list li:nth-child(4n+3).has-thumb .details h2 a {
   color: #ffffff; }
-/* line 132, ../scss/partials/_content_list.scss */
+/* line 113, ../scss/partials/_content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details h2 a:visited, .content-list li:nth-child(4n+3).has-thumb .details h2 a:visited {
   color: #bbbbbb; }
-/* line 137, ../scss/partials/_content_list.scss */
+/* line 118, ../scss/partials/_content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details .delete, .content-list li:nth-child(4n+3).has-thumb .details .delete {
   color: #ffffff;
   background-color: transparent;
@@ -3024,15 +2938,15 @@ form.search .icon {
   background-color: #ffffff;
   border-color: #ffffff;
   opacity: 0.75; }
-/* line 150, ../scss/partials/_content_list.scss */
+/* line 131, ../scss/partials/_content_list.scss */
 .content-list li.has-thumb .details {
   background: rgba(255, 255, 255, 0.8); }
 
-/* line 157, ../scss/partials/_content_list.scss */
+/* line 138, ../scss/partials/_content_list.scss */
 .load-more {
   text-align: center;
   padding: 2em 0 4em; }
-/* line 162, ../scss/partials/_content_list.scss */
+/* line 143, ../scss/partials/_content_list.scss */
 .load-more button .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3040,20 +2954,20 @@ form.search .icon {
   width: 21px;
   height: 5px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 162, ../scss/partials/_content_list.scss */
+  /* line 143, ../scss/partials/_content_list.scss */
   .load-more button .icon {
     background-image: url('../img/animated/2x/loader.gif?1434106352');
     -moz-background-size: 21px, 5px;
     -o-background-size: 21px, 5px;
     -webkit-background-size: 21px, 5px;
     background-size: 21px, 5px; } }
-/* line 168, ../scss/partials/_content_list.scss */
+/* line 149, ../scss/partials/_content_list.scss */
 .load-more button.active .icon {
   background-image: url('../img/animated/1x/loader_active.gif?1434108311');
   width: 21px;
   height: 5px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 168, ../scss/partials/_content_list.scss */
+  /* line 149, ../scss/partials/_content_list.scss */
   .load-more button.active .icon {
     background-image: url('../img/animated/2x/loader_active.gif?1434108311');
     -moz-background-size: 21px, 5px;
@@ -3061,12 +2975,127 @@ form.search .icon {
     -webkit-background-size: 21px, 5px;
     background-size: 21px, 5px; } }
 
-/* line 174, ../scss/partials/_content_list.scss */
+/* line 155, ../scss/partials/_content_list.scss */
 .to-top {
   position: fixed;
   bottom: 0;
   right: 0;
   padding: 0 20px 20px 0; }
+
+/**
+ * _grid.scss: simple grid system
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _media_query.scss: media query support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 4, ../scss/partials/_downloads.scss */
+.space {
+  color: #888888; }
+
+/* line 8, ../scss/partials/_downloads.scss */
+.downloads-list {
+  padding: 20px; }
+/* line 38, ../scss/outernet/mixins/_grid.scss */
+.downloads-list:after {
+  content: '';
+  display: block;
+  width: 100%;
+  clear: left; }
+/* line 11, ../scss/partials/_downloads.scss */
+.downloads-list li {
+  margin-bottom: 2em; }
+/* line 15, ../scss/partials/_downloads.scss */
+.downloads-list .do {
+  font-size: 87.5%;
+  line-height: 137.5%;
+  color: #888888;
+  margin-bottom: 0.5em; }
+/* line 20, ../scss/partials/_downloads.scss */
+.downloads-list .do:last-of-type {
+  margin-bottom: 1em; }
+/* line 25, ../scss/partials/_downloads.scss */
+.downloads-list .label {
+  font-weight: bold; }
+
+/* line 30, ../scss/partials/_downloads.scss */
+.downloads-filters {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px; }
+/* line 38, ../scss/outernet/mixins/_grid.scss */
+.downloads-filters:after {
+  content: '';
+  display: block;
+  width: 100%;
+  clear: left; }
+/* line 34, ../scss/partials/_downloads.scss */
+.downloads-filters #lang {
+  width: 260px; }
+/* line 38, ../scss/partials/_downloads.scss */
+.downloads-filters form {
+  display: inline; }
+/* line 42, ../scss/partials/_downloads.scss */
+.downloads-filters .langs {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  float: left;
+  box-sizing: border-box;
+  -moz-transition: width 0.5s;
+  -o-transition: width 0.5s;
+  -webkit-transition: width 0.5s;
+  transition: width 0.5s;
+  width: 66.66667%; }
+/* line 46, ../scss/partials/_downloads.scss */
+.downloads-filters .pager {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  float: left;
+  box-sizing: border-box;
+  -moz-transition: width 0.5s;
+  -o-transition: width 0.5s;
+  -webkit-transition: width 0.5s;
+  transition: width 0.5s;
+  width: 33.33333%;
+  text-align: right; }
+@media only screen and (max-width: 732px) {
+  /* line 52, ../scss/partials/_downloads.scss */
+  .downloads-filters .langs, .downloads-filters .pager {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    float: left;
+    box-sizing: border-box;
+    -moz-transition: width 0.5s;
+    -o-transition: width 0.5s;
+    -webkit-transition: width 0.5s;
+    transition: width 0.5s;
+    width: 100%;
+    text-align: left; } }
+
+/* line 59, ../scss/partials/_downloads.scss */
+.bottom-pager {
+  text-align: center;
+  padding: 2em 20px; }
 
 /**
  * _grid.scss: simple grid system
@@ -3397,17 +3426,17 @@ form.search .icon {
   border-radius: 0;
   padding: 0;
   margin: 0;
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  text-transform: capitalize;
   display: inline-block;
   vertical-align: middle;
   background-image: url('../img/icons/1x-s41a6501f83.png');
   background-position: 0 -1835px;
   background-repeat: no-repeat;
   width: 20px;
-  height: 20px;
-  text-indent: -119988px;
-  overflow: hidden;
-  text-align: left;
-  text-transform: capitalize; }
+  height: 20px; }
 /* line 178, ../scss/outernet/mixins/_buttons.scss */
 .file-list table .files-rename-button:focs, .file-list table .files-rename-button:hover {
   background: transparent;
@@ -3459,17 +3488,17 @@ form.search .icon {
   border-radius: 0;
   padding: 0;
   margin: 0;
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  text-transform: capitalize;
   display: inline-block;
   vertical-align: middle;
   background-image: url('../img/icons/1x-s41a6501f83.png');
   background-position: 0 -1265px;
   background-repeat: no-repeat;
   width: 25px;
-  height: 25px;
-  text-indent: -119988px;
-  overflow: hidden;
-  text-align: left;
-  text-transform: capitalize; }
+  height: 25px; }
 /* line 178, ../scss/outernet/mixins/_buttons.scss */
 .file-list table .files-delete button:focs, .file-list table .files-delete button:hover {
   background: transparent;
@@ -3909,3 +3938,329 @@ form.search .icon {
 .app-list li .app-details .app-description, .app-list li .app-details .app-author, .app-list li .app-details .app-version {
   font-size: 87.5%;
   line-height: 137.5%; }
+
+/**
+ * _sprites.scss: sprite images with high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _hdpi_images.scss: helpers for high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 3, ../scss/partials/_setup.scss */
+.setup-finished {
+  padding-top: 3em;
+  padding-bottom: 4em;
+  text-align: center; }
+/* line 9, ../scss/partials/_setup.scss */
+.setup-finished .all-ok {
+  display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -1375px;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 1em; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 9, ../scss/partials/_setup.scss */
+  .setup-finished .all-ok {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -1375px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+/* line 15, ../scss/partials/_setup.scss */
+.setup-finished .main {
+  font-size: 125%;
+  line-height: 130%;
+  margin: 0; }
+/* line 20, ../scss/partials/_setup.scss */
+.setup-finished .sub {
+  color: #bbbbbb; }
+
+/* line 3, ../scss/partials/_reader.scss */
+.reader-frame {
+  position: fixed;
+  top: 60px;
+  bottom: 120px;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  overflow: hidden; }
+/* line 12, ../scss/partials/_reader.scss */
+.reader-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%; }
+
+/* line 19, ../scss/partials/_reader.scss */
+.reader-meta {
+  position: fixed;
+  height: 119px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #dddddd; }
+/* line 27, ../scss/partials/_reader.scss */
+.reader-meta .attrib {
+  font-size: 87.5%;
+  line-height: 137.5%; }
+/* line 31, ../scss/partials/_reader.scss */
+.reader-meta .inner {
+  padding: 10px 20px; }
+
+/**
+ * _icons.scss: simple icon widget
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _sprites.scss: sprite images with high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _hdpi_images.scss: helpers for high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 3, ../scss/partials/_tags.scss */
+.tag-icon {
+  display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -3625px;
+  background-repeat: no-repeat;
+  width: 32px;
+  height: 19px;
+  width: 0;
+  heigth: 19px;
+  overflow: hidden;
+  padding: 0 0 0 32px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 3, ../scss/partials/_tags.scss */
+  .tag-icon {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -3625px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+
+/* line 8, ../scss/partials/_tags.scss */
+.tags a {
+  color: #888888;
+  margin: 0 0.2em; }
+/* line 13, ../scss/partials/_tags.scss */
+.tags form.inline {
+  vertical-align: middle; }
+/* line 17, ../scss/partials/_tags.scss */
+.tags .tag-button {
+  background: transparent;
+  display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -1835px;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+  width: 0;
+  heigth: 20px;
+  overflow: hidden;
+  padding: 0 0 0 20px;
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  text-transform: capitalize;
+  padding-left: 40px;
+  border: none;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  min-width: 0;
+  margin: 0;
+  color: #3584cf;
+  position: relative; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 17, ../scss/partials/_tags.scss */
+  .tags .tag-button {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -1835px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+/* line 71, ../scss/partials/_common_elements.scss */
+.tags .tag-button:hover {
+  display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -1885px;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+  width: 0;
+  heigth: 20px;
+  overflow: hidden;
+  padding: 0 0 0 20px;
+  padding-left: 40px;
+  text-indent: 0;
+  overflow: visible;
+  color: #28639b;
+  text-decoration: underline;
+  background-color: transparent; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 71, ../scss/partials/_common_elements.scss */
+  .tags .tag-button:hover {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -1885px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+
+/* line 4, ../scss/partials/_pager.scss */
+#pp, #page {
+  width: 100px; }
+
+/* line 8, ../scss/partials/_pager.scss */
+.pager-button {
+  border: 1px solid #bbbbbb;
+  -moz-border-radius: 1000px;
+  -webkit-border-radius: 1000px;
+  border-radius: 1000px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  line-height: 40px;
+  width: 40px;
+  text-align: center;
+  display: inline-block; }
+/* line 17, ../scss/partials/_pager.scss */
+.pager-button:hover {
+  border-color: #888888; }
+/* line 21, ../scss/partials/_pager.scss */
+.pager-button .icon {
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  text-transform: capitalize; }
+/* line 25, ../scss/partials/_pager.scss */
+.pager-button.prev .icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -605px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 25, ../scss/partials/_pager.scss */
+  .pager-button.prev .icon {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -605px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+/* line 30, ../scss/partials/_pager.scss */
+.pager-button:hover.prev .icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -660px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 30, ../scss/partials/_pager.scss */
+  .pager-button:hover.prev .icon {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -660px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+/* line 35, ../scss/partials/_pager.scss */
+.pager-button.next .icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -715px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 35, ../scss/partials/_pager.scss */
+  .pager-button.next .icon {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -715px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+/* line 40, ../scss/partials/_pager.scss */
+.pager-button:hover.next .icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-position: 0 -770px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 40, ../scss/partials/_pager.scss */
+  .pager-button:hover.next .icon {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -770px;
+    -moz-background-size: 100px 3864px;
+    -o-background-size: 100px 3864px;
+    -webkit-background-size: 100px 3864px;
+    background-size: 100px 3864px; } }
+
+/* line 46, ../scss/partials/_pager.scss */
+.pages-count {
+  color: #bbbbbb; }
