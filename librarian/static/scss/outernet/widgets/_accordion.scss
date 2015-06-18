@@ -48,6 +48,7 @@
       margin: 0;
       cursor: pointer;
       font-size: 20px;
+      padding-left: 20px;
     }
 
     // CONTENT
@@ -66,6 +67,8 @@
       }
       // HEADER
       & > :nth-child(1) {
+        padding-left: 0;
+
         a {
           position: relative;
           top: 2px;
