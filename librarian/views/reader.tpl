@@ -28,12 +28,13 @@ ${meta.title}
 </div>
 </%block>
 
+<%block name="footer"/>
+
 <%block name="script_templates">
 ${tag_js_templates.body()}
 <script id="readerCssPatch" type="text/template">
     <link rel="stylesheet" type="text/css" href="${assets['css/content']}" />
 </script>
-
 </%block>
 
 <%block name="extra_scripts">
