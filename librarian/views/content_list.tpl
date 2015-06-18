@@ -34,6 +34,7 @@ ${library_submenu.body()}
 <div class="filters">
     <div class="form langs">
         <form id="lang" class="downloads-langs">
+            <input type="hidden" name="q" value="${query or ''}">
             <input type="hidden" name="t" value="${tag_id or ''}">
             ${h.vselect('lang', SELECT_LANGS, lang)}
             ## Translators, used as label for language filter button
@@ -46,13 +47,10 @@ ${library_submenu.body()}
     </div>
 </div>
 
-% if query:
-## Translators, used as note on library page when showing search results, %(term)s represents the text typed in by user
-<p class="search-keyword">${_("Showing search results for '%(terms)s'") % {'terms': query}}</p>
-% endif
 <ul id="content-list" class="content-list" data-total="${int(pager.pages)}">
     ${content_list.body()}
 </ul>
+
 % if not metadata:
     <p class="empty">
     % if not query and not tag and not lang['lang']:
