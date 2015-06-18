@@ -31,4 +31,18 @@ $reader-data-height: 120px;
   .inner {
     padding: 10px 20px;
   }
+
+  .tag-form {
+    display: inline-block;
+    margin-bottom: 1em;
+  }
+
+  .tags-help {
+    display: inline;
+    padding: 0;
+  }
+
+  .tags {
+    display: inline-block;
+  }
 }
