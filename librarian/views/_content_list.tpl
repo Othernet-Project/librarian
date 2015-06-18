@@ -9,6 +9,9 @@
         </p>
         <h2 class="title"${th.i18n_attrs(meta.lang)}>
             <a href="${i18n_url('content:reader', content_id=meta.md5)}">${meta.title | h}</a>
+            % if th.is_authenticated():
+            ${delete_button.button(meta=meta)}
+            % endif
         </h2>
         ${tags.tags(meta)}
         <p class="attrib">
@@ -18,9 +21,6 @@
         ${_('%(date)s by %(publisher)s.') % dict(date=meta.timestamp.strftime('%Y-%m-%d'), publisher=publisher)}
         ${th.readable_license(meta.license)}
         </p>
-        % if th.is_authenticated():
-        ${delete_button.button(meta=meta)}
-        % endif
     </div>
 </li>
 % endfor
