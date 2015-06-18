@@ -15,7 +15,7 @@ from bottle import request, redirect
 from ..forms.auth import RegistrationForm
 from ..forms.setup import SetupLanguageForm,  SetupDateTimeForm
 from ..lib import auth
-from ..utils.lang import UI_LOCALES
+from ..utils.lang import UI_LOCALES, set_default_locale
 from ..utils.setup import setup_wizard
 
 
@@ -38,6 +38,7 @@ def setup_language():
 
     lang = form.processed_data['language']
     request.app.setup.append({'language': lang})
+    set_default_locale(lang)
     return dict(successful=True, language=lang)
 
 

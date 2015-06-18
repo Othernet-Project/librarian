@@ -11,6 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from __future__ import unicode_literals
 
+from bottle import request
 from bottle_utils.i18n import lazy_gettext as _
 
 from .template_helpers import template_helper
@@ -45,6 +46,12 @@ def dir(code):
 def lang_name_getter(ltuple):
     """ Getter used for sorting language names """
     return ltuple[1].lower()
+
+
+def set_default_locale(code):
+    for plugin in request.app.plugins:
+        if getattr(plugin, 'name', '') == 'i18n':
+            plugin.default_locale = code
 
 
 # These are locales used for language filtering and similar cases. We want them
