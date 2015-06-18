@@ -156,10 +156,12 @@ class Wizard(object):
 
         step_result = step['handler']()
         if not step_result.pop('successful', False):
+            step_index = self.current_step_index
             return self.template_func(step['template'],
                                       step_index=self.current_step_index,
                                       step_count=self.step_count,
                                       step_param=self.step_param,
+                                      step_name=self.steps[step_index]['name'],
                                       start_index=self.start_index,
                                       **step_result)
 

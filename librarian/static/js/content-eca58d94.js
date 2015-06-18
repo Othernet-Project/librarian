@@ -131,8 +131,7 @@
   updateHeight();
 
   // Inifinite scrolling
-  $('.pager-links').remove();  // No pager needed
-  $('.paging').remove();
+  $('.pager').remove();  // No pager needed
   win.on('scroll', showToTop);
   win.on('resize', updateHeight);
 
@@ -167,7 +166,6 @@
       return;
     }
 
-    
     // Formulate params for the new page
     params.p = page = page + 1;
     contentQuery.search(params);

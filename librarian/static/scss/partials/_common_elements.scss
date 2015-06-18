@@ -4,6 +4,10 @@
 
 body {
   padding-top: 60px;
+  background: $universe;
+}
+
+.body {
   background: $white;
 }
 
@@ -58,11 +62,11 @@ form.inline {
 }
 
 
-@mixin icon-link-button($icon, $hover-color: $sky25d) {
+@mixin icon-link-button($icon, $hover-color: $sky25d, $padding: 40px) {
   background: transparent;
   @include icon-plain($icon);
   @include hide-text;
-  padding-left: 40px;
+  padding-left: $padding;
   border: none;
   @include border-radius(0);
   min-width: 0;
@@ -72,7 +76,7 @@ form.inline {
 
   &:hover {
     @include icon-plain(#{$icon}_hover);
-    padding-left: 40px;
+    padding-left: $padding;
     text-indent: 0;
     overflow: visible;
     color: $hover-color;

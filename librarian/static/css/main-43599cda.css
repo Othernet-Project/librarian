@@ -1916,7 +1916,7 @@ table form button {
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -220px;
   background-repeat: no-repeat;
   width: 25px;
@@ -1926,15 +1926,15 @@ table form button {
   .menu .notifications .icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -220px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 50, ../scss/outernet/widgets/_icons.scss */
 .menu .notifications .icon:hover {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -385px;
   background-repeat: no-repeat;
   width: 25px;
@@ -1944,10 +1944,10 @@ table form button {
   .menu .notifications .icon:hover {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -385px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 54, ../scss/outernet/widgets/_icons.scss */
 .menu .notifications .icon.no-label {
   text-indent: -119988px;
@@ -1988,7 +1988,7 @@ table form button {
   vertical-align: middle;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -440px;
   background-repeat: no-repeat;
   width: 25px;
@@ -1998,10 +1998,10 @@ table form button {
   .menu .dropdown.languages .down-arrow {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -440px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 9, ../scss/partials/_dropdown.scss */
 .menu .dropdown.languages .down-arrow:hover {
   @incldue icon(arrow_down_hover, yes); }
@@ -2346,12 +2346,36 @@ table form button {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 3, ../scss/partials/_common_elements.scss */
+/**
+ * _grid.scss: simple grid system
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _media_query.scss: media query support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 5, ../scss/partials/_common_elements.scss */
 body {
   padding-top: 60px;
+  background: #333333; }
+
+/* line 10, ../scss/partials/_common_elements.scss */
+.body {
   background: #ffffff; }
 
-/* line 14, ../scss/partials/_common_elements.scss */
+/* line 20, ../scss/partials/_common_elements.scss */
 .h-bar {
   padding: 20px;
   text-align: center;
@@ -2359,7 +2383,7 @@ body {
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd; }
 
-/* line 20, ../scss/partials/_common_elements.scss */
+/* line 26, ../scss/partials/_common_elements.scss */
 .h-top-bar {
   padding: 10px;
   text-align: right;
@@ -2367,28 +2391,28 @@ body {
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd; }
 
-/* line 26, ../scss/partials/_common_elements.scss */
+/* line 32, ../scss/partials/_common_elements.scss */
 .tabbed-menu {
   padding: 0 20px; }
-/* line 29, ../scss/partials/_common_elements.scss */
+/* line 35, ../scss/partials/_common_elements.scss */
 .tabbed-menu a, .tabbed-menu .active {
   display: inline-block;
   line-height: 58px;
   margin-right: 2em;
   border-bottom: 3px solid transparent; }
-/* line 37, ../scss/partials/_common_elements.scss */
+/* line 43, ../scss/partials/_common_elements.scss */
 .tabbed-menu a:visited {
   color: #3584cf; }
-/* line 41, ../scss/partials/_common_elements.scss */
+/* line 47, ../scss/partials/_common_elements.scss */
 .tabbed-menu a:hover {
   text-decoration: none;
   border-bottom-color: #28639b; }
-/* line 47, ../scss/partials/_common_elements.scss */
+/* line 53, ../scss/partials/_common_elements.scss */
 .tabbed-menu .active {
   color: #bbbbbb;
   border-bottom-color: #bbbbbb; }
 
-/* line 53, ../scss/partials/_common_elements.scss */
+/* line 59, ../scss/partials/_common_elements.scss */
 form.inline {
   display: inline-block;
   border: 1px solid #dddddd;
@@ -2491,41 +2515,102 @@ form.inline button {
   line-height: 137.5%;
   line-height: 100%; }
 
-/* line 88, ../scss/partials/_common_elements.scss */
+/* line 94, ../scss/partials/_common_elements.scss */
 .full-page-form {
   max-width: 560px;
   margin: 0 auto;
   padding: 60px 20px; }
-/* line 91, ../scss/partials/_common_elements.scss */
+/* line 97, ../scss/partials/_common_elements.scss */
 .full-page-form input[type="text"], .full-page-form input[type="numeric"], .full-page-form input[type="email"], .full-page-form input[type="file"], .full-page-form input[type="password"], .full-page-form select, .full-page-form textarea {
   min-width: 200px;
   max-width: 100%;
   width: 100%; }
-/* line 104, ../scss/partials/_common_elements.scss */
+/* line 110, ../scss/partials/_common_elements.scss */
 .full-page-form .buttons {
   padding-top: 1.5em;
   text-align: center; }
 
-/* line 110, ../scss/partials/_common_elements.scss */
+/* line 116, ../scss/partials/_common_elements.scss */
 .error-content {
   max-width: 560px;
   margin: 0 auto;
   padding: 60px 20px; }
-/* line 113, ../scss/partials/_common_elements.scss */
+/* line 119, ../scss/partials/_common_elements.scss */
 .error-content .single {
   font-size: 125%;
   line-height: 130%;
   text-align: center; }
-/* line 118, ../scss/partials/_common_elements.scss */
+/* line 124, ../scss/partials/_common_elements.scss */
 .error-content pre {
   max-height: 300px;
   overflow: scroll;
   background: #333333;
   color: #ffffff; }
-/* line 124, ../scss/partials/_common_elements.scss */
+/* line 130, ../scss/partials/_common_elements.scss */
 .error-content pre code {
   background: #333333;
   color: #ffffff; }
+
+/* line 137, ../scss/partials/_common_elements.scss */
+.filters {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px; }
+/* line 38, ../scss/outernet/mixins/_grid.scss */
+.filters:after {
+  content: '';
+  display: block;
+  width: 100%;
+  clear: left; }
+/* line 141, ../scss/partials/_common_elements.scss */
+.filters #lang {
+  width: 260px; }
+/* line 145, ../scss/partials/_common_elements.scss */
+.filters form {
+  display: inline; }
+/* line 149, ../scss/partials/_common_elements.scss */
+.filters .langs {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  float: left;
+  box-sizing: border-box;
+  -moz-transition: width 0.5s;
+  -o-transition: width 0.5s;
+  -webkit-transition: width 0.5s;
+  transition: width 0.5s;
+  width: 66.66667%; }
+/* line 153, ../scss/partials/_common_elements.scss */
+.filters .pager {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  float: left;
+  box-sizing: border-box;
+  -moz-transition: width 0.5s;
+  -o-transition: width 0.5s;
+  -webkit-transition: width 0.5s;
+  transition: width 0.5s;
+  width: 33.33333%;
+  text-align: right; }
+@media only screen and (max-width: 732px) {
+  /* line 159, ../scss/partials/_common_elements.scss */
+  .filters .langs, .filters .pager {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    float: left;
+    box-sizing: border-box;
+    -moz-transition: width 0.5s;
+    -o-transition: width 0.5s;
+    -webkit-transition: width 0.5s;
+    transition: width 0.5s;
+    width: 100%;
+    text-align: left; } }
 
 /**
  * _sprites.scss: sprite images with high-dpi display support
@@ -2758,7 +2843,7 @@ form.search label {
 /* line 227, ../scss/outernet/mixins/_forms.scss */
 form.search button {
   display: inline-block; }
-@media only screen and (max-width: 1300px) {
+@media only screen and (max-width: 1500px) {
   /* line 178, ../scss/outernet/mixins/_forms.scss */
   form.search input[type="text"], form.search input[type="numeric"], form.search input[type="email"], form.search input[type="file"], form.search input[type="password"] {
     width: 600px; } }
@@ -2849,8 +2934,8 @@ form.search .icon {
   text-transform: capitalize;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
-  background-position: 0 -3090px;
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
+  background-position: 0 -3100px;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
@@ -2858,11 +2943,11 @@ form.search .icon {
   /* line 30, ../scss/partials/_content_list.scss */
   form.search .icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
-    background-position: 0 -3090px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    background-position: 0 -3100px;
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 
 /* line 38, ../scss/outernet/mixins/_grid.scss */
 .content-list:after {
@@ -2987,12 +3072,92 @@ form.search .icon {
 /* line 131, ../scss/partials/_content_list.scss */
 .content-list li.has-thumb .details {
   background: rgba(255, 255, 255, 0.8); }
+/* line 137, ../scss/partials/_content_list.scss */
+.content-list .tag-form {
+  display: inline-block; }
+/* line 141, ../scss/partials/_content_list.scss */
+.content-list .tags {
+  display: inline-block; }
+/* line 145, ../scss/partials/_content_list.scss */
+.content-list .delete-button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: block;
+  display: inline; }
+/* line 149, ../scss/partials/_content_list.scss */
+.content-list .delete-button button {
+  font-size: 16px;
+  background: transparent;
+  display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
+  background-position: 0 -1265px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px;
+  width: 0;
+  heigth: 25px;
+  overflow: hidden;
+  padding: 0 0 0 25px;
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  text-transform: capitalize;
+  padding-left: 46px;
+  border: none;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  min-width: 0;
+  margin: 0;
+  color: #3584cf;
+  position: relative; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 149, ../scss/partials/_content_list.scss */
+  .content-list .delete-button button {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -1265px;
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
+/* line 77, ../scss/partials/_common_elements.scss */
+.content-list .delete-button button:hover {
+  display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
+  background-position: 0 -1320px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px;
+  width: 0;
+  heigth: 25px;
+  overflow: hidden;
+  padding: 0 0 0 25px;
+  padding-left: 46px;
+  text-indent: 0;
+  overflow: visible;
+  color: #931010;
+  text-decoration: underline;
+  background-color: transparent; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 77, ../scss/partials/_common_elements.scss */
+  .content-list .delete-button button:hover {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -1320px;
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 
-/* line 138, ../scss/partials/_content_list.scss */
+/* line 156, ../scss/partials/_content_list.scss */
 .load-more {
   text-align: center;
   padding: 2em 0 4em; }
-/* line 143, ../scss/partials/_content_list.scss */
+/* line 161, ../scss/partials/_content_list.scss */
 .load-more button .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3000,20 +3165,20 @@ form.search .icon {
   width: 21px;
   height: 5px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 143, ../scss/partials/_content_list.scss */
+  /* line 161, ../scss/partials/_content_list.scss */
   .load-more button .icon {
     background-image: url('../img/animated/2x/loader.gif?1434106352');
     -moz-background-size: 21px, 5px;
     -o-background-size: 21px, 5px;
     -webkit-background-size: 21px, 5px;
     background-size: 21px, 5px; } }
-/* line 149, ../scss/partials/_content_list.scss */
+/* line 167, ../scss/partials/_content_list.scss */
 .load-more button.active .icon {
   background-image: url('../img/animated/1x/loader_active.gif?1434108311');
   width: 21px;
   height: 5px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 149, ../scss/partials/_content_list.scss */
+  /* line 167, ../scss/partials/_content_list.scss */
   .load-more button.active .icon {
     background-image: url('../img/animated/2x/loader_active.gif?1434108311');
     -moz-background-size: 21px, 5px;
@@ -3021,12 +3186,24 @@ form.search .icon {
     -webkit-background-size: 21px, 5px;
     background-size: 21px, 5px; } }
 
-/* line 155, ../scss/partials/_content_list.scss */
+/* line 173, ../scss/partials/_content_list.scss */
 .to-top {
   position: fixed;
   bottom: 0;
   right: 0;
   padding: 0 20px 20px 0; }
+
+/* line 180, ../scss/partials/_content_list.scss */
+p.end, p.empty {
+  font-size: 125%;
+  line-height: 130%;
+  color: #888888;
+  text-align: center;
+  padding: 0.5em 20px 2em; }
+
+/* line 188, ../scss/partials/_content_list.scss */
+p.end {
+  padding-top: 2em; }
 
 /**
  * _grid.scss: simple grid system
@@ -3078,67 +3255,6 @@ form.search .icon {
   font-weight: bold; }
 
 /* line 30, ../scss/partials/_downloads.scss */
-.downloads-filters {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  padding-right: 10px; }
-/* line 38, ../scss/outernet/mixins/_grid.scss */
-.downloads-filters:after {
-  content: '';
-  display: block;
-  width: 100%;
-  clear: left; }
-/* line 34, ../scss/partials/_downloads.scss */
-.downloads-filters #lang {
-  width: 260px; }
-/* line 38, ../scss/partials/_downloads.scss */
-.downloads-filters form {
-  display: inline; }
-/* line 42, ../scss/partials/_downloads.scss */
-.downloads-filters .langs {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-right: 10px;
-  padding-left: 10px;
-  float: left;
-  box-sizing: border-box;
-  -moz-transition: width 0.5s;
-  -o-transition: width 0.5s;
-  -webkit-transition: width 0.5s;
-  transition: width 0.5s;
-  width: 66.66667%; }
-/* line 46, ../scss/partials/_downloads.scss */
-.downloads-filters .pager {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-right: 10px;
-  padding-left: 10px;
-  float: left;
-  box-sizing: border-box;
-  -moz-transition: width 0.5s;
-  -o-transition: width 0.5s;
-  -webkit-transition: width 0.5s;
-  transition: width 0.5s;
-  width: 33.33333%;
-  text-align: right; }
-@media only screen and (max-width: 732px) {
-  /* line 52, ../scss/partials/_downloads.scss */
-  .downloads-filters .langs, .downloads-filters .pager {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
-    float: left;
-    box-sizing: border-box;
-    -moz-transition: width 0.5s;
-    -o-transition: width 0.5s;
-    -webkit-transition: width 0.5s;
-    transition: width 0.5s;
-    width: 100%;
-    text-align: left; } }
-
-/* line 59, ../scss/partials/_downloads.scss */
 .bottom-pager {
   text-align: center;
   padding: 2em 20px; }
@@ -3400,8 +3516,8 @@ form.search .icon {
   text-transform: capitalize;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
-  background-position: 0 -3090px;
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
+  background-position: 0 -3100px;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
@@ -3409,11 +3525,11 @@ form.search .icon {
   /* line 25, ../scss/partials/_files.scss */
   .location-bar .icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
-    background-position: 0 -3090px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    background-position: 0 -3100px;
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 
 /* line 33, ../scss/partials/_files.scss */
 .file-list {
@@ -3428,8 +3544,8 @@ form.search .icon {
 .file-list .dir span.icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
-  background-position: 0 -2045px;
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
+  background-position: 0 -2055px;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
@@ -3437,17 +3553,17 @@ form.search .icon {
   /* line 36, ../scss/partials/_files.scss */
   .file-list .dir span.icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
-    background-position: 0 -2045px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    background-position: 0 -2055px;
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 40, ../scss/partials/_files.scss */
 .file-list .file span.icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
-  background-position: 0 -1935px;
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
+  background-position: 0 -1945px;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
@@ -3455,17 +3571,17 @@ form.search .icon {
   /* line 40, ../scss/partials/_files.scss */
   .file-list .file span.icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
-    background-position: 0 -1935px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    background-position: 0 -1945px;
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 44, ../scss/partials/_files.scss */
 .file-list .up span.icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
-  background-position: 0 -2155px;
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
+  background-position: 0 -2165px;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
@@ -3473,11 +3589,11 @@ form.search .icon {
   /* line 44, ../scss/partials/_files.scss */
   .file-list .up span.icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
-    background-position: 0 -2155px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    background-position: 0 -2165px;
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 49, ../scss/partials/_files.scss */
 .file-list h2 .section-name {
   color: #888888; }
@@ -3532,11 +3648,11 @@ form.search .icon {
   text-transform: capitalize;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -1835px;
   background-repeat: no-repeat;
-  width: 20px;
-  height: 20px; }
+  width: 25px;
+  height: 25px; }
 /* line 178, ../scss/outernet/mixins/_buttons.scss */
 .file-list table .files-rename-button:focs, .file-list table .files-rename-button:hover {
   background: transparent;
@@ -3547,28 +3663,28 @@ form.search .icon {
   .file-list table .files-rename-button {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -1835px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 89, ../scss/partials/_files.scss */
 .file-list table .files-rename-button:focus, .file-list table .files-rename-button:hover {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
-  background-position: 0 -1885px;
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
+  background-position: 0 -1890px;
   background-repeat: no-repeat;
-  width: 20px;
-  height: 20px; }
+  width: 25px;
+  height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 89, ../scss/partials/_files.scss */
   .file-list table .files-rename-button:focus, .file-list table .files-rename-button:hover {
     background-image: url('../img/icons/2x-sef02559bad.png');
-    background-position: 0 -1885px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    background-position: 0 -1890px;
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 95, ../scss/partials/_files.scss */
 .file-list table .files-delete {
   border: none;
@@ -3594,7 +3710,7 @@ form.search .icon {
   text-transform: capitalize;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -1265px;
   background-repeat: no-repeat;
   width: 25px;
@@ -3609,15 +3725,15 @@ form.search .icon {
   .file-list table .files-delete button {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -1265px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 104, ../scss/partials/_files.scss */
 .file-list table .files-delete button:focus, .file-list table .files-delete button:hover {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -1320px;
   background-repeat: no-repeat;
   width: 25px;
@@ -3627,10 +3743,10 @@ form.search .icon {
   .file-list table .files-delete button:focus, .file-list table .files-delete button:hover {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -1320px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 111, ../scss/partials/_files.scss */
 .file-list table .files-rename, .file-list table .files-rename-button, .file-list table .files-run {
   margin-right: 1em; }
@@ -3790,26 +3906,30 @@ form.search .icon {
   border-top: 1px solid #dddddd;
   margin: 0;
   cursor: pointer;
-  font-size: 20px; }
-/* line 54, ../scss/outernet/widgets/_accordion.scss */
+  font-size: 20px;
+  padding-left: 20px; }
+/* line 55, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections .accordion-section > :nth-child(2) {
   border-top: 1px solid #dddddd;
   padding: 20px;
   overflow: hidden;
   margin: 0; }
-/* line 64, ../scss/outernet/widgets/_accordion.scss */
+/* line 65, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .accordion-section:last-child > :nth-child(2) {
   border-bottom: 1px solid #dddddd; }
 /* line 69, ../scss/outernet/widgets/_accordion.scss */
+.dashboard-sections.active .accordion-section > :nth-child(1) {
+  padding-left: 0; }
+/* line 72, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .accordion-section > :nth-child(1) a {
   position: relative;
   top: 2px; }
-/* line 74, ../scss/outernet/widgets/_accordion.scss */
+/* line 77, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .accordion-section > :nth-child(1) .accordion-icon {
   display: inline-block;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -110px;
   background-repeat: no-repeat;
   width: 25px;
@@ -3817,36 +3937,36 @@ form.search .icon {
   vertical-align: middle;
   margin: 0 12.5px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 74, ../scss/outernet/widgets/_accordion.scss */
+  /* line 77, ../scss/outernet/widgets/_accordion.scss */
   .dashboard-sections.active .accordion-section > :nth-child(1) .accordion-icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -110px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
-/* line 81, ../scss/outernet/widgets/_accordion.scss */
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
+/* line 84, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .accordion-section > :nth-child(1):hover {
   background: #fafafa; }
-/* line 84, ../scss/outernet/widgets/_accordion.scss */
+/* line 87, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .accordion-section > :nth-child(1):hover .accordion-icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -165px;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 84, ../scss/outernet/widgets/_accordion.scss */
+  /* line 87, ../scss/outernet/widgets/_accordion.scss */
   .dashboard-sections.active .accordion-section > :nth-child(1):hover .accordion-icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -165px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
-/* line 91, ../scss/outernet/widgets/_accordion.scss */
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
+/* line 94, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .accordion-section > :nth-child(2) {
   max-height: 0;
   padding-top: 0;
@@ -3856,77 +3976,77 @@ form.search .icon {
   -o-transition: border-top-width 0.3s, padding-top 0.3s, max-height 0.5s, padding-bottom 0.3s;
   -webkit-transition: border-top-width 0.3s, padding-top 0.3s, max-height 0.5s, padding-bottom 0.3s;
   transition: border-top-width 0.3s, padding-top 0.3s, max-height 0.5s, padding-bottom 0.3s; }
-/* line 106, ../scss/outernet/widgets/_accordion.scss */
+/* line 109, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .non-collapsible > :nth-child(1) {
   cursor: default; }
-/* line 109, ../scss/outernet/widgets/_accordion.scss */
+/* line 112, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .non-collapsible > :nth-child(1) .accordion-icon {
   opacity: 0.3; }
-/* line 113, ../scss/outernet/widgets/_accordion.scss */
+/* line 116, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .non-collapsible > :nth-child(1):hover {
   background: #ffffff; }
-/* line 116, ../scss/outernet/widgets/_accordion.scss */
+/* line 119, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .non-collapsible > :nth-child(1):hover span.accordion-icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 0;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 116, ../scss/outernet/widgets/_accordion.scss */
+  /* line 119, ../scss/outernet/widgets/_accordion.scss */
   .dashboard-sections.active .non-collapsible > :nth-child(1):hover span.accordion-icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 0;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
-/* line 121, ../scss/outernet/widgets/_accordion.scss */
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
+/* line 124, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .non-collapsible > :nth-child(1) a {
   cursor: default;
   color: #555555; }
-/* line 125, ../scss/outernet/widgets/_accordion.scss */
+/* line 128, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .non-collapsible > :nth-child(1) a:hover {
   text-decoration: none; }
-/* line 136, ../scss/outernet/widgets/_accordion.scss */
+/* line 139, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .non-collapsible > :nth-child(1) .accordion-icon, .dashboard-sections.active .expanded > :nth-child(1) .accordion-icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 0;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 136, ../scss/outernet/widgets/_accordion.scss */
+  /* line 139, ../scss/outernet/widgets/_accordion.scss */
   .dashboard-sections.active .non-collapsible > :nth-child(1) .accordion-icon, .dashboard-sections.active .expanded > :nth-child(1) .accordion-icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 0;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
-/* line 141, ../scss/outernet/widgets/_accordion.scss */
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
+/* line 144, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .non-collapsible > :nth-child(1):hover .accordion-icon, .dashboard-sections.active .expanded > :nth-child(1):hover .accordion-icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -55px;
   background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 141, ../scss/outernet/widgets/_accordion.scss */
+  /* line 144, ../scss/outernet/widgets/_accordion.scss */
   .dashboard-sections.active .non-collapsible > :nth-child(1):hover .accordion-icon, .dashboard-sections.active .expanded > :nth-child(1):hover .accordion-icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -55px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
-/* line 148, ../scss/outernet/widgets/_accordion.scss */
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
+/* line 151, ../scss/outernet/widgets/_accordion.scss */
 .dashboard-sections.active .non-collapsible > :nth-child(2), .dashboard-sections.active .expanded > :nth-child(2) {
   border-top-width: 1px;
   max-height: 1500px;
@@ -4069,7 +4189,7 @@ form.search .icon {
   display: inline-block;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -1375px;
   background-repeat: no-repeat;
   width: 100px;
@@ -4080,10 +4200,10 @@ form.search .icon {
   .setup-finished .all-ok {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -1375px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 15, ../scss/partials/_setup.scss */
 .setup-finished .main {
   font-size: 125%;
@@ -4115,14 +4235,26 @@ form.search .icon {
   bottom: 0;
   left: 0;
   right: 0;
-  border-top: 1px solid #dddddd; }
-/* line 27, ../scss/partials/_reader.scss */
+  border-top: 1px solid #dddddd;
+  background: #ffffff; }
+/* line 28, ../scss/partials/_reader.scss */
 .reader-meta .attrib {
   font-size: 87.5%;
   line-height: 137.5%; }
-/* line 31, ../scss/partials/_reader.scss */
+/* line 32, ../scss/partials/_reader.scss */
 .reader-meta .inner {
   padding: 10px 20px; }
+/* line 36, ../scss/partials/_reader.scss */
+.reader-meta .tag-form {
+  display: inline-block;
+  margin-bottom: 1em; }
+/* line 41, ../scss/partials/_reader.scss */
+.reader-meta .tags-help {
+  display: inline;
+  padding: 0; }
+/* line 46, ../scss/partials/_reader.scss */
+.reader-meta .tags {
+  display: inline-block; }
 
 /**
  * _icons.scss: simple icon widget
@@ -4169,8 +4301,8 @@ form.search .icon {
   display: inline-block;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
-  background-position: 0 -3625px;
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
+  background-position: 0 -3635px;
   background-repeat: no-repeat;
   width: 32px;
   height: 19px;
@@ -4182,11 +4314,11 @@ form.search .icon {
   /* line 3, ../scss/partials/_tags.scss */
   .tag-icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
-    background-position: 0 -3625px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    background-position: 0 -3635px;
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 
 /* line 8, ../scss/partials/_tags.scss */
 .tags a {
@@ -4201,15 +4333,15 @@ form.search .icon {
   display: inline-block;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -1835px;
   background-repeat: no-repeat;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   width: 0;
-  heigth: 20px;
+  heigth: 25px;
   overflow: hidden;
-  padding: 0 0 0 20px;
+  padding: 0 0 0 25px;
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
@@ -4228,24 +4360,24 @@ form.search .icon {
   .tags .tag-button {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -1835px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
-/* line 71, ../scss/partials/_common_elements.scss */
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
+/* line 77, ../scss/partials/_common_elements.scss */
 .tags .tag-button:hover {
   display: inline-block;
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
-  background-position: 0 -1885px;
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
+  background-position: 0 -1890px;
   background-repeat: no-repeat;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   width: 0;
-  heigth: 20px;
+  heigth: 25px;
   overflow: hidden;
-  padding: 0 0 0 20px;
+  padding: 0 0 0 25px;
   padding-left: 40px;
   text-indent: 0;
   overflow: visible;
@@ -4253,14 +4385,14 @@ form.search .icon {
   text-decoration: underline;
   background-color: transparent; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 71, ../scss/partials/_common_elements.scss */
+  /* line 77, ../scss/partials/_common_elements.scss */
   .tags .tag-button:hover {
     background-image: url('../img/icons/2x-sef02559bad.png');
-    background-position: 0 -1885px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    background-position: 0 -1890px;
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 
 /* line 4, ../scss/partials/_pager.scss */
 #pp, #page {
@@ -4292,7 +4424,7 @@ form.search .icon {
 .pager-button.prev .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -605px;
   background-repeat: no-repeat;
   width: 25px;
@@ -4302,15 +4434,15 @@ form.search .icon {
   .pager-button.prev .icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -605px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 30, ../scss/partials/_pager.scss */
 .pager-button:hover.prev .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -660px;
   background-repeat: no-repeat;
   width: 25px;
@@ -4320,15 +4452,15 @@ form.search .icon {
   .pager-button:hover.prev .icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -660px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 35, ../scss/partials/_pager.scss */
 .pager-button.next .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -715px;
   background-repeat: no-repeat;
   width: 25px;
@@ -4338,15 +4470,15 @@ form.search .icon {
   .pager-button.next .icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -715px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 /* line 40, ../scss/partials/_pager.scss */
 .pager-button:hover.next .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s41a6501f83.png');
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
   background-position: 0 -770px;
   background-repeat: no-repeat;
   width: 25px;
@@ -4356,10 +4488,10 @@ form.search .icon {
   .pager-button:hover.next .icon {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -770px;
-    -moz-background-size: 100px 3864px;
-    -o-background-size: 100px 3864px;
-    -webkit-background-size: 100px 3864px;
-    background-size: 100px 3864px; } }
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
 
 /* line 46, ../scss/partials/_pager.scss */
 .pages-count {

@@ -19,7 +19,7 @@
 
 form.search {
   @include single-input-form(1200px);
-  @include adjust-search-width(1300px, 600px);
+  @include adjust-search-width(1500px, 600px);
   @include adjust-search-width(900px, 400px);
   @include adjust-search-width(640px, 200px);
 
@@ -141,6 +141,16 @@ form.search {
   .tags {
     display: inline-block;
   }
+
+  .delete-button {
+    @include form-reset;
+    display: inline;
+
+    button {
+      font-size: $base-size;
+      @include icon-link-button(delete, $fire25d, 46px);
+    }
+  }
 }
 
 .load-more {
@@ -167,9 +177,14 @@ form.search {
   padding: 0 20px 20px 0;
 }
 
+p.end,
 p.empty {
   @include heading-5;
   color: $sub;
   text-align: center;
   padding: 0.5em 20px 2em;
+}
+
+p.end {
+  padding-top: 2em;
 }
