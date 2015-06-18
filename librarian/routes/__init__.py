@@ -91,6 +91,8 @@ def install_routes(app):
 
         ('setup:main', setup.setup_wizard,
          ['GET', 'POST'], '/setup/', {}),
+        ('setup:exit', setup.exit_wizard,
+         ['GET'], '/setup/exit/', {}),
 
         # Apps
 
