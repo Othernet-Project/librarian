@@ -24,11 +24,7 @@ def transaction_test(bottle_request_paths):
             conn = squery.Connection()
             db = squery.Database(conn)
             config = {'content.contentdir': tempfile.mkdtemp()}
-            migrations.migrate(db,
-                               in_pkg('migrations', 'sessions'),
-                               'librarian.migrations.sessions',
-                               config)
-
+            migrations.migrate(db, 'librarian.migrations.sessions', config)
             patchers = []
             for brp in paths:
                 patcher = mock.patch(brp)
