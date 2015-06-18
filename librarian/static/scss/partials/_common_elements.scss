@@ -1,4 +1,6 @@
 @import "outernet/mixins/colors";
+@import "outernet/mixins/grid";
+@import "outernet/mixins/media_query";
 
 body {
   padding-top: 60px;
@@ -124,6 +126,35 @@ form.inline {
     code {
       background: $universe;
       color: $white;
+    }
+  }
+}
+
+.filters {
+  @include grid-container;
+  @include row;
+
+  #lang {
+    width: 260px;
+  }
+
+  form {
+    display: inline;
+  }
+
+  .langs {
+    @include col6(4);
+  }
+
+  .pager {
+    @include col6(2);
+    text-align: right;
+  }
+
+  @include narrower-than(732px) {
+    .langs, .pager {
+      @include col1;
+      text-align: left;
     }
   }
 }

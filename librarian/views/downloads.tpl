@@ -28,7 +28,7 @@ ${_('Updates')}
 </div>
 % endif
 
-<div class="downloads-filters">
+<div class="filters">
     <div class="form langs">
         <form id="lang" class="downloads-langs">
             ${h.vselect('lang', SELECT_LANGS, lang)}

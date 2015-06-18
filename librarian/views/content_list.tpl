@@ -31,15 +31,21 @@ ${library_submenu.body()}
     % endif
 </div>
 
-<form id="pager" class="pager controls">
-    <input type="hidden" name="t" value="${tag_id or ''}">
-    <p>
-    ${h.vselect('lang', SELECT_LANGS, lang)}
-    ## Translators, used as label for language filter button
-    <button class="fake-go">${_('Filter')}</button>
-    <span class="paging">${simple_pager.body()}</span>
-    </p>
-</form>
+<div class="filters">
+    <div class="form langs">
+        <form id="lang" class="downloads-langs">
+            <input type="hidden" name="t" value="${tag_id or ''}">
+            ${h.vselect('lang', SELECT_LANGS, lang)}
+            ## Translators, used as label for language filter button
+            <button class="fake-go">${_('Filter')}</button>
+            </p>
+        </form>
+    </div>
+    <div class="forms pager">
+        ${simple_pager.prev_next_pager()}
+    </div>
+</div>
+
 % if query:
 ## Translators, used as note on library page when showing search results, %(term)s represents the text typed in by user
 <p class="search-keyword">${_("Showing search results for '%(terms)s'") % {'terms': query}}</p>
