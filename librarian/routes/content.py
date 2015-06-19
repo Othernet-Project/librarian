@@ -254,7 +254,7 @@ def rename_path(path):
         go_to_parent(path)
     new_name = os.path.normpath(new_name)
     new_path = os.path.join(os.path.dirname(path), new_name)
-    os.rename(path, new_path)
+    shutil.move(path, new_path)
     go_to_parent(path)
 
 
