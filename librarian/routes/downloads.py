@@ -114,11 +114,20 @@ def manage_downloads():
         request.app.exts.cache.invalidate(prefix='downloads')
         request.app.exts.notifications.send(_('Content added.'),
                                             category='content')
-    if action == 'delete':
+    elif action == 'add_all':
+        all_downloads = filter_downloads(lang=None)
+        all_files = [meta['md5'] for meta in all_downloads['metadata']]
+        archive = open_archive()
+        archive.add_to_archive(all_files)
+        request.app.exts.cache.invalidate(prefix='content')
+        request.app.exts.cache.invalidate(prefix='downloads')
+        request.app.exts.notifications.send(_('Content added.'),
+                                            category='content')
+    elif action == 'delete':
         downloads.remove_downloads(conf['content.spooldir'],
                                    content_ids=file_list)
         request.app.exts.cache.invalidate(prefix='downloads')
-    if action == 'deleteall':
+    elif action == 'delete_all':
         downloads.remove_downloads(conf['content.spooldir'],
                                    extension=conf['content.output_ext'])
         request.app.exts.cache.invalidate(prefix='downloads')
