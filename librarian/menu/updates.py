@@ -10,11 +10,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from . import MenuItem
 
-from bottle import request
 from bottle_utils.i18n import lazy_gettext as _
-from bottle_utils.lazy import CachingLazy
 
-from ..core.downloads import get_downloads
+from ..utils.core_helpers import filter_downloads
 
 
 class UpdatesMenuItem(MenuItem):
@@ -22,10 +20,7 @@ class UpdatesMenuItem(MenuItem):
     route = 'downloads:list'
 
     def _updates(self):
-        return CachingLazy(lambda: len(list(get_downloads(
-            request.app.config['content.spooldir'],
-            request.app.config['content.output_ext']
-        ))))
+        return len(filter_downloads(lang=None))
 
     def is_visible(self):
         return self._updates() > 0
