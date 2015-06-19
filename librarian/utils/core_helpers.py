@@ -8,6 +8,9 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import logging
+
+from datetime import datetime
 from functools import wraps
 from urlparse import urljoin
 
@@ -15,9 +18,12 @@ from bottle import request, redirect, abort
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
 
 from ..core import content as content_mod
+from ..core import downloads
 from ..core import metadata
+from ..core import zipballs
 from ..core.archive import Archive
 from ..core.files import FileManager
+from ..utils.cache import cached
 
 from .netutils import IPv4Range, get_target_host
 from .system import ensure_dir
@@ -42,6 +48,9 @@ LICENSES = (
     ('ARL', _('All rights reserved')),
     ('ON', _('Other non-free license')),
 )
+
+
+read_meta = cached()(zipballs.validate)
 
 
 def open_archive():
@@ -74,6 +83,44 @@ def with_content(func):
         meta = metadata.Meta(content, content_path)
         return func(meta=meta, **kwargs)
     return wrapper
+
+
+@cached(prefix='downloads', timeout=30)
+def get_download_paths():
+    paths = downloads.get_downloads(request.app.config['content.spooldir'],
+                                    request.app.config['content.output_ext'])
+    return list(reversed(downloads.order_downloads(paths)))
+
+
+@cached(prefix='downloads', timeout=30)
+def filter_downloads(lang):
+    conf = request.app.config
+    zballs = get_download_paths()
+    logging.info('Found {0} updates'.format(len(zballs)))
+    # Collect metadata of valid zipballs. If a language filter is specified
+    # filter the list based on that.
+    meta_filename = conf['content.metadata']
+    metas = []
+    for zipball_path, timestamp in zballs:
+        try:
+            meta = read_meta(zipball_path, meta_filename=meta_filename)
+        except zipballs.ValidationError as exc:
+            # Zip file is invalid. This means that the file is corrupted or the
+            # original file was signed with corrupt data in it. Either way, we
+            # don't know what to do with the file so we'll remove it.
+            logging.error("Error reading: {0}: {1}".format(zipball_path, exc))
+            downloads.safe_remove(zipball_path)
+        else:
+            if lang and meta['language'] != lang:
+                continue
+
+            meta['md5'] = zipballs.get_md5_from_path(zipball_path)
+            meta['ftimestamp'] = datetime.fromtimestamp(timestamp)
+            metas.append(metadata.Meta(meta, zipball_path))
+
+    archive = open_archive()
+    archive.add_replacement_data(metas, needed_keys=('title',))
+    return metas
 
 
 def get_content_url(root_url, domain):

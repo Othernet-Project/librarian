@@ -1,4 +1,4 @@
-/* line 5, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
@@ -7,38 +7,38 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font-size: 100%;
   vertical-align: baseline; }
 
-/* line 22, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1; }
 
-/* line 24, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none; }
 
-/* line 26, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-/* line 28, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle; }
 
-/* line 30, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none; }
-/* line 103, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none; }
 
-/* line 32, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none; }
 
-/* line 116, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block; }
 
@@ -835,11 +835,11 @@ input[type="text"].positive, input[type="numeric"].positive, input[type="email"]
   padding-right: 50px;
   background-position: right 12.5px top 50%;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/form_positive.png?1434436248'); }
+  background-image: url('../img/icons/1x/form_positive.png?1434530222'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 63, ../scss/outernet/partial/_forms.scss */
   input[type="text"].positive, input[type="numeric"].positive, input[type="email"].positive, input[type="password"].positive, input[type="file"].positive {
-    background-image: url('../img/icons/2x/form_positive.png?1434436346');
+    background-image: url('../img/icons/2x/form_positive.png?1434530222');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -849,11 +849,11 @@ input[type="text"].negative, input[type="numeric"].negative, input[type="email"]
   padding-right: 50px;
   background-position: right 12.5px top 50%;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/form_negative.png?1434436244'); }
+  background-image: url('../img/icons/1x/form_negative.png?1434530222'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 67, ../scss/outernet/partial/_forms.scss */
   input[type="text"].negative, input[type="numeric"].negative, input[type="email"].negative, input[type="password"].negative, input[type="file"].negative {
-    background-image: url('../img/icons/2x/form_negative.png?1434436344');
+    background-image: url('../img/icons/2x/form_negative.png?1434530222');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -902,11 +902,11 @@ input[type="checkbox"]:checked + label:before {
   transition: color 0.3s, background-color 0.3s, border-color 0.3s;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/checkmark.png?1434436204'); }
+  background-image: url('../img/icons/1x/checkmark.png?1434540728'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 88, ../scss/outernet/partial/_forms.scss */
   input[type="checkbox"]:checked + label:before {
-    background-image: url('../img/icons/2x/checkmark.png?1434436306');
+    background-image: url('../img/icons/2x/checkmark.png?1434540728');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -931,11 +931,11 @@ input[type="checkbox"]:focus + label:before {
 input[type="checkbox"]:focus:checked + label:before {
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/checkmark_active.png?1434436206'); }
+  background-image: url('../img/icons/1x/checkmark_active.png?1434540728'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 101, ../scss/outernet/partial/_forms.scss */
   input[type="checkbox"]:focus:checked + label:before {
-    background-image: url('../img/icons/2x/checkmark_active.png?1434436308');
+    background-image: url('../img/icons/2x/checkmark_active.png?1434540728');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -964,25 +964,25 @@ select {
   padding-right: 50px;
   background-repeat: no-repeat;
   background-position: right 10px top 50%;
-  background-image: url('../img/icons/1x/dropdown_open.png?1434436222'); }
+  background-image: url('../img/icons/1x/dropdown_open.png?1434540728'); }
 /* line 125, ../scss/outernet/mixins/_forms.scss */
 select::-ms-expand {
   display: none; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 115, ../scss/outernet/partial/_forms.scss */
   select {
-    background-image: url('../img/icons/2x/dropdown_open.png?1434436326');
+    background-image: url('../img/icons/2x/dropdown_open.png?1434540728');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 /* line 123, ../scss/outernet/partial/_forms.scss */
 select:hover {
-  background-image: url('../img/icons/1x/dropdown_open_hover.png?1434436228'); }
+  background-image: url('../img/icons/1x/dropdown_open_hover.png?1434540728'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 123, ../scss/outernet/partial/_forms.scss */
   select:hover {
-    background-image: url('../img/icons/2x/dropdown_open_hover.png?1434436330');
+    background-image: url('../img/icons/2x/dropdown_open_hover.png?1434540728');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -1602,11 +1602,11 @@ table form button {
   text-transform: capitalize;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/hamburger.png?1434436250'); }
+  background-image: url('../img/icons/1x/hamburger.png?1434530226'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 136, ../scss/outernet/widgets/_menu.scss */
   .menu .hamburger a {
-    background-image: url('../img/icons/2x/hamburger.png?1434436348');
+    background-image: url('../img/icons/2x/hamburger.png?1434530226');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -1640,11 +1640,11 @@ table form button {
 /* line 174, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2-trigger {
   background-position: right 10px top 50%;
-  background-image: url('../img/icons/1x/arrow_right.png?1434436198'); }
+  background-image: url('../img/icons/1x/arrow_right.png?1434530226'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 174, ../scss/outernet/widgets/_menu.scss */
   .alt-menu .level2-trigger {
-    background-image: url('../img/icons/2x/arrow_right.png?1434436302');
+    background-image: url('../img/icons/2x/arrow_right.png?1434530226');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -1652,12 +1652,12 @@ table form button {
 /* line 179, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .top-trigger {
   background-position: left 10px top 50%;
-  background-image: url('../img/icons/1x/arrow_left.png?1434436196');
+  background-image: url('../img/icons/1x/arrow_left.png?1434530226');
   padding-left: 40px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 179, ../scss/outernet/widgets/_menu.scss */
   .alt-menu .top-trigger {
-    background-image: url('../img/icons/2x/arrow_left.png?1434436300');
+    background-image: url('../img/icons/2x/arrow_left.png?1434530226');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -2031,13 +2031,13 @@ table form button {
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
-  background-image: url('../img/icons/1x/checkmark_active.png?1434436206');
+  background-image: url('../img/icons/1x/checkmark_active.png?1434540728');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 81, ../scss/partials/_mainmenu.scss */
   .menu .dropdown.languages .dropdown-item span.selected {
-    background-image: url('../img/icons/2x/checkmark_active.png?1434436308');
+    background-image: url('../img/icons/2x/checkmark_active.png?1434540728');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -2057,14 +2057,14 @@ table form button {
 /* line 104, ../scss/partials/_mainmenu.scss */
 .alt-menu .level2-lang .selected {
   background: #e7f3e9;
-  background-image: url('../img/icons/1x/form_positive.png?1434436248');
+  background-image: url('../img/icons/1x/form_positive.png?1434530222');
   background-repeat: no-repeat;
   background-position: right 20px top 50%;
   color: #058120; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 104, ../scss/partials/_mainmenu.scss */
   .alt-menu .level2-lang .selected {
-    background-image: url('../img/icons/2x/form_positive.png?1434436346');
+    background-image: url('../img/icons/2x/form_positive.png?1434530222');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -2347,6 +2347,16 @@ table form button {
  * http://www.gnu.org/licenses/gpl.txt.
  */
 /**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
  * _grid.scss: simple grid system
  * 
  * Copyright 2015, Outernet Inc.
@@ -2366,16 +2376,16 @@ table form button {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 5, ../scss/partials/_common_elements.scss */
+/* line 6, ../scss/partials/_common_elements.scss */
 body {
   padding-top: 60px;
   background: #333333; }
 
-/* line 10, ../scss/partials/_common_elements.scss */
+/* line 11, ../scss/partials/_common_elements.scss */
 .body {
   background: #ffffff; }
 
-/* line 20, ../scss/partials/_common_elements.scss */
+/* line 21, ../scss/partials/_common_elements.scss */
 .h-bar {
   padding: 20px;
   text-align: center;
@@ -2383,7 +2393,7 @@ body {
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd; }
 
-/* line 26, ../scss/partials/_common_elements.scss */
+/* line 27, ../scss/partials/_common_elements.scss */
 .h-top-bar {
   padding: 10px;
   text-align: right;
@@ -2391,28 +2401,28 @@ body {
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd; }
 
-/* line 32, ../scss/partials/_common_elements.scss */
+/* line 33, ../scss/partials/_common_elements.scss */
 .tabbed-menu {
   padding: 0 20px; }
-/* line 35, ../scss/partials/_common_elements.scss */
+/* line 36, ../scss/partials/_common_elements.scss */
 .tabbed-menu a, .tabbed-menu .active {
   display: inline-block;
   line-height: 58px;
   margin-right: 2em;
   border-bottom: 3px solid transparent; }
-/* line 43, ../scss/partials/_common_elements.scss */
+/* line 44, ../scss/partials/_common_elements.scss */
 .tabbed-menu a:visited {
   color: #3584cf; }
-/* line 47, ../scss/partials/_common_elements.scss */
+/* line 48, ../scss/partials/_common_elements.scss */
 .tabbed-menu a:hover {
   text-decoration: none;
   border-bottom-color: #28639b; }
-/* line 53, ../scss/partials/_common_elements.scss */
+/* line 54, ../scss/partials/_common_elements.scss */
 .tabbed-menu .active {
   color: #bbbbbb;
   border-bottom-color: #bbbbbb; }
 
-/* line 59, ../scss/partials/_common_elements.scss */
+/* line 60, ../scss/partials/_common_elements.scss */
 form.inline {
   display: inline-block;
   border: 1px solid #dddddd;
@@ -2515,43 +2525,43 @@ form.inline button {
   line-height: 137.5%;
   line-height: 100%; }
 
-/* line 94, ../scss/partials/_common_elements.scss */
+/* line 95, ../scss/partials/_common_elements.scss */
 .full-page-form {
   max-width: 560px;
   margin: 0 auto;
   padding: 60px 20px; }
-/* line 97, ../scss/partials/_common_elements.scss */
+/* line 98, ../scss/partials/_common_elements.scss */
 .full-page-form input[type="text"], .full-page-form input[type="numeric"], .full-page-form input[type="email"], .full-page-form input[type="file"], .full-page-form input[type="password"], .full-page-form select, .full-page-form textarea {
   min-width: 200px;
   max-width: 100%;
   width: 100%; }
-/* line 110, ../scss/partials/_common_elements.scss */
+/* line 111, ../scss/partials/_common_elements.scss */
 .full-page-form .buttons {
   padding-top: 1.5em;
   text-align: center; }
 
-/* line 116, ../scss/partials/_common_elements.scss */
+/* line 117, ../scss/partials/_common_elements.scss */
 .error-content {
   max-width: 560px;
   margin: 0 auto;
   padding: 60px 20px; }
-/* line 119, ../scss/partials/_common_elements.scss */
+/* line 120, ../scss/partials/_common_elements.scss */
 .error-content .single {
   font-size: 125%;
   line-height: 130%;
   text-align: center; }
-/* line 124, ../scss/partials/_common_elements.scss */
+/* line 125, ../scss/partials/_common_elements.scss */
 .error-content pre {
   max-height: 300px;
   overflow: scroll;
   background: #333333;
   color: #ffffff; }
-/* line 130, ../scss/partials/_common_elements.scss */
+/* line 131, ../scss/partials/_common_elements.scss */
 .error-content pre code {
   background: #333333;
   color: #ffffff; }
 
-/* line 137, ../scss/partials/_common_elements.scss */
+/* line 138, ../scss/partials/_common_elements.scss */
 .filters {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -2563,13 +2573,13 @@ form.inline button {
   display: block;
   width: 100%;
   clear: left; }
-/* line 141, ../scss/partials/_common_elements.scss */
+/* line 142, ../scss/partials/_common_elements.scss */
 .filters #lang {
   width: 260px; }
-/* line 145, ../scss/partials/_common_elements.scss */
+/* line 146, ../scss/partials/_common_elements.scss */
 .filters form {
   display: inline; }
-/* line 149, ../scss/partials/_common_elements.scss */
+/* line 150, ../scss/partials/_common_elements.scss */
 .filters .langs {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -2582,7 +2592,7 @@ form.inline button {
   -webkit-transition: width 0.5s;
   transition: width 0.5s;
   width: 66.66667%; }
-/* line 153, ../scss/partials/_common_elements.scss */
+/* line 154, ../scss/partials/_common_elements.scss */
 .filters .pager {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -2597,7 +2607,7 @@ form.inline button {
   width: 33.33333%;
   text-align: right; }
 @media only screen and (max-width: 732px) {
-  /* line 159, ../scss/partials/_common_elements.scss */
+  /* line 160, ../scss/partials/_common_elements.scss */
   .filters .langs, .filters .pager {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -2611,6 +2621,10 @@ form.inline button {
     transition: width 0.5s;
     width: 100%;
     text-align: left; } }
+
+/* line 167, ../scss/partials/_common_elements.scss */
+.info {
+  padding: 20px; }
 
 /**
  * _sprites.scss: sprite images with high-dpi display support
@@ -3123,7 +3137,7 @@ form.search .icon {
     -o-background-size: 100px 3874px;
     -webkit-background-size: 100px 3874px;
     background-size: 100px 3874px; } }
-/* line 77, ../scss/partials/_common_elements.scss */
+/* line 78, ../scss/partials/_common_elements.scss */
 .content-list .delete-button button:hover {
   display: inline-block;
   display: inline-block;
@@ -3144,7 +3158,7 @@ form.search .icon {
   text-decoration: underline;
   background-color: transparent; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 77, ../scss/partials/_common_elements.scss */
+  /* line 78, ../scss/partials/_common_elements.scss */
   .content-list .delete-button button:hover {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -1320px;
@@ -3161,26 +3175,26 @@ form.search .icon {
 .load-more button .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/animated/1x/loader.gif?1434106352');
+  background-image: url('../img/animated/1x/loader.gif?1434530226');
   width: 21px;
   height: 5px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 161, ../scss/partials/_content_list.scss */
   .load-more button .icon {
-    background-image: url('../img/animated/2x/loader.gif?1434106352');
+    background-image: url('../img/animated/2x/loader.gif?1434530226');
     -moz-background-size: 21px, 5px;
     -o-background-size: 21px, 5px;
     -webkit-background-size: 21px, 5px;
     background-size: 21px, 5px; } }
 /* line 167, ../scss/partials/_content_list.scss */
 .load-more button.active .icon {
-  background-image: url('../img/animated/1x/loader_active.gif?1434108311');
+  background-image: url('../img/animated/1x/loader_active.gif?1434530226');
   width: 21px;
   height: 5px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 167, ../scss/partials/_content_list.scss */
   .load-more button.active .icon {
-    background-image: url('../img/animated/2x/loader_active.gif?1434108311');
+    background-image: url('../img/animated/2x/loader_active.gif?1434530226');
     -moz-background-size: 21px, 5px;
     -o-background-size: 21px, 5px;
     -webkit-background-size: 21px, 5px;
@@ -4364,7 +4378,7 @@ p.end {
     -o-background-size: 100px 3874px;
     -webkit-background-size: 100px 3874px;
     background-size: 100px 3874px; } }
-/* line 77, ../scss/partials/_common_elements.scss */
+/* line 78, ../scss/partials/_common_elements.scss */
 .tags .tag-button:hover {
   display: inline-block;
   display: inline-block;
@@ -4385,7 +4399,7 @@ p.end {
   text-decoration: underline;
   background-color: transparent; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 77, ../scss/partials/_common_elements.scss */
+  /* line 78, ../scss/partials/_common_elements.scss */
   .tags .tag-button:hover {
     background-image: url('../img/icons/2x-sef02559bad.png');
     background-position: 0 -1890px;
@@ -4495,4 +4509,60 @@ p.end {
 
 /* line 46, ../scss/partials/_pager.scss */
 .pages-count {
+  color: #bbbbbb; }
+
+/**
+ * _sprites.scss: sprite images with high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _hdpi_images.scss: helpers for high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 3, ../scss/partials/_feedback.scss */
+.feedback {
+  padding-top: 3em;
+  padding-bottom: 4em;
+  text-align: center; }
+/* line 9, ../scss/partials/_feedback.scss */
+.feedback .icon {
+  display: inline-block;
+  margin-bottom: 1em; }
+/* line 14, ../scss/partials/_feedback.scss */
+.feedback.success .icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-sb6ec9a64b8.png');
+  background-position: 0 -1375px;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 14, ../scss/partials/_feedback.scss */
+  .feedback.success .icon {
+    background-image: url('../img/icons/2x-sef02559bad.png');
+    background-position: 0 -1375px;
+    -moz-background-size: 100px 3874px;
+    -o-background-size: 100px 3874px;
+    -webkit-background-size: 100px 3874px;
+    background-size: 100px 3874px; } }
+/* line 18, ../scss/partials/_feedback.scss */
+.feedback .main {
+  font-size: 125%;
+  line-height: 130%;
+  margin: 0; }
+/* line 23, ../scss/partials/_feedback.scss */
+.feedback .sub {
   color: #bbbbbb; }
