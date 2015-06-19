@@ -15,6 +15,12 @@ import uuid
 from bottle import request
 
 
+def is_string(obj):
+    if 'basestring' not in globals():
+        basestring = str
+    return isinstance(obj, basestring)
+
+
 def generate_key(*args, **kwargs):
     """Helper function to generate the md5 hash of all the passed in args."""
     md5 = hashlib.md5()
@@ -61,6 +67,34 @@ def cached(prefix='', timeout=None):
                     expires_in = backend.default_timeout
                 backend.set(key, value, timeout=expires_in)
             return value
+        return wrapper
+    return decorator
+
+
+def invalidates(prefix, before=False, after=False):
+    """Decorator that invalidates keys matching the specified prefix(es) before
+    and/or after invoking the wrapped function."""
+
+    def invalidate_prefixes(prefixes):
+        """Helper function to call invalidate over a list of prefixes."""
+        for p in prefixes:
+            request.app.exts.cache.invalidate(prefix=p)
+
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            # make sure we're working with a list of prefixes always
+            prefixes = [prefix] if is_string(prefix) else prefix
+            if before:
+                # invalidate cache before invoking wrapped function
+                invalidate_prefixes(prefixes)
+            # obtain result of wrapped function
+            result = func(*args, **kwargs)
+            if after:
+                # invalidate cache after invoking wrapped function
+                invalidate_prefixes(prefixes)
+            # return result of wrapped function
+            return result
         return wrapper
     return decorator
 
