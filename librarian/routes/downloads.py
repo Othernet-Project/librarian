@@ -13,6 +13,7 @@ from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ..core import downloads
 from ..lib.paginator import Paginator
+from ..utils.cache import invalidates
 from ..utils.core_helpers import open_archive, filter_downloads
 from ..utils.template import template, view
 
@@ -44,11 +45,10 @@ def list_downloads():
                 metadata=paginator.items)
 
 
+@invalidates(prefix=['content', 'downloads'], after=True)
 def add(file_list):
     archive = open_archive()
     added_count = archive.add_to_archive(file_list)
-    request.app.exts.cache.invalidate(prefix='content')
-    request.app.exts.cache.invalidate(prefix='downloads')
     request.app.exts.notifications.send(_('Content added.'),
                                         category='content')
     # Translators, used as confirmation title after the chosen updates were
@@ -62,12 +62,11 @@ def add(file_list):
     return (title, message, url)
 
 
+@invalidates(prefix=['content', 'downloads'], after=True)
 def add_all(*args):
     all_files = [meta['md5'] for meta in filter_downloads(lang=None)]
     archive = open_archive()
     added_count = archive.add_to_archive(all_files)
-    request.app.exts.cache.invalidate(prefix='content')
-    request.app.exts.cache.invalidate(prefix='downloads')
     request.app.exts.notifications.send(_('Content added.'),
                                         category='content')
     # Translators, used as confirmation title after the chosen updates were
@@ -81,10 +80,10 @@ def add_all(*args):
     return (title, message, url)
 
 
+@invalidates(prefix=['downloads'], after=True)
 def delete(file_list):
     spooldir = request.app.config['content.spooldir']
     removed_count = downloads.remove_downloads(spooldir, content_ids=file_list)
-    request.app.exts.cache.invalidate(prefix='downloads')
     # Translators, used as confirmation title after the chosen updates were
     # deleted on the updates page
     title = _("Updates deleted")
@@ -98,11 +97,11 @@ def delete(file_list):
     return (title, message, url)
 
 
+@invalidates(prefix=['downloads'], after=True)
 def delete_all(*args):
     spooldir = request.app.config['content.spooldir']
     content_ext = request.app.config['content.output_ext']
     removed_count = downloads.remove_downloads(spooldir, extension=content_ext)
-    request.app.exts.cache.invalidate(prefix='downloads')
     # Translators, used as confirmation title after the chosen updates were
     # deleted on the updates page
     title = _("Updates deleted")
