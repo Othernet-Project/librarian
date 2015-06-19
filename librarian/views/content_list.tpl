@@ -64,7 +64,7 @@ ${library_submenu.body()}
     ${_("There are no results for '%(tag)s'") % {'tag': tag}}
     % elif lang['lang']:
     ## Translators, used as not on library page when there is no content for given language
-    ${_("Language filter for '%(lang)s' is active. Click %(link)s to see all updates") % {'lang': th.lang_name_safe(lang['lang']), 'link': '<a href="%(path)s">%(label)s</a>' % {'path': i18n_url(request.path) + h.set_qparam(lang='').to_qs(), 'label': _('here')}}}
+    ${_("Language filter for '%(lang)s' is active. Click %(link)s to see all content") % {'lang': th.lang_name_safe(lang['lang']), 'link': '<a href="%(path)s">%(label)s</a>' % {'path': i18n_url(request.path) + h.set_qparam(lang='').to_qs(), 'label': _('here')}}}
     % endif
     </p>
 % endif
@@ -76,7 +76,7 @@ ${library_submenu.body()}
 <%block name="script_templates">
 <script id="loadLink" type="text/template">
     <p id="more" class="load-more">
-        <button 
+        <button
             class="primary"
             ## Translators, link that loads more content in infinite scrolling page
             data-active="${_('Load more content')}"
