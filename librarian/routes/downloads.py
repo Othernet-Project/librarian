@@ -124,3 +124,10 @@ def manage_downloads():
         request.app.exts.cache.invalidate(prefix='downloads')
 
     redirect(i18n_url('downloads:list'))
+
+
+def routes(app):
+    return (
+        ('downloads:list', list_downloads, 'GET', '/downloads/', {}),
+        ('downloads:action', manage_downloads, 'POST', '/downloads/', {}),
+    )

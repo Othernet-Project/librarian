@@ -37,3 +37,12 @@ def notifications_read():
     groups = NotificationGroup.group_by(get_notifications(),
                                         by=('category', 'read_at'))
     return dict(groups=groups)
+
+
+def routes(app):
+    return (
+        ('notifications:list', notification_list,
+         'GET', '/notifications/', {}),
+        ('notifications:read', notifications_read,
+         'POST', '/notifications/', {}),
+    )

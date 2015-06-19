@@ -92,3 +92,9 @@ def setup_superuser():
                      db=request.db.sessions,
                      overwrite=True)
     return dict(successful=True)
+
+
+def routes(app):
+    return (
+        ('setup:main', setup_wizard, ['GET', 'POST'], '/setup/', {}),
+    )

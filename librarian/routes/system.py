@@ -126,3 +126,32 @@ def show_access_denied_page():
 
 def all_404(path):
     abort(404)
+
+
+def routes(app):
+    skip_plugins = app.config['librarian.skip_plugins']
+
+    app.error(403)(show_access_denied_page)
+    app.error(404)(show_page_missing)
+    app.error(500)(show_error_page)
+    app.error(503)(show_maint_page)
+
+    return (
+        ('sys:static', send_static,
+         'GET', '/static/<path:path>',
+         dict(no_i18n=True, unlocked=True, skip=skip_plugins)),
+        ('sys:favicon', send_favicon,
+         'GET', '/favicon.ico',
+         dict(no_i18n=True, unlocked=True, skip=skip_plugins)),
+        ('sys:librarian_log', send_librarian_log,
+         'GET', '/librarian.log',
+         dict(no_i18n=True, unlocked=True, skip=skip_plugins)),
+        ('sys:syslog', send_syslog,
+         'GET', '/syslog',
+         dict(no_i18n=True, unlocked=True, skip=skip_plugins)),
+        # This route handler is added because unhandled missing pages cause
+        # bottle to _not_ install any plugins, and some are essential to
+        # rendering of the 404 page (e.g., i18n, sessions, auth).
+        ('sys:all404', all_404,
+         ['GET', 'POST'], '/<path:path>', dict()),
+    )
