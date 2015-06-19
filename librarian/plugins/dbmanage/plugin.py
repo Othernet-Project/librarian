@@ -85,10 +85,7 @@ def remove_dbfile():
 
 def run_migrations(db):
     conf = request.app.config
-    migrations.migrate(db,
-                       MDIR,
-                       'librarian.migrations.{0}'.format(DB_NAME),
-                       conf)
+    migrations.migrate(db, 'librarian.migrations.{0}'.format(DB_NAME), conf)
     logging.debug("Finished running migrations")
 
 
