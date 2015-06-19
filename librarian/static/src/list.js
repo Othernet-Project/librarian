@@ -67,14 +67,6 @@
       return;
     }
 
-    if (page + 1 > totalPages) {
-      end.show();
-      loadLink.hide();
-      loadContent = function () {};
-      loading = false;
-      return;
-    }
-
     // Formulate params for the new page
     params.p = page = page + 1;
     contentQuery.search(params);
@@ -86,6 +78,14 @@
     xhr = $.get(url);
     xhr.done(insertContent);
     xhr.fail(insertFailure);
+
+    if (page + 1 > totalPages) {
+      end.show();
+      loadLink.hide();
+      loadContent = function () {};
+      loading = false;
+      return;
+    }
   }
 
   function toggleToTopButton() {
