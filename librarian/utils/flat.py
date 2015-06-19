@@ -27,10 +27,19 @@ class FlatPage(object):
 
     def __call__(self):
         locale = getattr(request, 'locale', '_')
-        try:
-            rendered = self.versions[locale]
-        except KeyError:
+        key = '{0}_{1}'.format(self.__name__, locale)
+        if request.app.exts.is_installed('cache'):
+            # use cache if available
+            source = request.app.exts.cache
+        else:
+            # fallback to in-memory dict
+            source = self.versions
+
+        rendered = source.get(key)
+        if rendered is None:
             rendered = template(self.path)
+            source.set(key, rendered)
+
         return rendered
 
 
