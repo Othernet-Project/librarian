@@ -93,7 +93,7 @@ ${library_submenu.body()}
     ## Translators, shown when user reaches the end of the library
     ${_('You have reached the end of the library.')}
     ## Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
-    <a href="#content-list" class="to-top">${_('Go to top')}</a>
+    <a href="#content-list">${_('Go to top')}</a>
     </p>
 </script>
 
