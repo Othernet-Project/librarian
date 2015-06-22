@@ -13,6 +13,7 @@ import logging
 
 from bottle import request
 
+from ...core.content import to_path, filewalk
 from ...lib import squery
 
 
@@ -80,12 +81,12 @@ def path_space(path):
     return dev, free, total
 
 
-def free_space():
+def free_space(config=None):
     """ Returns free space information about content directory
 
     :returns:   two-tuple of free space and total space
     """
-    config = request.app.config
+    config = config or request.app.config
     cdir = config['content.contentdir']
     cdev, cfree, ctot = path_space(cdir)
     return cfree, ctot
@@ -105,42 +106,45 @@ def used_space():
     return res[0]['count'], res[0]['total'] or 0
 
 
-def needed_space(free_space):
+def needed_space(free_space, config=None):
     """ Returns the amount of space that needs to be freed, given free space
 
     :param free_space:  amount of currently available free space (bytes)
     :returns:           amount of additional space that should be freed (bytes)
 
     """
-    config = request.app.config
+    config = config or request.app.config
     return max([0, config['storage.minfree'] - free_space])
 
 
-def get_old_content():
+def get_old_content(db=None):
     """ Return content ordered from oldest to newest
 
     :returns:   list of content ordered from oldest to newest
     """
-    db = request.db.main
+    db = db or request.db.main
     db.query("""
-             SELECT md5, updated, title, views
+             SELECT md5, updated, title, views, tags, archive
              FROM zipballs
-             ORDER BY updated ASC, views ASC;
+             ORDER BY tags IS NULL DESC,
+                      views ASC,
+                      updated ASC,
+                      archive LIKE 'ephem%' DESC;
              """)
     return db.results
 
 
-def get_zip_space(md5, contentdir):
-    filename = '{0}.zip'.format(md5)
-    zippath = os.path.join(contentdir, filename)
-    return os.stat(zippath).st_size
+def get_content_size(md5, contentdir):
+    content_path = os.path.abspath(to_path(md5, prefix=contentdir))
+    return sum([os.stat(filepath).st_size
+                for filepath in filewalk(content_path)])
 
 
 def clone_zipball(zipball):
     return dict((key, zipball[key]) for key in zipball.keys())
 
 
-def cleanup_list(free_space):
+def cleanup_list(free_space, db=None, config=None):
     """ Return a generator of zipball metadata necessary to free enough space
 
     The generator will stop yielding as soon as enough zipballs have been
@@ -148,14 +152,14 @@ def cleanup_list(free_space):
     configuration.
     """
     # TODO: tests
-    zipballs = iter(get_old_content())
-    config = request.app.config
-    cdir = config['content.contentdir']
-    space = needed_space(free_space)
+    zipballs = iter(get_old_content(db=db))
+    config = config or request.app.config
+    contentdir = config['content.contentdir']
+    space = needed_space(free_space, config=config)
     while space > 0:
         zipball = clone_zipball(next(zipballs))
         if 'size' not in zipball:
-            zipball['size'] = get_zip_space(zipball['md5'], cdir)
+            zipball['size'] = get_content_size(zipball['md5'], contentdir)
 
         space -= zipball['size']
         yield zipball
