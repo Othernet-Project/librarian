@@ -9,8 +9,8 @@ ${widgets.progress(_("Signal"), status['signal'], value=status['signal'], thresh
 ${widgets.progress(_("Quality"), snr_pct, value=status['snr'], threshold=25)}
 
 <p class="lock">
-    ## Translators, this indicates whether we locked on to any satellite signal
-    <span class="label">${_('Locked on to satellite')}:</span> ${has_lock}
+    ## Translators, this indicates whether we locked on to the chosen transponder
+    <span class="label">${_('Locked on to transponder')}:</span> ${has_lock}
 </p>
 <p class="service">
     ## Translators, this indicates whether the signal onto which we locked is broadcasting Outernet service
