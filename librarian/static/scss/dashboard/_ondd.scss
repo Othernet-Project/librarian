@@ -11,7 +11,7 @@
     @include col1;
   }
 
-  .bitrate {
+  .bitrate, .lock, .service {
     .label {
       color: $sub;
     }
