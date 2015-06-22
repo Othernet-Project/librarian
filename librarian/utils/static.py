@@ -21,7 +21,7 @@ class Assets:
 
         self.env.versions = 'hash'
         self.env.manifest = 'json'
-        self.env.auto_rebuild = debug
+        self.env.auto_build = debug
 
         # Configure Compass
         self.env.config['compass_config'] = dict(
