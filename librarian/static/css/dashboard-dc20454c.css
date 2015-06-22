@@ -140,7 +140,7 @@
     transition: width 0.5s;
     width: 100%; } }
 /* line 15, ../scss/dashboard/_ondd.scss */
-.ondd-status .bitrate .label, .ondd-settings .bitrate .label {
+.ondd-status .bitrate .label, .ondd-status .lock .label, .ondd-status .service .label, .ondd-settings .bitrate .label, .ondd-settings .lock .label, .ondd-settings .service .label {
   color: #888888; }
 /* line 20, ../scss/dashboard/_ondd.scss */
 .ondd-status .progress, .ondd-settings .progress {
