@@ -234,3 +234,8 @@ class EmbeddedArchive(BaseArchive):
         q = self.db.Select('keep_formatting', sets='zipballs', where='md5 = ?')
         self.db.query(q, md5)
         return not self.db.result.keep_formatting
+
+    def get_content_languages(self):
+        q = 'SELECT DISTINCT language FROM zipballs'
+        self.db.query(q)
+        return [row.language for row in self.db.results]

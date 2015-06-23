@@ -36,7 +36,7 @@ ${library_submenu.body()}
         <form id="lang" class="downloads-langs">
             <input type="hidden" name="q" value="${query or ''}">
             <input type="hidden" name="t" value="${tag_id or ''}">
-            ${h.vselect('lang', SELECT_LANGS, lang)}
+            ${h.vselect('lang', th.content_languages(), lang)}
             ## Translators, used as label for language filter button
             <button class="fake-go">${_('Filter')}</button>
             </p>

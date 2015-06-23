@@ -31,7 +31,7 @@ ${_('Updates')}
 <div class="filters">
     <div class="form langs">
         <form id="lang" class="downloads-langs">
-            ${h.vselect('lang', SELECT_LANGS, lang)}
+            ${h.vselect('lang', th.download_languages(), lang)}
             ## Translators, used as label for language filter button
             <button class="fake-go">${_('Filter')}</button>
         </form>

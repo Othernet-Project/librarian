@@ -25,6 +25,7 @@ from ..core.archive import Archive
 from ..core.files import FileManager
 from ..utils.cache import cached
 
+from .lang import SELECT_LANGS
 from .netutils import IPv4Range, get_target_host
 from .system import ensure_dir
 from .template_helpers import template_helper
@@ -182,6 +183,30 @@ def content_domain_plugin(app):
 def get_content_path(content_id):
     """ Return relative path of a content based on it's id """
     return content_mod.to_path(content_id)
+
+
+@template_helper
+@cached(prefix='content')
+def content_languages():
+    conf = request.app.config
+    archive = Archive.setup(conf['librarian.backend'],
+                            request.db.main,
+                            unpackdir=conf['content.unpackdir'],
+                            contentdir=conf['content.contentdir'],
+                            spooldir=conf['content.spooldir'],
+                            meta_filename=conf['content.metadata'])
+    content_langs = archive.get_content_languages()
+    return [(code, name) for (code, name) in SELECT_LANGS
+            if code in content_langs]
+
+
+@template_helper
+@cached(prefix='downloads')
+def download_languages():
+    downloads = filter_downloads(lang=None)
+    download_langs = [meta['language'] for meta in downloads]
+    return [(code, name) for (code, name) in SELECT_LANGS
+            if code in download_langs]
 
 
 @template_helper
