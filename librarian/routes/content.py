@@ -31,16 +31,9 @@ from ..lib.paginator import Paginator
 from ..utils.cache import cached
 from ..utils.template import template, view
 from ..utils.core_helpers import open_archive, init_filemanager, with_content
-from ..utils.template_helpers import template_helper
 
 
 app = default_app()
-
-
-@template_helper
-def get_content_path(content_id):
-    """ Return relative path of a content based on it's id """
-    return content.to_path(content_id)
 
 
 @cached(prefix='content')

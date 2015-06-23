@@ -179,6 +179,12 @@ def content_domain_plugin(app):
 
 
 @template_helper
+def get_content_path(content_id):
+    """ Return relative path of a content based on it's id """
+    return content_mod.to_path(content_id)
+
+
+@template_helper
 def readable_license(license_code):
     return dict(LICENSES).get(license_code, LICENSES[0][1])
 
