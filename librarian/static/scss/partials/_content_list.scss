@@ -140,6 +140,10 @@ form.search {
 
   .tags {
     display: inline-block;
+    .tag-current {
+      padding: 1px 6px;
+      line-height: 137.5%;
+    }
   }
 
   .delete-button {
