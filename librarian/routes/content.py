@@ -17,6 +17,7 @@ import subprocess
 
 from bottle import request, abort, default_app, static_file, redirect, response
 from bottle_utils.ajax import roca_view
+from bottle_utils.csrf import csrf_protect, csrf_token
 from bottle_utils.common import to_unicode
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 from fdsend import send_file
@@ -106,14 +107,32 @@ def content_sites_list():
 
 
 @auth.login_required(next_to='/')
-@view('remove_error')
+@csrf_token
+@view('remove_confirm')
+def remove_content_confirm(content_id):
+    archive = open_archive()
+    cancel_url = request.headers.get('Referer', i18n_url('content:list'))
+    return dict(cancel_url=cancel_url,
+                content=archive.get_single(content_id))
+
+
+@auth.login_required(next_to='/')
+@csrf_protect
 def remove_content(content_id):
     """ Delete a single piece of content from archive """
     redir_path = i18n_url('content:list')
     archive = open_archive()
     archive.remove_from_archive([content_id])
     request.app.exts.cache.invalidate(prefix='content')
-    redirect(redir_path)
+    # Translators, used as page title of successful content removal feedback
+    page_title = _("Content removed")
+    # Translators, used as message of successful content removal feedback
+    message = _("Content successfully removed.")
+    return template('feedback',
+                    status='success',
+                    page_title=page_title,
+                    message=message,
+                    redirect=redir_path)
 
 
 def content_file(content_path, filename):
