@@ -15,6 +15,10 @@
     @include icon('done');
   }
 
+  &.error .icon {
+    @include icon('error');
+  }
+
   .main {
     @include heading-5;
     margin: 0;
