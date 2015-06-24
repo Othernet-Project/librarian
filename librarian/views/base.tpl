@@ -39,11 +39,6 @@
                         ${mi}
                     % endfor
                 </nav>
-                <div class="notifications menu-subblock">
-                    % for mi in menu_group('notifications'):
-                        ${mi}
-                    % endfor
-                </div>
                 <div class="hamburger">
                     <a href="#nav">Site menu</a>
                 </div>

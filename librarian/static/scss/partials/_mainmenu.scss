@@ -8,7 +8,7 @@
 .menu {
   .logo {
     @include hide-text;
-    @include misc-icon(logo_menu, yes);  
+    @include misc-icon(logo_menu, yes);
   }
 
   #nav .navicon {
@@ -52,15 +52,15 @@
         padding-right: 0.5em;
       }
     }
-  }
 
-  .notifications {
-    .icon {
-      @include icon-button(alert);
-    }
+    &.notifications {
+      .icon {
+        @include icon-button(alert);
+      }
 
-    .label {
-      display: none;
+      .label {
+        display: none !important;
+      }
     }
   }
 
