@@ -6,6 +6,6 @@ ${page_title}
 
 <div class="feedback ${status}">
     <span class="icon"></span>
-    <p class="main">${page_title}</p>
-    <p class="sub">${message}</p>
+    <p class="main">${main_message}</p>
+    <p class="sub">${sub_message}</p>
 </div>
