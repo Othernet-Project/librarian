@@ -17,7 +17,7 @@ import datetime
 from os.path import dirname, join
 
 from bottle import request, static_file
-from bottle_utils.i18n import lazy_gettext as _, i18n_url
+from bottle_utils.i18n import lazy_ngettext, lazy_gettext as _, i18n_url
 
 from ...core.archive import Archive
 
@@ -120,7 +120,7 @@ def rebuild():
     return end - start
 
 
-@view('dbmanage/backup_results', error=None, redirect=None, time=None)
+@view('feedback')
 def perform_backup():
     dbpath = get_dbpath()
     bpath = get_backup_path()
@@ -128,25 +128,68 @@ def perform_backup():
         btime = backup(dbpath, bpath)
         logging.debug('Database backup took %s seconds', btime)
     except AssertionError as err:
-        return dict(error=err.message)
-    return dict(redirect=get_file_url(), time=btime)
+        # Translators, error message displayed if database backup fails
+        main_msg = _('Database backup could not be completed. '
+                     'The following error occurred:')
+        sub_msg = err.message
+        status = 'error'
+        url = i18n_url('dashboard:main')
+    else:
+        # Translators, message displayed if database backup was successful
+        main_msg = _('Database backup has been completed successfully. '
+                     'You will be taken to the backup folder in 10 seconds.')
+        # Translators, message displayed if database backup was successful
+        sub_msg = lazy_ngettext('The operation took %s second',
+                                'The operation took %s seconds',
+                                btime) % round(btime, 2)
+        status = 'success'
+        url = get_file_url()
+
+    # Translators, used as page title
+    title = _('Database backup')
+    return dict(status=status,
+                page_title=title,
+                main_message=main_msg,
+                sub_message=sub_msg,
+                redirect=url)
 
 
-@view('dbmanage/rebuild_results', error=None, redirect=None, time=None,
-      fpath=None)
+@view('feedback')
 def perform_rebuild():
     try:
         rtime = rebuild()
     except LockFailureError:
         logging.debug('DBMANAGE: Global lock could not be acquired')
+        # Translators, error message displayed if database rebuild fails
+        main_msg = _('Database could not be rebuilt. '
+                     'The following error occurred:')
         # Translators, error message displayed when locking fails during
         # database rebuild
-        return dict(error=_('Librarian could not enter maintenance mode and '
-                            'database rebuild was cancelled. Please make '
-                            'sure noone else is using Librarian and '
-                            'try again.'))
-    return dict(redirect=i18n_url('content:list'),
-                time=rtime, fpath=get_file_url())
+        sub_msg = _('Librarian could not enter maintenance mode and '
+                    'database rebuild was cancelled. Please make '
+                    'sure noone else is using Librarian and '
+                    'try again.')
+        status = 'error'
+        url = i18n_url('dashboard:main')
+    else:
+        # Translators, message displayed if database backup was successful
+        main_msg = _('Content database has been rebuilt from scratch. A backup'
+                     ' copy of the original database has been created. '
+                     'You will find it in the files section.')
+        # Translators, message displayed if database backup was successful
+        sub_msg = lazy_ngettext('The operation took %s second',
+                                'The operation took %s seconds',
+                                rtime) % round(rtime, 2)
+        status = 'success'
+        url = i18n_url('content:list')
+
+    # Translators, used as page title
+    title = _('Database rebuild')
+    return dict(status=status,
+                page_title=title,
+                main_message=main_msg,
+                sub_message=sub_msg,
+                redirect=url)
 
 
 def install(app, route):
