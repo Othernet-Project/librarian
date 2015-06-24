@@ -130,6 +130,7 @@ def manage_downloads():
         # Translators, used as error message shown to user when wrong action
         # code is submitted to server
         message = _('Invalid action, please use one of the form buttons.')
+        url = i18n_url('downloads:list')
         status = 'error'
     else:
         (title, message, url) = handler(file_list)
