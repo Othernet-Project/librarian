@@ -15,7 +15,7 @@ from ..core import downloads
 from ..lib.paginator import Paginator
 from ..utils.cache import invalidates
 from ..utils.core_helpers import open_archive, filter_downloads
-from ..utils.template import template, view
+from ..utils.template import view
 
 
 @view('downloads')
@@ -113,6 +113,7 @@ def delete_all(*args):
     return (title, message, url)
 
 
+@view('feedback')
 def manage_downloads():
     """ Manage the downloaded content """
     action_handlers = {'add': add,
@@ -136,8 +137,8 @@ def manage_downloads():
         (title, message, url) = handler(file_list)
         status = 'success'
 
-    return template('feedback',
-                    status=status,
-                    page_title=title,
-                    message=message,
-                    redirect=url)
+    return dict(status=status,
+                page_title=title,
+                main_message=title,
+                sub_message=message,
+                redirect=url)
