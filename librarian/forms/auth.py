@@ -15,6 +15,9 @@ from ..lib import auth
 
 
 class LoginForm(form.Form):
+    messages = {
+        'login_error': _("Please enter the correct username and password.")
+    }
     # Translators, used as label for a login field
     username = form.StringField(_("Username"),
                                 placeholder=_('username'),
@@ -29,11 +32,13 @@ class LoginForm(form.Form):
         password = self.processed_data['password']
 
         if not auth.login_user(username, password):
-            message = _("Please enter the correct username and password.")
-            raise form.ValidationError(message, {})
+            raise form.ValidationError('login_error', {})
 
 
 class RegistrationForm(form.Form):
+    messages = {
+        'registration_error': _("The entered passwords do not match.")
+    }
     # Translators, used as label in create user form
     username = form.StringField(_("Username"),
                                 validators=[form.Required()],
@@ -51,5 +56,4 @@ class RegistrationForm(form.Form):
         password1 = self.processed_data['password1']
         password2 = self.processed_data['password2']
         if password1 != password2:
-            message = _("The entered passwords do not match.")
-            raise form.ValidationError(message, {})
+            raise form.ValidationError('registration_error', {})
