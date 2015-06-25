@@ -127,11 +127,12 @@ def remove_content(content_id):
     # Translators, used as page title of successful content removal feedback
     page_title = _("Content removed")
     # Translators, used as message of successful content removal feedback
-    message = _("Content successfully removed.")
+    sub_message = _("Content successfully removed.")
     return template('feedback',
                     status='success',
                     page_title=page_title,
-                    message=message,
+                    main_message=page_title,
+                    sub_message=sub_message,
                     redirect=redir_path)
 
 
