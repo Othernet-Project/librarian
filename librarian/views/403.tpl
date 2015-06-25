@@ -5,12 +5,12 @@
 ${_('Forbidden')}
 </%block>
 
-<%block name="error-title">
+<%block name="error_title">
 ## Translators, used as access denied page heading
 403: ${_('Forbidden')}
 </%block>
 
-<%block name="error-message">
+<%block name="error_message">
 <p>
 ## Translators, shown when user is denied access to a page
 ${_('You are not authorized to access this page.')}
