@@ -159,4 +159,3 @@ def rebuild_assets(config):
             os.unlink(p)
     cmdenv = CommandLineEnvironment(assets.env, logging.getLogger('assets'))
     cmdenv.invoke('build', {})
-    cmdenv.invoke('clean', {})
