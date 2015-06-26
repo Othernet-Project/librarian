@@ -8,8 +8,8 @@
         <title><%block name="title">Outernet</%block> - Librarian v${app_version}</title>
         <link rel="stylesheet" href="${assets['css/main']}" />
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-        % if redirect is not UNDEFINED:
-        <meta http-equiv="refresh" content="5; url=${redirect}" />
+        % if redirect_url is not UNDEFINED:
+        <meta http-equiv="refresh" content="${REDIRECT_DELAY}; url=${redirect_url}" />
         % endif
         <%block name="extra_head"/>
     </head>

@@ -35,6 +35,7 @@ def configure_template(app):
         'SELECT_LANGS': SELECT_LANGS,
         'u': to_unicode,
         'url': app.get_url,
+        'REDIRECT_DELAY': app.config.get('librarian.redirect_delay', 10)
     })
 
 
