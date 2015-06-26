@@ -1,0 +1,5 @@
+@import "outernet/widgets/accordion";
+
+.dashboard-sections {
+  @include accordion;
+}

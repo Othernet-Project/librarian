@@ -1,0 +1,24 @@
+@import "compass/typography";
+@import "sprites";
+
+footer {
+  background: $universe;
+  color: $sub;
+  text-align: center;
+  padding: 60px 20px;
+
+  .logo {
+    @include misc-icon('logo');
+    @include hide-text;
+    margin-bottom: 3em;
+  }
+
+  .progver {
+    @include bold;
+    margin-bottom: 0.2em;
+  }
+
+  .progver, .copyright {
+    @include sub;
+  }
+}

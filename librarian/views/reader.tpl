@@ -14,39 +14,29 @@ ${meta.title}
     <div class="reader-meta data">
         <div class="inner">
             <p class="date">
-            <strong>
-                ${meta.timestamp.strftime('%Y-%m-%d')}
-                % if meta.is_partner:
-                / ${meta.publisher}
-                / <span class="special">${_('partner')}</span>
-                % endif
-
-                % if meta.is_sponsored:
-                / ${meta.publisher}
-                / <span class="special">${_('sponsored')}</span>
-                % endif
-
-                % if meta.archive == 'core':
-                / <span class="special">${_('core')}</span>
-                % endif
-            </strong>
+            ${tags.tags(meta)}
+            ## Translators, attribution line appearing in the content list
+            <p class="attrib">
+            ## Translators, used in place of publisher name if publsiher name is not known
+            <% publisher = meta.publisher or _('unknown publisher') %>
+            ${_('%(date)s by %(publisher)s.') % dict(date=meta.timestamp.strftime('%Y-%m-%d'), publisher=publisher)}
+            ${th.readable_license(meta.license)}
             <a class="button small" href="${url('content:zipball', content_id=meta.md5)}">${_('Download')}</a>
             </p>
-            <p class="licensing">${th.readable_license(meta.license)}</p>
-            ${tags.tags(meta)}
         </div>
     </div>
 </div>
 </%block>
 
+<%block name="footer"/>
+
 <%block name="script_templates">
 ${tag_js_templates.body()}
 <script id="readerCssPatch" type="text/template">
-    <link rel="stylesheet" type="text/css" href="${th.static_url('sys:static', path='css/content.css')}" />
+    <link rel="stylesheet" type="text/css" href="${assets['css/content']}" />
 </script>
-
 </%block>
 
 <%block name="extra_scripts">
-<script src="${th.static_url('sys:static', path='js/reader.js')}"></script>
+<script src="${assets['js/reader']}"></script>
 </%block>

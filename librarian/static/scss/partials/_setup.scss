@@ -1,0 +1,23 @@
+@import "sprites";
+
+.setup-finished {
+  padding-top: 3em;
+  padding-bottom: 4em;
+
+  text-align: center;
+
+  .all-ok {
+    display: inline-block;
+    @include icon('done');
+    margin-bottom: 1em;
+  }
+
+  .main {
+    @include heading-5;   
+    margin: 0;
+  }
+
+  .sub {
+    color: $iconic;
+  }
+}

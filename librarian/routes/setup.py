@@ -8,17 +8,14 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import os
-
-import dateutil.parser
 import pytz
 
-from bottle import request
+from bottle import request, redirect
 
 from ..forms.auth import RegistrationForm
 from ..forms.setup import SetupLanguageForm,  SetupDateTimeForm
 from ..lib import auth
-from ..utils.lang import UI_LOCALES
+from ..utils.lang import UI_LOCALES, set_default_locale
 from ..utils.setup import setup_wizard
 
 
@@ -41,6 +38,7 @@ def setup_language():
 
     lang = form.processed_data['language']
     request.app.setup.append({'language': lang})
+    set_default_locale(lang)
     return dict(successful=True, language=lang)
 
 
@@ -92,3 +90,9 @@ def setup_superuser():
                      db=request.db.sessions,
                      overwrite=True)
     return dict(successful=True)
+
+
+def exit_wizard():
+    next_path = request.params.get('next', '/')
+    request.app.setup.wizard.exit()
+    redirect(next_path)

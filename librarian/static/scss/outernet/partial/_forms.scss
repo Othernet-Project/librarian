@@ -1,0 +1,163 @@
+/**
+ * _forms.scss: form control definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "outernet/mixins/forms";
+
+label {
+  @include label;
+
+  &.required {
+    @include label-required;
+  }
+
+  input[type="checkbox"] + &,
+  &.checkbox {
+    @include label-checkbox;
+  }
+}
+
+input[type="text"],
+input[type="numeric"],
+input[type="email"],
+input[type="file"],
+input[type="password"],
+textarea,
+select {
+  &.small {
+    @include input-geometry-s;
+    @include input-styling-s;
+  }
+
+  @include input-normal;
+
+  &.positive {
+    @include input-positive-styling;
+
+    &:focus {
+      @include input-active-styling;
+    }
+  }
+
+  &.negative {
+    @include input-negative-styling;
+
+    &:focus {
+      @include input-active-styling;
+    }
+  }
+}
+
+input[type="text"],
+input[type="numeric"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+  &.positive {
+    @include input-icon('form_positive');
+  }
+
+  &.negative {
+    @include input-icon('form_negative');
+  }
+}
+
+input[type="checkbox"] {
+  margin-left: $form-text-offset;
+  margin-right: -18px;
+  @include appearance(none);
+  width: 0;
+  height: 0;
+  display: inline-block;
+
+  & + label:before {
+    content: ' ';
+    @include checkbox-styling;
+  }
+
+  &:checked + label {
+    color: $forest;
+
+    &:before {
+      @include checkbox-checked-styling;
+    }
+  }
+
+  &:focus + label {
+    color: $sky;
+
+    &:before {
+      @include checkbox-active-styling;
+    }
+  }
+
+  &:focus:checked + label:before {
+    @include checkbox-active-checked-styling;
+  }
+}
+
+textarea {
+  @include regular;
+  resize: vertical;
+  height: $line-height-em * 5; // 5 lines
+  min-height: $line-height-em * 3;
+  max-height: $line-height-em * 12;
+  @include border-bottom-right-radius(0);
+}
+
+select {
+  @include select-styling;
+  padding-right: 50px;
+  background-repeat: no-repeat;
+  background-position: right 10px top 50%;
+
+  @include with-hdpi(icons, dropdown_open);
+
+  &:hover {
+    @include with-hdpi(icons, dropdown_open_hover);
+  }
+
+  option {
+    @include select-option-styling;
+  }
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+select option {
+}
+
+.field-help {
+  @include help-text;
+  @include form-help-text-layout;
+}
+
+.field-error {
+  @include help-text;
+  @include form-help-text-layout;
+  color: $fire;
+}
+
+.form-errors {
+  background: $fire6;
+  border: 1px solid $fire25;
+  padding: 15px;
+  margin-bottom: 1em;
+
+  li {
+    @include help-text;
+    @include form-help-text-layout;
+    color: $fire;
+    @include bold;
+    padding-left: 0.2em;
+  }
+}

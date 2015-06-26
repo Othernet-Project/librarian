@@ -5,11 +5,6 @@
 ${_('Apps')}
 </%block>
 
-<%block name="heading">
-## Translators, used as page heading
-${_('Apps')}
-</%block>
-
 <ul class="app-list">
     % if apps:
         % for app in apps:

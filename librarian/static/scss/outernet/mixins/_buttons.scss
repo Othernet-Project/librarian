@@ -1,0 +1,184 @@
+/**
+ * _buttons.scss: button styling
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "colors";
+@import "fonts";
+@import "media_query";
+
+$default-button-style: outline;
+
+@mixin button-base {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  line-height: inherit;
+
+  ::-moz-focus-inner {
+      padding: 0 !important;
+      border: none !important;
+  }
+}
+
+@mixin button-color($color: $sky, $hover: $sky25d, $style: $default-button-style) {
+  @if $style == reverse {
+    color: $color;
+    background-color: $white;
+    border-color: $white;
+
+    &:visited {
+      color: $color;
+    }
+  } 
+  @else if $style == outline {
+    color: $color;
+    background-color: transparent;
+    border-color: $color;
+
+    &:visited {
+      color: $color;
+    }
+  } 
+  @else if $style == reverse-outline {
+    color: $white;
+    background-color: transparent;
+    border-color: $white;
+
+    &:visited {
+      color: $white;
+    }
+  }
+  @else {
+    color: $white;
+    background-color: $color;
+    border-color: $color;
+
+    &:visited {
+      color: $white;
+    }
+  }
+
+
+  @if $hover != no {
+    &:focus,
+    &:hover {
+      text-decoration: none;
+
+      @if $style == normal or $style == outline {
+        color: $white;
+        background-color: $hover;
+        border-color: $hover;
+      }
+      @else if $style == reverse-outline {
+        color: $color;
+        background-color: $white;
+        border-color: $white;
+        opacity: 0.75;
+      }
+      @else {
+        opacity: 0.75;
+      }
+    }
+  }
+}
+
+@mixin button-label {
+  font-family: $base-font;
+  font-size: $base-size;
+  line-height: 100%;
+}
+
+@mixin button-label-s {
+  @include sub;
+  line-height: 100%;
+}
+
+@mixin button-geometry {
+  width: auto;
+  min-width: 170px;
+  height: 40px;
+  @include border-radius(100px);  // make button fully rounded
+  @include box-sizing(border-box);
+
+  @include narrower-than(320px) {
+    width: 100%;
+  }
+}
+
+@mixin button-geometry-anchor-fix {
+  padding: 11px 20px 0;
+}
+
+@mixin button-geometry-s {
+  width: auto;
+  min-width: 0;
+  height: 24px;
+}
+
+@mixin button-geometry-anchor-fix-s {
+  padding: 4px 20px 0;
+}
+
+// Default buttons
+
+@mixin button-base-styling {
+  @include button-base;
+  @include button-label;
+  @include button-geometry;
+}
+
+@mixin button {
+  @include button-base-styling;
+  @include button-color;
+}
+
+// Colors
+
+@mixin button-normal-color($style: $default-button-style) {
+  @include button-color($style: $style) 
+}
+
+@mixin button-inactive-color($style: $default-button-style) {
+  @include button-color($color: $iconic, $hover: no, $style: $style) 
+}
+
+@mixin button-cta-color($style: $default-button-style) {
+  @include button-color($color: $sun, $hover: $sun25d, $style: $style);
+}
+
+@mixin button-delete-color($style: $default-button-style) {
+  @include button-color($color: $fire, $hover: $fire25d, $style: $style);
+}
+
+@mixin button-confirm-color($style: $default-button-style) {
+  @include button-color($color: $forest, $hover: $forest25d, $style: $style);
+}
+
+// Removes button appearance
+@mixin button-reset() {
+  border: none;
+  background: transparent;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  @include border-radius(0);
+  padding: 0;
+  margin: 0;
+
+  &:focs,
+  &:hover {
+    background: transparent;
+    border: none;
+    opacity: 1;
+  }
+}

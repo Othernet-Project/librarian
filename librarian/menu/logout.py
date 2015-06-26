@@ -16,9 +16,8 @@ from bottle_utils.i18n import i18n_url, lazy_gettext as _
 
 class LogoutMenuItem(MenuItem):
     label = _("Log out")
-    icon_class = 'exit'
+    icon_class = 'logout'
     route = 'auth:logout'
-    group = 'main'
 
     def is_visible(self):
         return hasattr(request, 'user') and request.user.is_authenticated

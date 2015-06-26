@@ -1,0 +1,44 @@
+@import "outernet/mixins/fonts";
+@import "outernet/mixins/grid";
+@import "outernet/mixins/media_query";
+
+.app-list {
+  @include single-cell-grid;
+
+  li {
+    @include col6;
+    
+    // Min column width is 160px. We start with a 6 column layout, which gives us a
+    // minimum required width of 960px.
+    @include narrower-than(960px) {
+      @include col4;
+    }
+
+    @include narrower-than(640px) {
+      @include col2;
+    }
+
+    @include narrower-than(320px) {
+      @include col1;
+    }
+
+    text-align: center;
+
+    .app-icon img {
+      width: 128px;
+      height: 128px;
+    }
+
+    .app-details {
+      span {
+        display: block;
+      }
+
+      .app-description,
+      .app-author,
+      .app-version {
+        @include sub;
+      }
+    }
+  }
+}

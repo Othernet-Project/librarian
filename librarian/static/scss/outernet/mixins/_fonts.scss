@@ -1,0 +1,91 @@
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+$base-font: Arial, Helvetica, "Liberation Sans", sans-serif;
+$base-size: 16px;
+$line-height-em: 1.375em; // Size of base line-height in em
+
+//Styles (bold, underlined, and italicized)
+@mixin underline {
+  text-decoration: underline;
+}
+
+@mixin bold {
+  font-weight: bold;
+}
+
+@mixin italic {
+  font-style: italic;
+}
+
+@mixin plain {
+  font-style: none;
+  font-weight: normal;
+}
+
+//Fonts (sub, regular, and headers)
+@mixin regular {
+  font-family: $base-font;
+  font-size: $base-size;
+  line-height: 137.5%;
+}
+
+@mixin sub {
+  font-size: 87.5%;
+  line-height: 137.5%;
+}
+
+@mixin heading-0 {
+  font-size: 437.5%;
+  line-height: 110%;
+}
+
+@mixin heading-1 {
+  font-size: 175%;
+  line-height: 125%;
+}
+
+@mixin heading-2 {
+  font-size: 162.5%;
+  line-height: 123%;
+}
+
+@mixin heading-3 {
+  font-size: 150%;
+  line-height: 125%;
+}
+
+@mixin heading-4 {
+  font-size: 137.5%;
+  line-height: 127%;
+}
+
+@mixin heading-5 {
+  font-size: 125%;
+  line-height: 130%;
+}
+
+@mixin heading-6 {
+  font-size: 112.5%;
+  line-height: 116%;
+}
+
+@mixin heading-common {
+  margin-top: 1em;
+  margin-bottom: $base-size;
+}
+
+@mixin help-text {
+  @include sub;
+  color: $sub;
+  display: block;
+}
+

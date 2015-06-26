@@ -1,0 +1,26 @@
+@mixin dropdown($icon) {
+  position: relative;
+
+  .down-arrow {
+    display: inline-block;
+    vertical-align: middle;
+    @include icon($icon, yes);
+
+    &:hover {
+      @incldue icon(#{$icon}_hover, yes);
+    }
+  }
+
+  .dropdown-body {
+    display: none;
+    position: absolute;
+    background-color: $input;
+    border: 1px solid $border;
+    overflow: hidden;
+    @include border-radius(7px);
+
+    li:hover {
+      background-color: $sun25;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+@import "outernet/widgets/icons";
+
+.tag-icon {
+  @include icon-plain(tags);
+}
+
+.tags {
+  a {
+    color: $sub;
+    margin: 0 0.2em;
+  }
+
+  form.inline {
+    vertical-align: middle;
+  }
+
+  .tag-button {
+    @include icon-link-button(edit);
+  }
+}

@@ -1,0 +1,99 @@
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "compass/css3";
+@import "outernet/mixins/colors";
+@import "outernet/mixins/fonts";
+
+body {
+  @include regular;
+  color: $base;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  &.first {
+    margin-top: 0;
+  }
+}
+
+h1 {
+  @include heading-1;
+  @include heading-common;
+}
+
+h2 {
+  @include heading-2;
+  @include heading-common;
+}
+
+h3 {
+  @include heading-3;
+  @include heading-common;
+}
+
+h4 {
+  @include heading-4;
+  @include heading-common;
+}
+
+h5 {
+  @include heading-5;
+  @include heading-common;
+}
+
+h6 {
+  @include heading-6;
+  @include heading-common;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+b, strong {
+  @include bold;
+}
+
+i, em {
+  @include italic;
+}
+
+pre {
+  overflow: hidden;
+  margin-bottom: 1em;
+  background: $border;
+  @include border-radius(4px);
+  padding: 0.4em;
+
+  &:hover {
+    overflow: visible;
+    position: relative;
+    z-index: 1000;
+  }
+}
+
+code {
+  display: inline-block;
+  font-family: monospace;
+  background: $border;
+  @include border-radius(4px);
+  padding: 0 0.4em;
+  font-size: 80%;
+}
+
+ul.bullets {
+  margin-bottom: 1em;
+
+  li {
+    list-style: disc;
+    margin-left: 1em;
+  }
+}

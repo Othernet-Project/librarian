@@ -1,0 +1,218 @@
+/**
+ * _menu.scss: menubar and hamburger menu
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "outernet/mixins/sprites";
+@import "outernet/mixins/colors";
+@import "outernet/mixins/media_query";
+@import "outernet/widgets/icons";
+
+$menu-item-margin: 1.2em;
+$menu-cutoff: 800px;
+
+@mixin menu-link-rev {
+  color: $base;
+
+  &:hover,
+  &:focus {
+    color: $sky;
+  }
+
+  &:visited {
+    color: $base;
+  }
+}
+
+@mixin menu-link-base {
+  font-size: 18px;
+  margin-right: $menu-item-margin;
+}
+
+.menu {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid $border;
+  height: 60px;
+  padding: 0 20px;
+  background: $universe;
+  color: $earth;
+
+  a {
+    color: $sub;
+
+    &:hover {
+      color: $white;
+      text-decoration: none;
+    }
+
+    &:visited {
+      color: $sub;
+    }
+
+    &:focus {
+      color: $sky;
+    }
+  }
+
+  &.reverse {
+    background: $white;
+    color: $iconic;
+
+    a {
+      @include menu-link-rev;
+    }
+  }
+
+  .menu-block-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .menu-subblock {
+    display: inline-block;
+    padding-top: 18px;
+    margin-right: $menu-item-margin;
+    vertical-align: top;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  #nav {
+    a {
+      @include menu-link-base;
+
+      &:hover {
+        color: $white;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .active {
+      @include menu-link-base;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    @include narrower-than($menu-cutoff) {
+      display: none;
+    }
+  }
+
+  .hamburger {
+    width: 60px;
+    line-height: 60px;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    display: none;
+
+    &.open {
+      background: $white;
+    }
+
+    @include narrower-than($menu-cutoff) {
+      display: inline-block;
+    }
+
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      @include hide-text;
+      background-position: center center;
+      background-repeat: no-repeat;
+      @include with-hdpi(icons, hamburger);
+    }
+  }
+}
+
+.alt-menu {
+  position: fixed;
+  z-index: 2000;
+  top: 60px;
+  bottom: 0;
+  left: 100%;
+  width: 100%;
+  opacity: 0;
+  background: $white;
+  @include transition(left 0.3s ease-out, opacity 0.3s ease-out);
+
+  @include wider-than($menu-cutoff) {
+    display: none;
+  }
+
+  .active .icon,
+  .active .label {
+    opacity: 0.5;
+  }
+
+  .level2-trigger,
+  .top-trigger {
+    color: $iconic;
+    background-repeat: no-repeat;
+  }
+
+  .level2-trigger {
+    background-position: right 10px top 50%;
+    @include with-hdpi(icons, arrow_right);
+  }
+
+  .top-trigger {
+    background-position: left 10px top 50%;
+    @include with-hdpi(icons, arrow_left);
+    padding-left: 40px;
+  }
+
+  .level1, .level2 {
+    position: absolute;
+    background: $white;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    overflow-y: scroll;
+    background: $white;
+  }
+
+  .level2 {
+    left: 100%;
+    border-left: 3px solid $border;
+    @include transition(left 0.3s ease-out);
+
+    &.open {
+      left: 0;
+    }
+  }
+
+  &.open {
+    left: 0; 
+    opacity: 1;
+  }
+
+  a, .active {
+    display: block;
+    line-height: 60px;
+    padding: 0 20px;
+    border-bottom: 1px solid $border;
+    color: $base;
+  }
+}

@@ -1,0 +1,171 @@
+/**
+ * _grid.scss: simple grid system
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 5, ../scss/dashboard/_diskspace.scss */
+#diskspace .progress {
+  max-width: 100%;
+  margin-bottom: 0; }
+/* line 10, ../scss/dashboard/_diskspace.scss */
+#diskspace .stat {
+  margin-bottom: 0.5em; }
+/* line 13, ../scss/dashboard/_diskspace.scss */
+#diskspace .stat .number {
+  font-size: 175%;
+  line-height: 125%; }
+
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 5, ../scss/dashboard/_dbmanage.scss */
+#dbmanage .inline-form-wrapper {
+  margin-bottom: 1em; }
+/* line 8, ../scss/dashboard/_dbmanage.scss */
+#dbmanage .inline-form-wrapper form {
+  display: inline-block; }
+/* line 13, ../scss/dashboard/_dbmanage.scss */
+#dbmanage .warning {
+  color: #c41414;
+  font-weight: bold;
+  max-width: 40em; }
+
+/* line 2, ../scss/dashboard/_logs.scss */
+#logs textarea {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1em;
+  font-family: monospace;
+  font-size: 12px;
+  min-height: 300px;
+  max-height: 600px; }
+
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _grid.scss: simple grid system
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _media_query.scss: media query support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 6, ../scss/dashboard/_ondd.scss */
+.ondd-status, .ondd-settings {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  float: left;
+  box-sizing: border-box;
+  -moz-transition: width 0.5s;
+  -o-transition: width 0.5s;
+  -webkit-transition: width 0.5s;
+  transition: width 0.5s;
+  width: 50%; }
+@media only screen and (max-width: 640px) {
+  /* line 6, ../scss/dashboard/_ondd.scss */
+  .ondd-status, .ondd-settings {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    float: left;
+    box-sizing: border-box;
+    -moz-transition: width 0.5s;
+    -o-transition: width 0.5s;
+    -webkit-transition: width 0.5s;
+    transition: width 0.5s;
+    width: 100%; } }
+/* line 15, ../scss/dashboard/_ondd.scss */
+.ondd-status .bitrate .label, .ondd-status .lock .label, .ondd-status .service .label, .ondd-settings .bitrate .label, .ondd-settings .lock .label, .ondd-settings .service .label {
+  color: #888888; }
+/* line 20, ../scss/dashboard/_ondd.scss */
+.ondd-status .progress, .ondd-settings .progress {
+  max-width: 100%;
+  width: 100%; }
+/* line 25, ../scss/dashboard/_ondd.scss */
+.ondd-status .progress .label, .ondd-settings .progress .label {
+  text-transform: uppercase; }
+/* line 29, ../scss/dashboard/_ondd.scss */
+.ondd-status .no-lock, .ondd-settings .no-lock {
+  color: #c41414; }
+/* line 33, ../scss/dashboard/_ondd.scss */
+.ondd-status .has-lock, .ondd-settings .has-lock {
+  color: #058120; }
+
+/* line 38, ../scss/dashboard/_ondd.scss */
+.signal-status {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  float: left;
+  box-sizing: border-box;
+  -moz-transition: width 0.5s;
+  -o-transition: width 0.5s;
+  -webkit-transition: width 0.5s;
+  transition: width 0.5s;
+  width: 100%; }

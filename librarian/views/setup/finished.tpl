@@ -5,12 +5,9 @@
 ${_('Setup Completed')}
 </%block>
 
-<%block name="heading">
-## Translators, used as page heading
-${_('Setup Completed')}
-</%block>
-
 <div class="setup-finished">
-    <p>${_('Librarian has been set up successfully.')}</p>
-    <a class="button" href="${i18n_url('content:list', locale=setup['language'])}">${_('Start using Librarian')}</a>
+    <span class="all-ok"></span>
+    <p class="main">${_('Settings are saved.')}</p>
+    <p class="sub">${_('Welcome to outernet.')}</p>
+    <a class="button confirm" href="${i18n_url('setup:exit')}?next=${i18n_url('content:list')}">${_('Start using Outernet')}</a>
 </div>

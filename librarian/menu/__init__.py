@@ -8,8 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import os
-import sys
+import importlib
 
 import bottle
 
@@ -18,22 +17,17 @@ from bottle_utils.i18n import i18n_url
 
 
 MENU_ITEMS = []
+MENU_GROUPS = {}
 
 
 class MenuItem(object):
     label = ''
     group = None
-    icon_class = None
-    alt_icon_class = None
+    icon_class = ''
+    alt_icon_class = ''
     route = None
     default_classes = ('navicon',)
-
-    def __init__(self):
-        mod_file = sys.modules[self.__class__.__module__].__file__
-        pkg_path = os.path.dirname(os.path.abspath(mod_file))
-        self.name = os.path.basename(pkg_path)
-        if self.icon_class is None:
-            raise ValueError("icon_class parameter is not set.")
+    name = None
 
     def is_alt_icon_visible(self):
         return False
@@ -45,18 +39,24 @@ class MenuItem(object):
         return i18n_url(self.route)
 
     def render(self):
-        icon = html.SPAN(_class="icon")
+        if not self.is_visible():
+            return ''
         if self.is_alt_icon_visible():
             icon_class = self.alt_icon_class
         else:
             icon_class = self.icon_class
+        if icon_class:
+            icon = html.SPAN(_class="icon")
+        else:
+            icon = ''
 
-        item_class = ' '.join(tuple(self.default_classes) + (icon_class,))
-        return html.link_other(icon + self.label,
-                               self.get_path(),
-                               bottle.request.original_path,
-                               html.SPAN,
-                               _class=item_class)
+        item_class = ' '.join(
+            tuple(self.default_classes) + (icon_class,)).strip()
+        return html.link_other(
+            ' '.join([icon + html.SPAN(self.label, _class="label")]),
+            self.get_path(), bottle.request.original_path,
+            lambda s, _class: html.SPAN(s, _class='active ' + item_class),
+            _class=item_class)
 
     def __str__(self):
         return self.render()
@@ -65,16 +65,36 @@ class MenuItem(object):
         return self.render()
 
 
-def install_menuitems(app):
-    for mod_path in app.config.get('menu.items', []):
-        try:
-            __import__(mod_path)  # attempt import from pythonpath
-        except ImportError:
-            rel_path = 'librarian.menu.{0}'.format(mod_path)
-            __import__(rel_path)  # attempt local import
+def find_menu_cls(mod):
+    for member in dir(mod):
+        member = getattr(mod, member)
+        if issubclass(member, MenuItem) and member is not MenuItem:
+            return member
+    raise ValueError('Could not find MenuItem subclass in {}'.format(
+        mod.__name__))
 
-    for menu_item_cls in MenuItem.__subclasses__():
-        MENU_ITEMS.append(menu_item_cls)
+
+def install_menuitems(app):
+    for (name, group) in app.config.items():
+        if not name.startswith('menu.'):
+            continue
+        group_name = name.replace('menu.', '')
+
+        for mod_path in group:
+            name = mod_path.rsplit('.', 1)[-1]
+            try:
+                # Attempt global import
+                mod = importlib.import_module(mod_path)
+            except ImportError:
+                # Attempt local import
+                rel_path = 'librarian.menu.{0}'.format(mod_path)
+                mod = importlib.import_module(rel_path)
+
+            menu_cls = find_menu_cls(mod)
+            menu_cls.name = name
+            MENU_ITEMS.append(menu_cls)
+            MENU_GROUPS.setdefault(group_name, [])
+            MENU_GROUPS[group_name].append(menu_cls)
 
     bottle.BaseTemplate.defaults.update({'menu_group': menu_group,
                                          'menu_item': menu_item})
@@ -82,9 +102,8 @@ def install_menuitems(app):
 
 def menu_group(group):
     """Return list of menu items that belong to the specified `group`"""
-    for item in MENU_ITEMS:
-        if item.group == group:
-            yield item()
+    for item in MENU_GROUPS[group]:
+        yield item()
 
 
 def menu_item(name, group=None):

@@ -40,6 +40,10 @@ class are accessible through this archive object.
 expected to be passed as keyword arguments, and are mandatory. An exception
 will be raised if they are omitted during instantiation. The parameters are:
 
+- ``unpackdir`` - Path to folder where zipballs are symlinked while unpacking
 - ``contentdir`` - Path to content folder(where archive zipballs are stored)
 - ``spooldir`` - Path for temporary content storage
 - ``meta_filename`` - Name of the file that contains content metadata
+
+All methods of a storage backend should return native python objects, not
+backend specified objects.

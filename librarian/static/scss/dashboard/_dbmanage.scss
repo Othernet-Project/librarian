@@ -1,0 +1,18 @@
+@import "outernet/mixins/colors";
+@import "outernet/mixins/fonts";
+
+#dbmanage {
+  .inline-form-wrapper {
+    margin-bottom: 1em;
+
+    form {
+      display: inline-block;
+    }
+  }
+
+  .warning {
+    color: $fire;
+    @include bold;
+    max-width: 40em;
+  }
+}

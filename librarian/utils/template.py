@@ -28,7 +28,6 @@ def configure_template(app):
     bottle.BaseTemplate.defaults.update({
         'app_version': app.version,
         'request': bottle.request,
-        'style': 'screen',  # Default stylesheet
         'h': html,
         'th': template_helper,
         'LANGS': LANGS,

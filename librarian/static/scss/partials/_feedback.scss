@@ -1,0 +1,30 @@
+@import "sprites";
+
+.feedback {
+  padding-top: 3em;
+  padding-bottom: 4em;
+
+  text-align: center;
+
+  .icon {
+    display: inline-block;
+    margin-bottom: 1em;
+  }
+
+  &.success .icon {
+    @include icon('done');
+  }
+
+  &.error .icon {
+    @include icon('error');
+  }
+
+  .main {
+    @include heading-5;
+    margin: 0;
+  }
+
+  .sub {
+    color: $iconic;
+  }
+}

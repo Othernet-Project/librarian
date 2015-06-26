@@ -13,10 +13,10 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import logging
 
 from bottle import request
+from bottle_utils import form
 from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
-from ...lib import forms
 from ...utils.setup import setup_wizard
 from ...utils.template import template, view
 from ...utils.template_helpers import template_helper
@@ -120,59 +120,71 @@ def get_signal_status():
     return dict(status=ipc.get_status())
 
 
-class ONDDForm(forms.Form):
+class ONDDForm(form.Form):
     PRESETS = PRESETS
+    messages = {
+        'tuning_error': _("Tuner configuration could not be saved. "
+                          "Please make sure that the tuner is connected.")
+    }
     # TODO: Add support for DiSEqC azimuth value
-    lnb = forms.SelectField(
+    lnb = form.SelectField(
         _("LNB Type"),
         # Translators, error message when LNB type is incorrect
-        validators=[forms.Required(message=_('Invalid choice for LNB type'))],
+        validators=[form.Required(messages={
+            'required': _('Invalid choice for LNB type')
+        })],
         choices=LNB_TYPES
     )
-    frequency = forms.IntegerField(
+    frequency = form.IntegerField(
         _("Frequency"),
         validators=[
-            forms.Required(),
-            forms.InRangeValidator(
+            form.Required(),
+            form.InRangeValidator(
                 min_value=0,
                 # Translators, error message when frequency value is wrong
-                message=_('Frequency must be a positive number')
+                messages={'min_val': _('Frequency must be a positive number')}
             )
         ]
     )
-    symbolrate = forms.IntegerField(
+    symbolrate = form.IntegerField(
         _("Symbol rate"),
         validators=[
-            forms.Required(),
-            forms.InRangeValidator(
+            form.Required(),
+            form.InRangeValidator(
                 min_value=0,
                 # Translators, error message when symbolrate value is wrong
-                message=_('Symbolrate must be a positive number')
+                messages={'min_val': _('Symbolrate must be a positive number')}
             )
         ]
     )
-    delivery = forms.SelectField(
+    delivery = form.SelectField(
         _("Delivery system"),
         choices=DELIVERY,
         # Translators, error message when wrong delivery system is selected
         validators=[
-            forms.Required(message=_('Invalid choice for delivery system'))
+            form.Required(messages={
+                'required': _('Invalid choice for delivery system')
+            })
         ]
     )
-    modulation = forms.SelectField(
+    modulation = form.SelectField(
         _("Modulation"),
         choices=MODULATION,
         # Translators, error message when wrong modulation mode is selected
         validators=[
-            forms.Required(message=_('Invalid choice for modulation mode'))
+            form.Required(messages={
+                'required': _('Invalid choice for modulation mode')
+            })
         ]
     )
-    polarization = forms.SelectField(
+    polarization = form.SelectField(
         _("Polarization"),
         choices=POLARIZATION,
         # Translators, error message when wrong polarization is selected
         validators=[
-            forms.Required(message=_('Invalid choice for polarization'))
+            form.Required(messages={
+                'required': _('Invalid choice for polarization')
+            })
         ]
     )
 
@@ -195,9 +207,7 @@ class ONDDForm(forms.Form):
         if not response.startswith('2'):
             # Translators, error message shown when setting transponder
             # configuration is not successful
-            msg = _("Tuner configuration could not be saved. "
-                    "Please make sure that the tuner is connected.")
-            raise forms.ValidationError(msg, {})
+            raise form.ValidationError('tuning_error', {})
 
 
 @roca_view('ondd/settings', 'ondd/_settings_form', template_func=template)

@@ -1,0 +1,45 @@
+/**
+ * _sprites.scss: sprite images with high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "hdpi_images";
+
+@mixin named-sprite($map, $map-2x, $name, $dimensions: yes) {
+  // We avoid shorthand so we only override what we need to
+  background-image: sprite-url($map);
+  background-position: sprite-position($map, $name);
+  background-repeat: no-repeat;
+  
+  @if $dimensions == yes {
+    $sfile: sprite-file($map, $name);
+    width: image-width($sfile);
+    height: image-height($sfile);
+  }
+
+  @include at-hdpi {
+    background-image: sprite-url($map-2x);
+    background-position: sprite-position($map, $name);
+    @include background-size(sprite-width($map) sprite-height($map));
+  }
+}
+
+@mixin sprite($map, $map-2x, $name, $dimensions: yes) {
+  @if $dimensions == yes {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  @include named-sprite($map, $map-2x, $name, $dimensions);
+}
+
+$icons: sprite-map('icons/1x/*.png', $spacing: 30px);
+$icons-2x: sprite-map('icons/2x/*.png', $spacing: 60px);
+@mixin icon($name, $dimensions: yes) {
+  @include sprite($icons, $icons-2x, $name, $dimensions);
+}

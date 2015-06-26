@@ -1,0 +1,102 @@
+/**
+ * _buttons.scss: button styling
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "outernet/mixins/buttons";
+
+button,
+.button { 
+  @include button;
+
+  &.small {
+    @include button-label-s;
+    @include button-geometry-s;
+  }
+
+  &.primary {
+    @include button-normal-color(normal);
+  }
+
+  &.cta {
+    @include button-cta-color;
+
+    &.primary {
+      @include button-cta-color(normal);
+    }
+  }
+
+  &.delete {
+    @include button-delete-color;
+
+    &.primary {
+      @include button-delete-color(normal);
+    }
+  }
+
+  &.confirm {
+    @include button-confirm-color(normal);
+  }
+
+  &.reverse {
+    @include button-color($style: reverse-outline); 
+
+    &.primary {
+      @include button-color($style: reverse);
+    }
+
+    &.cta {
+      @include button-cta-color($style: reverse-outline);
+
+      &.primary {
+        @include button-cta-color($style: reverse);
+      }
+    }
+
+    &.delete {
+      @include button-delete-color($style: reverse-outline);
+
+      &.primary {
+        @include button-delete-color($style: reverse);
+      }
+    }
+
+    &.confirm {
+      @include button-confirm-color($style: reverse-outline);
+
+      &.primary {
+        @include button-confirm-color($style: reverse);
+      }
+    }
+
+    &[disabled],
+    &.disabled {
+      @include button-inactive-color($style: reverse-outline);
+      opacity: 0.5;
+    }
+  }
+
+  &[disabled],
+  &.disabled {
+    @include button-inactive-color;
+    cursor: default;
+
+    &.primary {
+      @include button-inactive-color($style: normal);
+    }
+  }
+}
+
+a.button {
+  @include button-geometry-anchor-fix;
+
+  &.small {
+    @include button-geometry-anchor-fix-s;
+  }
+}

@@ -1,10 +1,21 @@
-<span class="pager-links">
+<%def name="prev_next_pager()">
     % if pager.has_prev:
-    ## Translators, used in the pager
-    <a href="${i18n_path(request.path) + h.set_qparam(p=pager.page - 1).to_qs()}" class="button prev">${_('previous')}</a>
+    ## Translators, used in the pager 
+    <a href="${i18n_path(request.path) + h.set_qparam(p=pager.page - 1).to_qs()}" class="pager-button prev"><span class="icon">${_('previous')}</span></a>
     % endif
 
-    ${h.form(method='GET', _class='inline')}
+    <span class="pages-count">
+    ${_('Page %(current)s of %(total)s') % dict(current=pager.page, total=pager.pages)}
+    </span>
+
+    % if pager.has_next:
+    ## Translators, used in the pager
+    <a href="${i18n_path(request.path) + h.set_qparam(p=pager.page + 1).to_qs()}" class="pager-button next"><span class="icon">${_('next')}</span></a>
+    % endif
+</%def>
+
+<%def name="pager_options()">
+    ${h.form(method='GET')}
         % if pager.pages > 1:
         <label for="page">${_('page')}</label>
         ${h.vselect('p', pager.page_choices, vals, _id='page')}
@@ -13,9 +24,9 @@
         <label for="per-page">${_('per page')}</label>
         <button type="submit">${_('Reload')}</button>
     </form>
+</%def>
 
-    % if pager.has_next:
-    ## Translators, used in the pager
-    <a href="${i18n_path(request.path) + h.set_qparam(p=pager.page + 1).to_qs()}" class="button next">${_('next')}</a>
-    % endif
+<span class="pager-links">
+    ${self.pager_options()}
+    ${self.prev_next_pager()}
 </span>

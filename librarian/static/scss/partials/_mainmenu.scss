@@ -1,0 +1,127 @@
+@import "compass/typography";
+@import "outernet/mixins/media_query";
+@import "outernet/mixins/sprites";
+@import "outernet/widgets/icons";
+@import "dropdown";
+@import "sprites";
+
+.menu {
+  .logo {
+    @include hide-text;
+    @include misc-icon(logo_menu, yes);
+  }
+
+  #nav .navicon {
+    display: inline-block;
+    height: 24px;
+    position: relative;
+
+    .icon {
+      margin-right: 0.2em;
+    }
+
+    .label {
+      display: inline-block;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .count {
+      @include icon-label($sun);
+    }
+
+    .icon + .label {
+      overflow: hidden;
+      max-width: 0;
+      @include transition(max-width 0.3s);
+
+      @include narrower-than($menu-cutoff) {
+        max-width: none;
+      }
+    }
+
+    &:hover {
+      .icon + .label {
+        display: inline-block;
+        max-width: 200px;
+      }
+    }
+
+    &.updates:hover {
+      .icon + .label {
+        padding-right: 0.5em;
+      }
+    }
+
+    &.notifications {
+      .icon {
+        @include icon-button(alert);
+      }
+
+      .label {
+        display: none !important;
+      }
+    }
+  }
+
+  .dropdown.languages {
+    display: inline-block;
+    @include dropdown(arrow_down);
+
+    .dropdown-item {
+      white-space: nowrap;
+    }
+
+    .dropdown-item .language {
+      padding: 10px 20px 10px 20px;
+      text-align: center;
+      display: block;
+    }
+
+    .dropdown-item span.selected {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+      @include with-hdpi(icons, 'checkmark_active', $include-size: yes);
+    }
+
+    @include narrower-than($menu-cutoff) {
+      display: none;
+    }
+  }
+}
+
+.alt-menu {
+  .icon {
+    width: 30px;
+    margin-right: 0.5em;
+  }
+
+  .label {
+    display: inline-block;
+  }
+
+  .level2-lang .selected {
+    background: $forest10;
+    @include with-hdpi(icons, form_positive);
+    background-repeat: no-repeat;
+    background-position: right 20px top 50%;
+    color: $forest;
+  }
+}
+
+@each $navicon in (library, files, sites, apps, updates, logout, settings) {
+  #nav .#{$navicon},
+  .alt-menu .#{$navicon} {
+    .icon {
+      @include app-icon($navicon);
+    }
+  }
+
+  #nav .#{$navicon} {
+    &:hover .icon,
+    &.active .icon {
+      @include app-icon(#{$navicon}_hover);
+    }
+  }
+}
