@@ -9,14 +9,14 @@ ${widgets.progress(_("Signal"), status['signal'], value=status['signal'], thresh
 ${widgets.progress(_("Quality"), snr_pct, value=status['snr'], threshold=25)}
 
 <p class="lock">
-    ## Translators, this indicates whether we locked on to the chosen transponder
-    <span class="label">${_('Locked on to transponder')}:</span> ${has_lock}
+    ## Translators, label shown beore signal lock indicator (e.g., Signal lock: yes)
+    <span class="label">${_('Signal lock:')}</span> ${has_lock}
 </p>
 <p class="service">
-    ## Translators, this indicates whether the signal onto which we locked is broadcasting Outernet service
-    <span class="label">${_('Receiving Outernet service')}:</span> ${has_service}
+    ## Translators, label shown before service lock indicator (e.g., Receiving data: yes)
+    <span class="label">${_('Receiving data:')}</span> ${has_service}
 </p>
 <p class="bitrate">
-    ## Translators, bitrate
-    <span class="label">${_('Bitrate')}:</span> ${h.hsize(th.get_bitrate(status), unit='bps', step=1000)}
+    ## Translators, label shown before the current bitrate indicator (e.g., Bitrate: 68.7kbps)
+    <span class="label">${_('Bitrate:')}</span> ${h.hsize(th.get_bitrate(status), unit='bps', step=1000)}
 </p>
