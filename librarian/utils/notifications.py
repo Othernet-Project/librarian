@@ -249,7 +249,7 @@ def get_notifications(notification_ids=None):
         args = []
         query = db.Select(sets='notifications', where='user IS NULL')
 
-    query.where += '(dismissable == 0 OR read_at IS NOT NULL)'
+    query.where += '(dismissable = 0 OR read_at IS NULL)'
 
     if notification_ids:
         query.where += db.sqlin.__func__('notification_id', notification_ids)
