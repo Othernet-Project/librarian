@@ -130,7 +130,9 @@ class ONDDForm(form.Form):
     lnb = form.SelectField(
         _("LNB Type"),
         # Translators, error message when LNB type is incorrect
-        validators=[form.Required(message=_('Invalid choice for LNB type'))],
+        validators=[form.Required(messages={
+            'required': _('Invalid choice for LNB type')
+        })],
         choices=LNB_TYPES
     )
     frequency = form.IntegerField(
@@ -140,7 +142,7 @@ class ONDDForm(form.Form):
             form.InRangeValidator(
                 min_value=0,
                 # Translators, error message when frequency value is wrong
-                message=_('Frequency must be a positive number')
+                messages={'min_val': _('Frequency must be a positive number')}
             )
         ]
     )
@@ -151,7 +153,7 @@ class ONDDForm(form.Form):
             form.InRangeValidator(
                 min_value=0,
                 # Translators, error message when symbolrate value is wrong
-                message=_('Symbolrate must be a positive number')
+                messages={'min_val': _('Symbolrate must be a positive number')}
             )
         ]
     )
@@ -160,7 +162,9 @@ class ONDDForm(form.Form):
         choices=DELIVERY,
         # Translators, error message when wrong delivery system is selected
         validators=[
-            form.Required(message=_('Invalid choice for delivery system'))
+            form.Required(messages={
+                'required': _('Invalid choice for delivery system')
+            })
         ]
     )
     modulation = form.SelectField(
@@ -168,7 +172,9 @@ class ONDDForm(form.Form):
         choices=MODULATION,
         # Translators, error message when wrong modulation mode is selected
         validators=[
-            form.Required(message=_('Invalid choice for modulation mode'))
+            form.Required(messages={
+                'required': _('Invalid choice for modulation mode')
+            })
         ]
     )
     polarization = form.SelectField(
@@ -176,7 +182,9 @@ class ONDDForm(form.Form):
         choices=POLARIZATION,
         # Translators, error message when wrong polarization is selected
         validators=[
-            form.Required(message=_('Invalid choice for polarization'))
+            form.Required(messages={
+                'required': _('Invalid choice for polarization')
+            })
         ]
     )
 
