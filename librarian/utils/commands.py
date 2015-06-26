@@ -17,6 +17,7 @@ import hooks
 
 from ..core.archive import Archive
 from ..lib import auth
+from ..utils import static
 from .version import get_version
 
 
@@ -145,6 +146,13 @@ def repl_shutdown(app):
 def repl(arg, app):
     app.events.subscribe(hooks.POST_START, repl_start)
     app.events.subscribe(hooks.SHUTDOWN, repl_shutdown)
+
+
+@command('assets', '--assets', action='store_true',
+         help='rebuild static assets')
+def assets_command(arg, app):
+    static.rebuild_assets(app.config)
+    sys.exit(0)
 
 
 @command('version', '--version', action='store_true',

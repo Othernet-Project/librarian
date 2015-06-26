@@ -1,8 +1,11 @@
 import os
+import glob
+import logging
 
 import webassets
-
 from bottle import BaseTemplate
+from webassets.script import CommandLineEnvironment
+
 
 MODDIR = os.path.dirname(__file__)
 PKGDIR = os.path.dirname(MODDIR)
@@ -113,18 +116,18 @@ class Assets:
 
 
 def parse_bundle(bundle):
+    """ Parse bundle configuration """
     bundle_name, bundle_content = [b.strip() for b in bundle.split(':')]
     bundle_content = [b.strip() for b in bundle_content.split(',')]
     return bundle_name, bundle_content
 
 
-def setup_static(app):
-    config = app.config
-
+def make_assets(config):
+    """ Create Assets instance from dict-like config object """
     assets_dir = os.path.join(PKGDIR, config['assets.directory'])
     assets_url = config['assets.url']
     assets_debug = config['assets.debug']
-    assets = app.assets = Assets(assets_dir, assets_url, assets_debug)
+    assets = Assets(assets_dir, assets_url, assets_debug)
 
     js_bundles = [parse_bundle(b)
                   for b in config.get('assets.js_bundles', [])]
@@ -135,5 +138,25 @@ def setup_static(app):
                    for b in config.get('assets.css_bundles', [])]
     for name, contents in css_bundles:
         assets.add_css_bundle(name, contents)
+    return assets
 
+
+def setup_static(app):
+    """ Set up assets """
+    assets = app.assets = make_assets(app.config)
     BaseTemplate.defaults['assets'] = assets
+
+
+def rebuild_assets(config):
+    config = config.copy()
+    config['assets.debug'] = True
+    assets = make_assets(config)
+    assets_dir = assets.env.directory
+    # Remove existing assets
+    for name, bundle in assets.env._named_bundles.items():
+        path = os.path.join(assets_dir, bundle.output) % {'version': '*'}
+        for p in glob.iglob(path):
+            os.unlink(p)
+    cmdenv = CommandLineEnvironment(assets.env, logging.getLogger('assets'))
+    cmdenv.invoke('build', {})
+    cmdenv.invoke('clean', {})
