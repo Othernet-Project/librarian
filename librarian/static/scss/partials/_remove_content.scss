@@ -9,7 +9,7 @@
   .icon {
     display: inline-block;
     margin-bottom: 1em;
-    @include icon('delete');
+    @include icon('confirmation');
   }
 
   .main {
