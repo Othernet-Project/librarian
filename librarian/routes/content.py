@@ -118,22 +118,21 @@ def remove_content_confirm(content_id):
 
 @auth.login_required(next_to='/')
 @csrf_protect
+@view('feedback')
 def remove_content(content_id):
     """ Delete a single piece of content from archive """
-    redir_path = i18n_url('content:list')
     archive = open_archive()
     archive.remove_from_archive([content_id])
     request.app.exts.cache.invalidate(prefix='content')
     # Translators, used as page title of successful content removal feedback
     page_title = _("Content removed")
     # Translators, used as message of successful content removal feedback
-    sub_message = _("Content successfully removed.")
-    return template('feedback',
-                    status='success',
-                    page_title=page_title,
-                    main_message=page_title,
-                    sub_message=sub_message,
-                    redirect=redir_path)
+    message = _("Content successfully removed.")
+    return dict(status='success',
+                page_title=page_title,
+                message=message,
+                redirect_url=i18n_url('content:list'),
+                redirect_target=_("Library"))
 
 
 def content_file(content_path, filename):
