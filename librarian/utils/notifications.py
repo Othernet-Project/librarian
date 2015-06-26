@@ -258,7 +258,10 @@ def get_notifications(notification_ids=None):
         args += notification_ids
 
     db.query(query, *args)
-    return (Notification(**to_dict(row)) for row in db.results)
+    for row in db.results:
+        notification = Notification(**to_dict(row))
+        if not notification.is_read:
+            yield notification
 
 
 def notifies(message, **params):
