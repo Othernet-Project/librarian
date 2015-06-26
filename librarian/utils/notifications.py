@@ -226,11 +226,15 @@ def get_notifications(notification_ids=None):
     user = request.user.username if request.user.is_authenticated else None
     notification_ids = notification_ids or []
 
-    query = db.Select(sets='notifications', where='user IS NULL')
-    args = []
     if user:
-        query.where |= 'user = ?'
-        args += [user]
+        args = [user]
+        query = db.Select(sets='notifications',
+                          where='(user IS NULL OR user = ?)')
+    else:
+        args = []
+        query = db.Select(sets='notifications', where='user IS NULL')
+
+    query.where += '(dismissable == 0 OR read_at IS NOT NULL)'
 
     if notification_ids:
         query.where += db.sqlin.__func__('notification_id', notification_ids)
