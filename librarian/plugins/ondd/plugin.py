@@ -221,7 +221,7 @@ def set_settings():
 
     return dict(form=form,
                 message=_('Transponder configuration saved.'),
-                redirect=i18n_url('dashboard:main'))
+                redirect_url=i18n_url('dashboard:main'))
 
 
 @view('ondd/_file_list')
