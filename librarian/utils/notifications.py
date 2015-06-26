@@ -189,7 +189,9 @@ class NotificationGroup(object):
             except IndexError:
                 raise ValueError('Notification group has 0 notifications.')
 
-        return super(NotificationGroup, self).__getattr__(name)
+        cls_name = self.__class__.__name__
+        msg = "'{0}' object has no attribute '{1}'".format(cls_name, name)
+        raise AttributeError(msg)
 
     def add(self, notification):
         self.notifications.append(notification)
