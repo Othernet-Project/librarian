@@ -4598,18 +4598,20 @@ p.end {
 .notification-list .notification .notification-body .message {
   color: #e17502;
   margin: 0;
-  width: 90%;
+  width: 90%; }
+/* line 40, ../scss/partials/_notifications.scss */
+.notification-list .notification .notification-body .message .titles {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; }
-/* line 44, ../scss/partials/_notifications.scss */
+/* line 46, ../scss/partials/_notifications.scss */
 .notification-list .notification .notification-body .icon {
   float: right;
   display: inline-block; }
-/* line 48, ../scss/partials/_notifications.scss */
+/* line 50, ../scss/partials/_notifications.scss */
 .notification-list .notification .notification-body .timestamp {
   color: #888888; }
-/* line 51, ../scss/partials/_notifications.scss */
+/* line 53, ../scss/partials/_notifications.scss */
 .notification-list .notification .notification-body button {
   position: absolute;
   right: 0;

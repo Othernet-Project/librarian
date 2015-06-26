@@ -1,8 +1,8 @@
 <%def name="content(group)">
-    <span class="description">${ngettext('A content item has been added to the Library with the following title:',
-                                         '{count} content items have been added to the Library with the following titles:',
-                                         group.count).format(count=group.count)}</span>
-    <span class="titles">${', '.join([item.message['title'] for item in group.notifications])}</span>
+    <h2 class="description">${ngettext('A content item has been added to the Library with the following title:',
+                                       '{count} content items have been added to the Library with the following titles:',
+                                       group.count).format(count=group.count)}</h2>
+    <p class="titles">${', '.join([item.message['title'] for item in group.notifications])}</p>
 </%def>
 <% notification_templates = {'content': content} %>
 
@@ -17,7 +17,7 @@
         % for notification in group.notifications:
             <input type="hidden" name="mark_read" value="${notification.notification_id}" />
         % endfor
-        <h2 class="message">${notification_templates[notification.category](group)}</h2>
+        <div class="message">${notification_templates[notification.category](group)}</div>
         <span class="timestamp">${group.created_at.date()}</span>
         <span class="icon ${group.category}"></span>
         % if not group.is_read:

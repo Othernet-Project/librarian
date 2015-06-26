@@ -37,9 +37,11 @@
         color: $sun;
         margin: 0;
         width: 90%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        .titles {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
       .icon {
         float: right;
@@ -51,7 +53,8 @@
       button {
         position: absolute;
         right: 0;
-        top: 5px;
+        top: 50%;
+        margin-top: -12px;
       }
     }
   }
