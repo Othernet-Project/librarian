@@ -22,10 +22,13 @@
       border-width: 65px 65px 0 0;
       border-color: $sun transparent transparent transparent;
       .icon {
-        @include icon(alert);
+        @include icon(alert_sys);
         position: absolute;
         top: -60px;
         left: 5px;
+      }
+      .icon.dismissable {
+        @include icon(alert_new);
       }
     }
     .notification-body {

@@ -10,7 +10,7 @@
 <li class="notification h-bar ${loop.cycle('white', '')} ${'' if group.is_read else 'unread'}">
     % if not group.is_read:
     <span class="alert">
-        <span class="icon"></span>
+        <span class="icon${' dismissable' if group.dismissable else ''}"></span>
     </span>
     % endif
     ${h.form('post', _class="notification-body")}
