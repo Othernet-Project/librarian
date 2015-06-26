@@ -10,6 +10,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import logging
 import os
 
 from bottle import request, redirect, MultiDict, abort
@@ -24,6 +25,31 @@ from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError
 
 from . import zipballs
+
+
+def row_to_dict(row):
+    return dict((key, row[key]) for key in row.keys())
+
+
+def auto_cleanup(app):
+    (free, _) = zipballs.free_space(config=app.config)
+    needed_space = zipballs.needed_space(free, config=app.config)
+    if not needed_space:
+        return
+
+    archive = Archive.setup(app.config['librarian.backend'],
+                            app.databases.main,
+                            unpackdir=app.config['content.unpackdir'],
+                            contentdir=app.config['content.contentdir'],
+                            spooldir=app.config['content.spooldir'],
+                            meta_filename=app.config['content.metadata'])
+    deletable_content = zipballs.cleanup_list(free,
+                                              db=app.databases.main,
+                                              config=app.config)
+    content_ids = [content['md5'] for content in deletable_content]
+    deleted = archive.remove_from_archive(content_ids)
+    msg = "Automatic cleanup has deleted {0} content entries.".format(deleted)
+    logging.info(msg)
 
 
 @view('diskspace/cleanup', message=None, vals=MultiDict())
@@ -86,6 +112,10 @@ def install(app, route):
     except AttributeError:
         raise NotSupportedError(
             'Disk space information not available on this platform')
+
+    if app.config.get('storage.auto_cleanup', False):
+        app.events.subscribe('background', auto_cleanup)
+
     route(
         ('list', cleanup_list, 'GET', '/cleanup/', {}),
         ('cleanup', cleanup, 'POST', '/cleanup/', {}),
