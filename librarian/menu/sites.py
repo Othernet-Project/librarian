@@ -17,4 +17,3 @@ class SitesMenuItem(MenuItem):
     label = _("Sites")
     icon_class = 'sites'
     route = 'content:sites_list'
-    group = 'main'

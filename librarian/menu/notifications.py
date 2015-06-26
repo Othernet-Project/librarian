@@ -17,7 +17,6 @@ class NotificationsMenuItem(MenuItem):
     icon_class = 'notifications'
     alt_icon_class = 'notifications unread'
     route = 'notifications:list'
-    group = 'main'
 
     def __init__(self, *args, **kwargs):
         super(NotificationsMenuItem, self).__init__(*args, **kwargs)
