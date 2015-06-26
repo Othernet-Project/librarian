@@ -45,12 +45,22 @@ def list_downloads():
                 metadata=paginator.items)
 
 
+def notify_content_added(content_id_list):
+    archive = open_archive()
+    print(content_id_list)
+    content_list = archive.get_multiple(content_id_list,
+                                        fields=('md5', 'title'))
+    for content_item in content_list:
+        content_data = {'id': content_item['md5'],
+                        'title': content_item['title']}
+        request.app.exts.notifications.send(content_data, category='content')
+
+
 @invalidates(prefix=['content', 'downloads'], after=True)
 def add(file_list):
     archive = open_archive()
     added_count = archive.add_to_archive(file_list)
-    request.app.exts.notifications.send(_('Content added.'),
-                                        category='content')
+    notify_content_added(file_list)
     # Translators, used as confirmation title after the chosen updates were
     # successfully added to the library
     title = _("Updates added")
@@ -67,8 +77,7 @@ def add_all(*args):
     all_files = [meta['md5'] for meta in filter_downloads(lang=None)]
     archive = open_archive()
     added_count = archive.add_to_archive(all_files)
-    request.app.exts.notifications.send(_('Content added.'),
-                                        category='content')
+    notify_content_added(all_files)
     # Translators, used as confirmation title after the chosen updates were
     # successfully added to the library
     title = _("Updates added")
