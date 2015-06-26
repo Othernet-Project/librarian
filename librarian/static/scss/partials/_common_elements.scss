@@ -24,6 +24,10 @@ body {
   @include h-bar;
 }
 
+.h-bar.white {
+  background: $white;
+}
+
 .h-top-bar {
   padding: 10px;
   text-align: right;
