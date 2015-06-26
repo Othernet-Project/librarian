@@ -10,10 +10,11 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import datetime
 import functools
+import json
 import uuid
 
 from bottle import request
-from bottle_utils.common import unicode
+from bottle_utils.common import basestring, unicode
 
 
 NOTIFICATION_COLS = (
@@ -40,7 +41,11 @@ class Notification(object):
                  icon=None, priority=NORMAL, expires_at=None, dismissable=True,
                  read_at=None, user=None):
         self.notification_id = notification_id
-        self.message = unicode(message)
+        try:
+            self.message = json.loads(message)
+        except ValueError:
+            self.message = unicode(message)
+
         self.created_at = created_at
         self.category = category
         self.icon = icon
@@ -55,6 +60,9 @@ class Notification(object):
              expiration=0, dismissable=True, user=None, group=None):
         # TODO: if group is not None, query all users of the specified group
         # and create a notification instance for each member of the group
+        if not isinstance(message, basestring):
+            message = json.dumps(message)
+
         instance = cls(notification_id=cls.generate_unique_id(),
                        message=message,
                        created_at=datetime.datetime.now(),
@@ -120,9 +128,16 @@ class Notification(object):
     def save(self):
         db = request.db.sessions
         query = db.Replace('notifications', cols=NOTIFICATION_COLS)
+        # allow both arbitary strings as well as json objects as notification
+        # message
+        if isinstance(self.message, basestring):
+            message = self.message
+        else:
+            message = json.dumps(self.message)
+
         db.query(query,
                  notification_id=self.notification_id,
-                 message=self.message,
+                 message=message,
                  created_at=self.created_at,
                  category=self.category,
                  icon=self.icon,
