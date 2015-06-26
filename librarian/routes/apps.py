@@ -59,3 +59,14 @@ def send_app_file(appid, path='index.html'):
         timestamp = os.stat(app_path).st_mtime
         content_file = zipballs.StringIO(content)
         return send_file(content_file, filename, len(content), timestamp)
+
+
+def routes(app):
+    return (
+        ('apps:list', show_apps,
+         'GET', '/apps/', dict(unlocked=True)),
+        ('apps:app', send_app_file,
+         'GET', '/apps/<appid>/', dict(unlocked=True)),
+        ('apps:asset', send_app_file,
+         'GET', '/apps/<appid>/<path:path>', dict(unlocked=True)),
+    )

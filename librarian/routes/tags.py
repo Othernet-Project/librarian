@@ -54,3 +54,10 @@ def edit_tags(meta):
     if request.is_xhr:
         return template('_tag_list', meta=meta, base_path=base_path)
     redirect('/')
+
+
+def routes(app):
+    return (
+        ('tags:list', tag_cloud, 'GET', '/tags/', {}),
+        ('tags:edit', edit_tags, 'POST', '/tags/<content_id>', {}),
+    )

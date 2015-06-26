@@ -163,3 +163,10 @@ def manage_downloads():
         feedback = handler(file_list)
 
     return dict(status=status, **feedback)
+
+
+def routes(app):
+    return (
+        ('downloads:list', list_downloads, 'GET', '/downloads/', {}),
+        ('downloads:action', manage_downloads, 'POST', '/downloads/', {}),
+    )

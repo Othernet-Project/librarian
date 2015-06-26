@@ -96,3 +96,10 @@ def exit_wizard():
     next_path = request.params.get('next', '/')
     request.app.setup.wizard.exit()
     redirect(next_path)
+
+
+def routes(app):
+    return (
+        ('setup:main', setup_wizard, ['GET', 'POST'], '/setup/', {}),
+        ('setup:exit', exit_wizard, ['GET'], '/setup/exit/', {}),
+    )

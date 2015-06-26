@@ -19,3 +19,9 @@ def dashboard():
     """ Render the dashboard """
     plugins = DASHBOARD_PLUGINS
     return locals()
+
+
+def routes(app):
+    return (
+        ('dashboard:main', dashboard, 'GET', '/dashboard/', {}),
+    )

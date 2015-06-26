@@ -48,3 +48,11 @@ def logout():
     next_path = request.params.get('next', '/')
     request.user.logout()
     http_redirect(i18n_path(next_path))
+
+
+def routes(app):
+    return (
+        ('auth:login_form', show_login_form, 'GET', '/login/', {}),
+        ('auth:login', login, 'POST', '/login/', {}),
+        ('auth:logout', logout, 'GET', '/logout/', {}),
+    )
