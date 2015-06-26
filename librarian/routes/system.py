@@ -120,7 +120,7 @@ def show_page_missing(exc):
 
 
 @view('403')
-def show_access_denied_page():
+def show_access_denied_page(exc):
     return dict()
 
 

@@ -1,0 +1,194 @@
+@import "compass/typography";
+@import "outernet/mixins/forms";
+@import "outernet/mixins/grid";
+@import "outernet/mixins/buttons";
+@import "outernet/mixins/hyperlinks";
+@import "outernet/mixins/media_query";
+
+@mixin adjust-search-width($screen-width, $input-width) {
+  @include narrower-than($screen-width) {
+    @include single-input-form-width($input-width);
+  }
+}
+
+.search-keyword {
+  @include sub;
+  color: $sub;
+  margin: 0.5em 0 0;
+}
+
+form.search {
+  @include single-input-form(1200px);
+  @include adjust-search-width(1500px, 600px);
+  @include adjust-search-width(900px, 400px);
+  @include adjust-search-width(640px, 200px);
+
+  @include phone-portrait-wide {
+    @include single-input-inline;
+  }
+
+  .icon {
+    display: inline-block;
+    vertical-align: middle;
+    @include hide-text;
+    @include icon(search, yes);
+  }
+}
+
+.content-list {
+  @include row;
+
+  li {
+    @include background-size(cover);
+    @include col2;
+    position: relative;
+    padding: 0;
+
+    @include phone-portrait-wide {
+      @include col1;
+      padding: 0;
+    }
+
+    .details {
+      // Delegate gutter padding to inner container
+      @include grid-padding;
+      padding-top: 3em;
+      min-height: 200px;
+
+      text-align: center;
+
+      @include phone-portrait-wide {
+        text-align: left;
+      }
+    }
+
+    .label-archive {
+      position: absolute;
+      right: 0;
+      top: 0;
+      line-height: 40px;
+      padding: 0 20px;
+      color: $white;
+
+      &.label-partner {
+        background: $forest;
+      }
+
+      &.label-sponsored {
+        background: $sun;
+      }
+
+      &.label-core {
+        background: $sky;
+      }
+    }
+
+    h2 {
+      @include heading-4;
+      max-width: 80%;
+      margin: 0 auto 0.5em;
+
+      @include phone-portrait-wide {
+        max-width: none;
+        @include heading-5;
+      }
+    }
+
+    backgound-color: $white;
+
+    @mixin alternating-background {
+      background-color: $earth;
+
+      &.has-thumb .details {
+        background: transparentize(black, 0.4);
+        color: $iconic;
+
+        a {
+          @include link-reverse;
+        }
+
+        h2 a {
+          color: $white;
+
+          &:visited {
+            color: $iconic;
+          }
+        }
+
+        .delete {
+          @include button-delete-color(reverse-outline);
+        }
+      }
+    }
+
+    // Background color sequence
+    &:nth-child(4n+2),
+    &:nth-child(4n+3), {
+      @include alternating-background;
+    }
+
+    &.has-thumb {
+      .details {
+        background: transparentize(white, 0.2);
+      }
+    }
+  }
+
+  .tag-form {
+    display: inline-block;
+  }
+
+  .tags {
+    display: inline-block;
+    .tag-current {
+      padding: 1px 6px;
+      line-height: 137.5%;
+    }
+  }
+
+  .delete-button {
+    @include form-reset;
+    display: inline;
+
+    button {
+      font-size: $base-size;
+      @include icon-link-button(delete, $fire25d, 46px);
+    }
+  }
+}
+
+.load-more {
+  text-align: center;
+  padding: 2em 0 4em;
+
+  button {
+    .icon {
+      display: inline-block;
+      vertical-align: middle;
+      @include with-hdpi(animated, loader, $include-size: yes, $extension: gif);
+    }
+
+    &.active .icon {
+      @include with-hdpi(animated, loader_active, $include-size: yes, $extension: gif);
+    }
+  }
+}
+
+.to-top {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 0 20px 20px 0;
+}
+
+p.end,
+p.empty {
+  @include heading-5;
+  color: $sub;
+  text-align: center;
+  padding: 0.5em 20px 2em;
+}
+
+p.end {
+  padding-top: 2em;
+}

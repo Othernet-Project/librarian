@@ -1,0 +1,33 @@
+@import "outernet/mixins/grid";
+@import "outernet/mixins/media_query";
+
+.space {
+  color: $sub;
+}
+
+.downloads-list {
+  @include single-cell-grid;
+
+  li {
+    margin-bottom: 2em;
+  }
+
+  .do {
+    @include sub;
+    color: $sub;
+    margin-bottom: 0.5em;
+
+    &:last-of-type {
+      margin-bottom: 1em;
+    }
+  }
+
+  .label {
+    @include bold;
+  }
+}
+
+.bottom-pager {
+  text-align: center;
+  padding: 2em 20px;
+}

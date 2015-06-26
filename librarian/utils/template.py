@@ -28,7 +28,6 @@ def configure_template(app):
     bottle.BaseTemplate.defaults.update({
         'app_version': app.version,
         'request': bottle.request,
-        'style': 'screen',  # Default stylesheet
         'h': html,
         'th': template_helper,
         'LANGS': LANGS,
@@ -36,6 +35,7 @@ def configure_template(app):
         'SELECT_LANGS': SELECT_LANGS,
         'u': to_unicode,
         'url': app.get_url,
+        'REDIRECT_DELAY': app.config.get('librarian.redirect_delay', 10)
     })
 
 

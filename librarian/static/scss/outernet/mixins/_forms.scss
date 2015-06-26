@@ -1,0 +1,262 @@
+/**
+ * _forms.scss: form control definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "compass/css3";
+@import "colors";
+@import "fonts";
+@import "hdpi_images";
+
+
+$form-text-offset: 15px;
+$form-animation-delay: 0.3s;
+
+
+@mixin label {
+  @include bold;
+  display: block;
+  padding-left: $form-text-offset;
+  padding-bottom: 4px;
+  cursor: pointer;
+}
+
+@mixin label-required {
+  &:after {
+    content: '*';
+    color: $fire;
+  }
+}
+
+@mixin label-checkbox {
+  @include plain;
+  display: inline-block;
+  padding: 0 0 0 4px;
+  line-height: 40px;
+}
+
+@mixin input-geometry {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px $form-text-offset 8px;
+  border: 1px solid transparent;
+  @include border-radius(7px);
+  @include box-sizing(border-box);
+}
+
+@mixin input-geometry-s {
+  padding: 2px $form-text-offset / 2 3px;
+  @include border-radius(3px);
+  width: auto;
+  max-width: 100%;
+}
+
+@mixin input-styling($text, $background, $border) {
+  color: $text;
+  background-color: $background;
+  border-color: $border;
+  outline: none;  // removes boxy outline when field is focused in Chrome
+  @include regular;
+  @include transition(
+    color $form-animation-delay, 
+    background-color $form-animation-delay, 
+    border-color $form-animation-delay);
+}
+
+@mixin input-styling-s {
+  @include sub;
+
+  &:focus {
+    @include sub;
+  }
+}
+
+@mixin input-icon($name) {
+  padding-right: 50px;
+  background-position: right 12.5px top 50%;
+  background-repeat: no-repeat;
+  @include with-hdpi('icons', $name);
+}
+
+@mixin input-normal-styling {
+  @include input-styling($base, $input, $border);
+}
+
+@mixin input-active-styling {
+  @include input-styling($base, $sky6, $sky25);
+}
+
+@mixin input-positive-styling {
+  @include input-styling($forest, $forest6, $forest25);
+}
+
+@mixin input-negative-styling {
+  @include input-styling($fire, $fire6, $fire25);
+}
+
+@mixin input-normal {
+  @include input-geometry;
+  @include input-normal-styling;
+
+  &:focus {
+    @include input-active-styling;
+  }
+}
+
+@mixin form-help-text-layout {
+  padding-left: $form-text-offset; 
+  padding-top: 6px;
+}
+
+@mixin select-styling {
+  @include appearance(none);
+  padding: 8px $form-text-offset 8px;
+
+  // Remove arrow in older versions of Firefox
+  text-indent: 0.01px;
+  text-overflow: "";
+
+  &::-ms-expand {
+    // Applies to IE's drop-down button
+    display: none;
+  }
+}
+
+@mixin select-option-styling {
+  color: $sub;
+  background: $input;
+  border-radius: 2px;
+  padding: 0 $form-text-offset;
+
+  &[value] {
+    color: $base;
+  }
+}
+
+@mixin checkbox-styling {
+  display: inline-block;
+  border: 1px solid $border;
+  background: $input;
+  width: 15px;
+  height: 15px;
+  padding: 0.2em;
+  vertical-align: middle;
+  position: relative;
+  margin: 0 2px 0 $form-text-offset * 0.3;
+  padding: 0;
+  @include border-radius(2px);
+}
+
+@mixin checkbox-checked-styling {
+  @include input-positive-styling;
+  background-position: center center;
+  background-repeat: no-repeat;
+  @include with-hdpi('icons', 'checkmark');
+}
+
+@mixin checkbox-active-styling {
+  @include input-active-styling;
+}
+
+@mixin checkbox-active-checked-styling {
+  background-position: center center;
+  background-repeat: no-repeat;
+  @include with-hdpi('icons', 'checkmark_active');
+}
+
+@mixin input-container {
+  margin-bottom: 1.25em;
+}
+
+@mixin single-input-form-width($width: 200px) {
+  input[type="text"],
+  input[type="numeric"],
+  input[type="email"],
+  input[type="file"],
+  input[type="password"] {
+    width: $width;
+  }
+}
+
+@mixin single-input-form-container($background: $input) {
+  display: inline-block;
+  border: 1px solid $border;
+  background: $background;
+  @include border-radius(1000px);  // fully rounded
+  padding: 2px;
+  position: relative;
+  white-space: nowrap;
+}
+
+@mixin single-input-form($width: 200px, $background: $input, $focus: $sky6) {
+  @include single-input-form-container($background);
+
+  input[type="text"],
+  input[type="numeric"],
+  input[type="email"],
+  input[type="file"],
+  input[type="password"] {
+    display: inline-block;
+    max-width: none;
+    border: 0;
+    background-color: transparent;
+    vertical-align: middle;
+    @include border-radius(1000px); // fully rounded
+
+    &:focus {
+      background-color: $focus;
+    }
+  }
+
+  @include single-input-form-width($width);
+
+
+  label {
+    display: inline-block;
+    padding-bottom: 0;
+    margin-right: 0.5em;
+    vertical-align: middle;
+  }
+
+  button {
+    display: inline-block;
+  }
+}
+
+@mixin single-input-inline($width: 100px, $background: $input, $focus: $sky6) {
+  @include single-input-form($width, $background, $focus);
+
+  label {
+    @include sub;
+  }
+
+  input[type="text"],
+  input[type="numeric"],
+  input[type="email"],
+  input[type="file"],
+  input[type="password"] {
+    @include input-geometry-s;
+    @include input-styling-s;
+    @include border-radius(1000px); // fully rounded
+  }
+
+  @include single-input-form-width($width);
+
+  button {
+    @include button-geometry-s;
+    @include button-label-s;
+  }
+}
+
+@mixin form-reset() {
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: block;
+}

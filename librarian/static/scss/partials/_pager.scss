@@ -1,0 +1,48 @@
+@import "compass/typography";
+@import "compass/css3";
+
+#pp, #page {
+  width: 100px;
+}
+
+.pager-button {
+  border: 1px solid $iconic;
+  @include border-radius(1000px);
+  @include box-sizing(border-box);
+  line-height: 40px;
+  width: 40px;
+  text-align: center;
+  display: inline-block;
+
+  &:hover {
+    border-color: $sub;
+  }
+
+  .icon {
+    @include hide-text;
+  }
+
+  &.prev .icon {
+    @include icon(arrow_left);
+  }
+
+  &:hover {
+    &.prev .icon {
+      @include icon(arrow_left_hover);
+    }
+  }
+
+  &.next .icon {
+    @include icon(arrow_right);
+  }
+
+  &:hover {
+    &.next .icon {
+      @include icon(arrow_right_hover);
+    }
+  }
+}
+
+.pages-count {
+  color: $iconic;
+}

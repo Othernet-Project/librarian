@@ -51,12 +51,6 @@ def rebuild_catalogs():
     subprocess.call('python scripts/cmpmsgs.py librarian/locales', shell=True)
 
 
-def rebuild_static(sdist=False):
-    import subprocess
-    cmd = ('build', 'dist')[sdist]
-    subprocess.check_call(['grunt', cmd])
-
-
 def clean_pyc():
     print("cleaning up cached files in '%s'" % SCRIPTDIR)
     for root, dirs, files in os.walk(SCRIPTDIR):
@@ -94,13 +88,11 @@ class Develop(DevelopCommand):
     def run(self):
         DevelopCommand.run(self)
         rebuild_catalogs()
-        rebuild_static()
 
 
 class Package(SdistCommand):
     def run(self):
         rebuild_catalogs()
-        rebuild_static(sdist=True)
         clean_pyc()
         SdistCommand.run(self)
 

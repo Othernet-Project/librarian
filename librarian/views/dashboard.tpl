@@ -5,14 +5,11 @@
 ${_('Dashboard')}
 </%block>
 
-<%block name="heading">
-## Translators, used as page heading
-${_('Dashboard')}
-</%block>
-
-% for plugin in plugins:
+<div class="dashboard-sections accordion">
+    % for plugin in plugins:
     ${plugin.render()}
-% endfor
+    % endfor
+</div>
 
 <%block name="javascript_templates">
 <script id="collapseIcon" type="text/template">
@@ -20,8 +17,12 @@ ${_('Dashboard')}
 </script>
 </%block>
 
+<%block name="extra_head">
+<link rel="stylesheet" href="${assets['css/dashboard']}">
+</%block>
+
 <%block name="extra_scripts">
-<script src="${th.static_url('sys:static', path='js/dashboard.js')}"></script>
+<script src="${assets['js/dashboard']}"></script>
 % for p in plugins:
     ${p.render_javascript()}
 % endfor

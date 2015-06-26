@@ -73,9 +73,10 @@ def start():
     # We are passing the ``wsgiapp`` object here because that's the one that
     # contains the I18N middleware. If we pass ``app`` object, then we won't
     # have the I18N middleware active at all.
+    default_locale = app.config.get('language', lang.DEFAULT_LOCALE)
     wsgiapp = I18NPlugin(app,
                          langs=lang.UI_LANGS,
-                         default_locale=lang.DEFAULT_LOCALE,
+                         default_locale=default_locale,
                          domain='librarian',
                          locale_dir=app.in_pkg('locales'))
     # run start hooks

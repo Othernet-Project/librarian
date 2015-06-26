@@ -12,3 +12,4 @@ __pycache__/
 *.log
 /librarian/static/dist
 /librarian/static/assets.json
+.webassets-cache

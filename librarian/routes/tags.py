@@ -12,6 +12,7 @@ import re
 
 from bottle import request, redirect
 from bottle_utils.ajax import roca_view
+from bottle_utils.i18n import i18n_url
 
 from ..utils.core_helpers import open_archive, with_content
 from ..utils.template import template
@@ -27,7 +28,9 @@ def split_tags(tags):
 
 @roca_view('tag_cloud', '_tag_cloud', template_func=template)
 def tag_cloud():
-    base_path = request.params.get('base_path')
+    # base_path is used to construct a link to content list or sites page
+    # filtered by tag (see _tag_list.tpl).
+    base_path = request.params.get('base_path', i18n_url('content:list'))
     try:
         current = request.params.get('tag')
     except (ValueError, TypeError):

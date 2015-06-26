@@ -381,3 +381,6 @@ class BaseArchive(object):
 
     def needs_formatting(self, md5):
         raise NotImplementedError()
+
+    def get_content_languages(self):
+        raise NotImplementedError()

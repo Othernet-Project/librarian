@@ -44,6 +44,8 @@ class Setup(object):
         if not self.data:
             self.data = self.auto_configure()
 
+        self.wizard = setup_wizard
+
     def __getitem__(self, key):
         return self.data[key]
 
@@ -106,6 +108,12 @@ class SetupWizard(wizard.Wizard):
         request.app.setup.append(setup_data)
         result = template(self.finished_template, setup=request.app.setup)
         return result
+
+    def exit(self):
+        # called to clear the state object which stores the steps that were
+        # used while stepping through the wizard, after which clicking back
+        # won't work anymore
+        self.clear_needed_steps()
 
     def get_next_setup_step_index(self):
         for step_index, step in sorted(self.steps.items(), key=lambda x: x[0]):

@@ -1,0 +1,173 @@
+@import "outernet/mixins/colors";
+@import "outernet/mixins/fonts";
+@import "outernet/mixins/grid";
+@import "outernet/mixins/media_query";
+
+body {
+  padding-top: 60px;
+  background: $universe;
+}
+
+.body {
+  background: $white;
+}
+
+@mixin h-bar {
+  background: $earth;
+  border-top: 1px solid $border;
+  border-bottom: 1px solid $border;
+}
+
+.h-bar {
+  padding: 20px;
+  text-align: center;
+  @include h-bar;
+}
+
+.h-bar.white {
+  background: $white;
+}
+
+.h-top-bar {
+  padding: 10px;
+  text-align: right;
+  @include h-bar;
+}
+
+.tabbed-menu {
+  padding: 0 20px;
+
+  a, .active {
+    display: inline-block;
+    line-height: 58px;
+    margin-right: 2em;
+    border-bottom: 3px solid transparent;
+  }
+
+  a {
+    &:visited {
+      color: $sky;
+    }
+
+    &:hover {
+      text-decoration: none;
+      border-bottom-color: $sky25d;
+    }
+  }
+
+  .active {
+    color: $iconic;
+    border-bottom-color: $iconic;
+  }
+}
+
+form.inline {
+  @include single-input-form;
+  @include single-input-inline;
+}
+
+
+@mixin icon-link-button($icon, $hover-color: $sky25d, $padding: 40px) {
+  background: transparent;
+  @include icon-plain($icon);
+  @include hide-text;
+  padding-left: $padding;
+  border: none;
+  @include border-radius(0);
+  min-width: 0;
+  margin: 0;
+  color: $sky;
+  position: relative;
+
+  &:hover {
+    @include icon-plain(#{$icon}_hover);
+    padding-left: $padding;
+    text-indent: 0;
+    overflow: visible;
+    color: $hover-color;
+    text-decoration: underline;
+    background-color: transparent;
+  }
+}
+
+@mixin full-page-attn {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.full-page-form {
+  @include full-page-attn;
+
+  input[type="text"],
+  input[type="numeric"],
+  input[type="email"],
+  input[type="file"],
+  input[type="password"],
+  select,
+  textarea
+  {
+    min-width: 200px;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .buttons {
+    padding-top: 1.5em;
+    text-align: center;
+  }
+}
+
+.error-content {
+  @include full-page-attn;
+
+  .single {
+    @include heading-5;
+    text-align: center;
+  }
+
+  pre {
+    max-height: 300px;
+    overflow: scroll;
+    background: $universe;
+    color: $white;
+
+    code {
+      background: $universe;
+      color: $white;
+    }
+  }
+}
+
+.filters {
+  @include grid-container;
+  @include row;
+
+  #lang {
+    width: 260px;
+  }
+
+  form {
+    display: inline;
+  }
+
+  .langs {
+    @include col6(4);
+  }
+
+  .pager {
+    @include col6(2);
+    text-align: right;
+  }
+
+  @include narrower-than(732px) {
+    .langs, .pager {
+      @include col1;
+      text-align: left;
+    }
+  }
+}
+
+.info {
+  padding: 20px;
+}

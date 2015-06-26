@@ -1,0 +1,19 @@
+@import "sprites";
+
+.confirm.remove {
+  padding-top: 3em;
+  padding-bottom: 4em;
+
+  text-align: center;
+
+  .icon {
+    display: inline-block;
+    margin-bottom: 1em;
+    @include icon('confirmation');
+  }
+
+  .main {
+    @include heading-5;
+    margin: 0;
+  }
+}

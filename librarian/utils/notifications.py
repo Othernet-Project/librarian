@@ -10,10 +10,11 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import datetime
 import functools
+import json
 import uuid
 
 from bottle import request
-from bottle_utils.common import unicode
+from bottle_utils.common import basestring, unicode
 
 
 NOTIFICATION_COLS = (
@@ -40,7 +41,11 @@ class Notification(object):
                  icon=None, priority=NORMAL, expires_at=None, dismissable=True,
                  read_at=None, user=None):
         self.notification_id = notification_id
-        self.message = unicode(message)
+        try:
+            self.message = json.loads(message)
+        except ValueError:
+            self.message = unicode(message)
+
         self.created_at = created_at
         self.category = category
         self.icon = icon
@@ -55,6 +60,9 @@ class Notification(object):
              expiration=0, dismissable=True, user=None, group=None):
         # TODO: if group is not None, query all users of the specified group
         # and create a notification instance for each member of the group
+        if not isinstance(message, basestring):
+            message = json.dumps(message)
+
         instance = cls(notification_id=cls.generate_unique_id(),
                        message=message,
                        created_at=datetime.datetime.now(),
@@ -120,9 +128,16 @@ class Notification(object):
     def save(self):
         db = request.db.sessions
         query = db.Replace('notifications', cols=NOTIFICATION_COLS)
+        # allow both arbitary strings as well as json objects as notification
+        # message
+        if isinstance(self.message, basestring):
+            message = self.message
+        else:
+            message = json.dumps(self.message)
+
         db.query(query,
                  notification_id=self.notification_id,
-                 message=self.message,
+                 message=message,
                  created_at=self.created_at,
                  category=self.category,
                  icon=self.icon,
@@ -154,7 +169,6 @@ class Notification(object):
 class NotificationGroup(object):
 
     proxied_attrs = (
-        'message',
         'created_at',
         'expires_at',
         'read_at',
@@ -171,11 +185,13 @@ class NotificationGroup(object):
     def __getattr__(self, name):
         if name in self.proxied_attrs:
             try:
-                return getattr(self.notifications[0], name)
+                return getattr(self.notifications[-1], name)
             except IndexError:
                 raise ValueError('Notification group has 0 notifications.')
 
-        return super(NotificationGroup, self).__getattr__(name)
+        cls_name = self.__class__.__name__
+        msg = "'{0}' object has no attribute '{1}'".format(cls_name, name)
+        raise AttributeError(msg)
 
     def add(self, notification):
         self.notifications.append(notification)
@@ -227,18 +243,25 @@ def get_notifications(notification_ids=None):
     user = request.user.username if request.user.is_authenticated else None
     notification_ids = notification_ids or []
 
-    query = db.Select(sets='notifications', where='user IS NULL')
-    args = []
     if user:
-        query.where |= 'user = ?'
-        args += [user]
+        args = [user]
+        query = db.Select(sets='notifications',
+                          where='(user IS NULL OR user = ?)')
+    else:
+        args = []
+        query = db.Select(sets='notifications', where='user IS NULL')
+
+    query.where += '(dismissable = 0 OR read_at IS NULL)'
 
     if notification_ids:
         query.where += db.sqlin.__func__('notification_id', notification_ids)
         args += notification_ids
 
     db.query(query, *args)
-    return (Notification(**to_dict(row)) for row in db.results)
+    for row in db.results:
+        notification = Notification(**to_dict(row))
+        if not notification.is_read:
+            yield notification
 
 
 def notifies(message, **params):

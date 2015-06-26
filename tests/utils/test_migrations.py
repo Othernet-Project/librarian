@@ -1,4 +1,3 @@
-import sys
 import tempfile
 
 import mock
@@ -23,7 +22,9 @@ def up(db, conf):
 def test_list_modules(listdir):
     """ Can list Python modules from specified directory """
     listdir.return_value = ['01_test.py', '02_test.py']
-    m = mod.get_mods('foo')
+    mocked_pkg = mock.Mock()
+    mocked_pkg.__path__ = ['foo']
+    m = mod.get_mods(mocked_pkg)
     assert sorted(list(m)) == ['01_test', '02_test']
 
 
@@ -31,7 +32,9 @@ def test_list_modules(listdir):
 def test_list_modules_no_dupes(listdir):
     """ Listing modules does not return duplicates """
     listdir.return_value = ['01_test.py', '01_test.pyc', '02_test.py']
-    m = mod.get_mods('foo')
+    mocked_pkg = mock.Mock()
+    mocked_pkg.__path__ = ['foo']
+    m = mod.get_mods(mocked_pkg)
     assert sorted(list(m)) == ['01_test', '02_test']
 
 
@@ -40,7 +43,9 @@ def test_list_modules_ignores_non_migration_files(listdir):
     """ Listing modules will not return modules aren't migrations """
     listdir.return_value = ['__init__.py', 'foo.py', '01_test.py',
                             '02_test.py']
-    m = mod.get_mods('foo')
+    mocked_pkg = mock.Mock()
+    mocked_pkg.__path__ = ['foo']
+    m = mod.get_mods(mocked_pkg)
     assert sorted(list(m)) == ['01_test', '02_test']
 
 
@@ -48,7 +53,9 @@ def test_list_modules_ignores_non_migration_files(listdir):
 def test_list_modules_can_use_any_number_of_digits(listdir):
     """ Migration numbering is not limited by number of digits """
     listdir.return_value = ['00001_test.py', '00002_test.py']
-    m = mod.get_mods('foo')
+    mocked_pkg = mock.Mock()
+    mocked_pkg.__path__ = ['foo']
+    m = mod.get_mods(mocked_pkg)
     assert list(m) == ['00001_test', '00002_test']
 
 
@@ -64,45 +71,14 @@ def test_get_migration_list_correct_order():
     assert list(m) == [('02_test', 2), ('03_test', 3)]
 
 
-@mock.patch(MOD + '.imp.find_module', autospec=True)
-def test_load_migration(find_module):
-    """ Migration module is loaded """
-    find_module.side_effect = [
-        (mock_module(), '/foo/__init__.py', ('.py', 'U', 1)),
-        (mock_module(), '/foo/01_test.py', ('.py', 'U', 1))
-    ]
-    m = mod.load_mod('01_test', '/foo')
-    find_module.assert_has_calls([
-        mock.call('__init__', ['/foo']),
-        mock.call('01_test', ['/foo']),
-    ])
-    assert 'db_migrations' in sys.modules
-    assert sys.modules['db_migrations.01_test'] == m
-    assert hasattr(m, 'up')
-    del sys.modules['db_migrations.01_test']  # cleanup
-    del sys.modules['db_migrations']  # cleanup
-
-
-@mock.patch(MOD + '.imp.find_module', autospec=True)
-def test_load_migration_twice(find_module):
-    """ Migration module is not loaded twice if it's found in sys.modules """
-    find_module.return_value = (mock_module(), '/foo/01_test.py',
-                                ('.py', 'U', 1))
-    mod.load_mod('01_test', '/foo')
-    mod.load_mod('01_test', '/foo')
-    assert find_module.call_count == 2
-    del sys.modules['db_migrations.01_test']  # cleanup
-    del sys.modules['db_migrations']  # cleanup
-
-
-@mock.patch(MOD + '.imp.find_module', autospec=True)
-def test_load_migration_custom_prefix(find_module):
-    find_module.return_value = (mock_module(), '/foo/01_test.py',
-                                ('.py', 'U', 1))
-    mod.load_mod('01_test', '/foo', prefix='librarian.migrations')
-    assert 'librarian.migrations.01_test' in sys.modules
-    del sys.modules['librarian.migrations.01_test']
-    del sys.modules['librarian.migrations']  # cleanup
+@mock.patch.object(mod.importlib, 'import_module')
+def test_load_migration(import_module):
+    mocked_pkg = mock.Mock()
+    mocked_pkg.__name__ = 'mypkg'
+    mocked_mod = mock_module()
+    import_module.return_value = mocked_mod
+    assert mod.load_mod('01_test', mocked_pkg) is mocked_mod
+    import_module.assert_called_once_with('mypkg.01_test', package='mypkg')
 
 
 def test_get_migration_version():
@@ -145,16 +121,21 @@ def test_run_migration():
 @mock.patch(MOD + '.get_new')
 @mock.patch(MOD + '.load_mod')
 @mock.patch(MOD + '.run_migration')
-def test_migrate(run, load_mod, get_new, get_mods, get_version, *ignored):
+@mock.patch.object(mod.importlib, 'import_module')
+def test_migrate(import_module, run, load_mod, get_new, get_mods, get_version,
+                 *ignored):
+    mocked_pkg = mock.MagicMock()
+    mocked_pkg.__package__ = 'mypkg'
+    import_module.return_value = mocked_pkg
     get_version.return_value = 2
     get_mods.return_value = ['01_test', '02_test', '03_test']
     get_new.return_value = [('03_test', 3)]
     db = mock.Mock()
-    mod.migrate(db, '/foo', 'mypkg', {})
+    mod.migrate(db, 'mypkg', {})
+    import_module.assert_called_once_with('mypkg')
     get_version.assert_called_once_with(db)
-    get_mods.assert_called_once_with('/foo')
+    get_mods.assert_called_once_with(mocked_pkg)
     get_new.assert_called_once_with(get_mods.return_value, 3)
-    load_mod.assert_called_once_with('03_test', '/foo', 'mypkg')
+    load_mod.assert_called_once_with('03_test', mocked_pkg)
     run.assert_called_once_with(3, db, load_mod.return_value, {})
     assert db.refresh_table_stats.called
-

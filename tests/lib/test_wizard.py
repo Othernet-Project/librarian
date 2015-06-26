@@ -29,7 +29,7 @@ def test_call(create_wizard, wizard):
     create_wizard.return_value = mocked_instance
     wizard.test_attr = 1
     wizard()
-    wiz_dict = {'name': 'test', 'steps': {}, 'test_attr': 1}
+    wiz_dict = {'name': 'test', 'steps': {}, 'test_attr': 1, 'state': None}
     create_wizard.assert_called_once_with('test', wiz_dict)
     mocked_instance.dispatch.assert_called_once_with()
 
@@ -228,7 +228,7 @@ def test_start_next_step_has_result(w_next, template, request, wizard):
     mocked_step = mock.Mock()
     mocked_step.return_value = {'some': 'param'}
     wizard.state = {'step': 1}
-    wizard.steps[1] = mocked_step
+    wizard.steps[1] = {'name': 'test', 'GET': {'handler': mocked_step}}
     w_next.return_value = {'handler': mocked_step, 'template': 'step_tmp.tpl'}
     wizard.start_next_step()
     mocked_step.assert_called_once_with()
@@ -237,6 +237,7 @@ def test_start_next_step_has_result(w_next, template, request, wizard):
                                      step_index=1,
                                      step_count=1,
                                      step_param='step',
+                                     step_name='test',
                                      start_index=0)
 
 
@@ -281,7 +282,8 @@ def test_process_current_step_has_error(template, wizard):
     mocked_handler = mock.Mock()
     mocked_handler.return_value = {'successful': False, 'errors': {'_': '1'}}
     wizard.state = {'step': 1, 'data': {}}
-    wizard.steps = {1: {'POST': {'handler': mocked_handler,
+    wizard.steps = {1: {'name': 'test',
+                        'POST': {'handler': mocked_handler,
                                  'template': 'step_tmp.tpl'}}}
     template.return_value = 'whole html with error'
 
@@ -293,6 +295,7 @@ def test_process_current_step_has_error(template, wizard):
                                      step_index=1,
                                      step_count=1,
                                      step_param='step',
+                                     step_name='test',
                                      start_index=0)
 
 

@@ -2,18 +2,19 @@
 
 <p>
 ${_('Database size')}: ${h.hsize(dbsize)}
-<a href="${url('plugins:dbmanage:download')}">${_('download')}</a>
 </p>
 
 <div class="inline-form-wrapper">
-    <form action="${i18n_url('plugins:dbmanage:backup')}" method="POST" class="inline">
+    <a class="button primary" href="${url('plugins:dbmanage:download')}">${_('Download')}</a>
+
+    <form action="${i18n_url('plugins:dbmanage:backup')}" method="POST">
         ## Translators, refers to database backup
         <button>${_('Backup')}</button>
     </form>
 
-    <form action="${i18n_url('plugins:dbmanage:rebuild')}" method="POST" class="inline">
+    <form action="${i18n_url('plugins:dbmanage:rebuild')}" method="POST">
         ## Translators, refers to database rebuild feature
-        <button>${_('Rebuild')}</button>
+        <button class="delete">${_('Rebuild')}</button>
     </form>
 </div>
 

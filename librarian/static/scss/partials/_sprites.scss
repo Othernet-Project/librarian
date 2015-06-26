@@ -1,0 +1,13 @@
+@import "outernet/mixins/sprites";
+
+$librarian: sprite-map('librarian/1x/*.png', $spacing: 30px);
+$librarian-2x: sprite-map('librarian/2x/*.png', $spacing: 60px);
+@mixin app-icon($name, $dimensions: yes) {
+  @include sprite($librarian, $librarian-2x, $name, $dimensions);
+}
+
+$misc: sprite-map('misc/1x/*.png', $spacing: 30px);
+$misc-2x: sprite-map('misc/2x/*.png', $spacing: 60px);
+@mixin misc-icon($name, $dimensions: yes) {
+  @include sprite($misc, $misc-2x, $name, $dimensions);
+}

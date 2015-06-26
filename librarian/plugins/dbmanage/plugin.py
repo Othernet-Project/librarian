@@ -17,7 +17,8 @@ import datetime
 from os.path import dirname, join
 
 from bottle import request, static_file
-from bottle_utils.i18n import lazy_gettext as _, i18n_url
+from bottle_utils.common import unicode
+from bottle_utils.i18n import lazy_ngettext, lazy_gettext as _, i18n_url
 
 from ...core.archive import Archive
 
@@ -85,10 +86,7 @@ def remove_dbfile():
 
 def run_migrations(db):
     conf = request.app.config
-    migrations.migrate(db,
-                       MDIR,
-                       'librarian.migrations.{0}'.format(DB_NAME),
-                       conf)
+    migrations.migrate(db, 'librarian.migrations.{0}'.format(DB_NAME), conf)
     logging.debug("Finished running migrations")
 
 
@@ -123,7 +121,7 @@ def rebuild():
     return end - start
 
 
-@view('dbmanage/backup_results', error=None, redirect=None, time=None)
+@view('feedback')
 def perform_backup():
     dbpath = get_dbpath()
     bpath = get_backup_path()
@@ -131,25 +129,78 @@ def perform_backup():
         btime = backup(dbpath, bpath)
         logging.debug('Database backup took %s seconds', btime)
     except AssertionError as err:
-        return dict(error=err.message)
-    return dict(redirect=get_file_url(), time=btime)
+        # Translators, error message displayed if database backup fails
+        base_msg = _('Database backup could not be completed. '
+                     'The following error occurred:')
+        message = ' '.join(map(unicode, [base_msg, err.message]))
+        status = 'error'
+        url = i18n_url('dashboard:main')
+        # Translators, redirection target if database backup was successful
+        target = _('Dashboard')
+    else:
+        # Translators, message displayed if database backup was successful
+        base_msg = _('Database backup has been completed successfully.')
+        took_msg = lazy_ngettext('The operation took %s second',
+                                 'The operation took %s seconds',
+                                 btime) % round(btime, 2)
+        message = ' '.join(map(unicode, [base_msg, took_msg]))
+        status = 'success'
+        url = get_file_url()
+        # Translators, redirection target if database backup was successful
+        target = _('the backup folder')
+
+    # Translators, used as page title
+    title = _('Database backup')
+    return dict(status=status,
+                page_title=title,
+                message=message,
+                redirect_url=url,
+                redirect_target=target)
 
 
-@view('dbmanage/rebuild_results', error=None, redirect=None, time=None,
-      fpath=None)
+@view('feedback')
 def perform_rebuild():
     try:
         rtime = rebuild()
-    except LockFailureError:
+    except Exception:
         logging.debug('DBMANAGE: Global lock could not be acquired')
+        # Translators, error message displayed if database rebuild fails
+        base_msg = _('Database could not be rebuilt. '
+                     'The following error occurred:')
         # Translators, error message displayed when locking fails during
         # database rebuild
-        return dict(error=_('Librarian could not enter maintenance mode and '
-                            'database rebuild was cancelled. Please make '
-                            'sure noone else is using Librarian and '
-                            'try again.'))
-    return dict(redirect=i18n_url('content:list'),
-                time=rtime, fpath=get_file_url())
+        reason = _('Librarian could not enter maintenance mode and '
+                   'database rebuild was cancelled. Please make '
+                   'sure noone else is using Librarian and '
+                   'try again.')
+        message = ' '.join(map(unicode, [base_msg, reason]))
+        status = 'error'
+        url = i18n_url('dashboard:main')
+        # Translators, redirection target if database backup was successful
+        target = _('Dashboard')
+    else:
+        # Translators, message displayed if database backup was successful
+        base_msg = _('Content database has been rebuilt from scratch. A backup'
+                     ' copy of the original database has been created. '
+                     'You will find it in the files section.')
+        # Translators, message displayed if database backup was successful
+        took_msg = lazy_ngettext('The operation took %s second',
+                                 'The operation took %s seconds',
+                                 rtime) % round(rtime, 2)
+        message = ' '.join(map(unicode, [base_msg, took_msg]))
+        # Translators, message displayed if database backup was successful
+        status = 'success'
+        url = i18n_url('content:list')
+        # Translators, redirection target if database backup was successful
+        target = _('Library')
+
+    # Translators, used as page title
+    title = _('Database rebuild')
+    return dict(status=status,
+                page_title=title,
+                message=message,
+                redirect_url=url,
+                redirect_target=target)
 
 
 def install(app, route):

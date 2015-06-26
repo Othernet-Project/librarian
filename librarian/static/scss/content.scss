@@ -1,0 +1,32 @@
+@import "compass/reset";
+@import "outernet/mixins/colors";
+@import "outernet/partial/fonts";
+@import "outernet/partial/hyperlinks";
+@import "outernet/partial/tables";
+@import "outernet/mixins/media_query";
+
+html {
+  background: $iconic;
+  padding: 2em;
+
+  @include phone-portrait-wide {
+    padding: 0;
+  }
+}
+
+body {
+  background: $white;
+  padding: 2em;
+  max-width: 50em;
+  margin: 0 auto;
+  border: 1px solid $border;
+
+  @include phone-portrait-wide {
+    padding: 20px;
+    border: none;
+  }
+}
+
+img {
+  max-width: 100%;
+}

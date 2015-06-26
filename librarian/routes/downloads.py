@@ -8,68 +8,17 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import logging
-from datetime import datetime
+from bottle import request
+from bottle_utils.i18n import lazy_ngettext, lazy_gettext as _, i18n_url
 
-from bottle import request, redirect
-from bottle_utils.i18n import i18n_url, lazy_gettext as _
-
-from ..core import metadata
 from ..core import downloads
-from ..core import zipballs
 from ..lib.paginator import Paginator
-from ..utils.cache import cached
-from ..utils.core_helpers import open_archive
+from ..utils.cache import invalidates
+from ..utils.core_helpers import open_archive, filter_downloads
 from ..utils.template import view
 
 
-read_meta = cached()(zipballs.validate)
-
-
-@cached(prefix='downloads', timeout=30)
-def get_download_paths():
-    paths = downloads.get_downloads(request.app.config['content.spooldir'],
-                                    request.app.config['content.output_ext'])
-    return list(reversed(downloads.order_downloads(paths)))
-
-
-@cached(prefix='downloads', timeout=30)
-def filter_downloads(lang):
-    conf = request.app.config
-    zballs = get_download_paths()
-    zball_count = len(zballs)
-    last_zball = datetime.fromtimestamp(zballs[0][1]) if zballs else None
-    logging.info('Found {0} updates'.format(zball_count))
-    # Collect metadata of valid zipballs. If a language filter is specified
-    # filter the list based on that.
-    meta_filename = conf['content.metadata']
-    metas = []
-    for zipball_path, timestamp in zballs:
-        try:
-            meta = read_meta(zipball_path, meta_filename=meta_filename)
-        except zipballs.ValidationError as exc:
-            # Zip file is invalid. This means that the file is corrupted or the
-            # original file was signed with corrupt data in it. Either way, we
-            # don't know what to do with the file so we'll remove it.
-            logging.error("Error reading: {0}: {1}".format(zipball_path, exc))
-            downloads.safe_remove(zipball_path)
-        else:
-            if lang and meta['language'] != lang:
-                continue
-
-            meta['md5'] = zipballs.get_md5_from_path(zipball_path)
-            meta['ftimestamp'] = datetime.fromtimestamp(timestamp)
-            metas.append(metadata.Meta(meta, zipball_path))
-
-    archive = open_archive()
-    archive.add_replacement_data(metas, needed_keys=('title',))
-
-    return dict(metadata=metas,
-                nzipballs=zball_count,
-                last_zip=last_zball)
-
-
-@view('downloads', vals={})
+@view('downloads')
 def list_downloads():
     """ Render a list of downloaded content """
     selection = request.params.get('sel', '0') == '1'
@@ -81,46 +30,136 @@ def list_downloads():
     page = Paginator.parse_page(request.params)
     per_page = Paginator.parse_per_page(request.params)
     # get downloads filtered by above parsed filter params
-    result = filter_downloads(lang)
-
-    paginator = Paginator(result['metadata'], page, per_page)
+    metas = filter_downloads(lang)
+    # paginate query results
+    paginator = Paginator(metas, page, per_page)
+    # request params need to be returned as well
     vals = dict(request.params)
     vals.update({'pp': per_page, 'p': page})
+    return dict(vals=vals,
+                nzipballs=len(metas),
+                last_zball=metas[0]['ftimestamp'] if metas else None,
+                pager=paginator,
+                selection=selection,
+                lang=dict(lang=lang),
+                metadata=paginator.items)
 
-    result.update(dict(vals=vals,
-                       pager=paginator,
-                       selection=selection,
-                       lang=dict(lang=lang),
-                       metadata=paginator.items))
-    return result
+
+def notify_content_added(content_id_list):
+    archive = open_archive()
+    content_list = archive.get_multiple(content_id_list,
+                                        fields=('md5', 'title'))
+    for content_item in content_list:
+        content_data = {'id': content_item['md5'],
+                        'title': content_item['title']}
+        request.app.exts.notifications.send(content_data, category='content')
 
 
-@view('downloads_error')  # TODO: Add this view
+@invalidates(prefix=['content', 'downloads'], after=True)
+def add(file_list):
+    archive = open_archive()
+    added_count = archive.add_to_archive(file_list)
+    notify_content_added(file_list)
+    # Translators, used as confirmation title after the chosen updates were
+    # successfully added to the library
+    title = _("Updates added")
+    # Translators, used as confirmation message after the chosen updates were
+    # successfully added to the library
+    message = lazy_ngettext(
+        "An update has been added to the Library.",
+        "{update_count} updates have been added to the Library.",
+        added_count
+    ).format(update_count=added_count)
+    return dict(page_title=title,
+                message=message,
+                redirect_url=i18n_url('downloads:list'),
+                redirect_target=_("Updates"))
+
+
+@invalidates(prefix=['content', 'downloads'], after=True)
+def add_all(*args):
+    all_files = [meta['md5'] for meta in filter_downloads(lang=None)]
+    archive = open_archive()
+    added_count = archive.add_to_archive(all_files)
+    notify_content_added(all_files)
+    # Translators, used as confirmation title after the chosen updates were
+    # successfully added to the library
+    title = _("Updates added")
+    # Translators, used as confirmation message after the chosen updates were
+    # successfully added to the library
+    message = lazy_ngettext(
+        "An update has been added to the Library.",
+        "{update_count} updates have been added to the Library.",
+        added_count
+    ).format(update_count=added_count)
+    return dict(page_title=title,
+                message=message,
+                redirect_url=i18n_url('downloads:list'),
+                redirect_target=_("Updates"))
+
+
+@invalidates(prefix=['downloads'], after=True)
+def delete(file_list):
+    spooldir = request.app.config['content.spooldir']
+    removed_count = downloads.remove_downloads(spooldir, content_ids=file_list)
+    # Translators, used as confirmation title after the chosen updates were
+    # deleted on the updates page
+    title = _("Updates deleted")
+    # Translators, used as confirmation message after the chosen updates were
+    # deleted on the updates page
+    message = lazy_ngettext("An update has been deleted.",
+                            "{update_count} updates have been deleted.",
+                            removed_count).format(update_count=removed_count)
+    return dict(page_title=title,
+                message=message,
+                redirect_url=i18n_url('downloads:list'),
+                redirect_target=_("Updates"))
+
+
+@invalidates(prefix=['downloads'], after=True)
+def delete_all(*args):
+    spooldir = request.app.config['content.spooldir']
+    content_ext = request.app.config['content.output_ext']
+    removed_count = downloads.remove_downloads(spooldir, extension=content_ext)
+    # Translators, used as confirmation title after the chosen updates were
+    # deleted on the updates page
+    title = _("Updates deleted")
+    # Translators, used as confirmation message after the chosen updates were
+    # deleted on the updates page
+    message = lazy_ngettext("An update has been deleted.",
+                            "{update_count} updates have been deleted.",
+                            removed_count).format(update_count=removed_count)
+    return dict(page_title=title,
+                message=message,
+                redirect_url=i18n_url('downloads:list'),
+                redirect_target=_("Updates"))
+
+
+@view('feedback')
 def manage_downloads():
     """ Manage the downloaded content """
-    forms = request.forms
-    action = forms.get('action')
-    file_list = forms.getall('selection')
-    conf = request.app.config
-    if not action:
+    action_handlers = {'add': add,
+                       'add_all': add_all,
+                       'delete': delete,
+                       'delete_all': delete_all}
+    action = request.forms.get('action')
+    file_list = request.forms.getall('selection')
+    try:
+        handler = action_handlers[action]
+    except KeyError:
+        # Translators, used as error title shown to user when wrong action
+        # code is submitted to server
+        title = _("Invalid action")
         # Translators, used as error message shown to user when wrong action
         # code is submitted to server
-        return {'error': _('Invalid action, please use one of the form '
-                           'buttons.')}
-    if action == 'add':
-        archive = open_archive()
-        archive.add_to_archive(file_list)
-        request.app.exts.cache.invalidate(prefix='content')
-        request.app.exts.cache.invalidate(prefix='downloads')
-        request.app.exts.notifications.send(_('Content added.'),
-                                            category='content')
-    if action == 'delete':
-        downloads.remove_downloads(conf['content.spooldir'],
-                                   content_ids=file_list)
-        request.app.exts.cache.invalidate(prefix='downloads')
-    if action == 'deleteall':
-        downloads.remove_downloads(conf['content.spooldir'],
-                                   extension=conf['content.output_ext'])
-        request.app.exts.cache.invalidate(prefix='downloads')
+        message = _('Invalid action, please use one of the form buttons.')
+        status = 'error'
+        feedback = dict(page_title=title,
+                        message=message,
+                        redirect_url=i18n_url('downloads:list'),
+                        redirect_target=_("Updates"))
+    else:
+        status = 'success'
+        feedback = handler(file_list)
 
-    redirect(i18n_url('downloads:list'))
+    return dict(status=status, **feedback)

@@ -1,10 +1,7 @@
 <%def name="button(meta)">
-<form class="delete-button" action="${i18n_url('content:delete', content_id=meta.md5)}" method="POST">
+<form class="delete-button" action="${i18n_url('content:delete', content_id=meta.md5)}" method="GET">
     <button>
-        <span class="icon">
-            <span class="altlabel"></span> 
-            <span class="fulllabel">Delete</span>
-        </span>
+        ${_('Delete')}
     </button>
 </form>
 </%def>

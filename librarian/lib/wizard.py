@@ -30,6 +30,7 @@ class Wizard(object):
 
     def __init__(self, name):
         self.name = name
+        self.state = None
         self.steps = dict()
 
     def __call__(self, *args, **kwargs):
@@ -89,6 +90,12 @@ class Wizard(object):
     def save_state(self):
         request.session[self.id] = self.state
 
+    def clear_needed_steps(self):
+        if self.state is None:
+            self.load_state()
+        self.state['needed_steps'] = []
+        self.save_state()
+
     def next(self):
         """Return next step of the wizard."""
         try:
@@ -127,15 +134,15 @@ class Wizard(object):
         try:
             step = next(self)
         except StopIteration:
-            self.state['needed_steps'] = []
-            self.save_state()
             return self.wizard_finished(self.state['data'])
         else:
             step_context = step['handler']()
+            step_index = self.current_step_index
             return self.template_func(step['template'],
                                       step_index=self.current_step_index,
                                       step_count=self.step_count,
                                       step_param=self.step_param,
+                                      step_name=self.steps[step_index]['name'],
                                       start_index=self.start_index,
                                       **step_context)
 
@@ -154,10 +161,12 @@ class Wizard(object):
 
         step_result = step['handler']()
         if not step_result.pop('successful', False):
+            step_index = self.current_step_index
             return self.template_func(step['template'],
                                       step_index=self.current_step_index,
                                       step_count=self.step_count,
                                       step_param=self.step_param,
+                                      step_name=self.steps[step_index]['name'],
                                       start_index=self.start_index,
                                       **step_result)
 
@@ -221,7 +230,7 @@ class Wizard(object):
 
     def remove_gaps(self):
         """Inplace removal of eventual gaps between registered step indexes."""
-        original = [None] * (max(self.steps.keys()) + 1)
+        original = [None] * (max(self.steps.keys() or [0]) + 1)
         for idx, step in self.steps.items():
             original[idx] = step
 

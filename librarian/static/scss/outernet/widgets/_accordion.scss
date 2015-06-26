@@ -1,0 +1,158 @@
+/**
+ * _accordion.scss: accordion widget styling
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+
+@import "outernet/mixins/colors";
+@import "outernet/mixins/hyperlinks";
+@import "outernet/mixins/sprites";
+
+@mixin accordion-header {
+  background: $white;
+  line-height: 50px;
+  border-top: 1px solid $border;
+  border-bottom: 1px solid $border;
+  margin: 0;
+}
+
+@mixin accordion {
+
+  .accordion-section {
+    background: $input;
+
+    input[type="text"],
+    input[type="numeric"],
+    input[type="email"],
+    input[type="file"],
+    input[type="password"],
+    textarea,
+    select {
+      background-color: $earth;
+
+      &:focus {
+        background-color: $sky6;
+      }
+    }
+
+    // HEADER
+    & > :nth-child(1) {
+      background: $white;
+      line-height: 50px;
+      border-top: 1px solid $border;
+      margin: 0;
+      cursor: pointer;
+      font-size: 20px;
+      padding-left: 20px;
+    }
+
+    // CONTENT
+    & > :nth-child(2) {
+      border-top: 1px solid $border;
+      padding: 20px;
+      overflow: hidden;
+      margin: 0;
+    }
+  }
+
+  &.active {
+    .accordion-section {
+      &:last-child > :nth-child(2) {
+        border-bottom: 1px solid $border;
+      }
+      // HEADER
+      & > :nth-child(1) {
+        padding-left: 0;
+
+        a {
+          position: relative;
+          top: 2px;
+        }
+
+        .accordion-icon {
+          display: inline-block;
+          @include icon(accordion_open);
+          vertical-align: middle;
+          margin: 0 12.5px;
+        }
+
+        &:hover {
+          background: $input;
+
+          .accordion-icon {
+            @include icon(accordion_open_hover);
+          }
+        }
+      }
+
+      // CONTENT
+      & > :nth-child(2) {
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        border-top-width: 0;
+        @include transition(
+          border-top-width 0.3s,
+          padding-top 0.3s,
+          max-height 0.5s, 
+          padding-bottom 0.3s);
+      }
+    }
+
+    .non-collapsible {
+      // HEADER
+      & > :nth-child(1) {
+        cursor: default;
+
+        .accordion-icon {
+          opacity: 0.3;
+        }
+
+        &:hover {
+          background: $white;
+
+          span.accordion-icon {
+            @include icon(accordion_close);
+          }
+        }
+
+        a {
+          cursor: default;
+          color: $base;
+
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+    }
+
+    .non-collapsible,
+    .expanded {
+      // HEADER
+      & > :nth-child(1) {
+        .accordion-icon {
+          @include icon(accordion_close);
+        }
+
+        &:hover {
+          .accordion-icon {
+            @include icon(accordion_close_hover);
+          }
+        }
+      }
+
+      // CONTENT
+      & > :nth-child(2) {
+        border-top-width: 1px;
+        max-height: 1500px;
+        padding: 20px;
+      }
+    }
+  }
+}

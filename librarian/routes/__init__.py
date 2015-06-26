@@ -52,6 +52,8 @@ def install_routes(app):
          dict(no_i18n=True, unlocked=True, skip=skip_plugins)),
         ('content:reader', content.content_reader,
          'GET', '/pages/<content_id>', {}),
+        ('content:delete', content.remove_content_confirm,
+         'GET', '/delete/<content_id>', {}),
         ('content:delete', content.remove_content,
          'POST', '/delete/<content_id>', {}),
         # This is a static file route and is shadowed by the static file server
@@ -91,6 +93,8 @@ def install_routes(app):
 
         ('setup:main', setup.setup_wizard,
          ['GET', 'POST'], '/setup/', {}),
+        ('setup:exit', setup.exit_wizard,
+         ['GET'], '/setup/exit/', {}),
 
         # Apps
 

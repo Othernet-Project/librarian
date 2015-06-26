@@ -1,0 +1,61 @@
+@import "outernet/mixins/colors";
+
+.empty {
+  @include heading-5;
+  color: $sub;
+  text-align: center;
+  padding: 0.5em 20px 2em;
+}
+
+.notification-list {
+  .notification {
+    position: relative;
+    padding: 65px;
+    text-align: left;
+    .alert {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 65px 65px 0 0;
+      border-color: $sun transparent transparent transparent;
+      .icon {
+        @include icon(alert_sys);
+        position: absolute;
+        top: -60px;
+        left: 5px;
+      }
+      .icon.dismissable {
+        @include icon(alert_new);
+      }
+    }
+    .notification-body {
+      position: relative;
+      .message {
+        color: $sun;
+        margin: 0;
+        width: 90%;
+        .titles {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+      .icon {
+        float: right;
+        display: inline-block;
+      }
+      .timestamp {
+        color: $sub;
+      }
+      button {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -12px;
+      }
+    }
+  }
+}

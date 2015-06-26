@@ -1,0 +1,179 @@
+@import "compass/typography";
+@import "outernet/mixins/grid";
+@import "outernet/mixins/tables";
+@import "outernet/mixins/media_query";
+@import "outernet/mixins/forms";
+@import "outernet/mixins/buttons";
+@import "outernet/mixins/sprites";
+
+@mixin adjust-search-width($screen-width, $input-width) {
+  @include narrower-than($screen-width) {
+    @include single-input-form-width($input-width);
+  }
+}
+
+.location-bar {
+  @include single-input-form(1200px);
+  @include adjust-search-width(1300px, 600px);
+  @include adjust-search-width(900px, 400px);
+  @include adjust-search-width(640px, 200px);
+
+  @include phone-portrait-wide {
+    @include single-input-inline;
+  }
+
+  .icon {
+    display: inline-block;
+    vertical-align: middle;
+    @include hide-text;
+    @include icon(search, yes);
+  }
+}
+
+.file-list {
+  @include single-cell-grid;
+
+  .dir span.icon {
+    @include icon(folder);
+  }
+
+  .file span.icon {
+    @include icon(file);
+  }
+
+  .up span.icon {
+    @include icon(folder_up);
+  }
+
+  h2 {
+    .section-name {
+      color: $sub;
+    }
+  }
+
+  table {
+    @include table-col-width(1, 30px);
+    @include table-col-width(3, 100px);
+    @include table-col-width(4, 400px);
+
+    th:nth-child(1),
+    td:nth-child(1) {
+      padding-right: 0;
+    }
+
+    th:nth-child(2),
+    td:nth-child(2) {
+      padding-left: 2px;
+    }
+
+    th:nth-child(3),
+    th:nth-child(4),
+    td:nth-child(3),
+    td:nth-child(4),
+    {
+      text-align: right;
+    }
+
+    tr.empty {
+      background: $input;
+      text-align: center;
+      color: $sub;
+      padding: 20px;
+    }
+
+    .files-rename-button {
+      @include button-reset;
+      @include hide-text;
+      @include icon(edit);
+
+      &:focus,
+      &:hover {
+        @include icon(edit_hover);
+      }
+    }
+
+    .files-delete {
+      @include form-reset;
+      display: inline-block;
+
+      button {
+        @include button-reset;
+        @include hide-text;
+        @include icon(delete);
+
+        &:focus,
+        &:hover {
+          @include icon(delete_hover);
+        }
+      }
+    }
+
+    .files-rename,
+    .files-rename-button,
+    .files-run {
+      margin-right: 1em;
+    }
+
+    .files-run {
+      @include form-reset;
+      display: inline-block;
+    }
+
+    .dir span.icon {
+      // TODO
+    }
+
+    .file span.icon {
+      // TODO
+    }
+
+    @include narrower-than(800px) {
+      td:nth-child(1) {
+        display: none;
+
+        &.empty {
+          display: block;
+          width: auto;
+        }
+      }
+
+      td:nth-child(2) {
+        @include heading-5;
+      }
+
+      td:nth-child(3) {
+        display: block;
+        text-align: left;
+        @include sub;
+        width: auto;
+      }
+
+      td:nth-child(4)
+      {
+        display: inline-block;
+        width: auto;
+        text-align: left;
+      }
+  
+      tr {
+        padding: 20px;
+      }
+
+      @include table-flat;
+    }
+  }
+
+  .upone {
+    @include sub;
+  }
+
+  &.active {
+    table {
+      @include table-col-width(4, 160px);
+    }
+  }
+}
+
+.files-readme {
+  @include simple-row;
+}
