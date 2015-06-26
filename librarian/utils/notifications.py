@@ -154,7 +154,6 @@ class Notification(object):
 class NotificationGroup(object):
 
     proxied_attrs = (
-        'message',
         'created_at',
         'expires_at',
         'read_at',
