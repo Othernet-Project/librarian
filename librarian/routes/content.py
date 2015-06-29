@@ -8,6 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import functools
 import os
 
 from bottle import request, abort, default_app, static_file
@@ -100,23 +101,46 @@ def content_sites_list():
     return result
 
 
+def guard_already_removed(func):
+    @functools.wraps(func)
+    def wrapper(content_id, **kwargs):
+        archive = open_archive()
+        content = archive.get_single(content_id)
+        if not content:
+            # Translators, used as page title when a content item's removal is
+            # retried, but it was already deleted before
+            title = _("Content already removed")
+            # Translators, used as message when a content item's removal is
+            # retried, but it was already deleted before
+            message = _("The specified content has already been removed.")
+            return template('feedback',
+                            status='success',
+                            page_title=title,
+                            message=message,
+                            redirect_url=i18n_url('content:list'),
+                            redirect_target=_("Library"))
+
+        return func(content=content, **kwargs)
+    return wrapper
+
+
 @auth.login_required(next_to='/')
 @csrf_token
+@guard_already_removed
 @view('remove_confirm')
-def remove_content_confirm(content_id):
-    archive = open_archive()
+def remove_content_confirm(content):
     cancel_url = request.headers.get('Referer', i18n_url('content:list'))
-    return dict(cancel_url=cancel_url,
-                content=archive.get_single(content_id))
+    return dict(content=content, cancel_url=cancel_url)
 
 
 @auth.login_required(next_to='/')
 @csrf_protect
+@guard_already_removed
 @view('feedback')
-def remove_content(content_id):
+def remove_content(content):
     """ Delete a single piece of content from archive """
     archive = open_archive()
-    archive.remove_from_archive([content_id])
+    archive.remove_from_archive([content.md5])
     request.app.exts.cache.invalidate(prefix='content')
     # Translators, used as page title of successful content removal feedback
     page_title = _("Content removed")
