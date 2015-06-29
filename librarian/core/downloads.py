@@ -96,6 +96,9 @@ def safe_remove(path):
     :param path:  path to remove
     :returns:     boolean indicating success of removal
     """
+    if not path:
+        return False
+
     try:
         os.unlink(path)
     except OSError as exc:
