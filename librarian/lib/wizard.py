@@ -200,14 +200,14 @@ class Wizard(object):
     def register_step(self, name, template, method=valid_methods, index=None,
                       test=None):
         def decorator(func):
-            next_free_index = max(self.steps.keys() + [-1]) + 1
-            use_index = self.request_step_index(name, index, next_free_index)
+            next_free_idx = max(self.steps.keys() + [self.start_index - 1]) + 1
+            use_index = self.request_step_index(name, index, next_free_idx)
 
             if (use_index in self.steps and
                     self.steps[use_index]['name'] != name):
                 # an auto-indexed handler probably have taken the place of this
                 # manually indexed handler, switch their places
-                self.steps[next_free_index] = self.steps[use_index]
+                self.steps[next_free_idx] = self.steps[use_index]
                 del self.steps[use_index]
 
             methods = [method] if isinstance(method, basestring) else method
@@ -230,7 +230,7 @@ class Wizard(object):
 
     def remove_gaps(self):
         """Inplace removal of eventual gaps between registered step indexes."""
-        original = [None] * (max(self.steps.keys() or [0]) + 1)
+        original = [None] * (max(self.steps.keys() or [self.start_index]) + 1)
         for idx, step in self.steps.items():
             original[idx] = step
 
