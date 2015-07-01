@@ -1,28 +1,1015 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: Librarian\n"
+"Report-Msgid-Bugs-To: translations@outernet.is\n"
+"POT-Creation-Date: 2015-07-01 16:32+0200\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Project-Id-Version: Librarian\n"
-"Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: librarian/views/base.tpl:8 librarian/views/base.tpl:67
-msgid "Librarian"
-msgstr "Pustakawan"
+#: librarian/menu/tags.py:17
+msgid "Tags"
+msgstr ""
 
-#: librarian/views/base.tpl:32 librarian/views/dashboard.tpl:5
-#: librarian/views/dashboard.tpl:10
-msgid "Dashboard"
-msgstr "Dasbor"
+#: librarian/menu/files.py:17 librarian/views/file_list.tpl:6
+#: librarian/views/file_list.tpl:24
+msgid "Files"
+msgstr "Arsip"
 
-#: librarian/views/base.tpl:30 librarian/views/downloads.tpl:7
-#: librarian/views/downloads.tpl:12
+#: librarian/menu/updates.py:33 librarian/routes/downloads.py:76
+#: librarian/routes/downloads.py:98 librarian/routes/downloads.py:116
+#: librarian/routes/downloads.py:135 librarian/routes/downloads.py:160
+#: librarian/views/downloads.tpl:7
 msgid "Updates"
 msgstr "Pembaharuan"
 
+#: librarian/menu/dashboard.py:17
+msgid "Settings"
+msgstr ""
+
+#: librarian/menu/home.py:17
+msgid "Home"
+msgstr ""
+
+#: librarian/menu/notifications.py:29 librarian/views/notification_list.tpl:6
+msgid "Notifications"
+msgstr ""
+
+#: librarian/menu/sites.py:17 librarian/routes/content.py:99
+msgid "Sites"
+msgstr "Situs"
+
+#. Translators, redirection target if database backup was successful
+#: librarian/menu/content.py:17 librarian/plugins/dbmanage/plugin.py:195
+#: librarian/routes/content.py:89 librarian/routes/content.py:121
+#: librarian/routes/content.py:153
+msgid "Library"
+msgstr "Perpustakaan"
+
+#: librarian/menu/apps.py:17 librarian/views/app_list.tpl:5
+msgid "Apps"
+msgstr "Aplikasi"
+
+#: librarian/menu/logout.py:18
+msgid "Log out"
+msgstr "Log out"
+
+#. Translators, used as label for language
+#: librarian/forms/setup.py:21
+msgid "Language"
+msgstr ""
+
+#. Translators, used as label for date and time setup
+#: librarian/forms/setup.py:31
+msgid "Timezone"
+msgstr ""
+
+#: librarian/forms/auth.py:19
+msgid "Please enter the correct username and password."
+msgstr "Harap masukkan username dan password anda yang benar"
+
+#. Translators, used as label for a login field
+#. Translators, used as label in create user form
+#. Translators, used as label for a login field
+#. Translators, used as label in create user form
+#: librarian/forms/auth.py:22 librarian/forms/auth.py:43
+msgid "Username"
+msgstr ""
+
+#: librarian/forms/auth.py:23 librarian/forms/auth.py:45
+msgid "username"
+msgstr "Username"
+
+#. Translators, used as label for a password field
+#. Translators, used as label in create user form
+#. Translators, used as label for a password field
+#. Translators, used as label in create user form
+#: librarian/forms/auth.py:26 librarian/forms/auth.py:47
+msgid "Password"
+msgstr ""
+
+#: librarian/forms/auth.py:27 librarian/forms/auth.py:49
+msgid "password"
+msgstr "password"
+
+#: librarian/forms/auth.py:40
+msgid "The entered passwords do not match."
+msgstr "The entered passwords do not match."
+
+#. Translators, used as label in create user form
+#: librarian/forms/auth.py:51
+msgid "Confirm Password"
+msgstr ""
+
+#: librarian/forms/auth.py:53
+msgid "confirm password"
+msgstr "confirm password"
+
+#: librarian/utils/lang.py:32
+msgid "unknown"
+msgstr "Tidak dikenal"
+
+#: librarian/utils/lang.py:207
+msgid "any language"
+msgstr "baahasa apapun"
+
+#: librarian/utils/core_helpers.py:35
+msgid "Unknown license"
+msgstr "Lisensi tidak diketahui"
+
+#: librarian/utils/core_helpers.py:36
+msgid "Creative Commons Attribution"
+msgstr "Atribusi Creative Commons"
+
+#: librarian/utils/core_helpers.py:37
+msgid "Creative Commons Attribution-NoDerivs"
+msgstr "Atribusi Creative Commons-TanpaTurunan"
+
+#: librarian/utils/core_helpers.py:38
+msgid "Creative Commons Attribution-NonCommercial"
+msgstr "Atribusi Creative Commons-Nonkomersial"
+
+#: librarian/utils/core_helpers.py:39
+msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
+msgstr "Atribusi Creative Commons-Nonkomersial-TanpaTurunan"
+
+#: librarian/utils/core_helpers.py:40
+msgid "Creative Commons Attribution-ShareAlike"
+msgstr "Atribusi Creative Commons-BerbagiSerupa"
+
+#: librarian/utils/core_helpers.py:41
+msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
+msgstr "Atribusi Creative Commons-Nonkomersial-BerbagiSerupa"
+
+#: librarian/utils/core_helpers.py:42
+msgid "GNU Free Documentation License"
+msgstr "Lisensi Dokumentasi Bebas GNU"
+
+#: librarian/utils/core_helpers.py:43
+msgid "Open Publication License"
+msgstr "Lisensi Publikasi Terbuka"
+
+#: librarian/utils/core_helpers.py:44
+msgid "Open Content License"
+msgstr "Lisensi Konten Terbuka"
+
+#: librarian/utils/core_helpers.py:45
+msgid "Against DRM License"
+msgstr "Melawan Lisensi DRM"
+
+#: librarian/utils/core_helpers.py:46
+msgid "Free Art License"
+msgstr "Lisensi Kebebasan Seni"
+
+#: librarian/utils/core_helpers.py:47
+msgid "Public Domain"
+msgstr "Domain publik"
+
+#: librarian/utils/core_helpers.py:48
+msgid "Other free license"
+msgstr "Lisensi gratis lainnya"
+
+#: librarian/utils/core_helpers.py:49
+msgid "All rights reserved"
+msgstr "Semua hak cipta"
+
+#: librarian/utils/core_helpers.py:50
+msgid "Other non-free license"
+msgstr "Lisensi tidak-bebas lainnya"
+
+#. Translators, refers to transponder polarization
+#: librarian/plugins/ondd/plugin.py:48
+msgid "None"
+msgstr "Tidak ada"
+
+#. Translators, refers to transponder polarization
+#: librarian/plugins/ondd/plugin.py:50
+msgid "Vertical"
+msgstr "Vertikal"
+
+#. Translators, refers to transponder polarization
+#: librarian/plugins/ondd/plugin.py:52
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#. Translators, this is a type of LNB
+#: librarian/plugins/ondd/plugin.py:63
+msgid "Universal"
+msgstr "Universal"
+
+#. Translators, this is a type of LNB
+#: librarian/plugins/ondd/plugin.py:65
+msgid "North America Ku band"
+msgstr "Band Ku Amerika Utara"
+
+#. Translators, this is a type of LNB
+#: librarian/plugins/ondd/plugin.py:67
+msgid "C band"
+msgstr ""
+
+#: librarian/plugins/ondd/plugin.py:126
+msgid ""
+"Tuner configuration could not be saved. Please make sure that the tuner is "
+"connected."
+msgstr ""
+
+#: librarian/plugins/ondd/plugin.py:131
+msgid "LNB Type"
+msgstr ""
+
+#: librarian/plugins/ondd/plugin.py:134
+msgid "Invalid choice for LNB type"
+msgstr "Pilihan invalid untuk tipe LNB"
+
+#: librarian/plugins/ondd/plugin.py:139
+msgid "Frequency"
+msgstr ""
+
+#. Translators, error message when frequency value is wrong
+#: librarian/plugins/ondd/plugin.py:145
+msgid "Frequency must be a positive number"
+msgstr "Frekuensi harus dalam bilangan positif"
+
+#: librarian/plugins/ondd/plugin.py:150
+msgid "Symbol rate"
+msgstr ""
+
+#. Translators, error message when symbolrate value is wrong
+#: librarian/plugins/ondd/plugin.py:156
+msgid "Symbolrate must be a positive number"
+msgstr "Symbolrate harus dalam bilangan positif"
+
+#: librarian/plugins/ondd/plugin.py:161
+msgid "Delivery system"
+msgstr ""
+
+#: librarian/plugins/ondd/plugin.py:166
+msgid "Invalid choice for delivery system"
+msgstr "Pilihan invalid untuk sistem pengiriman"
+
+#: librarian/plugins/ondd/plugin.py:171
+msgid "Modulation"
+msgstr ""
+
+#: librarian/plugins/ondd/plugin.py:176
+msgid "Invalid choice for modulation mode"
+msgstr "Pilihan invalid untuk mode modulasi"
+
+#: librarian/plugins/ondd/plugin.py:181
+msgid "Polarization"
+msgstr ""
+
+#: librarian/plugins/ondd/plugin.py:186
+msgid "Invalid choice for polarization"
+msgstr "Pilihan invalid untuk polarisasi"
+
+#: librarian/plugins/ondd/plugin.py:223
+msgid "Transponder configuration saved."
+msgstr ""
+
+#. Translators, used as dashboard section title
+#: librarian/plugins/ondd/plugin.py:273
+#: librarian/plugins/tvheadend/plugin.py:24
+#: librarian/plugins/ondd/views/ondd/settings.tpl:6
+#: librarian/plugins/ondd/views/ondd/settings.tpl:11
+msgid "Tuner settings"
+msgstr "Pengaturan Tuner"
+
+#. Translators, error message displayed if database backup fails
+#: librarian/plugins/dbmanage/plugin.py:133
+msgid "Database backup could not be completed. The following error occurred:"
+msgstr "Backup database tidak terselesaikan. Kesalahan sebagai berikut:"
+
+#. Translators, redirection target if database backup was successful
+#: librarian/plugins/dbmanage/plugin.py:139
+#: librarian/plugins/dbmanage/plugin.py:180 librarian/views/dashboard.tpl:5
+msgid "Dashboard"
+msgstr "Dasbor"
+
+#. Translators, message displayed if database backup was successful
+#: librarian/plugins/dbmanage/plugin.py:142
+msgid "Database backup has been completed successfully."
+msgstr ""
+
+#. Translators, redirection target if database backup was successful
+#: librarian/plugins/dbmanage/plugin.py:150
+msgid "the backup folder"
+msgstr ""
+
+#. Translators, used as page title
+#: librarian/plugins/dbmanage/plugin.py:153
+msgid "Database backup"
+msgstr "Backup database"
+
+#. Translators, error message displayed if database rebuild fails
+#: librarian/plugins/dbmanage/plugin.py:168
+msgid "Database could not be rebuilt. The following error occurred:"
+msgstr "Database tidak dapat dibangun ulang. Kesalahan sebagai berikut:"
+
+#. Translators, error message displayed when locking fails during
+#. database rebuild
+#: librarian/plugins/dbmanage/plugin.py:172
+msgid ""
+"Librarian could not enter maintenance mode and database rebuild was "
+"cancelled. Please make sure noone else is using Librarian and try again."
+msgstr ""
+"Pustakawan tidak dapat memasuki mode perbaikan dan pembangunan kembali "
+"dibatalkan. Tolong pastikan tidak ada yang menggunakan pustakawan dan "
+"silakan coba lagi."
+
+#. Translators, message displayed if database backup was successful
+#: librarian/plugins/dbmanage/plugin.py:183
+msgid ""
+"Content database has been rebuilt from scratch. A backup copy of the "
+"original database has been created. You will find it in the files section."
+msgstr ""
+"Konten database telah dibangun kembali dari awal. Salinan backup dari "
+"database original telah terbentuk. Anda akan menemukannya di bagian arsip."
+
+#. Translators, used as page title
+#: librarian/plugins/dbmanage/plugin.py:198
+msgid "Database rebuild"
+msgstr "Pembangunan kembali database"
+
+#. Translators, used as dashboard section title
+#: librarian/plugins/dbmanage/plugin.py:217
+msgid "Content database"
+msgstr "Konten database"
+
+#. Translators, used as dashboard section title
+#: librarian/plugins/license/plugin.py:24
+msgid "About"
+msgstr "Tentang"
+
+#. Translators, used as response to innvalid HTTP request
+#: librarian/plugins/diskspace/plugin.py:69
+msgid "Invalid request"
+msgstr "Permintaan invalid"
+
+#. Translators, used as message to user when clean-up is started
+#. without selecting any content
+#: librarian/plugins/diskspace/plugin.py:79
+msgid "No content selected"
+msgstr "Tidak ada konten terpilih"
+
+#. Translators, used when user is previewing clean-up, %s is
+#. replaced by amount of content that can be freed in bytes,
+#. KB, MB, etc
+#: librarian/plugins/diskspace/plugin.py:86
+#, python-format
+msgid "%s can be freed by removing selected content"
+msgstr "%s dapat dibebaskan dengan mehilangkan konten terpilih"
+
+#. Translators, error message shown on clean-up page when there was
+#. no deletable content
+#: librarian/plugins/diskspace/plugin.py:104
+msgid "Nothing to delete"
+msgstr "Tiada yang dihapus"
+
+#. Translators, used as dashboard section title
+#: librarian/plugins/diskspace/plugin.py:127
+msgid "Content library stats"
+msgstr "Status konten perpustakaan"
+
+#. Translators, used as dashboard section title
+#: librarian/plugins/netinterfaces/plugin.py:26
+msgid "Network interfaces"
+msgstr "Interfase jaringan"
+
+#. Translators, used as dashboard section title
+#: librarian/plugins/logs/plugin.py:30
+msgid "Application logs"
+msgstr "Log aplikasi"
+
+#: librarian/routes/files.py:52
+msgid "The files you were looking for could not be found"
+msgstr "Arsip yang anda cari tidak dapat ditemukan"
+
+#: librarian/routes/files.py:54
+msgid "This list represents the search results"
+msgstr "Daftar ini menunjukkan hasil pencarian"
+
+#: librarian/routes/files.py:65
+msgid "This folder does not exist"
+msgstr "Folder ini tidak ada"
+
+#. Translators, used as confirmation title after the chosen updates were
+#. successfully added to the library
+#: librarian/routes/downloads.py:65 librarian/routes/downloads.py:87
+msgid "Updates added"
+msgstr ""
+
+#. Translators, used as confirmation title after the chosen updates were
+#. deleted on the updates page
+#: librarian/routes/downloads.py:107 librarian/routes/downloads.py:126
+msgid "Updates deleted"
+msgstr ""
+
+#. Translators, used as error title shown to user when wrong action
+#. code is submitted to server
+#: librarian/routes/downloads.py:152
+msgid "Invalid action"
+msgstr ""
+
+#. Translators, used as error message shown to user when wrong action
+#. code is submitted to server
+#: librarian/routes/downloads.py:155
+msgid "Invalid action, please use one of the form buttons."
+msgstr "Tindakan invalid, tolong gunakan salah satu tombol yang tersedia."
+
+#: librarian/routes/content.py:67
+msgid "Specified tag was not found"
+msgstr "Label spesifik tidak ditemukan"
+
+#: librarian/routes/content.py:90
+msgid "Content library is currently empty"
+msgstr "Konten perpustakaan sedang kosong"
+
+#: librarian/routes/content.py:100
+msgid "There are no sites in the library."
+msgstr ""
+
+#. Translators, used as page title when a content item's removal is
+#. retried, but it was already deleted before
+#: librarian/routes/content.py:112
+msgid "Content already removed"
+msgstr ""
+
+#. Translators, used as message when a content item's removal is
+#. retried, but it was already deleted before
+#: librarian/routes/content.py:115
+msgid "The specified content has already been removed."
+msgstr ""
+
+#. Translators, used as page title of successful content removal feedback
+#: librarian/routes/content.py:146
+msgid "Content removed"
+msgstr ""
+
+#. Translators, used as message of successful content removal feedback
+#: librarian/routes/content.py:148
+msgid "Content successfully removed."
+msgstr ""
+
+#: librarian/views/403.tpl:5 librarian/views/403.tpl:10
+msgid "Forbidden"
+msgstr "Terlarang"
+
+#: librarian/views/403.tpl:16
+msgid "You are not authorized to access this page."
+msgstr "Anda tidak diijinkan mengakses laman ini"
+
+#: librarian/views/remove_confirm.tpl:5
+msgid "Confirm Removal"
+msgstr ""
+
+#: librarian/views/remove_confirm.tpl:12
+#, python-brace-format
+msgid "Are you sure you want to remove the content entry named {title}"
+msgstr ""
+
+#: librarian/views/remove_confirm.tpl:16
+msgid "Remove"
+msgstr ""
+
+#: librarian/views/remove_confirm.tpl:18 librarian/views/file_list.tpl:117
+msgid "Cancel"
+msgstr ""
+
+#: librarian/views/_tag_cloud.tpl:5
+msgid "everything"
+msgstr "semua"
+
+#: librarian/views/notification_list.tpl:15 librarian/views/downloads.tpl:24
+msgid "Discard all"
+msgstr ""
+
+#: librarian/views/notification_list.tpl:25
+msgid "There are no new notifications"
+msgstr ""
+
+#: librarian/views/_content_list.tpl:19 librarian/views/reader.tpl:21
+msgid "unknown publisher"
+msgstr ""
+
+#: librarian/views/_content_list.tpl:21 librarian/views/reader.tpl:22
+#, python-format
+msgid "%(date)s by %(publisher)s."
+msgstr ""
+
+#: librarian/views/base.tpl:63 librarian/views/setup/main.tpl:58
+msgid "Humanity's public library"
+msgstr ""
+
+#: librarian/views/base.tpl:74
+msgid "Language:"
+msgstr "Language:"
+
+#: librarian/views/base.tpl:86 librarian/views/setup/main.tpl:48
+msgid "Back"
+msgstr ""
+
+#: librarian/views/_tag_list.tpl:2
+msgid "User tags"
+msgstr ""
+
+#: librarian/views/downloads.tpl:15
+msgid "update available"
+msgid_plural "updates available"
+msgstr[0] "pembaharuan tersedia"
+
+#: librarian/views/downloads.tpl:21
+msgid "Add all to Library"
+msgstr ""
+
+#: librarian/views/downloads.tpl:36 librarian/views/content_list.tpl:41
+msgid "Filter"
+msgstr ""
+
+#: librarian/views/downloads.tpl:49
+#, python-format
+msgid ""
+"Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
+msgstr ""
+"Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
+
+#: librarian/views/downloads.tpl:49 librarian/views/content_list.tpl:67
+msgid "here"
+msgstr "here"
+
+#: librarian/views/downloads.tpl:52
+msgid "There is no new content"
+msgstr "Saat ini belum ada konten baru"
+
+#: librarian/views/downloads.tpl:68
+msgid "replaces:"
+msgstr "ganti:"
+
+#: librarian/views/downloads.tpl:76
+msgid "received on:"
+msgstr ""
+
+#: librarian/views/downloads.tpl:80
+msgid "broadcast on:"
+msgstr ""
+
+#: librarian/views/downloads.tpl:84
+msgid "language:"
+msgstr ""
+
+#: librarian/views/downloads.tpl:90
+msgid "Add to library"
+msgstr ""
+
+#: librarian/views/downloads.tpl:92
+msgid "Discard"
+msgstr ""
+
+#: librarian/views/_list_controls.tpl:3
+msgid "Select all"
+msgstr "Pilih semua"
+
+#: librarian/views/_list_controls.tpl:5
+msgid "Select none"
+msgstr "Pilih tidak satupun"
+
+#: librarian/views/_list_controls.tpl:7
+msgid "Add selected to library"
+msgstr "Tambahkan yang terpilih ke perpustakaan"
+
+#: librarian/views/_list_controls.tpl:9
+msgid "Delete selected"
+msgstr "Hapus yang terpilih"
+
+#: librarian/views/_list_controls.tpl:11
+msgid "Delete all"
+msgstr "Hapus semua"
+
+#: librarian/views/login.tpl:5 librarian/views/login.tpl:36
+msgid "Login"
+msgstr "Login"
+
+#: librarian/views/login.tpl:10
+msgid "Log into Librarian"
+msgstr ""
+
+#: librarian/views/exec_result.tpl:5 librarian/views/exec_result.tpl:10
+msgid "Script output"
+msgstr "Skrip hasil"
+
+#: librarian/views/exec_result.tpl:16
+msgid "return code:"
+msgstr "Kode pengembalian:"
+
+#: librarian/views/exec_result.tpl:19
+msgid "OK"
+msgstr "OK"
+
+#: librarian/views/exec_result.tpl:22
+msgid "error"
+msgstr "kesalahan"
+
+#: librarian/views/exec_result.tpl:27
+msgid "Output"
+msgstr "Output"
+
+#: librarian/views/exec_result.tpl:32
+msgid "no output"
+msgstr "Tidak ada output"
+
+#: librarian/views/exec_result.tpl:37
+msgid "Errors"
+msgstr "Kesalahan"
+
+#: librarian/views/content_list.tpl:20 librarian/views/content_list.tpl:22
+#: librarian/views/file_list.tpl:18
+msgid "Search"
+msgstr ""
+
+#: librarian/views/content_list.tpl:21
+msgid "Search titles"
+msgstr ""
+
+#: librarian/views/content_list.tpl:27
+#, fuzzy, python-format
+msgid "Showing search results for '%(terms)s'"
+msgstr "Memperlihatkan hasil pencarian untuk '%(term)s'"
+
+#: librarian/views/content_list.tpl:29
+msgid "Clear"
+msgstr ""
+
+#: librarian/views/content_list.tpl:61
+#, fuzzy, python-format
+msgid "There are no search results for '%(terms)s'"
+msgstr "TIdak ada hasil "
+
+#: librarian/views/content_list.tpl:64
+#, fuzzy, python-format
+msgid "There are no results for '%(tag)s'"
+msgstr "Tidak ada hasil pencarian untuk '&(tag)s'"
+
+#: librarian/views/content_list.tpl:67
+#, python-format
+msgid ""
+"Language filter for '%(lang)s' is active. Click %(link)s to see all content"
+msgstr ""
+
+#: librarian/views/content_list.tpl:86
+msgid "Load more content"
+msgstr "Muat lebih banyak konten"
+
+#: librarian/views/content_list.tpl:94
+msgid "You have reached the end of the library."
+msgstr "Anda mencapai batas akhir perpustakaan"
+
+#: librarian/views/content_list.tpl:96 librarian/views/content_list.tpl:103
+msgid "Go to top"
+msgstr "Pergi ke atas"
+
+#: librarian/views/_tag_js_templates.tpl:3
+msgid "Edit"
+msgstr ""
+
+#: librarian/views/_tag_js_templates.tpl:8
+msgid "Close"
+msgstr "Tutup"
+
+#: librarian/views/_tag_js_templates.tpl:13
+msgid "Tags could not be updated."
+msgstr "Label tidak dapat diperbaharui"
+
+#: librarian/views/tag_cloud.tpl:6
+msgid "Tag cloud"
+msgstr "Label awan"
+
+#: librarian/views/feedback.tpl:11
+#, python-brace-format
+msgid "You'll be taken to {target} in {seconds} seconds."
+msgstr ""
+
+#: librarian/views/reader.tpl:24
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:8
+msgid "Download"
+msgstr "Unduh"
+
+#: librarian/views/404.tpl:5 librarian/views/404.tpl:10
+msgid "Page not found"
+msgstr "Laman tidak ditemukan"
+
+#: librarian/views/404.tpl:14
+msgid "The page you were looking for could not be found"
+msgstr "Laman yang anda cari tidak bisa ditemukan"
+
+#: librarian/views/plugin_error.tpl:4
+msgid "An error occurred during the rendering of this plugin."
+msgstr ""
+
+#: librarian/views/_tags.tpl:10 librarian/views/file_list.tpl:116
+msgid "Save"
+msgstr ""
+
+#: librarian/views/_tags.tpl:14
+msgid "Separate tags with commas"
+msgstr "Pisahkan label dengan koma"
+
+#: librarian/views/_delete_button.tpl:4 librarian/views/file_list.tpl:68
+#: librarian/views/file_list.tpl:91
+msgid "Delete"
+msgstr "hapus?"
+
+#: librarian/views/_notification_list.tpl:2
+#, python-brace-format
+msgid "A content item has been added to the Library with the following title:"
+msgid_plural ""
+"{count} content items have been added to the Library with the following "
+"titles:"
+msgstr[0] ""
+
+#: librarian/views/_notification_list.tpl:24
+msgid "Mark read"
+msgstr ""
+
+#: librarian/views/503.tpl:5 librarian/views/503.tpl:10
+msgid "Under maintenance"
+msgstr "Sedang dalam perbaikan"
+
+#: librarian/views/503.tpl:15
+msgid ""
+"Librarian is currently in maintenance mode. Please wait a few minutes and "
+"try again."
+msgstr ""
+"Pustakawan sedang dalam mode perbaikan. Tolong tunggu beberapa menit dan "
+"coba lagi."
+
+#: librarian/views/_simple_pager.tpl:4
+msgid "previous"
+msgstr "sebelumnya"
+
+#: librarian/views/_simple_pager.tpl:8
+#, python-format
+msgid "Page %(current)s of %(total)s"
+msgstr ""
+
+#: librarian/views/_simple_pager.tpl:13
+msgid "next"
+msgstr "berikutnya"
+
+#: librarian/views/_simple_pager.tpl:20
+msgid "page"
+msgstr "halaman"
+
+#: librarian/views/_simple_pager.tpl:24
+msgid "per page"
+msgstr "per halaman"
+
+#: librarian/views/_simple_pager.tpl:25
+msgid "Reload"
+msgstr "Muat ulang"
+
+#: librarian/views/app_list.tpl:16
+msgid "No description provided"
+msgstr "Tidak ada deskripsi tersedia"
+
+#: librarian/views/app_list.tpl:24
+msgid "author:"
+msgstr "pengarang:"
+
+#: librarian/views/app_list.tpl:26
+#: librarian/plugins/license/views/license.tpl:13
+msgid "version:"
+msgstr "versi:"
+
+#: librarian/views/app_list.tpl:35
+msgid "No apps found."
+msgstr "Tidak ada aplikasi yang ditemukan."
+
+#: librarian/views/500.tpl:5 librarian/views/500.tpl:10
+msgid "Error"
+msgstr "Kesalahan"
+
+#: librarian/views/500.tpl:14
+msgid ""
+"Librarian has failed to fulfill your request due to unexpected error in the "
+"program. Details are provided below."
+msgstr ""
+"Pustakawan gagal memenuhi permintaan anda akibat kesalahan yang tidak "
+"terduga dalam program. Detil tersedia di bawah ini."
+
+#: librarian/views/500.tpl:19 librarian/plugins/logs/views/logs.tpl:7
+msgid "Download application log"
+msgstr "Unduh log aplikasi"
+
+#: librarian/views/file_list.tpl:14
+msgid "Search files and folders"
+msgstr ""
+
+#: librarian/views/file_list.tpl:30
+msgid "Name"
+msgstr ""
+
+#: librarian/views/file_list.tpl:32
+msgid "Size"
+msgstr ""
+
+#: librarian/views/file_list.tpl:33
+msgid "Actions"
+msgstr ""
+
+#: librarian/views/file_list.tpl:42
+msgid "Go up one level"
+msgstr ""
+
+#: librarian/views/file_list.tpl:48
+msgid "(go to file list)"
+msgstr "(pergi ke daftar arsip)"
+
+#: librarian/views/file_list.tpl:54
+msgid "There are currently no files or folders here."
+msgstr "Tidak ada arsip atau folder di sini."
+
+#: librarian/views/file_list.tpl:65 librarian/views/file_list.tpl:88
+#: librarian/views/file_list.tpl:110
+msgid "Rename"
+msgstr "Namai ulang"
+
+#: librarian/views/file_list.tpl:83
+msgid "Run"
+msgstr "Jalankan"
+
+#: librarian/views/file_list.tpl:102
+msgid "About this folder"
+msgstr "Tentang folder ini"
+
+#: librarian/views/setup/finished.tpl:5
+msgid "Setup Completed"
+msgstr "Setup Completed"
+
+#: librarian/views/setup/finished.tpl:10
+msgid "Settings are saved."
+msgstr ""
+
+#: librarian/views/setup/finished.tpl:11
+msgid "Welcome to outernet."
+msgstr ""
+
+#: librarian/views/setup/finished.tpl:12
+msgid "Start using Outernet"
+msgstr ""
+
+#: librarian/views/setup/step_language.tpl:5
+msgid "Please select the interface language."
+msgstr "Please select the interface language."
+
+#: librarian/views/setup/step_superuser.tpl:4
+msgid "Please enter the desired credentials for the superuser account."
+msgstr "Please enter the desired credentials for the superuser account."
+
+#: librarian/views/setup/main.tpl:8
+msgid "Setup Wizard"
+msgstr "Setup Wizard"
+
+#: librarian/views/setup/main.tpl:40
+#, python-format
+msgid "Setup Wizard: Step %s of %s"
+msgstr "Setup Wizard: Step %s of %s"
+
+#: librarian/views/setup/main.tpl:50
+msgid "Next"
+msgstr "Next"
+
+#: librarian/views/setup/step_datetime.tpl:4
+msgid "Please set the current timezone."
+msgstr ""
+
+#: librarian/plugins/ondd/views/ondd.tpl:15
+msgid "Downloads in progress"
+msgstr "Unduhan dalam progres"
+
+#: librarian/plugins/ondd/views/ondd_wizard.tpl:7
+msgid "Please select the satellite you'd like to receive data from."
+msgstr "Please select the satellite you'd like to receive data from."
+
+#: librarian/plugins/ondd/views/ondd/_presets.tpl:4
+msgid "Satellite:"
+msgstr "Satelit:"
+
+#: librarian/plugins/ondd/views/ondd/_presets.tpl:7
+msgid "Select a satellite"
+msgstr "Pilih satelit"
+
+#: librarian/plugins/ondd/views/ondd/_presets.tpl:17
+msgid "Custom..."
+msgstr "Custom..."
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:4
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:5
+msgid "Yes"
+msgstr ""
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:4
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:5
+msgid "No"
+msgstr ""
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:7
+msgid "Signal"
+msgstr ""
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:9
+msgid "Quality"
+msgstr ""
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:13
+msgid "Signal lock:"
+msgstr ""
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:17
+msgid "Receiving data:"
+msgstr ""
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:21
+msgid "Bitrate:"
+msgstr ""
+
+#: librarian/plugins/ondd/views/ondd/_file_list.tpl:5
+msgid "No files are being downloaded"
+msgstr "Tidak ada file yang sedang diunduh"
+
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:13
+msgid "Tune in"
+msgstr "Menyetel"
+
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:4
+msgid "Database size"
+msgstr "Ukuran database"
+
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:12
+msgid "Backup"
+msgstr "Backup"
+
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:17
+msgid "Rebuild"
+msgstr "Pembangunan kembali"
+
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:23
+msgid ""
+"Database rebuild will cause all tags to be lost. It will also put Librarian "
+"into maintenance mode and prevent users from accessing content."
+msgstr ""
+"Pembangunan kembali database akan menyebabkan semua label hilang. Juga  "
+"menjadi Pustakawan ke dalam mode perbaikan dan mencegah pengguna mengakses "
+"konten."
+
+#: librarian/plugins/license/views/license.tpl:5
+msgid ""
+"\n"
+"This program is free software: you can redistribute it and/or modify it\n"
+"under the terms of the GNU General Public License as published by the\n"
+"Free Software Foundation, either version 3 of the License, or (at your\n"
+"option) any later version.\n"
+msgstr ""
+"Program ini adalah software gratis: anda dapat meredistribusikannya dan/atau "
+"memodifikasi sesuai aturan pada Lisensi Publik Umum GNU yang dipublikasikan "
+"oleh Free Software Foundation, baik Lisensi versi 3, atau (sesuai pilihan "
+"anda) versi terbaru."
+
+#: librarian/plugins/license/views/license.tpl:16
+msgid "Some rights reserved."
+msgstr "Beberapa hak cipta."
+
+#: librarian/plugins/diskspace/views/diskspace.tpl:11
+msgid "You are running low on disk space."
+msgstr "Ruang cakram yang tersedia tinggal sedikit "
+
+#: librarian/plugins/diskspace/views/diskspace.tpl:13
+msgid "Free some space now"
+msgstr "Bebaskan sejumlah ruang sekarang"
+
+#: librarian/plugins/diskspace/views/diskspace.tpl:21
+msgid "item in the library"
+msgid_plural "items in the library"
+msgstr[0] "benda-benda dalam perpustakaan"
+
+#: librarian/plugins/diskspace/views/diskspace.tpl:27
+msgid "used space"
+msgstr "ruang terpakai"
+
+#: librarian/plugins/diskspace/views/diskspace/_space_info.tpl:6
+#, python-format
+msgid "Total space (%s free)"
+msgstr ""
+
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:5
+#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:10
+msgid "Library clean-up"
+msgstr "Pembersihan perpustakaan"
+
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:20
+#, python-format
 msgid "%s more space should be freed."
 msgstr "%s lebih banyak ruang harus dibebaskan."
 
@@ -38,7 +1025,6 @@ msgstr "hapus?"
 msgid "date"
 msgstr "tanggal"
 
-#: librarian/views/downloads.tpl:53
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:37
 msgid "title"
 msgstr "Judul"
@@ -59,945 +1045,171 @@ msgstr "Berapa banyak ruang yang dibebaskan?"
 msgid "Delete selected now"
 msgstr "Hapus yang terpilih sekarang"
 
-#: librarian/plugins/diskspace/views/diskspace.tpl:27
-msgid "used space"
-msgstr "ruang terpakai"
+#: librarian/plugins/tvheadend/views/tvheadend.tpl:4
+msgid "Access TVHeadend"
+msgstr "Akses TVHeadend"
 
-#: librarian/views/downloads.tpl:26
-msgid "last update"
-msgstr "pembaharuan terakhir"
+#: librarian/plugins/netinterfaces/views/netinterfaces.tpl:4
+msgid "List of available network interfaces"
+msgstr "Daftar interfase jaringan yang tersedia"
 
-#: librarian/plugins/diskspace/views/diskspace.tpl:11
-msgid "You are running low on disk space."
-msgstr "Ruang cakram yang tersedia tinggal sedikit "
-
-#: librarian/plugins/diskspace/views/diskspace.tpl:13
-msgid "Free some space now"
-msgstr "Bebaskan sejumlah ruang sekarang"
-
-#: librarian/views/downloads.tpl:51
-msgid "select"
-msgstr "pilih"
-
-#: librarian/views/downloads.tpl:93
-msgid "There is no new content"
-msgstr "Saat ini belum ada konten baru"
-
-#: librarian/views/_list_controls.tpl:9
-msgid "Delete selected"
-msgstr "Hapus yang terpilih"
-
-#: librarian/routes/content.py:104 librarian/views/base.tpl:22
-msgid "Library"
-msgstr "Perpustakaan"
-
-#: librarian/views/content_list.tpl:49
-msgid "Content library is currently empty"
-msgstr "Konten perpustakaan sedang kosong"
-
-#: librarian/views/content_list.tpl:25
-msgid "search titles"
-msgstr "cari judul"
-
-#: librarian/views/file_list.tpl:18 librarian/views/content_list.tpl:27
-msgid "go"
-msgstr "jalankan"
-
-#: librarian/views/content_list.tpl:30
-msgid "clear"
-msgstr "bersihkan"
-
-#: librarian/views/downloads.tpl:20
-msgid "update available"
-msgid_plural "updates available"
-msgstr[0] "pembaharuan tersedia"
-
-#: librarian/plugins/diskspace/plugin.py:94
-msgid "Content library stats"
-msgstr "Status konten perpustakaan"
-
-#: librarian/plugins/diskspace/views/diskspace.tpl:21
-msgid "item in the library"
-msgid_plural "items in the library"
-msgstr[0] "benda-benda dalam perpustakaan"
-
-#: librarian/plugins/logs/plugin.py:30
-msgid "Application logs"
-msgstr "Log aplikasi"
+#: librarian/plugins/netinterfaces/views/netinterfaces.tpl:8
+msgid "Interface name"
+msgstr "nama interfase"
 
 #: librarian/plugins/logs/views/logs.tpl:4
 msgid "Logs are shown in reverse chronological order"
 msgstr "Log ditunjukkan dalam urutan kronologis yang terbalik"
 
-#: librarian/views/_list_controls.tpl:3
-msgid "Select all"
-msgstr "Pilih semua"
-
-#: librarian/views/_list_controls.tpl:5
-msgid "Select none"
-msgstr "Pilih tidak satupun"
-
-#: librarian/views/downloads.tpl:55
-msgid "broadcast"
-msgstr "siaran"
-
-#: librarian/views/downloads.tpl:57
-msgid "downloaded"
-msgstr "terunduh"
-
-#: librarian/views/content_list.tpl:40
-msgid "Showing search results for '%(terms)s'"
-msgstr "Memperlihatkan hasil pencarian untuk '%(term)s'"
-
-#: librarian/views/content_list.tpl:52
-msgid "There are no search results for '%(terms)s'"
-msgstr "TIdak ada hasil "
-
-#. Translators, used in the pager
-#: librarian/views/_simple_pager.tpl:4
-msgid "previous"
-msgstr "sebelumnya"
-
-#. Translators, used in the pager
-#: librarian/views/_simple_pager.tpl:19
-msgid "next"
-msgstr "berikutnya"
-
-#. Translators, used as page title
-#. Translators, used as page title on clean-up page
-#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:5
-#: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:10
-msgid "Library clean-up"
-msgstr "Pembersihan perpustakaan"
-
-#. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
-#: librarian/views/_simple_pager.tpl:9
-msgid "page"
-msgstr "halaman"
-
-#. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
-#: librarian/views/_simple_pager.tpl:13
-msgid "per page"
-msgstr "per halaman"
-
-#. Translators, %s is the amount of free space in bytes, KB, MB, etc.
-#: librarian/plugins/diskspace/views/diskspace/_space_info.tpl:4
-msgid "total space (%s free)"
-msgstr "total ruang (%s bebas)"
-
-#. Translators, used as button label on updates page for adding marked content to library
-#: librarian/views/_list_controls.tpl:7
-msgid "Add selected to library"
-msgstr "Tambahkan yang terpilih ke perpustakaan"
-
-#. Translators, used as 'content belongs to core archive' badge
-#: librarian/views/reader.tpl:30
-msgid "core"
-msgstr "inti"
-
-#. Translators, used as 'sponsored content' badge
-#: librarian/views/reader.tpl:26
-msgid "sponsored"
-msgstr "disponsori"
-
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#: librarian/views/base.tpl:28 librarian/views/app_list.tpl:5
-#: librarian/views/app_list.tpl:10
-msgid "Apps"
-msgstr "Aplikasi"
-
-#. Translators, refers to app author
-#: librarian/views/app_list.tpl:29
-msgid "author:"
-msgstr "pengarang:"
-
-#. Translators, refers to app version
-#: librarian/views/app_list.tpl:31
-#: librarian/plugins/license/views/license.tpl:13
-msgid "version:"
-msgstr "versi:"
-
-#. Translators, message show in app listing when no apps are present.
-#: librarian/views/app_list.tpl:40
-msgid "No apps found."
-msgstr "Tidak ada aplikasi yang ditemukan."
-
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#. Translators, used main navigation menu
-#. Translators, used as page title
-#. Translators, used as page heading
-#: librarian/views/base.tpl:24 librarian/views/file_list.tpl:5
-#: librarian/views/file_list.tpl:10
-msgid "Files"
-msgstr "Arsip"
-
-#: librarian/views/_simple_pager.tpl:14
-msgid "Reload"
-msgstr "Muat ulang"
-
-#: librarian/views/downloads.tpl:73
-msgid "replaces:"
-msgstr "ganti:"
-
-#. Translators, used as label for link that leads to parent directory in file listing
-#: librarian/views/file_list.tpl:28
-msgid "(go up one level)"
-msgstr "(naik satu level)"
-
-#: librarian/views/file_list.tpl:50 librarian/views/file_list.tpl:70
-msgid "Rename"
-msgstr "Namai ulang"
-
-#: librarian/views/file_list.tpl:55 librarian/views/file_list.tpl:75
-msgid "Delete"
-msgstr "hapus?"
-
-#: librarian/views/file_list.tpl:92
-msgid "About this folder"
-msgstr "Tentang folder ini"
-
-#. Translators, used as page title for page that shows result of running a script
-#. Translators, used as page header for page that shows result of running a script
-#: librarian/views/exec_result.tpl:2 librarian/views/exec_result.tpl:5
-msgid "Script output"
-msgstr "Skrip hasil"
-
-#. Translators, return (result) code of the script executed via file browser
-#: librarian/views/exec_result.tpl:11
-msgid "return code:"
-msgstr "Kode pengembalian:"
-
-#. Translators, shown when result code is good (0).
-#: librarian/views/exec_result.tpl:14
-msgid "OK"
-msgstr "OK"
-
-#. Translators, shown when result code is not good (non-zero).
-#: librarian/views/exec_result.tpl:17
-msgid "error"
-msgstr "kesalahan"
-
-#. Translators, refers to standard output of script run from file browser (STDOUT)
-#: librarian/views/exec_result.tpl:22
-msgid "Output"
-msgstr "Output"
-
-#. Translators, shown if script returned no output
-#: librarian/views/exec_result.tpl:27
-msgid "no output"
-msgstr "Tidak ada output"
-
-#. Translators, refers to standard errors of script run from file browser (STDERR)
-#: librarian/views/exec_result.tpl:32
-msgid "Errors"
-msgstr "Kesalahan"
-
-#. Translators, label for button in file listing that allows user to run a script
-#: librarian/views/file_list.tpl:82
-msgid "Run"
-msgstr "Jalankan"
-
-#. Translators, this is used when app doesn't provide a description
-#: librarian/views/app_list.tpl:21
-msgid "No description provided"
-msgstr "Tidak ada deskripsi tersedia"
-
-#: librarian/core/metadata.py:32
-msgid "Unknown license"
-msgstr "Lisensi tidak diketahui"
-
-#: librarian/core/metadata.py:33
-msgid "Creative Commons Attribution"
-msgstr "Atribusi Creative Commons"
-
-#: librarian/core/metadata.py:34
-msgid "Creative Commons Attribution-NoDerivs"
-msgstr "Atribusi Creative Commons-TanpaTurunan"
-
-#: librarian/core/metadata.py:35
-msgid "Creative Commons Attribution-NonCommercial"
-msgstr "Atribusi Creative Commons-Nonkomersial"
-
-#: librarian/core/metadata.py:36
-msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
-msgstr "Atribusi Creative Commons-Nonkomersial-TanpaTurunan"
-
-#: librarian/core/metadata.py:37
-msgid "Creative Commons Attribution-ShareAlike"
-msgstr "Atribusi Creative Commons-BerbagiSerupa"
-
-#: librarian/core/metadata.py:38
-msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
-msgstr "Atribusi Creative Commons-Nonkomersial-BerbagiSerupa"
-
-#: librarian/core/metadata.py:39
-msgid "GNU Free Documentation License"
-msgstr "Lisensi Dokumentasi Bebas GNU"
-
-#: librarian/core/metadata.py:40
-msgid "Open Publication License"
-msgstr "Lisensi Publikasi Terbuka"
-
-#: librarian/core/metadata.py:41
-msgid "Open Content License"
-msgstr "Lisensi Konten Terbuka"
-
-#: librarian/core/metadata.py:42
-msgid "Against DRM License"
-msgstr "Melawan Lisensi DRM"
-
-#: librarian/core/metadata.py:43
-msgid "Free Art License"
-msgstr "Lisensi Kebebasan Seni"
-
-#: librarian/core/metadata.py:44
-msgid "Public Domain"
-msgstr "Domain publik"
-
-#: librarian/core/metadata.py:45
-msgid "Other free license"
-msgstr "Lisensi gratis lainnya"
-
-#: librarian/core/metadata.py:46
-msgid "All rights reserved"
-msgstr "Semua hak cipta"
-
-#: librarian/core/metadata.py:47
-msgid "Other non-free license"
-msgstr "Lisensi tidak-bebas lainnya"
-
-#. Translators, used as response to innvalid HTTP request
-#: librarian/plugins/diskspace/plugin.py:42
-msgid "Invalid request"
-msgstr "Permintaan invalid"
-
-#. Translators, used as message to user when clean-up is started
-#. without selecting any content
-#: librarian/plugins/diskspace/plugin.py:52
-msgid "No content selected"
-msgstr "Tidak ada konten terpilih"
-
-#. Translators, used when user is previewing clean-up, %s is
-#. replaced by amount of content that can be freed in bytes,
-#. KB, MB, etc
-#: librarian/plugins/diskspace/plugin.py:59
-msgid "%s can be freed by removing selected content"
-msgstr "%s dapat dibebaskan dengan mehilangkan konten terpilih"
-
-#. Translators, error message shown on clean-up page when there was
-#. no deletable content
-#: librarian/plugins/diskspace/plugin.py:75
-msgid "Nothing to delete"
-msgstr "Tiada yang dihapus"
-
-#. Translators, used as error message shown to user when wrong action
-#. code is submitted to server
-#: librarian/routes/downloads.py:103
-msgid "Invalid action, please use one of the form buttons."
-msgstr "Tindakan invalid, tolong gunakan salah satu tombol yang tersedia."
-
-#. Translators, used as placeholder while infinite scrolling content is being loaded
-#: librarian/views/content_list.tpl:80
-msgid "Loading..."
-msgstr "Memuat..."
-
-#. Translators, shown when user reaches the end of the library
-#: librarian/views/content_list.tpl:87
-msgid "You have reached the end of the library."
-msgstr "Anda mencapai batas akhir perpustakaan"
-
-#. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
-#: librarian/views/content_list.tpl:89 librarian/views/content_list.tpl:96
-msgid "Go to top"
-msgstr "Pergi ke atas"
-
-#. Translators, used as section heading on dashboard above 'About' section
-#: librarian/plugins/license/plugin.py:24
-msgid "About"
-msgstr "Tentang"
-
-#. Translators, appears in copyright line in dashboard's 'About' section
-#: librarian/plugins/license/views/license.tpl:16
-msgid "Some rights reserved."
-msgstr "Beberapa hak cipta."
-
-#: librarian/routes/content.py:68
-msgid "Specified tag was not found"
-msgstr "Label spesifik tidak ditemukan"
-
-#. Translators, used as not on library page when there is no content for given tag
-#: librarian/views/content_list.tpl:55
-msgid "There are no results for '%(tag)s'"
-msgstr "Tidak ada hasil pencarian untuk '&(tag)s'"
-
-#. Translators, button label for a button that saves user tags for a piece of content
-#: librarian/views/_tags.tpl:11
-msgid "Save tags"
-msgstr "Simpan label"
-
-#. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
-#: librarian/views/_tags.tpl:15
-msgid "Separate tags with commas"
-msgstr "Pisahkan label dengan koma"
-
-#. Translators, used as link table for a pseudo-tag that cancels tag-based filtering of content
-#: librarian/views/_tag_cloud.tpl:5
-msgid "everything"
-msgstr "semua"
-
-#. Translators, used as label for button that appears next to tag list
-#: librarian/views/_tag_js_templates.tpl:3
-msgid "Edit tags"
-msgstr "Perbaiki label"
-
-#. Translators, used as label for button that appears in tag editing form
-#: librarian/views/_tag_js_templates.tpl:8
-msgid "Close"
-msgstr "Tutup"
-
-#. Translators, error message shown when updating tags fails
-#: librarian/views/_tag_js_templates.tpl:13
-msgid "Tags could not be updated."
-msgstr "Label tidak dapat diperbaharui"
-
-#. Translators, link that loads more content in infinite scrolling page
-#: librarian/views/content_list.tpl:72
-msgid "Load more content"
-msgstr "Muat lebih banyak konten"
-
-#. Translators, used as section heading on dashboard
-#: librarian/plugins/ondd/plugin.py:269
-#: librarian/plugins/tvheadend/plugin.py:24
-#: librarian/plugins/ondd/views/ondd/settings.tpl:6
-#: librarian/plugins/ondd/views/ondd/settings.tpl:11
-msgid "Tuner settings"
-msgstr "Pengaturan Tuner"
-
-#: librarian/plugins/tvheadend/views/tvheadend.tpl:4
-msgid "Access TVHeadend"
-msgstr "Akses TVHeadend"
-
-#: librarian/views/file_list.tpl:40
-msgid "There are currently no files or folders here."
-msgstr "Tidak ada arsip atau folder di sini."
-
-#. Translators, used as page title
-#. Translators, used as page heading
-#: librarian/views/tag_cloud.tpl:2 librarian/views/tag_cloud.tpl:5
-msgid "Tag cloud"
-msgstr "Label awan"
-
-#. Translators, error message displayed when locking fails during
-#. database rebuild
-#. Translators, error message displayed when locking fails during
-#. database rebuild
-#: librarian/plugins/dbmanage/plugin.py:145
-msgid "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
-msgstr "Pustakawan tidak dapat memasuki mode perbaikan dan pembangunan kembali dibatalkan. Tolong pastikan tidak ada yang menggunakan pustakawan dan silakan coba lagi."
-
-#. Translators, used as dashboard section title
-#. Translators, used as dashboard section title
-#: librarian/plugins/dbmanage/plugin.py:164
-msgid "Content database"
-msgstr "Konten database"
-
-#. Translators, refers to transponder polarization
-#. Translators, refers to transponder polarization
-#: librarian/plugins/ondd/plugin.py:45
-msgid "None"
-msgstr "Tidak ada"
-
-#. Translators, refers to transponder polarization
-#. Translators, refers to transponder polarization
-#: librarian/plugins/ondd/plugin.py:47
-msgid "Vertical"
-msgstr "Vertikal"
-
-#. Translators, refers to transponder polarization
-#. Translators, refers to transponder polarization
-#: librarian/plugins/ondd/plugin.py:49
-msgid "Horizontal"
-msgstr "Horizontal"
-
-#. Translators, this is a type of LNB
-#. Translators, this is a type of LNB
-#: librarian/plugins/ondd/plugin.py:60
-msgid "Universal"
-msgstr "Universal"
-
-#. Translators, this is a type of LNB
-#. Translators, this is a type of LNB
-#: librarian/plugins/ondd/plugin.py:62
-msgid "North America Ku band"
-msgstr "Band Ku Amerika Utara"
-
-#. Translators, error message when LNB type is incorrect
-#. Translators, error message when LNB type is incorrect
-#: librarian/plugins/ondd/plugin.py:121 librarian/plugins/ondd/plugin.py:189
-msgid "Invalid choice for LNB type"
-msgstr "Pilihan invalid untuk tipe LNB"
-
-#. Translators, error message when frequency value is
-#. wrong
-#. Translators, error message when frequency value is
-#. wrong
-#: librarian/plugins/ondd/plugin.py:125 librarian/plugins/ondd/plugin.py:193
-msgid "Frequency must be a positive number"
-msgstr "Frekuensi harus dalam bilangan positif"
-
-#. Translators, error message when frequency value is
-#. wrong
-#. Translators, error message when symbolrate value is
-#. wrong
-#. Translators, error message when frequency value is
-#. wrong
-#. Translators, error message when symbolrate value is
-#. wrong
-#: librarian/plugins/ondd/plugin.py:128 librarian/plugins/ondd/plugin.py:135
-#: librarian/plugins/ondd/plugin.py:196 librarian/plugins/ondd/plugin.py:203
-msgid "Please type in a number"
-msgstr "Tolong ketik dalam bilangan"
-
-#. Translators, error message when symbolrate value is
-#. wrong
-#. Translators, error message when symbolrate value is
-#. wrong
-#: librarian/plugins/ondd/plugin.py:132 librarian/plugins/ondd/plugin.py:200
-msgid "Symbolrate must be a positive number"
-msgstr "Symbolrate harus dalam bilangan positif"
-
-#. Translators, error message shown when wrong delivery
-#. system is selected
-#. Translators, error message shown when wrong delivery
-#. system is selected
-#: librarian/plugins/ondd/plugin.py:139 librarian/plugins/ondd/plugin.py:207
-msgid "Invalid choice for delivery system"
-msgstr "Pilihan invalid untuk sistem pengiriman"
-
-#. Translators, error message shown when wrong modulation
-#. mode is selected
-#. Translators, error message shown when wrong modulation
-#. mode is selected
-#: librarian/plugins/ondd/plugin.py:143 librarian/plugins/ondd/plugin.py:211
-msgid "Invalid choice for modulation mode"
-msgstr "Pilihan invalid untuk mode modulasi"
-
-#. Translators, error message shown when wrong
-#. polarization is selected
-#. Translators, error message shown when wrong
-#. polarization is selected
-#: librarian/plugins/ondd/plugin.py:147 librarian/plugins/ondd/plugin.py:215
-msgid "Invalid choice for polarization"
-msgstr "Pilihan invalid untuk polarisasi"
-
-#. Translators, error message shown when setting transponder
-#. configuration is not successful
-#. Translators, error message shown when setting transponder
-#. configuration is not successful
-#: librarian/plugins/ondd/plugin.py:166 librarian/plugins/ondd/plugin.py:238
-msgid "Transponder configuration could not be set"
-msgstr "Pengaturan transponder tidak dapat ditentukan"
-
-#: librarian/routes/content.py:206
-msgid "The files you were looking for could not be found"
-msgstr "Arsip yang anda cari tidak dapat ditemukan"
-
-#: librarian/routes/content.py:208
-msgid "This list represents the search results"
-msgstr "Daftar ini menunjukkan hasil pencarian"
-
-#: librarian/routes/content.py:219
-msgid "This folder does not exist"
-msgstr "Folder ini tidak ada"
-
-#: librarian/plugins/dbmanage/views/dbmanage.tpl:4
-msgid "Database size"
-msgstr "Ukuran database"
-
-#: librarian/plugins/dbmanage/views/dbmanage.tpl:5
-msgid "download"
-msgstr "unduh"
-
-#. Translators, refers to database backup
-#: librarian/plugins/dbmanage/views/dbmanage.tpl:11
-msgid "Backup"
-msgstr "Backup"
-
-#. Translators, refers to database rebuild feature
-#: librarian/plugins/dbmanage/views/dbmanage.tpl:16
-msgid "Rebuild"
-msgstr "Pembangunan kembali"
-
-#. Translators, note about database rebuild shown on dashboard
-#: librarian/plugins/dbmanage/views/dbmanage.tpl:22
-msgid "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
-msgstr "Pembangunan kembali database akan menyebabkan semua label hilang. Juga  menjadi Pustakawan ke dalam mode perbaikan dan mencegah pengguna mengakses konten."
-
-#. Translators, used as page heading
-#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:5
-#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:10
-msgid "Database backup"
-msgstr "Backup database"
-
-#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:14
-msgid "Database backup has been completed successfully. You will be taken to the backup folder in 10 seconds."
-msgstr "Backup database sukses. Anda akan kembali ke folder backup dalam 10 detik."
-
-#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:16
-#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:16
-msgid "The operation took %s second"
-msgid_plural "The operation took %s seconds"
-msgstr[0] "Operasi berjalan dalam %s detik"
-
-#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:19
-msgid "Database backup could not be completed. The following error occurred:"
-msgstr "Backup database tidak terselesaikan. Kesalahan sebagai berikut:"
-
-#. Translators, used as page heading
-#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:5
-#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:10
-msgid "Database rebuild"
-msgstr "Pembangunan kembali database"
-
-#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:14
-msgid "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
-msgstr "Konten database telah dibangun kembali dari awal. Salinan backup dari database original telah terbentuk. Anda akan menemukannya di bagian arsip."
-
-#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:19
-msgid "Database could not be rebuilt. The following error occurred:"
-msgstr "Database tidak dapat dibangun ulang. Kesalahan sebagai berikut:"
-
-#: librarian/plugins/license/views/license.tpl:5
-msgid "\n"
-"This program is free software: you can redistribute it and/or modify it\n"
-"under the terms of the GNU General Public License as published by the\n"
-"Free Software Foundation, either version 3 of the License, or (at your\n"
-"option) any later version.\n"
-""
-msgstr "Program ini adalah software gratis: anda dapat meredistribusikannya dan/atau memodifikasi sesuai aturan pada Lisensi Publik Umum GNU yang dipublikasikan oleh Free Software Foundation, baik Lisensi versi 3, atau (sesuai pilihan anda) versi terbaru."
-
-#: librarian/views/500.tpl:18 librarian/plugins/logs/views/logs.tpl:6
-msgid "Download application log"
-msgstr "Unduh log aplikasi"
-
-#. Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
-#: librarian/plugins/ondd/views/ondd.tpl:17
-msgid "Downloads in progress"
-msgstr "Unduhan dalam progres"
-
-#. Translators, label for select list that allows user to pick a satellite to tune into
-#: librarian/plugins/ondd/views/ondd.tpl:27
-#: librarian/plugins/ondd/views/ondd_wizard.tpl:22
-msgid "Satellite:"
-msgstr "Satelit:"
-
-#. Translators, placeholder for satellite selection select list
-#: librarian/plugins/ondd/views/ondd.tpl:30
-#: librarian/plugins/ondd/views/ondd_wizard.tpl:25
-msgid "Select a satellite"
-msgstr "Pilih satelit"
-
-#. Translators, label for option that allows user to set custom transponder parameters
-#: librarian/plugins/ondd/views/ondd.tpl:40
-#: librarian/plugins/ondd/views/ondd_wizard.tpl:35
-msgid "Custom..."
-msgstr "Custom..."
-
-#. Translators, form label for transponder frequency
-#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:13
-#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:16
-msgid "Frequency:"
-msgstr "Frekuensi:"
-
-#. Translators, form label for transponder symbol rate
-#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:19
-#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:22
-msgid "Symbol rate:"
-msgstr "Symbol rate:"
-
-#. Translators, form label for transponder delivery system (DVB-S or DVB-S2)
-#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:25
-#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:28
-msgid "Delivery system:"
-msgstr "Sistem pengiriman:"
-
-#. Translators, form label for transponder modulation mode (QPSK, etc)
-#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:31
-#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:34
-msgid "Modulation:"
-msgstr "Modulasi:"
-
-#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:37
-#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:40
-msgid "Polarization:"
-msgstr "Polarisasi:"
-
-#. Translators, button label that confirms tuner settings
-#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:48
-msgid "Tune in"
-msgstr "Menyetel"
-
-#. Translators, whether tuner has a lock on the signal or not (note: technical term)
-#: librarian/plugins/ondd/views/ondd/_signal.tpl:3
-msgid "has lock"
-msgstr "punya kunci"
-
-#: librarian/plugins/ondd/views/ondd/_signal.tpl:3
-msgid "no lock"
-msgstr "tiada kunci"
-
-#. Translators, short for 'signal/noise ratio'
-#: librarian/plugins/ondd/views/ondd/_signal.tpl:14
-msgid "SNR"
-msgstr "SNR"
-
-#. Translators, used as page title
-#. Translators, used as error page heading
-#: librarian/views/500.tpl:5 librarian/views/500.tpl:10
-msgid "Error"
-msgstr "Kesalahan"
-
-#: librarian/views/500.tpl:13
-msgid "Librarian has failed to fulfill your request due to unexpected error in the program. Details are provided below."
-msgstr "Pustakawan gagal memenuhi permintaan anda akibat kesalahan yang tidak terduga dalam program. Detil tersedia di bawah ini."
-
-#. Translators, used as page title
-#. Translators, used as maintenance page heading
-#: librarian/views/503.tpl:5 librarian/views/503.tpl:10
-msgid "Under maintenance"
-msgstr "Sedang dalam perbaikan"
-
-#: librarian/views/503.tpl:14
-msgid "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
-msgstr "Pustakawan sedang dalam mode perbaikan. Tolong tunggu beberapa menit dan coba lagi."
-
-#. Translators, used as label for link that leads to file list
-#: librarian/views/file_list.tpl:34
-msgid "(go to file list)"
-msgstr "(pergi ke daftar arsip)"
-
-#. Translators, attribution (e.g., 'By Project Gutenberg')
-#: librarian/views/_content_list.tpl:31
-msgid "by %s"
-msgstr "dengan %s"
-
-#. Translators, error message shown when user does not supply username
-#. Translators, error message shown when user does not supply username
-#: librarian/routes/auth.py:36
-msgid "Type in your username"
-msgstr "Tuliskan username anda"
-
-#. Translators, error message shown when user does not supply password
-#. Translators, error message shown when user does not supply password
-#: librarian/routes/auth.py:39
-msgid "Type in your password"
-msgstr "Tuliskan password anda"
-
-#: librarian/routes/auth.py:45
-msgid "Please enter the correct username and password."
-msgstr "Harap masukkan username dan password anda yang benar"
-
-#: librarian/utils/lang.py:74
-msgid "any language"
-msgstr "baahasa apapun"
-
-#: librarian/plugins/ondd/views/ondd/_file_list.tpl:5
-msgid "No files are being downloaded"
-msgstr "Tidak ada file yang sedang diunduh"
-
-#: librarian/plugins/ondd/views/ondd/_settings_fields.tpl:5
-#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:8
-msgid "LNB type:"
-msgstr "Tipe LNB"
-
-#: librarian/views/403.tpl:5 librarian/views/403.tpl:10
-msgid "Forbidden"
-msgstr "Terlarang"
-
-#: librarian/views/403.tpl:15
-msgid "You are not authorized to access this page."
-msgstr "Anda tidak diijinkan mengakses laman ini"
-
-#: librarian/views/base.tpl:35
-msgid "Log out"
-msgstr "Log out"
-
-#: librarian/views/login.tpl:5 librarian/views/login.tpl:10
-#: librarian/views/login.tpl:35
-msgid "Login"
-msgstr "Login"
-
-#: librarian/views/login.tpl:22 librarian/views/setup/step_superuser.tpl:8
-msgid "Username:"
-msgstr "Username"
-
-#: librarian/views/login.tpl:24 librarian/views/setup/step_superuser.tpl:10
-msgid "username"
-msgstr "Username"
-
-#: librarian/views/login.tpl:29 librarian/views/setup/step_superuser.tpl:15
-msgid "Password:"
-msgstr "Password"
-
-#: librarian/views/login.tpl:31 librarian/views/setup/step_superuser.tpl:17
-msgid "password"
-msgstr "password"
-
-#: librarian/views/reader.tpl:33
-msgid "Download"
-msgstr "Unduh"
-
-#: librarian/views/_list_controls.tpl:11
-msgid "Delete all"
-msgstr "Hapus semua"
-
-#: librarian/views/content_list.tpl:34 librarian/views/downloads.tpl:37
-msgid "filter"
-msgstr "filter"
-
-#: librarian/views/downloads.tpl:59
-msgid "language"
-msgstr "bahasa"
-
-#: librarian/views/remove_error.tpl:5 librarian/views/remove_error.tpl:10
-msgid "Content file missing"
-msgstr "konten file hilang"
-
-#: librarian/views/remove_error.tpl:14
-msgid "The content file was not found, but has been removed from the database. You will be redirected to the content list shortly."
-msgstr "File konten tidak ditemukan, tapi telah dihapus dari database. Anda akan di sambungkan-kembali ke daftar konten sebentar lagi"
-
-#: librarian/utils/lang.py:34
-msgid "unknown"
-msgstr "Tidak dikenal"
-
-#. Translators, used as dashboard section title
-#: librarian/plugins/netinterfaces/plugin.py:26
-msgid "Network interfaces"
-msgstr "Interfase jaringan"
-
-#. Translators, used main navigation menu
-#: librarian/routes/content.py:113 librarian/views/base.tpl:26
-msgid "Sites"
-msgstr "Situs"
-
-#. Translators, used as page title
-#. Translators, used as error page heading
-#: librarian/views/404.tpl:5 librarian/views/404.tpl:10
-msgid "Page not found"
-msgstr "Laman tidak ditemukan"
-
-#: librarian/views/404.tpl:13
-msgid "The page you were looking for could not be found"
-msgstr "Laman yang anda cari tidak bisa ditemukan"
-
-#. Translators, used as note in Application network interfaces section
-#: librarian/plugins/netinterfaces/views/netinterfaces.tpl:4
-msgid "List of available network interfaces"
-msgstr "Daftar interfase jaringan yang tersedia"
-
-#. Translators, used as label for network interface name
-#: librarian/plugins/netinterfaces/views/netinterfaces.tpl:8
-msgid "Interface name"
-msgstr "nama interfase"
-
-#: librarian/routes/setup.py:57
-msgid "Please select a valid language."
-msgstr "Please select a valid language."
-
-#: librarian/routes/setup.py:89
-msgid "Please select a valid date and time."
-msgstr "Please select a valid date and time."
-
-#: librarian/routes/setup.py:113
-msgid "The entered passwords do not match."
-msgstr "The entered passwords do not match."
-
-#: librarian/routes/setup.py:122
-msgid "This username is already taken."
-msgstr "This username is already taken."
-
-#: librarian/routes/setup.py:125
-msgid "Invalid user credentials, please try again."
-msgstr "Invalid user credentials, please try again."
-
-#: librarian/views/reader.tpl:21
-msgid "partner"
-msgstr "partner"
-
-#. Translators, used as not on library page when there is no content for given language
-#. Translators, note that appears in table on updates page when there is no new downloaded content for a given language
-#: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
-msgid "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
-msgstr "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
-
-#: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
-msgid "here"
-msgstr "here"
-
-#: librarian/views/setup/step_superuser.tpl:4
-msgid "Please enter the desired credentials for the superuser account."
-msgstr "Please enter the desired credentials for the superuser account."
-
-#. Translators, used as label for a password field
-#: librarian/views/setup/step_superuser.tpl:22
-msgid "Confirm Password:"
-msgstr "Confirm Password:"
-
-#. Translators, used as placeholder in the password field
-#: librarian/views/setup/step_superuser.tpl:24
-msgid "confirm password"
-msgstr "confirm password"
-
-#. Translators, used as page title
-#: librarian/views/setup/main.tpl:5
-msgid "Setup Wizard"
-msgstr "Setup Wizard"
-
-#. Translators, used as page heading
-#: librarian/views/setup/main.tpl:10
-msgid "Setup Wizard: Step %s of %s"
-msgstr "Setup Wizard: Step %s of %s"
-
-#: librarian/views/setup/main.tpl:20
-msgid "Next"
-msgstr "Next"
-
-#: librarian/views/setup/step_datetime.tpl:4
-msgid "Please set the current date and time."
-msgstr "Please set the current date and time."
-
-#: librarian/views/setup/step_language.tpl:4
-msgid "Please select the interface language."
-msgstr "Please select the interface language."
-
-#. Translators, used as label for language
-#: librarian/views/setup/step_language.tpl:8
-msgid "Language:"
-msgstr "Language:"
-
-#. Translators, used as page title
-#. Translators, used as page heading
-#: librarian/views/setup/finished.tpl:5 librarian/views/setup/finished.tpl:10
-msgid "Setup Completed"
-msgstr "Setup Completed"
-
-#: librarian/views/setup/finished.tpl:14
-msgid "Libriran has been set up successfully."
-msgstr "Libriran has been set up successfully."
-
-#: librarian/views/setup/finished.tpl:15
-msgid "Start using Librarian"
-msgstr "Start using Librarian"
-
-#: librarian/plugins/ondd/views/ondd_wizard.tpl:6
-msgid "Please select the satellite you'd like to receive data from."
-msgstr "Please select the satellite you'd like to receive data from."
+#: librarian/plugins/logs/views/logs.tpl:8
+msgid "Download system log"
+msgstr ""
 
+#~ msgid "Librarian"
+#~ msgstr "Pustakawan"
+
+#~ msgid "last update"
+#~ msgstr "pembaharuan terakhir"
+
+#~ msgid "select"
+#~ msgstr "pilih"
+
+#~ msgid "search titles"
+#~ msgstr "cari judul"
+
+#~ msgid "go"
+#~ msgstr "jalankan"
+
+#~ msgid "clear"
+#~ msgstr "bersihkan"
+
+#~ msgid "broadcast"
+#~ msgstr "siaran"
+
+#~ msgid "downloaded"
+#~ msgstr "terunduh"
+
+#~ msgid "total space (%s free)"
+#~ msgstr "total ruang (%s bebas)"
+
+#~ msgid "core"
+#~ msgstr "inti"
+
+#~ msgid "sponsored"
+#~ msgstr "disponsori"
+
+#~ msgid "(go up one level)"
+#~ msgstr "(naik satu level)"
+
+#~ msgid "Loading..."
+#~ msgstr "Memuat..."
+
+#~ msgid "Save tags"
+#~ msgstr "Simpan label"
+
+#~ msgid "Edit tags"
+#~ msgstr "Perbaiki label"
+
+#~ msgid "Please type in a number"
+#~ msgstr "Tolong ketik dalam bilangan"
+
+#~ msgid "Transponder configuration could not be set"
+#~ msgstr "Pengaturan transponder tidak dapat ditentukan"
+
+#~ msgid "download"
+#~ msgstr "unduh"
+
+#~ msgid ""
+#~ "Database backup has been completed successfully. You will be taken to the "
+#~ "backup folder in 10 seconds."
+#~ msgstr ""
+#~ "Backup database sukses. Anda akan kembali ke folder backup dalam 10 detik."
+
+#~ msgid "The operation took %s second"
+#~ msgid_plural "The operation took %s seconds"
+#~ msgstr[0] "Operasi berjalan dalam %s detik"
+
+#~ msgid "Frequency:"
+#~ msgstr "Frekuensi:"
+
+#~ msgid "Symbol rate:"
+#~ msgstr "Symbol rate:"
+
+#~ msgid "Delivery system:"
+#~ msgstr "Sistem pengiriman:"
+
+#~ msgid "Modulation:"
+#~ msgstr "Modulasi:"
+
+#~ msgid "Polarization:"
+#~ msgstr "Polarisasi:"
+
+#~ msgid "has lock"
+#~ msgstr "punya kunci"
+
+#~ msgid "no lock"
+#~ msgstr "tiada kunci"
+
+#~ msgid "SNR"
+#~ msgstr "SNR"
+
+#~ msgid "by %s"
+#~ msgstr "dengan %s"
+
+#~ msgid "Type in your username"
+#~ msgstr "Tuliskan username anda"
+
+#~ msgid "Type in your password"
+#~ msgstr "Tuliskan password anda"
+
+#~ msgid "LNB type:"
+#~ msgstr "Tipe LNB"
+
+#~ msgid "Username:"
+#~ msgstr "Username"
+
+#~ msgid "Password:"
+#~ msgstr "Password"
+
+#~ msgid "filter"
+#~ msgstr "filter"
+
+#~ msgid "language"
+#~ msgstr "bahasa"
+
+#~ msgid "Content file missing"
+#~ msgstr "konten file hilang"
+
+#~ msgid ""
+#~ "The content file was not found, but has been removed from the database. "
+#~ "You will be redirected to the content list shortly."
+#~ msgstr ""
+#~ "File konten tidak ditemukan, tapi telah dihapus dari database. Anda akan "
+#~ "di sambungkan-kembali ke daftar konten sebentar lagi"
+
+#~ msgid "Please select a valid language."
+#~ msgstr "Please select a valid language."
+
+#~ msgid "Please select a valid date and time."
+#~ msgstr "Please select a valid date and time."
+
+#~ msgid "This username is already taken."
+#~ msgstr "This username is already taken."
+
+#~ msgid "Invalid user credentials, please try again."
+#~ msgstr "Invalid user credentials, please try again."
+
+#~ msgid "partner"
+#~ msgstr "partner"
+
+#~ msgid "Confirm Password:"
+#~ msgstr "Confirm Password:"
+
+#~ msgid "Please set the current date and time."
+#~ msgstr "Please set the current date and time."
+
+#~ msgid "Libriran has been set up successfully."
+#~ msgstr "Libriran has been set up successfully."
+
+#~ msgid "Start using Librarian"
+#~ msgstr "Start using Librarian"

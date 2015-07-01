@@ -13,13 +13,15 @@ msgstr ""
 msgid "Librarian"
 msgstr "أمين مكتبة"
 
-#: librarian/views/base.tpl:32 librarian/views/dashboard.tpl:5
-#: librarian/views/dashboard.tpl:10
+#: librarian/plugins/dbmanage/plugin.py:139
+#: librarian/plugins/dbmanage/plugin.py:180 librarian/views/dashboard.tpl:5
 msgid "Dashboard"
 msgstr "لوحة التحكم"
 
-#: librarian/views/base.tpl:30 librarian/views/downloads.tpl:7
-#: librarian/views/downloads.tpl:12
+#: librarian/menu/updates.py:33 librarian/routes/downloads.py:76
+#: librarian/routes/downloads.py:98 librarian/routes/downloads.py:116
+#: librarian/routes/downloads.py:135 librarian/routes/downloads.py:160
+#: librarian/views/downloads.tpl:7
 msgid "Updates"
 msgstr "تحديثات"
 
@@ -40,7 +42,6 @@ msgstr "حذف ؟"
 msgid "date"
 msgstr "التاريخ"
 
-#: librarian/views/downloads.tpl:53
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:37
 msgid "title"
 msgstr "العنوان"
@@ -81,7 +82,7 @@ msgstr "حرر بعض المساحة الان"
 msgid "select"
 msgstr "اختر"
 
-#: librarian/views/downloads.tpl:93
+#: librarian/views/downloads.tpl:52
 msgid "There is no new content"
 msgstr "لا يوجد محتوى جديد"
 
@@ -89,11 +90,13 @@ msgstr "لا يوجد محتوى جديد"
 msgid "Delete selected"
 msgstr "حذف المحدد"
 
-#: librarian/routes/content.py:104 librarian/views/base.tpl:22
+#: librarian/menu/content.py:17 librarian/plugins/dbmanage/plugin.py:195
+#: librarian/routes/content.py:89 librarian/routes/content.py:121
+#: librarian/routes/content.py:153
 msgid "Library"
 msgstr "المكتبة"
 
-#: librarian/views/content_list.tpl:49
+#: librarian/routes/content.py:90
 msgid "Content library is currently empty"
 msgstr "محتوى المكتبة فرغ حاليا"
 
@@ -110,7 +113,7 @@ msgid "clear"
 msgstr "مسح"
 
 #. هناك تحديث متوفر
-#: librarian/views/downloads.tpl:20
+#: librarian/views/downloads.tpl:15
 msgid "update available"
 msgid_plural "updates available"
 msgstr[0] "لا توجد تحديثات متوفرة"
@@ -120,7 +123,7 @@ msgstr[3] "تحديثات قليلة متوفرة"
 msgstr[4] "عدة تحديثات متوفرة"
 msgstr[5] "تحديثات اخرى متوفرة"
 
-#: librarian/plugins/diskspace/plugin.py:94
+#: librarian/plugins/diskspace/plugin.py:127
 msgid "Content library stats"
 msgstr "حالة محتوى المكتبة"
 
@@ -158,11 +161,11 @@ msgstr "البث"
 msgid "downloaded"
 msgstr "تم تحميل"
 
-#: librarian/views/content_list.tpl:40
+#: librarian/views/content_list.tpl:27
 msgid "Showing search results for '%(terms)s'"
 msgstr "اظهار نتائج البحث (terms)%"
 
-#: librarian/views/content_list.tpl:52
+#: librarian/views/content_list.tpl:61
 msgid "There are no search results for '%(terms)s'"
 msgstr "ليس هناك نتائج للبحث عن '%(terms)'"
 
@@ -172,7 +175,7 @@ msgid "previous"
 msgstr "السابق"
 
 #. Translators, used in the pager
-#: librarian/views/_simple_pager.tpl:19
+#: librarian/views/_simple_pager.tpl:13
 msgid "next"
 msgstr "التالي"
 
@@ -184,12 +187,12 @@ msgid "Library clean-up"
 msgstr "تنظيف المكتبة"
 
 #. Translators, used as label for select list in pager for selecting the library page, appears before the select list (in "page N" format)
-#: librarian/views/_simple_pager.tpl:9
+#: librarian/views/_simple_pager.tpl:20
 msgid "page"
 msgstr "الصفحة"
 
 #. Translators, used as label for select list for selecting number of items to show per page, appears after the select list (in "N per page" format)
-#: librarian/views/_simple_pager.tpl:13
+#: librarian/views/_simple_pager.tpl:24
 msgid "per page"
 msgstr "بالصفحة"
 
@@ -219,24 +222,23 @@ msgstr "برعاية"
 #. Translators, used as page title
 #. Translators, used as page heading
 #. Translators, used main navigation menu
-#: librarian/views/base.tpl:28 librarian/views/app_list.tpl:5
-#: librarian/views/app_list.tpl:10
+#: librarian/menu/apps.py:17 librarian/views/app_list.tpl:5
 msgid "Apps"
 msgstr "تطبيقات"
 
 #. Translators, refers to app author
-#: librarian/views/app_list.tpl:29
+#: librarian/views/app_list.tpl:24
 msgid "author:"
 msgstr "المؤلف:"
 
 #. Translators, refers to app version
-#: librarian/views/app_list.tpl:31
+#: librarian/views/app_list.tpl:26
 #: librarian/plugins/license/views/license.tpl:13
 msgid "version:"
 msgstr "النسخة"
 
 #. Translators, message show in app listing when no apps are present.
-#: librarian/views/app_list.tpl:40
+#: librarian/views/app_list.tpl:35
 msgid "No apps found."
 msgstr "لاتوجد تطبيقات"
 
@@ -246,16 +248,16 @@ msgstr "لاتوجد تطبيقات"
 #. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
-#: librarian/views/base.tpl:24 librarian/views/file_list.tpl:5
-#: librarian/views/file_list.tpl:10
+#: librarian/menu/files.py:17 librarian/views/file_list.tpl:6
+#: librarian/views/file_list.tpl:24
 msgid "Files"
 msgstr "ملفات"
 
-#: librarian/views/_simple_pager.tpl:14
+#: librarian/views/_simple_pager.tpl:25
 msgid "Reload"
 msgstr "اعادة تحميل"
 
-#: librarian/views/downloads.tpl:73
+#: librarian/views/downloads.tpl:68
 msgid "replaces:"
 msgstr "اعادة الترتيب"
 
@@ -264,157 +266,159 @@ msgstr "اعادة الترتيب"
 msgid "(go up one level)"
 msgstr "(اصعد مستوى واحد)"
 
-#: librarian/views/file_list.tpl:50 librarian/views/file_list.tpl:70
+#: librarian/views/file_list.tpl:65 librarian/views/file_list.tpl:88
+#: librarian/views/file_list.tpl:110
 msgid "Rename"
 msgstr "اعادة التسمية"
 
-#: librarian/views/file_list.tpl:55 librarian/views/file_list.tpl:75
+#: librarian/views/_delete_button.tpl:4 librarian/views/file_list.tpl:68
+#: librarian/views/file_list.tpl:91
 msgid "Delete"
 msgstr "مسح"
 
 #. عن هذا الملف
-#: librarian/views/file_list.tpl:92
+#: librarian/views/file_list.tpl:102
 msgid "About this folder"
 msgstr "عن الملفات"
 
 #. Translators, used as page title for page that shows result of running a script
 #. Translators, used as page header for page that shows result of running a script
-#: librarian/views/exec_result.tpl:2 librarian/views/exec_result.tpl:5
+#: librarian/views/exec_result.tpl:5 librarian/views/exec_result.tpl:10
 msgid "Script output"
 msgstr "مخرج السكربت"
 
 #. Translators, return (result) code of the script executed via file browser
-#: librarian/views/exec_result.tpl:11
+#: librarian/views/exec_result.tpl:16
 msgid "return code:"
 msgstr "رمز الاسترجاع"
 
 #. Translators, shown when result code is good (0).
-#: librarian/views/exec_result.tpl:14
+#: librarian/views/exec_result.tpl:19
 msgid "OK"
 msgstr "حسنا"
 
 #. Translators, shown when result code is not good (non-zero).
-#: librarian/views/exec_result.tpl:17
+#: librarian/views/exec_result.tpl:22
 msgid "error"
 msgstr "خطا"
 
 #. Translators, refers to standard output of script run from file browser (STDOUT)
-#: librarian/views/exec_result.tpl:22
+#: librarian/views/exec_result.tpl:27
 msgid "Output"
 msgstr "مخرج"
 
 #. Translators, shown if script returned no output
-#: librarian/views/exec_result.tpl:27
+#: librarian/views/exec_result.tpl:32
 msgid "no output"
 msgstr "لايوجد مخرج"
 
 #. Translators, refers to standard errors of script run from file browser (STDERR)
-#: librarian/views/exec_result.tpl:32
+#: librarian/views/exec_result.tpl:37
 msgid "Errors"
 msgstr "اخطاء"
 
 #. Translators, label for button in file listing that allows user to run a script
-#: librarian/views/file_list.tpl:82
+#: librarian/views/file_list.tpl:83
 msgid "Run"
 msgstr "تشغيل"
 
 #. Translators, this is used when app doesn't provide a description
-#: librarian/views/app_list.tpl:21
+#: librarian/views/app_list.tpl:16
 msgid "No description provided"
 msgstr "لا يوجد وصف المقدمة"
 
-#: librarian/core/metadata.py:32
+#: librarian/utils/core_helpers.py:35
 msgid "Unknown license"
 msgstr "رخصة غير معروفه"
 
-#: librarian/core/metadata.py:33
+#: librarian/utils/core_helpers.py:36
 msgid "Creative Commons Attribution"
 msgstr "الإبداعي العزو"
 
-#: librarian/core/metadata.py:34
+#: librarian/utils/core_helpers.py:37
 msgid "Creative Commons Attribution-NoDerivs"
 msgstr "مشاع مبدع-لايوجد استرجاع"
 
-#: librarian/core/metadata.py:35
+#: librarian/utils/core_helpers.py:38
 msgid "Creative Commons Attribution-NonCommercial"
 msgstr "المشاع المبدع نسبة المصنف إلى مؤلفه، غير التجارية"
 
-#: librarian/core/metadata.py:36
+#: librarian/utils/core_helpers.py:39
 msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
 msgstr "المشاع المبدع نسبة المصنف إلى مؤلفه، غير التجارية-لايوجد استرجاع"
 
-#: librarian/core/metadata.py:37
+#: librarian/utils/core_helpers.py:40
 msgid "Creative Commons Attribution-ShareAlike"
 msgstr "مشاع مبدع للوثائق الحرة- شير الايك"
 
-#: librarian/core/metadata.py:38
+#: librarian/utils/core_helpers.py:41
 msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
 msgstr "المشاع المبدع نسبة المصنف إلى مؤلفه، غير التجارية-شير الايك"
 
-#: librarian/core/metadata.py:39
+#: librarian/utils/core_helpers.py:42
 msgid "GNU Free Documentation License"
 msgstr "رخصة جنو للوثائق الحرة"
 
-#: librarian/core/metadata.py:40
+#: librarian/utils/core_helpers.py:43
 msgid "Open Publication License"
 msgstr "ترخيص مفتوح النشر"
 
-#: librarian/core/metadata.py:41
+#: librarian/utils/core_helpers.py:44
 msgid "Open Content License"
 msgstr "افتح محويات الرخيص"
 
-#: librarian/core/metadata.py:42
+#: librarian/utils/core_helpers.py:45
 msgid "Against DRM License"
 msgstr "ضد اولوية الترخيص"
 
-#: librarian/core/metadata.py:43
+#: librarian/utils/core_helpers.py:46
 msgid "Free Art License"
 msgstr "ترخيص الفن مجاني"
 
-#: librarian/core/metadata.py:44
+#: librarian/utils/core_helpers.py:47
 msgid "Public Domain"
 msgstr "المجال العام\n"
 ""
 
-#: librarian/core/metadata.py:45
+#: librarian/utils/core_helpers.py:48
 msgid "Other free license"
 msgstr "رخصة مجانية اخرى"
 
-#: librarian/core/metadata.py:46
+#: librarian/utils/core_helpers.py:49
 msgid "All rights reserved"
 msgstr "جميع الحقوق محفوظة"
 
-#: librarian/core/metadata.py:47
+#: librarian/utils/core_helpers.py:50
 msgid "Other non-free license"
 msgstr "الرخص الاخرى غير مجانية"
 
 #. Translators, used as response to innvalid HTTP request
-#: librarian/plugins/diskspace/plugin.py:42
+#: librarian/plugins/diskspace/plugin.py:69
 msgid "Invalid request"
 msgstr "طلب غير معروف"
 
 #. Translators, used as message to user when clean-up is started
 #. without selecting any content
-#: librarian/plugins/diskspace/plugin.py:52
+#: librarian/plugins/diskspace/plugin.py:79
 msgid "No content selected"
 msgstr "لم يتم إختيار المحتوى"
 
 #. Translators, used when user is previewing clean-up, %s is
 #. replaced by amount of content that can be freed in bytes,
 #. KB, MB, etc
-#: librarian/plugins/diskspace/plugin.py:59
+#: librarian/plugins/diskspace/plugin.py:86
 msgid "%s can be freed by removing selected content"
 msgstr "%ث يمكن الافراج عنها من خلال مسح المحتويات المختارة"
 
 #. Translators, error message shown on clean-up page when there was
 #. no deletable content
-#: librarian/plugins/diskspace/plugin.py:75
+#: librarian/plugins/diskspace/plugin.py:104
 msgid "Nothing to delete"
 msgstr "ليس هنالك شيء للمسح"
 
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
-#: librarian/routes/downloads.py:103
+#: librarian/routes/downloads.py:155
 #, fuzzy
 msgid "Invalid action, please use one of the form buttons."
 msgstr "عمل غير صالح , يرجى استخدام احد ازرار النموذج"
@@ -425,12 +429,12 @@ msgid "Loading..."
 msgstr "جاري التحميل..."
 
 #. Translators, shown when user reaches the end of the library
-#: librarian/views/content_list.tpl:87
+#: librarian/views/content_list.tpl:94
 msgid "You have reached the end of the library."
 msgstr "لقد وصلت الى نهاية المكتبة"
 
 #. Translators, link that appears at the bottom of infinite-scrolling page that takes the user back to top of the page
-#: librarian/views/content_list.tpl:89 librarian/views/content_list.tpl:96
+#: librarian/views/content_list.tpl:96 librarian/views/content_list.tpl:103
 msgid "Go to top"
 msgstr "إذهب للأعلى"
 
@@ -444,12 +448,12 @@ msgstr "عن"
 msgid "Some rights reserved."
 msgstr "بعض الحقوق محفوظة."
 
-#: librarian/routes/content.py:68
+#: librarian/routes/content.py:67
 msgid "Specified tag was not found"
 msgstr "لم يتم العثور على الوسم المحدد"
 
 #. Translators, used as not on library page when there is no content for given tag
-#: librarian/views/content_list.tpl:55
+#: librarian/views/content_list.tpl:64
 msgid "There are no results for '%(tag)s'"
 msgstr "ليس هناك نتائج ل '%(tag)s'"
 
@@ -459,7 +463,7 @@ msgid "Save tags"
 msgstr "احفظ الوسوم"
 
 #. Translators, note below the tag form (please note that it has to be the comma characters such as the one used in English language regardless of the interface language selected by user, so emphasize this where appropriate)
-#: librarian/views/_tags.tpl:15
+#: librarian/views/_tags.tpl:14
 msgid "Separate tags with commas"
 msgstr "افصل بين الوسوم بفواصل"
 
@@ -484,12 +488,12 @@ msgid "Tags could not be updated."
 msgstr "لم يمكن تحديث الوسوم"
 
 #. Translators, link that loads more content in infinite scrolling page
-#: librarian/views/content_list.tpl:72
+#: librarian/views/content_list.tpl:86
 msgid "Load more content"
 msgstr "قم بتحميل المزيد من المحتوى"
 
 #. Translators, used as section heading on dashboard
-#: librarian/plugins/ondd/plugin.py:269
+#: librarian/plugins/ondd/plugin.py:273
 #: librarian/plugins/tvheadend/plugin.py:24
 #: librarian/plugins/ondd/views/ondd/settings.tpl:6
 #: librarian/plugins/ondd/views/ondd/settings.tpl:11
@@ -500,13 +504,13 @@ msgstr "إعدادات المدوزن"
 msgid "Access TVHeadend"
 msgstr "الدخول على TVHeadend"
 
-#: librarian/views/file_list.tpl:40
+#: librarian/views/file_list.tpl:54
 msgid "There are currently no files or folders here."
 msgstr "لايوجد هُنا أي ملفات أو مجلدات"
 
 #. Translators, used as page title
 #. Translators, used as page heading
-#: librarian/views/tag_cloud.tpl:2 librarian/views/tag_cloud.tpl:5
+#: librarian/views/tag_cloud.tpl:6
 msgid "Tag cloud"
 msgstr "اوسم السحابة"
 
@@ -514,49 +518,49 @@ msgstr "اوسم السحابة"
 #. database rebuild
 #. Translators, error message displayed when locking fails during
 #. database rebuild
-#: librarian/plugins/dbmanage/plugin.py:145
+#: librarian/plugins/dbmanage/plugin.py:172
 msgid "Librarian could not enter maintenance mode and database rebuild was cancelled. Please make sure noone else is using Librarian and try again."
 msgstr "البرنامج لا يستطيع دخول وضع الصيانة وتم إلغاء أعادة بناء قاعدة البيانات. الرجاء التأكد أنه لا يوجد شخص أخر يستخدم البرنامج و حاول مرة أخرى"
 
 #. Translators, used as dashboard section title
 #. Translators, used as dashboard section title
-#: librarian/plugins/dbmanage/plugin.py:164
+#: librarian/plugins/dbmanage/plugin.py:217
 msgid "Content database"
 msgstr "محتوى قاعدة البيانات"
 
 #. Translators, refers to transponder polarization
 #. Translators, refers to transponder polarization
-#: librarian/plugins/ondd/plugin.py:45
+#: librarian/plugins/ondd/plugin.py:48
 msgid "None"
 msgstr "فارغ"
 
 #. Translators, refers to transponder polarization
 #. Translators, refers to transponder polarization
-#: librarian/plugins/ondd/plugin.py:47
+#: librarian/plugins/ondd/plugin.py:50
 msgid "Vertical"
 msgstr "عامودي"
 
 #. Translators, refers to transponder polarization
 #. Translators, refers to transponder polarization
-#: librarian/plugins/ondd/plugin.py:49
+#: librarian/plugins/ondd/plugin.py:52
 msgid "Horizontal"
 msgstr "أفقي"
 
 #. Translators, this is a type of LNB
 #. Translators, this is a type of LNB
-#: librarian/plugins/ondd/plugin.py:60
+#: librarian/plugins/ondd/plugin.py:63
 msgid "Universal"
 msgstr "عالمي"
 
 #. Translators, this is a type of LNB
 #. Translators, this is a type of LNB
-#: librarian/plugins/ondd/plugin.py:62
+#: librarian/plugins/ondd/plugin.py:65
 msgid "North America Ku band"
 msgstr "North America Ku band"
 
 #. Translators, error message when LNB type is incorrect
 #. Translators, error message when LNB type is incorrect
-#: librarian/plugins/ondd/plugin.py:121 librarian/plugins/ondd/plugin.py:189
+#: librarian/plugins/ondd/plugin.py:134
 msgid "Invalid choice for LNB type"
 msgstr "أختيار لنوع LNB غير صالح"
 
@@ -564,7 +568,7 @@ msgstr "أختيار لنوع LNB غير صالح"
 #. wrong
 #. Translators, error message when frequency value is
 #. wrong
-#: librarian/plugins/ondd/plugin.py:125 librarian/plugins/ondd/plugin.py:193
+#: librarian/plugins/ondd/plugin.py:145
 msgid "Frequency must be a positive number"
 msgstr "الاشارة يجب ان تكون رقم موجب"
 
@@ -585,7 +589,7 @@ msgstr "الرجاء إدخال رقم"
 #. wrong
 #. Translators, error message when symbolrate value is
 #. wrong
-#: librarian/plugins/ondd/plugin.py:132 librarian/plugins/ondd/plugin.py:200
+#: librarian/plugins/ondd/plugin.py:156
 msgid "Symbolrate must be a positive number"
 msgstr "معدل الترميز يجب أن يكون رقم موجب"
 
@@ -593,7 +597,7 @@ msgstr "معدل الترميز يجب أن يكون رقم موجب"
 #. system is selected
 #. Translators, error message shown when wrong delivery
 #. system is selected
-#: librarian/plugins/ondd/plugin.py:139 librarian/plugins/ondd/plugin.py:207
+#: librarian/plugins/ondd/plugin.py:166
 msgid "Invalid choice for delivery system"
 msgstr "أختيار غير صالح لنظام التوصيل"
 
@@ -601,7 +605,7 @@ msgstr "أختيار غير صالح لنظام التوصيل"
 #. mode is selected
 #. Translators, error message shown when wrong modulation
 #. mode is selected
-#: librarian/plugins/ondd/plugin.py:143 librarian/plugins/ondd/plugin.py:211
+#: librarian/plugins/ondd/plugin.py:176
 msgid "Invalid choice for modulation mode"
 msgstr "أختيار غير صالح لوضع التعديل"
 
@@ -609,7 +613,7 @@ msgstr "أختيار غير صالح لوضع التعديل"
 #. polarization is selected
 #. Translators, error message shown when wrong
 #. polarization is selected
-#: librarian/plugins/ondd/plugin.py:147 librarian/plugins/ondd/plugin.py:215
+#: librarian/plugins/ondd/plugin.py:186
 msgid "Invalid choice for polarization"
 msgstr "أختيار غير صالح للإستقطاب"
 
@@ -621,15 +625,15 @@ msgstr "أختيار غير صالح للإستقطاب"
 msgid "Transponder configuration could not be set"
 msgstr "لا يمكن إعداد ترتيب المستجيب"
 
-#: librarian/routes/content.py:206
+#: librarian/routes/files.py:52
 msgid "The files you were looking for could not be found"
 msgstr "الملفات غير متاحة"
 
-#: librarian/routes/content.py:208
+#: librarian/routes/files.py:54
 msgid "This list represents the search results"
 msgstr "هذه القائمة تمثل نتائج البحث"
 
-#: librarian/routes/content.py:219
+#: librarian/routes/files.py:65
 msgid "This folder does not exist"
 msgstr "المجلد غير موجود"
 
@@ -642,23 +646,22 @@ msgid "download"
 msgstr "تحميل"
 
 #. Translators, refers to database backup
-#: librarian/plugins/dbmanage/views/dbmanage.tpl:11
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:12
 msgid "Backup"
 msgstr "نسخة احتياطية"
 
 #. Translators, refers to database rebuild feature
-#: librarian/plugins/dbmanage/views/dbmanage.tpl:16
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:17
 msgid "Rebuild"
 msgstr "اعادة بناء"
 
 #. Translators, note about database rebuild shown on dashboard
-#: librarian/plugins/dbmanage/views/dbmanage.tpl:22
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:23
 msgid "Database rebuild will cause all tags to be lost. It will also put Librarian into maintenance mode and prevent users from accessing content."
 msgstr "إعادة بناء القاعدة سيحذف جميع العلامات. سوف تضع البرنامج في وضع الصيانة و أمنع المستخدمين من الدخول إلى البرنامج."
 
 #. Translators, used as page heading
-#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:5
-#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:10
+#: librarian/plugins/dbmanage/plugin.py:153
 msgid "Database backup"
 msgstr "نسخة من قاعدة البيانات"
 
@@ -678,21 +681,20 @@ msgstr[3] "العملية أخذت %s لحظات"
 msgstr[4] "العملية أخذت %s العديد"
 msgstr[5] "العملية أخذت %s أخرى"
 
-#: librarian/plugins/dbmanage/views/dbmanage/backup_results.tpl:19
+#: librarian/plugins/dbmanage/plugin.py:133
 msgid "Database backup could not be completed. The following error occurred:"
 msgstr "النسخ الأحتياطي لقاعدة البيانات لم يكتمل. تم ظهور الخطأ التالي:"
 
 #. Translators, used as page heading
-#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:5
-#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:10
+#: librarian/plugins/dbmanage/plugin.py:198
 msgid "Database rebuild"
 msgstr "أعادة بناء قاعدة البيانات"
 
-#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:14
+#: librarian/plugins/dbmanage/plugin.py:183
 msgid "Content database has been rebuilt from scratch. A backup copy of the original database has been created. You will find it in the files section."
 msgstr "محتويات قاعدة البيانات تمت إعادة بنائها من البداية. تم عمل نسخ إحتياطية من قاعدة البيانات. ستجدها في قسم الملفات."
 
-#: librarian/plugins/dbmanage/views/dbmanage/rebuild_results.tpl:19
+#: librarian/plugins/dbmanage/plugin.py:168
 msgid "Database could not be rebuilt. The following error occurred:"
 msgstr "لا يمكن إعادة بناء قاعدة البيانات. تم ظهور الخطأ التالي:"
 
@@ -707,30 +709,27 @@ msgstr "هذا البرنامج هو مجاني: بإمكانك إعادة تو�
 "تحت شروط GNU الرخصة العمومية العامة منشور من قبل مؤسسة البرمجيات الحرة, أما على ثلاث نسخ من الرخصة \n"
 "أو (تحت تصرفك) على أي نسخة حديثة."
 
-#: librarian/views/500.tpl:18 librarian/plugins/logs/views/logs.tpl:6
+#: librarian/views/500.tpl:19 librarian/plugins/logs/views/logs.tpl:7
 msgid "Download application log"
 msgstr "تنزيل ملخص التطبيق"
 
 #. Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
-#: librarian/plugins/ondd/views/ondd.tpl:17
+#: librarian/plugins/ondd/views/ondd.tpl:15
 msgid "Downloads in progress"
 msgstr "التنزيل يعمل"
 
 #. Translators, label for select list that allows user to pick a satellite to tune into
-#: librarian/plugins/ondd/views/ondd.tpl:27
-#: librarian/plugins/ondd/views/ondd_wizard.tpl:22
+#: librarian/plugins/ondd/views/ondd/_presets.tpl:4
 msgid "Satellite:"
 msgstr "القمر:"
 
 #. Translators, placeholder for satellite selection select list
-#: librarian/plugins/ondd/views/ondd.tpl:30
-#: librarian/plugins/ondd/views/ondd_wizard.tpl:25
+#: librarian/plugins/ondd/views/ondd/_presets.tpl:7
 msgid "Select a satellite"
 msgstr "أختار القمر"
 
 #. Translators, label for option that allows user to set custom transponder parameters
-#: librarian/plugins/ondd/views/ondd.tpl:40
-#: librarian/plugins/ondd/views/ondd_wizard.tpl:35
+#: librarian/plugins/ondd/views/ondd/_presets.tpl:17
 msgid "Custom..."
 msgstr "مخصص..."
 
@@ -764,7 +763,7 @@ msgid "Polarization:"
 msgstr "الأستقطاب:"
 
 #. Translators, button label that confirms tuner settings
-#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:48
+#: librarian/plugins/ondd/views/ondd/_settings_form.tpl:13
 msgid "Tune in"
 msgstr "التوجيه"
 
@@ -788,7 +787,7 @@ msgstr "SNR"
 msgid "Error"
 msgstr "خطأ"
 
-#: librarian/views/500.tpl:13
+#: librarian/views/500.tpl:14
 msgid "Librarian has failed to fulfill your request due to unexpected error in the program. Details are provided below."
 msgstr "المكتبي فشل في تلبية طلبك بسبب خطأ غير متوقع في البرنماج. التفاصيل أدناه."
 
@@ -798,12 +797,12 @@ msgstr "المكتبي فشل في تلبية طلبك بسبب خطأ غير م
 msgid "Under maintenance"
 msgstr "تحت الاصلاح"
 
-#: librarian/views/503.tpl:14
+#: librarian/views/503.tpl:15
 msgid "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
 msgstr "المكتبي حاليا في حالة الاصلاح. رجاءا انتظر بضع دقائق وجرب مرة أخرى."
 
 #. Translators, used as label for link that leads to file list
-#: librarian/views/file_list.tpl:34
+#: librarian/views/file_list.tpl:48
 msgid "(go to file list)"
 msgstr "(اذهب الى لائحة الملف)"
 
@@ -824,11 +823,11 @@ msgstr "اكتب اسم المستخدم خاصتك"
 msgid "Type in your password"
 msgstr "اكتب رقمك السري"
 
-#: librarian/routes/auth.py:45
+#: librarian/forms/auth.py:19
 msgid "Please enter the correct username and password."
 msgstr "لطفا ادخل اسم المستخدم وكلمة السر الصحيحين"
 
-#: librarian/utils/lang.py:74
+#: librarian/utils/lang.py:207
 msgid "any language"
 msgstr "اية لغة"
 
@@ -845,16 +844,15 @@ msgstr "من نوع الرأس المستقبل للموجات"
 msgid "Forbidden"
 msgstr "ممنوع"
 
-#: librarian/views/403.tpl:15
+#: librarian/views/403.tpl:16
 msgid "You are not authorized to access this page."
 msgstr "ليس مسوح لك لدخول هذه الصفحة"
 
-#: librarian/views/base.tpl:35
+#: librarian/menu/logout.py:18
 msgid "Log out"
 msgstr "خروج"
 
-#: librarian/views/login.tpl:5 librarian/views/login.tpl:10
-#: librarian/views/login.tpl:35
+#: librarian/views/login.tpl:5 librarian/views/login.tpl:36
 msgid "Login"
 msgstr "دخول"
 
@@ -862,7 +860,7 @@ msgstr "دخول"
 msgid "Username:"
 msgstr "اسم المستخدم"
 
-#: librarian/views/login.tpl:24 librarian/views/setup/step_superuser.tpl:10
+#: librarian/forms/auth.py:23 librarian/forms/auth.py:45
 msgid "username"
 msgstr "اسم المستخدم"
 
@@ -870,11 +868,12 @@ msgstr "اسم المستخدم"
 msgid "Password:"
 msgstr "كلمة السر"
 
-#: librarian/views/login.tpl:31 librarian/views/setup/step_superuser.tpl:17
+#: librarian/forms/auth.py:27 librarian/forms/auth.py:49
 msgid "password"
 msgstr "كلمة السر"
 
-#: librarian/views/reader.tpl:33
+#: librarian/views/reader.tpl:24
+#: librarian/plugins/dbmanage/views/dbmanage.tpl:8
 msgid "Download"
 msgstr "تنزيل"
 
@@ -898,7 +897,7 @@ msgstr "محتوى الملف مفقود"
 msgid "The content file was not found, but has been removed from the database. You will be redirected to the content list shortly."
 msgstr "محتوى الملف لم يتم ايجاده، ولكن تم ازالته من قاعدة المعلومات. سيتم تحويلك الىلائحة  المحتوى حالا."
 
-#: librarian/utils/lang.py:34
+#: librarian/utils/lang.py:32
 msgid "unknown"
 msgstr "غير معروف"
 
@@ -908,7 +907,7 @@ msgid "Network interfaces"
 msgstr "تقاطعات الشبكة"
 
 #. Translators, used main navigation menu
-#: librarian/routes/content.py:113 librarian/views/base.tpl:26
+#: librarian/menu/sites.py:17 librarian/routes/content.py:99
 msgid "Sites"
 msgstr "مواقع"
 
@@ -918,7 +917,7 @@ msgstr "مواقع"
 msgid "Page not found"
 msgstr "الصفحة لم يتم ايجاها"
 
-#: librarian/views/404.tpl:13
+#: librarian/views/404.tpl:14
 msgid "The page you were looking for could not be found"
 msgstr "الصفحة التي فتشت عنها لم يتم ايجادها."
 
@@ -940,7 +939,7 @@ msgstr "الرجاء اختيار لغة صحيحة"
 msgid "Please select a valid date and time."
 msgstr "الرجاء اختيار وقت و تاريخ مناسب"
 
-#: librarian/routes/setup.py:113
+#: librarian/forms/auth.py:40
 msgid "The entered passwords do not match."
 msgstr "كلمة السر المدخلة غير مطابقة"
 
@@ -958,11 +957,11 @@ msgstr "شريك"
 
 #. Translators, used as not on library page when there is no content for given language
 #. Translators, note that appears in table on updates page when there is no new downloaded content for a given language
-#: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
+#: librarian/views/downloads.tpl:49
 msgid "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
 msgstr "لغة المصفي لـ '%(lang)s' فعال. أضغط %(link)s لرؤية التحديثات"
 
-#: librarian/views/content_list.tpl:58 librarian/views/downloads.tpl:90
+#: librarian/views/downloads.tpl:49 librarian/views/content_list.tpl:67
 msgid "here"
 msgstr "هنا"
 
@@ -976,21 +975,21 @@ msgid "Confirm Password:"
 msgstr "تأكيد كلمة المرور:"
 
 #. Translators, used as placeholder in the password field
-#: librarian/views/setup/step_superuser.tpl:24
+#: librarian/forms/auth.py:53
 msgid "confirm password"
 msgstr "تأكيد كلمة المرور"
 
 #. Translators, used as page title
-#: librarian/views/setup/main.tpl:5
+#: librarian/views/setup/main.tpl:8
 msgid "Setup Wizard"
 msgstr "معالج الإعداد"
 
 #. Translators, used as page heading
-#: librarian/views/setup/main.tpl:10
+#: librarian/views/setup/main.tpl:40
 msgid "Setup Wizard: Step %s of %s"
 msgstr "معالج الإعداد: خطوة %s من %s"
 
-#: librarian/views/setup/main.tpl:20
+#: librarian/views/setup/main.tpl:50
 msgid "Next"
 msgstr "التالي"
 
@@ -998,18 +997,18 @@ msgstr "التالي"
 msgid "Please set the current date and time."
 msgstr "الرجاء أعداد التاريخ و الوقت الحالي"
 
-#: librarian/views/setup/step_language.tpl:4
+#: librarian/views/setup/step_language.tpl:5
 msgid "Please select the interface language."
 msgstr "الرجاء أختيار لغة الإستخدام"
 
 #. Translators, used as label for language
-#: librarian/views/setup/step_language.tpl:8
+#: librarian/views/base.tpl:74
 msgid "Language:"
 msgstr "اللغة:"
 
 #. Translators, used as page title
 #. Translators, used as page heading
-#: librarian/views/setup/finished.tpl:5 librarian/views/setup/finished.tpl:10
+#: librarian/views/setup/finished.tpl:5
 msgid "Setup Completed"
 msgstr "تم التنزيل"
 
@@ -1021,7 +1020,346 @@ msgstr "تم إعداد البرنامج بنجاح."
 msgid "Start using Librarian"
 msgstr "بدء أستخدام البرنامج"
 
-#: librarian/plugins/ondd/views/ondd_wizard.tpl:6
+#: librarian/plugins/ondd/views/ondd_wizard.tpl:7
 msgid "Please select the satellite you'd like to receive data from."
 msgstr "الرجاء أختيار القمر الذي ترغب بأستقبال البيانات منه."
+
+#: librarian/menu/tags.py:17
+msgid "Tags"
+msgstr "Tags"
+
+#: librarian/menu/dashboard.py:17
+msgid "Settings"
+msgstr "Settings"
+
+#: librarian/menu/home.py:17
+msgid "Home"
+msgstr "Home"
+
+#: librarian/menu/notifications.py:29 librarian/views/notification_list.tpl:6
+msgid "Notifications"
+msgstr "Notifications"
+
+#. Translators, used as label for language
+#: librarian/forms/setup.py:21
+msgid "Language"
+msgstr "Language"
+
+#. Translators, used as label for date and time setup
+#: librarian/forms/setup.py:31
+msgid "Timezone"
+msgstr "Timezone"
+
+#. Translators, used as label for a login field
+#. Translators, used as label in create user form
+#. Translators, used as label for a login field
+#. Translators, used as label in create user form
+#: librarian/forms/auth.py:22 librarian/forms/auth.py:43
+msgid "Username"
+msgstr "Username"
+
+#. Translators, used as label for a password field
+#. Translators, used as label in create user form
+#. Translators, used as label for a password field
+#. Translators, used as label in create user form
+#: librarian/forms/auth.py:26 librarian/forms/auth.py:47
+msgid "Password"
+msgstr "Password"
+
+#. Translators, used as label in create user form
+#: librarian/forms/auth.py:51
+msgid "Confirm Password"
+msgstr "Confirm Password"
+
+#. Translators, this is a type of LNB
+#: librarian/plugins/ondd/plugin.py:67
+msgid "C band"
+msgstr "C band"
+
+#: librarian/plugins/ondd/plugin.py:126
+msgid "Tuner configuration could not be saved. Please make sure that the tuner is connected."
+msgstr "Tuner configuration could not be saved. Please make sure that the tuner is connected."
+
+#: librarian/plugins/ondd/plugin.py:131
+msgid "LNB Type"
+msgstr "LNB Type"
+
+#: librarian/plugins/ondd/plugin.py:139
+msgid "Frequency"
+msgstr "Frequency"
+
+#: librarian/plugins/ondd/plugin.py:150
+msgid "Symbol rate"
+msgstr "Symbol rate"
+
+#: librarian/plugins/ondd/plugin.py:161
+msgid "Delivery system"
+msgstr "Delivery system"
+
+#: librarian/plugins/ondd/plugin.py:171
+msgid "Modulation"
+msgstr "Modulation"
+
+#: librarian/plugins/ondd/plugin.py:181
+msgid "Polarization"
+msgstr "Polarization"
+
+#: librarian/plugins/ondd/plugin.py:223
+msgid "Transponder configuration saved."
+msgstr "Transponder configuration saved."
+
+#. Translators, message displayed if database backup was successful
+#: librarian/plugins/dbmanage/plugin.py:142
+msgid "Database backup has been completed successfully."
+msgstr "Database backup has been completed successfully."
+
+#. Translators, redirection target if database backup was successful
+#: librarian/plugins/dbmanage/plugin.py:150
+msgid "the backup folder"
+msgstr "the backup folder"
+
+#. Translators, used as confirmation title after the chosen updates were
+#. successfully added to the library
+#: librarian/routes/downloads.py:65 librarian/routes/downloads.py:87
+msgid "Updates added"
+msgstr "Updates added"
+
+#. Translators, used as confirmation title after the chosen updates were
+#. deleted on the updates page
+#: librarian/routes/downloads.py:107 librarian/routes/downloads.py:126
+msgid "Updates deleted"
+msgstr "Updates deleted"
+
+#. Translators, used as error title shown to user when wrong action
+#. code is submitted to server
+#: librarian/routes/downloads.py:152
+msgid "Invalid action"
+msgstr "Invalid action"
+
+#: librarian/routes/content.py:100
+msgid "There are no sites in the library."
+msgstr "There are no sites in the library."
+
+#. Translators, used as page title when a content item's removal is
+#. retried, but it was already deleted before
+#: librarian/routes/content.py:112
+msgid "Content already removed"
+msgstr "Content already removed"
+
+#. Translators, used as message when a content item's removal is
+#. retried, but it was already deleted before
+#: librarian/routes/content.py:115
+msgid "The specified content has already been removed."
+msgstr "The specified content has already been removed."
+
+#. Translators, used as page title of successful content removal feedback
+#: librarian/routes/content.py:146
+msgid "Content removed"
+msgstr "Content removed"
+
+#. Translators, used as message of successful content removal feedback
+#: librarian/routes/content.py:148
+msgid "Content successfully removed."
+msgstr "Content successfully removed."
+
+#: librarian/views/remove_confirm.tpl:5
+msgid "Confirm Removal"
+msgstr "Confirm Removal"
+
+#: librarian/views/remove_confirm.tpl:12
+msgid "Are you sure you want to remove the content entry named {title}"
+msgstr "Are you sure you want to remove the content entry named {title}"
+
+#: librarian/views/remove_confirm.tpl:16
+msgid "Remove"
+msgstr "Remove"
+
+#: librarian/views/remove_confirm.tpl:18 librarian/views/file_list.tpl:117
+msgid "Cancel"
+msgstr "Cancel"
+
+#: librarian/views/notification_list.tpl:15 librarian/views/downloads.tpl:24
+msgid "Discard all"
+msgstr "Discard all"
+
+#: librarian/views/notification_list.tpl:25
+msgid "There are no new notifications"
+msgstr "There are no new notifications"
+
+#: librarian/views/_content_list.tpl:19 librarian/views/reader.tpl:21
+msgid "unknown publisher"
+msgstr "unknown publisher"
+
+#: librarian/views/_content_list.tpl:21 librarian/views/reader.tpl:22
+msgid "%(date)s by %(publisher)s."
+msgstr "%(date)s by %(publisher)s."
+
+#: librarian/views/base.tpl:63 librarian/views/setup/main.tpl:58
+msgid "Humanity's public library"
+msgstr "Humanity's public library"
+
+#: librarian/views/base.tpl:86 librarian/views/setup/main.tpl:48
+msgid "Back"
+msgstr "Back"
+
+#: librarian/views/_tag_list.tpl:2
+msgid "User tags"
+msgstr "User tags"
+
+#: librarian/views/downloads.tpl:21
+msgid "Add all to Library"
+msgstr "Add all to Library"
+
+#: librarian/views/downloads.tpl:36 librarian/views/content_list.tpl:41
+msgid "Filter"
+msgstr "Filter"
+
+#: librarian/views/downloads.tpl:76
+msgid "received on:"
+msgstr "received on:"
+
+#: librarian/views/downloads.tpl:80
+msgid "broadcast on:"
+msgstr "broadcast on:"
+
+#: librarian/views/downloads.tpl:84
+msgid "language:"
+msgstr "language:"
+
+#: librarian/views/downloads.tpl:90
+msgid "Add to library"
+msgstr "Add to library"
+
+#: librarian/views/downloads.tpl:92
+msgid "Discard"
+msgstr "Discard"
+
+#: librarian/views/login.tpl:10
+msgid "Log into Librarian"
+msgstr "Log into Librarian"
+
+#: librarian/views/content_list.tpl:20 librarian/views/content_list.tpl:22
+#: librarian/views/file_list.tpl:18
+msgid "Search"
+msgstr "Search"
+
+#: librarian/views/content_list.tpl:21
+msgid "Search titles"
+msgstr "Search titles"
+
+#: librarian/views/content_list.tpl:29
+msgid "Clear"
+msgstr "Clear"
+
+#: librarian/views/content_list.tpl:67
+msgid "Language filter for '%(lang)s' is active. Click %(link)s to see all content"
+msgstr "Language filter for '%(lang)s' is active. Click %(link)s to see all content"
+
+#: librarian/views/_tag_js_templates.tpl:3
+msgid "Edit"
+msgstr "Edit"
+
+#: librarian/views/feedback.tpl:11
+msgid "You'll be taken to {target} in {seconds} seconds."
+msgstr "You'll be taken to {target} in {seconds} seconds."
+
+#: librarian/views/plugin_error.tpl:4
+msgid "An error occurred during the rendering of this plugin."
+msgstr "An error occurred during the rendering of this plugin."
+
+#: librarian/views/_tags.tpl:10 librarian/views/file_list.tpl:116
+msgid "Save"
+msgstr "Save"
+
+#: librarian/views/_notification_list.tpl:2
+msgid "A content item has been added to the Library with the following title:"
+msgid_plural "{count} content items have been added to the Library with the following titles:"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: librarian/views/_notification_list.tpl:24
+msgid "Mark read"
+msgstr "Mark read"
+
+#: librarian/views/_simple_pager.tpl:8
+msgid "Page %(current)s of %(total)s"
+msgstr "Page %(current)s of %(total)s"
+
+#: librarian/views/file_list.tpl:14
+msgid "Search files and folders"
+msgstr "Search files and folders"
+
+#: librarian/views/file_list.tpl:30
+msgid "Name"
+msgstr "Name"
+
+#: librarian/views/file_list.tpl:32
+msgid "Size"
+msgstr "Size"
+
+#: librarian/views/file_list.tpl:33
+msgid "Actions"
+msgstr "Actions"
+
+#: librarian/views/file_list.tpl:42
+msgid "Go up one level"
+msgstr "Go up one level"
+
+#: librarian/views/setup/finished.tpl:10
+msgid "Settings are saved."
+msgstr "Settings are saved."
+
+#: librarian/views/setup/finished.tpl:11
+msgid "Welcome to outernet."
+msgstr "Welcome to outernet."
+
+#: librarian/views/setup/finished.tpl:12
+msgid "Start using Outernet"
+msgstr "Start using Outernet"
+
+#: librarian/views/setup/step_datetime.tpl:4
+msgid "Please set the current timezone."
+msgstr "Please set the current timezone."
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:4
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:5
+msgid "Yes"
+msgstr "Yes"
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:4
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:5
+msgid "No"
+msgstr "No"
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:7
+msgid "Signal"
+msgstr "Signal"
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:9
+msgid "Quality"
+msgstr "Quality"
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:13
+msgid "Signal lock:"
+msgstr "Signal lock:"
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:17
+msgid "Receiving data:"
+msgstr "Receiving data:"
+
+#: librarian/plugins/ondd/views/ondd/_signal.tpl:21
+msgid "Bitrate:"
+msgstr "Bitrate:"
+
+#: librarian/plugins/diskspace/views/diskspace/_space_info.tpl:6
+msgid "Total space (%s free)"
+msgstr "Total space (%s free)"
+
+#: librarian/plugins/logs/views/logs.tpl:8
+msgid "Download system log"
+msgstr "Download system log"
 
