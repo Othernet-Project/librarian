@@ -17,7 +17,3 @@
     </div>
 </div>
 </%block>
-
-<%block name="extra_scripts">
-<script src="${assets['js/setup']}"></script>
-</%block>
