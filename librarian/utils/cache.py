@@ -224,7 +224,7 @@ class MemcachedCache(BaseCache):
         return self._cache.get(key)
 
     def set(self, key, value, timeout=None):
-        expires = self.get_expiry(timeout)
+        expires = int(self.get_expiry(timeout))
         self._cache.set(key, value, expires)
 
     def delete(self, key):
