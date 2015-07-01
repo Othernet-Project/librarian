@@ -19,5 +19,5 @@
 </%block>
 
 <%block name="extra_scripts">
-<script type="text/javascript" src="${th.static_url('sys:static', path='js/setupdatetime.js')}"></script>
+<script src="${assets['js/setup']}"></script>
 </%block>
