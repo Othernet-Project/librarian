@@ -163,7 +163,7 @@ def perform_backup():
 def perform_rebuild():
     try:
         rtime = rebuild()
-    except Exception:
+    except LockFailureError:
         logging.debug('DBMANAGE: Global lock could not be acquired')
         # Translators, error message displayed if database rebuild fails
         base_msg = _('Database could not be rebuilt. '
