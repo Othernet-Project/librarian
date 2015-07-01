@@ -104,7 +104,12 @@ def validate(path, meta_filename='info.json'):
     except (KeyError, ValueError):
         raise ValidationError(path, 'missing or malformed metadata file')
     # Inspect entry point
-    indexpath = '{0}/{1}'.format(md5, meta.get('index', 'index.html'))
+    try:
+        index_val = meta['index']
+    except KeyError:
+        index_val = meta.get('entry_point', 'index.html')
+
+    indexpath = '{0}/{1}'.format(md5, index_val)
     if indexpath not in names:
         raise ValidationError(path, "missing index at '{}'".format(indexpath))
 
