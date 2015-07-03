@@ -18,6 +18,29 @@ Response:
     </streams>
 </response>
 
+Get info about current transfers
+
+Sned: <get uri="/transfers"/>
+Response:
+<?xml version="1.0" encoding="UTF-8"?>
+<response code="200">
+    <streams>
+        <stream>
+            <pid>65</pid>
+            <transfers>
+                <transfer>
+                    <carousel_id>1</carousel_id>
+                    <path></path>
+                    <hash></hash>
+                    <block_count>0</block_count>
+                    <block_received>0</block_received>
+                    <complete>no</complete>
+                </transfer>
+            </transfers>
+        </stream>
+    </streams>
+</response>
+
 Get signaling information
 
 Send: <get uri="/signaling/"/>
