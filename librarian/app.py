@@ -109,7 +109,8 @@ def shutdown(*args, **kwargs):
     print('Bye! Have a nice day! Those books are due Tuesday, by the way!')
 
 
-def main(config_path):
+def main():
+    config_path = commands.get_config_path() or app.CONFPATH
     app.config = ConfDict.from_file(config_path, catchall=True, autojson=True)
     app.version = version.get_version(__version__, app.config)
     hooks.register_hooks(app)
@@ -121,9 +122,8 @@ def main(config_path):
     commands.select_command(app)
     # begin app-start sequence
     prestart()
-    return start()
+    sys.exit(start())
 
 
 if __name__ == '__main__':
-    config_path = commands.get_config_path() or app.CONFPATH
-    sys.exit(main(config_path))
+    main()

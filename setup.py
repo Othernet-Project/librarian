@@ -182,6 +182,11 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
     ],
+    entry_points = {
+        'console_scripts': [
+            'librarian = librarian.app:main',
+        ],
+    },
     install_requires=DEPS,
     cmdclass={
         'test': PyTest,
