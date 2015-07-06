@@ -21,7 +21,6 @@ ${meta.title}
             <% publisher = meta.publisher or _('unknown publisher') %>
             ${_('%(date)s by %(publisher)s.') % dict(date=meta.timestamp.strftime('%Y-%m-%d'), publisher=publisher)}
             ${th.readable_license(meta.license)}
-            <a class="button small" href="${url('content:zipball', content_id=meta.md5)}">${_('Download')}</a>
             </p>
         </div>
     </div>
