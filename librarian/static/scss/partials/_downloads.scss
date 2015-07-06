@@ -13,6 +13,7 @@
   }
 
   .do {
+    margin-left: 10px;
     @include sub;
     color: $sub;
     margin-bottom: 0.5em;
@@ -24,6 +25,10 @@
 
   .label {
     @include bold;
+  }
+
+  form {
+    margin-bottom: 1em;
   }
 }
 
