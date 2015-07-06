@@ -171,3 +171,15 @@ form.inline {
 .info {
   padding: 20px;
 }
+
+p.end,
+p.empty {
+  @include heading-5;
+  color: $sub;
+  text-align: center;
+  padding: 1.5em 20px 2em;
+}
+
+p.end {
+  padding-top: 2em;
+}

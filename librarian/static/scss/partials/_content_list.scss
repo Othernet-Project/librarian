@@ -180,15 +180,3 @@ form.search {
   right: 0;
   padding: 0 20px 20px 0;
 }
-
-p.end,
-p.empty {
-  @include heading-5;
-  color: $sub;
-  text-align: center;
-  padding: 0.5em 20px 2em;
-}
-
-p.end {
-  padding-top: 2em;
-}
