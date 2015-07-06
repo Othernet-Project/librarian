@@ -15,6 +15,7 @@ from ..utils.notifications import get_notifications
 
 class NotificationsMenuItem(MenuItem):
     icon_class = 'notifications'
+    alt_icon_class = 'notifications-active'
     route = 'notifications:list'
 
     def __init__(self, *args, **kwargs):
@@ -24,10 +25,14 @@ class NotificationsMenuItem(MenuItem):
                                  for notification in self.notifications
                                  if not notification.is_read])
 
+    def is_alt_icon_visible(self):
+        return self.unread_count
+
     @property
     def label(self):
-        lbl = _("Notifications")
+        lbl = '<span class="notifications-label">{}</span>'.format(
+            _("Notifications"))
         if self.unread_count > 0:
-            lbl += ' <span class="count">({0})</span>'.format(
+            lbl += ' <span class="count">{0}</span>'.format(
                 self.unread_count)
         return lbl
