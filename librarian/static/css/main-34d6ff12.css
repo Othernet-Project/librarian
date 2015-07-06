@@ -1,4 +1,4 @@
-/* line 5, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
@@ -7,38 +7,38 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font-size: 100%;
   vertical-align: baseline; }
 
-/* line 22, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1; }
 
-/* line 24, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none; }
 
-/* line 26, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-/* line 28, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle; }
 
-/* line 30, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none; }
-/* line 103, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none; }
 
-/* line 32, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none; }
 
-/* line 116, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../.gem/ruby/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block; }
 
@@ -835,11 +835,11 @@ input[type="text"].positive, input[type="numeric"].positive, input[type="email"]
   padding-right: 50px;
   background-position: right 12.5px top 50%;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/form_positive.png?1435309900'); }
+  background-image: url('../img/icons/1x/form_positive.png?1435334446'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 63, ../scss/outernet/partial/_forms.scss */
   input[type="text"].positive, input[type="numeric"].positive, input[type="email"].positive, input[type="password"].positive, input[type="file"].positive {
-    background-image: url('../img/icons/2x/form_positive.png?1435309900');
+    background-image: url('../img/icons/2x/form_positive.png?1435334446');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -849,11 +849,11 @@ input[type="text"].negative, input[type="numeric"].negative, input[type="email"]
   padding-right: 50px;
   background-position: right 12.5px top 50%;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/form_negative.png?1435309900'); }
+  background-image: url('../img/icons/1x/form_negative.png?1435334446'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 67, ../scss/outernet/partial/_forms.scss */
   input[type="text"].negative, input[type="numeric"].negative, input[type="email"].negative, input[type="password"].negative, input[type="file"].negative {
-    background-image: url('../img/icons/2x/form_negative.png?1435309900');
+    background-image: url('../img/icons/2x/form_negative.png?1435334446');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -902,11 +902,11 @@ input[type="checkbox"]:checked + label:before {
   transition: color 0.3s, background-color 0.3s, border-color 0.3s;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/checkmark.png?1435309900'); }
+  background-image: url('../img/icons/1x/checkmark.png?1435334446'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 88, ../scss/outernet/partial/_forms.scss */
   input[type="checkbox"]:checked + label:before {
-    background-image: url('../img/icons/2x/checkmark.png?1435309900');
+    background-image: url('../img/icons/2x/checkmark.png?1435334446');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -931,11 +931,11 @@ input[type="checkbox"]:focus + label:before {
 input[type="checkbox"]:focus:checked + label:before {
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/checkmark_active.png?1435309900'); }
+  background-image: url('../img/icons/1x/checkmark_active.png?1435334446'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 101, ../scss/outernet/partial/_forms.scss */
   input[type="checkbox"]:focus:checked + label:before {
-    background-image: url('../img/icons/2x/checkmark_active.png?1435309900');
+    background-image: url('../img/icons/2x/checkmark_active.png?1435334446');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -964,25 +964,25 @@ select {
   padding-right: 50px;
   background-repeat: no-repeat;
   background-position: right 10px top 50%;
-  background-image: url('../img/icons/1x/dropdown_open.png?1435309900'); }
+  background-image: url('../img/icons/1x/dropdown_open.png?1435334446'); }
 /* line 125, ../scss/outernet/mixins/_forms.scss */
 select::-ms-expand {
   display: none; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 115, ../scss/outernet/partial/_forms.scss */
   select {
-    background-image: url('../img/icons/2x/dropdown_open.png?1435309900');
+    background-image: url('../img/icons/2x/dropdown_open.png?1435334446');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 /* line 123, ../scss/outernet/partial/_forms.scss */
 select:hover {
-  background-image: url('../img/icons/1x/dropdown_open_hover.png?1435309900'); }
+  background-image: url('../img/icons/1x/dropdown_open_hover.png?1435334446'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 123, ../scss/outernet/partial/_forms.scss */
   select:hover {
-    background-image: url('../img/icons/2x/dropdown_open_hover.png?1435309900');
+    background-image: url('../img/icons/2x/dropdown_open_hover.png?1435334446');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -1602,11 +1602,11 @@ table form button {
   text-transform: capitalize;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/hamburger.png?1435309900'); }
+  background-image: url('../img/icons/1x/hamburger.png?1435334446'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 136, ../scss/outernet/widgets/_menu.scss */
   .menu .hamburger a {
-    background-image: url('../img/icons/2x/hamburger.png?1435309900');
+    background-image: url('../img/icons/2x/hamburger.png?1435334446');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -1640,11 +1640,11 @@ table form button {
 /* line 174, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2-trigger {
   background-position: right 10px top 50%;
-  background-image: url('../img/icons/1x/arrow_right.png?1435309900'); }
+  background-image: url('../img/icons/1x/arrow_right.png?1435334446'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 174, ../scss/outernet/widgets/_menu.scss */
   .alt-menu .level2-trigger {
-    background-image: url('../img/icons/2x/arrow_right.png?1435309900');
+    background-image: url('../img/icons/2x/arrow_right.png?1435334446');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -1652,12 +1652,12 @@ table form button {
 /* line 179, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .top-trigger {
   background-position: left 10px top 50%;
-  background-image: url('../img/icons/1x/arrow_left.png?1435309900');
+  background-image: url('../img/icons/1x/arrow_left.png?1435334446');
   padding-left: 40px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 179, ../scss/outernet/widgets/_menu.scss */
   .alt-menu .top-trigger {
-    background-image: url('../img/icons/2x/arrow_left.png?1435309900');
+    background-image: url('../img/icons/2x/arrow_left.png?1435334446');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -1976,9 +1976,77 @@ table form button {
   box-sizing: border-box;
   font-weight: bold; }
 /* line 61, ../scss/partials/_mainmenu.scss */
-.menu #nav .navicon.notifications .label {
-  display: none !important; }
+.menu #nav .navicon.notifications .notifications-label {
+  display: none; }
 /* line 67, ../scss/partials/_mainmenu.scss */
+.menu #nav .navicon.notifications-active .icon {
+  display: inline-block;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s66ef4f051d.png');
+  background-position: 0 -275px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 67, ../scss/partials/_mainmenu.scss */
+  .menu #nav .navicon.notifications-active .icon {
+    background-image: url('../img/icons/2x-s9ad74fd043.png');
+    background-position: 0 -275px;
+    -moz-background-size: 100px 4244px;
+    -o-background-size: 100px 4244px;
+    -webkit-background-size: 100px 4244px;
+    background-size: 100px 4244px; } }
+/* line 50, ../scss/outernet/widgets/_icons.scss */
+.menu #nav .navicon.notifications-active .icon:hover {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s66ef4f051d.png');
+  background-position: 0 -330px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 50, ../scss/outernet/widgets/_icons.scss */
+  .menu #nav .navicon.notifications-active .icon:hover {
+    background-image: url('../img/icons/2x-s9ad74fd043.png');
+    background-position: 0 -330px;
+    -moz-background-size: 100px 4244px;
+    -o-background-size: 100px 4244px;
+    -webkit-background-size: 100px 4244px;
+    background-size: 100px 4244px; } }
+/* line 54, ../scss/outernet/widgets/_icons.scss */
+.menu #nav .navicon.notifications-active .icon.no-label {
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  text-transform: capitalize; }
+/* line 62, ../scss/outernet/widgets/_icons.scss */
+.menu #nav .navicon.notifications-active .icon .label {
+  display: inline-block;
+  position: absolute;
+  font-size: 12px;
+  bottom: -4px;
+  right: -12px;
+  width: 1.55em;
+  line-height: 1.4em;
+  padding: 0;
+  text-align: center;
+  background: #ffffff;
+  color: #e17502;
+  border: 1px solid #dddddd;
+  -moz-border-radius: 1000px;
+  -webkit-border-radius: 1000px;
+  border-radius: 1000px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-weight: bold; }
+/* line 71, ../scss/partials/_mainmenu.scss */
+.menu #nav .navicon.notifications-active .notifications-label {
+  display: none; }
+/* line 77, ../scss/partials/_mainmenu.scss */
 .menu .dropdown.languages {
   display: inline-block;
   position: relative; }
@@ -2018,59 +2086,59 @@ table form button {
 /* line 22, ../scss/partials/_dropdown.scss */
 .menu .dropdown.languages .dropdown-body li:hover {
   background-color: #f7dcc1; }
-/* line 71, ../scss/partials/_mainmenu.scss */
+/* line 81, ../scss/partials/_mainmenu.scss */
 .menu .dropdown.languages .dropdown-item {
   white-space: nowrap; }
-/* line 75, ../scss/partials/_mainmenu.scss */
+/* line 85, ../scss/partials/_mainmenu.scss */
 .menu .dropdown.languages .dropdown-item .language {
   padding: 10px 20px 10px 20px;
   text-align: center;
   display: block; }
-/* line 81, ../scss/partials/_mainmenu.scss */
+/* line 91, ../scss/partials/_mainmenu.scss */
 .menu .dropdown.languages .dropdown-item span.selected {
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
-  background-image: url('../img/icons/1x/checkmark_active.png?1435309900');
+  background-image: url('../img/icons/1x/checkmark_active.png?1435334446');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 81, ../scss/partials/_mainmenu.scss */
+  /* line 91, ../scss/partials/_mainmenu.scss */
   .menu .dropdown.languages .dropdown-item span.selected {
-    background-image: url('../img/icons/2x/checkmark_active.png?1435309900');
+    background-image: url('../img/icons/2x/checkmark_active.png?1435334446');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 @media only screen and (max-width: 800px) {
-  /* line 67, ../scss/partials/_mainmenu.scss */
+  /* line 77, ../scss/partials/_mainmenu.scss */
   .menu .dropdown.languages {
     display: none; } }
 
-/* line 95, ../scss/partials/_mainmenu.scss */
+/* line 105, ../scss/partials/_mainmenu.scss */
 .alt-menu .icon {
   width: 30px;
   margin-right: 0.5em; }
-/* line 100, ../scss/partials/_mainmenu.scss */
+/* line 110, ../scss/partials/_mainmenu.scss */
 .alt-menu .label {
   display: inline-block; }
-/* line 104, ../scss/partials/_mainmenu.scss */
+/* line 114, ../scss/partials/_mainmenu.scss */
 .alt-menu .level2-lang .selected {
   background: #e7f3e9;
-  background-image: url('../img/icons/1x/form_positive.png?1435309900');
+  background-image: url('../img/icons/1x/form_positive.png?1435334446');
   background-repeat: no-repeat;
   background-position: right 20px top 50%;
   color: #058120; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 104, ../scss/partials/_mainmenu.scss */
+  /* line 114, ../scss/partials/_mainmenu.scss */
   .alt-menu .level2-lang .selected {
-    background-image: url('../img/icons/2x/form_positive.png?1435309900');
+    background-image: url('../img/icons/2x/form_positive.png?1435334446');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 
-/* line 116, ../scss/partials/_mainmenu.scss */
+/* line 126, ../scss/partials/_mainmenu.scss */
 #nav .library .icon, .alt-menu .library .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2080,7 +2148,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 116, ../scss/partials/_mainmenu.scss */
+  /* line 126, ../scss/partials/_mainmenu.scss */
   #nav .library .icon, .alt-menu .library .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -330px;
@@ -2089,7 +2157,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 122, ../scss/partials/_mainmenu.scss */
+/* line 132, ../scss/partials/_mainmenu.scss */
 #nav .library:hover .icon, #nav .library.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2099,7 +2167,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 122, ../scss/partials/_mainmenu.scss */
+  /* line 132, ../scss/partials/_mainmenu.scss */
   #nav .library:hover .icon, #nav .library.active .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -385px;
@@ -2108,7 +2176,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 116, ../scss/partials/_mainmenu.scss */
+/* line 126, ../scss/partials/_mainmenu.scss */
 #nav .files .icon, .alt-menu .files .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2118,7 +2186,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 116, ../scss/partials/_mainmenu.scss */
+  /* line 126, ../scss/partials/_mainmenu.scss */
   #nav .files .icon, .alt-menu .files .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -110px;
@@ -2127,7 +2195,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 122, ../scss/partials/_mainmenu.scss */
+/* line 132, ../scss/partials/_mainmenu.scss */
 #nav .files:hover .icon, #nav .files.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2137,7 +2205,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 122, ../scss/partials/_mainmenu.scss */
+  /* line 132, ../scss/partials/_mainmenu.scss */
   #nav .files:hover .icon, #nav .files.active .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -165px;
@@ -2146,7 +2214,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 116, ../scss/partials/_mainmenu.scss */
+/* line 126, ../scss/partials/_mainmenu.scss */
 #nav .sites .icon, .alt-menu .sites .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2156,7 +2224,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 116, ../scss/partials/_mainmenu.scss */
+  /* line 126, ../scss/partials/_mainmenu.scss */
   #nav .sites .icon, .alt-menu .sites .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -726px;
@@ -2165,7 +2233,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 122, ../scss/partials/_mainmenu.scss */
+/* line 132, ../scss/partials/_mainmenu.scss */
 #nav .sites:hover .icon, #nav .sites.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2175,7 +2243,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 122, ../scss/partials/_mainmenu.scss */
+  /* line 132, ../scss/partials/_mainmenu.scss */
   #nav .sites:hover .icon, #nav .sites.active .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -781px;
@@ -2184,7 +2252,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 116, ../scss/partials/_mainmenu.scss */
+/* line 126, ../scss/partials/_mainmenu.scss */
 #nav .apps .icon, .alt-menu .apps .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2194,7 +2262,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 116, ../scss/partials/_mainmenu.scss */
+  /* line 126, ../scss/partials/_mainmenu.scss */
   #nav .apps .icon, .alt-menu .apps .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 0;
@@ -2203,7 +2271,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 122, ../scss/partials/_mainmenu.scss */
+/* line 132, ../scss/partials/_mainmenu.scss */
 #nav .apps:hover .icon, #nav .apps.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2213,7 +2281,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 122, ../scss/partials/_mainmenu.scss */
+  /* line 132, ../scss/partials/_mainmenu.scss */
   #nav .apps:hover .icon, #nav .apps.active .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -55px;
@@ -2222,7 +2290,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 116, ../scss/partials/_mainmenu.scss */
+/* line 126, ../scss/partials/_mainmenu.scss */
 #nav .updates .icon, .alt-menu .updates .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2232,7 +2300,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 116, ../scss/partials/_mainmenu.scss */
+  /* line 126, ../scss/partials/_mainmenu.scss */
   #nav .updates .icon, .alt-menu .updates .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -1196px;
@@ -2241,7 +2309,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 122, ../scss/partials/_mainmenu.scss */
+/* line 132, ../scss/partials/_mainmenu.scss */
 #nav .updates:hover .icon, #nav .updates.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2251,7 +2319,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 122, ../scss/partials/_mainmenu.scss */
+  /* line 132, ../scss/partials/_mainmenu.scss */
   #nav .updates:hover .icon, #nav .updates.active .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -1251px;
@@ -2260,7 +2328,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 116, ../scss/partials/_mainmenu.scss */
+/* line 126, ../scss/partials/_mainmenu.scss */
 #nav .logout .icon, .alt-menu .logout .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2270,7 +2338,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 116, ../scss/partials/_mainmenu.scss */
+  /* line 126, ../scss/partials/_mainmenu.scss */
   #nav .logout .icon, .alt-menu .logout .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -506px;
@@ -2279,7 +2347,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 122, ../scss/partials/_mainmenu.scss */
+/* line 132, ../scss/partials/_mainmenu.scss */
 #nav .logout:hover .icon, #nav .logout.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2289,7 +2357,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 122, ../scss/partials/_mainmenu.scss */
+  /* line 132, ../scss/partials/_mainmenu.scss */
   #nav .logout:hover .icon, #nav .logout.active .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -561px;
@@ -2298,7 +2366,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 116, ../scss/partials/_mainmenu.scss */
+/* line 126, ../scss/partials/_mainmenu.scss */
 #nav .settings .icon, .alt-menu .settings .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2308,7 +2376,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 116, ../scss/partials/_mainmenu.scss */
+  /* line 126, ../scss/partials/_mainmenu.scss */
   #nav .settings .icon, .alt-menu .settings .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -616px;
@@ -2317,7 +2385,7 @@ table form button {
     -webkit-background-size: 250px 1276px;
     background-size: 250px 1276px; } }
 
-/* line 122, ../scss/partials/_mainmenu.scss */
+/* line 132, ../scss/partials/_mainmenu.scss */
 #nav .settings:hover .icon, #nav .settings.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -2327,7 +2395,7 @@ table form button {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 122, ../scss/partials/_mainmenu.scss */
+  /* line 132, ../scss/partials/_mainmenu.scss */
   #nav .settings:hover .icon, #nav .settings.active .icon {
     background-image: url('../img/librarian/2x-s53c21e5ca8.png');
     background-position: 0 -671px;
@@ -3183,26 +3251,26 @@ form.search .icon {
 .load-more button .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/animated/1x/loader.gif?1435309900');
+  background-image: url('../img/animated/1x/loader.gif?1435334446');
   width: 21px;
   height: 5px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 165, ../scss/partials/_content_list.scss */
   .load-more button .icon {
-    background-image: url('../img/animated/2x/loader.gif?1435309900');
+    background-image: url('../img/animated/2x/loader.gif?1435334446');
     -moz-background-size: 21px, 5px;
     -o-background-size: 21px, 5px;
     -webkit-background-size: 21px, 5px;
     background-size: 21px, 5px; } }
 /* line 171, ../scss/partials/_content_list.scss */
 .load-more button.active .icon {
-  background-image: url('../img/animated/1x/loader_active.gif?1435309900');
+  background-image: url('../img/animated/1x/loader_active.gif?1435334446');
   width: 21px;
   height: 5px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 171, ../scss/partials/_content_list.scss */
   .load-more button.active .icon {
-    background-image: url('../img/animated/2x/loader_active.gif?1435309900');
+    background-image: url('../img/animated/2x/loader_active.gif?1435334446');
     -moz-background-size: 21px, 5px;
     -o-background-size: 21px, 5px;
     -webkit-background-size: 21px, 5px;
@@ -4615,7 +4683,8 @@ p.end {
 .notification-list .notification .notification-body button {
   position: absolute;
   right: 0;
-  top: 5px; }
+  top: 50%;
+  margin-top: -12px; }
 
 /**
  * _sprites.scss: sprite images with high-dpi display support
