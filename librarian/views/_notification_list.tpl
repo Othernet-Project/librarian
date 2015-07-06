@@ -21,7 +21,7 @@
         <span class="timestamp">${group.created_at.date()}</span>
         <span class="icon ${group.category}"></span>
         % if not group.is_read:
-        <button class="small" type="submit">${_('Mark read')}</button>
+        <button class="small" type="submit">${_('Dismiss')}</button>
         % endif
     </form>
 </li>
