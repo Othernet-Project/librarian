@@ -76,10 +76,6 @@ ${_('Updates')}
         <span class="label">${_('received on:')}</span> ${meta['ftimestamp'].strftime('%Y-%m-%d')}
         </p>
 
-        <p class="downloads-timestamp do">
-        <span class="label">${_('broadcast on:')}</span> ${h.strft(meta['timestamp'], '%Y-%m-%d')}
-        </p>
-
         <p class="downloads-language do">
         <span class="label">${_('language:')}</span> ${th.lang_name_safe(meta.get('language'))}
         </p>
