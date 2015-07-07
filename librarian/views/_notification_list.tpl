@@ -2,7 +2,7 @@
     <h2 class="description">${ngettext('A content item has been added to the Library with the following title:',
                                        '{count} content items have been added to the Library with the following titles:',
                                        group.count).format(count=group.count)}</h2>
-    <p class="titles">${', '.join([item.message['title'] for item in group.notifications])}</p>
+    <p class="titles">${', '.join([item.safe_message('title') for item in group.notifications])}</p>
 </%def>
 <% notification_templates = {'content': content} %>
 

@@ -125,6 +125,16 @@ class Notification(object):
 
         return self
 
+    def safe_message(self, *key_chain):
+        """Attempt retrieveng the value under the passed in keys if message is
+        a JSON object, otherwise just return the message itself."""
+        if isinstance(self.message, basestring):
+            return self.message
+
+        return functools.reduce(lambda src, key: src[key],
+                                key_chain,
+                                self.message)
+
     def save(self):
         db = request.db.sessions
         query = db.Replace('notifications', cols=NOTIFICATION_COLS)
