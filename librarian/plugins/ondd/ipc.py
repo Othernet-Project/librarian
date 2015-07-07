@@ -191,6 +191,28 @@ def get_file_list():
     return out
 
 
+def parse_transfer(transfer):
+    return dict(path=transfer.find('path').text,
+                hash=transfer.find('hash').text,
+                size=int(transfer.find('size').text))
+
+
+def get_transfers():
+    """ Get information about the file ONDD is currently processing """
+    payload = xml_get_path('/transfers')
+    try:
+        root = send(payload)
+    except ET.ParseError:
+        logging.error('ONDD: Could not parse XML data')
+        return []
+
+    if root is None:
+        return []
+
+    return [parse_transfer(transfer) for stream in root.find('streams')
+            for transfer in stream.find('transfers')]
+
+
 def freq_conv(freq, lnb_type):
     """ Converts transponder frequency to L-band frequency
 
