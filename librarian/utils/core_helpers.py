@@ -206,7 +206,7 @@ def content_languages():
 def download_languages():
     downloads = filter_downloads(lang=None)
     download_langs = [meta['language'] for meta in downloads]
-    return [(code, name) for (code, name) in SELECT_LANGS
+    return [(code, unicode(name)) for (code, name) in SELECT_LANGS
             if code in download_langs]
 
 
