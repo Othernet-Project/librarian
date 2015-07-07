@@ -57,10 +57,6 @@
       .icon {
         @include icon-button(alert);
       }
-
-      .label {
-        display: none !important;
-      }
     }
   }
 
