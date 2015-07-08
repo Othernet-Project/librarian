@@ -499,4 +499,6 @@ body {
 
 /* line 30, ../scss/content.scss */
 img {
-  max-width: 100%; }
+  max-width: 100%;
+  width: auto !important;
+  height: auto !important; }
