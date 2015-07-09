@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "css/content-%(version)s.css": "a3efe597", 
     "css/dashboard-%(version)s.css": "dc20454c", 
 <<<<<<< HEAD
@@ -19,10 +20,17 @@
     "css/main-%(version)s.css": "69bbcb7e", 
     "css/wizard-%(version)s.css": "d7fa52b7", 
 >>>>>>> fix/static-asset-loading
+=======
+    "css/content-%(version)s.css": "b88598bc", 
+    "css/dashboard-%(version)s.css": "dc20454c", 
+    "css/main-%(version)s.css": "25aa19fd", 
+    "css/wizard-%(version)s.css": "e83e5915", 
+>>>>>>> fix/reader-image-size-98635908
     "js/content-%(version)s.js": "d5d568de", 
     "js/dashboard-%(version)s.js": "6dab1ac5", 
     "js/files-%(version)s.js": "d969cdea", 
     "js/reader-%(version)s.js": "2f328060", 
+<<<<<<< HEAD
 <<<<<<< HEAD
     "js/setup-%(version)s.js": "53b72773", 
     "js/ui-%(version)s.js": "14406d1d"
@@ -40,4 +48,8 @@
     "js/setup-%(version)s.js": "10ea5fdc", 
     "js/ui-%(version)s.js": "89f3cc90"
 >>>>>>> fix/static-asset-loading
+=======
+    "js/setup-%(version)s.js": "53b72773", 
+    "js/ui-%(version)s.js": "89f3cc90"
+>>>>>>> fix/reader-image-size-98635908
 }
