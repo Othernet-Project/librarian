@@ -15,6 +15,7 @@ from functools import wraps
 from urlparse import urljoin
 
 from bottle import request, redirect, abort
+from bottle_utils.common import unicode
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
 
 from ..core import content as content_mod
@@ -196,7 +197,7 @@ def content_languages():
                             spooldir=conf['content.spooldir'],
                             meta_filename=conf['content.metadata'])
     content_langs = archive.get_content_languages()
-    return [(code, name) for (code, name) in SELECT_LANGS
+    return [(code, unicode(name)) for (code, name) in SELECT_LANGS
             if code in content_langs]
 
 
@@ -205,7 +206,7 @@ def content_languages():
 def download_languages():
     downloads = filter_downloads(lang=None)
     download_langs = [meta['language'] for meta in downloads]
-    return [(code, name) for (code, name) in SELECT_LANGS
+    return [(code, unicode(name)) for (code, name) in SELECT_LANGS
             if code in download_langs]
 
 
