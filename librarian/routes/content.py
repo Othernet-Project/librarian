@@ -32,7 +32,7 @@ from ..utils.core_helpers import open_archive, with_content
 app = default_app()
 
 
-@cached(prefix='content')
+@cached(prefix='content', timeout=300)
 def filter_content(query, lang, tag, multipage):
     conf = request.app.config
     archive = open_archive()
