@@ -12,7 +12,7 @@ ${_('Notifications')}
         <form method="post">
             <button name="action" value="mark_read_all" class="confirm primary">
                 ## Translators, used as label for discarding all unread notifications
-                <span class="icon">${_('Discard all')}</span>
+                <span class="icon">${_('Dismiss all')}</span>
             </button>
         </form>
     </div>
