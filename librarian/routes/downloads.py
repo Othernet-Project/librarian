@@ -45,14 +45,18 @@ def list_downloads():
                 metadata=paginator.items)
 
 
-def notify_content_added(content_id_list):
+def notify_content_added(content_id_list, chunk_size=100):
     archive = open_archive()
-    content_list = archive.get_multiple(content_id_list,
-                                        fields=('md5', 'title'))
-    for content_item in content_list:
-        content_data = {'id': content_item['md5'],
-                        'title': content_item['title']}
-        request.app.exts.notifications.send(content_data, category='content')
+    id_list = (content_id_list[i:i + chunk_size]
+               for i in range(0, len(content_id_list), chunk_size))
+    for content_ids in id_list:
+        content_list = archive.get_multiple(content_ids,
+                                            fields=('md5', 'title'))
+        for content_item in content_list:
+            content_data = {'id': content_item['md5'],
+                            'title': content_item['title']}
+            request.app.exts.notifications.send(content_data,
+                                                category='content')
 
 
 @invalidates(prefix=['content', 'downloads'], after=True)
