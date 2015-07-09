@@ -12,12 +12,14 @@ from bottle import request
 from bottle_utils.i18n import lazy_ngettext, lazy_gettext as _, i18n_url
 
 from ..core import downloads
+from ..lib.auth import login_required
 from ..lib.paginator import Paginator
 from ..utils.cache import invalidates
 from ..utils.core_helpers import open_archive, filter_downloads
 from ..utils.template import view
 
 
+@login_required()
 @view('downloads')
 def list_downloads():
     """ Render a list of downloaded content """
@@ -135,6 +137,7 @@ def delete_all(*args):
                 redirect_target=_("Updates"))
 
 
+@login_required()
 @view('feedback')
 def manage_downloads():
     """ Manage the downloaded content """
