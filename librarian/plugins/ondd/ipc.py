@@ -210,7 +210,7 @@ def freq_conv(freq, lnb_type):
         return freq - NA_KU_OFF
     if lnb_type == C_BAND:
         # C band LNB
-        return freq - C_OFF
+        return abs(freq - C_OFF)
     # Universal
     if freq > UN_HI_SW:
         return freq - UN_HI_OFF
