@@ -72,18 +72,6 @@ ${_('Updates')}
         </p>
         % endif
 
-        <p class="downloads-ftimestamp do">
-        <span class="label">${_('received on:')}</span> ${meta['ftimestamp'].strftime('%Y-%m-%d')}
-        </p>
-
-        <p class="downloads-timestamp do">
-        <span class="label">${_('broadcast on:')}</span> ${h.strft(meta['timestamp'], '%Y-%m-%d')}
-        </p>
-
-        <p class="downloads-language do">
-        <span class="label">${_('language:')}</span> ${th.lang_name_safe(meta.get('language'))}
-        </p>
-
         <form method="POST" class="downloads-action">
             <input type="hidden" name="selection" value="${meta['md5']}">
             ## Translators, used as button label on updates page for adding marked content to library
@@ -91,6 +79,14 @@ ${_('Updates')}
             ## Translators, used as button label on updates page for permanently deleting all downloaded content
             <button type="submit" name="action" value="delete" class="delete small">${_('Discard')}</button>
         </form>
+
+        <p class="downloads-ftimestamp do">
+        <span class="label">${_('received on:')}</span> ${meta['ftimestamp'].strftime('%Y-%m-%d')}
+        </p>
+
+        <p class="downloads-language do">
+        <span class="label">${_('language:')}</span> ${th.lang_name_safe(meta.get('language'))}
+        </p>
     </li>
     % endfor
 </ul>
