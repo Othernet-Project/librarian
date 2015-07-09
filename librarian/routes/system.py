@@ -8,8 +8,6 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import os
-import json
 import logging
 import datetime
 
@@ -19,55 +17,9 @@ from bottle import request, static_file, abort
 
 from librarian import __version__
 from ..utils.template import view
-from ..utils.template_helpers import template_helper
 
 
 STATIC_ROOT = join(dirname(dirname(abspath(__file__))), 'static')
-HASHED_DIR = 'dist'
-
-
-def symlink_hashed_files_to_unhashed_paths(asset_map):
-    for original, hashed in asset_map.items():
-        original_path = os.path.join(STATIC_ROOT, original)
-        # make sure folder structure is present to hold the symlink
-        original_dir = os.path.dirname(original_path)
-        if not os.path.exists(original_dir):
-            os.makedirs(original_dir)
-        # if a previous symlink exists, remove it
-        if os.path.islink(original_path):
-            os.unlink(original_path)
-        # if it still exists, it's not a symlink but a real file so keep it
-        if not os.path.exists(original_path):
-            hashed_path = os.path.join(STATIC_ROOT, HASHED_DIR, hashed)
-            os.symlink(hashed_path, original_path)
-
-
-def load_asset_map():
-    try:
-        with open(join(STATIC_ROOT, 'assets.json'), 'r') as assets_file:
-            return json.load(assets_file)
-    except Exception:
-        logging.warning('No hashed assets found.')
-        return {}
-    else:
-        # WORKAROUND: apps api has no access to `static_url` template helper,
-        # so if a request comes in with the old unhashed paths, the symlinks
-        # with unhased names will point to the hashed files
-        symlink_hashed_files_to_unhashed_paths()
-
-
-ASSET_MAP = load_asset_map()
-symlink_hashed_files_to_unhashed_paths(ASSET_MAP)
-
-
-@template_helper
-def static_url(route, path):
-    try:
-        actual_path = join(HASHED_DIR, ASSET_MAP[path])
-    except KeyError:
-        actual_path = path
-
-    return request.app.get_url(route, path=actual_path)
 
 
 def send_static(path):

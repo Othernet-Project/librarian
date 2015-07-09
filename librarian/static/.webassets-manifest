@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "css/main-%(version)s.css": "86d9db90", 
     "css/wizard-%(version)s.css": "1ec2ca7a", 
 =======
@@ -14,10 +15,15 @@
     "css/main-%(version)s.css": "34d6ff12", 
     "css/wizard-%(version)s.css": "1ec2ca7a", 
 >>>>>>> fix/notification-bell-98446466
+=======
+    "css/main-%(version)s.css": "69bbcb7e", 
+    "css/wizard-%(version)s.css": "d7fa52b7", 
+>>>>>>> fix/static-asset-loading
     "js/content-%(version)s.js": "d5d568de", 
     "js/dashboard-%(version)s.js": "6dab1ac5", 
     "js/files-%(version)s.js": "d969cdea", 
     "js/reader-%(version)s.js": "2f328060", 
+<<<<<<< HEAD
     "js/setup-%(version)s.js": "53b72773", 
     "js/ui-%(version)s.js": "14406d1d"
 =======
@@ -30,4 +36,8 @@
     "js/setup-%(version)s.js": "39b16b3d", 
     "js/ui-%(version)s.js": "75b7b478"
 >>>>>>> fix/notifications-empty-and-import-error-98389470-98447178
+=======
+    "js/setup-%(version)s.js": "10ea5fdc", 
+    "js/ui-%(version)s.js": "89f3cc90"
+>>>>>>> fix/static-asset-loading
 }
