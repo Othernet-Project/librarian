@@ -58,8 +58,18 @@
         @include icon-button(alert);
       }
 
-      .label {
-        display: none !important;
+      .notifications-label {
+        display: none;
+      }
+    }
+
+    &.notifications-active {
+      .icon {
+        @include icon-button(alert_active);
+      }
+
+      .notifications-label {
+        display: none;
       }
     }
   }

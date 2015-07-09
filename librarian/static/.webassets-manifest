@@ -2,12 +2,17 @@
     "css/content-%(version)s.css": "a3efe597", 
     "css/dashboard-%(version)s.css": "dc20454c", 
 <<<<<<< HEAD
+<<<<<<< HEAD
     "css/main-%(version)s.css": "86d9db90", 
     "css/wizard-%(version)s.css": "1ec2ca7a", 
 =======
     "css/main-%(version)s.css": "d689b7f6", 
     "css/wizard-%(version)s.css": "98418a90", 
 >>>>>>> feature/notification-naming-98450588
+=======
+    "css/main-%(version)s.css": "34d6ff12", 
+    "css/wizard-%(version)s.css": "1ec2ca7a", 
+>>>>>>> fix/notification-bell-98446466
     "js/content-%(version)s.js": "d5d568de", 
     "js/dashboard-%(version)s.js": "6dab1ac5", 
     "js/files-%(version)s.js": "d969cdea", 
