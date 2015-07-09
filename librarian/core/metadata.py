@@ -68,7 +68,10 @@ def add_missing_keys(meta):
     """
     for key in EDGE_KEYS:
         if key not in meta:
-            meta[key] = validator.values.DEFAULTS.get(key, None)
+            # entry_point is not a valid key by specification, but is used
+            # by librarian nevertheless to avoid conflicts with SQL
+            def_key = 'index' if key == 'entry_point' else key
+            meta[key] = validator.values.DEFAULTS.get(def_key, None)
 
 
 def replace_aliases(meta):

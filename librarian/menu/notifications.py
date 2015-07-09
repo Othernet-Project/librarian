@@ -30,9 +30,11 @@ class NotificationsMenuItem(MenuItem):
 
     @property
     def label(self):
+        unread_count = self.unread_count
+        if unread_count > 99:
+            unread_count = '!'
         lbl = '<span class="notifications-label">{}</span>'.format(
             _("Notifications"))
-        if self.unread_count > 0:
-            lbl += ' <span class="count">{0}</span>'.format(
-                self.unread_count)
+        if unread_count > 0:
+            lbl += ' <span class="count">{0}</span>'.format(unread_count)
         return lbl
