@@ -10,6 +10,8 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from . import MenuItem
 
+from bottle import request
+
 from bottle_utils.i18n import lazy_gettext as _
 
 from ..utils.core_helpers import filter_downloads
@@ -23,7 +25,8 @@ class UpdatesMenuItem(MenuItem):
         return len(filter_downloads(lang=None))
 
     def is_visible(self):
-        return self._updates() > 0
+        is_admin = hasattr(request, 'user') and request.user.is_superuser
+        return is_admin and self._updates() > 0
 
     @property
     def label(self):
