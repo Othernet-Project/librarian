@@ -33,6 +33,7 @@ ${library_submenu.body()}
 
 <div class="filters">
     <div class="form langs">
+        % if len(th.content_languages()) > 1:
         <form id="lang" class="downloads-langs">
             <input type="hidden" name="q" value="${query or ''}">
             <input type="hidden" name="t" value="${tag_id or ''}">
@@ -41,6 +42,7 @@ ${library_submenu.body()}
             <button class="fake-go">${_('Filter')}</button>
             </p>
         </form>
+        % endif
     </div>
     <div class="forms pager">
         ${simple_pager.prev_next_pager()}
