@@ -92,7 +92,31 @@ PRESETS = [
         'modulation': 'QPSK',
         'azimuth': 0,
     }),
-    ('Intelsat 10 (47.5E)', 4, {
+    ('AsiaSat 5 C-band (100.5E)', 4, {
+        'frequency': '3960',
+        'symbolrate': '30000',
+        'polarization': 'h',
+        'delivery': 'DVB-S',
+        'modulation': 'QPSK',
+        'azimuth': 0,
+    }),
+    ('Eutelsat (113.0W)', 5, {
+        'frequency': '12089',
+        'symbolrate': '11719',
+        'polarization': 'h',
+        'delivery': 'DVB-S',
+        'modulation': 'QPSK',
+        'azimuth': 0,
+    }),
+    ('ABS-2 (74.9E)', 6, {
+        'frequency': '11734',
+        'symbolrate': '44000',
+        'polarization': 'h',
+        'delivery': 'DVB-S',
+        'modulation': 'QPSK',
+        'azimuth': 0,
+    }),
+    ('Intelsat 10 (47.5E)', 7, {
         'frequency': '12602',
         'symbolrate': '10110',
         'polarization': 'v',
