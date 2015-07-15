@@ -119,7 +119,7 @@ def reload_db(app):
                             contentdir=app.config['content.contentdir'],
                             spooldir=app.config['content.spooldir'],
                             meta_filename=app.config['content.metadata'])
-    archive.reload_data()
+    archive.reload_content()
     print('Content reload finished.')
     sys.exit(0)
 
