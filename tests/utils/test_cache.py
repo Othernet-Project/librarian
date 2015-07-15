@@ -236,9 +236,9 @@ class TestMemcachedCache(object):
 
     @mock.patch.object(mod.MemcachedCache, 'get_expiry')
     def test_set(self, get_expiry, mc_cache):
-        get_expiry.return_value = 'expires'
+        get_expiry.return_value = 123456789
         mc_cache.set('key', 'data', timeout=120)
-        mc_cache._cache.set.assert_called_once_with('key', 'data', 'expires')
+        mc_cache._cache.set.assert_called_once_with('key', 'data', 123456789)
         get_expiry.assert_called_once_with(120)
 
     def test_delete(self, mc_cache):

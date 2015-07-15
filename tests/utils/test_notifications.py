@@ -227,7 +227,7 @@ class TestNotificationGroup(object):
     def test_empty_group(self):
         group = mod.NotificationGroup()
         with pytest.raises(ValueError):
-            group.message
+            group.category
 
     def test_count(self):
         notification = mod.Notification('uid', 'msg', 'now')
