@@ -28,9 +28,10 @@ def lang_name(code):
 @template_helper
 def lang_name_safe(code):
     """ Return native language name for locale code """
-    if not code:
+    try:
+        return lang_name(code)
+    except KeyError:
         return _('unknown')
-    return lang_name(code)
 
 
 @template_helper
