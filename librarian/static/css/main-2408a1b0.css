@@ -4311,7 +4311,7 @@ form.search .icon {
 .reader-frame {
   position: fixed;
   top: 60px;
-  bottom: 120px;
+  bottom: 60px;
   left: 0;
   right: 0;
   background: #ffffff;
@@ -4325,7 +4325,7 @@ form.search .icon {
 /* line 19, ../scss/partials/_reader.scss */
 .reader-meta {
   position: fixed;
-  height: 119px;
+  height: 59px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -4337,16 +4337,22 @@ form.search .icon {
   line-height: 137.5%; }
 /* line 32, ../scss/partials/_reader.scss */
 .reader-meta .inner {
-  padding: 10px 20px; }
-/* line 36, ../scss/partials/_reader.scss */
+  padding: 5px 20px; }
+/* line 34, ../scss/partials/_reader.scss */
+.reader-meta .inner p, .reader-meta .inner form {
+  margin: 0; }
+/* line 37, ../scss/partials/_reader.scss */
+.reader-meta .inner p.attrib {
+  margin-top: 5px; }
+/* line 42, ../scss/partials/_reader.scss */
 .reader-meta .tag-form {
   display: inline-block;
   margin-bottom: 1em; }
-/* line 41, ../scss/partials/_reader.scss */
+/* line 47, ../scss/partials/_reader.scss */
 .reader-meta .tags-help {
   display: inline;
   padding: 0; }
-/* line 46, ../scss/partials/_reader.scss */
+/* line 52, ../scss/partials/_reader.scss */
 .reader-meta .tags {
   display: inline-block; }
 

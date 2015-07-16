@@ -1,4 +1,4 @@
-$reader-data-height: 120px;
+$reader-data-height: 60px;
 
 .reader-frame {
   position: fixed;
@@ -30,7 +30,13 @@ $reader-data-height: 120px;
   }
 
   .inner {
-    padding: 10px 20px;
+    padding: 5px 20px;
+    p, form {
+      margin: 0;
+    }
+    p.attrib {
+      margin-top: 5px;
+    }
   }
 
   .tag-form {
