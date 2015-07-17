@@ -14,7 +14,7 @@
 
 .location-bar {
   @include single-input-form(1200px);
-  @include adjust-search-width(1300px, 600px);
+  @include adjust-search-width(1500px, 600px);
   @include adjust-search-width(900px, 400px);
   @include adjust-search-width(640px, 200px);
 
@@ -154,7 +154,7 @@
         width: auto;
         text-align: left;
       }
-  
+
       tr {
         padding: 20px;
       }
