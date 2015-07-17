@@ -92,6 +92,7 @@
             settingsForm.replaceWith(result);
             self.initForm();
             fields.css('display', oldDisplay);
+            settingsForm.find('.message').delay(5000).fadeOut();
         });
     };
 
