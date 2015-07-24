@@ -3,9 +3,9 @@ $reader-data-height: 60px;
 .reader-frame {
   position: fixed;
   top: 60px;
-  bottom: $reader-data-height;
+  bottom: 0;
   left: 0;
-  right: 0;
+  right: 240px;
   background: $white;
   overflow: hidden;
 
@@ -18,9 +18,9 @@ $reader-data-height: 60px;
 
 .reader-meta {
   position: fixed;
-  height: $reader-data-height - 1px;
+  width: 240px;
+  top: 60px;
   bottom: 0;
-  left: 0;
   right: 0;
   border-top: 1px solid $border;
   background: $white;
@@ -30,7 +30,7 @@ $reader-data-height: 60px;
   }
 
   .inner {
-    padding: 5px 20px;
+    padding: 5px 10px;
     p, form {
       margin: 0;
     }
@@ -45,8 +45,8 @@ $reader-data-height: 60px;
   }
 
   .tags-help {
-    display: inline;
-    padding: 0;
+    display: block;
+    padding: .5em;
   }
 
   .tags {
