@@ -16,6 +16,15 @@ $reader-data-height: 60px;
   }
 }
 
+@include narrower-than(600px) {
+  .reader-meta {
+    display: none;
+  }
+  .reader-frame {
+    right: 0px;
+  }
+}
+
 .reader-meta {
   position: fixed;
   width: 240px;
@@ -36,6 +45,7 @@ $reader-data-height: 60px;
     }
     p.attrib {
       margin-top: 5px;
+      padding-top: 0.5em;
     }
   }
 
