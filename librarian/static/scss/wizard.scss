@@ -104,3 +104,18 @@ body.initial {
 
   padding-bottom: 50px;
 }
+
+.label {
+  @include label;
+}
+
+.large {
+  padding-left: $form-text-offset;
+  color: $border;
+  font-size: 200%;
+  line-height: 120%;
+}
+
+.note .large {
+  color: $sky25d;
+}
