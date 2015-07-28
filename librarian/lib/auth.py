@@ -121,6 +121,15 @@ def encrypt_password(password):
     return pbkdf2.crypt(password)
 
 
+def set_password(username, clear_text):
+    """ Set password using provided clear-text password """
+    password = encrypt_password(clear_text)
+    db = request.db.sessions
+    query = db.Update('users', password=':password',
+                      where='username = :username')
+    db.query(query, password=password, username=username)
+
+
 def generate_reset_token(length=6):
     # This token is not particularly secure, because the emphasis was on
     # convenience rather than security. It is reasonably easy to crack the
