@@ -173,6 +173,16 @@ def get_user(username):
     return db.result
 
 
+def get_user_by_reset_token(token):
+    sha1 = hashlib.sha1()
+    sha1.update(token.encode('utf8'))
+    hashed_token = sha1.hexdigest()
+    db = request.db.sessions
+    query = db.Select(sets='users', where='reset_token = ?')
+    db.query(query, hashed_token)
+    return db.result
+
+
 def login_user(username, password):
     user = get_user(username)
     if user and is_valid_password(password, user.password):
