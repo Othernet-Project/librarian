@@ -5,7 +5,7 @@ $reader-data-height: 60px;
   top: 60px;
   bottom: 0;
   left: 0;
-  right: 240px;
+  right: 0;
   background: $white;
   overflow: hidden;
 
@@ -13,53 +13,5 @@ $reader-data-height: 60px;
     display: block;
     width: 100%;
     height: 100%;
-  }
-}
-
-@include narrower-than(600px) {
-  .reader-meta {
-    display: none;
-  }
-  .reader-frame {
-    right: 0px;
-  }
-}
-
-.reader-meta {
-  position: fixed;
-  width: 240px;
-  top: 60px;
-  bottom: 0;
-  right: 0;
-  border-top: 1px solid $border;
-  background: $earth;
-
-  .attrib {
-    @include sub;
-  }
-
-  .inner {
-    padding: 5px 10px;
-    p, form {
-      margin: 0;
-    }
-    p.attrib {
-      margin-top: 5px;
-      padding-top: 0.5em;
-    }
-  }
-
-  .tag-form {
-    display: inline-block;
-    margin-bottom: 1em;
-  }
-
-  .tags-help {
-    display: block;
-    padding: .5em;
-  }
-
-  .tags {
-    display: inline-block;
   }
 }
