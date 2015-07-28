@@ -35,5 +35,8 @@ ${_('Login')}
         <p class="buttons">
             <button type="submit" class="primary"><span class="icon"></span> ${_('Login')}</button>
         </p>
+        <p class="buttons">
+        <a href="${i18n_url('auth:reset_form')}?${h.set_qparam(next=next_path)}">${_('Reset your password')}</a>
+        </p>
     </form>
 </div>
