@@ -57,3 +57,28 @@ class RegistrationForm(form.Form):
         password2 = self.processed_data['password2']
         if password1 != password2:
             raise form.ValidationError('registration_error', {})
+
+
+class PasswordResetForm(form.Form):
+    messages = {
+        'password_match': _("The entered passwords do not match."),
+        'invalid_token': _('Password reset token does not match any user'),
+    }
+    # Translators, used as label in create user form
+    reset_token = form.StringField(_("Password reset token"),
+                                   validators=[form.Required()],
+                                   placeholder='123456')
+    # Translators, used as label in password reset form
+    password1 = form.PasswordField(_("Password"),
+                                   validators=[form.Required()],
+                                   placeholder=_('password'))
+    # Translators, used as label in password reset form
+    password2 = form.PasswordField(_("Confirm Password"),
+                                   validators=[form.Required()],
+                                   placeholder=_('confirm password'))
+
+    def validate(self):
+        password1 = self.processed_data['password1']
+        password2 = self.processed_data['password2']
+        if password1 != password2:
+            raise form.ValidationError('password_match', {})

@@ -45,12 +45,14 @@ def create_superuser(app):
         sys.exit(1)
 
     try:
-        auth.create_user(username=username,
-                         password=password,
-                         is_superuser=True,
-                         db=app.databases.sessions,
-                         overwrite=True)
-        print("User created.")
+        reset_token = auth.create_user(
+            username=username,
+            password=password,
+            is_superuser=True,
+            db=app.databases.sessions,
+            overwrite=True)
+        print("User created. The password reset token is: {}".format(
+            reset_token))
     except auth.UserAlreadyExists:
         print("User already exists, please try a different username.")
         create_superuser(app)

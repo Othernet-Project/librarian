@@ -74,21 +74,24 @@ def has_no_superuser():
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
                             method='GET', index=3, test=has_no_superuser)
 def setup_superuser_form():
-    return dict(form=RegistrationForm())
+    return dict(form=RegistrationForm(),
+                reset_token=auth.generate_reset_token())
 
 
 @setup_wizard.register_step('superuser', template='setup/step_superuser.tpl',
                             method='POST', index=3, test=has_no_superuser)
 def setup_superuser():
     form = RegistrationForm(request.forms)
+    reset_token = request.params.get('reset_token')
     if not form.is_valid():
-        return dict(successful=False, form=form)
+        return dict(successful=False, form=form, reset_token=reset_token)
 
     auth.create_user(form.processed_data['username'],
                      form.processed_data['password1'],
                      is_superuser=True,
                      db=request.db.sessions,
-                     overwrite=True)
+                     overwrite=True,
+                     reset_token=reset_token)
     return dict(successful=True)
 
 
