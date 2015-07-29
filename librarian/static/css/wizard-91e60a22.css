@@ -2435,20 +2435,22 @@ body.initial .menu {
     background-size: 250px 1276px; } }
 
 /* line 108, ../scss/wizard.scss */
-.label {
-  font-weight: bold;
-  display: block;
-  padding-left: 15px;
-  padding-bottom: 4px;
-  cursor: pointer; }
-
-/* line 112, ../scss/wizard.scss */
 .large {
   padding-left: 15px;
   color: #dddddd;
   font-size: 200%;
   line-height: 120%; }
 
+/* line 116, ../scss/wizard.scss */
+.note .label {
+  font-weight: bold;
+  display: block;
+  padding-left: 15px;
+  padding-bottom: 4px;
+  cursor: pointer; }
 /* line 119, ../scss/wizard.scss */
+.note .label.inline {
+  display: inline-block; }
+/* line 124, ../scss/wizard.scss */
 .note .large {
   color: #28639b; }
