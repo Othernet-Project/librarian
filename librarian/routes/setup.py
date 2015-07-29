@@ -82,9 +82,9 @@ def setup_superuser_form():
                             method='POST', index=3, test=has_no_superuser)
 def setup_superuser():
     form = RegistrationForm(request.forms)
-    if not form.is_valid():
-        return dict(successful=False, form=form)
     reset_token = request.params.get('reset_token')
+    if not form.is_valid():
+        return dict(successful=False, form=form, reset_token=reset_token)
 
     auth.create_user(form.processed_data['username'],
                      form.processed_data['password1'],
