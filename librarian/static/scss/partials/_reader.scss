@@ -3,7 +3,7 @@ $reader-data-height: 60px;
 .reader-frame {
   position: fixed;
   top: 60px;
-  bottom: $reader-data-height;
+  bottom: 0;
   left: 0;
   right: 0;
   background: $white;
@@ -13,43 +13,5 @@ $reader-data-height: 60px;
     display: block;
     width: 100%;
     height: 100%;
-  }
-}
-
-.reader-meta {
-  position: fixed;
-  height: $reader-data-height - 1px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-top: 1px solid $border;
-  background: $white;
-
-  .attrib {
-    @include sub;
-  }
-
-  .inner {
-    padding: 5px 20px;
-    p, form {
-      margin: 0;
-    }
-    p.attrib {
-      margin-top: 5px;
-    }
-  }
-
-  .tag-form {
-    display: inline-block;
-    margin-bottom: 1em;
-  }
-
-  .tags-help {
-    display: inline;
-    padding: 0;
-  }
-
-  .tags {
-    display: inline-block;
   }
 }
