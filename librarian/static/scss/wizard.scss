@@ -105,10 +105,6 @@ body.initial {
   padding-bottom: 50px;
 }
 
-.label {
-  @include label;
-}
-
 .large {
   padding-left: $form-text-offset;
   color: $border;
@@ -116,6 +112,16 @@ body.initial {
   line-height: 120%;
 }
 
-.note .large {
-  color: $sky25d;
+.note {
+  .label {
+    @include label;
+
+    &.inline {
+      display: inline-block;
+    }
+  }
+  
+  .large {
+    color: $sky25d;
+  }
 }
