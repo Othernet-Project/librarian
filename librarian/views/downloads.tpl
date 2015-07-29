@@ -95,7 +95,3 @@ ${_('Updates')}
 <div class="bottom-pager">
 ${simple_pager.prev_next_pager()}
 </div>
-
-<%block name="extra_scripts">
-<script src="/static/js/downloads.js"></script>
-</%block>
