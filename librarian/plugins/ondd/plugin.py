@@ -69,8 +69,8 @@ LNB_TYPES = (
 
 PRESETS = [
     ('Galaxy 19 (97.0W)', 1, {
-        'frequency': '12177',
-        'symbolrate': '23000',
+        'frequency': '11929',
+        'symbolrate': '22000',
         'polarization': 'v',
         'delivery': 'DVB-S',
         'modulation': 'QPSK',
