@@ -2,8 +2,13 @@
 
 <%def name="space(free, total)">
 <% pct = round((total - free) / float(total) * 100, 1) if total else 100 %>
-## Translators, %s is the amount of free space in bytes, KB, MB, etc.
-${widgets.progress(_('Total space (%s free)') % h.hsize(free), pct)}
+${widgets.progress(
+    ## Translators, used as label for storage space indicator
+    _('Storage space'), 
+    pct, 
+    ## Translators, %(free)s and %(total)s are placeholders for disk space amount, please leave them as they are.
+    _('%(free)s free of %(total)s') % {'free': h.hsize(free), 'total': h.hsize(total)}, pct)
+}
 </%def>
 
 ${space(free, total)}
