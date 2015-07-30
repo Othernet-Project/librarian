@@ -9,7 +9,7 @@ bottle-utils-ajax==0.3.1
 bottle-utils-lazy==0.3.2
 bottle-utils-i18n==0.3.5
 bottle-utils-csrf==0.3.3
-bottle-utils-form==0.3.10
+bottle-utils-form==0.3.11
 bottle-fdsend==0.1.1
 sqlize==0.1
 scandir==0.9
