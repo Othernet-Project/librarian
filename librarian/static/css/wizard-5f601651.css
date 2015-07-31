@@ -2051,6 +2051,21 @@ p.end, p.empty {
 p.end {
   padding-top: 2em; }
 
+/* line 188, ../scss/partials/_common_elements.scss */
+.note .label {
+  font-weight: bold;
+  display: block;
+  padding-left: 15px;
+  padding-bottom: 4px;
+  cursor: pointer; }
+/* line 192, ../scss/partials/_common_elements.scss */
+.note .large {
+  line-height: 120%;
+  font-size: 200%;
+  color: #28639b;
+  display: block;
+  margin-left: 15px; }
+
 /**
  * _sprites.scss: sprite images with high-dpi display support
  *
