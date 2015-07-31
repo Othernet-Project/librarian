@@ -8,10 +8,44 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import os
+import hashlib
+
+from bottle import request
+
 from bottle_utils import form
 from bottle_utils.i18n import lazy_gettext as _
 
 from ..lib import auth
+
+
+class TokenValidator(form.Validator):
+    messages = {
+        # Translators, errorm essage shown when emergency reset token is
+        # invalid
+        'bad_token': _('This emergency reset token is invalid'),
+    }
+
+    def validate(self, v):
+        if not v:
+            return
+        config = request.app.config
+        emergency_token_path = config.get('emergency.file')
+        if not os.path.isfile(emergency_token_path):
+            raise form.ValidationError('bad_token', {'value': ''})
+        with open(emergency_token_path, 'r') as f:
+            emergency_token = f.read().strip()
+        if not emergency_token:
+            raise form.ValidationError('bad_token', {'value': ''})
+        if self.to_token(v.strip().lower()) != emergency_token:
+            raise form.ValidationError('bad_token', {'value': ''})
+
+    @staticmethod
+    def to_token(s):
+        """ Convert clear-text to hashed token """
+        sha256 = hashlib.sha256()
+        sha256.update(s.encode('utf8'))
+        return sha256.hexdigest()
 
 
 class LoginForm(form.Form):
@@ -82,3 +116,18 @@ class PasswordResetForm(form.Form):
         password2 = self.processed_data['password2']
         if password1 != password2:
             raise form.ValidationError('password_match', {})
+
+
+class EmergencyResetForm(RegistrationForm):
+    messages = {
+        'registration_error': _("The entered passwords do not match."),
+        # Translators, used as error message for emergency reset token form
+        # field
+        'bad_token': _('Invalid emergency reset token'),
+    }
+
+    # Translators, used as label for emergency reset token field
+    emergency_reset = form.StringField(_('Emergency reset token'),
+                                       validators=[form.Required(),
+                                                   TokenValidator()],
+                                       placeholder='12345678')
