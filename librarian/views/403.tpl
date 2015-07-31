@@ -11,8 +11,8 @@ ${_('Forbidden')}
 </%block>
 
 <%block name="error_message">
-<p>
+<p class="single">
 ## Translators, shown when user is denied access to a page
-${_('You are not authorized to access this page.')}
+${_('You are not authorized to access this page or the page has expired.')}
 </p>
 </%block>
