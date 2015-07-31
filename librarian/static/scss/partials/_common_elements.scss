@@ -183,3 +183,17 @@ p.empty {
 p.end {
   padding-top: 2em;
 }
+
+.note {
+  .label {
+    @include label;
+  }
+
+  .large {
+    line-height: 120%;
+    font-size: 200%;
+    color: $sky25d;
+    display: block;
+    margin-left: $form-text-offset;
+  }
+}
