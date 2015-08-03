@@ -223,7 +223,7 @@ def needs_tone(freq, lnb_type):
     Always returns ``True`` for C band and North America Ku band LNBs.
     """
     if lnb_type in (KU_BAND, C_BAND):
-        return True
+        return False
     return freq > UN_HI_SW
 
 
