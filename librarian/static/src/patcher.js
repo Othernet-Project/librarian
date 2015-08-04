@@ -2,19 +2,24 @@
 (function ($) {
     'use strict';
     var head,
-        readerDoc,
         readerFrame = $(document).find('#reader-main'),
         keepFormatting = readerFrame.data('keep-formatting'),
         readerCssPatch = $(window.templates.readerCssPatch);
 
-    readerFrame.load(function () {
-        readerDoc = readerFrame.contents();
+    function applyStylePatch() {
+        var readerDoc = readerFrame.contents();
         if (!keepFormatting) {
             head = readerDoc.find('head');
             if (head.length === 0) {
-                head = readerDoc.append('<head></head>');
+                head = $('<head></head>');
+                readerDoc.append(head);
             }
             head.append(readerCssPatch);
         }
-    });
+    }
+
+    readerFrame.load(applyStylePatch);
+    if (readerFrame.contents().prop('readyState') === 'complete') {
+        applyStylePatch();
+    }
 }(this.jQuery));
