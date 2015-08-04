@@ -91,16 +91,6 @@ def content_list():
     return result
 
 
-@roca_view('content_list', '_content_list', template_func=template)
-def content_sites_list():
-    """ Show list of multipage content only """
-    result = prepare_content_list(multipage=True)
-    result.update({'base_path': i18n_url('content:sites_list'),
-                   'page_title': _('Sites'),
-                   'empty_message': _('There are no sites in the library.')})
-    return result
-
-
 def guard_already_removed(func):
     @functools.wraps(func)
     def wrapper(content_id, **kwargs):
@@ -129,8 +119,7 @@ def guard_already_removed(func):
 @guard_already_removed
 @view('remove_confirm')
 def remove_content_confirm(content):
-    cancel_url = request.headers.get('Referer', i18n_url('content:list'))
-    return dict(content=content, cancel_url=cancel_url)
+    return dict(content=content, cancel_url=i18n_url('content:list'))
 
 
 @auth.login_required(next_to='/')
@@ -186,10 +175,7 @@ def content_reader(meta):
     if file_path.startswith('/'):
         file_path = file_path[1:]
 
-    referer = request.headers.get('Referer', '')
-    base_path = i18n_url('content:sites_list')
-    if str(base_path) not in referer:
-        base_path = i18n_url('content:list')
+    base_path = i18n_url('content:list')
     return dict(meta=meta, base_path=base_path, file_path=file_path)
 
 
@@ -199,8 +185,6 @@ def routes(app):
         # CONTENT
         ('content:list', content_list,
          'GET', '/', {}),
-        ('content:sites_list', content_sites_list,
-         'GET', '/sites/', {}),
         ('content:reader', content_reader,
          'GET', '/pages/<content_id>', {}),
         ('content:delete', remove_content_confirm,

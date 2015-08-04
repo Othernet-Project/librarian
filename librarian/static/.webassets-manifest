@@ -1,7 +1,7 @@
 {
     "css/content-%(version)s.css": "c1a5d1e6", 
     "css/dashboard-%(version)s.css": "dc20454c", 
-    "css/main-%(version)s.css": "d7820bc2", 
+    "css/main-%(version)s.css": "b42ca342", 
     "css/wizard-%(version)s.css": "5f601651", 
     "js/content-%(version)s.js": "d5d568de", 
     "js/dashboard-%(version)s.js": "6dab1ac5", 
