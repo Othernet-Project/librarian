@@ -4322,6 +4322,16 @@ form.search .icon {
 .setup-finished .sub {
   color: #bbbbbb; }
 
+/**
+ * _media_query.scss: media query support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
 /* line 3, ../scss/partials/_reader.scss */
 .reader-frame {
   position: fixed;
@@ -4351,37 +4361,42 @@ form.search .icon {
   bottom: 0;
   right: 0;
   background: #dddddd;
-  padding: 20px 0 20px 35px;
-  -moz-transition: padding 0.5s;
-  -o-transition: padding 0.5s;
-  -webkit-transition: padding 0.5s;
-  transition: padding 0.5s; }
-/* line 32, ../scss/partials/_reader.scss */
-.reader-meta .inner {
-  position: relative;
-  height: 100%;
-  width: 0;
   -moz-transition: width 0.5s;
   -o-transition: width 0.5s;
   -webkit-transition: width 0.5s;
-  transition: width 0.5s; }
-/* line 38, ../scss/partials/_reader.scss */
-.reader-meta .inner .tag-editor .field-help {
-  padding-left: 0; }
-/* line 42, ../scss/partials/_reader.scss */
-.reader-meta .inner .attrib {
+  transition: width 0.5s;
+  width: 35px; }
+/* line 32, ../scss/partials/_reader.scss */
+.reader-meta .inner {
+  position: relative;
+  height: 100%; }
+/* line 35, ../scss/partials/_reader.scss */
+.reader-meta .inner .meta-container {
   position: absolute;
+  left: 35px;
   bottom: 0;
-  margin-bottom: 0; }
-/* line 48, ../scss/partials/_reader.scss */
-.reader-meta .toggle {
+  top: 0;
+  right: 0;
+  padding: 20px; }
+/* line 43, ../scss/partials/_reader.scss */
+.reader-meta .inner .meta-container .tag-editor .field-help {
+  padding-left: 0; }
+/* line 47, ../scss/partials/_reader.scss */
+.reader-meta .inner .meta-container .attrib {
+  position: absolute;
+  bottom: 20px;
+  margin-bottom: 0px;
+  right: 20px;
+  left: 20px; }
+/* line 55, ../scss/partials/_reader.scss */
+.reader-meta .inner .toggle {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   background: #eeeeee; }
-/* line 54, ../scss/partials/_reader.scss */
-.reader-meta .toggle .icon {
+/* line 61, ../scss/partials/_reader.scss */
+.reader-meta .inner .toggle .icon {
   display: inline-block;
   margin: 20px 5px;
   cursor: pointer;
@@ -4393,16 +4408,16 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 54, ../scss/partials/_reader.scss */
-  .reader-meta .toggle .icon {
+  /* line 61, ../scss/partials/_reader.scss */
+  .reader-meta .inner .toggle .icon {
     background-image: url('../img/icons/2x-s9ad74fd043.png');
     background-position: 0 -110px;
     -moz-background-size: 100px 4244px;
     -o-background-size: 100px 4244px;
     -webkit-background-size: 100px 4244px;
     background-size: 100px 4244px; } }
-/* line 59, ../scss/partials/_reader.scss */
-.reader-meta .toggle .icon:hover {
+/* line 66, ../scss/partials/_reader.scss */
+.reader-meta .inner .toggle .icon:hover {
   display: inline-block;
   vertical-align: middle;
   background-image: url('../img/icons/1x-s66ef4f051d.png');
@@ -4411,21 +4426,18 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 59, ../scss/partials/_reader.scss */
-  .reader-meta .toggle .icon:hover {
+  /* line 66, ../scss/partials/_reader.scss */
+  .reader-meta .inner .toggle .icon:hover {
     background-image: url('../img/icons/2x-s9ad74fd043.png');
     background-position: 0 -165px;
     -moz-background-size: 100px 4244px;
     -o-background-size: 100px 4244px;
     -webkit-background-size: 100px 4244px;
     background-size: 100px 4244px; } }
-/* line 64, ../scss/partials/_reader.scss */
+/* line 72, ../scss/partials/_reader.scss */
 .reader-meta.expanded {
-  padding: 20px 20px 20px 50px; }
-/* line 66, ../scss/partials/_reader.scss */
-.reader-meta.expanded .inner {
-  width: 204px; }
-/* line 70, ../scss/partials/_reader.scss */
+  width: 274px; }
+/* line 75, ../scss/partials/_reader.scss */
 .reader-meta.expanded .toggle .icon {
   display: inline-block;
   vertical-align: middle;
@@ -4435,7 +4447,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 70, ../scss/partials/_reader.scss */
+  /* line 75, ../scss/partials/_reader.scss */
   .reader-meta.expanded .toggle .icon {
     background-image: url('../img/icons/2x-s9ad74fd043.png');
     background-position: 0 0;
@@ -4443,7 +4455,7 @@ form.search .icon {
     -o-background-size: 100px 4244px;
     -webkit-background-size: 100px 4244px;
     background-size: 100px 4244px; } }
-/* line 72, ../scss/partials/_reader.scss */
+/* line 77, ../scss/partials/_reader.scss */
 .reader-meta.expanded .toggle .icon:hover {
   display: inline-block;
   vertical-align: middle;
@@ -4453,7 +4465,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 72, ../scss/partials/_reader.scss */
+  /* line 77, ../scss/partials/_reader.scss */
   .reader-meta.expanded .toggle .icon:hover {
     background-image: url('../img/icons/2x-s9ad74fd043.png');
     background-position: 0 -55px;
@@ -4461,6 +4473,10 @@ form.search .icon {
     -o-background-size: 100px 4244px;
     -webkit-background-size: 100px 4244px;
     background-size: 100px 4244px; } }
+@media only screen and (max-width: 640px) {
+  /* line 84, ../scss/partials/_reader.scss */
+  .reader-meta.expanded {
+    width: 100%; } }
 
 /**
  * _icons.scss: simple icon widget
