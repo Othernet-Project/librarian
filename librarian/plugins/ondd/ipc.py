@@ -10,6 +10,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from __future__ import unicode_literals
 
+import os
 import socket
 import logging
 import xml.etree.ElementTree as ET
@@ -192,9 +193,16 @@ def get_file_list():
 
 
 def parse_transfer(transfer):
-    return dict(path=transfer.find('path').text,
+    path = transfer.find('path').text or ''
+    block_count = int(transfer.find('block_count').text)
+    block_received = int(transfer.find('block_received').text)
+    percentage = block_received * 100 / (block_count or 1)
+    return dict(path=path,
+                filename=os.path.basename(path),
                 hash=transfer.find('hash').text,
-                size=int(transfer.find('size').text))
+                block_count=block_count,
+                block_received=block_received,
+                percentage=percentage)
 
 
 def get_transfers():
