@@ -6,7 +6,7 @@
     "js/content-%(version)s.js": "d5d568de", 
     "js/dashboard-%(version)s.js": "6dab1ac5", 
     "js/files-%(version)s.js": "d969cdea", 
-    "js/reader-%(version)s.js": "5bccadcb", 
+    "js/reader-%(version)s.js": "9ae637d0", 
     "js/setup-%(version)s.js": "10ea5fdc", 
     "js/ui-%(version)s.js": "89f3cc90"
 }

@@ -9,4 +9,7 @@
         metaContainer.toggleClass('expanded');
         reader.toggleClass('reduced');
     });
+    // initially, the sidebar is hidden
+    metaContainer.removeClass('expanded');
+    reader.removeClass('reduced');
 }(this.jQuery));
