@@ -8,12 +8,15 @@ ${meta.title}
 
 <%block name="main">
 <div class="reader">
-    <div class="reader-frame">
+    <div class="reader-frame reduced">
         <iframe id="reader-main" class="reader-main" src="${url('content:file', content_path=th.get_content_path(meta.md5), filename=file_path)}" data-keep-formatting="${meta.keep_formatting}"></iframe>
     </div>
-    <div class="reader-meta data">
+    <div class="reader-meta data expanded">
+        <div class="toggle"><span class="icon"></span></div>
         <div class="inner">
-            <p class="date">
+            <div class="tag-editor">
+                ${tags.tags(meta)}
+            </div>
             ## Translators, attribution line appearing in the content list
             <p class="attrib">
             ## Translators, used in place of publisher name if publsiher name is not known
@@ -27,6 +30,7 @@ ${meta.title}
 </%block>
 
 <%block name="script_templates">
+${tag_js_templates.body()}
 <script id="readerCssPatch" type="text/template">
     <link rel="stylesheet" type="text/css" href="${assets['css/content']}" />
 </script>
