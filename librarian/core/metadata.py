@@ -20,7 +20,6 @@ from outernet_metadata import validator
 
 ALIASES = {
     'publisher': ['partner'],
-    'entry_point': ['index']
 }
 
 
@@ -68,10 +67,7 @@ def add_missing_keys(meta):
     """
     for key in EDGE_KEYS:
         if key not in meta:
-            # entry_point is not a valid key by specification, but is used
-            # by librarian nevertheless to avoid conflicts with SQL
-            def_key = 'index' if key == 'entry_point' else key
-            meta[key] = validator.values.DEFAULTS.get(def_key, None)
+            meta[key] = validator.values.DEFAULTS.get(key, None)
 
 
 def replace_aliases(meta):
