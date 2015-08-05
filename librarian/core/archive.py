@@ -109,19 +109,17 @@ class BaseArchive(object):
 
         self.__initialized = True
 
-    def get_count(self, terms=None, tag=None, lang=None, multipage=None):
+    def get_count(self, terms=None, tag=None, lang=None):
         """Return the number of matching content metadata filtered by the given
         options.
         Implementation is backend specific.
 
         :param terms:      string: search query
         :param tag:        list of string tags
-        :param lang:       string: language code
-        :param multipage:  bool"""
+        :param lang:       string: language code"""
         raise NotImplementedError()
 
-    def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None,
-                    multipage=None):
+    def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None):
         """Return iterable of matching content metadata filtered by the given
         options.
         Implementation is backend specific.
@@ -130,8 +128,7 @@ class BaseArchive(object):
         :param offset:     int: start index
         :param limit:      int: max number of items to be returned
         :param tag:        list of string tags
-        :param lang:       string: language code
-        :param multipage:  bool"""
+        :param lang:       string: language code"""
         raise NotImplementedError()
 
     def get_single(self, content_id):

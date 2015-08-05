@@ -34,7 +34,7 @@ class EmbeddedArchive(BaseArchive):
         self.sqlin = lambda *args, **kw: self.db.sqlin.__func__(*args, **kw)
         super(EmbeddedArchive, self).__init__(**config)
 
-    def get_count(self, terms=None, tag=None, lang=None, multipage=None):
+    def get_count(self, terms=None, tag=None, lang=None):
         q = self.db.Select('COUNT(*) as count',
                            sets='zipballs',
                            where='disabled = 0')
@@ -44,25 +44,16 @@ class EmbeddedArchive(BaseArchive):
         if lang:
             q.where += 'language = :lang'
 
-        if multipage is not None:
-            q.where += 'multipage = :multipage'
-
         if terms:
             terms = '%' + terms.lower() + '%'
             q.where += ('title LIKE :terms OR '
                         'publisher LIKE :terms OR '
                         'keywords LIKE :terms')
 
-        self.db.query(q,
-                      terms=terms,
-                      tag_id=tag,
-                      lang=lang,
-                      multipage=multipage)
-
+        self.db.query(q, terms=terms, tag_id=tag, lang=lang)
         return self.db.result.count
 
-    def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None,
-                    multipage=None):
+    def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None):
         # TODO: tests
         q = self.db.Select(sets='zipballs',
                            where='disabled = 0',
@@ -75,21 +66,13 @@ class EmbeddedArchive(BaseArchive):
         if lang:
             q.where += 'language = :lang'
 
-        if multipage is not None:
-            q.where += 'multipage = :multipage'
-
         if terms:
             terms = '%' + terms.lower() + '%'
             q.where += ('title LIKE :terms OR '
                         'publisher LIKE :terms OR '
                         'keywords LIKE :terms')
 
-        self.db.query(q,
-                      terms=terms,
-                      tag_id=tag,
-                      lang=lang,
-                      multipage=multipage)
-
+        self.db.query(q, terms=terms, tag_id=tag, lang=lang)
         return self.db.results
 
     def get_single(self, content_id):
