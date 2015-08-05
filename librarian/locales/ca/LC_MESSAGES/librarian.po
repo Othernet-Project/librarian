@@ -7,12 +7,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: POEditor.com\n"
+"X-Generator: Poedit 1.8.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Josep Comas <extern@jcomas.net>\n"
+"Language-Team: \n"
 
 #: librarian/menu/tags.py:17
 msgid "Tags"
-msgstr ""
+msgstr "Etiquetes"
 
 #: librarian/menu/files.py:17 librarian/views/file_list.tpl:6
 #: librarian/views/file_list.tpl:24
@@ -24,23 +27,23 @@ msgstr "Fitxers"
 #: librarian/routes/downloads.py:135 librarian/routes/downloads.py:160
 #: librarian/views/downloads.tpl:7
 msgid "Updates"
-msgstr "Actualitzacion"
+msgstr "Actualitzacions"
 
 #: librarian/menu/dashboard.py:17
 msgid "Settings"
-msgstr ""
+msgstr "Configuració"
 
 #: librarian/menu/home.py:17
 msgid "Home"
-msgstr ""
+msgstr "Inici"
 
 #: librarian/menu/notifications.py:29 librarian/views/notification_list.tpl:6
 msgid "Notifications"
-msgstr ""
+msgstr "Notificacions"
 
 #: librarian/menu/sites.py:17 librarian/routes/content.py:99
 msgid "Sites"
-msgstr "Sites"
+msgstr "Llocs"
 
 #. Translators, redirection target if database backup was successful
 #: librarian/menu/content.py:17 librarian/plugins/dbmanage/plugin.py:195
@@ -55,21 +58,21 @@ msgstr "Aplicacions"
 
 #: librarian/menu/logout.py:18
 msgid "Log out"
-msgstr "Log out"
+msgstr "Sortir"
 
 #. Translators, used as label for language
 #: librarian/forms/setup.py:21
 msgid "Language"
-msgstr ""
+msgstr "Llenguatge"
 
 #. Translators, used as label for date and time setup
 #: librarian/forms/setup.py:31
 msgid "Timezone"
-msgstr ""
+msgstr "Zona horària"
 
 #: librarian/forms/auth.py:19
 msgid "Please enter the correct username and password."
-msgstr "Please enter the correct username and password."
+msgstr "Si us plau, entra correctament l'usuari i la contrasenya."
 
 #. Translators, used as label for a login field
 #. Translators, used as label in create user form
@@ -77,11 +80,11 @@ msgstr "Please enter the correct username and password."
 #. Translators, used as label in create user form
 #: librarian/forms/auth.py:22 librarian/forms/auth.py:43
 msgid "Username"
-msgstr ""
+msgstr "Usuari"
 
 #: librarian/forms/auth.py:23 librarian/forms/auth.py:45
 msgid "username"
-msgstr "username"
+msgstr "usuari"
 
 #. Translators, used as label for a password field
 #. Translators, used as label in create user form
@@ -89,32 +92,32 @@ msgstr "username"
 #. Translators, used as label in create user form
 #: librarian/forms/auth.py:26 librarian/forms/auth.py:47
 msgid "Password"
-msgstr ""
+msgstr "Contrasenya"
 
 #: librarian/forms/auth.py:27 librarian/forms/auth.py:49
 msgid "password"
-msgstr "password"
+msgstr "contrasenya"
 
 #: librarian/forms/auth.py:40
 msgid "The entered passwords do not match."
-msgstr ""
+msgstr "Les contrasenyes entrades no concorden."
 
 #. Translators, used as label in create user form
 #: librarian/forms/auth.py:51
 msgid "Confirm Password"
-msgstr ""
+msgstr "Confirmar Contrasenya"
 
 #: librarian/forms/auth.py:53
 msgid "confirm password"
-msgstr ""
+msgstr "confirmar contrasenya"
 
 #: librarian/utils/lang.py:32
 msgid "unknown"
-msgstr "unknown"
+msgstr "desconegut"
 
 #: librarian/utils/lang.py:207
 msgid "any language"
-msgstr "any language"
+msgstr "qualsevol llenguatge"
 
 #: librarian/utils/core_helpers.py:35
 msgid "Unknown license"
@@ -126,7 +129,7 @@ msgstr "Atribució Creative Commons"
 
 #: librarian/utils/core_helpers.py:37
 msgid "Creative Commons Attribution-NoDerivs"
-msgstr "Creative Commons Attribution-NoDerivs"
+msgstr "Atribució Creative Commons NoDerivs"
 
 #: librarian/utils/core_helpers.py:38
 msgid "Creative Commons Attribution-NonCommercial"
@@ -134,35 +137,35 @@ msgstr "Atribució Creative Commons NonCommercial"
 
 #: librarian/utils/core_helpers.py:39
 msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
-msgstr "Creative Commons Attribution-NonCommercial-NoDerivs"
+msgstr "Atribució Creative Commons NonCommercial-NoDerivs"
 
 #: librarian/utils/core_helpers.py:40
 msgid "Creative Commons Attribution-ShareAlike"
-msgstr "Creative Commons Attribution-ShareAlike"
+msgstr "Atribució Creative Commons ShareAlike"
 
 #: librarian/utils/core_helpers.py:41
 msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
-msgstr "Creative Commons Attribution-NonCommercial-ShareAlike"
+msgstr "Atribució Creative Commons NonCommercial-ShareAlike"
 
 #: librarian/utils/core_helpers.py:42
 msgid "GNU Free Documentation License"
-msgstr "Llicència GNU de Documentació Gratüita"
+msgstr "Llicència de Documentació Lliure de GNU"
 
 #: librarian/utils/core_helpers.py:43
 msgid "Open Publication License"
-msgstr "Open Publication License"
+msgstr "Llicència de Publicació Oberta"
 
 #: librarian/utils/core_helpers.py:44
 msgid "Open Content License"
-msgstr "Open Content License"
+msgstr "Llicència de Contingut Obert"
 
 #: librarian/utils/core_helpers.py:45
 msgid "Against DRM License"
-msgstr "Against DRM License"
+msgstr "Llicència contra DRM"
 
 #: librarian/utils/core_helpers.py:46
 msgid "Free Art License"
-msgstr "Llicència Artística Gratuita"
+msgstr "Llicència Artística Lliure"
 
 #: librarian/utils/core_helpers.py:47
 msgid "Public Domain"
@@ -170,7 +173,7 @@ msgstr "Domini Públic"
 
 #: librarian/utils/core_helpers.py:48
 msgid "Other free license"
-msgstr "Altra llicència gratüita"
+msgstr "Altra llicència lliure"
 
 #: librarian/utils/core_helpers.py:49
 msgid "All rights reserved"
@@ -178,7 +181,7 @@ msgstr "Tots els drets reservats"
 
 #: librarian/utils/core_helpers.py:50
 msgid "Other non-free license"
-msgstr "Altre llicència no gratuita"
+msgstr "Altra llicència no gratuïta"
 
 #. Translators, refers to transponder polarization
 #: librarian/plugins/ondd/plugin.py:48
@@ -203,30 +206,32 @@ msgstr "Universal"
 #. Translators, this is a type of LNB
 #: librarian/plugins/ondd/plugin.py:65
 msgid "North America Ku band"
-msgstr "North America Ku band"
+msgstr "Banda Ku de Nord-Amèrica"
 
 #. Translators, this is a type of LNB
 #: librarian/plugins/ondd/plugin.py:67
 msgid "C band"
-msgstr ""
+msgstr "Banda C"
 
 #: librarian/plugins/ondd/plugin.py:126
 msgid ""
 "Tuner configuration could not be saved. Please make sure that the tuner is "
 "connected."
 msgstr ""
+"La configuració del sintonitzador no es pot guardar. Si us plau, comprova "
+"que el sintonitzador estigui connectat."
 
 #: librarian/plugins/ondd/plugin.py:131
 msgid "LNB Type"
-msgstr ""
+msgstr "Tipus de LNB"
 
 #: librarian/plugins/ondd/plugin.py:134
 msgid "Invalid choice for LNB type"
-msgstr "Opció escollida incorrecta pel tipus LNB"
+msgstr "Opció escollida incorrecta pel tipus de LNB"
 
 #: librarian/plugins/ondd/plugin.py:139
 msgid "Frequency"
-msgstr ""
+msgstr "Freqüència"
 
 #. Translators, error message when frequency value is wrong
 #: librarian/plugins/ondd/plugin.py:145
@@ -235,16 +240,16 @@ msgstr "La frequència ha de ser un número positiu"
 
 #: librarian/plugins/ondd/plugin.py:150
 msgid "Symbol rate"
-msgstr ""
+msgstr "Velocitat de símbols"
 
 #. Translators, error message when symbolrate value is wrong
 #: librarian/plugins/ondd/plugin.py:156
 msgid "Symbolrate must be a positive number"
-msgstr "Symbolrate must be a positive number"
+msgstr "La velocitat de símbols ha de ser un número positiu"
 
 #: librarian/plugins/ondd/plugin.py:161
 msgid "Delivery system"
-msgstr ""
+msgstr "Sistema d'enviament"
 
 #: librarian/plugins/ondd/plugin.py:166
 msgid "Invalid choice for delivery system"
@@ -252,23 +257,23 @@ msgstr "Selecció de métode d'enviament incorrecte"
 
 #: librarian/plugins/ondd/plugin.py:171
 msgid "Modulation"
-msgstr ""
+msgstr "Modulació"
 
 #: librarian/plugins/ondd/plugin.py:176
 msgid "Invalid choice for modulation mode"
-msgstr "Invalid choice for modulation mode"
+msgstr "Mode de modulació incorrecte"
 
 #: librarian/plugins/ondd/plugin.py:181
 msgid "Polarization"
-msgstr ""
+msgstr "Polarització"
 
 #: librarian/plugins/ondd/plugin.py:186
 msgid "Invalid choice for polarization"
-msgstr "Invalid choice for polarization"
+msgstr "Opció de polarització incorrecte"
 
 #: librarian/plugins/ondd/plugin.py:223
 msgid "Transponder configuration saved."
-msgstr ""
+msgstr "Configuració del transponder guardada."
 
 #. Translators, used as dashboard section title
 #: librarian/plugins/ondd/plugin.py:273
@@ -281,7 +286,8 @@ msgstr "Ajustos del sintonitzador"
 #. Translators, error message displayed if database backup fails
 #: librarian/plugins/dbmanage/plugin.py:133
 msgid "Database backup could not be completed. The following error occurred:"
-msgstr "Database backup could not be completed. The following error occurred:"
+msgstr ""
+"La còpia de la base de dades no es pot guardar. Ha succeït l'error següent:"
 
 #. Translators, redirection target if database backup was successful
 #: librarian/plugins/dbmanage/plugin.py:139
@@ -292,12 +298,12 @@ msgstr "Panell de Control"
 #. Translators, message displayed if database backup was successful
 #: librarian/plugins/dbmanage/plugin.py:142
 msgid "Database backup has been completed successfully."
-msgstr ""
+msgstr "La còpia de la base de dades s'ha guardat correctament."
 
 #. Translators, redirection target if database backup was successful
 #: librarian/plugins/dbmanage/plugin.py:150
 msgid "the backup folder"
-msgstr ""
+msgstr "carpeta de còpia de seguretat"
 
 #. Translators, used as page title
 #: librarian/plugins/dbmanage/plugin.py:153
@@ -316,8 +322,9 @@ msgid ""
 "Librarian could not enter maintenance mode and database rebuild was "
 "cancelled. Please make sure noone else is using Librarian and try again."
 msgstr ""
-"Librarian could not enter maintenance mode and database rebuild was "
-"cancelled. Please make sure noone else is using Librarian and try again."
+"Librarian no pot entrar en mode de manteniment i la reconstrucció de la base "
+"de dades s'ha cancel·lat. Si us plau, comprova que ningú més l'estigui fent "
+"servir."
 
 #. Translators, message displayed if database backup was successful
 #: librarian/plugins/dbmanage/plugin.py:183
@@ -325,8 +332,8 @@ msgid ""
 "Content database has been rebuilt from scratch. A backup copy of the "
 "original database has been created. You will find it in the files section."
 msgstr ""
-"Content database has been rebuilt from scratch. A backup copy of the "
-"original database has been created. You will find it in the files section."
+"La base de dades s'ha reconstruit des del principi. S'ha creat una còpia de "
+"la base de dades original. La trobaràs a la secció Fitxers."
 
 #. Translators, used as page title
 #: librarian/plugins/dbmanage/plugin.py:198
@@ -376,7 +383,7 @@ msgstr "Estadístiques de contingut de la biblioteca"
 #. Translators, used as dashboard section title
 #: librarian/plugins/netinterfaces/plugin.py:26
 msgid "Network interfaces"
-msgstr "Network interfaces"
+msgstr "Interfícies de xarxa"
 
 #. Translators, used as dashboard section title
 #: librarian/plugins/logs/plugin.py:30
@@ -385,11 +392,11 @@ msgstr "Registres de l'aplicació"
 
 #: librarian/routes/files.py:52
 msgid "The files you were looking for could not be found"
-msgstr "The files you were looking for could not be found"
+msgstr "No s'han trobat els arxius que buscaves"
 
 #: librarian/routes/files.py:54
 msgid "This list represents the search results"
-msgstr "This list represents the search results"
+msgstr "Aquesta llista representa els resultats de la cerca"
 
 #: librarian/routes/files.py:65
 msgid "This folder does not exist"
@@ -399,19 +406,19 @@ msgstr "Aquesta carpeta no existeix"
 #. successfully added to the library
 #: librarian/routes/downloads.py:65 librarian/routes/downloads.py:87
 msgid "Updates added"
-msgstr ""
+msgstr "Actualitzacions afegides"
 
 #. Translators, used as confirmation title after the chosen updates were
 #. deleted on the updates page
 #: librarian/routes/downloads.py:107 librarian/routes/downloads.py:126
 msgid "Updates deleted"
-msgstr ""
+msgstr "Actualitzacions esborrades"
 
 #. Translators, used as error title shown to user when wrong action
 #. code is submitted to server
 #: librarian/routes/downloads.py:152
 msgid "Invalid action"
-msgstr ""
+msgstr "Acció no vàlida"
 
 #. Translators, used as error message shown to user when wrong action
 #. code is submitted to server
@@ -425,58 +432,58 @@ msgstr "L'etiqueta especificada no s'ha trobat"
 
 #: librarian/routes/content.py:90
 msgid "Content library is currently empty"
-msgstr "Llibrería de contiguts buida"
+msgstr "Biblioteca de continguts buida"
 
 #: librarian/routes/content.py:100
 msgid "There are no sites in the library."
-msgstr ""
+msgstr "No hi ha llocs en aquesta biblioteca."
 
 #. Translators, used as page title when a content item's removal is
 #. retried, but it was already deleted before
 #: librarian/routes/content.py:112
 msgid "Content already removed"
-msgstr ""
+msgstr "Contingut ja eliminat"
 
 #. Translators, used as message when a content item's removal is
 #. retried, but it was already deleted before
 #: librarian/routes/content.py:115
 msgid "The specified content has already been removed."
-msgstr ""
+msgstr "El contingut especificat ja ha estat eliminat."
 
 #. Translators, used as page title of successful content removal feedback
 #: librarian/routes/content.py:146
 msgid "Content removed"
-msgstr ""
+msgstr "Contingut eliminat"
 
 #. Translators, used as message of successful content removal feedback
 #: librarian/routes/content.py:148
 msgid "Content successfully removed."
-msgstr ""
+msgstr "Contingut correctament eliminat."
 
 #: librarian/views/403.tpl:5 librarian/views/403.tpl:10
 msgid "Forbidden"
-msgstr "Forbidden"
+msgstr "Prohibit"
 
 #: librarian/views/403.tpl:16
 msgid "You are not authorized to access this page."
-msgstr "You are not authorized to access this page."
+msgstr "No estàs autoritzat a accedir aquesta pàgina."
 
 #: librarian/views/remove_confirm.tpl:5
 msgid "Confirm Removal"
-msgstr ""
+msgstr "Confirmar eliminació"
 
 #: librarian/views/remove_confirm.tpl:12
 #, python-brace-format
 msgid "Are you sure you want to remove the content entry named {title}"
-msgstr ""
+msgstr "Estàs segur que vols esborrar l'entrada {title}"
 
 #: librarian/views/remove_confirm.tpl:16
 msgid "Remove"
-msgstr ""
+msgstr "Eliminar"
 
 #: librarian/views/remove_confirm.tpl:18 librarian/views/file_list.tpl:117
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel·lar"
 
 #: librarian/views/_tag_cloud.tpl:5
 msgid "everything"
@@ -484,36 +491,36 @@ msgstr "tot"
 
 #: librarian/views/notification_list.tpl:15 librarian/views/downloads.tpl:24
 msgid "Discard all"
-msgstr ""
+msgstr "Descartar-ho tot"
 
 #: librarian/views/notification_list.tpl:25
 msgid "There are no new notifications"
-msgstr ""
+msgstr "No hi ha noves notificacions"
 
 #: librarian/views/_content_list.tpl:19 librarian/views/reader.tpl:21
 msgid "unknown publisher"
-msgstr ""
+msgstr "publicador desconegut"
 
 #: librarian/views/_content_list.tpl:21 librarian/views/reader.tpl:22
 #, python-format
 msgid "%(date)s by %(publisher)s."
-msgstr ""
+msgstr "%(date)s per %(publisher)s."
 
 #: librarian/views/base.tpl:63 librarian/views/setup/main.tpl:58
 msgid "Humanity's public library"
-msgstr ""
+msgstr "Biblioteca pública de la humanitat"
 
 #: librarian/views/base.tpl:74
 msgid "Language:"
-msgstr ""
+msgstr "Llenguatge:"
 
 #: librarian/views/base.tpl:86 librarian/views/setup/main.tpl:48
 msgid "Back"
-msgstr ""
+msgstr "Retrocedir"
 
 #: librarian/views/_tag_list.tpl:2
 msgid "User tags"
-msgstr ""
+msgstr "Etiquetes d'usuari"
 
 #: librarian/views/downloads.tpl:15
 msgid "update available"
@@ -523,21 +530,23 @@ msgstr[1] "actualitzacións disponibles"
 
 #: librarian/views/downloads.tpl:21
 msgid "Add all to Library"
-msgstr ""
+msgstr "Afegir tot a la biblioteca"
 
 #: librarian/views/downloads.tpl:36 librarian/views/content_list.tpl:41
 msgid "Filter"
-msgstr ""
+msgstr "Filtrar"
 
 #: librarian/views/downloads.tpl:49
 #, python-format
 msgid ""
 "Language filter for '%(lang)s' is active. Click %(link)s to see all updates"
 msgstr ""
+"Filtre de llenguatge per '%(lang)s' està actiu. Prem %(link)s per veure "
+"totes les actualitzacions."
 
 #: librarian/views/downloads.tpl:49 librarian/views/content_list.tpl:67
 msgid "here"
-msgstr ""
+msgstr "aquí"
 
 #: librarian/views/downloads.tpl:52
 msgid "There is no new content"
@@ -549,23 +558,23 @@ msgstr "reemplaça:"
 
 #: librarian/views/downloads.tpl:76
 msgid "received on:"
-msgstr ""
+msgstr "rebut el:"
 
 #: librarian/views/downloads.tpl:80
 msgid "broadcast on:"
-msgstr ""
+msgstr "transmès per:"
 
 #: librarian/views/downloads.tpl:84
 msgid "language:"
-msgstr ""
+msgstr "llenguatge:"
 
 #: librarian/views/downloads.tpl:90
 msgid "Add to library"
-msgstr ""
+msgstr "Afegir a la biblioteca"
 
 #: librarian/views/downloads.tpl:92
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #: librarian/views/_list_controls.tpl:3
 msgid "Select all"
@@ -581,19 +590,19 @@ msgstr "Afegir seleccionat a la biblioteca"
 
 #: librarian/views/_list_controls.tpl:9
 msgid "Delete selected"
-msgstr "Esborra seleccionat"
+msgstr "Esborrar seleccionat"
 
 #: librarian/views/_list_controls.tpl:11
 msgid "Delete all"
-msgstr "Delete all"
+msgstr "Esborrar tot"
 
 #: librarian/views/login.tpl:5 librarian/views/login.tpl:36
 msgid "Login"
-msgstr "Login"
+msgstr "Entrar"
 
 #: librarian/views/login.tpl:10
 msgid "Log into Librarian"
-msgstr ""
+msgstr "Entrar a la Biblioteca"
 
 #: librarian/views/exec_result.tpl:5 librarian/views/exec_result.tpl:10
 msgid "Script output"
@@ -626,11 +635,11 @@ msgstr "Errors"
 #: librarian/views/content_list.tpl:20 librarian/views/content_list.tpl:22
 #: librarian/views/file_list.tpl:18
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: librarian/views/content_list.tpl:21
 msgid "Search titles"
-msgstr ""
+msgstr "Buscar per títol"
 
 #: librarian/views/content_list.tpl:27
 #, python-format
@@ -639,12 +648,12 @@ msgstr "Mostrant resultats per %(terms)s"
 
 #: librarian/views/content_list.tpl:29
 msgid "Clear"
-msgstr ""
+msgstr "Netejar"
 
 #: librarian/views/content_list.tpl:61
-#, fuzzy, python-format
+#, python-format
 msgid "There are no search results for '%(terms)s'"
-msgstr "No hi han resultats per la cerca '%(termes)s'"
+msgstr "No hi han resultats per la cerca '%(terms)s'"
 
 #: librarian/views/content_list.tpl:64
 #, python-format
@@ -656,6 +665,8 @@ msgstr "No hi han resultats per '%(tag)s' "
 msgid ""
 "Language filter for '%(lang)s' is active. Click %(link)s to see all content"
 msgstr ""
+"Filtre de llenguatge per '%(lang)s' està actiu. Prem %(link)s  per veure tot "
+"el contingut"
 
 #: librarian/views/content_list.tpl:86
 msgid "Load more content"
@@ -671,11 +682,11 @@ msgstr "Ves amunt"
 
 #: librarian/views/_tag_js_templates.tpl:3
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: librarian/views/_tag_js_templates.tpl:8
 msgid "Close"
-msgstr "Tanca"
+msgstr "Tancar"
 
 #: librarian/views/_tag_js_templates.tpl:13
 msgid "Tags could not be updated."
@@ -688,28 +699,28 @@ msgstr "Núvol d'etiquetes"
 #: librarian/views/feedback.tpl:11
 #, python-brace-format
 msgid "You'll be taken to {target} in {seconds} seconds."
-msgstr ""
+msgstr "Et portarà a {target} en {seconds} segons."
 
 #: librarian/views/reader.tpl:24
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:8
 msgid "Download"
-msgstr "Download"
+msgstr "Descarregar"
 
 #: librarian/views/404.tpl:5 librarian/views/404.tpl:10
 msgid "Page not found"
-msgstr "Page not found"
+msgstr "Pàgina no trobada"
 
 #: librarian/views/404.tpl:14
 msgid "The page you were looking for could not be found"
-msgstr "The page you were looking for could not be found"
+msgstr "La pàgina que buscaves no s'ha trobat"
 
 #: librarian/views/plugin_error.tpl:4
 msgid "An error occurred during the rendering of this plugin."
-msgstr ""
+msgstr "Ha passat un error en l'execució d'aquest plugin."
 
 #: librarian/views/_tags.tpl:10 librarian/views/file_list.tpl:116
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: librarian/views/_tags.tpl:14
 msgid "Separate tags with commas"
@@ -718,7 +729,7 @@ msgstr "Separa les etiquetes amb comes"
 #: librarian/views/_delete_button.tpl:4 librarian/views/file_list.tpl:68
 #: librarian/views/file_list.tpl:91
 msgid "Delete"
-msgstr "Elimina"
+msgstr "Eliminar"
 
 #: librarian/views/_notification_list.tpl:2
 #, python-brace-format
@@ -726,12 +737,13 @@ msgid "A content item has been added to the Library with the following title:"
 msgid_plural ""
 "{count} content items have been added to the Library with the following "
 "titles:"
-msgstr[0] ""
+msgstr[0] "Un element s'ha afegit a la Biblioteca amb el títol següent:"
 msgstr[1] ""
+"{count} elements s'han afegit a la Biblioteca amb els títols següents:"
 
 #: librarian/views/_notification_list.tpl:24
 msgid "Mark read"
-msgstr ""
+msgstr "Marcar com a llegit"
 
 #: librarian/views/503.tpl:5 librarian/views/503.tpl:10
 msgid "Under maintenance"
@@ -742,8 +754,8 @@ msgid ""
 "Librarian is currently in maintenance mode. Please wait a few minutes and "
 "try again."
 msgstr ""
-"Librarian is currently in maintenance mode. Please wait a few minutes and "
-"try again."
+"Librarian es troba en mode manteniment. Si us plau, espera uns minuts i "
+"torna a provar-ho."
 
 #: librarian/views/_simple_pager.tpl:4
 msgid "previous"
@@ -752,7 +764,7 @@ msgstr "anterior"
 #: librarian/views/_simple_pager.tpl:8
 #, python-format
 msgid "Page %(current)s of %(total)s"
-msgstr ""
+msgstr "Pàgina %(current)s de %(total)s"
 
 #: librarian/views/_simple_pager.tpl:13
 msgid "next"
@@ -768,7 +780,7 @@ msgstr "per pàgina"
 
 #: librarian/views/_simple_pager.tpl:25
 msgid "Reload"
-msgstr "Recarrega"
+msgstr "Recarregar"
 
 #: librarian/views/app_list.tpl:16
 msgid "No description provided"
@@ -796,8 +808,8 @@ msgid ""
 "Librarian has failed to fulfill your request due to unexpected error in the "
 "program. Details are provided below."
 msgstr ""
-"Librarian has failed to fulfill your request due to unexpected error in the "
-"program. Details are provided below."
+"Librarian no ha completat la petició degut a un error en el programa. "
+"Detalls de l'error a continuació."
 
 #: librarian/views/500.tpl:19 librarian/plugins/logs/views/logs.tpl:7
 msgid "Download application log"
@@ -805,23 +817,23 @@ msgstr "Descarrega els registres de l'aplicació"
 
 #: librarian/views/file_list.tpl:14
 msgid "Search files and folders"
-msgstr ""
+msgstr "Buscar arxius i carpetes"
 
 #: librarian/views/file_list.tpl:30
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: librarian/views/file_list.tpl:32
 msgid "Size"
-msgstr ""
+msgstr "Mida"
 
 #: librarian/views/file_list.tpl:33
 msgid "Actions"
-msgstr ""
+msgstr "Accions"
 
 #: librarian/views/file_list.tpl:42
 msgid "Go up one level"
-msgstr ""
+msgstr "Anar un nivell amunt"
 
 #: librarian/views/file_list.tpl:48
 msgid "(go to file list)"
@@ -834,11 +846,11 @@ msgstr "Actualment no hi han fitxers o carpetes aquí."
 #: librarian/views/file_list.tpl:65 librarian/views/file_list.tpl:88
 #: librarian/views/file_list.tpl:110
 msgid "Rename"
-msgstr "Renombra"
+msgstr "Renombrar"
 
 #: librarian/views/file_list.tpl:83
 msgid "Run"
-msgstr "Executa"
+msgstr "Executar"
 
 #: librarian/views/file_list.tpl:102
 msgid "About this folder"
@@ -846,44 +858,44 @@ msgstr "Sobre aquesta carpeta"
 
 #: librarian/views/setup/finished.tpl:5
 msgid "Setup Completed"
-msgstr ""
+msgstr "Configuració completada"
 
 #: librarian/views/setup/finished.tpl:10
 msgid "Settings are saved."
-msgstr ""
+msgstr "Configuració guardada."
 
 #: librarian/views/setup/finished.tpl:11
 msgid "Welcome to outernet."
-msgstr ""
+msgstr "Benvingut a outernet."
 
 #: librarian/views/setup/finished.tpl:12
 msgid "Start using Outernet"
-msgstr ""
+msgstr "Començar a utilitzar Outernet"
 
 #: librarian/views/setup/step_language.tpl:5
 msgid "Please select the interface language."
-msgstr ""
+msgstr "Si us plau, tria el llenguatge de la interfície"
 
 #: librarian/views/setup/step_superuser.tpl:4
 msgid "Please enter the desired credentials for the superuser account."
-msgstr ""
+msgstr "Si us plau, entra les credencials pel compte de superusuari."
 
 #: librarian/views/setup/main.tpl:8
 msgid "Setup Wizard"
-msgstr ""
+msgstr "Assistent de Configuració"
 
 #: librarian/views/setup/main.tpl:40
 #, python-format
 msgid "Setup Wizard: Step %s of %s"
-msgstr ""
+msgstr "Assistent de Configuració: Pas %s de %s"
 
 #: librarian/views/setup/main.tpl:50
 msgid "Next"
-msgstr ""
+msgstr "Següent"
 
 #: librarian/views/setup/step_datetime.tpl:4
 msgid "Please set the current timezone."
-msgstr ""
+msgstr "Indica la zona horària"
 
 #: librarian/plugins/ondd/views/ondd.tpl:15
 msgid "Downloads in progress"
@@ -891,7 +903,7 @@ msgstr "Descàrregues en procés"
 
 #: librarian/plugins/ondd/views/ondd_wizard.tpl:7
 msgid "Please select the satellite you'd like to receive data from."
-msgstr ""
+msgstr "Escull el satèl·lit del qual rebre les dades."
 
 #: librarian/plugins/ondd/views/ondd/_presets.tpl:4
 msgid "Satellite:"
@@ -908,36 +920,36 @@ msgstr "Personalitzat..."
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:4
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:5
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:4
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:5
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:7
 msgid "Signal"
-msgstr ""
+msgstr "Senyal"
 
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:9
 msgid "Quality"
-msgstr ""
+msgstr "Qualitat"
 
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:13
 msgid "Signal lock:"
-msgstr ""
+msgstr "Senyal fixada:"
 
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:17
 msgid "Receiving data:"
-msgstr ""
+msgstr "Rebent dades:"
 
 #: librarian/plugins/ondd/views/ondd/_signal.tpl:21
 msgid "Bitrate:"
-msgstr ""
+msgstr "Taxa de bits:"
 
 #: librarian/plugins/ondd/views/ondd/_file_list.tpl:5
 msgid "No files are being downloaded"
-msgstr "No files are being downloaded"
+msgstr "No s'estan descarregant arxius"
 
 #: librarian/plugins/ondd/views/ondd/_settings_form.tpl:13
 msgid "Tune in"
@@ -953,15 +965,16 @@ msgstr "Còpia de seguretat"
 
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:17
 msgid "Rebuild"
-msgstr "Reconstrueix"
+msgstr "Reconstruir"
 
 #: librarian/plugins/dbmanage/views/dbmanage.tpl:23
 msgid ""
 "Database rebuild will cause all tags to be lost. It will also put Librarian "
 "into maintenance mode and prevent users from accessing content."
 msgstr ""
-"Database rebuild will cause all tags to be lost. It will also put Librarian "
-"into maintenance mode and prevent users from accessing content."
+"La reconstrucció de la base de dades provocarà que totes les etiquetes es "
+"perdin. També deixarà Librarian en mode manteniment i evitarà que els "
+"usuaris accedeixin al contingut."
 
 #: librarian/plugins/license/views/license.tpl:5
 msgid ""
@@ -972,10 +985,11 @@ msgid ""
 "option) any later version.\n"
 msgstr ""
 "\n"
-"This program is free software: you can redistribute it and/or modify it\n"
-"under the terms of the GNU General Public License as published by the\n"
-"Free Software Foundation, either version 3 of the License, or (at your\n"
-"option) any later version.\n"
+"Aquest programa és programari lliure: pots distribuir-lo i/o modificar-lo\n"
+"sota els termes de la llicència GNU General Public tal com s'ha publicat "
+"per\n"
+"la Free Software Foundation, either versió 3 de la llicència, o (si ho\n"
+"prefereixes) qualsevol versió posterior.\n"
 
 #: librarian/plugins/license/views/license.tpl:16
 msgid "Some rights reserved."
@@ -983,7 +997,7 @@ msgstr "Alguns drets reservats."
 
 #: librarian/plugins/diskspace/views/diskspace.tpl:11
 msgid "You are running low on disk space."
-msgstr "Tens poc espai lliure en disc"
+msgstr "Tens poc espai lliure en disc."
 
 #: librarian/plugins/diskspace/views/diskspace.tpl:13
 msgid "Free some space now"
@@ -992,8 +1006,8 @@ msgstr "Alliberar espai ara"
 #: librarian/plugins/diskspace/views/diskspace.tpl:21
 msgid "item in the library"
 msgid_plural "items in the library"
-msgstr[0] "element a la llibrería"
-msgstr[1] "elements a la llibrería"
+msgstr[0] "element a la biblioteca"
+msgstr[1] "elements a la biblioteca"
 
 #: librarian/plugins/diskspace/views/diskspace.tpl:27
 msgid "used space"
@@ -1002,7 +1016,7 @@ msgstr "espai utilitzat"
 #: librarian/plugins/diskspace/views/diskspace/_space_info.tpl:6
 #, python-format
 msgid "Total space (%s free)"
-msgstr ""
+msgstr "Espai total (%s lliure)"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:5
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:10
@@ -1020,7 +1034,7 @@ msgstr "No queda espai lliure"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:33
 msgid "delete?"
-msgstr "esborra?"
+msgstr "esborrar?"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:35
 msgid "date"
@@ -1032,7 +1046,7 @@ msgstr "títol"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:39
 msgid "size"
-msgstr "tamany"
+msgstr "mida"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:55
 msgid "There is enough free space. No clean-up needed."
@@ -1040,11 +1054,11 @@ msgstr "Hi ha suficient espai lliure. No es necessari netejar."
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:62
 msgid "How much space does this free up?"
-msgstr "¿Quan espai allibera això?"
+msgstr "Quan espai allibera això?"
 
 #: librarian/plugins/diskspace/views/diskspace/cleanup.tpl:64
 msgid "Delete selected now"
-msgstr "Esborra el seleccionat"
+msgstr "Esborrar el seleccionat"
 
 #: librarian/plugins/tvheadend/views/tvheadend.tpl:4
 msgid "Access TVHeadend"
@@ -1052,11 +1066,11 @@ msgstr "Accedir a TVHeadend"
 
 #: librarian/plugins/netinterfaces/views/netinterfaces.tpl:4
 msgid "List of available network interfaces"
-msgstr "List of available network interfaces"
+msgstr "Llista d'interfícies de xarxa disponibles"
 
 #: librarian/plugins/netinterfaces/views/netinterfaces.tpl:8
 msgid "Interface name"
-msgstr "Interface name"
+msgstr "Nom interfície"
 
 #: librarian/plugins/logs/views/logs.tpl:4
 msgid "Logs are shown in reverse chronological order"
@@ -1064,7 +1078,7 @@ msgstr "Els registres es mostren en ordre cronològic invers"
 
 #: librarian/plugins/logs/views/logs.tpl:8
 msgid "Download system log"
-msgstr ""
+msgstr "Baixar registre del sistema"
 
 #~ msgid "Please type in a number"
 #~ msgstr "Si us plau introdueix un número"
