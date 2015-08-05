@@ -2,7 +2,8 @@ SQL = """
 create table app
 (
     md5 varchar primary_key not null,
-    version varchar
+    version varchar,
+    description varchar
 );
 """
 

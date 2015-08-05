@@ -3,7 +3,8 @@ create table html
 (
     md5 varchar primary_key not null,
     keep_formatting boolean not null default 0,
-    entry_point varchar not null default 'index.html'
+    entry_point varchar not null default 'index.html',
+    description varchar
 );
 
 replace into html (md5, keep_formatting, entry_point)

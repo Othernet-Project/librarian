@@ -1,9 +1,7 @@
 SQL = """
-create table video
+create table generic
 (
     md5 varchar primary_key not null,
-    duration integer,
-    resolution varchar,
     description varchar
 );
 """
