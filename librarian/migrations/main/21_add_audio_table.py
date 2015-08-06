@@ -5,7 +5,7 @@ create table audio
     description varchar
 );
 
-create table tracks
+create table playlist
 (
     md5 varchar primary_key not null,
     file varchar,
