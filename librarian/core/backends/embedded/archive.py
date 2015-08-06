@@ -11,7 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import json
 import logging
 
-from ...archive import BaseArchive, metadata
+from ...archive import BaseArchive
 
 
 CONTENT_ORDER = ['-date(updated)', '-views']
@@ -27,85 +27,54 @@ def with_tag(q):
     q.where += 'tag_id = :tag_id'
 
 
-class RelationType(object):
-
-    def __init__(self, schema):
-        self.schema = schema
-
-    def __getattr__(self, name):
-        return getattr(self.schema, name)
-
-    def __getitem__(self, key):
-        return self.schema[key]
-
-
-class OneToOne(RelationType):
+class Transformation(object):
     pass
 
 
-class OneToMany(RelationType):
+class Merge(Transformation):
+    """Merge into parent"""
     pass
 
 
-class Schema(dict):
+class Ignore(Transformation):
+    """Ignores / deletes key and value"""
+    pass
 
-    def fields(self):
-        return (value for value in self.values()
-                if value is not None or not isinstance(value, RelationType))
 
-    def one_to_one(self):
-        return ((key, value) for (key, value) in self.items()
-                if isinstance(value, OneToOne))
-
-    def one_to_many(self):
-        return ((key, value) for (key, value) in self.items()
-                if isinstance(value, OneToMany))
+class Rename(Transformation):
+    """Renames key to specified name"""
+    def __init__(self, name):
+        self.name = name
 
 
 class EmbeddedArchive(BaseArchive):
-    schema = Schema(zip(metadata.EDGE_KEYS, metadata.EDGE_KEYS))
-    schema.update({
-        'replaces': None,
-        'md5': 'md5',
-        'size': 'size',
-        'updated': 'updated',
-        'content_type': 'content_type',
-        'generic': OneToOne(Schema({
-            'md5': 'md5',
-            'description': 'description'
-        })),
-        'html': OneToOne(Schema({
-            'md5': 'md5',
-            'index': 'entry_point',
-            'keep_formatting': 'keep_formatting'
-        })),
-        'video': OneToOne(Schema({
-            'md5': 'md5',
-            'description': 'description',
-            'duration': 'duration',
-            'size': 'resolution'
-        })),
-        'audio': OneToOne(Schema({
-            'md5': 'md5',
-            'description': 'description',
-            'playlist': OneToMany(Schema({
-                'md5': 'md5',
-                'file': 'file',
-                'title': 'title',
-                'duration': 'duration'
-            }))
-        })),
-        'app': OneToOne(Schema({
-            'md5': 'md5',
-            'description': 'description',
-            'version': 'version',
-        })),
-    })
+    transformations = [
+        {'content': Merge},
+        {'replaces': Ignore},
+        {'html': [
+            {'index': Rename('entry_point')}
+        ]},
+        {'video': [
+            {'size': Rename('resolution')}
+        ]}
+    ]
 
     def __init__(self, db, **config):
         self.db = db
         self.sqlin = lambda *args, **kw: self.db.sqlin.__func__(*args, **kw)
         super(EmbeddedArchive, self).__init__(**config)
+
+    def serialize(self, metadata, transformations):
+        for transform in transformations:
+            ((key, action),) = transform.items()
+            if isinstance(action, list) and key in metadata:
+                self.serialize(metadata[key], action)
+            elif action is Merge:
+                metadata.update(metadata.pop(key))
+            elif action is Ignore:
+                metadata.pop(key, None)
+            elif isinstance(action, Rename):
+                metadata[action.name] = metadata.pop(key)
 
     def get_count(self, terms=None, tag=None, lang=None):
         q = self.db.Select('COUNT(*) as count',
@@ -169,38 +138,29 @@ class EmbeddedArchive(BaseArchive):
         self.db.query(q, domain=domain)
         return self.db.results
 
-    def write(self, table_name, schema, data, shared_extra_data=None):
-        merged = dict(data)
-        merged.update(shared_extra_data or {})
-        q = self.db.Replace(table_name, cols=schema.fields())
-        self.db.query(q, **merged)
-        for sub_table_name, sub_schema in schema.one_to_one():
-            if sub_table_name in merged:
-                self.write(sub_table_name,
-                           schema[sub_table_name],
-                           merged[sub_table_name],
-                           shared_extra_data=shared_extra_data)
+    def write(self, table_name, data, shared_data=None):
+        data.update(shared_data)
+        primitives = {}
+        for key, value in data.items():
+            if isinstance(value, dict):
+                self.write(key, value, shared_data=shared_data)
+            elif isinstance(value, list):
+                for row in value:
+                    self.write(key, row, shared_data=shared_data)
+            else:
+                primitives[key] = value
 
-        for sub_table_name, sub_schema in schema.one_to_many():
-            if sub_table_name in merged:
-                for row in merged[sub_table_name]:
-                    self.write(sub_table_name,
-                               schema[sub_table_name],
-                               row,
-                               shared_extra_data=shared_extra_data)
+        q = self.db.Replace(table_name, cols=primitives.keys())
+        self.db.query(q, **primitives)
 
     def add_meta_to_db(self, metadata):
         with self.db.transaction() as cur:
             logging.debug("Adding new content to archive database")
-            self.write('zipballs', self.schema, metadata)
-            # insert content type specific data into their respective tables
-            for content_type, content_data in metadata['content'].items():
-                self.write(content_type,
-                           self.schema[content_type],
-                           content_data,
-                           shared_extra_data=dict(md5=metadata['md5']))
-
             replaces = metadata.get('replaces')
+            self.serialize(metadata, self.transformations)
+            self.write('zipballs',
+                       metadata,
+                       shared_data={'md5': metadata['md5']})
             if replaces:
                 msg = "Removing replaced content from archive database."
                 logging.debug(msg)
