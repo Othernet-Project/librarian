@@ -11,7 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import json
 import logging
 
-from ...archive import BaseArchive
+from ...archive import BaseArchive, metadata
 
 
 CONTENT_ORDER = ['-date(updated)', '-views']
@@ -27,7 +27,80 @@ def with_tag(q):
     q.where += 'tag_id = :tag_id'
 
 
+class RelationType(object):
+
+    def __init__(self, schema):
+        self.schema = schema
+
+    def __getattr__(self, name):
+        return getattr(self.schema, name)
+
+    def __getitem__(self, key):
+        return self.schema[key]
+
+
+class OneToOne(RelationType):
+    pass
+
+
+class OneToMany(RelationType):
+    pass
+
+
+class Schema(dict):
+
+    def fields(self):
+        return (value for value in self.values()
+                if value is not None or not isinstance(value, RelationType))
+
+    def one_to_one(self):
+        return ((key, value) for (key, value) in self.items()
+                if isinstance(value, OneToOne))
+
+    def one_to_many(self):
+        return ((key, value) for (key, value) in self.items()
+                if isinstance(value, OneToMany))
+
+
 class EmbeddedArchive(BaseArchive):
+    schema = Schema(zip(metadata.EDGE_KEYS, metadata.EDGE_KEYS))
+    schema.update({
+        'replaces': None,
+        'md5': 'md5',
+        'size': 'size',
+        'updated': 'updated',
+        'content_type': 'content_type',
+        'generic': OneToOne(Schema({
+            'md5': 'md5',
+            'description': 'description'
+        })),
+        'html': OneToOne(Schema({
+            'md5': 'md5',
+            'index': 'entry_point',
+            'keep_formatting': 'keep_formatting'
+        })),
+        'video': OneToOne(Schema({
+            'md5': 'md5',
+            'description': 'description',
+            'duration': 'duration',
+            'size': 'resolution'
+        })),
+        'audio': OneToOne(Schema({
+            'md5': 'md5',
+            'description': 'description',
+            'playlist': OneToMany(Schema({
+                'md5': 'md5',
+                'file': 'file',
+                'title': 'title',
+                'duration': 'duration'
+            }))
+        })),
+        'app': OneToOne(Schema({
+            'md5': 'md5',
+            'description': 'description',
+            'version': 'version',
+        })),
+    })
 
     def __init__(self, db, **config):
         self.db = db
@@ -96,12 +169,37 @@ class EmbeddedArchive(BaseArchive):
         self.db.query(q, domain=domain)
         return self.db.results
 
+    def write(self, table_name, schema, data, shared_extra_data=None):
+        merged = dict(data)
+        merged.update(shared_extra_data or {})
+        q = self.db.Replace(table_name, cols=schema.fields())
+        self.db.query(q, **merged)
+        for sub_table_name, sub_schema in schema.one_to_one():
+            if sub_table_name in merged:
+                self.write(sub_table_name,
+                           schema[sub_table_name],
+                           merged[sub_table_name],
+                           shared_extra_data=shared_extra_data)
+
+        for sub_table_name, sub_schema in schema.one_to_many():
+            if sub_table_name in merged:
+                for row in merged[sub_table_name]:
+                    self.write(sub_table_name,
+                               schema[sub_table_name],
+                               row,
+                               shared_extra_data=shared_extra_data)
+
     def add_meta_to_db(self, metadata):
         with self.db.transaction() as cur:
             logging.debug("Adding new content to archive database")
-            q = self.db.Replace('zipballs', cols=BaseArchive.db_fields)
-            self.db.query(q, **metadata)
-            rowcount = cur.rowcount
+            self.write('zipballs', self.schema, metadata)
+            # insert content type specific data into their respective tables
+            for content_type, content_data in metadata['content'].items():
+                self.write(content_type,
+                           self.schema[content_type],
+                           content_data,
+                           shared_extra_data=dict(md5=metadata['md5']))
+
             replaces = metadata.get('replaces')
             if replaces:
                 msg = "Removing replaced content from archive database."
@@ -109,7 +207,7 @@ class EmbeddedArchive(BaseArchive):
                 q = self.db.Delete('zipballs', where='md5 = ?')
                 self.db.query(q, replaces)
 
-        return rowcount
+        return True
 
     def remove_meta_from_db(self, content_id):
         with self.db.transaction() as cur:
