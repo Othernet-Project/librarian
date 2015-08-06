@@ -89,16 +89,13 @@ class BaseArchive(object):
         'spooldir',
         'meta_filename',
     )
-    meta_db_mapping = {
-        'replaces': None,
-        'index': 'entry_point'
+    content_types = {
+        'generic': 1,
+        'html': 2,
+        'video': 4,
+        'audio': 8,
+        'app': 16,
     }
-    db_fields = (
-        'md5',
-        'size',
-        'updated',
-    ) + tuple(filter(None, [meta_db_mapping.get(key, key)
-                            for key in metadata.EDGE_KEYS]))
 
     def __init__(self, **config):
         self.config = config
@@ -108,6 +105,12 @@ class BaseArchive(object):
                                 "{1}".format(type(self).__name__, key))
 
         self.__initialized = True
+
+    def determine_content_type(self, content):
+        """Calculate bitmask of the passed in content object based on the
+        content types found in it."""
+        calc = lambda mask, key: mask + self.content_types.get(key.lower(), 0)
+        return functools.reduce(calc, content.keys(), 0)
 
     def get_count(self, terms=None, tag=None, lang=None):
         """Return the number of matching content metadata filtered by the given
@@ -242,6 +245,7 @@ class BaseArchive(object):
         meta['md5'] = content_id
         meta['updated'] = datetime.datetime.now()
         meta['size'] = content.get_content_size(contentdir, content_id)
+        meta['content_type'] = self.determine_content_type(meta['content'])
 
     def extract_zipball(self, zip_path, contentdir):
         """Extract zipball found on `zip_path` into `contentdir`.
