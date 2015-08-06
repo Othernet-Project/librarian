@@ -56,6 +56,9 @@ class EmbeddedArchive(BaseArchive):
         ]},
         {'video': [
             {'size': Rename('resolution')}
+        ]},
+        {'image': [
+            {'size': Rename('resolution')}
         ]}
     ]
 
