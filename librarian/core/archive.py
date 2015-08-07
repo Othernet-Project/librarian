@@ -106,6 +106,17 @@ class BaseArchive(object):
 
         self.__initialized = True
 
+    def get_content_type_name(self, content_type_id):
+        """Return the name of the content type for a given ID."""
+        for (key, value) in self.content_types.items():
+            if value == content_type_id:
+                return key
+
+    def list_content_types(self, content_type_mask):
+        """Return list of content type names present in a mask."""
+        return [name for (name, cid) in self.content_types.items()
+                if content_type_mask & cid == cid]
+
     def determine_content_type(self, content):
         """Calculate bitmask of the passed in content object based on the
         content types found in it."""
