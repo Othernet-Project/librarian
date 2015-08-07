@@ -187,16 +187,19 @@ def content_reader(meta):
     """ Loads the reader interface """
     archive = open_archive()
     archive.add_view(meta.md5)
-    file_path = request.params.get('path', meta.entry_point)
-    file_path = meta.entry_point if file_path == '/' else file_path
-    if file_path.startswith('/'):
-        file_path = file_path[1:]
+    # as mixed content is possible in zipballs, it is allowed to specify which
+    # content type is being viewed now explicitly, falling back to the first
+    # one found in the content object
+    requested_content_type = request.params.get('content_type')
+    content_type = archive.get_content_type_name(requested_content_type)
+    if content_type is None:
+        # pick first available content type present in content object as it was
+        # not specified
+        content_type = archive.list_content_types(meta['content_type'])[0]
 
-    referer = request.headers.get('Referer', '')
-    base_path = i18n_url('content:sites_list')
-    if str(base_path) not in referer:
-        base_path = i18n_url('content:list')
-    return dict(meta=meta, base_path=base_path, file_path=file_path)
+    return dict(meta=meta,
+                base_path=i18n_url('content:list'),
+                chosen_content_type=content_type)
 
 
 def routes(app):
