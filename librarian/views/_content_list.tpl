@@ -2,7 +2,7 @@
 <%namespace name='delete_button' file='_delete_button.tpl'/>
 
 % for meta in metadata:
-<li class="data ${meta.get('archive', 'unknown')} ${'partner' if meta.is_partner else ''} ${'sponsored' if meta.is_sponsored else ''} ${'has-thumb' if meta.images else ''}" data-id="${meta.md5}" ${'style="background-image: url(\'{}\')"'.format(url('content:file', content_path=th.get_content_path(meta.md5), filename=meta.image)) if meta.images else ''}>
+<li class="data ${meta.get('archive', 'unknown')} ${'partner' if meta.is_partner else ''} ${'sponsored' if meta.is_sponsored else ''} ${'has-thumb' if meta.cover else ''}" data-id="${meta.md5}" ${'style="background-image: url(\'{}\')"'.format(url('content:file', content_path=th.get_content_path(meta.md5), filename=meta.cover)) if meta.cover else ''}>
     <div class="details">
         <p class="label-archive label-${meta.label}">
         ${_(meta.label)}
