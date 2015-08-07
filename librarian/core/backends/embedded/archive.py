@@ -28,8 +28,15 @@ def with_tag(q):
     q.where += 'tag_id = :tag_id'
 
 
+class AttrDict(dict):
+
+    def __init__(self, *args, **kwargs):
+        super(AttrDict, self).__init__(*args, **kwargs)
+        self.__dict__ = self
+
+
 def row_to_dict(row):
-    return dict((key, row[key]) for key in row.keys())
+    return AttrDict((key, row[key]) for key in row.keys())
 
 
 def to_dict(func):
