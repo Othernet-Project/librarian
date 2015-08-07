@@ -33,10 +33,13 @@ app = default_app()
 
 
 @cached(prefix='content', timeout=300)
-def filter_content(query, lang, tag):
+def filter_content(query, lang, tag, content_type):
     conf = request.app.config
     archive = open_archive()
-    raw_metas = archive.get_content(terms=query, lang=lang, tag=tag)
+    raw_metas = archive.get_content(terms=query,
+                                    lang=lang,
+                                    tag=tag,
+                                    content_type=content_type)
     contentdir = conf['content.contentdir']
     metas = [metadata.Meta(meta, content.to_path(meta['md5'], contentdir))
              for meta in raw_metas]
@@ -50,6 +53,11 @@ def prepare_content_list():
     default_lang = request.user.options.get('content_language', None)
     lang = request.params.get('lang', default_lang)
     request.user.options['content_language'] = lang
+    # parse content type filter
+    try:
+        content_type = int(request.params.get('content_type'))
+    except (TypeError, ValueError):
+        content_type = None
     # parse tag filter
     archive = open_archive()
     try:
@@ -66,13 +74,14 @@ def prepare_content_list():
     page = Paginator.parse_page(request.params)
     per_page = Paginator.parse_per_page(request.params)
     # get content list filtered by above parsed filter params
-    metas = filter_content(query, lang, tag)
+    metas = filter_content(query, lang, tag, content_type)
     pager = Paginator(metas, page, per_page)
     return dict(metadata=pager.items,
                 pager=pager,
                 vals=request.params.decode(),
                 query=query,
                 lang=dict(lang=lang),
+                content_types=archive.content_types,
                 tag=tag_name,
                 tag_id=tag,
                 tag_cloud=archive.get_tag_cloud())

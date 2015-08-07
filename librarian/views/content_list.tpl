@@ -47,6 +47,14 @@ ${library_submenu.body()}
     <div class="forms pager">
         ${simple_pager.prev_next_pager()}
     </div>
+    <div class="content-type">
+        <ul>
+            <li><a href="${i18n_path(request.path)}">${_("All")}</a></li>
+            % for content_type, content_type_id in content_types.items():
+            <li><a href="${i18n_path(request.path) + h.set_qparam(content_type=content_type_id).to_qs()}">${content_type}</a></li>
+            % endfor
+        </ul>
+    </div>
 </div>
 
 <ul id="content-list" class="content-list" data-total="${int(pager.pages)}">
