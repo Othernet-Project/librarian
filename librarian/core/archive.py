@@ -112,26 +112,29 @@ class BaseArchive(object):
         calc = lambda mask, key: mask + self.content_types.get(key.lower(), 0)
         return functools.reduce(calc, content.keys(), 0)
 
-    def get_count(self, terms=None, tag=None, lang=None):
+    def get_count(self, terms=None, tag=None, lang=None, content_type=None):
         """Return the number of matching content metadata filtered by the given
         options.
         Implementation is backend specific.
 
-        :param terms:      string: search query
-        :param tag:        list of string tags
-        :param lang:       string: language code"""
+        :param terms:         string: search query
+        :param tag:           list of string tags
+        :param lang:          string: language code
+        :param content_type:  int: content type id"""
         raise NotImplementedError()
 
-    def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None):
+    def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None,
+                    content_type=None):
         """Return iterable of matching content metadata filtered by the given
         options.
         Implementation is backend specific.
 
-        :param terms:      string: search query
-        :param offset:     int: start index
-        :param limit:      int: max number of items to be returned
-        :param tag:        list of string tags
-        :param lang:       string: language code"""
+        :param terms:         string: search query
+        :param offset:        int: start index
+        :param limit:         int: max number of items to be returned
+        :param tag:           list of string tags
+        :param lang:          string: language code
+        :param content_type:  int: content type id"""
         raise NotImplementedError()
 
     def get_single(self, content_id):

@@ -118,7 +118,7 @@ class EmbeddedArchive(BaseArchive):
             elif isinstance(action, Rename):
                 metadata[action.name] = metadata.pop(key)
 
-    def get_count(self, terms=None, tag=None, lang=None):
+    def get_count(self, terms=None, tag=None, lang=None, content_type=None):
         q = self.db.Select('COUNT(*) as count',
                            sets='zipballs',
                            where='disabled = 0')
@@ -134,10 +134,18 @@ class EmbeddedArchive(BaseArchive):
                         'publisher LIKE :terms OR '
                         'keywords LIKE :terms')
 
-        self.db.query(q, terms=terms, tag_id=tag, lang=lang)
+        if content_type:
+            q.where += '("content_type" & :content_type) == :content_type'
+
+        self.db.query(q,
+                      terms=terms,
+                      tag_id=tag,
+                      lang=lang,
+                      content_type=content_type)
         return len(self.many)
 
-    def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None):
+    def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None,
+                    content_type=None):
         # TODO: tests
         q = self.db.Select(sets='zipballs',
                            where='disabled = 0',
@@ -156,7 +164,14 @@ class EmbeddedArchive(BaseArchive):
                         'publisher LIKE :terms OR '
                         'keywords LIKE :terms')
 
-        self.db.query(q, terms=terms, tag_id=tag, lang=lang)
+        if content_type:
+            q.where += '("content_type" & :content_type) == :content_type'
+
+        self.db.query(q,
+                      terms=terms,
+                      tag_id=tag,
+                      lang=lang,
+                      content_type=content_type)
         return self.many()
 
     def fetch(self, table, content_id, dest, many=False):
