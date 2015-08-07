@@ -8,6 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import functools
 import json
 import logging
 
@@ -25,6 +26,26 @@ def multiarg(query, n):
 def with_tag(q):
     q.sets.natural_join('taggings')
     q.where += 'tag_id = :tag_id'
+
+
+def row_to_dict(row):
+    return dict((key, row[key]) for key in row.keys())
+
+
+def to_dict(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        row = func(*args, **kwargs)
+        return row_to_dict(row)
+    return wrapper
+
+
+def to_dict_list(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        rows = func(*args, **kwargs)
+        return map(row_to_dict, rows)
+    return wrapper
 
 
 class Transformation(object):
@@ -61,15 +82,33 @@ class EmbeddedArchive(BaseArchive):
             {'size': Rename('resolution')}
         ]}
     ]
+    content_schema = {
+        'generic': {},
+        'html': {},
+        'video': {},
+        'audio': {'many': ['playlist']},
+        'app': {},
+        'image': {'many': ['album']},
+        'playlist': {},
+        'album': {}
+    }
 
     def __init__(self, db, **config):
         self.db = db
         self.sqlin = lambda *args, **kw: self.db.sqlin.__func__(*args, **kw)
         super(EmbeddedArchive, self).__init__(**config)
 
+    @to_dict
+    def one(self):
+        return self.db.result
+
+    @to_dict_list
+    def many(self):
+        return self.db.results
+
     def serialize(self, metadata, transformations):
-        for transform in transformations:
-            ((key, action),) = transform.items()
+        for transformer in transformations:
+            ((key, action),) = transformer.items()
             if isinstance(action, list) and key in metadata:
                 self.serialize(metadata[key], action)
             elif action is Merge:
@@ -96,7 +135,7 @@ class EmbeddedArchive(BaseArchive):
                         'keywords LIKE :terms')
 
         self.db.query(q, terms=terms, tag_id=tag, lang=lang)
-        return self.db.result.count
+        return len(self.many)
 
     def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None):
         # TODO: tests
@@ -118,19 +157,34 @@ class EmbeddedArchive(BaseArchive):
                         'keywords LIKE :terms')
 
         self.db.query(q, terms=terms, tag_id=tag, lang=lang)
-        return self.db.results
+        return self.many()
+
+    def fetch(self, table, content_id, dest, many=False):
+        q = self.db.Select(sets=table, where='md5 = ?')
+        self.db.query(q, content_id)
+        dest[table] = self.one() if not many else self.many()
+        for relation, related_tables in self.content_schema[table].items():
+            for rel_table in related_tables:
+                self.fetch(rel_table,
+                           content_id,
+                           dest[table],
+                           many=relation == 'many')
 
     def get_single(self, content_id):
         q = self.db.Select(sets='zipballs', where='md5 = ?')
         self.db.query(q, content_id)
-        return self.db.result
+        data = self.one()
+        for content_type, mask in self.content_types.items():
+            if data['content_type'] & mask == mask:
+                self.fetch(content_type, content_id, data)
+        return data
 
     def get_multiple(self, content_ids, fields=None):
         q = self.db.Select(what=['*'] if fields is None else fields,
                            sets='zipballs',
                            where=self.sqlin('md5', content_ids))
         self.db.query(q, *content_ids)
-        return self.db.results
+        return self.many()
 
     def content_for_domain(self, domain):
         # TODO: tests
@@ -139,7 +193,7 @@ class EmbeddedArchive(BaseArchive):
                            order=CONTENT_ORDER)
         domain = '%' + domain.lower() + '%'
         self.db.query(q, domain=domain)
-        return self.db.results
+        return self.many()
 
     def write(self, table_name, data, shared_data=None):
         data.update(shared_data)
@@ -200,7 +254,7 @@ class EmbeddedArchive(BaseArchive):
                            order='-updated',
                            limit=1)
         self.db.query(q)
-        res = self.db.result
+        res = self.one()
         return res and res.updated
 
     def add_view(self, md5):
@@ -227,7 +281,7 @@ class EmbeddedArchive(BaseArchive):
         # Get the IDs of the tags
         q = self.db.Select(sets='tags', where=self.sqlin('name', tags))
         self.db.query(q, *tags)
-        tags = self.db.results
+        tags = self.many()
         ids = (i['tag_id'] for i in tags)
 
         # Create taggings
@@ -261,7 +315,7 @@ class EmbeddedArchive(BaseArchive):
     def get_tag_name(self, tag_id):
         q = self.db.Select('name', sets='tags', where='tag_id = ?')
         self.db.query(q, tag_id)
-        return self.db.result
+        return self.one()
 
     def get_tag_cloud(self):
         q = self.db.Select(
@@ -271,15 +325,15 @@ class EmbeddedArchive(BaseArchive):
             order=['-count', 'name']
         )
         self.db.query(q)
-        return self.db.results
+        return self.many()
 
     def needs_formatting(self, md5):
         """ Whether content needs formatting patch """
         q = self.db.Select('keep_formatting', sets='zipballs', where='md5 = ?')
         self.db.query(q, md5)
-        return not self.db.result.keep_formatting
+        return not self.one()['keep_formatting']
 
     def get_content_languages(self):
         q = 'SELECT DISTINCT language FROM zipballs'
         self.db.query(q)
-        return [row.language for row in self.db.results]
+        return [row['language'] for row in self.many()]
