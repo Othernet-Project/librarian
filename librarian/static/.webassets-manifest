@@ -7,7 +7,7 @@
     "js/content-%(version)s.js": "d5d568de", 
     "js/dashboard-%(version)s.js": "6dab1ac5", 
     "js/files-%(version)s.js": "d969cdea", 
-    "js/reader-%(version)s.js": "63bc1052", 
+    "js/reader-%(version)s.js": "4d441518", 
     "js/setup-%(version)s.js": "10ea5fdc", 
     "js/ui-%(version)s.js": "89f3cc90", 
     "js/video-%(version)s.js": "d3261f31"
