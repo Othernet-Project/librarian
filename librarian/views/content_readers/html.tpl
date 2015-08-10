@@ -2,7 +2,7 @@
     <iframe id="reader-main" class="reader-main" src="${url('content:file', content_path=th.get_content_path(meta.md5), filename=file_path)}" data-keep-formatting="${meta['html']['keep_formatting']}"></iframe>
 </%def>
 
-<%def name="meta()">
+<%def name="meta_display()">
     ## Translators, attribution line appearing in the content list
     <p class="attrib">
     ## Translators, used in place of publisher name if publsiher name is not known
