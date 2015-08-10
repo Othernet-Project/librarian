@@ -10,7 +10,6 @@
             <param name="flashvars" value="controls=true&file=${video_url}" />
         </object>
     </video>
-
 </%def>
 
 <%def name="meta_display()">

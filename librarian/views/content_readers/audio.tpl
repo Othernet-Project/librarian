@@ -1,8 +1,6 @@
 <%def name="reader_display()">
     <h3 id="audio-title">${meta['audio']['playlist'][0]['title']}</h3>
-    <audio id="audio-player" controls="controls">
-        <source src="${url('content:file', content_path=th.get_content_path(meta.md5), filename=meta['audio']['playlist'][0]['file'])}" />
-    </audio>
+    <audio id="audio-player" src="${url('content:file', content_path=th.get_content_path(meta.md5), filename=meta['audio']['playlist'][0]['file'])}"></audio>
     <ul class="playlist">
         % for track in meta['audio']['playlist']:
         <li data-url="${url('content:file', content_path=th.get_content_path(meta.md5), filename=track['file'])}">

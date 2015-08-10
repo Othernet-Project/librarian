@@ -5,8 +5,6 @@
     $.contentReaders.audio = function () {
         var player = new MediaElementPlayer('#audio-player');
 
-        player.play();
-
         $('.play').on('click', function () {
             var track = $(this).parent(),
                 url = track.data('url'),
