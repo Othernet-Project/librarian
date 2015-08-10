@@ -119,11 +119,15 @@ class EmbeddedArchive(BaseArchive):
             if isinstance(action, list) and key in metadata:
                 self._serialize(metadata[key], action)
             elif action is Merge:
-                metadata.update(metadata.pop(key))
+                value = metadata.pop(key, None)
+                if value is not None:
+                    metadata.update(value)
             elif action is Ignore:
                 metadata.pop(key, None)
             elif isinstance(action, Rename):
-                metadata[action.name] = metadata.pop(key)
+                value = metadata.pop(key, None)
+                if value is not None:
+                    metadata[action.name] = value
 
     def get_count(self, terms=None, tag=None, lang=None, content_type=None):
         q = self.db.Select('COUNT(*) as count',
