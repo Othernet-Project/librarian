@@ -5,8 +5,8 @@
     %>
     <video width="${width}" height="${height}" controls="controls" preload="none">
         <source src="${video_url}" />
-        <object width="${width}" height="${height}" type="application/x-shockwave-flash" data="/static/vendor/mediaelement/flashmediaelement.swf">
-            <param name="movie" value="/static/vendor/mediaelement/flashmediaelement.swf" />
+        <object width="${width}" height="${height}" type="application/x-shockwave-flash" data="${assets.url}vendor/mediaelement/flashmediaelement.swf">
+            <param name="movie" value="${assets.url}vendor/mediaelement/flashmediaelement.swf" />
             <param name="flashvars" value="controls=true&file=${video_url}" />
         </object>
     </video>

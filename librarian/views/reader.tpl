@@ -8,7 +8,7 @@ ${meta.title}
 </%block>
 
 <%block name="extra_head">
-<link rel="stylesheet" type="text/css" href="/static/vendor/mediaelement/mediaelementplayer.css" />
+<link rel="stylesheet" type="text/css" href="${assets.url}vendor/mediaelement/mediaelementplayer.css" />
 </%block>
 
 <%block name="main">
