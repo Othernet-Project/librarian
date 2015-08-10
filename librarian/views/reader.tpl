@@ -7,8 +7,12 @@
 ${meta.title}
 </%block>
 
+<%block name="extra_head">
+<link rel="stylesheet" type="text/css" href="/static/vendor/mediaelement/mediaelementplayer.css" />
+</%block>
+
 <%block name="main">
-<div class="reader">
+<div class="reader" data-content-type="${chosen_content_type}">
     <div class="reader-frame">
         ${reader.reader_display()}
     </div>
