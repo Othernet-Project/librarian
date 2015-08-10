@@ -95,6 +95,7 @@ class BaseArchive(object):
         'video': 4,
         'audio': 8,
         'app': 16,
+        'image': 32,
     }
 
     def __init__(self, **config):
