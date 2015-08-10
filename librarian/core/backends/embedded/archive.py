@@ -113,11 +113,11 @@ class EmbeddedArchive(BaseArchive):
     def many(self):
         return self.db.results
 
-    def serialize(self, metadata, transformations):
+    def _serialize(self, metadata, transformations):
         for transformer in transformations:
             ((key, action),) = transformer.items()
             if isinstance(action, list) and key in metadata:
-                self.serialize(metadata[key], action)
+                self._serialize(metadata[key], action)
             elif action is Merge:
                 metadata.update(metadata.pop(key))
             elif action is Ignore:
@@ -181,16 +181,16 @@ class EmbeddedArchive(BaseArchive):
                       content_type=content_type)
         return self.many()
 
-    def fetch(self, table, content_id, dest, many=False):
+    def _fetch(self, table, content_id, dest, many=False):
         q = self.db.Select(sets=table, where='md5 = ?')
         self.db.query(q, content_id)
         dest[table] = self.one() if not many else self.many()
         for relation, related_tables in self.content_schema[table].items():
             for rel_table in related_tables:
-                self.fetch(rel_table,
-                           content_id,
-                           dest[table],
-                           many=relation == 'many')
+                self._fetch(rel_table,
+                            content_id,
+                            dest[table],
+                            many=relation == 'many')
 
     def get_single(self, content_id):
         q = self.db.Select(sets='zipballs', where='md5 = ?')
@@ -198,7 +198,7 @@ class EmbeddedArchive(BaseArchive):
         data = self.one()
         for content_type, mask in self.content_types.items():
             if data['content_type'] & mask == mask:
-                self.fetch(content_type, content_id, data)
+                self._fetch(content_type, content_id, data)
         return data
 
     def get_multiple(self, content_ids, fields=None):
@@ -217,15 +217,15 @@ class EmbeddedArchive(BaseArchive):
         self.db.query(q, domain=domain)
         return self.many()
 
-    def write(self, table_name, data, shared_data=None):
+    def _write(self, table_name, data, shared_data=None):
         data.update(shared_data)
         primitives = {}
         for key, value in data.items():
             if isinstance(value, dict):
-                self.write(key, value, shared_data=shared_data)
+                self._write(key, value, shared_data=shared_data)
             elif isinstance(value, list):
                 for row in value:
-                    self.write(key, row, shared_data=shared_data)
+                    self._write(key, row, shared_data=shared_data)
             else:
                 primitives[key] = value
 
@@ -236,10 +236,10 @@ class EmbeddedArchive(BaseArchive):
         with self.db.transaction() as cur:
             logging.debug("Adding new content to archive database")
             replaces = metadata.get('replaces')
-            self.serialize(metadata, self.transformations)
-            self.write('zipballs',
-                       metadata,
-                       shared_data={'md5': metadata['md5']})
+            self._serialize(metadata, self.transformations)
+            self._write('zipballs',
+                        metadata,
+                        shared_data={'md5': metadata['md5']})
             if replaces:
                 msg = "Removing replaced content from archive database."
                 logging.debug(msg)
