@@ -43,6 +43,8 @@ def to_dict(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         row = func(*args, **kwargs)
+        if not row:
+            return row
         return row_to_dict(row)
     return wrapper
 
@@ -51,6 +53,8 @@ def to_dict_list(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         rows = func(*args, **kwargs)
+        if not rows:
+            return rows
         return map(row_to_dict, rows)
     return wrapper
 
@@ -200,9 +204,10 @@ class EmbeddedArchive(BaseArchive):
         q = self.db.Select(sets='zipballs', where='md5 = ?')
         self.db.query(q, content_id)
         data = self.one()
-        for content_type, mask in self.content_types.items():
-            if data['content_type'] & mask == mask:
-                self._fetch(content_type, content_id, data)
+        if data:
+            for content_type, mask in self.content_types.items():
+                if data['content_type'] & mask == mask:
+                    self._fetch(content_type, content_id, data)
         return data
 
     def get_multiple(self, content_ids, fields=None):
