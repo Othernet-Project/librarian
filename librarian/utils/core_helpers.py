@@ -167,10 +167,8 @@ def content_resolver_plugin(root_url, ap_client_ip_range):
 
 def create_directories(app):
     ensure_dir(app.config['content.spooldir'])
-    ensure_dir(app.config['content.appdir'])
     ensure_dir(app.config['content.unpackdir'])
     ensure_dir(app.config['content.contentdir'])
-    ensure_dir(app.config['content.covers'])
 
 
 def content_domain_plugin(app):
