@@ -200,7 +200,8 @@ def content_reader(meta):
 
     return dict(meta=meta,
                 base_path=i18n_url('content:list'),
-                chosen_content_type=content_type)
+                chosen_content_type=content_type,
+                chosen_path=request.params.get('path'))
 
 
 def routes(app):
