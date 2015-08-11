@@ -128,13 +128,6 @@ def determine_content_type(meta):
     return functools.reduce(calc, meta['content'].keys(), 0)
 
 
-def get_content_type_name(content_type_id):
-    """Return the name of the content type for a given ID."""
-    for (key, value) in CONTENT_TYPES.items():
-        if value == content_type_id:
-            return key
-
-
 class Meta(object):
     """ Metadata wrapper with additional methods for easier consumption
 

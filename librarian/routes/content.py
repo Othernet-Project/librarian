@@ -54,9 +54,8 @@ def prepare_content_list():
     lang = request.params.get('lang', default_lang)
     request.user.options['content_language'] = lang
     # parse content type filter
-    try:
-        content_type = int(request.params.get('content_type'))
-    except (TypeError, ValueError):
+    content_type = request.params.get('content_type')
+    if content_type not in metadata.CONTENT_TYPES:
         content_type = None
     # parse tag filter
     archive = open_archive()
@@ -191,8 +190,7 @@ def content_reader(meta):
     # as mixed content is possible in zipballs, it is allowed to specify which
     # content type is being viewed now explicitly, falling back to the first
     # one found in the content object
-    requested_content_type = request.params.get('content_type')
-    content_type = metadata.get_content_type_name(requested_content_type)
+    content_type = request.params.get('content_type')
     if content_type is None:
         # pick first available content type present in content object as it was
         # not specified

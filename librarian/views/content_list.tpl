@@ -50,8 +50,8 @@ ${library_submenu.body()}
     <div class="content-type">
         <ul>
             <li><a href="${i18n_path(request.path)}">${_("All")}</a></li>
-            % for content_type, content_type_id in content_types.items():
-            <li><a href="${i18n_path(request.path) + h.set_qparam(content_type=content_type_id).to_qs()}">${content_type}</a></li>
+            % for content_type in content_types.keys():
+            <li><a href="${i18n_path(request.path) + h.set_qparam(content_type=content_type).to_qs()}">${content_type}</a></li>
             % endfor
         </ul>
     </div>

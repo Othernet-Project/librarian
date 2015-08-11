@@ -180,6 +180,8 @@ class EmbeddedArchive(BaseArchive):
                         'keywords LIKE :terms')
 
         if content_type:
+            # get integer representation of content type
+            content_type = metadata.CONTENT_TYPES[content_type]
             q.where += '("content_type" & :content_type) == :content_type'
         else:
             # exclude content types that cannot be displayed on the mixed type
