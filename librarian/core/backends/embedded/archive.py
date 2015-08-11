@@ -181,6 +181,12 @@ class EmbeddedArchive(BaseArchive):
 
         if content_type:
             q.where += '("content_type" & :content_type) == :content_type'
+        else:
+            # exclude content types that cannot be displayed on the mixed type
+            # content list
+            content_type = sum([metadata.CONTENT_TYPES[name]
+                                for name in self.exclude_from_content_list])
+            q.where += '("content_type" & :content_type) != :content_type'
 
         self.db.query(q,
                       terms=terms,

@@ -89,6 +89,9 @@ class BaseArchive(object):
         'spooldir',
         'meta_filename',
     )
+    exclude_from_content_list = (
+        'app',
+    )
 
     def __init__(self, **config):
         self.config = config
