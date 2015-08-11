@@ -82,6 +82,7 @@ def prepare_content_list():
                 query=query,
                 lang=dict(lang=lang),
                 content_types=metadata.CONTENT_TYPES,
+                chosen_content_type=content_type,
                 tag=tag_name,
                 tag_id=tag,
                 tag_cloud=archive.get_tag_cloud())
