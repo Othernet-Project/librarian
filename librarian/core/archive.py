@@ -89,14 +89,6 @@ class BaseArchive(object):
         'spooldir',
         'meta_filename',
     )
-    content_types = {
-        'generic': 1,
-        'html': 2,
-        'video': 4,
-        'audio': 8,
-        'app': 16,
-        'image': 32,
-    }
 
     def __init__(self, **config):
         self.config = config
@@ -106,23 +98,6 @@ class BaseArchive(object):
                                 "{1}".format(type(self).__name__, key))
 
         self.__initialized = True
-
-    def get_content_type_name(self, content_type_id):
-        """Return the name of the content type for a given ID."""
-        for (key, value) in self.content_types.items():
-            if value == content_type_id:
-                return key
-
-    def list_content_types(self, content_type_mask):
-        """Return list of content type names present in a mask."""
-        return [name for (name, cid) in self.content_types.items()
-                if content_type_mask & cid == cid]
-
-    def determine_content_type(self, content):
-        """Calculate bitmask of the passed in content object based on the
-        content types found in it."""
-        calc = lambda mask, key: mask + self.content_types.get(key.lower(), 0)
-        return functools.reduce(calc, content.keys(), 0)
 
     def get_count(self, terms=None, tag=None, lang=None, content_type=None):
         """Return the number of matching content metadata filtered by the given
@@ -260,7 +235,7 @@ class BaseArchive(object):
         meta['md5'] = content_id
         meta['updated'] = datetime.datetime.now()
         meta['size'] = content.get_content_size(contentdir, content_id)
-        meta['content_type'] = self.determine_content_type(meta['content'])
+        meta['content_type'] = metadata.determine_content_type(meta)
 
     def extract_zipball(self, zip_path, contentdir):
         """Extract zipball found on `zip_path` into `contentdir`.

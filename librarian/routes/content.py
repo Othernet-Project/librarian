@@ -81,7 +81,7 @@ def prepare_content_list():
                 vals=request.params.decode(),
                 query=query,
                 lang=dict(lang=lang),
-                content_types=archive.content_types,
+                content_types=metadata.CONTENT_TYPES,
                 tag=tag_name,
                 tag_id=tag,
                 tag_cloud=archive.get_tag_cloud())
@@ -191,11 +191,11 @@ def content_reader(meta):
     # content type is being viewed now explicitly, falling back to the first
     # one found in the content object
     requested_content_type = request.params.get('content_type')
-    content_type = archive.get_content_type_name(requested_content_type)
+    content_type = metadata.get_content_type_name(requested_content_type)
     if content_type is None:
         # pick first available content type present in content object as it was
         # not specified
-        content_type = archive.list_content_types(meta['content_type'])[0]
+        content_type = meta.content_type_names[0]
 
     return dict(meta=meta,
                 base_path=i18n_url('content:list'),

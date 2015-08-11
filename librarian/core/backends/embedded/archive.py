@@ -12,7 +12,7 @@ import functools
 import json
 import logging
 
-from ...archive import BaseArchive
+from ...archive import BaseArchive, metadata
 
 
 CONTENT_ORDER = ['-date(updated)', '-views']
@@ -205,7 +205,7 @@ class EmbeddedArchive(BaseArchive):
         self.db.query(q, content_id)
         data = self.one()
         if data:
-            for content_type, mask in self.content_types.items():
+            for content_type, mask in metadata.CONTENT_TYPES.items():
                 if data['content_type'] & mask == mask:
                     self._fetch(content_type, content_id, data)
         return data

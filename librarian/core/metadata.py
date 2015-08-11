@@ -12,12 +12,21 @@ from __future__ import unicode_literals
 
 import os
 import json
+import functools
 
 import scandir
 
 from outernet_metadata import validator
 
 
+CONTENT_TYPES = {
+    'generic': 1,
+    'html': 2,
+    'video': 4,
+    'audio': 8,
+    'app': 16,
+    'image': 32,
+}
 ALIASES = {
     'publisher': ['partner'],
 }
@@ -112,6 +121,20 @@ def process_meta(meta):
     return meta
 
 
+def determine_content_type(meta):
+    """Calculate bitmask of the passed in metadata based on the content types
+    found in it."""
+    calc = lambda mask, key: mask + CONTENT_TYPES.get(key.lower(), 0)
+    return functools.reduce(calc, meta['content'].keys(), 0)
+
+
+def get_content_type_name(content_type_id):
+    """Return the name of the content type for a given ID."""
+    for (key, value) in CONTENT_TYPES.items():
+        if value == content_type_id:
+            return key
+
+
 class Meta(object):
     """ Metadata wrapper with additional methods for easier consumption
 
@@ -200,3 +223,9 @@ class Meta(object):
 
         self._image = self.find_image()
         return self._image
+
+    @property
+    def content_type_names(self):
+        """Return list of content type names present in a content object."""
+        return [name for (name, cid) in CONTENT_TYPES.items()
+                if self.meta['content_type'] & cid == cid]
