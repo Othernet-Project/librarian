@@ -1,5 +1,5 @@
 <%def name="reader_display()">
-
+    <iframe id="reader-main" class="reader-main" src="${url('content:file', content_path=th.get_content_path(meta.md5), filename='index.html')}"></iframe>
 </%def>
 
 <%def name="meta_display()">

@@ -1,9 +1,9 @@
 <%inherit file='base.tpl'/>
 <%namespace name='simple_pager' file='_simple_pager.tpl'/>
 <%namespace name='content_list' file='_content_list.tpl'/>
+<%namespace name='app_list' file='_app_list.tpl'/>
 <%namespace name='library_submenu' file='_library_submenu.tpl'/>
 <%namespace name='tag_js_templates' file='_tag_js_templates.tpl'/>
-
 <%block name="title">
 ${page_title}
 </%block>
@@ -58,7 +58,11 @@ ${library_submenu.body()}
 </div>
 
 <ul id="content-list" class="content-list" data-total="${int(pager.pages)}">
+    % if chosen_content_type == 'app':
+    ${app_list.body()}
+    % else:
     ${content_list.body()}
+    % endif
 </ul>
 
 % if not metadata:
