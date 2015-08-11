@@ -4345,6 +4345,9 @@ form.search .icon {
   display: block;
   width: 100%;
   height: 100%; }
+/* line 17, ../scss/partials/_reader.scss */
+.reader-frame .mejs-container button {
+  min-width: auto; }
 
 /**
  * _icons.scss: simple icon widget
