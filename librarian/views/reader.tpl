@@ -31,5 +31,5 @@ ${meta.title}
 </%block>
 
 <%block name="extra_scripts">
-<script src="${assets['js/reader']}"></script>
+<script type="text/javascript" src="${assets['js/reader']}"></script>
 </%block>
