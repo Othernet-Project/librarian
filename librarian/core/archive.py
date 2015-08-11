@@ -89,7 +89,14 @@ class BaseArchive(object):
         'spooldir',
         'meta_filename',
     )
+    # list of content types that cannot be displayed on the mixed content list
+    # where all other types are mixed together
     exclude_from_content_list = (
+        'app',
+    )
+    # list of content types which data needs to be completely fetched even when
+    # loading the content list
+    prefetchable_types = (
         'app',
     )
 

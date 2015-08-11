@@ -179,23 +179,29 @@ class EmbeddedArchive(BaseArchive):
                         'publisher LIKE :terms OR '
                         'keywords LIKE :terms')
 
+        prefetch = content_type in self.prefetchable_types
         if content_type:
             # get integer representation of content type
-            content_type = metadata.CONTENT_TYPES[content_type]
+            content_type_id = metadata.CONTENT_TYPES[content_type]
             q.where += '("content_type" & :content_type) == :content_type'
         else:
             # exclude content types that cannot be displayed on the mixed type
             # content list
-            content_type = sum([metadata.CONTENT_TYPES[name]
-                                for name in self.exclude_from_content_list])
+            content_type_id = sum([metadata.CONTENT_TYPES[name]
+                                   for name in self.exclude_from_content_list])
             q.where += '("content_type" & :content_type) != :content_type'
 
         self.db.query(q,
                       terms=terms,
                       tag_id=tag,
                       lang=lang,
-                      content_type=content_type)
-        return self.many()
+                      content_type=content_type_id)
+        results = self.many()
+        if prefetch and results:
+            for meta in results:
+                self._fetch(content_type, meta['md5'], meta)
+
+        return results
 
     def _fetch(self, table, content_id, dest, many=False):
         q = self.db.Select(sets=table, where='md5 = ?')
