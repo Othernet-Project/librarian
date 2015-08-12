@@ -138,9 +138,6 @@ class Meta(object):
     with content thumbnails). This functionality may be factored out of this
     class at a later time.
     """
-
-    IMAGE_EXTENSIONS = ('.png', '.gif', '.jpg', '.jpeg')
-
     def __init__(self, meta, content_path):
         """ Metadata wrapper instantiation
 
@@ -151,7 +148,7 @@ class Meta(object):
         # We use ``or`` in the following line because 'tags' can be an empty
         # string, which is treated as invalid JSON
         self.tags = json.loads(meta.get('tags') or '{}')
-        self._image = None
+        self._files = None
         self.content_path = content_path
 
     def __getattr__(self, attr):
@@ -183,16 +180,13 @@ class Meta(object):
         """
         return self.meta.get(key, default)
 
-    def find_image(self):
+    def find_files(self):
         if not self.content_path or not os.path.exists(self.content_path):
-            return None
+            return []
 
-        for entry in scandir.scandir(self.content_path):
-            extension = os.path.splitext(entry.name)[1].lower()
-            if extension in self.IMAGE_EXTENSIONS:
-                return entry.name
-
-        return None
+        return [(filename, os.stat(os.path.join(root, filename)).st_size)
+                for root, _, filenames in scandir.walk(self.content_path)
+                for filename in filenames]
 
     @property
     def lang(self):
@@ -209,12 +203,10 @@ class Meta(object):
         return 'core'
 
     @property
-    def image(self):
-        if self._image is not None:
-            return self._image
-
-        self._image = self.find_image()
-        return self._image
+    def files(self):
+        if self._files is None:
+            self._files = self.find_files()
+        return self._files
 
     @property
     def content_type_names(self):
