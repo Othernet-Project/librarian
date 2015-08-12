@@ -27,6 +27,37 @@
 }
 
 .reader {
+  &.generic {
+    .single-download {
+      margin: 1em;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      .download-button {
+        display: inline-block;
+        @include icon(loader_download_hover, yes);
+      }
+    }
+    .download-list {
+      margin: 1em;
+      .file-info {
+        display: inline-block;
+        vertical-align: middle;
+        .filename {
+          display: inline-block;
+          width: 350px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          vertical-align: middle;
+        }
+      }
+      .download-link {
+        display: inline-block;
+        @include icon(loader_download_hover, yes);
+      }
+    }
+  }
   &.audio {
     .player {
       margin: 1em;
