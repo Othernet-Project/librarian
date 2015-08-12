@@ -147,13 +147,21 @@ class EmbeddedArchive(BaseArchive):
                         'keywords LIKE :terms')
 
         if content_type:
+            # get integer representation of content type
+            content_type_id = metadata.CONTENT_TYPES[content_type]
             q.where += '("content_type" & :content_type) == :content_type'
+        else:
+            # exclude content types that cannot be displayed on the mixed type
+            # content list
+            content_type_id = sum([metadata.CONTENT_TYPES[name]
+                                   for name in self.exclude_from_content_list])
+            q.where += '("content_type" & :content_type) != :content_type'
 
         self.db.query(q,
                       terms=terms,
                       tag_id=tag,
                       lang=lang,
-                      content_type=content_type)
+                      content_type=content_type_id)
         return len(self.many)
 
     def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None,
