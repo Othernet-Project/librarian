@@ -4349,6 +4349,37 @@ form.search .icon {
 .reader-frame .mejs-container button {
   min-width: auto; }
 
+/* line 24, ../scss/partials/_reader.scss */
+.reader.image .album-item {
+  float: left;
+  margin: 25px; }
+@media only screen and (max-width: 320px) {
+  /* line 24, ../scss/partials/_reader.scss */
+  .reader.image .album-item {
+    margin: 0; } }
+/* line 30, ../scss/partials/_reader.scss */
+.reader.image .album-item a {
+  width: 200px;
+  height: 200px;
+  max-width: 200px;
+  max-height: 200px;
+  display: table-cell;
+  vertical-align: middle;
+  position: relative;
+  text-align: center; }
+/* line 39, ../scss/partials/_reader.scss */
+.reader.image .album-item a .thumbnail {
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle; }
+/* line 44, ../scss/partials/_reader.scss */
+.reader.image .album-item a .title {
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  width: 100%;
+  text-align: center; }
+
 /**
  * _icons.scss: simple icon widget
  *
