@@ -109,7 +109,6 @@ def clean_keys(meta):
 
 def process_meta(meta):
     failed = validator.validate(meta, broadcast=True)
-    failed.pop('broadcast', None)  # TODO: remove this after until v0.3
     if failed:
         keys = ', '.join(failed.keys())
         msg = "Metadata validation failed for keys: {0}".format(keys)
