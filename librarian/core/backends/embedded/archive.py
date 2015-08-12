@@ -130,10 +130,7 @@ class EmbeddedArchive(BaseArchive):
                 if value is not None:
                     metadata[action.name] = value
 
-    def get_count(self, terms=None, tag=None, lang=None, content_type=None):
-        q = self.db.Select('COUNT(*) as count',
-                           sets='zipballs',
-                           where='disabled = 0')
+    def _query(self, q, terms, tag, lang, content_type):
         if tag:
             with_tag(q)
 
@@ -162,6 +159,12 @@ class EmbeddedArchive(BaseArchive):
                       tag_id=tag,
                       lang=lang,
                       content_type=content_type_id)
+
+    def get_count(self, terms=None, tag=None, lang=None, content_type=None):
+        q = self.db.Select('COUNT(*) as count',
+                           sets='zipballs',
+                           where='disabled = 0')
+        self._query(q, terms, tag, lang, content_type)
         return len(self.many)
 
     def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None,
@@ -172,37 +175,9 @@ class EmbeddedArchive(BaseArchive):
                            order=CONTENT_ORDER,
                            limit=limit,
                            offset=offset)
-        if tag:
-            with_tag(q)
-
-        if lang:
-            q.where += 'language = :lang'
-
-        if terms:
-            terms = '%' + terms.lower() + '%'
-            q.where += ('title LIKE :terms OR '
-                        'publisher LIKE :terms OR '
-                        'keywords LIKE :terms')
-
-        prefetch = content_type in self.prefetchable_types
-        if content_type:
-            # get integer representation of content type
-            content_type_id = metadata.CONTENT_TYPES[content_type]
-            q.where += '("content_type" & :content_type) == :content_type'
-        else:
-            # exclude content types that cannot be displayed on the mixed type
-            # content list
-            content_type_id = sum([metadata.CONTENT_TYPES[name]
-                                   for name in self.exclude_from_content_list])
-            q.where += '("content_type" & :content_type) != :content_type'
-
-        self.db.query(q,
-                      terms=terms,
-                      tag_id=tag,
-                      lang=lang,
-                      content_type=content_type_id)
+        self._query(q, terms, tag, lang, content_type)
         results = self.many()
-        if prefetch and results:
+        if results and content_type in self.prefetchable_types:
             for meta in results:
                 self._fetch(content_type, meta['md5'], meta)
 
