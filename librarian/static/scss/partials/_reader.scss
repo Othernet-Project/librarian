@@ -1,5 +1,12 @@
 @import "outernet/mixins/sprites";
 
+@mixin entity-icon {
+  font-size: 3em;
+  font-weight: bold;
+  text-decoration: none;
+  line-height: 1em;
+}
+
 .reader-frame {
   position: fixed;
   top: 60px;
@@ -20,6 +27,26 @@
 }
 
 .reader {
+  &.audio {
+    .player {
+      margin: 1em;
+      .playlist {
+        margin-top: 1em;
+        .track-info {
+          width: 350px;
+          display: inline-block;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          vertical-align: middle;
+        }
+        .play {
+          vertical-align: middle;
+          @include entity-icon;
+        }
+      }
+    }
+  }
   &.image {
     .album-item {
       float: left;
@@ -54,9 +81,7 @@
     .top-controls {
       margin: 1em;
       .back {
-        font-size: 3em;
-        font-weight: bold;
-        text-decoration: none;
+        @include entity-icon;
       }
     }
     .image-viewer {
