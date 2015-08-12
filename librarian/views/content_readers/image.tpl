@@ -7,15 +7,21 @@
         except Exception:
             img_index = None
     %>
-    % if img_index > 0 and img_index < img_count:
-        <a class="back" href="${content_url + h.set_qparam(content_type=chosen_content_type).del_qparam('path').to_qs()}">${_("Back")}</a>
-        <img src=${url('content:file', content_path=th.get_content_path(meta.md5), filename=meta['image']['album'][img_index]['file'])} />
-        % if img_index > 0:
-            <a class="previous" href="${content_url + h.set_qparam(content_type=chosen_content_type).set_qparam(path=img_index - 1).to_qs()}">${_("Previous")}</a>
-        % endif
-        % if img_index < img_count - 1:
-            <a class="next" href="${content_url + h.set_qparam(content_type=chosen_content_type).set_qparam(path=img_index + 1).to_qs()}">${_("Next")}</a>
-        % endif
+    % if img_index >= 0 and img_index < img_count:
+        <div class="top-controls">
+            <a class="back" href="${content_url + h.set_qparam(content_type=chosen_content_type).del_qparam('path').to_qs()}">&larr;</a>
+        </div>
+        <div class="image-viewer">
+            % if img_index > 0:
+            <a class="previous" href="${content_url + h.set_qparam(content_type=chosen_content_type).set_qparam(path=img_index - 1).to_qs()}"></a>
+            % endif
+            <div class="image-container">
+                <img src=${url('content:file', content_path=th.get_content_path(meta.md5), filename=meta['image']['album'][img_index]['file'])} />
+            </div>
+            % if img_index < img_count - 1:
+            <a class="next" href="${content_url + h.set_qparam(content_type=chosen_content_type).set_qparam(path=img_index + 1).to_qs()}"></a>
+            % endif
+        </div>
     % else:
     <ul class="album">
     % for image in meta['image']['album']:

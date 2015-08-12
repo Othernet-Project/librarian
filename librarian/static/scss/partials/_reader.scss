@@ -1,4 +1,4 @@
-$reader-data-height: 60px;
+@import "outernet/mixins/sprites";
 
 .reader-frame {
   position: fixed;
@@ -48,6 +48,36 @@ $reader-data-height: 60px;
           width: 100%;
           text-align: center;
         }
+      }
+    }
+
+    .top-controls {
+      margin: 1em;
+      .back {
+        font-size: 3em;
+        font-weight: bold;
+        text-decoration: none;
+      }
+    }
+    .image-viewer {
+      text-align: center;
+      height: 100%;
+      margin-top: 5em;
+      .image-container {
+        width: 70%;
+        vertical-align: middle;
+        display: inline-block;
+        img {
+          max-width: 100%;
+        }
+      }
+      .previous {
+        display: inline-block;
+        @include icon(arrow_left, yes);
+      }
+      .next {
+        display: inline-block;
+        @include icon(arrow_right, yes);
       }
     }
   }
