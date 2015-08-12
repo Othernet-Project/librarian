@@ -4351,7 +4351,7 @@ form.search .icon {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 3, ../scss/partials/_reader.scss */
+/* line 10, ../scss/partials/_reader.scss */
 .reader-frame {
   position: fixed;
   top: 60px;
@@ -4360,24 +4360,45 @@ form.search .icon {
   right: 0;
   background: #ffffff;
   overflow: hidden; }
-/* line 12, ../scss/partials/_reader.scss */
+/* line 19, ../scss/partials/_reader.scss */
 .reader-frame iframe {
   display: block;
   width: 100%;
   height: 100%; }
-/* line 17, ../scss/partials/_reader.scss */
+/* line 24, ../scss/partials/_reader.scss */
 .reader-frame .mejs-container button {
   min-width: auto; }
 
-/* line 24, ../scss/partials/_reader.scss */
+/* line 31, ../scss/partials/_reader.scss */
+.reader.audio .player {
+  margin: 1em; }
+/* line 33, ../scss/partials/_reader.scss */
+.reader.audio .player .playlist {
+  margin-top: 1em; }
+/* line 35, ../scss/partials/_reader.scss */
+.reader.audio .player .playlist .track-info {
+  width: 350px;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle; }
+/* line 43, ../scss/partials/_reader.scss */
+.reader.audio .player .playlist .play {
+  vertical-align: middle;
+  font-size: 3em;
+  font-weight: bold;
+  text-decoration: none;
+  line-height: 1em; }
+/* line 51, ../scss/partials/_reader.scss */
 .reader.image .album-item {
   float: left;
   margin: 25px; }
 @media only screen and (max-width: 320px) {
-  /* line 24, ../scss/partials/_reader.scss */
+  /* line 51, ../scss/partials/_reader.scss */
   .reader.image .album-item {
     margin: 0; } }
-/* line 30, ../scss/partials/_reader.scss */
+/* line 57, ../scss/partials/_reader.scss */
 .reader.image .album-item a {
   width: 200px;
   height: 200px;
@@ -4387,40 +4408,41 @@ form.search .icon {
   vertical-align: middle;
   position: relative;
   text-align: center; }
-/* line 39, ../scss/partials/_reader.scss */
+/* line 66, ../scss/partials/_reader.scss */
 .reader.image .album-item a .thumbnail {
   height: auto;
   max-width: 100%;
   vertical-align: middle; }
-/* line 44, ../scss/partials/_reader.scss */
+/* line 71, ../scss/partials/_reader.scss */
 .reader.image .album-item a .title {
   position: absolute;
   bottom: -40px;
   left: 0;
   width: 100%;
   text-align: center; }
-/* line 54, ../scss/partials/_reader.scss */
+/* line 81, ../scss/partials/_reader.scss */
 .reader.image .top-controls {
   margin: 1em; }
-/* line 56, ../scss/partials/_reader.scss */
+/* line 83, ../scss/partials/_reader.scss */
 .reader.image .top-controls .back {
   font-size: 3em;
   font-weight: bold;
-  text-decoration: none; }
-/* line 62, ../scss/partials/_reader.scss */
+  text-decoration: none;
+  line-height: 1em; }
+/* line 87, ../scss/partials/_reader.scss */
 .reader.image .image-viewer {
   text-align: center;
   height: 100%;
   margin-top: 5em; }
-/* line 66, ../scss/partials/_reader.scss */
+/* line 91, ../scss/partials/_reader.scss */
 .reader.image .image-viewer .image-container {
   width: 70%;
   vertical-align: middle;
   display: inline-block; }
-/* line 70, ../scss/partials/_reader.scss */
+/* line 95, ../scss/partials/_reader.scss */
 .reader.image .image-viewer .image-container img {
   max-width: 100%; }
-/* line 74, ../scss/partials/_reader.scss */
+/* line 99, ../scss/partials/_reader.scss */
 .reader.image .image-viewer .previous {
   display: inline-block;
   display: inline-block;
@@ -4431,7 +4453,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 74, ../scss/partials/_reader.scss */
+  /* line 99, ../scss/partials/_reader.scss */
   .reader.image .image-viewer .previous {
     background-image: url('../img/icons/2x-s9ad74fd043.png');
     background-position: 0 -715px;
@@ -4439,7 +4461,7 @@ form.search .icon {
     -o-background-size: 100px 4244px;
     -webkit-background-size: 100px 4244px;
     background-size: 100px 4244px; } }
-/* line 78, ../scss/partials/_reader.scss */
+/* line 103, ../scss/partials/_reader.scss */
 .reader.image .image-viewer .next {
   display: inline-block;
   display: inline-block;
@@ -4450,7 +4472,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 78, ../scss/partials/_reader.scss */
+  /* line 103, ../scss/partials/_reader.scss */
   .reader.image .image-viewer .next {
     background-image: url('../img/icons/2x-s9ad74fd043.png');
     background-position: 0 -825px;
