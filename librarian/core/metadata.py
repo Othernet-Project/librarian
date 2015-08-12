@@ -32,15 +32,8 @@ ALIASES = {
 }
 
 
-def get_successor_key(key):
-    """ If a key becomes obsolete, return it's successor.
-
-    :param key:  string: old(now obsolete) key name
-    :returns:    string: new(successor) key name"""
-    for edge_key, edge_aliases in ALIASES.items():
-        for obsolete_key in edge_aliases:
-            if obsolete_key == key:
-                return edge_key
+def is_deprecated(key):
+    return validator.values.v.deprecated in validator.values.SPECS[key]
 
 
 def get_edge_keys():
@@ -49,8 +42,8 @@ def get_edge_keys():
     :returns:  tuple of strings(key names)"""
     edge_keys = set()
     for key in validator.values.KEYS:
-        successor = get_successor_key(key)
-        edge_keys.add(successor or key)
+        if not is_deprecated(key):
+            edge_keys.add(key)
 
     return tuple(edge_keys)
 
