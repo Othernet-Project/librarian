@@ -186,7 +186,8 @@ class Meta(object):
 
         return [(filename, os.stat(os.path.join(root, filename)).st_size)
                 for root, _, filenames in scandir.walk(self.content_path)
-                for filename in filenames]
+                for filename in filenames
+                if filename != 'info.json']
 
     @property
     def lang(self):
