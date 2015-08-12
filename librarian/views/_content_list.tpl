@@ -8,7 +8,12 @@
         ${_(meta.label)}
         </p>
         <h2 class="title"${th.i18n_attrs(meta.lang)}>
-            <a href="${i18n_url('content:reader', content_id=meta.md5) + h.set_qparam(content_type=chosen_content_type).to_qs()}">${meta.title | h}</a>
+            <%
+                content_url = i18n_url('content:reader', content_id=meta.md5)
+                if chosen_content_type:
+                    content_url += h.set_qparam(content_type=chosen_content_type).to_qs()
+            %>
+            <a href="${content_url}">${meta.title | h}</a>
             % if th.is_authenticated():
             ${delete_button.button(meta=meta)}
             % endif
