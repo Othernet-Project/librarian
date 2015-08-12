@@ -4331,6 +4331,26 @@ form.search .icon {
 .setup-finished .sub {
   color: #bbbbbb; }
 
+/**
+ * _sprites.scss: sprite images with high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _hdpi_images.scss: helpers for high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
 /* line 3, ../scss/partials/_reader.scss */
 .reader-frame {
   position: fixed;
@@ -4379,6 +4399,65 @@ form.search .icon {
   left: 0;
   width: 100%;
   text-align: center; }
+/* line 54, ../scss/partials/_reader.scss */
+.reader.image .top-controls {
+  margin: 1em; }
+/* line 56, ../scss/partials/_reader.scss */
+.reader.image .top-controls .back {
+  font-size: 3em;
+  font-weight: bold;
+  text-decoration: none; }
+/* line 62, ../scss/partials/_reader.scss */
+.reader.image .image-viewer {
+  text-align: center;
+  height: 100%;
+  margin-top: 5em; }
+/* line 66, ../scss/partials/_reader.scss */
+.reader.image .image-viewer .image-container {
+  width: 70%;
+  vertical-align: middle;
+  display: inline-block; }
+/* line 70, ../scss/partials/_reader.scss */
+.reader.image .image-viewer .image-container img {
+  max-width: 100%; }
+/* line 74, ../scss/partials/_reader.scss */
+.reader.image .image-viewer .previous {
+  display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s66ef4f051d.png');
+  background-position: 0 -715px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 74, ../scss/partials/_reader.scss */
+  .reader.image .image-viewer .previous {
+    background-image: url('../img/icons/2x-s9ad74fd043.png');
+    background-position: 0 -715px;
+    -moz-background-size: 100px 4244px;
+    -o-background-size: 100px 4244px;
+    -webkit-background-size: 100px 4244px;
+    background-size: 100px 4244px; } }
+/* line 78, ../scss/partials/_reader.scss */
+.reader.image .image-viewer .next {
+  display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s66ef4f051d.png');
+  background-position: 0 -825px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 78, ../scss/partials/_reader.scss */
+  .reader.image .image-viewer .next {
+    background-image: url('../img/icons/2x-s9ad74fd043.png');
+    background-position: 0 -825px;
+    -moz-background-size: 100px 4244px;
+    -o-background-size: 100px 4244px;
+    -webkit-background-size: 100px 4244px;
+    background-size: 100px 4244px; } }
 
 /**
  * _icons.scss: simple icon widget
