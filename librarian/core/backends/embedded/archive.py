@@ -83,9 +83,6 @@ class EmbeddedArchive(BaseArchive):
     transformations = [
         {'content': Merge},
         {'replaces': Ignore},
-        {'html': [
-            {'index': Rename('entry_point')}
-        ]},
         {'video': [
             {'size': Rename('resolution')}
         ]},

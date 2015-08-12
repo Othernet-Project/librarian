@@ -1,7 +1,7 @@
 <%def name="reader_display()">
     <%
         width, height = map(lambda x: int(x) if x else '100%', (meta['video'].get('resolution') or 'x').split('x'))
-        video_url = url('content:file', content_path=th.get_content_path(meta.md5), filename=meta['video']['file'])
+        video_url = url('content:file', content_path=th.get_content_path(meta.md5), filename=meta['video']['main'])
     %>
     <video width="${width}" height="${height}" controls="controls" preload="none">
         <source src="${video_url}" />
