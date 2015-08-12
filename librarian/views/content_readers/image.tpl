@@ -1,18 +1,19 @@
 <%def name="reader_display()">
     <%
         content_url = i18n_url('content:reader', content_id=meta.md5)
+        img_count = len(meta['image']['album'])
         try:
             img_index = int(chosen_path)
         except Exception:
             img_index = None
     %>
-    % if img_index > 0 and img_index < len(meta['image']['album']):
+    % if img_index > 0 and img_index < img_count:
         <a class="back" href="${content_url + h.set_qparam(content_type=chosen_content_type).del_qparam('path').to_qs()}">${_("Back")}</a>
         <img src=${url('content:file', content_path=th.get_content_path(meta.md5), filename=meta['image']['album'][img_index]['file'])} />
         % if img_index > 0:
             <a class="previous" href="${content_url + h.set_qparam(content_type=chosen_content_type).set_qparam(path=img_index - 1).to_qs()}">${_("Previous")}</a>
         % endif
-        % if img_index < len(meta['image']['album']) - 1:
+        % if img_index < img_count - 1:
             <a class="next" href="${content_url + h.set_qparam(content_type=chosen_content_type).set_qparam(path=img_index + 1).to_qs()}">${_("Next")}</a>
         % endif
     % else:
@@ -24,8 +25,11 @@
                 thumb_path = image['file']
             thumb_url = url('content:file', content_path=th.get_content_path(meta.md5), filename=thumb_path)
         %>
-        <li class="image">
-            <a href="${content_url + h.set_qparam(content_type=chosen_content_type).set_qparam(path=loop.index).to_qs()}"><img src="${thumb_url}" /></a>
+        <li class="album-item">
+            <a href="${content_url + h.set_qparam(content_type=chosen_content_type).set_qparam(path=loop.index).to_qs()}">
+                <img class="thumbnail" src="${thumb_url}" />
+                <span class="title">${image['title'] if image.get('title') else _('Image %s of %s') % (loop.index, img_count)}</span>
+            </a>
         </li>
     % endfor
     </ul>

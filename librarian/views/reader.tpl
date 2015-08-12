@@ -12,7 +12,7 @@ ${meta.title}
 </%block>
 
 <%block name="main">
-<div class="reader" data-content-type="${chosen_content_type}">
+<div class="reader ${chosen_content_type}" data-content-type="${chosen_content_type}">
     <div class="reader-frame">
         ${reader.reader_display()}
     </div>

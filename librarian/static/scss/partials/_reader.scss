@@ -18,3 +18,37 @@ $reader-data-height: 60px;
     min-width: auto;
   }
 }
+
+.reader {
+  &.image {
+    .album-item {
+      float: left;
+      margin: 25px;
+      @include narrower-than(320px) {
+        margin: 0;
+      }
+      a {
+        width: 200px;
+        height: 200px;
+        max-width: 200px;
+        max-height: 200px;
+        display: table-cell;
+        vertical-align: middle;
+        position: relative;
+        text-align: center;
+        .thumbnail {
+          height: auto;
+          max-width: 100%;
+          vertical-align: middle;
+        }
+        .title {
+          position: absolute;
+          bottom: -40px;
+          left: 0;
+          width: 100%;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
