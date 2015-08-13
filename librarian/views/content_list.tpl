@@ -5,7 +5,8 @@
 <%namespace name='library_submenu' file='_library_submenu.tpl'/>
 <%namespace name='tag_js_templates' file='_tag_js_templates.tpl'/>
 <%block name="title">
-${page_title}
+## Translators, used as page title
+${_('Library')}
 </%block>
 
 ${library_submenu.body()}
@@ -69,7 +70,7 @@ ${library_submenu.body()}
     <p class="empty">
     % if not query and not tag and not lang['lang']:
     ## Translators, used as note on library page when library is empty
-    ${empty_message}
+    ${_('Content library is currently empty')}
     % elif query:
     ## Translators, used as note on library page when search does not return anything
     ${_("There are no search results for '%(terms)s'") % {'terms': query}}

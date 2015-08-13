@@ -46,7 +46,9 @@ def filter_content(query, lang, tag, content_type):
     return metas
 
 
-def prepare_content_list():
+@roca_view('content_list', '_content_list', template_func=template)
+def content_list():
+    """ Show list of content """
     # parse search query
     query = request.params.getunicode('q', '').strip()
     # parse language filter
@@ -84,17 +86,8 @@ def prepare_content_list():
                 chosen_content_type=content_type,
                 tag=tag_name,
                 tag_id=tag,
-                tag_cloud=archive.get_tag_cloud())
-
-
-@roca_view('content_list', '_content_list', template_func=template)
-def content_list():
-    """ Show list of content """
-    result = prepare_content_list()
-    result.update({'base_path': i18n_url('content:list'),
-                   'page_title': _('Library'),
-                   'empty_message': _('Content library is currently empty')})
-    return result
+                tag_cloud=archive.get_tag_cloud(),
+                base_path=i18n_url('content:list'))
 
 
 def guard_already_removed(func):
