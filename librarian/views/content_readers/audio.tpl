@@ -21,6 +21,15 @@
 </%def>
 
 <%def name="meta_display()">
+    <div class="content-info">
+        <div class="title">${meta.title}</div>
+        <div class="download-date">${meta.timestamp.date()}</div>
+        % if meta.audio.get('description'):
+        <div class="description">${meta.audio['description']}</div>
+        % endif
+        <% duration = sum([track.get('duration') or 0 for track in meta.audio['playlist']]) %>
+        <div class="duration">${duration}</div>
+    </div>
     <div class="tag-editor">
         ${tags.tags(meta)}
     </div>

@@ -45,9 +45,38 @@
 </%def>
 
 <%def name="meta_display()">
+    <%
+        img_count = len(meta['image']['album'])
+        try:
+            img_index = int(chosen_path)
+        except Exception:
+            img_index = None
+    %>
+    % if img_index >= 0 and img_index < img_count:
+    <div class="content-info">
+        <% image = meta.image['album'][img_index] %>
+        % if image.get('title'):
+        <div class="title">${image['title']}</div>
+        % endif
+        % if image.get('caption'):
+        <div class="caption">${image['caption']}</div>
+        % endif
+        % if image.get('resolution'):
+        <div class="dimensions">${image['resolution']}</div>
+        % endif
+    </div>
+    % else:
+    <div class="content-info">
+        <div class="title">${meta.title}</div>
+        <div class="download-date">${meta.timestamp.date()}</div>
+        % if meta.image.get('description'):
+        <div class="description">${meta.image['description']}</div>
+        % endif
+    </div>
     <div class="tag-editor">
         ${tags.tags(meta)}
     </div>
+    % endif
     ## Translators, attribution line appearing in the content list
     <p class="attrib">
     ## Translators, used in place of publisher name if publsiher name is not known

@@ -28,8 +28,12 @@
 </%def>
 
 <%def name="meta_display()">
-    <div class="tag-editor">
-        ${tags.tags(meta)}
+    <div class="content-info">
+        <div class="title">${meta.title}</div>
+        <div class="download-date">${meta.timestamp.date()}</div>
+        % if meta.generic.get('description'):
+        <div class="description">${meta.generic['description']}</div>
+        % endif
     </div>
     ## Translators, attribution line appearing in the content list
     <p class="attrib">

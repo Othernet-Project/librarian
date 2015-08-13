@@ -15,6 +15,16 @@
 </%def>
 
 <%def name="meta_display()">
+    <div class="content-info">
+        <div class="title">${meta.title}</div>
+        <div class="download-date">${meta.timestamp.date()}</div>
+        % if meta.video.get('description'):
+        <div class="description">${meta.video['description']}</div>
+        % endif
+        % if meta.video.get('duration'):
+        <div class="duration">${meta.video['duration']}</div>
+        % endif
+    </div>
     <div class="tag-editor">
         ${tags.tags(meta)}
     </div>
