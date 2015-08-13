@@ -1,9 +1,9 @@
 {
     "css/content-%(version)s.css": "b88598bc", 
     "css/dashboard-%(version)s.css": "dc20454c", 
-    "css/main-%(version)s.css": "231159ab", 
+    "css/main-%(version)s.css": "cf7221ab", 
     "css/wizard-%(version)s.css": "6354bf4c", 
-    "js/content-%(version)s.js": "b393d632", 
+    "js/content-%(version)s.js": "4ad05187", 
     "js/dashboard-%(version)s.js": "6dab1ac5", 
     "js/files-%(version)s.js": "d969cdea", 
     "js/reader-%(version)s.js": "1543f51f", 

@@ -4147,19 +4147,16 @@ form.search .icon {
 .content-list.app .app-item .field {
   display: block; }
 /* line 14, ../scss/partials/_apps.scss */
-.content-list.app .app-item.thumbnail .author, .content-list.app .app-item.thumbnail .download-date, .content-list.app .app-item.thumbnail .description {
+.content-list.app .app-item.thumbnails .author, .content-list.app .app-item.thumbnails .download-date, .content-list.app .app-item.thumbnails .description {
   display: none; }
 /* line 17, ../scss/partials/_apps.scss */
-.content-list.app .app-item.thumbnail .app-info {
+.content-list.app .app-item.thumbnails .app-info {
   display: block; }
 /* line 22, ../scss/partials/_apps.scss */
 .content-list.app .controls {
   position: absolute;
   top: 0;
   right: 0; }
-/* line 27, ../scss/partials/_apps.scss */
-.content-list.app .controls.hidden {
-  display: none; }
 
 /**
  * _sprites.scss: sprite images with high-dpi display support
