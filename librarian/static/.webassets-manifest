@@ -1,10 +1,10 @@
 {
     "css/content-%(version)s.css": "b88598bc", 
     "css/dashboard-%(version)s.css": "dc20454c", 
-    "css/main-%(version)s.css": "d7aba9b1", 
+    "css/main-%(version)s.css": "d4aad032", 
     "css/reader-%(version)s.css": "a88381ea", 
     "css/wizard-%(version)s.css": "6354bf4c", 
-    "js/content-%(version)s.js": "d5d568de", 
+    "js/content-%(version)s.js": "b393d632", 
     "js/dashboard-%(version)s.js": "6dab1ac5", 
     "js/files-%(version)s.js": "d969cdea", 
     "js/reader-%(version)s.js": "35cabc7a", 
