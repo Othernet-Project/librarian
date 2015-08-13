@@ -341,3 +341,13 @@ def test_files_property_found(find_files):
     find_files.return_value = (('foobar.jpg', 1234))
     meta = mod.Meta({'md5': 'md5'}, 'content_dir')
     assert meta.files == find_files.return_value
+
+
+def test_determine_content_type():
+    for name, value in mod.CONTENT_TYPES.items():
+        meta = {'content': {name: None}}
+        assert mod.determine_content_type(meta) == value
+
+    mixed = {'content': {'app': None, 'generic': None}}
+    expected = mod.CONTENT_TYPES['app'] + mod.CONTENT_TYPES['generic']
+    assert mod.determine_content_type(mixed) == expected
