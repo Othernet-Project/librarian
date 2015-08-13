@@ -15,7 +15,7 @@
         % endif
         <span class="field version">${meta.app['version']}</span>
         % if th.is_authenticated():
-        <form class="uninstall" action="${i18n_url('content:delete', content_id=meta.md5)}" method="GET">
+        <form class="uninstall-button" action="${i18n_url('content:delete', content_id=meta.md5)}" method="GET">
             <button>${_('Uninstall')}</button>
         </form>
         % endif

@@ -11,7 +11,7 @@
     %>
     % if img_index >= 0 and img_index < img_count:
         <div class="top-controls">
-            <a class="back" href="${content_url + h.set_qparam(content_type=chosen_content_type).del_qparam('path').to_qs()}">&larr;</a>
+            <a class="back" href="${content_url + h.set_qparam(content_type=chosen_content_type).del_qparam('path').to_qs()}"></a>
         </div>
         <div class="image-viewer">
             % if img_index > 0:

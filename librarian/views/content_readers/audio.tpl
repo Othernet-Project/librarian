@@ -13,7 +13,7 @@
                     <span>(${track['duration']})</span>
                     % endif
                 </span>
-                <a class="play" href="javascript:;">&#9658;</a>
+                <a class="play" href="javascript:;"></a>
             </li>
             % endfor
         </ul>

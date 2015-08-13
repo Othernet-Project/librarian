@@ -41,7 +41,7 @@
       text-align: center;
       .download-button {
         display: inline-block;
-        @include icon(loader_download_hover, yes);
+        @include with-hdpi(icons, loader_download_hover, yes);
       }
     }
     .download-list {
@@ -60,7 +60,7 @@
       }
       .download-link {
         display: inline-block;
-        @include icon(loader_download_hover, yes);
+        @include with-hdpi(icons, loader_download_hover, yes);
       }
     }
   }
@@ -69,17 +69,33 @@
       margin: 1em;
       .playlist {
         margin-top: 1em;
+        display: inline-block;
+        background: black;
+        padding: 10px;
+        li {
+          margin: 0.5em 0;
+        }
         .track-info {
-          width: 350px;
+          width: 345px;
           display: inline-block;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
           vertical-align: middle;
+          color: $iconic;
         }
         .play {
+          @include with-hdpi(icons, play);
+          display: inline-block;
           vertical-align: middle;
-          @include entity-icon;
+          width: 32px;
+          height: 32px;
+          background-repeat: no-repeat;
+          background-size: cover;
+          opacity: 0.6;
+          &:hover {
+            opacity: 1;
+          }
         }
       }
     }
@@ -118,7 +134,11 @@
     .top-controls {
       margin: 1em;
       .back {
-        @include entity-icon;
+        display: inline-block;
+        @include with-hdpi(icons, back, yes);
+        &:hover {
+          @include with-hdpi(icons, back_hover, yes);
+        }
       }
     }
     .image-viewer {
@@ -135,11 +155,11 @@
       }
       .previous {
         display: inline-block;
-        @include icon(arrow_left, yes);
+        @include with-hdpi(icons, arrow_left, yes);
       }
       .next {
         display: inline-block;
-        @include icon(arrow_right, yes);
+        @include with-hdpi(icons, arrow_right, yes);
       }
     }
   }
@@ -186,9 +206,9 @@
         display: inline-block;
         margin: 20px 5px;
         cursor: pointer;
-        @include icon(accordion_open);
+        @include with-hdpi(icons, accordion_open, yes);
         &:hover {
-          @include icon(accordion_open_hover);
+          @include with-hdpi(icons, accordion_open_hover, yes);
         }
       }
     }
@@ -197,9 +217,9 @@
     width: 274px;
     .toggle {
       .icon {
-        @include icon(accordion_close);
+        @include with-hdpi(icons, accordion_close, yes);
         &:hover {
-          @include icon(accordion_close_hover);
+          @include with-hdpi(icons, accordion_close_hover, yes);
         }
       }
     }
