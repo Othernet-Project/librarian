@@ -26,6 +26,9 @@
 </%def>
 
 <%def name="meta_display()">
+    <div class="tag-editor">
+        ${tags.tags(meta)}
+    </div>
     ## Translators, attribution line appearing in the content list
     <p class="attrib">
     ## Translators, used in place of publisher name if publsiher name is not known

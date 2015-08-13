@@ -1,3 +1,4 @@
+@import "outernet/mixins/media_query";
 @import "outernet/mixins/sprites";
 
 @mixin entity-icon {
@@ -12,9 +13,14 @@
   top: 60px;
   bottom: 0;
   left: 0;
-  right: 0;
+  right: 36px;
   background: $white;
   overflow: hidden;
+  @include transition(right 0.5s);
+
+  &.reduced {
+    right: 275px;
+  }
 
   iframe {
     display: block;
@@ -135,6 +141,72 @@
         display: inline-block;
         @include icon(arrow_right, yes);
       }
+    }
+  }
+}
+
+.reader-meta {
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  right: 0;
+  background: $border;
+  @include transition(width 0.5s);
+  width: 35px;
+  .inner {
+    position: relative;
+    height: 100%;
+    .meta-container {
+      position: absolute;
+      left: 35px;
+      bottom: 0;
+      top: 0;
+      right: 0;
+      padding: 20px;
+      .tag-editor {
+        .field-help {
+          padding-left: 0;
+        }
+      }
+      .attrib {
+        position: absolute;
+        bottom: 20px;
+        margin-bottom: 0px;
+        right: 20px;
+        left: 20px;
+      }
+    }
+    .toggle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      background: $earth;
+      .icon {
+        display: inline-block;
+        margin: 20px 5px;
+        cursor: pointer;
+        @include icon(accordion_open);
+        &:hover {
+          @include icon(accordion_open_hover);
+        }
+      }
+    }
+  }
+  &.expanded {
+    width: 274px;
+    .toggle {
+      .icon {
+        @include icon(accordion_close);
+        &:hover {
+          @include icon(accordion_close_hover);
+        }
+      }
+    }
+  }
+  @include narrower-than(640px) {
+    &.expanded {
+      width: 100%;
     }
   }
 }

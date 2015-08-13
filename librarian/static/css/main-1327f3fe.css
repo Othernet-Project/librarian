@@ -4254,6 +4254,16 @@ form.search .icon {
   color: #bbbbbb; }
 
 /**
+ * _media_query.scss: media query support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
  * _sprites.scss: sprite images with high-dpi display support
  *
  * Copyright 2014-2015, Outernet Inc.
@@ -4273,31 +4283,38 @@ form.search .icon {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 10, ../scss/partials/_reader.scss */
+/* line 11, ../scss/partials/_reader.scss */
 .reader-frame {
   position: fixed;
   top: 60px;
   bottom: 0;
   left: 0;
-  right: 0;
+  right: 36px;
   background: #ffffff;
-  overflow: hidden; }
-/* line 19, ../scss/partials/_reader.scss */
+  overflow: hidden;
+  -moz-transition: right 0.5s;
+  -o-transition: right 0.5s;
+  -webkit-transition: right 0.5s;
+  transition: right 0.5s; }
+/* line 21, ../scss/partials/_reader.scss */
+.reader-frame.reduced {
+  right: 275px; }
+/* line 25, ../scss/partials/_reader.scss */
 .reader-frame iframe {
   display: block;
   width: 100%;
   height: 100%; }
-/* line 24, ../scss/partials/_reader.scss */
+/* line 30, ../scss/partials/_reader.scss */
 .reader-frame .mejs-container button {
   min-width: auto; }
 
-/* line 31, ../scss/partials/_reader.scss */
+/* line 37, ../scss/partials/_reader.scss */
 .reader.generic .single-download {
   margin: 1em;
   width: 100%;
   height: 100%;
   text-align: center; }
-/* line 36, ../scss/partials/_reader.scss */
+/* line 42, ../scss/partials/_reader.scss */
 .reader.generic .single-download .download-button {
   display: inline-block;
   display: inline-block;
@@ -4308,7 +4325,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 36, ../scss/partials/_reader.scss */
+  /* line 42, ../scss/partials/_reader.scss */
   .reader.generic .single-download .download-button {
     background-image: url('../img/icons/2x-s9ad74fd043.png');
     background-position: 0 -3140px;
@@ -4316,14 +4333,14 @@ form.search .icon {
     -o-background-size: 100px 4244px;
     -webkit-background-size: 100px 4244px;
     background-size: 100px 4244px; } }
-/* line 41, ../scss/partials/_reader.scss */
+/* line 47, ../scss/partials/_reader.scss */
 .reader.generic .download-list {
   margin: 1em; }
-/* line 43, ../scss/partials/_reader.scss */
+/* line 49, ../scss/partials/_reader.scss */
 .reader.generic .download-list .file-info {
   display: inline-block;
   vertical-align: middle; }
-/* line 46, ../scss/partials/_reader.scss */
+/* line 52, ../scss/partials/_reader.scss */
 .reader.generic .download-list .file-info .filename {
   display: inline-block;
   width: 350px;
@@ -4331,7 +4348,7 @@ form.search .icon {
   white-space: nowrap;
   text-overflow: ellipsis;
   vertical-align: middle; }
-/* line 55, ../scss/partials/_reader.scss */
+/* line 61, ../scss/partials/_reader.scss */
 .reader.generic .download-list .download-link {
   display: inline-block;
   display: inline-block;
@@ -4342,7 +4359,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 55, ../scss/partials/_reader.scss */
+  /* line 61, ../scss/partials/_reader.scss */
   .reader.generic .download-list .download-link {
     background-image: url('../img/icons/2x-s9ad74fd043.png');
     background-position: 0 -3140px;
@@ -4350,13 +4367,13 @@ form.search .icon {
     -o-background-size: 100px 4244px;
     -webkit-background-size: 100px 4244px;
     background-size: 100px 4244px; } }
-/* line 62, ../scss/partials/_reader.scss */
+/* line 68, ../scss/partials/_reader.scss */
 .reader.audio .player {
   margin: 1em; }
-/* line 64, ../scss/partials/_reader.scss */
+/* line 70, ../scss/partials/_reader.scss */
 .reader.audio .player .playlist {
   margin-top: 1em; }
-/* line 66, ../scss/partials/_reader.scss */
+/* line 72, ../scss/partials/_reader.scss */
 .reader.audio .player .playlist .track-info {
   width: 350px;
   display: inline-block;
@@ -4364,22 +4381,22 @@ form.search .icon {
   white-space: nowrap;
   text-overflow: ellipsis;
   vertical-align: middle; }
-/* line 74, ../scss/partials/_reader.scss */
+/* line 80, ../scss/partials/_reader.scss */
 .reader.audio .player .playlist .play {
   vertical-align: middle;
   font-size: 3em;
   font-weight: bold;
   text-decoration: none;
   line-height: 1em; }
-/* line 82, ../scss/partials/_reader.scss */
+/* line 88, ../scss/partials/_reader.scss */
 .reader.image .album-item {
   float: left;
   margin: 25px; }
 @media only screen and (max-width: 320px) {
-  /* line 82, ../scss/partials/_reader.scss */
+  /* line 88, ../scss/partials/_reader.scss */
   .reader.image .album-item {
     margin: 0; } }
-/* line 88, ../scss/partials/_reader.scss */
+/* line 94, ../scss/partials/_reader.scss */
 .reader.image .album-item a {
   width: 200px;
   height: 200px;
@@ -4389,41 +4406,41 @@ form.search .icon {
   vertical-align: middle;
   position: relative;
   text-align: center; }
-/* line 97, ../scss/partials/_reader.scss */
+/* line 103, ../scss/partials/_reader.scss */
 .reader.image .album-item a .thumbnail {
   height: auto;
   max-width: 100%;
   vertical-align: middle; }
-/* line 102, ../scss/partials/_reader.scss */
+/* line 108, ../scss/partials/_reader.scss */
 .reader.image .album-item a .title {
   position: absolute;
   bottom: -40px;
   left: 0;
   width: 100%;
   text-align: center; }
-/* line 112, ../scss/partials/_reader.scss */
+/* line 118, ../scss/partials/_reader.scss */
 .reader.image .top-controls {
   margin: 1em; }
-/* line 114, ../scss/partials/_reader.scss */
+/* line 120, ../scss/partials/_reader.scss */
 .reader.image .top-controls .back {
   font-size: 3em;
   font-weight: bold;
   text-decoration: none;
   line-height: 1em; }
-/* line 118, ../scss/partials/_reader.scss */
+/* line 124, ../scss/partials/_reader.scss */
 .reader.image .image-viewer {
   text-align: center;
   height: 100%;
   margin-top: 5em; }
-/* line 122, ../scss/partials/_reader.scss */
+/* line 128, ../scss/partials/_reader.scss */
 .reader.image .image-viewer .image-container {
   width: 70%;
   vertical-align: middle;
   display: inline-block; }
-/* line 126, ../scss/partials/_reader.scss */
+/* line 132, ../scss/partials/_reader.scss */
 .reader.image .image-viewer .image-container img {
   max-width: 100%; }
-/* line 130, ../scss/partials/_reader.scss */
+/* line 136, ../scss/partials/_reader.scss */
 .reader.image .image-viewer .previous {
   display: inline-block;
   display: inline-block;
@@ -4434,7 +4451,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 130, ../scss/partials/_reader.scss */
+  /* line 136, ../scss/partials/_reader.scss */
   .reader.image .image-viewer .previous {
     background-image: url('../img/icons/2x-s9ad74fd043.png');
     background-position: 0 -715px;
@@ -4442,7 +4459,7 @@ form.search .icon {
     -o-background-size: 100px 4244px;
     -webkit-background-size: 100px 4244px;
     background-size: 100px 4244px; } }
-/* line 134, ../scss/partials/_reader.scss */
+/* line 140, ../scss/partials/_reader.scss */
 .reader.image .image-viewer .next {
   display: inline-block;
   display: inline-block;
@@ -4453,7 +4470,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 134, ../scss/partials/_reader.scss */
+  /* line 140, ../scss/partials/_reader.scss */
   .reader.image .image-viewer .next {
     background-image: url('../img/icons/2x-s9ad74fd043.png');
     background-position: 0 -825px;
@@ -4461,6 +4478,130 @@ form.search .icon {
     -o-background-size: 100px 4244px;
     -webkit-background-size: 100px 4244px;
     background-size: 100px 4244px; } }
+
+/* line 148, ../scss/partials/_reader.scss */
+.reader-meta {
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  right: 0;
+  background: #dddddd;
+  -moz-transition: width 0.5s;
+  -o-transition: width 0.5s;
+  -webkit-transition: width 0.5s;
+  transition: width 0.5s;
+  width: 35px; }
+/* line 156, ../scss/partials/_reader.scss */
+.reader-meta .inner {
+  position: relative;
+  height: 100%; }
+/* line 159, ../scss/partials/_reader.scss */
+.reader-meta .inner .meta-container {
+  position: absolute;
+  left: 35px;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  padding: 20px; }
+/* line 167, ../scss/partials/_reader.scss */
+.reader-meta .inner .meta-container .tag-editor .field-help {
+  padding-left: 0; }
+/* line 171, ../scss/partials/_reader.scss */
+.reader-meta .inner .meta-container .attrib {
+  position: absolute;
+  bottom: 20px;
+  margin-bottom: 0px;
+  right: 20px;
+  left: 20px; }
+/* line 179, ../scss/partials/_reader.scss */
+.reader-meta .inner .toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: #eeeeee; }
+/* line 185, ../scss/partials/_reader.scss */
+.reader-meta .inner .toggle .icon {
+  display: inline-block;
+  margin: 20px 5px;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s66ef4f051d.png');
+  background-position: 0 -110px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 185, ../scss/partials/_reader.scss */
+  .reader-meta .inner .toggle .icon {
+    background-image: url('../img/icons/2x-s9ad74fd043.png');
+    background-position: 0 -110px;
+    -moz-background-size: 100px 4244px;
+    -o-background-size: 100px 4244px;
+    -webkit-background-size: 100px 4244px;
+    background-size: 100px 4244px; } }
+/* line 190, ../scss/partials/_reader.scss */
+.reader-meta .inner .toggle .icon:hover {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s66ef4f051d.png');
+  background-position: 0 -165px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 190, ../scss/partials/_reader.scss */
+  .reader-meta .inner .toggle .icon:hover {
+    background-image: url('../img/icons/2x-s9ad74fd043.png');
+    background-position: 0 -165px;
+    -moz-background-size: 100px 4244px;
+    -o-background-size: 100px 4244px;
+    -webkit-background-size: 100px 4244px;
+    background-size: 100px 4244px; } }
+/* line 196, ../scss/partials/_reader.scss */
+.reader-meta.expanded {
+  width: 274px; }
+/* line 199, ../scss/partials/_reader.scss */
+.reader-meta.expanded .toggle .icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s66ef4f051d.png');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 199, ../scss/partials/_reader.scss */
+  .reader-meta.expanded .toggle .icon {
+    background-image: url('../img/icons/2x-s9ad74fd043.png');
+    background-position: 0 0;
+    -moz-background-size: 100px 4244px;
+    -o-background-size: 100px 4244px;
+    -webkit-background-size: 100px 4244px;
+    background-size: 100px 4244px; } }
+/* line 201, ../scss/partials/_reader.scss */
+.reader-meta.expanded .toggle .icon:hover {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s66ef4f051d.png');
+  background-position: 0 -55px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 201, ../scss/partials/_reader.scss */
+  .reader-meta.expanded .toggle .icon:hover {
+    background-image: url('../img/icons/2x-s9ad74fd043.png');
+    background-position: 0 -55px;
+    -moz-background-size: 100px 4244px;
+    -o-background-size: 100px 4244px;
+    -webkit-background-size: 100px 4244px;
+    background-size: 100px 4244px; } }
+@media only screen and (max-width: 640px) {
+  /* line 208, ../scss/partials/_reader.scss */
+  .reader-meta.expanded {
+    width: 100%; } }
 
 /**
  * _icons.scss: simple icon widget

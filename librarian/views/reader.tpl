@@ -13,18 +13,22 @@ ${meta.title}
 
 <%block name="main">
 <div class="reader ${chosen_content_type}" data-content-type="${chosen_content_type}">
-    <div class="reader-frame">
+    <div class="reader-frame reduced">
         ${reader.reader_display()}
     </div>
-    <div class="reader-meta data">
+    <div class="reader-meta data expanded">
         <div class="inner">
-            ${reader.meta_display()}
+            <div class="toggle"><span class="icon"></span></div>
+            <div class="meta-container">
+                ${reader.meta_display()}
+            </div>
         </div>
     </div>
 </div>
 </%block>
 
 <%block name="script_templates">
+${tag_js_templates.body()}
 <script id="readerCssPatch" type="text/template">
     <link rel="stylesheet" type="text/css" href="${assets['css/content']}" />
 </script>
