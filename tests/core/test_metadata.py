@@ -60,31 +60,23 @@ def attr_overrides(obj, **kwargs):
         setattr(obj, key, value)
 
 
-def test_get_successor_key():
-    assert mod.get_successor_key('partner') == 'publisher'
-    assert mod.get_successor_key('index') == 'entry_point'
-    assert mod.get_successor_key('publisher') is None
-    assert mod.get_successor_key('url') is None
-
-
 def test_edge_keys():
     assert mod.get_edge_keys() == (
         'publisher',
         'replaces',
-        'keep_formatting',
         'language',
         'license',
         'title',
         'url',
         'timestamp',
-        'multipage',
+        'cover',
+        'thumbnail',
         'broadcast',
         'keywords',
-        'entry_point',
-        'images',
         'is_partner',
+        'content',
         'is_sponsored',
-        'archive'
+        'archive',
     )
 
 
@@ -92,13 +84,11 @@ def test_replace_aliases():
     meta = {'url': 'test',
             'title': 'again',
             'is_partner': True,
-            'partner': 'Partner',
-            'index': 'some.html'}
+            'partner': 'Partner'}
     expected = {'url': 'test',
                 'title': 'again',
                 'is_partner': True,
-                'publisher': 'Partner',
-                'entry_point': 'some.html'}
+                'publisher': 'Partner'}
     mod.replace_aliases(meta)
     assert meta == expected
 
@@ -245,42 +235,43 @@ def test_meta_get_key(*ignored):
     assert meta.get('missing') is None
 
 
-@mock.patch.object(mod.scandir, 'scandir')
-def test_find_image_no_content_path(scandir):
+@mock.patch.object(mod.scandir, 'walk')
+def test_find_files_no_content_path(walk):
     meta = mod.Meta({'foo': 'bar'}, '')
-    assert meta.find_image() is None
-    assert not scandir.called
+    assert meta.find_files() == []
+    assert not walk.called
 
 
-@mock.patch.object(mod.scandir, 'scandir')
+@mock.patch.object(mod.scandir, 'walk')
 @mock.patch.object(mod.os.path, 'exists')
-def test_find_image_content_path_does_not_exist(exists, scandir):
+def test_find_files_content_path_does_not_exist(exists, walk):
     exists.return_value = False
     meta = mod.Meta({'foo': 'bar'}, '/content/path')
-    assert meta.find_image() is None
-    assert not scandir.called
+    assert meta.find_files() == []
+    assert not walk.called
 
 
-@mock.patch.object(mod.scandir, 'scandir')
+@mock.patch.object(mod.scandir, 'walk')
 @mock.patch.object(mod.os.path, 'exists')
-def test_find_image_no_files(exists, scandir):
+def test_find_files_no_files(exists, walk):
     exists.return_value = True
-    scandir.scandir.return_value = []
+    walk.return_value = []
     meta = mod.Meta({'foo': 'bar'}, '/content/path')
-    assert meta.find_image() is None
-    scandir.assert_called_once_with('/content/path')
+    assert meta.find_files() == []
+    walk.assert_called_once_with('/content/path')
 
 
+@mock.patch.object(mod.os, 'stat')
 @mock.patch.object(mod.os.path, 'exists')
-@mock.patch.object(mod.scandir, 'scandir')
-def test_find_image_success(scandir, exists):
-    mocked_entry = mock.Mock()
-    mocked_entry.name = 'image.jpg'
+@mock.patch.object(mod.scandir, 'walk')
+def test_find_files_success(walk, exists, stat):
+    root = '/content/path'
     exists.return_value = True
-    scandir.return_value = [mocked_entry]
-    meta = mod.Meta({'foo': 'bar'}, '/content/path')
-    assert meta.find_image() == 'image.jpg'
-    scandir.assert_called_once_with('/content/path')
+    stat.return_value.st_size = 1234
+    walk.return_value = ((root, [], ['image.jpg']),)
+    meta = mod.Meta({'foo': 'bar'}, root)
+    assert meta.find_files() == [('image.jpg', 1234)]
+    walk.assert_called_once_with('/content/path')
 
 
 @mock.patch(MOD + '.json', autospec=True)
@@ -337,22 +328,16 @@ def test_label_property_with_key_combinations(*ignored):
         assert meta.label == 'partner'
 
 
-@mock.patch.object(mod, 'json', autospec=True)
-@mock.patch.object(mod, 'os', autospec=True)
-@mock.patch.object(mod.Meta, 'find_image')
-def test_image_property_cached(find_image, *ignored):
-    """ If image path is cached, it is returned immediately """
+@mock.patch.object(mod.Meta, 'find_files')
+def test_files_property_cached(find_files):
     meta = mod.Meta({'md5': 'md5'}, '/content/root/')
-    meta._image = 'foobar.jpg'
-    assert meta.image == 'foobar.jpg'
-    assert not find_image.called
+    meta._files = (('foobar.jpg', 1234))
+    assert meta.files == (('foobar.jpg', 1234))
+    assert not find_files.called
 
 
-@mock.patch.object(mod, 'json', autospec=True)
-@mock.patch.object(mod, 'os', autospec=True)
-@mock.patch.object(mod.Meta, 'find_image')
-def test_image_property_found(find_image, *ignored):
-    """ If image exist on dist, it will be found and returned """
-    find_image.return_value = 'foobar.jpg'
+@mock.patch.object(mod.Meta, 'find_files')
+def test_files_property_found(find_files):
+    find_files.return_value = (('foobar.jpg', 1234))
     meta = mod.Meta({'md5': 'md5'}, 'content_dir')
-    assert meta.image == 'foobar.jpg'
+    assert meta.files == find_files.return_value

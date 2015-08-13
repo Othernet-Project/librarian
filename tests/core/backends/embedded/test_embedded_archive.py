@@ -53,8 +53,8 @@ def test_remove_meta_from_db(cursor, archive):
 
 
 @mock_cursor
-@mock.patch.object(mod.EmbeddedArchive, 'serialize')
-@mock.patch.object(mod.EmbeddedArchive, 'write')
+@mock.patch.object(mod.EmbeddedArchive, '_serialize')
+@mock.patch.object(mod.EmbeddedArchive, '_write')
 def test_add_meta_to_db(cursor, archive, write, serialize):
     delete_sql = 'proper delete query'
     archive.db.Delete.return_value = delete_sql
@@ -83,16 +83,16 @@ def test_add_meta_to_db(cursor, archive, write, serialize):
 
 def test_needs_formatting(archive):
     # FIXME: This needs to be an integration test for full cov
-    archive.db.result.keep_formatting = True
+    archive.db.result = {'keep_formatting': True}
     ret = archive.needs_formatting('foo')
     assert archive.db.query.called
     assert ret is False
-    archive.db.result.keep_formatting = False
+    archive.db.result = {'keep_formatting': False}
     ret = archive.needs_formatting('foo')
     assert ret is True
 
 
-def test_serialize(archive):
+def test__serialize(archive):
     metadata = {
         "url": "http://en.wikipedia.org/wiki/Sweden",
         "title": "content title",
@@ -101,7 +101,7 @@ def test_serialize(archive):
         "replaces": "1fa7b8c2430bb75642d062f08f00a115",
         "content": {
             "html": {
-                "index": "test.html",
+                "main": "test.html",
                 "keep_formatting": True
             },
             "audio": {
@@ -114,14 +114,14 @@ def test_serialize(archive):
             }
         }
     }
-    archive.serialize(metadata, archive.transformations)
+    archive._serialize(metadata, archive.transformations)
     assert metadata == {
         "url": "http://en.wikipedia.org/wiki/Sweden",
         "title": "content title",
         "timestamp": "2014-08-10 20:35:17 UTC",
         "md5": "13b320accaae7ae35b51e79fcebaea05",
         "html": {
-            "entry_point": "test.html",
+            "main": "test.html",
             "keep_formatting": True
         },
         "audio": {
@@ -135,7 +135,7 @@ def test_serialize(archive):
     }
 
 
-def test_write(archive):
+def test__write(archive):
     metadata = {
         "url": "http://en.wikipedia.org/wiki/Sweden",
         "title": "content title",
@@ -154,9 +154,9 @@ def test_write(archive):
             }]
         }
     }
-    archive.write('zipballs',
-                  metadata,
-                  shared_data={'md5': '13b320accaae7ae35b51e79fcebaea05'})
+    archive._write('zipballs',
+                   metadata,
+                   shared_data={'md5': '13b320accaae7ae35b51e79fcebaea05'})
     replace_calls = [
         mock.call('html', cols=['entry_point', 'keep_formatting', 'md5']),
         mock.call('playlist', cols=['duration', 'title', 'file', 'md5']),
