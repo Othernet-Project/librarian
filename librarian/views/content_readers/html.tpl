@@ -1,3 +1,5 @@
+<%namespace name="tags" file="/_tags.tpl"/>
+
 <%def name="reader_display()">
     <iframe id="reader-main" class="reader-main" src="${url('content:file', content_path=th.get_content_path(meta.md5), filename=meta['html']['main'])}" data-keep-formatting="${meta['html']['keep_formatting']}"></iframe>
 </%def>

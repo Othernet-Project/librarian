@@ -1,5 +1,4 @@
 <%inherit file="base.tpl"/>
-<%namespace name="tags" file="_tags.tpl"/>
 <%namespace name="tag_js_templates" file="_tag_js_templates.tpl"/>
 <%namespace name='reader' file='${"content_readers/%s.tpl" % context["chosen_content_type"]}'/>
 

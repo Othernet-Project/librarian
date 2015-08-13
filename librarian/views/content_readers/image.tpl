@@ -1,3 +1,5 @@
+<%namespace name="tags" file="/_tags.tpl"/>
+
 <%def name="reader_display()">
     <%
         content_url = i18n_url('content:reader', content_id=meta.md5)

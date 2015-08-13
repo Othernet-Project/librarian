@@ -1,3 +1,5 @@
+<%namespace name="tags" file="/_tags.tpl"/>
+
 <%def name="reader_display()">
     <%
         width, height = map(lambda x: int(x) if x else '100%', (meta['video'].get('resolution') or 'x').split('x'))

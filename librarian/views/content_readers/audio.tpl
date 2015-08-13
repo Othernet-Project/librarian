@@ -1,3 +1,5 @@
+<%namespace name="tags" file="/_tags.tpl"/>
+
 <%def name="reader_display()">
     <div class="player">
         <h3 id="audio-title">${meta['audio']['playlist'][0]['title']}</h3>

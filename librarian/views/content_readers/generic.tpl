@@ -1,3 +1,5 @@
+<%namespace name="tags" file="/_tags.tpl"/>
+
 <%def name="reader_display()">
     % if len(meta.files) == 1:
     <% ((filename, filesize),) = meta.files %>
