@@ -150,6 +150,6 @@
 
   // Show app list view controls
   $('.controls').show();
-  $('.thumbnail-view').click(activateThumbnailView);
-  $('.detail-view').click(activateDetailView);
+  $('.thumbnails-view').click(activateThumbnailView);
+  $('.details-view').click(activateDetailView);
 }(this, this.jQuery, this._, this.URI));

@@ -23,6 +23,6 @@
 </li>
 % endfor
 <div class="controls">
-    <a class="thumbnail-view" href="${i18n_path(request.path) + h.set_qparam(view='thumbnails').to_qs()}">${_("Thumbnail view")}</a>
-    <a class="detail-view" href="${i18n_path(request.path) + h.set_qparam(view='details').to_qs()}">${_("Detail view")}</a>
+    <a class="thumbnails-view" href="${i18n_path(request.path) + h.set_qparam(view='thumbnails').to_qs()}"></a>
+    <a class="details-view" href="${i18n_path(request.path) + h.set_qparam(view='details').to_qs()}"></a>
 </div>
