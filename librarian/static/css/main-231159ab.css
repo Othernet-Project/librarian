@@ -2215,44 +2215,6 @@ table form button {
     background-size: 250px 1276px; } }
 
 /* line 126, ../scss/partials/_mainmenu.scss */
-#nav .sites .icon, .alt-menu .sites .icon {
-  display: inline-block;
-  vertical-align: middle;
-  background-image: url('../img/librarian/1x-s05f5323011.png');
-  background-position: 0 -726px;
-  background-repeat: no-repeat;
-  width: 25px;
-  height: 25px; }
-@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 126, ../scss/partials/_mainmenu.scss */
-  #nav .sites .icon, .alt-menu .sites .icon {
-    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
-    background-position: 0 -726px;
-    -moz-background-size: 250px 1276px;
-    -o-background-size: 250px 1276px;
-    -webkit-background-size: 250px 1276px;
-    background-size: 250px 1276px; } }
-
-/* line 132, ../scss/partials/_mainmenu.scss */
-#nav .sites:hover .icon, #nav .sites.active .icon {
-  display: inline-block;
-  vertical-align: middle;
-  background-image: url('../img/librarian/1x-s05f5323011.png');
-  background-position: 0 -781px;
-  background-repeat: no-repeat;
-  width: 25px;
-  height: 25px; }
-@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 132, ../scss/partials/_mainmenu.scss */
-  #nav .sites:hover .icon, #nav .sites.active .icon {
-    background-image: url('../img/librarian/2x-s53c21e5ca8.png');
-    background-position: 0 -781px;
-    -moz-background-size: 250px 1276px;
-    -o-background-size: 250px 1276px;
-    -webkit-background-size: 250px 1276px;
-    background-size: 250px 1276px; } }
-
-/* line 126, ../scss/partials/_mainmenu.scss */
 #nav .apps .icon, .alt-menu .apps .icon {
   display: inline-block;
   vertical-align: middle;
