@@ -4206,31 +4206,108 @@ form.search .icon {
   max-height: 1500px;
   padding: 20px; }
 
-/* line 1, ../scss/partials/_apps.scss */
+/**
+ * _sprites.scss: sprite images with high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _hdpi_images.scss: helpers for high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 3, ../scss/partials/_apps.scss */
 .content-list.app {
   margin: 2em;
   position: relative; }
-/* line 4, ../scss/partials/_apps.scss */
+/* line 6, ../scss/partials/_apps.scss */
 .content-list.app .app-item {
   margin: 1em; }
-/* line 6, ../scss/partials/_apps.scss */
+/* line 8, ../scss/partials/_apps.scss */
 .content-list.app .app-item .app-info {
   display: inline-block;
   vertical-align: top; }
-/* line 10, ../scss/partials/_apps.scss */
+/* line 12, ../scss/partials/_apps.scss */
 .content-list.app .app-item .field {
   display: block; }
-/* line 14, ../scss/partials/_apps.scss */
+/* line 16, ../scss/partials/_apps.scss */
 .content-list.app .app-item.thumbnails .author, .content-list.app .app-item.thumbnails .download-date, .content-list.app .app-item.thumbnails .description {
   display: none; }
-/* line 17, ../scss/partials/_apps.scss */
+/* line 19, ../scss/partials/_apps.scss */
 .content-list.app .app-item.thumbnails .app-info {
   display: block; }
-/* line 22, ../scss/partials/_apps.scss */
+/* line 24, ../scss/partials/_apps.scss */
 .content-list.app .controls {
   position: absolute;
   top: 0;
   right: 0; }
+/* line 28, ../scss/partials/_apps.scss */
+.content-list.app .controls a {
+  margin-left: 0.5em; }
+/* line 32, ../scss/partials/_apps.scss */
+.content-list.app .thumbnails-view {
+  display: inline-block;
+  background-image: url('../img/icons/1x/icons.png?1439439302');
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 32, ../scss/partials/_apps.scss */
+  .content-list.app .thumbnails-view {
+    background-image: url('../img/icons/2x/icons.png?1439439758');
+    -moz-background-size: 25px, 25px;
+    -o-background-size: 25px, 25px;
+    -webkit-background-size: 25px, 25px;
+    background-size: 25px, 25px; } }
+/* line 35, ../scss/partials/_apps.scss */
+.content-list.app .thumbnails-view:hover {
+  background-image: url('../img/icons/1x/icons_hover.png?1439439304');
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 35, ../scss/partials/_apps.scss */
+  .content-list.app .thumbnails-view:hover {
+    background-image: url('../img/icons/2x/icons_hover.png?1439439760');
+    -moz-background-size: 25px, 25px;
+    -o-background-size: 25px, 25px;
+    -webkit-background-size: 25px, 25px;
+    background-size: 25px, 25px; } }
+/* line 39, ../scss/partials/_apps.scss */
+.content-list.app .details-view {
+  display: inline-block;
+  background-image: url('../img/icons/1x/list.png?1439439306');
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 39, ../scss/partials/_apps.scss */
+  .content-list.app .details-view {
+    background-image: url('../img/icons/2x/list.png?1439439736');
+    -moz-background-size: 25px, 25px;
+    -o-background-size: 25px, 25px;
+    -webkit-background-size: 25px, 25px;
+    background-size: 25px, 25px; } }
+/* line 42, ../scss/partials/_apps.scss */
+.content-list.app .details-view:hover {
+  background-image: url('../img/icons/1x/list_hover.png?1439439310');
+  width: 25px;
+  height: 25px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 42, ../scss/partials/_apps.scss */
+  .content-list.app .details-view:hover {
+    background-image: url('../img/icons/2x/list_hover.png?1439439738');
+    -moz-background-size: 25px, 25px;
+    -o-background-size: 25px, 25px;
+    -webkit-background-size: 25px, 25px;
+    background-size: 25px, 25px; } }
 
 /**
  * _sprites.scss: sprite images with high-dpi display support
