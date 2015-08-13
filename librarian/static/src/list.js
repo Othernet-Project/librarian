@@ -101,17 +101,19 @@
     body.animate({'scrollTop': 0}, 500);
   }
 
-  function activateThumbnailView() {
+  function activateThumbnailView(e) {
     var items = $('.app-item');
+    e.preventDefault();
     items.fadeOut('fast', function () {
-      items.addClass('thumbnail').fadeIn();
+      items.addClass('thumbnails').fadeIn();
     });
   }
 
-  function activateDetailView() {
+  function activateDetailView(e) {
     var items = $('.app-item');
+    e.preventDefault();
     items.fadeOut('fast', function () {
-      items.removeClass('thumbnail').fadeIn();
+      items.removeClass('thumbnails').fadeIn();
     });
   }
 

@@ -1,5 +1,5 @@
 % for meta in metadata:
-<li class="app-item">
+<li class="app-item ${'thumbnails' if view == 'thumbnails' else 'details'}">
     <% app_url = i18n_url('content:reader', content_id=meta.md5) + h.set_qparam(content_type=chosen_content_type).to_qs() %>
     <a class="thumbnail" href="${app_url}">
         <img src="${url('content:file', content_path=th.get_content_path(meta.md5), filename=meta.thumbnail)}" />
@@ -22,7 +22,7 @@
     </div>
 </li>
 % endfor
-<div class="controls hidden">
-    <a class="thumbnail-view">${_("Thumbnail view")}</a>
-    <a class="detail-view">${_("Detail view")}</a>
+<div class="controls">
+    <a class="thumbnail-view" href="${i18n_path(request.path) + h.set_qparam(view='thumbnails').to_qs()}">${_("Thumbnail view")}</a>
+    <a class="detail-view" href="${i18n_path(request.path) + h.set_qparam(view='details').to_qs()}">${_("Detail view")}</a>
 </div>

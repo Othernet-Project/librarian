@@ -10,7 +10,7 @@
     .field {
       display: block;
     }
-    &.thumbnail {
+    &.thumbnails {
       .author, .download-date, .description {
         display: none;
       }
@@ -23,8 +23,5 @@
     position: absolute;
     top: 0;
     right: 0;
-  }
-  .controls.hidden {
-    display: none;
   }
 }

@@ -87,7 +87,8 @@ def content_list():
                 tag=tag_name,
                 tag_id=tag,
                 tag_cloud=archive.get_tag_cloud(),
-                base_path=i18n_url('content:list'))
+                base_path=i18n_url('content:list'),
+                view=request.params.get('view'))
 
 
 def guard_already_removed(func):
