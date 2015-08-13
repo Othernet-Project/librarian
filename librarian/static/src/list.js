@@ -101,6 +101,20 @@
     body.animate({'scrollTop': 0}, 500);
   }
 
+  function activateThumbnailView() {
+    var items = $('.app-item');
+    items.fadeOut('fast', function () {
+      items.addClass('thumbnail').fadeIn();
+    });
+  }
+
+  function activateDetailView() {
+    var items = $('.app-item');
+    items.fadeOut('fast', function () {
+      items.removeClass('thumbnail').fadeIn();
+    });
+  }
+
   showToTop = _.debounce(toggleToTopButton, 50);
 
   // Normalize pager vales
@@ -131,4 +145,9 @@
   $('.pager').remove();  // No pager needed
   win.on('scroll', showToTop);
   win.on('resize', updateHeight);
+
+  // Show app list view controls
+  $('.controls').show();
+  $('.thumbnail-view').click(activateThumbnailView);
+  $('.detail-view').click(activateDetailView);
 }(this, this.jQuery, this._, this.URI));

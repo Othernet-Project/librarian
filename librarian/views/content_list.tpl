@@ -57,7 +57,7 @@ ${library_submenu.body()}
     </div>
 </div>
 
-<ul id="content-list" class="content-list" data-total="${int(pager.pages)}">
+<ul id="content-list" class="content-list ${chosen_content_type or ''}" data-total="${int(pager.pages)}">
     % if chosen_content_type == 'app':
     ${app_list.body()}
     % else:
