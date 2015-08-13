@@ -14,11 +14,21 @@
             <a class="back" href="${content_url + h.set_qparam(content_type=chosen_content_type).del_qparam('path').to_qs()}"></a>
         </div>
         <div class="image-viewer">
+            <script id="imageURLs" type="application/json">
+                {
+                    "urls": [
+                    % for image in meta['image']['album']:
+                        <% sep = ',' if not loop.last else '' %>
+                        "${url('content:file', content_path=th.get_content_path(meta.md5), filename=image['file'])}"${sep}
+                    % endfor
+                    ]
+                }
+            </script>
             % if img_index > 0:
             <a class="previous" href="${content_url + h.set_qparam(content_type=chosen_content_type).set_qparam(path=img_index - 1).to_qs()}"></a>
             % endif
             <div class="image-container">
-                <img src=${url('content:file', content_path=th.get_content_path(meta.md5), filename=meta['image']['album'][img_index]['file'])} />
+                <img src=${url('content:file', content_path=th.get_content_path(meta.md5), filename=meta['image']['album'][img_index]['file'])} data-index="${img_index}" />
             </div>
             % if img_index < img_count - 1:
             <a class="next" href="${content_url + h.set_qparam(content_type=chosen_content_type).set_qparam(path=img_index + 1).to_qs()}"></a>
