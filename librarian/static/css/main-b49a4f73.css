@@ -4257,26 +4257,26 @@ form.search .icon {
 /* line 32, ../scss/partials/_apps.scss */
 .content-list.app .thumbnails-view {
   display: inline-block;
-  background-image: url('../img/icons/1x/icons.png?1439439302');
+  background-image: url('../img/icons/1x/icons.png?1439559143');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 32, ../scss/partials/_apps.scss */
   .content-list.app .thumbnails-view {
-    background-image: url('../img/icons/2x/icons.png?1439439758');
+    background-image: url('../img/icons/2x/icons.png?1439559143');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 /* line 35, ../scss/partials/_apps.scss */
 .content-list.app .thumbnails-view:hover {
-  background-image: url('../img/icons/1x/icons_hover.png?1439439304');
+  background-image: url('../img/icons/1x/icons_hover.png?1439559143');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 35, ../scss/partials/_apps.scss */
   .content-list.app .thumbnails-view:hover {
-    background-image: url('../img/icons/2x/icons_hover.png?1439439760');
+    background-image: url('../img/icons/2x/icons_hover.png?1439559143');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -4284,26 +4284,26 @@ form.search .icon {
 /* line 39, ../scss/partials/_apps.scss */
 .content-list.app .details-view {
   display: inline-block;
-  background-image: url('../img/icons/1x/list.png?1439439306');
+  background-image: url('../img/icons/1x/list.png?1439559143');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 39, ../scss/partials/_apps.scss */
   .content-list.app .details-view {
-    background-image: url('../img/icons/2x/list.png?1439439736');
+    background-image: url('../img/icons/2x/list.png?1439559143');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 /* line 42, ../scss/partials/_apps.scss */
 .content-list.app .details-view:hover {
-  background-image: url('../img/icons/1x/list_hover.png?1439439310');
+  background-image: url('../img/icons/1x/list_hover.png?1439559143');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 42, ../scss/partials/_apps.scss */
   .content-list.app .details-view:hover {
-    background-image: url('../img/icons/2x/list_hover.png?1439439738');
+    background-image: url('../img/icons/2x/list_hover.png?1439559143');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -4393,7 +4393,7 @@ form.search .icon {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 11, ../scss/partials/_reader.scss */
+/* line 15, ../scss/partials/_reader.scss */
 .reader-frame {
   position: fixed;
   top: 60px;
@@ -4402,50 +4402,50 @@ form.search .icon {
   right: 36px;
   background: #ffffff;
   overflow: hidden;
-  -moz-transition: right 0.5s;
-  -o-transition: right 0.5s;
-  -webkit-transition: right 0.5s;
-  transition: right 0.5s; }
-/* line 21, ../scss/partials/_reader.scss */
-.reader-frame.reduced {
-  right: 275px; }
+  -moz-transition: right 0.3s;
+  -o-transition: right 0.3s;
+  -webkit-transition: right 0.3s;
+  transition: right 0.3s; }
 /* line 25, ../scss/partials/_reader.scss */
+.reader-frame.reduced {
+  right: 248px; }
+/* line 29, ../scss/partials/_reader.scss */
 .reader-frame iframe {
   display: block;
   width: 100%;
   height: 100%; }
-/* line 30, ../scss/partials/_reader.scss */
+/* line 34, ../scss/partials/_reader.scss */
 .reader-frame .mejs-container button {
   min-width: auto; }
 
-/* line 37, ../scss/partials/_reader.scss */
+/* line 41, ../scss/partials/_reader.scss */
 .reader.generic .single-download {
   margin: 1em;
   width: 100%;
   height: 100%;
   text-align: center; }
-/* line 42, ../scss/partials/_reader.scss */
+/* line 46, ../scss/partials/_reader.scss */
 .reader.generic .single-download .download-button {
   display: inline-block;
   background-image: url('../img/icons/1x/loader_download_hover.png?1434436260');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 42, ../scss/partials/_reader.scss */
+  /* line 46, ../scss/partials/_reader.scss */
   .reader.generic .single-download .download-button {
     background-image: url('../img/icons/2x/loader_download_hover.png?1434436356');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 47, ../scss/partials/_reader.scss */
+/* line 51, ../scss/partials/_reader.scss */
 .reader.generic .download-list {
   margin: 1em; }
-/* line 49, ../scss/partials/_reader.scss */
+/* line 53, ../scss/partials/_reader.scss */
 .reader.generic .download-list .file-info {
   display: inline-block;
   vertical-align: middle; }
-/* line 52, ../scss/partials/_reader.scss */
+/* line 56, ../scss/partials/_reader.scss */
 .reader.generic .download-list .file-info .filename {
   display: inline-block;
   width: 350px;
@@ -4453,33 +4453,33 @@ form.search .icon {
   white-space: nowrap;
   text-overflow: ellipsis;
   vertical-align: middle; }
-/* line 61, ../scss/partials/_reader.scss */
+/* line 65, ../scss/partials/_reader.scss */
 .reader.generic .download-list .download-link {
   display: inline-block;
   background-image: url('../img/icons/1x/loader_download_hover.png?1434436260');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 61, ../scss/partials/_reader.scss */
+  /* line 65, ../scss/partials/_reader.scss */
   .reader.generic .download-list .download-link {
     background-image: url('../img/icons/2x/loader_download_hover.png?1434436356');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 68, ../scss/partials/_reader.scss */
+/* line 72, ../scss/partials/_reader.scss */
 .reader.audio .player {
   margin: 1em; }
-/* line 70, ../scss/partials/_reader.scss */
+/* line 74, ../scss/partials/_reader.scss */
 .reader.audio .player .playlist {
   margin-top: 1em;
   display: inline-block;
   background: black;
   padding: 10px; }
-/* line 75, ../scss/partials/_reader.scss */
+/* line 79, ../scss/partials/_reader.scss */
 .reader.audio .player .playlist li {
   margin: 0.5em 0; }
-/* line 78, ../scss/partials/_reader.scss */
+/* line 82, ../scss/partials/_reader.scss */
 .reader.audio .player .playlist .track-info {
   width: 345px;
   display: inline-block;
@@ -4488,9 +4488,9 @@ form.search .icon {
   text-overflow: ellipsis;
   vertical-align: middle;
   color: #bbbbbb; }
-/* line 87, ../scss/partials/_reader.scss */
+/* line 91, ../scss/partials/_reader.scss */
 .reader.audio .player .playlist .play {
-  background-image: url('../img/icons/1x/play.png?1439439494');
+  background-image: url('../img/icons/1x/play.png?1439559143');
   display: inline-block;
   vertical-align: middle;
   width: 32px;
@@ -4499,25 +4499,25 @@ form.search .icon {
   background-size: cover;
   opacity: 0.6; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 87, ../scss/partials/_reader.scss */
+  /* line 91, ../scss/partials/_reader.scss */
   .reader.audio .player .playlist .play {
-    background-image: url('../img/icons/2x/play.png?1439439742');
+    background-image: url('../img/icons/2x/play.png?1439559143');
     -moz-background-size: 128px, 128px;
     -o-background-size: 128px, 128px;
     -webkit-background-size: 128px, 128px;
     background-size: 128px, 128px; } }
-/* line 96, ../scss/partials/_reader.scss */
+/* line 100, ../scss/partials/_reader.scss */
 .reader.audio .player .playlist .play:hover {
   opacity: 1; }
-/* line 104, ../scss/partials/_reader.scss */
+/* line 108, ../scss/partials/_reader.scss */
 .reader.image .album-item {
   float: left;
   margin: 25px; }
 @media only screen and (max-width: 320px) {
-  /* line 104, ../scss/partials/_reader.scss */
+  /* line 108, ../scss/partials/_reader.scss */
   .reader.image .album-item {
     margin: 0; } }
-/* line 110, ../scss/partials/_reader.scss */
+/* line 114, ../scss/partials/_reader.scss */
 .reader.image .album-item a {
   width: 200px;
   height: 200px;
@@ -4527,83 +4527,83 @@ form.search .icon {
   vertical-align: middle;
   position: relative;
   text-align: center; }
-/* line 119, ../scss/partials/_reader.scss */
+/* line 123, ../scss/partials/_reader.scss */
 .reader.image .album-item a .thumbnail {
   height: auto;
   max-width: 100%;
   vertical-align: middle; }
-/* line 124, ../scss/partials/_reader.scss */
+/* line 128, ../scss/partials/_reader.scss */
 .reader.image .album-item a .title {
   position: absolute;
   bottom: -40px;
   left: 0;
   width: 100%;
   text-align: center; }
-/* line 134, ../scss/partials/_reader.scss */
+/* line 138, ../scss/partials/_reader.scss */
 .reader.image .top-controls {
   margin: 1em; }
-/* line 136, ../scss/partials/_reader.scss */
+/* line 140, ../scss/partials/_reader.scss */
 .reader.image .top-controls .back {
   display: inline-block;
-  background-image: url('../img/icons/1x/back.png?1439439296');
+  background-image: url('../img/icons/1x/back.png?1439559143');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 136, ../scss/partials/_reader.scss */
+  /* line 140, ../scss/partials/_reader.scss */
   .reader.image .top-controls .back {
-    background-image: url('../img/icons/2x/back.png?1439439750');
+    background-image: url('../img/icons/2x/back.png?1439559143');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 139, ../scss/partials/_reader.scss */
+/* line 143, ../scss/partials/_reader.scss */
 .reader.image .top-controls .back:hover {
-  background-image: url('../img/icons/1x/back_hover.png?1439439296');
+  background-image: url('../img/icons/1x/back_hover.png?1439559143');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 139, ../scss/partials/_reader.scss */
+  /* line 143, ../scss/partials/_reader.scss */
   .reader.image .top-controls .back:hover {
-    background-image: url('../img/icons/2x/back_hover.png?1439439752');
+    background-image: url('../img/icons/2x/back_hover.png?1439559143');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 144, ../scss/partials/_reader.scss */
+/* line 148, ../scss/partials/_reader.scss */
 .reader.image .image-viewer {
   text-align: center;
   height: 100%;
   margin-top: 5em; }
-/* line 148, ../scss/partials/_reader.scss */
+/* line 152, ../scss/partials/_reader.scss */
 .reader.image .image-viewer .image-container {
   width: 70%;
   vertical-align: middle;
   display: inline-block; }
-/* line 152, ../scss/partials/_reader.scss */
+/* line 156, ../scss/partials/_reader.scss */
 .reader.image .image-viewer .image-container img {
   max-width: 100%; }
-/* line 156, ../scss/partials/_reader.scss */
+/* line 160, ../scss/partials/_reader.scss */
 .reader.image .image-viewer .previous {
   display: inline-block;
   background-image: url('../img/icons/1x/arrow_left.png?1434436196');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 156, ../scss/partials/_reader.scss */
+  /* line 160, ../scss/partials/_reader.scss */
   .reader.image .image-viewer .previous {
     background-image: url('../img/icons/2x/arrow_left.png?1434436300');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 160, ../scss/partials/_reader.scss */
+/* line 164, ../scss/partials/_reader.scss */
 .reader.image .image-viewer .next {
   display: inline-block;
   background-image: url('../img/icons/1x/arrow_right.png?1434436198');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 160, ../scss/partials/_reader.scss */
+  /* line 164, ../scss/partials/_reader.scss */
   .reader.image .image-viewer .next {
     background-image: url('../img/icons/2x/arrow_right.png?1434436302');
     -moz-background-size: 25px, 25px;
@@ -4611,23 +4611,23 @@ form.search .icon {
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 
-/* line 168, ../scss/partials/_reader.scss */
+/* line 172, ../scss/partials/_reader.scss */
 .reader-meta {
   position: fixed;
   top: 60px;
   bottom: 0;
-  right: 0;
+  right: -212px;
   background: #dddddd;
-  -moz-transition: width 0.5s;
-  -o-transition: width 0.5s;
-  -webkit-transition: width 0.5s;
-  transition: width 0.5s;
-  width: 35px; }
-/* line 176, ../scss/partials/_reader.scss */
+  -moz-transition: right 0.3s;
+  -o-transition: right 0.3s;
+  -webkit-transition: right 0.3s;
+  transition: right 0.3s;
+  width: 247px; }
+/* line 180, ../scss/partials/_reader.scss */
 .reader-meta .inner {
   position: relative;
   height: 100%; }
-/* line 179, ../scss/partials/_reader.scss */
+/* line 183, ../scss/partials/_reader.scss */
 .reader-meta .inner .meta-container {
   position: absolute;
   left: 35px;
@@ -4635,83 +4635,103 @@ form.search .icon {
   top: 0;
   right: 0;
   padding: 20px; }
-/* line 187, ../scss/partials/_reader.scss */
+/* line 191, ../scss/partials/_reader.scss */
 .reader-meta .inner .meta-container .tag-editor .field-help {
   padding-left: 0; }
-/* line 191, ../scss/partials/_reader.scss */
+/* line 195, ../scss/partials/_reader.scss */
 .reader-meta .inner .meta-container .attrib {
   position: absolute;
   bottom: 20px;
   margin-bottom: 0px;
   right: 20px;
   left: 20px; }
-/* line 199, ../scss/partials/_reader.scss */
+/* line 203, ../scss/partials/_reader.scss */
 .reader-meta .inner .toggle {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   background: #eeeeee; }
-/* line 205, ../scss/partials/_reader.scss */
+/* line 209, ../scss/partials/_reader.scss */
 .reader-meta .inner .toggle .icon {
   display: inline-block;
   margin: 20px 5px;
   cursor: pointer;
-  background-image: url('../img/icons/1x/accordion_open.png?1434436188');
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s5d02f0862a.png');
+  background-position: 0 -110px;
+  background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 205, ../scss/partials/_reader.scss */
+  /* line 209, ../scss/partials/_reader.scss */
   .reader-meta .inner .toggle .icon {
-    background-image: url('../img/icons/2x/accordion_open.png?1434436290');
-    -moz-background-size: 25px, 25px;
-    -o-background-size: 25px, 25px;
-    -webkit-background-size: 25px, 25px;
-    background-size: 25px, 25px; } }
-/* line 210, ../scss/partials/_reader.scss */
+    background-image: url('../img/icons/2x-s977a30ed79.png');
+    background-position: 0 -110px;
+    -moz-background-size: 128px 5512px;
+    -o-background-size: 128px 5512px;
+    -webkit-background-size: 128px 5512px;
+    background-size: 128px 5512px; } }
+/* line 214, ../scss/partials/_reader.scss */
 .reader-meta .inner .toggle .icon:hover {
-  background-image: url('../img/icons/1x/accordion_open_hover.png?1434436190');
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s5d02f0862a.png');
+  background-position: 0 -165px;
+  background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 210, ../scss/partials/_reader.scss */
+  /* line 214, ../scss/partials/_reader.scss */
   .reader-meta .inner .toggle .icon:hover {
-    background-image: url('../img/icons/2x/accordion_open_hover.png?1434436292');
-    -moz-background-size: 25px, 25px;
-    -o-background-size: 25px, 25px;
-    -webkit-background-size: 25px, 25px;
-    background-size: 25px, 25px; } }
-/* line 216, ../scss/partials/_reader.scss */
+    background-image: url('../img/icons/2x-s977a30ed79.png');
+    background-position: 0 -165px;
+    -moz-background-size: 128px 5512px;
+    -o-background-size: 128px 5512px;
+    -webkit-background-size: 128px 5512px;
+    background-size: 128px 5512px; } }
+/* line 220, ../scss/partials/_reader.scss */
 .reader-meta.expanded {
-  width: 274px; }
-/* line 219, ../scss/partials/_reader.scss */
+  right: 0; }
+/* line 223, ../scss/partials/_reader.scss */
 .reader-meta.expanded .toggle .icon {
-  background-image: url('../img/icons/1x/accordion_close.png?1434436186');
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s5d02f0862a.png');
+  background-position: 0 0;
+  background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 219, ../scss/partials/_reader.scss */
+  /* line 223, ../scss/partials/_reader.scss */
   .reader-meta.expanded .toggle .icon {
-    background-image: url('../img/icons/2x/accordion_close.png?1434436286');
-    -moz-background-size: 25px, 25px;
-    -o-background-size: 25px, 25px;
-    -webkit-background-size: 25px, 25px;
-    background-size: 25px, 25px; } }
-/* line 221, ../scss/partials/_reader.scss */
+    background-image: url('../img/icons/2x-s977a30ed79.png');
+    background-position: 0 0;
+    -moz-background-size: 128px 5512px;
+    -o-background-size: 128px 5512px;
+    -webkit-background-size: 128px 5512px;
+    background-size: 128px 5512px; } }
+/* line 225, ../scss/partials/_reader.scss */
 .reader-meta.expanded .toggle .icon:hover {
-  background-image: url('../img/icons/1x/accordion_close_hover.png?1434436186');
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/icons/1x-s5d02f0862a.png');
+  background-position: 0 -55px;
+  background-repeat: no-repeat;
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 221, ../scss/partials/_reader.scss */
+  /* line 225, ../scss/partials/_reader.scss */
   .reader-meta.expanded .toggle .icon:hover {
-    background-image: url('../img/icons/2x/accordion_close_hover.png?1434436288');
-    -moz-background-size: 25px, 25px;
-    -o-background-size: 25px, 25px;
-    -webkit-background-size: 25px, 25px;
-    background-size: 25px, 25px; } }
+    background-image: url('../img/icons/2x-s977a30ed79.png');
+    background-position: 0 -55px;
+    -moz-background-size: 128px 5512px;
+    -o-background-size: 128px 5512px;
+    -webkit-background-size: 128px 5512px;
+    background-size: 128px 5512px; } }
 @media only screen and (max-width: 640px) {
-  /* line 228, ../scss/partials/_reader.scss */
+  /* line 232, ../scss/partials/_reader.scss */
   .reader-meta.expanded {
     width: 100%; } }
 
