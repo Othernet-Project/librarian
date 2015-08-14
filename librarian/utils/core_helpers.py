@@ -181,7 +181,7 @@ def content_domain_plugin(app):
 @template_helper
 def get_content_path(content_id):
     """ Return relative path of a content based on it's id """
-    return content_mod.to_path(content_id)
+    return content_mod.to_path(content_id).replace('\\', '/')
 
 
 @template_helper
