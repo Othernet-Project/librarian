@@ -1,6 +1,10 @@
 @import "outernet/mixins/media_query";
 @import "outernet/mixins/sprites";
 
+$sidebar-width: 247px;
+$sidebar-handle-width: 35px;
+$sidebar-animation-interval: 0.3s;
+
 @mixin entity-icon {
   font-size: 3em;
   font-weight: bold;
@@ -13,13 +17,13 @@
   top: 60px;
   bottom: 0;
   left: 0;
-  right: 36px;
+  right: $sidebar-handle-width + 1px;
   background: $white;
   overflow: hidden;
-  @include transition(right 0.5s);
+  @include transition(right $sidebar-animation-interval);
 
   &.reduced {
-    right: 275px;
+    right: $sidebar-width + 1px;
   }
 
   iframe {
@@ -169,10 +173,10 @@
   position: fixed;
   top: 60px;
   bottom: 0;
-  right: 0;
+  right: $sidebar-handle-width - $sidebar-width;
   background: $border;
-  @include transition(width 0.5s);
-  width: 35px;
+  @include transition(right $sidebar-animation-interval);
+  width: $sidebar-width;
   .inner {
     position: relative;
     height: 100%;
@@ -214,7 +218,7 @@
     }
   }
   &.expanded {
-    width: 274px;
+    right: 0;
     .toggle {
       .icon {
         @include with-hdpi(icons, accordion_close, yes);
