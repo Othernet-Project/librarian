@@ -210,9 +210,9 @@ $sidebar-animation-interval: 0.3s;
         display: inline-block;
         margin: 20px 5px;
         cursor: pointer;
-        @include with-hdpi(icons, accordion_open, yes);
+        @include icon(accordion_open, yes);
         &:hover {
-          @include with-hdpi(icons, accordion_open_hover, yes);
+          @include icon(accordion_open_hover, yes);
         }
       }
     }
@@ -221,9 +221,9 @@ $sidebar-animation-interval: 0.3s;
     right: 0;
     .toggle {
       .icon {
-        @include with-hdpi(icons, accordion_close, yes);
+        @include icon(accordion_close, yes);
         &:hover {
-          @include with-hdpi(icons, accordion_close_hover, yes);
+          @include icon(accordion_close_hover, yes);
         }
       }
     }
