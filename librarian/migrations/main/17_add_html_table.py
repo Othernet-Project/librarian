@@ -1,7 +1,7 @@
 SQL = """
 create table html
 (
-    md5 varchar primary_key not null,
+    md5 varchar primary_key unique not null,
     keep_formatting boolean not null default 0,
     main varchar not null default 'index.html'
 );

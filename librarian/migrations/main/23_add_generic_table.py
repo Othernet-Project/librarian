@@ -1,7 +1,7 @@
 SQL = """
 create table generic
 (
-    md5 varchar primary_key not null,
+    md5 varchar primary_key unique not null,
     description varchar
 );
 """

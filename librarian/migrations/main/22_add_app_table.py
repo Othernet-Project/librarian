@@ -1,7 +1,7 @@
 SQL = """
 create table app
 (
-    md5 varchar primary_key not null,
+    md5 varchar primary_key unique not null,
     version varchar,
     description varchar
 );

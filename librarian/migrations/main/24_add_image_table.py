@@ -1,7 +1,7 @@
 SQL = """
 create table image
 (
-    md5 varchar primary_key not null,
+    md5 varchar primary_key unique not null,
     description varchar
 );
 
@@ -12,7 +12,8 @@ create table album
     thumbnail varchar,
     caption varchar,
     title varchar,
-    resolution varchar
+    resolution varchar,
+    unique(md5, file) on conflict replace
 );
 """
 
