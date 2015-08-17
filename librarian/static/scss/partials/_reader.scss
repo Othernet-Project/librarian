@@ -137,6 +137,7 @@ $sidebar-animation-interval: 0.3s;
 
     .top-controls {
       margin: 1em;
+      position: absolute;
       .back {
         display: inline-block;
         @include with-hdpi(icons, back, yes);
@@ -145,14 +146,19 @@ $sidebar-animation-interval: 0.3s;
         }
       }
     }
+
     .image-viewer {
-      text-align: center;
       height: 100%;
-      margin-top: 5em;
-      .image-container {
-        width: 70%;
+      width: 100%;
+      display: table;
+      .cell {
+        display: table-cell;
         vertical-align: middle;
-        display: inline-block;
+        text-align: center;
+      }
+      .image-container {
+        vertical-align: middle;
+        width: 70%;
         img {
           max-width: 100%;
         }
