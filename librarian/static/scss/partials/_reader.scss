@@ -89,16 +89,11 @@ $sidebar-animation-interval: 0.3s;
           color: $iconic;
         }
         .play {
-          @include with-hdpi(icons, play);
+          @include with-hdpi(icons, play_item, yes);
           display: inline-block;
           vertical-align: middle;
-          width: 32px;
-          height: 32px;
-          background-repeat: no-repeat;
-          background-size: cover;
-          opacity: 0.6;
           &:hover {
-            opacity: 1;
+            @include with-hdpi(icons, play_item_hover, yes);
           }
         }
       }
