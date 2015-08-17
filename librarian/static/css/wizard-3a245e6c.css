@@ -2322,56 +2322,56 @@ body.initial .menu {
 .steps .step {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s6f20806940.png');
-  background-position: 0 -4880px;
+  background-image: url('../img/icons/1x-s093b8055e4.png');
+  background-position: 0 -5200px;
   background-repeat: no-repeat;
   width: 20px;
   height: 20px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 74, ../scss/wizard.scss */
   .steps .step {
-    background-image: url('../img/icons/2x-sf13202e92c.png');
-    background-position: 0 -4880px;
-    -moz-background-size: 100px 5519px;
-    -o-background-size: 100px 5519px;
-    -webkit-background-size: 100px 5519px;
-    background-size: 100px 5519px; } }
+    background-image: url('../img/icons/2x-sc22abbe6a5.png');
+    background-position: 0 -5200px;
+    -moz-background-size: 100px 5839px;
+    -o-background-size: 100px 5839px;
+    -webkit-background-size: 100px 5839px;
+    background-size: 100px 5839px; } }
 /* line 78, ../scss/wizard.scss */
 .steps .previous {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s6f20806940.png');
-  background-position: 0 -4830px;
+  background-image: url('../img/icons/1x-s093b8055e4.png');
+  background-position: 0 -5150px;
   background-repeat: no-repeat;
   width: 20px;
   height: 20px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 78, ../scss/wizard.scss */
   .steps .previous {
-    background-image: url('../img/icons/2x-sf13202e92c.png');
-    background-position: 0 -4830px;
-    -moz-background-size: 100px 5519px;
-    -o-background-size: 100px 5519px;
-    -webkit-background-size: 100px 5519px;
-    background-size: 100px 5519px; } }
+    background-image: url('../img/icons/2x-sc22abbe6a5.png');
+    background-position: 0 -5150px;
+    -moz-background-size: 100px 5839px;
+    -o-background-size: 100px 5839px;
+    -webkit-background-size: 100px 5839px;
+    background-size: 100px 5839px; } }
 /* line 82, ../scss/wizard.scss */
 .steps .current {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s6f20806940.png');
-  background-position: 0 -4780px;
+  background-image: url('../img/icons/1x-s093b8055e4.png');
+  background-position: 0 -5100px;
   background-repeat: no-repeat;
   width: 20px;
   height: 20px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 82, ../scss/wizard.scss */
   .steps .current {
-    background-image: url('../img/icons/2x-sf13202e92c.png');
-    background-position: 0 -4780px;
-    -moz-background-size: 100px 5519px;
-    -o-background-size: 100px 5519px;
-    -webkit-background-size: 100px 5519px;
-    background-size: 100px 5519px; } }
+    background-image: url('../img/icons/2x-sc22abbe6a5.png');
+    background-position: 0 -5100px;
+    -moz-background-size: 100px 5839px;
+    -o-background-size: 100px 5839px;
+    -webkit-background-size: 100px 5839px;
+    background-size: 100px 5839px; } }
 
 /* line 87, ../scss/wizard.scss */
 .h-bar {
