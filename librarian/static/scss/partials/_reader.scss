@@ -160,11 +160,17 @@ $sidebar-animation-interval: 0.3s;
       }
       .previous {
         display: inline-block;
-        @include with-hdpi(icons, arrow_left, yes);
+        @include with-hdpi(icons, prev, yes);
+        &:hover {
+          @include with-hdpi(icons, prev_hover, yes);
+        }
       }
       .next {
         display: inline-block;
-        @include with-hdpi(icons, arrow_right, yes);
+        @include with-hdpi(icons, next, yes);
+        &:hover {
+          @include with-hdpi(icons, next_hover, yes);
+        }
       }
     }
   }
