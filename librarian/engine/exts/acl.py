@@ -124,9 +124,3 @@ def permission_required(*permissions, user_getter=lambda: request.user,
             # deny access silently if that's what's needed
         return wrapper
     return decorator
-
-
-def init_begin(supervisor):
-    # routes, plugins, etc. can access this decorator through the supervisor
-    # object during their installation and wrap themselves if they need to.
-    supervisor.exts.permission_required = permission_required
