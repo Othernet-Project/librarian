@@ -93,12 +93,12 @@ class Supervisor:
     def add_plugins(self, plugins):
         for plugin in plugins:
             plugin = self._import(plugin)
-            self.app.install(plugin(self.config))
+            self.app.install(plugin(self))
 
     def add_routes(self, routing):
         for route in routing:
             route = self._import(route)
-            for r in route(self.config):
+            for r in route(self):
                 path, method, cb, name, kw = r
                 self.app.route(path, method, cb, name=name, **kw)
 
