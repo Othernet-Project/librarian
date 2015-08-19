@@ -117,9 +117,9 @@ class Supervisor:
         # Fire post-start event after WSGI server is started.
         self.events.publish(self.POST_START, self)
         # Start background loop
-        self.init_background()
+        self.start_background_loop()
 
-    def init_background(self):
+    def start_background_loop(self):
         while True:
             time.sleep(self.LOOP_INTERVAL)
             # Fire background event
