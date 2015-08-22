@@ -1,4 +1,3 @@
-import importlib
 import logging
 import os
 import sys
@@ -8,6 +7,7 @@ from bottle import Bottle
 from gevent import pywsgi
 
 from .confloader import get_config_path, ConfDict
+from .dependencies import DependencyLoader
 from .exts import ExtContainer
 from .pubsub import PubSub
 from .signal_handlers import on_interrupt
@@ -24,13 +24,13 @@ class Supervisor:
     LOOP_INTERVAL = 5  # in seconds
     DEFAULT_CONFIG_FILENAME = 'librarian.ini'
 
-    INIT_BEGIN = 'INIT_BEGIN'
-    INIT_COMPLETE = 'INIT_COMPLETE'
-    PRE_START = 'PRE_START'
-    POST_START = 'POST_START'
-    BACKGROUND = 'BACKGROUND'
-    SHUTDOWN = 'SHUTDOWN'
-    IMMEDIATE_SHUTDOWN = 'IMMEDIATE_SHUTDOWN'
+    INIT_BEGIN = 'init_begin'
+    INIT_COMPLETE = 'init_complete'
+    PRE_START = 'pre_start'
+    POST_START = 'post_start'
+    BACKGROUND = 'background'
+    SHUTDOWN = 'shutdown'
+    IMMEDIATE_SHUTDOWN = 'immediate_shutdown'
     APP_HOOKS = (
         INIT_BEGIN,
         INIT_COMPLETE,
@@ -49,22 +49,17 @@ class Supervisor:
         self.events = PubSub()
         self.exts = ExtContainer()
 
-        # Load configuration
+        # Load core configuration
         config_path = os.path.join(root_dir, self.DEFAULT_CONFIG_FILENAME)
-        self.configure(get_config_path(default=config_path))
+        self._configure(get_config_path(default=config_path))
         self.config['root'] = root_dir
 
-        # Register application hooks
-        for hook_name in self.APP_HOOKS:
-            self.add_hooks(hook_name)
+        # Load components
+        self._load_components(self.config['app.components'])
 
         # Fire init-begin event. Subscribers may register command line handlers
         # during this period.
         self.events.publish(self.INIT_BEGIN, self)
-
-        # Register higher-level components
-        self.add_plugins(self.config['stack.plugins'])
-        self.add_routes(self.config['stack.routes'])
 
         # Register interrupt handler
         on_interrupt(self.halt)
@@ -77,7 +72,7 @@ class Supervisor:
             # One of the command line handlers probably requested early exit
             sys.exit(exc.exit_code)
 
-    def configure(self, path):
+    def _configure(self, path):
         path = os.path.abspath(path)
         base_path = os.path.dirname(path)
         self.config = self.app.config = ConfDict.from_file(path,
@@ -85,22 +80,52 @@ class Supervisor:
                                                            catchall=True,
                                                            autojson=True)
 
-    def add_hooks(self, hook_name):
-        for hook_path in self.config.get('stack.{0}'.format(hook_name), []):
-            hook = self._import(hook_path)
-            self.events.subscribe(hook_name, hook)
+    def _install_hook(self, name, fn, **kwargs):
+        self.events.subscribe(name, fn)
 
-    def add_plugins(self, plugins):
-        for plugin in plugins:
-            plugin = self._import(plugin)
-            self.app.install(plugin(self))
+    def _install_routes(self, fn, **kwargs):
+        route_config = fn(self.config)
+        for route in route_config:
+            (path, method, handler, name, kwargs) = route
+            self.app.route(path, method, handler, name=name, **kwargs)
 
-    def add_routes(self, routing):
-        for route in routing:
-            route = self._import(route)
-            for r in route(self):
-                path, method, cb, name, kw = r
-                self.app.route(path, method, cb, name=name, **kw)
+    def _install_plugin(self, fn, **kwargs):
+        plugin = fn(self)
+        self.app.install(plugin)
+
+    COMPONENT_META = {
+        'hooks': {
+            'exports': dict(zip(APP_HOOKS, [{}] * len(APP_HOOKS))),
+            'is_strict': False,
+            'handler': _install_hook
+        },
+        'plugins': {
+            'exports': {
+                'plugin': {}
+            },
+            'is_strict': True,
+            'handler': _install_plugin
+        },
+        'routes': {
+            'exports': {
+                'routes': {}
+            },
+            'is_strict': True,
+            'handler': _install_routes
+        }
+    }
+
+    def _load_components(self, components):
+        loader = DependencyLoader(components, self.COMPONENT_META)
+        for dep in loader.load():
+            comp_handler = self.COMPONENT_META[dep['type']]['handler']
+            comp_handler(**dep)
+
+    def _enter_background_loop(self):
+        while True:
+            time.sleep(self.LOOP_INTERVAL)
+            # Fire background event
+            self.events.publish(self.BACKGROUND, self)
 
     def start(self):
         # Fire pre-start event right before starting the WSGI server.
@@ -117,22 +142,10 @@ class Supervisor:
         # Fire post-start event after WSGI server is started.
         self.events.publish(self.POST_START, self)
         # Start background loop
-        self.start_background_loop()
-
-    def start_background_loop(self):
-        while True:
-            time.sleep(self.LOOP_INTERVAL)
-            # Fire background event
-            self.events.publish(self.BACKGROUND, self)
+        self._enter_background_loop()
 
     def halt(self):
         logging.info('Stopping the application')
         self.server.stop(5)
         logging.info('Running shutdown hooks')
         self.events.publish(self.SHUTDOWN, self)
-
-    @staticmethod
-    def _import(name):
-        mod, obj = name.rsplit('.', 1)
-        mod = importlib.import_module(mod)
-        return getattr(mod, obj)
