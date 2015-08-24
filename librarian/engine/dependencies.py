@@ -57,7 +57,7 @@ class DependencyLoader(object):
                 mod = loader.find_module(mod_name).load_module(mod_name)
                 modules.append(mod)
 
-        return modules
+        return (pkg_path, modules)
 
     def _get_exports_spec(self, module):
         try:
@@ -69,28 +69,28 @@ class DependencyLoader(object):
             return (exports, True)
 
     def _build(self):
-        # assemble a list of modules in the same order as their packages were
-        # listed on the component list
-        modules = []
+        """Assemble initial dependency tree, preserving the order as specified
+        in the component list."""
+        module_names = self._component_meta.keys()
         for pkg_name in self._components:
-            modules += self._import_modules(pkg_name,
-                                            self._component_meta.keys())
-        # build initial unparsed and unordered dependency tree
-        for mod in modules:
-            exports, is_strict = self._get_exports_spec(mod)
-            for (fn_name, dependencies) in exports.items():
-                try:
-                    fn = getattr(mod, fn_name)
-                except AttributeError as exc:
-                    if is_strict:
-                        raise DependencyNotFound(exc)
-                    continue
-                else:
-                    dep_id = '.'.join(fn.__module__, fn.__name__)
-                    self._dep_tree[dep_id] = dict(fn=fn,
-                                                  name=fn.__name__,
-                                                  type=module_name(mod),
-                                                  **dependencies)
+            (pkg_path, modules) = self._import_modules(pkg_name, module_names)
+            # build initial unparsed and unordered dependency tree
+            for mod in modules:
+                exports, is_strict = self._get_exports_spec(mod)
+                for (fn_name, dependencies) in exports.items():
+                    try:
+                        fn = getattr(mod, fn_name)
+                    except AttributeError as exc:
+                        if is_strict:
+                            raise DependencyNotFound(exc)
+                        continue
+                    else:
+                        dep_id = '.'.join(fn.__module__, fn.__name__)
+                        self._dep_tree[dep_id] = dict(fn=fn,
+                                                      name=fn.__name__,
+                                                      type=module_name(mod),
+                                                      pkg_path=pkg_path,
+                                                      **dependencies)
 
     def _parse(self):
         """Generates reverse dependencies. Essentially turns `required_by`
