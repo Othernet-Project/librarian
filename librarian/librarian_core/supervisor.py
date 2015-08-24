@@ -141,7 +141,7 @@ class Supervisor:
                                 component=dep,
                                 config=comp_config)
             self._merge_config(comp_config)
-            comp_handler(**dep)
+            comp_handler(self, **dep)
 
     def _enter_background_loop(self):
         while True:
