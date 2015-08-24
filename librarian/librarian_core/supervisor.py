@@ -25,6 +25,7 @@ class Supervisor:
     DEFAULT_CONFIG_FILENAME = 'config.ini'
 
     INIT_BEGIN = 'init_begin'
+    COMPONENT_LOADED = 'component_loaded'
     INIT_COMPLETE = 'init_complete'
     PRE_START = 'pre_start'
     POST_START = 'post_start'
@@ -33,6 +34,7 @@ class Supervisor:
     IMMEDIATE_SHUTDOWN = 'immediate_shutdown'
     APP_HOOKS = (
         INIT_BEGIN,
+        COMPONENT_LOADED,
         INIT_COMPLETE,
         PRE_START,
         POST_START,
@@ -79,13 +81,7 @@ class Supervisor:
                                   autojson=True)
 
     def _merge_config(self, config):
-        # update first keys that need special care
-        static_path = config.pop('assets.directory', None)
-        static_url = config.pop('assets.url', None)
-        if static_path:
-            self.config.setdefault('sources', [])
-            self.config['sources'].append((static_path, static_url))
-        # merge rest of the config into global config, but without overwriting
+        # merge component config into global config, but without overwriting
         # existing data
         self.config.setdefaults(config)
 
@@ -137,6 +133,10 @@ class Supervisor:
             comp_config_path = os.path.join(dep['pkg_path'],
                                             self.DEFAULT_CONFIG_FILENAME)
             comp_config = self._load_config(comp_config_path)
+            self.events.publish(self.COMPONENT_LOADED,
+                                self,
+                                component=dep,
+                                config=comp_config)
             self._merge_config(comp_config)
             comp_handler(**dep)
 
