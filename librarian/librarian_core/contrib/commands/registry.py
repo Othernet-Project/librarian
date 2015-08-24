@@ -22,11 +22,3 @@ class CommandLineHandler:
                 fn(arg, self._supervisor)
 
         return args
-
-
-def init_begin(supervisor):
-    supervisor.exts.commands = CommandLineHandler(supervisor)
-
-
-def init_complete(supervisor):
-    supervisor.config['args'] = supervisor.exts.commands.handle()

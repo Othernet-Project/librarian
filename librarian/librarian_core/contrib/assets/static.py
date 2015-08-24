@@ -1,8 +1,5 @@
 import os
-import glob
-import logging
 
-import bottle
 import webassets.script
 
 
@@ -117,56 +114,29 @@ class Assets:
             return 'scss/' + s + '.scss'
         return s
 
+    @staticmethod
+    def parse_bundle(bundle):
+        bundle_name, bundle_content = [b.strip() for b in bundle.split(':')]
+        bundle_content = [b.strip() for b in bundle_content.split(',')]
+        return bundle_name, bundle_content
 
-def parse_bundle(bundle):
-    bundle_name, bundle_content = [b.strip() for b in bundle.split(':')]
-    bundle_content = [b.strip() for b in bundle_content.split(',')]
-    return bundle_name, bundle_content
+    @classmethod
+    def from_config(cls, config):
+        """ Create Assets instance from dict-like config object """
+        assets_dir = os.path.join(config['root'], config['assets.directory'])
+        assets_url = config['assets.url']
+        assets_debug = config['assets.debug']
+        assets = cls(assets_dir, assets_url, assets_debug)
+        for path, url in config.get('assets.sources', []):
+            assets.add_static_source(path, url=url)
 
+        js_bundles = [cls.parse_bundle(b)
+                      for b in config.get('assets.js_bundles', [])]
+        for name, contents in js_bundles:
+            assets.add_js_bundle(name, contents)
 
-def make_assets(config):
-    """ Create Assets instance from dict-like config object """
-    assets_dir = os.path.join(config['root'], config['assets.directory'])
-    assets_url = config['assets.url']
-    assets_debug = config['assets.debug']
-    assets = Assets(assets_dir, assets_url, assets_debug)
-    for path, url in config.get('assets.sources', []):
-        assets.add_static_source(path, url=url)
-
-    js_bundles = [parse_bundle(b)
-                  for b in config.get('assets.js_bundles', [])]
-    for name, contents in js_bundles:
-        assets.add_js_bundle(name, contents)
-
-    css_bundles = [parse_bundle(b)
-                   for b in config.get('assets.css_bundles', [])]
-    for name, contents in css_bundles:
-        assets.add_css_bundle(name, contents)
-    return assets
-
-
-def rebuild_assets(supervisor):
-    print("Rebuilding assets")
-    config = supervisor.config.copy()
-    config['assets.debug'] = True
-    assets_dir = supervisor.assets.env.directory
-    # Remove existing assets
-    for name, bundle in supervisor.assets.env._named_bundles.items():
-        path = os.path.join(assets_dir, bundle.output) % {'version': '*'}
-        for p in glob.iglob(path):
-            os.unlink(p)
-    env = webassets.script.CommandLineEnvironment(supervisor.assets.env,
-                                                  logging.getLogger('assets'))
-    env.invoke('build', {})
-    raise supervisor.EarlyExit("Static assets rebuilt successfully",
-                               exit_code=0)
-
-
-def init_begin(supervisor):
-    assets = make_assets(supervisor.config)
-    supervisor.exts.assets = bottle.BaseTemplate.defaults['assets'] = assets
-    supervisor.exts.commands.register('assets',
-                                      rebuild_assets,
-                                      '--assets',
-                                      action='store_true',
-                                      help='rebuild static assets')
+        css_bundles = [cls.parse_bundle(b)
+                       for b in config.get('assets.css_bundles', [])]
+        for name, contents in css_bundles:
+            assets.add_css_bundle(name, contents)
+        return assets
