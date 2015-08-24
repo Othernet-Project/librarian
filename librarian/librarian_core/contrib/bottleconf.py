@@ -29,7 +29,7 @@ def init_begin(supervisor):
                                       action='store_true',
                                       help='enable debugging')
 
-    bottle.debug(supervisor.config['server.debug'])
+    bottle.debug(supervisor.config['app.debug'])
     template_root = os.path.join(supervisor.config['root'],
                                  supervisor.config['app.view_path'])
     bottle.TEMPLATE_PATH.insert(0, template_root)
