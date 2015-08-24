@@ -26,7 +26,19 @@ def module_name(mod):
 
 
 class DependencyLoader(object):
+    """Components may define an `EXPORTS` section in each of their significant
+    modules which are checked during component loading. If it's omitted, a
+    default configuration is being used for component discovery. Example
+    configuration:
 
+    ``hooks.py``
+    EXPORTS = {
+        'pre_init': {
+            'depends_on': ['other_pkg.mod_name.fn_name', 'some.mod.fn'],
+            'required_by': ['first_pkg.a_mod.a_fn']
+        }
+    }
+    """
     def __init__(self, components, component_meta):
         self._components = components
         self._component_meta = component_meta
