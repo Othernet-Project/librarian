@@ -27,7 +27,7 @@ def module_name(mod):
 
 class DependencyLoader(object):
     """Components may define an `EXPORTS` section in each of their significant
-    modules which are checked during component loading. If it's omitted, a
+    modules, which are inspected during component loading. If it's omitted, a
     default configuration is being used for component discovery. Example
     configuration:
 
