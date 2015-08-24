@@ -132,4 +132,4 @@ class DependencyLoader(object):
         self._build()
         self._parse()
         self._order()
-        return self._dep_tree
+        return self._dep_tree.values()
