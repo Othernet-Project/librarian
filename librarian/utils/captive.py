@@ -1,4 +1,6 @@
-from bottle import request, HTTPResponse
+import logging
+
+from bottle import request, HTTPResponse, redirect
 
 from . import netutils
 from .template import template
@@ -10,17 +12,25 @@ def captive_portal_plugin(domain_mappings, ip_range):
     def decorator(callback):
         def wrapper(*args, **kwargs):
             target_host = netutils.get_target_host()
-            if target_hot in domain_mappings
-                # The domain_mappings map domain names to combination of
-                # template name and status code (some captive portal detection
-                # algorithms look for 204 status code instead of 200).
-                template_name, status = domain_mappings[target_host].split(';')
-                if status == '204':
-                    response = ''
-                else:
-                    response = template(TEMPLATE_PREFIX + template_name, {})
-                raise HTTPResponse(response, int(status))
-            return callback(*args, **kwargs)
+
+            if target_host not in domain_mappings:
+                # This is not a captive portal check
+                return callback(*args, **kwargs)
+
+            logging.debug('Matched captive portal host %s', target_host)
+
+            # The domain_mappings map domain names to combination of
+            # template name and status code (some captive portal detection
+            # algorithms look for 204 status code instead of 200).
+            template_name, status = domain_mappings[target_host].split(';')
+
+            if status == '204':
+                response = ''
+            elif status == '302':
+                return redirect('/', 302)
+            else:
+                response = template(TEMPLATE_PREFIX + template_name, {})
+            raise HTTPResponse(response, int(status))
         return wrapper
     return decorator
 
