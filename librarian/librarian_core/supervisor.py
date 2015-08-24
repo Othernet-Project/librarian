@@ -72,9 +72,12 @@ class Supervisor:
             # One of the command line handlers probably requested early exit
             sys.exit(exc.exit_code)
 
-    def _load_config(self, path):
+    def _load_config(self, path, strict=True):
         path = os.path.abspath(path)
         base_path = os.path.dirname(path)
+        if not strict and not os.path.exists(path):
+            return ConfDict()
+
         return ConfDict.from_file(path,
                                   base_dir=base_path,
                                   catchall=True,
@@ -132,7 +135,7 @@ class Supervisor:
             comp_handler = self.COMPONENT_META[dep['type']]['handler']
             comp_config_path = os.path.join(dep['pkg_path'],
                                             self.DEFAULT_CONFIG_FILENAME)
-            comp_config = self._load_config(comp_config_path)
+            comp_config = self._load_config(comp_config_path, strict=False)
             self.events.publish(self.COMPONENT_LOADED,
                                 self,
                                 component=dep,
