@@ -122,9 +122,8 @@ class ConfDict(dict):
 
     def setdefaults(self, other):
         for k in other:
-            if k in self:
-                continue
-            self[k] = other[k]
+            if k not in self:
+                self[k] = other[k]
 
     @staticmethod
     def clean_value(val):
