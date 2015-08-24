@@ -22,7 +22,7 @@ class EarlyExit(Exception):
 
 class Supervisor:
     LOOP_INTERVAL = 5  # in seconds
-    DEFAULT_CONFIG_FILENAME = 'librarian.ini'
+    DEFAULT_CONFIG_FILENAME = 'config.ini'
 
     INIT_BEGIN = 'init_begin'
     INIT_COMPLETE = 'init_complete'
@@ -50,8 +50,9 @@ class Supervisor:
         self.exts = ExtContainer()
 
         # Load core configuration
-        config_path = os.path.join(root_dir, self.DEFAULT_CONFIG_FILENAME)
-        self._configure(get_config_path(default=config_path))
+        default_path = os.path.join(root_dir, self.DEFAULT_CONFIG_FILENAME)
+        config_path = get_config_path(default=default_path)
+        self.config = self.app.config = self._load_config(config_path)
         self.config['root'] = root_dir
 
         # Load components
@@ -72,13 +73,13 @@ class Supervisor:
             # One of the command line handlers probably requested early exit
             sys.exit(exc.exit_code)
 
-    def _configure(self, path):
+    def _load_config(self, path):
         path = os.path.abspath(path)
         base_path = os.path.dirname(path)
-        self.config = self.app.config = ConfDict.from_file(path,
-                                                           base_dir=base_path,
-                                                           catchall=True,
-                                                           autojson=True)
+        return ConfDict.from_file(path,
+                                  base_dir=base_path,
+                                  catchall=True,
+                                  autojson=True)
 
     def _install_hook(self, name, fn, **kwargs):
         self.events.subscribe(name, fn)
@@ -119,6 +120,11 @@ class Supervisor:
         loader = DependencyLoader(components, self.COMPONENT_META)
         for dep in loader.load():
             comp_handler = self.COMPONENT_META[dep['type']]['handler']
+            comp_config_path = os.path.join(dep['pkg_path'],
+                                            self.DEFAULT_CONFIG_FILENAME)
+            comp_config = self._load_config(comp_config_path)
+            # update app config, but only keys that are not already defined
+            self.config.setdefaults(comp_config)
             comp_handler(**dep)
 
     def _enter_background_loop(self):
