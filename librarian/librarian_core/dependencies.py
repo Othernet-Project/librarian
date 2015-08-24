@@ -2,6 +2,7 @@ import collections
 import importlib
 import os
 import pkgutil
+import sys
 
 
 class UnresolvableDependency(Exception):
@@ -51,10 +52,13 @@ class DependencyLoader(object):
         """
         pkg = importlib.import_module(pkg_name)
         pkg_path = os.path.dirname(os.path.abspath(pkg.__file__))
+        if pkg_path not in sys.path:
+            sys.path.append(pkg_path)
+
         modules = []
-        for (loader, mod_name, is_pkg) in pkgutil.iter_modules(pkg_path):
+        for (loader, mod_name, is_pkg) in pkgutil.iter_modules([pkg_path]):
             if whitelist is None or mod_name in whitelist:
-                mod = loader.find_module(mod_name).load_module(mod_name)
+                mod = importlib.import_module(mod_name, pkg_name)
                 modules.append(mod)
 
         return (pkg_path, modules)
@@ -85,7 +89,7 @@ class DependencyLoader(object):
                             raise DependencyNotFound(exc)
                         continue
                     else:
-                        dep_id = '.'.join(fn.__module__, fn.__name__)
+                        dep_id = '.'.join([fn.__module__, fn.__name__])
                         self._dep_tree[dep_id] = dict(fn=fn,
                                                       name=fn.__name__,
                                                       type=module_name(mod),
