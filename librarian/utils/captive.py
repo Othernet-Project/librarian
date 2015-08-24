@@ -8,7 +8,7 @@ from .template import template
 TEMPLATE_PREFIX = 'captive_portal/'
 
 
-def captive_portal_plugin(domain_mappings, ip_range):
+def captive_portal_plugin(domain_mappings, ip_range, self_url):
     def decorator(callback):
         def wrapper(*args, **kwargs):
             target_host = netutils.get_target_host()
@@ -27,7 +27,7 @@ def captive_portal_plugin(domain_mappings, ip_range):
             if status == '204':
                 response = ''
             elif status == '302':
-                return redirect('/', 302)
+                return redirect(self_url, 302)
             else:
                 response = template(TEMPLATE_PREFIX + template_name, {})
             raise HTTPResponse(response, int(status))
@@ -40,4 +40,5 @@ def install_captive_portal_plugin(app):
                            for d in app.config['captive_portal.domains'])
     client_range = netutils.IPv4Range(
         *app.config['librarian.ap_client_ip_range'])
-    app.install(captive_portal_plugin(domain_mappings, client_range))
+    self_url = app.config['librarian.root_url'] + '/'
+    app.install(captive_portal_plugin(domain_mappings, client_range, self_url))
