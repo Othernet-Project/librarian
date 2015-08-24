@@ -21,7 +21,7 @@ gevent.hub.Hub.NOT_ERROR = (Exception,)
 
 import os
 
-from librarian.engine.supervisor import Supervisor
+from librarian_core.supervisor import Supervisor
 
 
 def main():
