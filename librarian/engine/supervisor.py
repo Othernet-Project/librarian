@@ -130,13 +130,13 @@ class Supervisor:
     def start(self):
         # Fire pre-start event right before starting the WSGI server.
         self.events.publish(self.PRE_START, self)
-        host = self.config['server.bind']
-        port = self.config['server.port']
+        host = self.config['app.bind']
+        port = self.config['app.port']
         self.server = pywsgi.WSGIServer((host, port), self.app, log=None)
         self.server.start()  # non-blocking
         assert self.server.started, 'Expected server to be running'
         logging.debug("Started server on http://%s:%s/", host, port)
-        if self.config['server.debug']:
+        if self.config['app.debug']:
             print('Started server on http://%s:%s/' % (host, port))
 
         # Fire post-start event after WSGI server is started.
