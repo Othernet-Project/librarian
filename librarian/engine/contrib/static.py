@@ -130,6 +130,8 @@ def make_assets(config):
     assets_url = config['assets.url']
     assets_debug = config['assets.debug']
     assets = Assets(assets_dir, assets_url, assets_debug)
+    for path, url in config.get('assets.sources', []):
+        assets.add_static_source(path, url=url)
 
     js_bundles = [parse_bundle(b)
                   for b in config.get('assets.js_bundles', [])]
