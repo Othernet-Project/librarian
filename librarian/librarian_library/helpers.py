@@ -18,18 +18,18 @@ from bottle import request, redirect, abort
 from bottle_utils.common import unicode
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
 
-from ..core import content as content_mod
-from ..core import downloads
-from ..core import metadata
-from ..core import zipballs
-from ..core.archive import Archive
-from ..core.files import FileManager
-from ..utils.cache import cached
+from librarian.utils.lang import SELECT_LANGS
+from librarian.utils.netutils import IPv4Range, get_target_host
+from librarian.utils.system import ensure_dir
+from librarian.utils.template_helpers import template_helper
+from librarian.librarian_cache.decorators import cached
 
-from .lang import SELECT_LANGS
-from .netutils import IPv4Range, get_target_host
-from .system import ensure_dir
-from .template_helpers import template_helper
+from .library import content as content_mod
+from .library import downloads
+from .library import metadata
+from .library import zipballs
+from .library.archive import Archive
+from .library.files import FileManager
 
 
 LICENSES = (
