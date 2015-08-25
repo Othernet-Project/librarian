@@ -9,7 +9,7 @@ $reader-data-height: 60px;
   left: 0;
   right: 0;
   background: $white;
-  @include ios_iframe_fix;
+  @include ios-iframe-fix;
 
   iframe {
     display: block;

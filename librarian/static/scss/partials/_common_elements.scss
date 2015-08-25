@@ -5,7 +5,7 @@
 @import "mixins/browser_fixes";
 
 html {
-  @include ios_font_size_fix;
+  @include ios-font-size-fix;
 }
 
 body {

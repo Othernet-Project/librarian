@@ -10,7 +10,7 @@
 //
 // Applicable to iOS Safari on versions of iOS 5 through 8.
 //
-@mixin ios_iframe_fix {
+@mixin ios-iframe-fix {
   overflow: auto;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -23,6 +23,6 @@
 // to the <HTML> element.
 //
 // Applicable to iOS Safari
-@mixin ios_font_size_fix {
+@mixin ios-font-size-fix {
   -webkit-text-size-adjust: 100%;
 }
