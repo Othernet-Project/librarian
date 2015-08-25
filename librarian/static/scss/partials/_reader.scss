@@ -1,3 +1,5 @@
+@import "mixins/browser_fixes";
+
 $reader-data-height: 60px;
 
 .reader-frame {
@@ -7,8 +9,7 @@ $reader-data-height: 60px;
   left: 0;
   right: 0;
   background: $white;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
+  @include ios_iframe_fix;
 
   iframe {
     display: block;
