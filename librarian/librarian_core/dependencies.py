@@ -22,8 +22,7 @@ class DependencyNotFound(Exception):
 
 
 def module_name(mod):
-    pkg = mod.__package__ or ''
-    return mod.__name__.replace(pkg, '')
+    return mod.__name__.split('.')[-1]
 
 
 class DependencyLoader(object):
@@ -58,7 +57,8 @@ class DependencyLoader(object):
         modules = []
         for (loader, mod_name, is_pkg) in pkgutil.iter_modules([pkg_path]):
             if whitelist is None or mod_name in whitelist:
-                mod = importlib.import_module(mod_name, pkg_name)
+                mod_path = '.'.join([pkg_name, mod_name])
+                mod = importlib.import_module(mod_path)
                 modules.append(mod)
 
         return (pkg_path, modules)
