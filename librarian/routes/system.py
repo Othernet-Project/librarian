@@ -16,7 +16,6 @@ from os.path import abspath, dirname, join, basename, splitext
 from bottle import request, static_file, abort
 
 from librarian import __version__
-from ..utils.http import http_redirect
 from ..utils.template import view
 
 
@@ -68,7 +67,8 @@ def show_maint_page(exc):
 
 @view('404')
 def show_page_missing(exc):
-    return http_redirect('/')
+    print(exc)
+    return dict()
 
 
 @view('403')
