@@ -5,11 +5,14 @@ from .static import Assets
 
 
 def component_loaded(supervisor, component, config):
-    static_path = config.pop('assets.directory', None)
-    static_url = config.pop('assets.url', None)
-    if static_path:
-        supervisor.config.setdefault('assets.sources', [])
-        supervisor.config['assets.sources'].append((static_path, static_url))
+    supervisor.config.setdefault('assets.sources', {})
+    pkg_name = component['pkg_name']
+    if pkg_name not in supervisor.config['assets.sources']:
+        static_path = config.pop('assets.directory', None)
+        static_url = config.pop('assets.url', None)
+        if static_path:
+            supervisor.config['assets.sources'][pkg_name] = (static_path,
+                                                             static_url)
 
 
 def init_begin(supervisor):

@@ -127,7 +127,7 @@ class Assets:
         assets_url = config['assets.url']
         assets_debug = config['assets.debug']
         assets = cls(assets_dir, assets_url, assets_debug)
-        for path, url in config.get('assets.sources', []):
+        for path, url in config.get('assets.sources', {}).values():
             assets.add_static_source(path, url=url)
 
         js_bundles = [cls.parse_bundle(b)
