@@ -13,12 +13,10 @@ from __future__ import print_function
 import re
 import sqlite3
 import logging
-from functools import wraps
 from contextlib import contextmanager
 
 import dateutil.parser
 
-from bottle import request
 from bottle_utils.common import basestring
 from bottle_utils.lazy import CachingLazy
 from sqlize import (From, Where, Group, Order, Limit, Select, Update, Delete,
@@ -209,34 +207,3 @@ class DatabaseContainer(dict):
             {n: CachingLazy(Database, c, debug=debug)
              for n, c in connections.items()})
         self.__dict__ = self
-
-
-def get_connection(db_name, db_path):
-    # FIXME: Add unit tests
-    if isinstance(db_path, Database):
-        conn = db_path.conn
-    else:
-        if hasattr(db_path, 'cursor'):
-            conn = db_path
-        else:
-            conn = Database.connect(db_path)
-    return conn
-
-
-def get_connections(db_confs):
-    return {n: get_connection(n, p) for n, p in db_confs.items()}
-
-
-def get_databases(db_confs, debug=False):
-    conns = get_connections(db_confs)
-    return DatabaseContainer(conns, debug=debug)
-
-
-def database_plugin(databases):
-    def plugin(callback):
-        @wraps(callback)
-        def wrapper(*args, **kwargs):
-            request.db = databases
-            return callback(*args, **kwargs)
-        return wrapper
-    return plugin
