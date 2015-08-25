@@ -93,6 +93,7 @@ class DependencyLoader(object):
                         self._dep_tree[dep_id] = dict(fn=fn,
                                                       name=fn.__name__,
                                                       type=module_name(mod),
+                                                      pkg_name=pkg_name,
                                                       pkg_path=pkg_path,
                                                       **dependencies)
 
