@@ -8,7 +8,7 @@ def component_loaded(supervisor, component, config):
     static_path = config.pop('assets.directory', None)
     static_url = config.pop('assets.url', None)
     if static_path:
-        supervisor.config.setdefault('sources', [])
+        supervisor.config.setdefault('assets.sources', [])
         supervisor.config['assets.sources'].append((static_path, static_url))
 
 
