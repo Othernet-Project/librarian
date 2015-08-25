@@ -100,7 +100,7 @@ class Supervisor:
     def _install_routes(self, fn, **kwargs):
         route_config = fn(self.config)
         for route in route_config:
-            (path, method, handler, name, kwargs) = route
+            (name, handler, method, path, kwargs) = route
             self.app.route(path, method, handler, name=name, **kwargs)
 
     def _install_plugin(self, fn, **kwargs):
