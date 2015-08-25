@@ -4,8 +4,11 @@
 @import "outernet/partial/hyperlinks";
 @import "outernet/partial/tables";
 @import "outernet/mixins/media_query";
+@import "mixins/browser_fixes";
+
 
 html {
+  @include ios-font-size-fix;
   background: $iconic;
   padding: 2em;
 
