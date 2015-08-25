@@ -167,10 +167,8 @@ def content_resolver_plugin(root_url, ap_client_ip_range):
 
 def create_directories(app):
     ensure_dir(app.config['content.spooldir'])
-    ensure_dir(app.config['content.appdir'])
     ensure_dir(app.config['content.unpackdir'])
     ensure_dir(app.config['content.contentdir'])
-    ensure_dir(app.config['content.covers'])
 
 
 def content_domain_plugin(app):
@@ -183,7 +181,7 @@ def content_domain_plugin(app):
 @template_helper
 def get_content_path(content_id):
     """ Return relative path of a content based on it's id """
-    return content_mod.to_path(content_id)
+    return content_mod.to_path(content_id).replace('\\', '/')
 
 
 @template_helper

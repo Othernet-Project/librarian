@@ -89,16 +89,16 @@ class BaseArchive(object):
         'spooldir',
         'meta_filename',
     )
-    meta_db_mapping = {
-        'replaces': None,
-        'index': 'entry_point'
-    }
-    db_fields = (
-        'md5',
-        'size',
-        'updated',
-    ) + tuple(filter(None, [meta_db_mapping.get(key, key)
-                            for key in metadata.EDGE_KEYS]))
+    # list of content types that cannot be displayed on the mixed content list
+    # where all other types are mixed together
+    exclude_from_content_list = (
+        'app',
+    )
+    # list of content types which data needs to be completely fetched even when
+    # loading the content list
+    prefetchable_types = (
+        'app',
+    )
 
     def __init__(self, **config):
         self.config = config
@@ -109,29 +109,29 @@ class BaseArchive(object):
 
         self.__initialized = True
 
-    def get_count(self, terms=None, tag=None, lang=None, multipage=None):
+    def get_count(self, terms=None, tag=None, lang=None, content_type=None):
         """Return the number of matching content metadata filtered by the given
         options.
         Implementation is backend specific.
 
-        :param terms:      string: search query
-        :param tag:        list of string tags
-        :param lang:       string: language code
-        :param multipage:  bool"""
+        :param terms:         string: search query
+        :param tag:           list of string tags
+        :param lang:          string: language code
+        :param content_type:  int: content type id"""
         raise NotImplementedError()
 
     def get_content(self, terms=None, offset=0, limit=0, tag=None, lang=None,
-                    multipage=None):
+                    content_type=None):
         """Return iterable of matching content metadata filtered by the given
         options.
         Implementation is backend specific.
 
-        :param terms:      string: search query
-        :param offset:     int: start index
-        :param limit:      int: max number of items to be returned
-        :param tag:        list of string tags
-        :param lang:       string: language code
-        :param multipage:  bool"""
+        :param terms:         string: search query
+        :param offset:        int: start index
+        :param limit:         int: max number of items to be returned
+        :param tag:           list of string tags
+        :param lang:          string: language code
+        :param content_type:  int: content type id"""
         raise NotImplementedError()
 
     def get_single(self, content_id):
@@ -245,6 +245,7 @@ class BaseArchive(object):
         meta['md5'] = content_id
         meta['updated'] = datetime.datetime.now()
         meta['size'] = content.get_content_size(contentdir, content_id)
+        meta['content_type'] = metadata.determine_content_type(meta)
 
     def extract_zipball(self, zip_path, contentdir):
         """Extract zipball found on `zip_path` into `contentdir`.

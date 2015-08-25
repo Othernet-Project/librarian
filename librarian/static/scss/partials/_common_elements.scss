@@ -160,6 +160,16 @@ form.inline {
     text-align: right;
   }
 
+  .content-type {
+    clear: left;
+    text-align: center;
+    li {
+      display: inline-block;
+      text-transform: capitalize;
+      margin: 0 10px;
+    }
+  }
+
   @include narrower-than(732px) {
     .langs, .pager {
       @include col1;

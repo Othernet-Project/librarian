@@ -66,7 +66,6 @@ def validate(path, meta_filename='info.json'):
       there are, by extension, no absolute paths)
     - contain a file called info.json inside the directory
     - have valid metadata in info.json
-    - location of index file in metadata must be present
 
     The checks are performed from least expensive to most expensive and the
     first check that fails immediately raises.
@@ -103,17 +102,8 @@ def validate(path, meta_filename='info.json'):
         raise ValidationError(path, str(exc))
     except (KeyError, ValueError):
         raise ValidationError(path, 'missing or malformed metadata file')
-    # Inspect entry point
-    try:
-        index_val = meta['index']
-    except KeyError:
-        index_val = meta.get('entry_point', 'index.html')
-
-    indexpath = '{0}/{1}'.format(md5, index_val)
-    if indexpath not in names:
-        raise ValidationError(path, "missing index at '{}'".format(indexpath))
-
-    return meta
+    else:
+        return meta
 
 
 def backup(path):

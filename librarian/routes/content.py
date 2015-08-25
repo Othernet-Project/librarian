@@ -33,26 +33,32 @@ app = default_app()
 
 
 @cached(prefix='content', timeout=300)
-def filter_content(query, lang, tag, multipage):
+def filter_content(query, lang, tag, content_type):
     conf = request.app.config
     archive = open_archive()
     raw_metas = archive.get_content(terms=query,
                                     lang=lang,
                                     tag=tag,
-                                    multipage=multipage)
+                                    content_type=content_type)
     contentdir = conf['content.contentdir']
     metas = [metadata.Meta(meta, content.to_path(meta['md5'], contentdir))
              for meta in raw_metas]
     return metas
 
 
-def prepare_content_list(multipage=None):
+@roca_view('content_list', '_content_list', template_func=template)
+def content_list():
+    """ Show list of content """
     # parse search query
     query = request.params.getunicode('q', '').strip()
     # parse language filter
     default_lang = request.user.options.get('content_language', None)
     lang = request.params.get('lang', default_lang)
     request.user.options['content_language'] = lang
+    # parse content type filter
+    content_type = request.params.get('content_type')
+    if content_type not in metadata.CONTENT_TYPES:
+        content_type = None
     # parse tag filter
     archive = open_archive()
     try:
@@ -69,36 +75,20 @@ def prepare_content_list(multipage=None):
     page = Paginator.parse_page(request.params)
     per_page = Paginator.parse_per_page(request.params)
     # get content list filtered by above parsed filter params
-    metas = filter_content(query, lang, tag, multipage)
+    metas = filter_content(query, lang, tag, content_type)
     pager = Paginator(metas, page, per_page)
     return dict(metadata=pager.items,
                 pager=pager,
                 vals=request.params.decode(),
                 query=query,
                 lang=dict(lang=lang),
+                content_types=metadata.CONTENT_TYPES,
+                chosen_content_type=content_type,
                 tag=tag_name,
                 tag_id=tag,
-                tag_cloud=archive.get_tag_cloud())
-
-
-@roca_view('content_list', '_content_list', template_func=template)
-def content_list():
-    """ Show list of content """
-    result = prepare_content_list()
-    result.update({'base_path': i18n_url('content:list'),
-                   'page_title': _('Library'),
-                   'empty_message': _('Content library is currently empty')})
-    return result
-
-
-@roca_view('content_list', '_content_list', template_func=template)
-def content_sites_list():
-    """ Show list of multipage content only """
-    result = prepare_content_list(multipage=True)
-    result.update({'base_path': i18n_url('content:sites_list'),
-                   'page_title': _('Sites'),
-                   'empty_message': _('There are no sites in the library.')})
-    return result
+                tag_cloud=archive.get_tag_cloud(),
+                base_path=i18n_url('content:list'),
+                view=request.params.get('view'))
 
 
 def guard_already_removed(func):
@@ -129,8 +119,7 @@ def guard_already_removed(func):
 @guard_already_removed
 @view('remove_confirm')
 def remove_content_confirm(content):
-    cancel_url = request.headers.get('Referer', i18n_url('content:list'))
-    return dict(content=content, cancel_url=cancel_url)
+    return dict(content=content, cancel_url=i18n_url('content:list'))
 
 
 @auth.login_required(next_to='/')
@@ -181,16 +170,19 @@ def content_reader(meta):
     """ Loads the reader interface """
     archive = open_archive()
     archive.add_view(meta.md5)
-    file_path = request.params.get('path', meta.entry_point)
-    file_path = meta.entry_point if file_path == '/' else file_path
-    if file_path.startswith('/'):
-        file_path = file_path[1:]
+    # as mixed content is possible in zipballs, it is allowed to specify which
+    # content type is being viewed now explicitly, falling back to the first
+    # one found in the content object
+    content_type = request.params.get('content_type')
+    if content_type is None:
+        # pick first available content type present in content object as it was
+        # not specified
+        content_type = meta.content_type_names[0]
 
-    referer = request.headers.get('Referer', '')
-    base_path = i18n_url('content:sites_list')
-    if str(base_path) not in referer:
-        base_path = i18n_url('content:list')
-    return dict(meta=meta, base_path=base_path, file_path=file_path)
+    return dict(meta=meta,
+                base_path=i18n_url('content:list'),
+                chosen_content_type=content_type,
+                chosen_path=request.params.get('path'))
 
 
 def routes(app):
@@ -199,8 +191,6 @@ def routes(app):
         # CONTENT
         ('content:list', content_list,
          'GET', '/', {}),
-        ('content:sites_list', content_sites_list,
-         'GET', '/sites/', {}),
         ('content:reader', content_reader,
          'GET', '/pages/<content_id>', {}),
         ('content:delete', remove_content_confirm,

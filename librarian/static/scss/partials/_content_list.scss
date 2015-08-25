@@ -155,6 +155,16 @@ form.search {
       @include icon-link-button(delete, $fire25d, 46px);
     }
   }
+
+  .uninstall-button {
+    @include form-reset;
+    display: inline;
+
+    button {
+      font-size: $base-size;
+      @include icon-link-button(uninstall, $sub, 46px);
+    }
+  }
 }
 
 .load-more {

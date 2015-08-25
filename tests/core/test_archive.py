@@ -100,28 +100,6 @@ def base_archive():
 
 class TestBaseArchive(object):
 
-    def test_base_archive_db_fields(self, base_archive):
-        assert base_archive.db_fields == (
-            'md5',
-            'size',
-            'updated',
-            'publisher',
-            'keep_formatting',
-            'language',
-            'license',
-            'title',
-            'url',
-            'timestamp',
-            'multipage',
-            'broadcast',
-            'keywords',
-            'entry_point',
-            'images',
-            'is_partner',
-            'is_sponsored',
-            'archive'
-        )
-
     def test_base_archive_init_fail(self):
         with pytest.raises(TypeError):
             mod.BaseArchive()
@@ -212,10 +190,11 @@ class TestBaseArchive(object):
     @mock.patch.object(mod.BaseArchive, 'add_meta_to_db')
     @mock.patch.object(mod.os, 'remove')
     @mock.patch.object(mod.content, 'get_content_size')
+    @mock.patch.object(mod.metadata, 'determine_content_type')
     @mock.patch.object(mod.BaseArchive, 'extract_zipball')
-    def test_process_content_success(self, extract, get_content_size, remove,
-                                     add_meta_to_db, delete_content_files,
-                                     base_archive):
+    def test_process_content_success(self, extract, determine_content_type,
+                                     get_content_size, remove, add_meta_to_db,
+                                     delete_content_files, base_archive):
         content_id = 'some_id'
         meta = {'title': 'some title'}
         zip_path = '/path/file.zip'

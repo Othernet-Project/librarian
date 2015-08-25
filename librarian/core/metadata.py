@@ -12,27 +12,28 @@ from __future__ import unicode_literals
 
 import os
 import json
+import functools
 
 import scandir
 
 from outernet_metadata import validator
 
 
+CONTENT_TYPES = {
+    'generic': 1,
+    'html': 2,
+    'video': 4,
+    'audio': 8,
+    'app': 16,
+    'image': 32,
+}
 ALIASES = {
     'publisher': ['partner'],
-    'entry_point': ['index']
 }
 
 
-def get_successor_key(key):
-    """ If a key becomes obsolete, return it's successor.
-
-    :param key:  string: old(now obsolete) key name
-    :returns:    string: new(successor) key name"""
-    for edge_key, edge_aliases in ALIASES.items():
-        for obsolete_key in edge_aliases:
-            if obsolete_key == key:
-                return edge_key
+def is_deprecated(key):
+    return validator.values.v.deprecated in validator.values.SPECS[key]
 
 
 def get_edge_keys():
@@ -41,8 +42,8 @@ def get_edge_keys():
     :returns:  tuple of strings(key names)"""
     edge_keys = set()
     for key in validator.values.KEYS:
-        successor = get_successor_key(key)
-        edge_keys.add(successor or key)
+        if not is_deprecated(key):
+            edge_keys.add(key)
 
     return tuple(edge_keys)
 
@@ -68,10 +69,7 @@ def add_missing_keys(meta):
     """
     for key in EDGE_KEYS:
         if key not in meta:
-            # entry_point is not a valid key by specification, but is used
-            # by librarian nevertheless to avoid conflicts with SQL
-            def_key = 'index' if key == 'entry_point' else key
-            meta[key] = validator.values.DEFAULTS.get(def_key, None)
+            meta[key] = validator.values.DEFAULTS.get(key, None)
 
 
 def replace_aliases(meta):
@@ -104,7 +102,6 @@ def clean_keys(meta):
 
 def process_meta(meta):
     failed = validator.validate(meta, broadcast=True)
-    failed.pop('broadcast', None)  # TODO: remove this after until v0.3
     if failed:
         keys = ', '.join(failed.keys())
         msg = "Metadata validation failed for keys: {0}".format(keys)
@@ -114,6 +111,13 @@ def process_meta(meta):
     add_missing_keys(meta)
     clean_keys(meta)
     return meta
+
+
+def determine_content_type(meta):
+    """Calculate bitmask of the passed in metadata based on the content types
+    found in it."""
+    calc = lambda mask, key: mask + CONTENT_TYPES.get(key.lower(), 0)
+    return functools.reduce(calc, meta['content'].keys(), 0)
 
 
 class Meta(object):
@@ -127,9 +131,6 @@ class Meta(object):
     with content thumbnails). This functionality may be factored out of this
     class at a later time.
     """
-
-    IMAGE_EXTENSIONS = ('.png', '.gif', '.jpg', '.jpeg')
-
     def __init__(self, meta, content_path):
         """ Metadata wrapper instantiation
 
@@ -140,7 +141,7 @@ class Meta(object):
         # We use ``or`` in the following line because 'tags' can be an empty
         # string, which is treated as invalid JSON
         self.tags = json.loads(meta.get('tags') or '{}')
-        self._image = None
+        self._files = None
         self.content_path = content_path
 
     def __getattr__(self, attr):
@@ -172,16 +173,14 @@ class Meta(object):
         """
         return self.meta.get(key, default)
 
-    def find_image(self):
+    def find_files(self):
         if not self.content_path or not os.path.exists(self.content_path):
-            return None
+            return []
 
-        for entry in scandir.scandir(self.content_path):
-            extension = os.path.splitext(entry.name)[1].lower()
-            if extension in self.IMAGE_EXTENSIONS:
-                return entry.name
-
-        return None
+        return [(filename, os.stat(os.path.join(root, filename)).st_size)
+                for root, _, filenames in scandir.walk(self.content_path)
+                for filename in filenames
+                if filename != 'info.json']
 
     @property
     def lang(self):
@@ -198,9 +197,13 @@ class Meta(object):
         return 'core'
 
     @property
-    def image(self):
-        if self._image is not None:
-            return self._image
+    def files(self):
+        if self._files is None:
+            self._files = self.find_files()
+        return self._files
 
-        self._image = self.find_image()
-        return self._image
+    @property
+    def content_type_names(self):
+        """Return list of content type names present in a content object."""
+        return [name for (name, cid) in CONTENT_TYPES.items()
+                if self.meta['content_type'] & cid == cid]

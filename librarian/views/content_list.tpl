@@ -1,11 +1,12 @@
 <%inherit file='base.tpl'/>
 <%namespace name='simple_pager' file='_simple_pager.tpl'/>
 <%namespace name='content_list' file='_content_list.tpl'/>
+<%namespace name='app_list' file='_app_list.tpl'/>
 <%namespace name='library_submenu' file='_library_submenu.tpl'/>
 <%namespace name='tag_js_templates' file='_tag_js_templates.tpl'/>
-
 <%block name="title">
-${page_title}
+## Translators, used as page title
+${_('Library')}
 </%block>
 
 ${library_submenu.body()}
@@ -47,17 +48,29 @@ ${library_submenu.body()}
     <div class="forms pager">
         ${simple_pager.prev_next_pager()}
     </div>
+    <div class="content-type">
+        <ul>
+            <li><a href="${i18n_path(request.path)}">${_("All")}</a></li>
+            % for content_type in content_types.keys():
+            <li><a href="${i18n_path(request.path) + h.set_qparam(content_type=content_type).to_qs()}">${content_type}</a></li>
+            % endfor
+        </ul>
+    </div>
 </div>
 
-<ul id="content-list" class="content-list" data-total="${int(pager.pages)}">
+<ul id="content-list" class="content-list ${chosen_content_type or ''}" data-total="${int(pager.pages)}">
+    % if chosen_content_type == 'app':
+    ${app_list.body()}
+    % else:
     ${content_list.body()}
+    % endif
 </ul>
 
 % if not metadata:
     <p class="empty">
     % if not query and not tag and not lang['lang']:
     ## Translators, used as note on library page when library is empty
-    ${empty_message}
+    ${_('Content library is currently empty')}
     % elif query:
     ## Translators, used as note on library page when search does not return anything
     ${_("There are no search results for '%(terms)s'") % {'terms': query}}

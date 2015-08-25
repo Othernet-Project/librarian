@@ -120,7 +120,7 @@
   }
 }
 
-@each $navicon in (library, files, sites, apps, updates, logout, settings) {
+@each $navicon in (library, files, apps, updates, logout, settings) {
   #nav .#{$navicon},
   .alt-menu .#{$navicon} {
     .icon {
