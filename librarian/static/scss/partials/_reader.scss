@@ -19,12 +19,13 @@ $sidebar-animation-interval: 0.3s;
   left: 0;
   right: $sidebar-handle-width + 1px;
   background: $white;
-  overflow: hidden;
   @include transition(right $sidebar-animation-interval);
 
   &.reduced {
     right: $sidebar-width + 1px;
   }
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 
   iframe {
     display: block;
