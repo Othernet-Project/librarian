@@ -2,6 +2,11 @@
 @import "outernet/mixins/fonts";
 @import "outernet/mixins/grid";
 @import "outernet/mixins/media_query";
+@import "mixins/browser_fixes";
+
+html {
+  @include ios_font_size_fix;
+}
 
 body {
   padding-top: 60px;
