@@ -51,9 +51,9 @@ def init_databases(config):
     databases = get_databases(database_configs, debug=bottle.DEBUG)
     # Run migrations on all databases
     for db_name, db_config in database_configs.items():
-        migrate(databases[db_name],
-                '{0}.migrations.{1}'.format(db_config['pkg_name'], db_name),
-                config)
+        migration_pkg = '{0}.migrations.{1}'.format(db_config['package_name'],
+                                                    db_name)
+        migrate(databases[db_name], migration_pkg, config)
 
     return databases
 
