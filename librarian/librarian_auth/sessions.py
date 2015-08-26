@@ -13,7 +13,7 @@ import json
 import datetime
 import functools
 
-from bottle import request, response, hook
+from bottle import request, response
 from bottle_utils.common import basestring
 
 
@@ -243,27 +243,3 @@ class Session(object):
     def get_expiry():
         life = request.app.config['session.lifetime']
         return datetime.datetime.utcnow() + datetime.timedelta(life)
-
-
-def session_plugin(cookie_name, secret):
-    # Set up a hook, so handlers that raise cannot escape session-saving
-    @hook('after_request')
-    def save_session():
-        if hasattr(request, 'session'):
-            if request.session.modified:
-                request.session.save()
-
-            request.session.set_cookie(cookie_name, secret)
-
-    def plugin(callback):
-        @functools.wraps(callback)
-        def wrapper(*args, **kwargs):
-            session_id = request.get_cookie(cookie_name, secret=secret)
-            try:
-                request.session = Session.fetch(session_id)
-            except (SessionExpired, SessionInvalid):
-                request.session = Session.create()
-            return callback(*args, **kwargs)
-        return wrapper
-    plugin.name = 'session'
-    return plugin

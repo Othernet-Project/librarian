@@ -8,6 +8,8 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import random
+import string
 import urlparse
 
 from bottle import request, response
@@ -23,3 +25,11 @@ def http_redirect(path, code=303):
     response.status = code
     response.body = ""
     return response
+
+
+def generate_secret_key(length=50):
+    charset = [string.ascii_letters, string.digits, string.punctuation]
+    chars = (''.join(charset).replace('\'', '')
+                             .replace('"', '')
+                             .replace('\\', ''))
+    return ''.join([random.choice(chars) for i in range(length)])

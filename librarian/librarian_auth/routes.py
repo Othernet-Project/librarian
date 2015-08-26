@@ -14,11 +14,12 @@ from bottle_utils.form import ValidationError
 from bottle_utils.csrf import csrf_protect, csrf_token, csrf_tag
 from bottle_utils.i18n import i18n_path, i18n_url, lazy_gettext as _
 
-from ..forms.auth import LoginForm, PasswordResetForm
-from ..lib.auth import get_user_by_reset_token, set_password
-from ..utils.template import view, template
-from ..utils.http import http_redirect
-from ..utils.template_helpers import template_helper
+from librarian.utils.template import view, template
+from librarian.utils.template_helpers import template_helper
+
+from .forms import LoginForm, PasswordResetForm
+from .helpers import get_user_by_reset_token, set_password
+from .utils import http_redirect
 
 
 template_helper(csrf_tag)  # register csrf_tag in template_helpers
@@ -97,7 +98,7 @@ def reset():
                     redirect_url=login_url)
 
 
-def routes(app):
+def routes(supervisor):
     return (
         ('auth:login_form', show_login_form, 'GET', '/login/', {}),
         ('auth:login', login, 'POST', '/login/', {}),
