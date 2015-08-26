@@ -48,7 +48,7 @@ class Supervisor:
 
     def __init__(self, root_dir):
         self.server = None
-        self.app = Bottle()
+        self.app = self.wsgi = Bottle()
         self.app.supervisor = self
         self.events = PubSub()
         self.exts = ExtContainer()
@@ -169,7 +169,7 @@ class Supervisor:
         self.events.publish(self.PRE_START, self)
         host = self.config['app.bind']
         port = self.config['app.port']
-        self.server = pywsgi.WSGIServer((host, port), self.app, log=None)
+        self.server = pywsgi.WSGIServer((host, port), self.wsgi, log=None)
         self.server.start()  # non-blocking
         assert self.server.started, 'Expected server to be running'
         logging.debug("Started server on http://%s:%s/", host, port)
