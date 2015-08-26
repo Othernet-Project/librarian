@@ -48,6 +48,7 @@ class Supervisor:
     def __init__(self, root_dir):
         self.server = None
         self.app = Bottle()
+        self.app.supervisor = self
         self.events = PubSub()
         self.exts = ExtContainer()
 
