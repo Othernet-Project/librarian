@@ -2,14 +2,17 @@ import pytz
 
 from bottle import request
 
+from librarian.librarian_core.contrib.i18n.utils import (set_default_locale,
+                                                         get_enabled_locales)
 from librarian.librarian_setup.setup import setup_wizard
 
 from .forms import SetupLanguageForm, SetupDateTimeForm
-from .lang import UI_LOCALES, set_default_locale
 
 
 def is_language_invalid():
-    return request.app.setup.get('language') not in UI_LOCALES
+    supervisor = request.app.supervisor
+    lang_code = supervisor.exts.setup.get('language')
+    return lang_code not in get_enabled_locales()
 
 
 @setup_wizard.register_step('language', template='setup/step_language.tpl',
@@ -26,13 +29,14 @@ def setup_language():
         return dict(successful=False, form=form)
 
     lang = form.processed_data['language']
-    request.app.setup.append({'language': lang})
+    request.app.supervisor.exts.setup.append({'language': lang})
     set_default_locale(lang)
     return dict(successful=True, language=lang)
 
 
 def has_bad_tz():
-    return request.app.setup.get('timezone') not in pytz.common_timezones
+    timezone = request.app.supervisor.exts.setup.get('timezone')
+    return timezone not in pytz.common_timezones
 
 
 @setup_wizard.register_step('datetime', template='setup/step_datetime.tpl',
@@ -49,5 +53,5 @@ def setup_datetime():
         return dict(successful=False, form=form)
 
     timezone = form.processed_data['timezone']
-    request.app.setup.append({'timezone': timezone})
+    request.app.supervisor.exts.setup.append({'timezone': timezone})
     return dict(successful=True, timezone=timezone)
