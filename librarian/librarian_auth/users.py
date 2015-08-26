@@ -15,14 +15,6 @@ from bottle import request
 from .options import Options, DateTimeDecoder, DateTimeEncoder
 
 
-class UserAlreadyExists(Exception):
-    pass
-
-
-class InvalidUserCredentials(Exception):
-    pass
-
-
 class User(object):
 
     def __init__(self, username=None, is_superuser=None, created=None,

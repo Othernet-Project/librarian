@@ -10,7 +10,15 @@ import pbkdf2
 
 from bottle import request
 
-from .users import User, UserAlreadyExists, InvalidUserCredentials
+from .users import User
+
+
+class UserAlreadyExists(Exception):
+    pass
+
+
+class InvalidUserCredentials(Exception):
+    pass
 
 
 def get_redirect_path(base_path, next_path, next_param_name='next'):
