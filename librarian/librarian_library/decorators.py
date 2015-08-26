@@ -16,7 +16,7 @@ def with_content(func):
             abort(404)
         if not content:
             abort(404)
-        content_dir = conf['content.contentdir']
+        content_dir = conf['library.contentdir']
         content_path = content_mod.to_path(content_id, prefix=content_dir)
         meta = metadata.Meta(content, content_path)
         return func(meta=meta, **kwargs)

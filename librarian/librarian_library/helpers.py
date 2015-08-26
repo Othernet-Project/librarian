@@ -35,22 +35,22 @@ read_meta = cached()(zipballs.validate)
 
 def open_archive():
     conf = request.app.config
-    return Archive.setup(conf['librarian.backend'],
+    return Archive.setup(conf['library.backend'],
                          request.db.main,
-                         unpackdir=conf['content.unpackdir'],
-                         contentdir=conf['content.contentdir'],
-                         spooldir=conf['content.spooldir'],
-                         meta_filename=conf['content.metadata'])
+                         unpackdir=conf['library.unpackdir'],
+                         contentdir=conf['library.contentdir'],
+                         spooldir=conf['library.spooldir'],
+                         meta_filename=conf['library.metadata'])
 
 
 def init_filemanager():
-    return FileManager(request.app.config['content.filedir'])
+    return FileManager(request.app.config['library.filedir'])
 
 
 @cached(prefix='downloads', timeout=30)
 def get_download_paths():
-    paths = downloads.get_downloads(request.app.config['content.spooldir'],
-                                    request.app.config['content.output_ext'])
+    paths = downloads.get_downloads(request.app.config['library.spooldir'],
+                                    request.app.config['library.output_ext'])
     return list(reversed(downloads.order_downloads(paths)))
 
 
@@ -61,7 +61,7 @@ def filter_downloads(lang):
     logging.info('Found {0} updates'.format(len(zballs)))
     # Collect metadata of valid zipballs. If a language filter is specified
     # filter the list based on that.
-    meta_filename = conf['content.metadata']
+    meta_filename = conf['library.metadata']
     metas = []
     for zipball_path, timestamp in zballs:
         try:
@@ -87,12 +87,12 @@ def filter_downloads(lang):
 
 def get_content_url(root_url, domain):
     conf = request.app.config
-    archive = Archive.setup(conf['librarian.backend'],
+    archive = Archive.setup(conf['library.backend'],
                             request.db.main,
-                            unpackdir=conf['content.unpackdir'],
-                            contentdir=conf['content.contentdir'],
-                            spooldir=conf['content.spooldir'],
-                            meta_filename=conf['content.metadata'])
+                            unpackdir=conf['library.unpackdir'],
+                            contentdir=conf['library.contentdir'],
+                            spooldir=conf['library.spooldir'],
+                            meta_filename=conf['library.metadata'])
     matched_contents = archive.content_for_domain(domain)
     try:
         # as multiple matches are possible, pick the first one
@@ -117,12 +117,12 @@ def get_content_path(content_id):
 @cached(prefix='content')
 def content_languages():
     conf = request.app.config
-    archive = Archive.setup(conf['librarian.backend'],
+    archive = Archive.setup(conf['library.backend'],
                             request.db.main,
-                            unpackdir=conf['content.unpackdir'],
-                            contentdir=conf['content.contentdir'],
-                            spooldir=conf['content.spooldir'],
-                            meta_filename=conf['content.metadata'])
+                            unpackdir=conf['library.unpackdir'],
+                            contentdir=conf['library.contentdir'],
+                            spooldir=conf['library.spooldir'],
+                            meta_filename=conf['library.metadata'])
     content_langs = archive.get_content_languages()
     return [(code, unicode(name)) for (code, name) in SELECT_LANGS
             if code in content_langs]

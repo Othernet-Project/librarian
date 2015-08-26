@@ -6,10 +6,10 @@ def refill_db(supervisor):
     config = supervisor.config
     archive = Archive.setup(config['library.backend'],
                             supervisor.exts.databases.main,
-                            unpackdir=config['content.unpackdir'],
-                            contentdir=config['content.contentdir'],
-                            spooldir=config['content.spooldir'],
-                            meta_filename=config['content.metadata'])
+                            unpackdir=config['library.unpackdir'],
+                            contentdir=config['library.contentdir'],
+                            spooldir=config['library.spooldir'],
+                            meta_filename=config['library.metadata'])
     archive.clear_and_reload()
     print('Content refill finished.')
     raise supervisor.EarlyExit()
@@ -20,10 +20,10 @@ def reload_db(supervisor):
     config = supervisor.config
     archive = Archive.setup(config['library.backend'],
                             supervisor.exts.databases.main,
-                            unpackdir=config['content.unpackdir'],
-                            contentdir=config['content.contentdir'],
-                            spooldir=config['content.spooldir'],
-                            meta_filename=config['content.metadata'])
+                            unpackdir=config['library.unpackdir'],
+                            contentdir=config['library.contentdir'],
+                            spooldir=config['library.spooldir'],
+                            meta_filename=config['library.metadata'])
     archive.reload_content()
     print('Content reload finished.')
     raise supervisor.EarlyExit()

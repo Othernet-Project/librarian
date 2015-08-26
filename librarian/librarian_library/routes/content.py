@@ -37,7 +37,7 @@ def filter_content(query, lang, tag, content_type):
                                     lang=lang,
                                     tag=tag,
                                     content_type=content_type)
-    contentdir = conf['content.contentdir']
+    contentdir = conf['library.contentdir']
     metas = [metadata.Meta(meta, content.to_path(meta['md5'], contentdir))
              for meta in raw_metas]
     return metas
@@ -142,14 +142,14 @@ def remove_content(content):
 def content_file(content_path, filename):
     """ Serve file from content directory with specified id """
     # TODO: handle `keep_formatting` flag
-    content_dir = request.app.config['content.contentdir']
+    content_dir = request.app.config['library.contentdir']
     content_root = os.path.join(content_dir, content_path)
     return static_file(filename, root=content_root)
 
 
 @cached(prefix='zipball')
 def prepare_zipball(content_id):
-    content_dir = request.app.config['content.contentdir']
+    content_dir = request.app.config['library.contentdir']
     zball = zipballs.create(content_id, content_dir)
     return zball.getvalue()
 

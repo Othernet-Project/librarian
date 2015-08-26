@@ -107,7 +107,7 @@ def add_all(*args):
 
 @invalidates(prefix=['downloads'], after=True)
 def delete(file_list):
-    spooldir = request.app.config['content.spooldir']
+    spooldir = request.app.config['library.spooldir']
     removed_count = downloads.remove_downloads(spooldir, content_ids=file_list)
     # Translators, used as confirmation title after the chosen updates were
     # deleted on the updates page
@@ -125,8 +125,8 @@ def delete(file_list):
 
 @invalidates(prefix=['downloads'], after=True)
 def delete_all(*args):
-    spooldir = request.app.config['content.spooldir']
-    content_ext = request.app.config['content.output_ext']
+    spooldir = request.app.config['library.spooldir']
+    content_ext = request.app.config['library.output_ext']
     removed_count = downloads.remove_downloads(spooldir, extension=content_ext)
     # Translators, used as confirmation title after the chosen updates were
     # deleted on the updates page

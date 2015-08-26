@@ -39,7 +39,7 @@ def get_broadcast_date(path):
 def up(db, conf):
     db.executescript(SQL)
 
-    contentd = conf['content.contentdir']
+    contentd = conf['library.contentdir']
     zip_paths = [os.path.join(contentd, p) for p in os.listdir(contentd)
                  if p.endswith('.zip')]
     for path in zip_paths:

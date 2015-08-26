@@ -12,7 +12,7 @@ def get_size(path):
 
 
 def up(db, conf):
-    contentd = conf['content.contentdir']
+    contentd = conf['library.contentdir']
     paths = [os.path.join(contentd, p)
              for p in os.listdir(contentd)
              if p.endswith('.zip')]

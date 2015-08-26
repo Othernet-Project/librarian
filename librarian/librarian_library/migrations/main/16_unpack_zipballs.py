@@ -46,7 +46,7 @@ def unpack_zipball(md5, zip_path, content_dir):
 
 
 def up(db, conf):
-    content_dir = conf['content.contentdir']
+    content_dir = conf['library.contentdir']
     for entry in scandir.scandir(content_dir):
         if entry.name.endswith('.zip'):
             md5 = get_hash(entry.name)
