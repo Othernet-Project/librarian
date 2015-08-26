@@ -4,8 +4,11 @@ import os
 
 import bottle
 
-import bottle_utils.csrf
-import bottle_utils.html
+from bottle_utils import csrf
+from bottle_utils import html
+from bottle_utils.common import to_unicode
+
+from .decorators import template_helper
 
 
 class DateTimeCapableEncoder(json.JSONEncoder):
@@ -32,9 +35,11 @@ def configure_bottle(supervisor):
     bottle.BaseTemplate.defaults.update({
         'DEBUG': bottle.DEBUG,
         'request': bottle.request,
-        'h': bottle_utils.html,
+        'h': html,
+        'th': template_helper,
         'url': supervisor.app.get_url,
-        'csrf_tag': bottle_utils.csrf.csrf_tag,
+        'csrf_tag': csrf.csrf_tag,
         '_': lambda x: x,
-        'REDIRECT_DELAY': supervisor.config['app.redirect_delay'],
+        'REDIRECT_DELAY': supervisor.config.get('app.redirect_delay', 5),
+        'u': to_unicode,
     })
