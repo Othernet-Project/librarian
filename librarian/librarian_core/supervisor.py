@@ -1,5 +1,6 @@
 import logging
 import os
+import pkgutil
 import sys
 import time
 
@@ -56,7 +57,7 @@ class Supervisor:
         self._configure(root_dir)
 
         # Load components
-        self._load_components(self.config['app.components'])
+        self._load_components()
 
         # Fire init-begin event. Subscribers may register command line handlers
         # during this period.
@@ -130,7 +131,20 @@ class Supervisor:
         }
     }
 
-    def _load_components(self, components):
+    def _get_core_components(self):
+        """Return list of import paths for all found core components."""
+        core_root = os.path.dirname(os.path.abspath(__file__))
+        contrib_root = os.path.join(core_root, 'contrib')
+        return ['.'.join([__package__, 'contrib', name])
+                for (_, name, _) in pkgutil.iter_modules([contrib_root])]
+
+    def _load_components(self):
+        components = self.config['app.components']
+        # load default core components if core override flag was not set
+        if not self.config.get('app.core_override'):
+            core_components = self._get_core_components()
+            components = core_components + components
+
         loader = DependencyLoader(components, self.COMPONENT_META)
         for dep in loader.load():
             comp_handler = self.COMPONENT_META[dep['type']]['handler']
