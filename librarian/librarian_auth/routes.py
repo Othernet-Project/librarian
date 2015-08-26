@@ -11,18 +11,15 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from bottle import request
 from bottle_utils.html import set_qparam
 from bottle_utils.form import ValidationError
-from bottle_utils.csrf import csrf_protect, csrf_token, csrf_tag
+from bottle_utils.csrf import csrf_protect, csrf_token
 from bottle_utils.i18n import i18n_path, i18n_url, lazy_gettext as _
 
-from librarian.utils.template import view, template
-from librarian.utils.template_helpers import template_helper
+from librarian.librarian_core.contrib.templates.mako import view, template
+from librarian.librarian_core.contrib.templates.decorators import template_helper
 
 from .forms import LoginForm, PasswordResetForm
 from .helpers import get_user_by_reset_token, set_password
 from .utils import http_redirect
-
-
-template_helper(csrf_tag)  # register csrf_tag in template_helpers
 
 
 @template_helper

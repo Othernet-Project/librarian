@@ -11,45 +11,23 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import logging
 
 from datetime import datetime
-from functools import wraps
 from urlparse import urljoin
 
-from bottle import request, redirect, abort
+from bottle import request
 from bottle_utils.common import unicode
-from bottle_utils.i18n import i18n_url, lazy_gettext as _
+from bottle_utils.i18n import i18n_url
 
-from librarian.utils.lang import SELECT_LANGS
-from librarian.utils.netutils import IPv4Range, get_target_host
-from librarian.utils.system import ensure_dir
-from librarian.utils.template_helpers import template_helper
 from librarian.librarian_cache.decorators import cached
+from librarian.librarian_core.contrib.templates.decorators import template_helper
 
+from .consts import LICENSES
+from .lang import SELECT_LANGS
 from .library import content as content_mod
 from .library import downloads
 from .library import metadata
 from .library import zipballs
 from .library.archive import Archive
 from .library.files import FileManager
-
-
-LICENSES = (
-    (None, _('Unknown license')),
-    ('CC-BY', _('Creative Commons Attribution')),
-    ('CC-BY-ND', _('Creative Commons Attribution-NoDerivs')),
-    ('CC-BY-NC', _('Creative Commons Attribution-NonCommercial')),
-    ('CC-BY-ND-NC', _('Creative Commons Attribution-NonCommercial-NoDerivs')),
-    ('CC-BY-SA', _('Creative Commons Attribution-ShareAlike')),
-    ('CC-BY-NC-SA', _('Creative Commons Attribution-NonCommercial-ShareAlike')),
-    ('GFDL', _('GNU Free Documentation License')),
-    ('OPL', _('Open Publication License')),
-    ('OCL', _('Open Content License')),
-    ('ADL', _('Against DRM License')),
-    ('FAL', _('Free Art License')),
-    ('PD', _('Public Domain')),
-    ('OF', _('Other free license')),
-    ('ARL', _('All rights reserved')),
-    ('ON', _('Other non-free license')),
-)
 
 
 read_meta = cached()(zipballs.validate)
@@ -67,24 +45,6 @@ def open_archive():
 
 def init_filemanager():
     return FileManager(request.app.config['content.filedir'])
-
-
-def with_content(func):
-    @wraps(func)
-    def wrapper(content_id, **kwargs):
-        conf = request.app.config
-        archive = open_archive()
-        try:
-            content = archive.get_single(content_id)
-        except IndexError:
-            abort(404)
-        if not content:
-            abort(404)
-        content_dir = conf['content.contentdir']
-        content_path = content_mod.to_path(content_id, prefix=content_dir)
-        meta = metadata.Meta(content, content_path)
-        return func(meta=meta, **kwargs)
-    return wrapper
 
 
 @cached(prefix='downloads', timeout=30)
@@ -145,37 +105,6 @@ def get_content_url(root_url, domain):
         path = '{0}?path={1}'.format(base_path, request.path)
 
     return urljoin(root_url, path)
-
-
-def content_resolver_plugin(root_url, ap_client_ip_range):
-    """Load content based on the requested domain"""
-    ip_range = IPv4Range(*ap_client_ip_range)
-
-    def decorator(callback):
-        @wraps(callback)
-        def wrapper(*args, **kwargs):
-            target_host = get_target_host()
-            is_regular_access = target_host in root_url
-            if not is_regular_access and request.remote_addr in ip_range:
-                # a content domain was entered(most likely), try to load it
-                content_url = get_content_url(root_url, target_host)
-                return redirect(content_url)
-            return callback(*args, **kwargs)
-        return wrapper
-    return decorator
-
-
-def create_directories(app):
-    ensure_dir(app.config['content.spooldir'])
-    ensure_dir(app.config['content.unpackdir'])
-    ensure_dir(app.config['content.contentdir'])
-
-
-def content_domain_plugin(app):
-    app.install(content_resolver_plugin(
-        root_url=app.config['librarian.root_url'],
-        ap_client_ip_range=app.config['librarian.ap_client_ip_range']
-    ))
 
 
 @template_helper

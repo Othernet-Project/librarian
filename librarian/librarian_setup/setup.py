@@ -8,19 +8,16 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import functools
 import json
 import logging
 import os
 
-from ..lib import wizard
-from ..utils.template import template
+from bottle import request
 
-from bottle import request, redirect
-from bottle_utils.i18n import i18n_url
+from librarian.librarian_core.contrib.mako import template
 
+from .wizard import Wizard
 
-logger = logging.getLogger(__name__)
 
 AUTO_CONFIGURATORS = dict()
 
@@ -44,8 +41,6 @@ class Setup(object):
         if not self.data:
             self.data = self.auto_configure()
 
-        self.wizard = setup_wizard
-
     def __getitem__(self, key):
         return self.data[key]
 
@@ -68,7 +63,7 @@ class Setup(object):
                 return json.load(s_file)
         except Exception as exc:
             msg = 'Setup file loading failed: {0}'.format(str(exc))
-            logger.error(msg)
+            logging.error(msg)
             return {}
 
     def append(self, new_data):
@@ -84,7 +79,7 @@ class Setup(object):
         return data
 
 
-class SetupWizard(wizard.Wizard):
+class SetupWizard(Wizard):
     finished_template = 'setup/finished.tpl'
     allow_override = True
     start_index = 1
@@ -105,8 +100,9 @@ class SetupWizard(wizard.Wizard):
         for step, step_result in data.items():
             setup_data.update(step_result)
 
-        request.app.setup.append(setup_data)
-        result = template(self.finished_template, setup=request.app.setup)
+        setup = request.app.supervisor.exts.setup
+        setup.append(setup_data)
+        result = template(self.finished_template, setup=setup)
         return result
 
     def exit(self):
@@ -144,27 +140,3 @@ class SetupWizard(wizard.Wizard):
 
 
 setup_wizard = SetupWizard(name='setup')
-
-
-def setup_plugin(setup_path):
-    def plugin(callback):
-        @functools.wraps(callback)
-        def wrapper(*args, **kwargs):
-            if (not setup_wizard.is_completed and
-                    request.path != setup_path[len(request.locale) + 1:]):
-                return redirect(setup_path)
-            return callback(*args, **kwargs)
-        return wrapper
-    plugin.name = 'setup'
-    return plugin
-
-
-def load_setup(app):
-    # install app-wide access to setup parameters
-    app.setup = Setup(app.config['setup.file'])
-    # merge setup parameters into app config
-    app.config.update(dict(app.setup.items()))
-
-
-def setup_wizard_plugin(app):
-    app.install(setup_plugin(setup_path=i18n_url('setup:main')))
