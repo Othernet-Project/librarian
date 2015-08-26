@@ -10,8 +10,3 @@ def component_loaded(supervisor, component, config):
 
 def init_begin(supervisor):
     configure_bottle(supervisor)
-    supervisor.exts.commands.register('debug',
-                                      None,
-                                      '--debug',
-                                      action='store_true',
-                                      help='enable debugging')
