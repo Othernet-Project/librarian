@@ -11,10 +11,14 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from .commands import create_superuser
 from .utils import generate_secret_key
 
+from librarian.librarian_setup.decorators import autoconfigure
+
+
+autoconfigure('session.secret')(generate_secret_key)
+autoconfigure('csrf.secret')(generate_secret_key)
+
 
 def init_begin(supervisor):
-    supervisor.exts.setup.autoconfigure('session.secret')(generate_secret_key)
-    supervisor.exts.setup.autoconfigure('csrf.secret')(generate_secret_key)
     supervisor.exts.commands.register('superuser',
                                       create_superuser,
                                       '--su',

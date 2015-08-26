@@ -6,10 +6,15 @@ from .helpers import get_content_url
 from .netutils import IPv4Range, get_target_host
 
 
+EXPORTS = {
+    'content_resolver_plugin': {}
+}
+
+
 def content_resolver_plugin(supervisor):
     """Load content based on the requested domain"""
-    root_url = supervisor.config['librarian.root_url'],
-    ip_range = IPv4Range(*supervisor.config['librarian.ap_client_ip_range'])
+    root_url = supervisor.config['app.root_url'],
+    ip_range = IPv4Range(*supervisor.config['app.ap_client_ip_range'])
 
     def decorator(callback):
         @wraps(callback)

@@ -14,7 +14,7 @@ from __future__ import unicode_literals
 from bottle import request
 from bottle_utils.i18n import lazy_gettext as _
 
-from .template_helpers import template_helper
+from librarian.librarian_core.contrib.templates.decorators import template_helper
 
 # Helper functions are defined above the constants because we used them to
 # generate runtime constants.

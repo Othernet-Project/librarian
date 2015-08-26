@@ -11,25 +11,22 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import functools
 import os
 
-from bottle import request, abort, default_app, static_file
+from bottle import request, abort, static_file
 from bottle_utils.ajax import roca_view
 from bottle_utils.csrf import csrf_protect, csrf_token
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 from fdsend import send_file
 
+from librarian.librarian_auth.decorators import login_required
+from librarian.librarian_cache.decorators import cached
+from librarian.librarian_core.contrib.templates.renderer import template, view
+
+from ..decorators import with_content
+from ..helpers import open_archive
 from ..library import content
 from ..library import metadata
 from ..library import zipballs
-
-from librarian.utils.paginator import Paginator
-from librarian.utils.template import template, view
-#from librarian_auth.decorators import login_required
-from librarian.librarian_cache.decorators import cached
-
-from ..helpers import open_archive, with_content
-
-
-app = default_app()
+from ..paginator import Paginator
 
 
 @cached(prefix='content', timeout=300)
@@ -114,7 +111,7 @@ def guard_already_removed(func):
     return wrapper
 
 
-#@login_required(next_to='/')
+@login_required(next_to='/')
 @csrf_token
 @guard_already_removed
 @view('remove_confirm')
@@ -122,7 +119,7 @@ def remove_content_confirm(content):
     return dict(content=content, cancel_url=i18n_url('content:list'))
 
 
-#@login_required(next_to='/')
+@login_required(next_to='/')
 @csrf_protect
 @guard_already_removed
 @view('feedback')

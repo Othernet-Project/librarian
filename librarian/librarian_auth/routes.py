@@ -14,7 +14,7 @@ from bottle_utils.form import ValidationError
 from bottle_utils.csrf import csrf_protect, csrf_token
 from bottle_utils.i18n import i18n_path, i18n_url, lazy_gettext as _
 
-from librarian.librarian_core.contrib.templates.mako import view, template
+from librarian.librarian_core.contrib.templates.renderer import view, template
 from librarian.librarian_core.contrib.templates.decorators import template_helper
 
 from .forms import LoginForm, PasswordResetForm

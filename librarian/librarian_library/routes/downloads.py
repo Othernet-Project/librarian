@@ -11,16 +11,16 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from bottle import request
 from bottle_utils.i18n import lazy_ngettext, lazy_gettext as _, i18n_url
 
-from librarian.utils.paginator import Paginator
-from librarian.utils.template import view
+from librarian.librarian_auth.decorators import login_required
 from librarian.librarian_cache.decorators import invalidates
-#from librarian.librarian_auth.decorators import login_required
+from librarian.librarian_core.contrib.templates.renderer import view
 
 from ..helpers import open_archive, filter_downloads
 from ..library import downloads
+from ..paginator import Paginator
 
 
-#@login_required()
+@login_required()
 @view('downloads')
 def list_downloads():
     """ Render a list of downloaded content """
@@ -142,7 +142,7 @@ def delete_all(*args):
                 redirect_target=_("Updates"))
 
 
-#@login_required()
+@login_required()
 @view('feedback')
 def manage_downloads():
     """ Manage the downloaded content """

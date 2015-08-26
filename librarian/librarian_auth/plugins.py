@@ -13,9 +13,6 @@ EXPORTS = {
 
 
 def session_plugin(supervisor):
-    cookie_name = supervisor.config['session.cookie_name']
-    secret = supervisor.config['session.secret']
-
     # Set up a hook, so handlers that raise cannot escape session-saving
     @hook('after_request')
     def save_session():
@@ -23,11 +20,15 @@ def session_plugin(supervisor):
             if request.session.modified:
                 request.session.save()
 
+            cookie_name = supervisor.config['session.cookie_name']
+            secret = supervisor.config['session.secret']
             request.session.set_cookie(cookie_name, secret)
 
     def plugin(callback):
         @functools.wraps(callback)
         def wrapper(*args, **kwargs):
+            cookie_name = supervisor.config['session.cookie_name']
+            secret = supervisor.config['session.secret']
             session_id = request.get_cookie(cookie_name, secret=secret)
             try:
                 request.session = Session.fetch(session_id)
