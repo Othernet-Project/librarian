@@ -86,7 +86,8 @@ class DependencyLoader(object):
                         fn = getattr(mod, fn_name)
                     except AttributeError as exc:
                         if is_strict:
-                            raise DependencyNotFound(exc)
+                            msg = '[{0}] {1}'.format(mod.__name__, exc)
+                            raise DependencyNotFound(msg)
                         continue
                     else:
                         dep_id = '.'.join([fn.__module__, fn.__name__])
