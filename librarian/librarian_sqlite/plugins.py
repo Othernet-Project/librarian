@@ -10,4 +10,4 @@ def plugin(supervisor):
             request.db = supervisor.exts.databases
             return callback(*args, **kwargs)
         return wrapper
-    return plugin
+    return decorator
