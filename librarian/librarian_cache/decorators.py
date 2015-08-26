@@ -22,10 +22,10 @@ def cached(prefix='', timeout=None):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            if not request.app.exts.is_installed('cache'):
+            if not request.app.supervisor.exts.is_installed('cache'):
                 return func(*args, **kwargs)
 
-            backend = request.app.exts.cache
+            backend = request.app.supervisor.exts.cache
             generated = generate_key(func.__name__, *args, **kwargs)
             parsed_prefix = backend.parse_prefix(prefix)
             key = '{0}{1}'.format(parsed_prefix, generated)
@@ -49,7 +49,7 @@ def invalidates(prefix, before=False, after=False):
     def invalidate_prefixes(prefixes):
         """Helper function to call invalidate over a list of prefixes."""
         for p in prefixes:
-            request.app.exts.cache.invalidate(prefix=p)
+            request.app.supervisor.exts.cache.invalidate(prefix=p)
 
     def decorator(func):
         @functools.wraps(func)
