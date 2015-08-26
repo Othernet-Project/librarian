@@ -1,3 +1,4 @@
+from .commands import dump_tables
 from .utils import close_databases, init_databases
 
 
@@ -12,6 +13,10 @@ def component_loaded(supervisor, component, config):
 
 def init_begin(supervisor):
     supervisor.exts.databases = init_databases(supervisor.config)
+    supervisor.exts.commands.register('dump_tables',
+                                      dump_tables,
+                                      '--dump-tables',
+                                      action='store_true')
 
 
 def shutdown(supervisor):
