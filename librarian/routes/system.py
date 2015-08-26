@@ -68,7 +68,7 @@ def show_maint_page(exc):
 @view('404')
 def show_page_missing(exc):
     print(exc)
-    return dict()
+    return dict(redirect_url='/')
 
 
 @view('403')
