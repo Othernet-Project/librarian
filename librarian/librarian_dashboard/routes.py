@@ -11,15 +11,14 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from librarian.librarian_auth.decorators import login_required
 from librarian.librarian_core.contrib.templates.renderer import view
 
-from ..plugins import DASHBOARD as DASHBOARD_PLUGINS
+from .collector import DASHBOARD as DASHBOARD_PLUGINS
 
 
 @login_required()
 @view('dashboard')
 def dashboard():
     """ Render the dashboard """
-    plugins = DASHBOARD_PLUGINS
-    return locals()
+    return dict(plugins=DASHBOARD_PLUGINS)
 
 
 def routes(app):
