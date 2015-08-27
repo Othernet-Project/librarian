@@ -5,14 +5,14 @@ ${_('Database size')}: ${h.hsize(dbsize)}
 </p>
 
 <div class="inline-form-wrapper">
-    <a class="button primary" href="${url('plugins:dbmanage:download')}">${_('Download')}</a>
+    <a class="button primary" href="${url('dbmanage:download')}">${_('Download')}</a>
 
-    <form action="${i18n_url('plugins:dbmanage:backup')}" method="POST">
+    <form action="${i18n_url('dbmanage:backup')}" method="POST">
         ## Translators, refers to database backup
         <button>${_('Backup')}</button>
     </form>
 
-    <form action="${i18n_url('plugins:dbmanage:rebuild')}" method="POST">
+    <form action="${i18n_url('dbmanage:rebuild')}" method="POST">
         ## Translators, refers to database rebuild feature
         <button class="delete">${_('Rebuild')}</button>
     </form>
