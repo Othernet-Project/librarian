@@ -27,7 +27,6 @@ from .library import downloads
 from .library import metadata
 from .library import zipballs
 from .library.archive import Archive
-from .library.files import FileManager
 
 
 read_meta = cached()(zipballs.validate)
@@ -41,10 +40,6 @@ def open_archive():
                          contentdir=conf['library.contentdir'],
                          spooldir=conf['library.spooldir'],
                          meta_filename=conf['library.metadata'])
-
-
-def init_filemanager():
-    return FileManager(request.app.config['library.filedir'])
 
 
 @cached(prefix='downloads', timeout=30)
