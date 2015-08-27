@@ -1,6 +1,6 @@
 import functools
 
-from bottle import request, hook
+from bottle import request
 
 from .sessions import SessionExpired, SessionInvalid, Session
 from .users import User
@@ -14,7 +14,7 @@ EXPORTS = {
 
 def session_plugin(supervisor):
     # Set up a hook, so handlers that raise cannot escape session-saving
-    @hook('after_request')
+    @supervisor.app.hook('after_request')
     def save_session():
         if hasattr(request, 'session'):
             if request.session.modified:
@@ -42,7 +42,7 @@ def session_plugin(supervisor):
 
 def user_plugin(supervisor):
     # Set up a hook, so handlers that raise cannot escape session-saving
-    @hook('after_request')
+    @supervisor.app.hook('after_request')
     def process_options():
         if hasattr(request, 'session') and hasattr(request, 'user'):
             request.user.options.apply()
