@@ -6,11 +6,11 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from . import MenuItem
-
 from bottle_utils.i18n import lazy_gettext as _
 
-from ..utils.notifications import get_notifications
+from librarian.librarian_menu.menu import MenuItem
+
+from .notifications import get_notifications
 
 
 class NotificationsMenuItem(MenuItem):

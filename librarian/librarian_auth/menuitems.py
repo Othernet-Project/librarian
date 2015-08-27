@@ -8,7 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from . import MenuItem
+from librarian.librarian_menu.menu import MenuItem
 
 from bottle import request
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
