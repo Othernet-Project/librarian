@@ -1,5 +1,5 @@
 """
-system.py: System routes such as static files and error handlers
+routes.py: System routes such as static files and error handlers
 
 Copyright 2014-2015, Outernet Inc.
 Some rights reserved.
@@ -8,22 +8,27 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import logging
 import datetime
+import logging
 
-from os.path import abspath, dirname, join, basename, splitext
+from os.path import dirname, join, basename, splitext
 
 from bottle import request, static_file, abort
+from bottle_utils.lazy import caching_lazy
 
 from librarian import __version__
-from ..utils.template import view
+from librarian.librarian_core.contrib.templates.renderer import view
 
 
-STATIC_ROOT = join(dirname(dirname(abspath(__file__))), 'static')
+@caching_lazy
+def static_root():
+    project_root = request.app.config['root']
+    static_dir = request.app.config.get('assets.directory', 'static')
+    return join(project_root, static_dir)
 
 
 def send_static(path):
-    return static_file(path, root=STATIC_ROOT)
+    return static_file(path, root=static_root())
 
 
 def send_favicon():
@@ -61,13 +66,12 @@ def show_error_page(exc):
 
 
 @view('503')
-def show_maint_page(exc):
+def show_main_page(exc):
     return dict()
 
 
 @view('404')
 def show_page_missing(exc):
-    print(exc)
     return dict()
 
 
@@ -80,14 +84,8 @@ def all_404(path):
     abort(404)
 
 
-def routes(app):
-    skip_plugins = app.config['librarian.skip_plugins']
-
-    app.error(403)(show_access_denied_page)
-    app.error(404)(show_page_missing)
-    app.error(500)(show_error_page)
-    app.error(503)(show_maint_page)
-
+def routes(config):
+    skip_plugins = config['app.skip_plugins']
     return (
         ('sys:static', send_static,
          'GET', '/static/<path:path>',
