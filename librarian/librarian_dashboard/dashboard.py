@@ -11,7 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import logging
 import os
 
-from ..utils.template import template
+from librarian.librarian_core.contrib.templates.renderer import template
 
 
 class DashboardPlugin(object):

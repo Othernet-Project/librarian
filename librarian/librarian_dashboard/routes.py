@@ -21,7 +21,7 @@ def dashboard():
     return dict(plugins=DASHBOARD_PLUGINS)
 
 
-def routes(app):
+def routes(config):
     return (
         ('dashboard:main', dashboard, 'GET', '/dashboard/', {}),
     )
