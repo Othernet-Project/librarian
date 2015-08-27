@@ -9,11 +9,10 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
-import functools
 import contextlib
 from time import sleep
 
-from bottle import request, abort
+from bottle import request
 
 
 class LockFailureError(Exception):
