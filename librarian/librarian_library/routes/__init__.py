@@ -7,6 +7,11 @@ from .downloads import list_downloads, manage_downloads
 from .tags import tag_cloud, edit_tags
 
 
+EXPORTS = {
+    'routes': {'required_by': ['librarian.librarian_system.routes.routes']}
+}
+
+
 def routes(config):
     skip_plugins = config['app.skip_plugins']
     return (
