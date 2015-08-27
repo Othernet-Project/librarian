@@ -14,8 +14,10 @@ from bottle import request, redirect
 from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import i18n_url
 
-from ..utils.core_helpers import open_archive, with_content
-from ..utils.template import template
+from librarian.librarian_core.contrib.templates.renderer import template
+
+from ..decorators import with_content
+from ..helpers import open_archive
 
 
 WS = re.compile(r'\s', re.M)
