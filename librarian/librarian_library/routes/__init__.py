@@ -4,6 +4,7 @@ from .content import (content_list,
                       remove_content,
                       content_file)
 from .downloads import list_downloads, manage_downloads
+from .tags import tag_cloud, edit_tags
 
 
 def routes(config):
@@ -21,6 +22,10 @@ def routes(config):
         ('content:file', content_file,
          'GET', '/content/<content_path:re:[0-9a-f]{3}(/[0-9a-f]{3}){9}/[0-9a-f]{2}>/<filename:path>',  # NOQA
          dict(no_i18n=True, skip=skip_plugins)),
+
         ('downloads:list', list_downloads, 'GET', '/downloads/', {}),
         ('downloads:action', manage_downloads, 'POST', '/downloads/', {}),
+
+        ('tags:list', tag_cloud, 'GET', '/tags/', {}),
+        ('tags:edit', edit_tags, 'POST', '/tags/<content_id>', {}),
     )
