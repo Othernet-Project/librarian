@@ -93,13 +93,3 @@ def reset():
                               "set.") % {'username': username},
                     status='success',
                     redirect_url=login_url)
-
-
-def routes(supervisor):
-    return (
-        ('auth:login_form', show_login_form, 'GET', '/login/', {}),
-        ('auth:login', login, 'POST', '/login/', {}),
-        ('auth:logout', logout, 'GET', '/logout/', {}),
-        ('auth:reset_form', show_reset_form, 'GET', '/reset-password/', {}),
-        ('auth:reset', reset, 'POST', '/reset-password/', {}),
-    )
