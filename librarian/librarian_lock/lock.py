@@ -28,7 +28,7 @@ class UnlockFailureError(Exception):
 
 def get_lock_path():
     """ Return path of the lock file """
-    return request.app.config['librarian.lockfile']
+    return request.app.config['lock.file']
 
 
 def is_locked():
@@ -86,14 +86,3 @@ def global_lock(attempts=2, timeout=5, always_release=False):
         raise
     do_release()
     assert not is_locked(), 'Expected global lock to be released'
-
-
-def lock_plugin(callback):
-    @functools.wraps(callback)
-    def wrapper(*args, **kwargs):
-        unlocked = request.route.config.get('unlocked', False)
-        if not unlocked and is_locked():
-            abort(503, 'Librarian is locked')
-        return callback(*args, **kwargs)
-    return wrapper
-
