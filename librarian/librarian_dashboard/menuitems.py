@@ -14,6 +14,7 @@ from librarian.librarian_menu.menu import MenuItem
 
 
 class DashboardMenuItem(MenuItem):
+    name = 'dashboard'
     label = _("Settings")
     icon_class = 'settings'
     route = 'dashboard:main'

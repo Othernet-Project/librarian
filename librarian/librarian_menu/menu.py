@@ -18,6 +18,10 @@ MENU_ITEMS = []
 MENU_GROUPS = {}
 
 
+class MenuItemNotFound(Exception):
+    pass
+
+
 class MenuItem(object):
     label = ''
     group = None
@@ -77,3 +81,25 @@ def menu_item(name, group=None):
     for item in items:
         if item.name == name:
             return item()
+
+
+def discover_menu_items(config):
+    menu_item_classes = MenuItem.__subclasses__()
+    for (name, group) in config.items():
+        if not name.startswith('menu.'):
+            continue
+        group_name = name.replace('menu.', '')
+
+        for item_name in group:
+            try:
+                (menu_cls,) = [cls for cls in menu_item_classes
+                               if cls.name == item_name]
+            except ValueError:
+                raise MenuItemNotFound(item_name)
+            else:
+                MENU_ITEMS.append(menu_cls)
+                MENU_GROUPS.setdefault(group_name, [])
+                MENU_GROUPS[group_name].append(menu_cls)
+
+    bottle.BaseTemplate.defaults.update({'menu_group': menu_group,
+                                         'menu_item': menu_item})

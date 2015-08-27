@@ -6,18 +6,15 @@ from librarian.librarian_menu.menu import MenuItem
 from .helpers import filter_downloads
 
 
-class HomeMenuItem(MenuItem):
-    label = _("Home")
-    route = 'content:list'
-
-
 class ContentMenuItem(MenuItem):
+    name = 'content'
     label = _("Library")
     icon_class = 'library'
     route = 'content:list'
 
 
 class UpdatesMenuItem(MenuItem):
+    name = 'updates'
     icon_class = 'updates'
     route = 'downloads:list'
 
