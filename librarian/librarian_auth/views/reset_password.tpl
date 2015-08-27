@@ -16,7 +16,7 @@ ${_('Reset your password')}
         ${form.error}
         % endif
 
-        ${th.csrf_tag()}
+        ${csrf_tag()}
 
         <input type="hidden" name="next" value="${next_path}">
 

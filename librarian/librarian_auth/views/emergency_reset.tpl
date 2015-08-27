@@ -14,7 +14,7 @@
         ${form.error}
         % endif
 
-        ${th.csrf_tag()}
+        ${csrf_tag()}
 
         <p>
             ${form.emergency_reset.label}
