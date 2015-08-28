@@ -23,6 +23,9 @@ from ..utils.template import template, view
 from ..utils.core_helpers import init_filemanager
 
 
+SHELL = '/bin/sh'
+
+
 def dictify_file_list(file_list):
     return [{
         'path': f[0],
@@ -119,10 +122,11 @@ def rename_path(path):
 
 
 def run_path(path):
-    callargs = [path]
-    proc = subprocess.Popen(callargs, stdin=subprocess.PIPE,
+    callargs = [SHELL, path]
+    proc = subprocess.Popen(callargs,
+                            stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE, shell=True)
+                            stderr=subprocess.PIPE)
     out, err = proc.communicate()
     ret = proc.returncode
     return ret, out, err
