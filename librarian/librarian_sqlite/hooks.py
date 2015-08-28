@@ -11,7 +11,7 @@ def component_loaded(supervisor, component, config):
             supervisor.config['database.sources'][pkg_name] = db_names
 
 
-def init_begin(supervisor):
+def initialize(supervisor):
     supervisor.exts.databases = init_databases(supervisor.config)
     supervisor.exts.commands.register('dump_tables',
                                       dump_tables,

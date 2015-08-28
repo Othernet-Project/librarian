@@ -5,7 +5,7 @@ from bottle_utils.i18n import I18NPlugin
 from .consts import LANGS
 
 
-def init_begin(supervisor):
+def initialize(supervisor):
     if supervisor.config.get('i18n.enabled'):
         default_locale = supervisor.config.get('i18n.default_locale', 'en')
         domain = supervisor.config.get('i18n.domain')

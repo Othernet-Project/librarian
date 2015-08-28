@@ -4,7 +4,7 @@ from .routes import (show_access_denied_page,
                      show_main_page)
 
 
-def init_begin(supervisor):
+def initialize(supervisor):
     supervisor.app.error(403)(show_access_denied_page)
     supervisor.app.error(404)(show_page_missing)
     supervisor.app.error(500)(show_error_page)

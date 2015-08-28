@@ -1,7 +1,7 @@
 import logging.config
 
 
-def init_begin(supervisor):
+def initialize(supervisor):
     logging.config.dictConfig({
         'version': 1,
         'root': {

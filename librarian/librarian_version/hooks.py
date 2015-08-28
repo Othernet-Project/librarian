@@ -1,7 +1,7 @@
 from .commands import display_version
 
 
-def init_begin(supervisor):
+def initialize(supervisor):
     supervisor.exts.commands.register('version',
                                       display_version,
                                       '--version',

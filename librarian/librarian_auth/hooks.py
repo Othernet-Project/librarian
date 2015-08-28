@@ -18,7 +18,7 @@ autoconfigure('session.secret')(generate_secret_key)
 autoconfigure('csrf.secret')(generate_secret_key)
 
 
-def init_begin(supervisor):
+def initialize(supervisor):
     supervisor.exts.commands.register('superuser',
                                       create_superuser,
                                       '--su',

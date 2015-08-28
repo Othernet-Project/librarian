@@ -7,7 +7,7 @@ RECOVER = 'recover'
 RECOVERY_IMPOSSIBLE = 'recovery_impossible'
 
 
-def init_begin(supervisor):
+def initialize(supervisor):
     supervisor.APP_HOOKS += (RECOVER, RECOVERY_IMPOSSIBLE)
 
     def recovery_failed():

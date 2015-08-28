@@ -8,7 +8,7 @@ def component_loaded(supervisor, component, config):
         install_view_root(pkg_path, view_path)
 
 
-def init_begin(supervisor):
+def initialize(supervisor):
     configure_bottle(supervisor)
     # add shared template root if it exists
     view_path = supervisor.config.get('templates.view_path', None)

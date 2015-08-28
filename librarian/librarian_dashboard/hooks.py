@@ -14,5 +14,5 @@ def component_loaded(supervisor, component, config):
         collect_dashboard_plugin(plugin_cls)
 
 
-def init_begin(supervisor):
+def initialize(supervisor):
     install_dashboard_plugins(supervisor)

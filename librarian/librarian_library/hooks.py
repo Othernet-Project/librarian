@@ -2,7 +2,7 @@ from .commands import refill_db, reload_db
 from .utils import ensure_dir
 
 
-def init_begin(supervisor):
+def initialize(supervisor):
     ensure_dir(supervisor.config['library.spooldir'])
     ensure_dir(supervisor.config['library.unpackdir'])
     ensure_dir(supervisor.config['library.contentdir'])

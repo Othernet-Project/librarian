@@ -1,7 +1,7 @@
 from .repl import repl
 
 
-def init_begin(supervisor):
+def initialize(supervisor):
     supervisor.exts.commands.register(
         'version',
         repl,

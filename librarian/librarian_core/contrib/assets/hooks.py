@@ -15,7 +15,7 @@ def component_loaded(supervisor, component, config):
                                                              static_url)
 
 
-def init_begin(supervisor):
+def initialize(supervisor):
     instance = Assets.from_config(supervisor.config)
     supervisor.exts.assets = bottle.BaseTemplate.defaults['assets'] = instance
     supervisor.exts.commands.register('assets',
