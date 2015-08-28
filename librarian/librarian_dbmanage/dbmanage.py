@@ -24,8 +24,7 @@ def get_dbpath():
 
 def get_backup_dir():
     conf = request.app.config
-    backupdir = os.path.join(os.path.normpath(conf['library.filedir']),
-                             os.path.normpath(conf['dbmanage.backups']))
+    backupdir = os.path.normpath(conf['dbmanage.backupdir'])
     if not os.path.exists(backupdir):
         os.makedirs(backupdir)
     return backupdir
@@ -39,7 +38,7 @@ def get_backup_path():
 
 
 def get_file_url():
-    suburl = request.app.config['dbmanage.backups'].replace('\\', '/')
+    suburl = request.app.config['dbmanage.backupdir'].replace('\\', '/')
     return i18n_url('files:path', path=suburl)
 
 
