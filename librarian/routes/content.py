@@ -130,7 +130,7 @@ def guard_already_removed(func):
 @view('remove_confirm')
 def remove_content_confirm(content):
     cancel_url = request.headers.get('Referer', i18n_url('content:list'))
-    return dict(content=content, cancel_url=cancel_url)
+    return dict(title=content['title'], cancel_url=cancel_url)
 
 
 @auth.login_required(next_to='/')
