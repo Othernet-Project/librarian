@@ -11,5 +11,5 @@ def component_member_loaded(supervisor, member, config):
         pass  # no menuitems defined in this component
 
 
-def initialize(supervisor):
+def init_complete(supervisor):
     discover_menu_items(supervisor.config)
