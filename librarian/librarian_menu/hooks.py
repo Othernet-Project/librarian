@@ -3,8 +3,8 @@ import importlib
 from .menu import discover_menu_items
 
 
-def component_loaded(supervisor, component, config):
-    mod_path = '{0}.menuitems'.format(component['pkg_name'])
+def component_member_loaded(supervisor, member, config):
+    mod_path = '{0}.menuitems'.format(member['pkg_name'])
     try:
         importlib.import_module(mod_path)
     except ImportError:

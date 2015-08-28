@@ -4,9 +4,9 @@ from .handlers import rebuild_assets
 from .static import Assets
 
 
-def component_loaded(supervisor, component, config):
+def component_member_loaded(supervisor, member, config):
     supervisor.config.setdefault('assets.sources', {})
-    pkg_name = component['pkg_name']
+    pkg_name = member['pkg_name']
     if pkg_name not in supervisor.config['assets.sources']:
         static_path = config.pop('assets.directory', None)
         static_url = config.pop('assets.url', None)

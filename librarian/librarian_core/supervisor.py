@@ -26,7 +26,7 @@ class Supervisor:
     DEFAULT_CONFIG_FILENAME = 'config.ini'
 
     INITIALIZE = 'initialize'
-    COMPONENT_LOADED = 'component_loaded'
+    COMPONENT_MEMBER_LOADED = 'component_member_loaded'
     INIT_COMPLETE = 'init_complete'
     PRE_START = 'pre_start'
     POST_START = 'post_start'
@@ -35,7 +35,7 @@ class Supervisor:
     IMMEDIATE_SHUTDOWN = 'immediate_shutdown'
     APP_HOOKS = (
         INITIALIZE,
-        COMPONENT_LOADED,
+        COMPONENT_MEMBER_LOADED,
         INIT_COMPLETE,
         PRE_START,
         POST_START,
@@ -140,6 +140,20 @@ class Supervisor:
         return ['.'.join([__package__, 'contrib', name])
                 for (_, name, _) in pkgutil.iter_modules([contrib_root])]
 
+    def _install_component_member(self, member):
+        handler = self.COMPONENT_META[member['type']]['handler']
+        config_path = os.path.join(member['pkg_path'],
+                                   self.DEFAULT_CONFIG_FILENAME)
+        config = self._load_config(config_path, strict=False)
+        self._merge_config(config)
+        handler(self, **member)
+        # notify possibly other components that a new component has been
+        # installed successfully
+        self.events.publish(self.COMPONENT_MEMBER_LOADED,
+                            self,
+                            member=member,
+                            config=config)
+
     def _load_components(self):
         components = self.config['app.components']
         # load default core components if core override flag was not set
@@ -148,19 +162,8 @@ class Supervisor:
             components = core_components + components
 
         loader = DependencyLoader(components, self.COMPONENT_META)
-        for dep in loader.load():
-            comp_handler = self.COMPONENT_META[dep['type']]['handler']
-            comp_config_path = os.path.join(dep['pkg_path'],
-                                            self.DEFAULT_CONFIG_FILENAME)
-            comp_config = self._load_config(comp_config_path, strict=False)
-            self._merge_config(comp_config)
-            comp_handler(self, **dep)
-            # notify possibly other components that a new component has been
-            # installed successfully
-            self.events.publish(self.COMPONENT_LOADED,
-                                self,
-                                component=dep,
-                                config=comp_config)
+        for member in loader.load():
+            self._install_component_member(member)
 
     def _enter_background_loop(self):
         while True:

@@ -3,8 +3,8 @@ import importlib
 from .collector import install_dashboard_plugins, collect_dashboard_plugin
 
 
-def component_loaded(supervisor, component, config):
-    mod_path = '{0}.dashboard_plugin'.format(component['pkg_name'])
+def component_member_loaded(supervisor, member, config):
+    mod_path = '{0}.dashboard_plugin'.format(member['pkg_name'])
     try:
         mod = importlib.import_module(mod_path)
     except ImportError:

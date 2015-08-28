@@ -2,9 +2,9 @@ from .commands import dump_tables
 from .utils import close_databases, init_databases
 
 
-def component_loaded(supervisor, component, config):
+def component_member_loaded(supervisor, member, config):
     supervisor.config.setdefault('database.sources', {})
-    pkg_name = component['pkg_name']
+    pkg_name = member['pkg_name']
     if pkg_name not in supervisor.config['database.sources']:
         db_names = config.pop('database.names', None)
         if db_names:
