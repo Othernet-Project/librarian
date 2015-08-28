@@ -79,7 +79,7 @@ def show_file_list(path='.'):
             options = {'download': request.params.get('filename', False)}
             return static_file(err.path, root=files.filedir, **options)
     up = os.path.normpath(os.path.join(path, '..'))
-    up = os.path.relpath(up, conf['content.filedir'])
+    up = os.path.relpath(up, conf['library.filedir'])
     if resp_format == 'json':
         response.content_type = 'application/json'
         return json.dumps(dict(
