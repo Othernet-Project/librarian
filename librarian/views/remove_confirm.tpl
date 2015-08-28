@@ -13,7 +13,7 @@ ${_("Confirm Removal")}
         ${th.csrf_tag()}
         <p class="buttons">
             ## Translators, used as title of content removal confirmation button
-            <button type="submit" class="primary">${_('Remove')}</button>
+            <button type="submit" class="primary delete">${_('Remove')}</button>
             ## Translators, used as title of content removal cancellation button
             <a class="button" href="${cancel_url}">${_('Cancel')}</a>
         </p>
