@@ -25,7 +25,7 @@ class Supervisor:
     LOOP_INTERVAL = 5  # in seconds
     DEFAULT_CONFIG_FILENAME = 'config.ini'
 
-    INIT_BEGIN = 'init_begin'
+    INITIALIZE = 'initialize'
     COMPONENT_LOADED = 'component_loaded'
     INIT_COMPLETE = 'init_complete'
     PRE_START = 'pre_start'
@@ -34,7 +34,6 @@ class Supervisor:
     SHUTDOWN = 'shutdown'
     IMMEDIATE_SHUTDOWN = 'immediate_shutdown'
     APP_HOOKS = (
-        INIT_BEGIN,
         COMPONENT_LOADED,
         INIT_COMPLETE,
         PRE_START,
@@ -58,10 +57,6 @@ class Supervisor:
 
         # Load components
         self._load_components()
-
-        # Fire init-begin event. Subscribers may register command line handlers
-        # during this period.
-        self.events.publish(self.INIT_BEGIN, self)
 
         # Register interrupt handler
         on_interrupt(self.halt)
@@ -97,7 +92,13 @@ class Supervisor:
         self.config['root'] = root_dir
 
     def _install_hook(self, name, fn, **kwargs):
-        self.events.subscribe(name, fn)
+        # the `initialize` hook is a special hook that is not fired by the
+        # event system, but called individually, only once, for the component
+        # right at the moment after it has been loaded
+        if name == self.INITIALIZE:
+            fn(self)
+        else:
+            self.events.subscribe(name, fn)
 
     def _install_routes(self, fn, **kwargs):
         route_config = fn(self.config)
@@ -151,12 +152,14 @@ class Supervisor:
             comp_config_path = os.path.join(dep['pkg_path'],
                                             self.DEFAULT_CONFIG_FILENAME)
             comp_config = self._load_config(comp_config_path, strict=False)
+            self._merge_config(comp_config)
+            comp_handler(self, **dep)
+            # notify possibly other components that a new component has been
+            # installed successfully
             self.events.publish(self.COMPONENT_LOADED,
                                 self,
                                 component=dep,
                                 config=comp_config)
-            self._merge_config(comp_config)
-            comp_handler(self, **dep)
 
     def _enter_background_loop(self):
         while True:
