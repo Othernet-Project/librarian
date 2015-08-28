@@ -25,7 +25,7 @@ from .files import FileManager
 
 
 def init_filemanager():
-    return FileManager(request.app.config['library.filedir'])
+    return FileManager(request.app.config['files.rootdir'])
 
 
 def dictify_file_list(file_list):
@@ -79,7 +79,7 @@ def show_file_list(path='.'):
             options = {'download': request.params.get('filename', False)}
             return static_file(err.path, root=files.filedir, **options)
     up = os.path.normpath(os.path.join(path, '..'))
-    up = os.path.relpath(up, conf['library.filedir'])
+    up = os.path.relpath(up, conf['files.rootdir'])
     if resp_format == 'json':
         response.content_type = 'application/json'
         return json.dumps(dict(
