@@ -24,7 +24,7 @@ def get_dbpath():
 
 def get_backup_dir():
     conf = request.app.config
-    backupdir = os.path.join(os.path.normpath(conf['content.filedir']),
+    backupdir = os.path.join(os.path.normpath(conf['library.filedir']),
                              os.path.normpath(conf['dbmanage.backups']))
     if not os.path.exists(backupdir):
         os.makedirs(backupdir)
