@@ -34,6 +34,7 @@ class Supervisor:
     SHUTDOWN = 'shutdown'
     IMMEDIATE_SHUTDOWN = 'immediate_shutdown'
     APP_HOOKS = (
+        INITIALIZE,
         COMPONENT_LOADED,
         INIT_COMPLETE,
         PRE_START,
