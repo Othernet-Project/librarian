@@ -6,15 +6,11 @@ import time
 from bottle import request
 from bottle_utils.i18n import i18n_url
 
-from librarian.librarian_dashboard.exceptions import NotSupportedError
 from librarian.librarian_library.library.archive import Archive
 from librarian.librarian_lock.lock import global_lock
 from librarian.librarian_sqlite.utils import get_database_configs, migrate
 
-try:
-    from .backup import backup
-except RuntimeError:
-    raise NotSupportedError('Sqlite3 library not found')
+from .backup import backup
 
 
 DB_NAME = 'main'
