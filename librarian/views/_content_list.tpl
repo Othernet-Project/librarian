@@ -15,10 +15,12 @@
         </h2>
         ${tags.tags(meta)}
         <p class="attrib">
-        ## Translators, used in place of publisher name if publsiher name is not known
-        <% publisher = meta.publisher or _('unknown publisher') %>
         ## Translators, attribution line appearing in the content list
+        % if meta.publisher:
         ${_('%(date)s by %(publisher)s.') % dict(date=meta.timestamp.strftime('%Y-%m-%d'), publisher=publisher)}
+        % else:
+        ${meta.timestamp.strftime('%Y-%m-%d')}
+        % endif
         ${th.readable_license(meta.license)}
         </p>
     </div>
