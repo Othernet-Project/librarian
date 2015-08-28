@@ -19,6 +19,7 @@ from bottle import request, abort, static_file, redirect, response
 from bottle_utils.common import to_unicode
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
+from librarian.librarian_auth.decorators import login_required
 from librarian.librarian_core.contrib.templates.renderer import template, view
 
 from .files import FileManager
@@ -36,6 +37,7 @@ def dictify_file_list(file_list):
     } for f in file_list]
 
 
+@login_required(superuser_only=True)
 @view('file_list')
 def show_file_list(path='.'):
     search = request.params.get('p')
@@ -133,6 +135,7 @@ def run_path(path):
     return ret, out, err
 
 
+@login_required(superuser_only=True)
 def handle_file_action(path):
     action = request.forms.get('action')
     files = init_filemanager()
