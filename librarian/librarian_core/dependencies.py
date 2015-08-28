@@ -1,5 +1,6 @@
 import collections
 import importlib
+import logging
 import os
 import pkgutil
 import sys
@@ -58,8 +59,17 @@ class DependencyLoader(object):
         for (loader, mod_name, is_pkg) in pkgutil.iter_modules([pkg_path]):
             if whitelist is None or mod_name in whitelist:
                 mod_path = '.'.join([pkg_name, mod_name])
-                mod = importlib.import_module(mod_path)
-                modules.append(mod)
+                try:
+                    mod = importlib.import_module(mod_path)
+                except Exception:
+                    logging.exception("Component {0} encountered an error "
+                                      "during it's loading, installation "
+                                      "skipped.".format(pkg_name))
+                    # make sure component won't be partially installed
+                    modules = []
+                    break
+                else:
+                    modules.append(mod)
 
         return (pkg_path, modules)
 
