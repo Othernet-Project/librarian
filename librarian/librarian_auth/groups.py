@@ -14,7 +14,7 @@ class Group(BaseGroup):
     @classmethod
     def from_name(cls, group_name):
         db = request.db.sessions
-        query = db.Select('groups', where='name = :name')
+        query = db.Select(sets='groups', where='name = :name')
         db.query(query, name=group_name)
         group = db.result
         group = row_to_dict(group) if group else {}
