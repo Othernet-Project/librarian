@@ -41,13 +41,13 @@ drop table tmp;
 def up(db, conf):
     db.executescript(SQL_MIGRATE)
     # create superusers group
-    db.executescript(SQL_CREATE_GROUP)
+    db.execute(SQL_CREATE_GROUP)
     # get list of superusers
-    db.executescript(SQL_GET_SUPERUSERS)
+    db.execute(SQL_GET_SUPERUSERS)
 
     superusers = db.results
     for user in superusers:
         sql_upd = SQL_ASSIGN_SUPERUSER_GROUP.format(user.username)
-        db.executescript(sql_upd)
+        db.execute(sql_upd)
 
-    db.executescript(SQL_CLEANUP)
+    db.execute(SQL_CLEANUP)
