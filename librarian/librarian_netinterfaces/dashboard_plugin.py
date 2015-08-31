@@ -12,13 +12,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from bottle_utils.i18n import lazy_gettext as _
 
-from ..dashboard import DashboardPlugin
+from librarian.librarian_dashboard.dashboard import DashboardPlugin
 
 from .lsnet import get_network_interfaces
-
-
-def install(app, route):
-    pass
 
 
 class Dashboard(DashboardPlugin):
