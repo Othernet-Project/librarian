@@ -1,7 +1,7 @@
 from .library.archive import Archive
 
 
-def refill_db(supervisor):
+def refill_db(arg, supervisor):
     print('Begin content refill.')
     config = supervisor.config
     archive = Archive.setup(config['library.backend'],
@@ -15,7 +15,7 @@ def refill_db(supervisor):
     raise supervisor.EarlyExit()
 
 
-def reload_db(supervisor):
+def reload_db(arg, supervisor):
     print('Begin content reload.')
     config = supervisor.config
     archive = Archive.setup(config['library.backend'],

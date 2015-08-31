@@ -11,6 +11,6 @@ def repl_shutdown(supervisor):
     supervisor.repl_thread.join()
 
 
-def repl(supervisor):
+def repl(arg, supervisor):
     supervisor.events.subscribe(supervisor.POST_START, repl_start)
     supervisor.events.subscribe(supervisor.SHUTDOWN, repl_shutdown)

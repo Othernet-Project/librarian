@@ -1,6 +1,6 @@
 
 
-def dump_tables(supervisor):
+def dump_tables(arg, supervisor):
     schema = []
     for db in supervisor.exts.databases.values():
         db.query(db.Select('*', sets='sqlite_master'))

@@ -3,7 +3,7 @@ import getpass
 from .helpers import create_user, InvalidUserCredentials
 
 
-def create_superuser(supervisor):
+def create_superuser(arg, supervisor):
     print("Press ctrl-c to abort")
     try:
         username = raw_input('Username: ')
@@ -22,6 +22,6 @@ def create_superuser(supervisor):
             reset_token))
     except InvalidUserCredentials:
         print("Invalid user credentials, please try again.")
-        create_superuser(supervisor)
+        create_superuser(arg, supervisor)
 
     raise supervisor.EarlyExit()
