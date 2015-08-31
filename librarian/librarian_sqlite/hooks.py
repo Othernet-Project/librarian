@@ -2,6 +2,17 @@ from .commands import dump_tables
 from .utils import close_databases, init_databases
 
 
+EXPORTS = {
+    'initialize': {},
+    'component_member_loaded': {},
+    'init_complete': {
+        'required_by': ['librarian.librarian_core.contrib.commands.hooks.init_complete']
+    },
+    'shutdown': {},
+    'immediate_shutdown': {}
+}
+
+
 def initialize(supervisor):
     supervisor.exts.commands.register('dump_tables',
                                       dump_tables,
