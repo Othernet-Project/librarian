@@ -3,6 +3,7 @@ from .utils import close_databases, init_databases
 
 
 def initialize(supervisor):
+    supervisor.exts.databases = init_databases(supervisor.config)
     supervisor.exts.commands.register('dump_tables',
                                       dump_tables,
                                       '--dump-tables',
@@ -16,10 +17,6 @@ def component_member_loaded(supervisor, member, config):
         db_names = config.pop('database.names', None)
         if db_names:
             supervisor.config['database.sources'][pkg_name] = db_names
-
-
-def init_complete(supervisor):
-    supervisor.exts.databases = init_databases(supervisor.config)
 
 
 def shutdown(supervisor):
