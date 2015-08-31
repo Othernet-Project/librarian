@@ -83,6 +83,7 @@ def create_user(username, password, is_superuser=False, db=None,
                  'groups': groups}
     user = User(db=db, **user_data)
     user.save()
+    return user.reset_token
 
 
 def get_user(username):
