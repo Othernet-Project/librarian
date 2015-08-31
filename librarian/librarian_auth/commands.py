@@ -1,6 +1,6 @@
 import getpass
 
-from .helpers import create_user, UserAlreadyExists, InvalidUserCredentials
+from .helpers import create_user, InvalidUserCredentials
 
 
 def create_superuser(supervisor):
@@ -20,9 +20,6 @@ def create_superuser(supervisor):
                                   overwrite=True)
         print("User created. The password reset token is: {}".format(
             reset_token))
-    except UserAlreadyExists:
-        print("User already exists, please try a different username.")
-        create_superuser(supervisor)
     except InvalidUserCredentials:
         print("Invalid user credentials, please try again.")
         create_superuser(supervisor)

@@ -33,3 +33,15 @@ def generate_secret_key(length=50):
                              .replace('"', '')
                              .replace('\\', ''))
     return ''.join([random.choice(chars) for i in range(length)])
+
+
+def from_csv(raw_value):
+    return [val.strip() for val in raw_value.split(',')]
+
+
+def to_csv(values):
+    return ','.join(values)
+
+
+def row_to_dict(row):
+    return dict((key, row[key]) for key in row.keys())

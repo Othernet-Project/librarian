@@ -1,7 +1,6 @@
 import datetime
 import hashlib
 import random
-import sqlite3
 import string
 import urllib
 import urlparse
@@ -10,11 +9,9 @@ import pbkdf2
 
 from bottle import request
 
+from .groups import Group
 from .users import User
-
-
-class UserAlreadyExists(Exception):
-    pass
+from .utils import row_to_dict
 
 
 class InvalidUserCredentials(Exception):
@@ -76,31 +73,24 @@ def create_user(username, password, is_superuser=False, db=None,
     sha1.update(reset_token.encode('utf8'))
     hashed_token = sha1.hexdigest()
 
+    groups = [Group.from_name('superuser')] if is_superuser else []
+
     user_data = {'username': username,
                  'password': encrypted,
+                 'reset_token': hashed_token,
                  'created': datetime.datetime.utcnow(),
-                 'is_superuser': is_superuser,
-                 'reset_token': hashed_token}
-
-    db = db or request.db.sessions
-    sql_cmd = db.Replace if overwrite else db.Insert
-    query = sql_cmd('users', cols=('username',
-                                   'password',
-                                   'created',
-                                   'is_superuser',
-                                   'reset_token'))
-    try:
-        db.execute(query, user_data)
-        return reset_token
-    except sqlite3.IntegrityError:
-        raise UserAlreadyExists()
+                 'options': {},
+                 'groups': groups}
+    user = User(**user_data)
+    user.save()
 
 
 def get_user(username):
     db = request.db.sessions
     query = db.Select(sets='users', where='username = ?')
     db.query(query, username)
-    return db.result
+    user = db.result
+    return row_to_dict(user) if user else {}
 
 
 def get_user_by_reset_token(token):
@@ -115,11 +105,8 @@ def get_user_by_reset_token(token):
 
 def login_user(username, password):
     user = get_user(username)
-    if user and is_valid_password(password, user.password):
-        request.user = User(username=user.username,
-                            is_superuser=user.is_superuser,
-                            created=user.created,
-                            options=user.options)
+    if user and is_valid_password(password, user['password']):
+        request.user = User(**user)
         request.session.rotate()
         return True
 
