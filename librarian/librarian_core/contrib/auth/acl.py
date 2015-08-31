@@ -71,7 +71,7 @@ class BaseUser(object):
         if type(self) is BaseUser:
             raise TypeError("Abstract {0} class cannot be used "
                             "directly.".format(BaseUser.__name__))
-        self.groups = groups
+        self.groups = groups or []
 
     def has_permission(self, permission_class):
         if is_string(permission_class):
