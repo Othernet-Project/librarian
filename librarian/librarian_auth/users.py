@@ -31,12 +31,13 @@ def authenticated_only(func):
 class User(BaseUser):
 
     def __init__(self, username=None, password=None, reset_token=None,
-                 created=None, options=None, groups=None):
+                 created=None, options=None, groups=None, db=None):
         self.username = username
         self.password = password
         self.reset_token = reset_token
         self.created = created
         self.options = Options(options, onchange=self.save)
+        self.db = db or request.db.sessions
         super(User, self).__init__(groups=groups)
 
     @property
@@ -54,20 +55,19 @@ class User(BaseUser):
 
     @authenticated_only
     def save(self):
-        db = request.db.sessions
-        query = db.Replace('users', cols=('username',
-                                          'password',
-                                          'reset_token',
-                                          'created',
-                                          'options',
-                                          'groups'))
-        db.query(query,
-                 username=self.username,
-                 password=self.password,
-                 reset_token=self.reset_token,
-                 created=self.created,
-                 options=self.options.to_json(),
-                 groups=to_csv([group.name for group in self.groups]))
+        query = self.db.Replace('users', cols=('username',
+                                               'password',
+                                               'reset_token',
+                                               'created',
+                                               'options',
+                                               'groups'))
+        self.db.query(query,
+                      username=self.username,
+                      password=self.password,
+                      reset_token=self.reset_token,
+                      created=self.created,
+                      options=self.options.to_json(),
+                      groups=to_csv([group.name for group in self.groups]))
 
     def to_json(self):
         data = dict(username=self.username,

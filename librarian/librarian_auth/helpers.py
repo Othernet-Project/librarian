@@ -73,7 +73,7 @@ def create_user(username, password, is_superuser=False, db=None,
     sha1.update(reset_token.encode('utf8'))
     hashed_token = sha1.hexdigest()
 
-    groups = [Group.from_name('superuser')] if is_superuser else []
+    groups = [Group.from_name('superuser', db=db)] if is_superuser else []
 
     user_data = {'username': username,
                  'password': encrypted,
@@ -81,7 +81,7 @@ def create_user(username, password, is_superuser=False, db=None,
                  'created': datetime.datetime.utcnow(),
                  'options': {},
                  'groups': groups}
-    user = User(**user_data)
+    user = User(db=db, **user_data)
     user.save()
 
 
