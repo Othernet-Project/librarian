@@ -12,11 +12,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from bottle_utils.i18n import lazy_gettext as _
 
-from ..dashboard import DashboardPlugin
-
-
-def install(app, route):
-    pass
+from librarian.librarian_dashboard.dashboard import DashboardPlugin
 
 
 class Dashboard(DashboardPlugin):
