@@ -36,7 +36,7 @@ def generate_secret_key(length=50):
 
 
 def from_csv(raw_value):
-    return [val.strip() for val in raw_value.split(',') if val]
+    return [val.strip() for val in (raw_value or '').split(',') if val]
 
 
 def to_csv(values):

@@ -38,6 +38,7 @@ class User(BaseUser):
         self.created = created
         self.options = Options(options, onchange=self.save)
         self.db = db or request.db.sessions
+        groups = [Group.from_name(name, db=db) for name in from_csv(groups)]
         super(User, self).__init__(groups=groups)
 
     @property
@@ -80,7 +81,4 @@ class User(BaseUser):
 
     @classmethod
     def from_json(cls, data):
-        raw_data = json.loads(data, cls=DateTimeDecoder)
-        group_names = from_csv(raw_data.pop('groups', ''))
-        groups = map(Group.from_name, group_names)
-        return cls(groups=groups, **raw_data)
+        return cls(**json.loads(data, cls=DateTimeDecoder))

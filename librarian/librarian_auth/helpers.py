@@ -9,7 +9,6 @@ import pbkdf2
 
 from bottle import request
 
-from .groups import Group
 from .users import User
 from .utils import row_to_dict
 
@@ -73,7 +72,7 @@ def create_user(username, password, is_superuser=False, db=None,
     sha1.update(reset_token.encode('utf8'))
     hashed_token = sha1.hexdigest()
 
-    groups = [Group.from_name('superuser', db=db)] if is_superuser else []
+    groups = 'superuser' if is_superuser else ''
 
     user_data = {'username': username,
                  'password': encrypted,
