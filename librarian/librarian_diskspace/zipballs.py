@@ -13,8 +13,8 @@ import logging
 
 from bottle import request
 
-from ...core.content import to_path, filewalk
-from ...lib import squery
+from librarian.librarian_library.library.content import to_path, filewalk
+from librarian.librarian_sqlite import squery
 
 
 def get_database(dbpath):
@@ -87,7 +87,7 @@ def free_space(config=None):
     :returns:   two-tuple of free space and total space
     """
     config = config or request.app.config
-    cdir = config['content.contentdir']
+    cdir = config['library.contentdir']
     cdev, cfree, ctot = path_space(cdir)
     return cfree, ctot
 
@@ -154,7 +154,7 @@ def cleanup_list(free_space, db=None, config=None):
     # TODO: tests
     zipballs = iter(get_old_content(db=db))
     config = config or request.app.config
-    contentdir = config['content.contentdir']
+    contentdir = config['library.contentdir']
     space = needed_space(free_space, config=config)
     while space > 0:
         zipball = clone_zipball(next(zipballs))
