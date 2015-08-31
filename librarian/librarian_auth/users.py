@@ -38,7 +38,7 @@ class User(BaseUser):
         self.created = created
         self.options = Options(options, onchange=self.save)
         super(User, self).__init__(groups=groups)
-        print(self.groups[0].has_superpowers)
+
     @property
     def is_authenticated(self):
         return self.username is not None
@@ -82,5 +82,5 @@ class User(BaseUser):
     def from_json(cls, data):
         raw_data = json.loads(data, cls=DateTimeDecoder)
         group_names = from_csv(raw_data.pop('groups', ''))
-        groups = map(Group, group_names)
+        groups = map(Group.from_name, group_names)
         return cls(groups=groups, **raw_data)
