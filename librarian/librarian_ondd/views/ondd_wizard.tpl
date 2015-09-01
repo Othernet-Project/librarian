@@ -1,10 +1,10 @@
-<%inherit file='/setup/main.tpl'/>
+<%inherit file='/setup_base.tpl'/>
 <%namespace name="settings_fields" file="ondd/_settings_fields.tpl"/>
 <%namespace name="signal" file="ondd/_signal.tpl"/>
 <%namespace name="presets" file="ondd/_presets.tpl"/>
 
 <%block name="extra_head">
-<script type="text/javascript" src="${assets['css/ondd']}"></script>
+<link rel="stylesheet" href="${assets['css/ondd']}" />
 </%block>
 
 <%block name="step_title">
