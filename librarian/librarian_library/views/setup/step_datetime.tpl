@@ -17,3 +17,7 @@
     </div>
 </div>
 </%block>
+
+<%block name="extra_scripts">
+<script type="text/javascript" src="${assets['js/setdt']}"></script>
+</%block>

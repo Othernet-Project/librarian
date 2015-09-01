@@ -63,7 +63,6 @@
 
         <%block name="script_templates"/>
         <script src="${assets['js/ui']}"></script>
-        <script src="${assets['js/setup']}"></script>
         <%block name="extra_scripts"/>
     </body>
 </html>
