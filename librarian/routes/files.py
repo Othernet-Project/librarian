@@ -132,7 +132,7 @@ def guard_already_removed(func):
 @view('remove_confirm')
 def delete_path_confirm(path):
     cancel_url = request.headers.get('Referer', get_parent_url(path))
-    return dict(title=os.path.basename(path), cancel_url=cancel_url)
+    return dict(item_name=os.path.basename(path), cancel_url=cancel_url)
 
 
 @csrf_protect
