@@ -1,4 +1,4 @@
-from .repl import repl
+from .commands import repl
 
 
 def initialize(supervisor):
