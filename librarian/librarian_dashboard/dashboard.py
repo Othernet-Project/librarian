@@ -42,7 +42,6 @@ class DashboardPlugin(object):
 
     heading = None
     name = None
-    javascript = []
     template_lookup_base = os.path.dirname(__file__)
     classes = ['collapsible', 'collapsed']
     plugin_error_template = 'plugin_error.tpl'
@@ -77,9 +76,6 @@ class DashboardPlugin(object):
     def get_formatted_classes(self):
         return ' '.join([('dash-%s' % c) for c in self.get_classes()])
 
-    def get_javascript(self):
-        return self.javascript
-
     def render(self):
         """ Render dashboard section """
         name = self.get_name()
@@ -95,12 +91,6 @@ class DashboardPlugin(object):
         except Exception:
             logging.exception("Plugin rendering failed: {0}".format(name))
             return template(self.plugin_error_template, **context)
-
-    def render_javascript(self):
-        html = ''
-        for js in self.get_javascript():
-            html += '<script src="/s/%s/%s"></script>' % (self.name, js)
-        return html
 
     def __str__(self):
         return "<DashboardPlugin '%s'>" % self.name

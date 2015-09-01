@@ -23,7 +23,4 @@ ${_('Dashboard')}
 
 <%block name="extra_scripts">
 <script src="${assets['js/dashboard']}"></script>
-% for p in plugins:
-    ${p.render_javascript()}
-% endfor
 </%block>
