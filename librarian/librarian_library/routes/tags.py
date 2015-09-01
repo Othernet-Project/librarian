@@ -53,7 +53,7 @@ def edit_tags(meta):
     archive = open_archive()
     archive.add_tags(meta, new)
     archive.remove_tags(meta, removed)
-    request.app.exts.cache.invalidate('content')
+    request.app.supervisor.exts.cache.invalidate('content')
     if request.is_xhr:
         return template('_tag_list', meta=meta, base_path=base_path)
     redirect('/')

@@ -58,8 +58,8 @@ def notify_content_added(content_id_list, chunk_size=100):
         for content_item in content_list:
             content_data = {'id': content_item['md5'],
                             'title': content_item['title']}
-            request.app.exts.notifications.send(content_data,
-                                                category='content')
+            request.app.supervisor.exts.notifications.send(content_data,
+                                                           category='content')
 
 
 @invalidates(prefix=['content', 'downloads'], after=True)

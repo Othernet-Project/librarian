@@ -52,7 +52,7 @@ def cleanup():
                                 meta_filename=conf['library.metadata'])
         if selected:
             archive.remove_from_archive([z['md5'] for z in selected])
-            request.app.exts.cache.invalidate(prefix='content')
+            request.app.supervisor.exts.cache.invalidate(prefix='content')
             redirect(i18n_url('content:list'))
         else:
             # Translators, error message shown on clean-up page when there was

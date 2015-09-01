@@ -28,9 +28,9 @@ class FlatPage(object):
     def __call__(self):
         locale = getattr(request, 'locale', '_')
         key = '{0}_{1}'.format(self.__name__, locale)
-        if request.app.exts.is_installed('cache'):
+        if request.app.supervisor.exts.is_installed('cache'):
             # use cache if available
-            source = request.app.exts.cache
+            source = request.app.supervisor.exts.cache
         else:
             # fallback to in-memory dict
             source = self.versions

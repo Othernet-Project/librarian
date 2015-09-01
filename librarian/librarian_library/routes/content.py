@@ -127,7 +127,7 @@ def remove_content(content):
     """ Delete a single piece of content from archive """
     archive = open_archive()
     archive.remove_from_archive([content.md5])
-    request.app.exts.cache.invalidate(prefix='content')
+    request.app.supervisor.exts.cache.invalidate(prefix='content')
     # Translators, used as page title of successful content removal feedback
     page_title = _("Content removed")
     # Translators, used as message of successful content removal feedback
