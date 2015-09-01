@@ -3,7 +3,7 @@ from .repl import repl
 
 def initialize(supervisor):
     supervisor.exts.commands.register(
-        'version',
+        'repl',
         repl,
         '--repl',
         action='store_true',
