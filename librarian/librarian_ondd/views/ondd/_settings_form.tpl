@@ -1,5 +1,5 @@
 <%namespace name="settings_fields" file="_settings_fields.tpl"/>
-${h.form('post', action=i18n_url('plugins:ondd:settings'), _class='settings-form', _id='settings-form')}
+${h.form('post', action=i18n_url('ondd:settings'), _class='settings-form', _id='settings-form')}
     % if message:
     <p class="message">${ message }</p>
     % endif

@@ -14,6 +14,6 @@ ${_('Tuner settings')}
 ${settings_form.body()}
 
 <%block name="extra_scripts">
-<script src="${url('plugins:ondd:static', path='ondd.js')}"></script>
+<script type="text/javascript" src="${assets['js/ondd']}"></script>
 </%block>
 

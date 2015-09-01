@@ -4,8 +4,10 @@
 <%namespace name="file_list" file="ondd/_file_list.tpl"/>
 <%namespace name="presets" file="ondd/_presets.tpl"/>
 
+<style>@import "${assets['css/ondd']}";</style>
+
 <div class="ondd-status">
-    <div id="signal-status" class="signal-status" data-url="${i18n_url('plugins:ondd:status')}">
+    <div id="signal-status" class="signal-status" data-url="${i18n_url('ondd:status')}">
         ${signal.body()}
     </div>
 
@@ -14,7 +16,7 @@
     ## Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
     ${_('Downloads in progress')}
     </h3>
-    <div id="ondd-file-list" data-url="${i18n_url('plugins:ondd:files')}">
+    <div id="ondd-file-list" data-url="${i18n_url('ondd:files')}">
         ${file_list.body()}
     </div>
     % endif
@@ -24,3 +26,5 @@
     ${settings_form.body()}
     ${presets.body()}
 </div>
+
+<script type="text/javascript" src="${assets['js/ondd']}"></script>
