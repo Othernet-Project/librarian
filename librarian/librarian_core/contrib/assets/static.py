@@ -130,6 +130,9 @@ class Assets:
         for path, url in config.get('assets.sources', {}).values():
             assets.add_static_source(path, url=url)
 
+        paths = assets.env.load_path
+        assets.env.config['COMPASS_CONFIG']['additional_import_paths'] = paths
+
         js_bundles = [cls.parse_bundle(b)
                       for b in config.get('assets.js_bundles', [])]
         for name, contents in js_bundles:
@@ -139,4 +142,5 @@ class Assets:
                        for b in config.get('assets.css_bundles', [])]
         for name, contents in css_bundles:
             assets.add_css_bundle(name, contents)
+
         return assets
