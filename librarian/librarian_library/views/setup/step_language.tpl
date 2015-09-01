@@ -1,4 +1,4 @@
-<%inherit file='main.tpl'/>
+<%inherit file='/setup_base.tpl'/>
 
 <%block name="step_title">
 <p class="outernet-logo" lang="en" dir="ltr">Outernet</p>

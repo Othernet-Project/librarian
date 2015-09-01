@@ -6,7 +6,7 @@ from librarian.librarian_core.contrib.i18n.utils import (set_default_locale,
                                                          get_enabled_locales)
 from librarian.librarian_setup.setup import setup_wizard
 
-from .forms import SetupLanguageForm, SetupDateTimeForm
+from .forms import get_language_form, SetupDateTimeForm
 
 
 def is_language_invalid():
@@ -18,12 +18,14 @@ def is_language_invalid():
 @setup_wizard.register_step('language', template='setup/step_language.tpl',
                             method='GET', index=1, test=is_language_invalid)
 def setup_language_form():
+    SetupLanguageForm = get_language_form(request.app.config)
     return dict(form=SetupLanguageForm())
 
 
 @setup_wizard.register_step('language', template='setup/step_language.tpl',
                             method='POST', index=1, test=is_language_invalid)
 def setup_language():
+    SetupLanguageForm = get_language_form(request.app.config)
     form = SetupLanguageForm(request.forms)
     if not form.is_valid():
         return dict(successful=False, form=form)

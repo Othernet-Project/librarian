@@ -44,12 +44,12 @@ def cleanup():
                 'needed': zipballs.needed_space(free)}
     else:
         conf = request.app.config
-        archive = Archive.setup(conf['librarian.backend'],
+        archive = Archive.setup(conf['library.backend'],
                                 request.db.main,
-                                unpackdir=conf['content.unpackdir'],
-                                contentdir=conf['content.contentdir'],
-                                spooldir=conf['content.spooldir'],
-                                meta_filename=conf['content.metadata'])
+                                unpackdir=conf['library.unpackdir'],
+                                contentdir=conf['library.contentdir'],
+                                spooldir=conf['library.spooldir'],
+                                meta_filename=conf['library.metadata'])
         if selected:
             archive.remove_from_archive([z['md5'] for z in selected])
             request.app.exts.cache.invalidate(prefix='content')

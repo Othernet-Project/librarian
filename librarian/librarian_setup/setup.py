@@ -67,7 +67,7 @@ class Setup(object):
 
 
 class SetupWizard(Wizard):
-    finished_template = 'setup/finished.tpl'
+    finished_template = 'setup_finished.tpl'
     allow_override = True
     start_index = 1
     template_func = template

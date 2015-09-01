@@ -3,15 +3,22 @@ import pytz
 from bottle_utils import form
 from bottle_utils.i18n import lazy_gettext as _
 
-from .lang import UI_LANGS, DEFAULT_LOCALE
+from librarian.librarian_core.contrib.i18n.consts import LANGS
 
 
-class SetupLanguageForm(form.Form):
-    # Translators, used as label for language
-    language = form.SelectField(_('Language'),
-                                value=DEFAULT_LOCALE,
-                                validators=[form.Required()],
-                                choices=UI_LANGS)
+def get_language_form(config):
+    default_locale = config.get('i18n.default_locale', 'en')
+    locales = config.get('i18n.locales', ['en'])
+    ui_languages = [(code, name) for code, name in LANGS if code in locales]
+
+    class SetupLanguageForm(form.Form):
+        # Translators, used as label for language
+        language = form.SelectField(_('Language'),
+                                    value=default_locale,
+                                    validators=[form.Required()],
+                                    choices=ui_languages)
+
+    return SetupLanguageForm
 
 
 class SetupDateTimeForm(form.Form):

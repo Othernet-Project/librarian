@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         ## Translators, used in page title
-        <title><%block name="title">${_('Setup Wizard')}</%block> - Librarian v${app_version}</title>
+        <title><%block name="title">${_('Setup Wizard')}</%block> - Librarian v${th.app_version()}</title>
         <link rel="stylesheet" href="${assets['css/wizard']}" />
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
         <%block name="extra_head"/>
@@ -56,7 +56,7 @@
         <%block name="footer">
         <footer>
             <p class="logo"><span lang="en">Outernet</span>: ${_("Humanity's public library")}</p>
-            <p class="progver" lang="en">Librarian</span> <span dir="ltr">v${app_version}</span></p>
+            <p class="progver" lang="en">Librarian</span> <span dir="ltr">v${th.app_version()}</span></p>
             <p class="copyright">2014-2015 <span lang="en">Outernet Inc</span></p>
         </footer>
         </%block>

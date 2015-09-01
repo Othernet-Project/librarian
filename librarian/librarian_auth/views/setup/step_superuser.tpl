@@ -1,4 +1,4 @@
-<%inherit file='main.tpl'/>
+<%inherit file='/setup_base.tpl'/>
 
 <%block name="step_title">
 <h2>${_('Please enter the desired credentials for the superuser account.')}</h2>

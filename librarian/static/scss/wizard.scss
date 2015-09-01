@@ -3,7 +3,6 @@
 @import "outernet/mixins/media_query";
 @import "partials/common_elements";
 @import "partials/footer";
-@import "dashboard/ondd";
 
 body.initial {
   padding-top: 0;
@@ -16,7 +15,7 @@ body.initial {
 .menu {
   .logo {
     @include hide-text;
-    @include misc-icon('logo_menu', yes);  
+    @include misc-icon('logo_menu', yes);
   }
 
   .steps {
@@ -44,7 +43,7 @@ body.initial {
 
 .buttons {
   a.button,
-  button 
+  button
   {
     margin-bottom: 0.5em;
   }
@@ -52,7 +51,7 @@ body.initial {
 
 .timezone-container {
   select:nth-child(2),
-  select:nth-child(3) 
+  select:nth-child(3)
   {
     max-width: 48%;
     margin-right: 0.2em;
@@ -120,7 +119,7 @@ body.initial {
       display: inline-block;
     }
   }
-  
+
   .large {
     color: $sky25d;
   }

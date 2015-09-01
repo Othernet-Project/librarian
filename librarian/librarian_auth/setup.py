@@ -8,8 +8,8 @@ from .helpers import generate_reset_token, create_user
 
 def has_no_superuser():
     db = request.db.sessions
-    query = db.Select(sets='users', where='is_superuser = ?')
-    db.query(query, True)
+    query = db.Select(sets='users', where="groups LIKE :group")
+    db.query(query, group='%superuser%')
     return db.result is None
 
 
