@@ -1,4 +1,4 @@
-@import "sprites";
+@import "partials/sprites";
 
 .setup-finished {
   padding-top: 3em;
@@ -13,7 +13,7 @@
   }
 
   .main {
-    @include heading-5;   
+    @include heading-5;
     margin: 0;
   }
 

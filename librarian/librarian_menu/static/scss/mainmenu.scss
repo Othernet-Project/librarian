@@ -2,8 +2,8 @@
 @import "outernet/mixins/media_query";
 @import "outernet/mixins/sprites";
 @import "outernet/widgets/icons";
-@import "dropdown";
-@import "sprites";
+@import "partials/dropdown";
+@import "partials/sprites";
 
 .menu {
   .logo {
