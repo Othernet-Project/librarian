@@ -23,6 +23,7 @@ def captive_portal_plugin(supervisor):
 
             if target_host not in domain_mappings:
                 # This is not a captive portal check
+                logging.debug('No captive portal match for %s', target_host)
                 return callback(*args, **kwargs)
 
             logging.debug('Matched captive portal host %s', target_host)

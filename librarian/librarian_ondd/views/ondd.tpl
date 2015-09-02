@@ -10,16 +10,9 @@
     <div id="signal-status" class="signal-status" data-url="${i18n_url('ondd:status')}">
         ${signal.body()}
     </div>
-
-    % if files:
-    <h3>
-    ## Translators, used as title of a subsection in dashboard that lists files that are currently being downloaded
-    ${_('Downloads in progress')}
-    </h3>
-    <div id="ondd-file-list" data-url="${i18n_url('ondd:files')}">
+    <div id="ondd-file-list" class="ondd-file-list" data-url="${i18n_url('ondd:files')}">
         ${file_list.body()}
     </div>
-    % endif
 </div>
 
 <div class="ondd-settings">

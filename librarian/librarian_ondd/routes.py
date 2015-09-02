@@ -35,7 +35,7 @@ def set_settings():
 
 @view('ondd/_file_list')
 def show_file_list():
-    return dict(files=ipc.get_file_list())
+    return dict(files=ipc.get_transfers())
 
 
 def routes(config):

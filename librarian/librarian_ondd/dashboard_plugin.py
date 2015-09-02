@@ -41,4 +41,4 @@ class Dashboard(DashboardPlugin):
         initial_data = read_ondd_setup()
         return dict(status=ipc.get_status(),
                     form=ONDDForm(initial_data),
-                    files=[])
+                    files=ipc.get_transfers())

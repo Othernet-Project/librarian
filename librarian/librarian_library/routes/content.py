@@ -116,7 +116,8 @@ def guard_already_removed(func):
 @guard_already_removed
 @view('remove_confirm')
 def remove_content_confirm(content):
-    return dict(content=content, cancel_url=i18n_url('content:list'))
+    return dict(item_name=content['title'],
+                cancel_url=i18n_url('content:list'))
 
 
 @login_required(next_to='/')

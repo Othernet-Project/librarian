@@ -64,8 +64,8 @@ ${library_submenu.body()}
                             <input type="text" name="name" value="${d.name}">
                             <button name="action" value="rename" type="submit">${_('Rename')}</button>
                         </form>
-                        ${h.form('post', action=dpath, _class="files-delete")}
-                            <button class="delete" name="action" value="delete" type="submit">${_('Delete')}</button>
+                        ${h.form('get', action=i18n_url('files:delete_confirm', path=d.path), _class="files-delete")}
+                            <button class="delete" type="submit">${_('Delete')}</button>
                         </form>
                     </td>
                 </tr>
@@ -87,8 +87,8 @@ ${library_submenu.body()}
                             <input type="text" name="name" value="${f.name}">
                             <button name="action" value="rename" type="submit">${_('Rename')}</button>
                         </form>
-                        ${h.form('post', action=fpath, _class="files-delete")}
-                            <button class="danger" name="action" value="delete" type="submit">${_('Delete')}</button>
+                        ${h.form('get', action=i18n_url('files:delete_confirm', path=f.path), _class="files-delete")}
+                            <button class="danger" type="submit">${_('Delete')}</button>
                         </form>
                     </td>
                 </tr>

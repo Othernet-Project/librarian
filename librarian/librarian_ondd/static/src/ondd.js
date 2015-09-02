@@ -8,7 +8,7 @@
             filesUrl = fileList.data('url'),
 
             refreshInterval = 3000,  // ms
-            fileRefreshInterval = 30000,  // ms
+            fileRefreshInterval = 15000,  // ms
             satSelection = $(window.templates.satPresets),
             satSelector = satSelection.find('select'),
             settingsForm,
@@ -166,15 +166,13 @@
         };
 
         self.doRefreshFileList = function (interval) {
-            if (fileList.length > 0) {
-                setTimeout(function () {
-                    $.get(filesUrl).done(function (result) {
-                        fileList.html(result);
-                    }).always(function () {
-                        self.doRefreshFileList(interval);
-                    });
-                }, interval);
-            }
+            setTimeout(function () {
+                $.get(filesUrl).done(function (result) {
+                    fileList.html(result);
+                }).always(function () {
+                    self.doRefreshFileList(interval);
+                });
+            }, interval);
         };
 
         self.doRefresh(refreshInterval);

@@ -16,7 +16,7 @@ from .notifications import get_notifications
 class NotificationsMenuItem(MenuItem):
     name = 'notifications'
     icon_class = 'notifications'
-    alt_icon_class = 'notifications-active'
+    alt_icon_class = 'notifications_active'
     route = 'notifications:list'
 
     def __init__(self, *args, **kwargs):

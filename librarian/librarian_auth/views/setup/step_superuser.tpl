@@ -34,7 +34,7 @@
         <span class="label">${_('Password reset token')}</span>
         <span class="large">${reset_token}</span>
         <span class="field-help">
-        ${_('Please write down this password reset token and store it securely. You will need it if you ever need to reset your passwrd.')}
+        ${_('Please write down this password reset token and store it securely. You will need it if you ever need to reset your password.')}
         </span>
         ${h.HIDDEN('reset_token', reset_token)}
     </p>

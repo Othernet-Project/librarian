@@ -10,6 +10,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from __future__ import unicode_literals
 
+import os
 import socket
 import logging
 import xml.etree.ElementTree as ET
@@ -189,6 +190,35 @@ def get_file_list():
                 'size': int(f.find('size').text)
             })
     return out
+
+
+def parse_transfer(transfer):
+    path = transfer.find('path').text or ''
+    block_count = int(transfer.find('block_count').text)
+    block_received = int(transfer.find('block_received').text)
+    percentage = block_received * 100 / (block_count or 1)
+    return dict(path=path,
+                filename=os.path.basename(path),
+                hash=transfer.find('hash').text,
+                block_count=block_count,
+                block_received=block_received,
+                percentage=percentage)
+
+
+def get_transfers():
+    """ Get information about the file ONDD is currently processing """
+    payload = xml_get_path('/transfers')
+    try:
+        root = send(payload)
+    except ET.ParseError:
+        logging.error('ONDD: Could not parse XML data')
+        return []
+
+    if root is None:
+        return []
+
+    return [parse_transfer(transfer) for stream in root.find('streams')
+            for transfer in stream.find('transfers')]
 
 
 def freq_conv(freq, lnb_type):

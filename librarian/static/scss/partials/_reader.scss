@@ -1,5 +1,6 @@
 @import "outernet/mixins/media_query";
 @import "outernet/mixins/sprites";
+@import "mixins/browser_fixes";
 
 $sidebar-width: 247px;
 $sidebar-handle-width: 35px;
@@ -24,8 +25,7 @@ $sidebar-animation-interval: 0.3s;
   &.reduced {
     right: $sidebar-width + 1px;
   }
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
+  @include ios-iframe-fix;
 
   iframe {
     display: block;

@@ -111,6 +111,16 @@
     display: inline-block;
   }
 
+  .count {
+    font-weight: bold;
+    &:before {
+      content: "(";
+    }
+    &:after {
+      content: ")";
+    }
+  }
+
   .level2-lang .selected {
     background: $forest10;
     @include with-hdpi(icons, form_positive);
@@ -120,7 +130,7 @@
   }
 }
 
-@each $navicon in (library, files, apps, updates, logout, settings) {
+@each $navicon in (library, files, apps, updates, logout, settings, notifications, notifications_active) {
   #nav .#{$navicon},
   .alt-menu .#{$navicon} {
     .icon {

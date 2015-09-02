@@ -1,0 +1,12 @@
+{
+    "css/content-%(version)s.css": "ebca31d7", 
+    "css/dashboard-%(version)s.css": "7b3c38c5", 
+    "css/main-%(version)s.css": "b137c10e", 
+    "css/wizard-%(version)s.css": "2cdf79e7", 
+    "js/content-%(version)s.js": "d5d568de", 
+    "js/dashboard-%(version)s.js": "6dab1ac5", 
+    "js/files-%(version)s.js": "d969cdea", 
+    "js/reader-%(version)s.js": "f53cfcd4", 
+    "js/setup-%(version)s.js": "10ea5fdc", 
+    "js/ui-%(version)s.js": "14406d1d"
+}

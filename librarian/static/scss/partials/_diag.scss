@@ -1,0 +1,32 @@
+@import "outernet/mixins/colors";
+@import "outernet/mixins/media_query";
+
+.diag {
+  @include wider-than(960px) {
+    width: 50%;
+    margin: 0 auto;
+  }
+
+  table {
+    margin: 1em 0;
+  }
+
+  textarea {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1em;
+    font-family: monospace;
+    font-size: 12px;
+    min-height: 300px;
+    max-height: 600px;
+  }
+
+  .no-tuner {
+    color: $fire;
+    font-weight: bold;
+  }
+
+  .has-tuner {
+    color: $forest;
+  }
+}
