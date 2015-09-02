@@ -121,6 +121,14 @@ class Assets:
         return bundle_name, bundle_content
 
     @classmethod
+    def merge_bundles(cls, bundles):
+        merged = dict()
+        for name, contents in [cls.parse_bundle(b) for b in bundles]:
+            merged.setdefault(name, [])
+            merged[name].extend(contents)
+        return merged
+
+    @classmethod
     def from_config(cls, config):
         """ Create Assets instance from dict-like config object """
         assets_dir = os.path.join(config['root'], config['assets.directory'])
@@ -139,25 +147,12 @@ class Assets:
         paths = assets.env.load_path
         assets.env.config['COMPASS_CONFIG']['additional_import_paths'] = paths
 
-        js_bundles = [cls.parse_bundle(b)
-                      for b in config.get('assets.js_bundles', [])]
-        merged_js_bundles = dict()
-        for name, contents in js_bundles:
-            merged_js_bundles.setdefault(name, [])
-            merged_js_bundles[name].extend(contents)
-
-        for name, contents in merged_js_bundles.items():
+        js_bundles = cls.merge_bundles(config.get('assets.js_bundles', []))
+        for name, contents in js_bundles.items():
             assets.add_js_bundle(name, contents)
 
-        css_bundles = [cls.parse_bundle(b)
-                       for b in config.get('assets.css_bundles', [])]
-        merged_css_bundles = dict()
-        for name, contents in css_bundles:
-            merged_css_bundles.setdefault(name, [])
-            merged_css_bundles[name].extend(contents)
-
-        print(merged_css_bundles)
-        for name, contents in merged_css_bundles.items():
+        css_bundles = cls.merge_bundles(config.get('assets.css_bundles', []))
+        for name, contents in css_bundles.items():
             assets.add_css_bundle(name, contents)
 
         return assets
