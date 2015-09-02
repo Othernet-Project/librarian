@@ -6,6 +6,17 @@ from .handlers import rebuild_assets
 from .static import Assets
 
 
+EXPORTS = {
+    'component_member_loaded': {},
+    'initialize': {
+        'depends_on': ['librarian.librarian_core.contrib.commands.hooks.initialize']
+    },
+    'init_complete': {
+        'required_by': ['librarian.librarian_core.contrib.commands.hooks.init_complete']
+    }
+}
+
+
 def component_member_loaded(supervisor, member, config):
     supervisor.config.setdefault('assets.sources', {})
     supervisor.config.setdefault('assets.js_bundles', [])
