@@ -4,7 +4,7 @@
 <%namespace name="presets" file="ondd/_presets.tpl"/>
 
 <%block name="extra_head">
-<link rel="stylesheet" href="${assets['css/ondd']}" />
+<link rel="stylesheet" href="${assets['css/dashboard']}" />
 </%block>
 
 <%block name="step_title">

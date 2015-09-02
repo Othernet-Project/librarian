@@ -4,8 +4,6 @@
 <%namespace name="file_list" file="ondd/_file_list.tpl"/>
 <%namespace name="presets" file="ondd/_presets.tpl"/>
 
-<style>@import "${assets['css/ondd']}";</style>
-
 <div class="ondd-status">
     <div id="signal-status" class="signal-status" data-url="${i18n_url('ondd:status')}">
         ${signal.body()}
