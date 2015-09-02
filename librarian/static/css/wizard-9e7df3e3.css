@@ -1,4 +1,4 @@
-/* line 5, ../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
@@ -7,38 +7,38 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font-size: 100%;
   vertical-align: baseline; }
 
-/* line 22, ../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1; }
 
-/* line 24, ../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none; }
 
-/* line 26, ../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-/* line 28, ../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle; }
 
-/* line 30, ../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none; }
-/* line 103, ../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none; }
 
-/* line 32, ../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none; }
 
-/* line 116, ../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block; }
 
@@ -74,10 +74,50 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
  */
 /**
  * _forms.scss: form control definitions
+ *
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _buttons.scss: button styling
  * 
  * Copyright 2015, Outernet Inc.
  * Some rights reserved.
  * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _media_query.scss: media query support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
  * This software is free software licensed under the terms of GPLv3. See
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
@@ -114,10 +154,20 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
  */
 /**
  * _tables.scss: table and table cell content styling
- * 
+ *
  * Copyright 2015, Outernet Inc.
  * Some rights reserved.
- * 
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
  * This software is free software licensed under the terms of GPLv3. See
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
@@ -670,10 +720,50 @@ a:visited {
  */
 /**
  * _forms.scss: form control definitions
+ *
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _buttons.scss: button styling
  * 
  * Copyright 2015, Outernet Inc.
  * Some rights reserved.
  * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _media_query.scss: media query support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
  * This software is free software licensed under the terms of GPLv3. See
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
@@ -715,7 +805,7 @@ label {
   padding-left: 15px;
   padding-bottom: 4px;
   cursor: pointer; }
-/* line 31, ../scss/outernet/mixins/_forms.scss */
+/* line 32, ../scss/outernet/mixins/_forms.scss */
 label.required:after {
   content: '*';
   color: #c41414; }
@@ -760,11 +850,11 @@ input[type="text"].small, input[type="numeric"].small, input[type="email"].small
   max-width: 100%;
   font-size: 87.5%;
   line-height: 137.5%; }
-/* line 75, ../scss/outernet/mixins/_forms.scss */
+/* line 76, ../scss/outernet/mixins/_forms.scss */
 input[type="text"].small:focus, input[type="numeric"].small:focus, input[type="email"].small:focus, input[type="file"].small:focus, input[type="password"].small:focus, textarea.small:focus, select.small:focus {
   font-size: 87.5%;
   line-height: 137.5%; }
-/* line 107, ../scss/outernet/mixins/_forms.scss */
+/* line 108, ../scss/outernet/mixins/_forms.scss */
 input[type="text"]:focus, input[type="numeric"]:focus, input[type="email"]:focus, input[type="file"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
   color: #555555;
   background-color: #f3f8fc;
@@ -835,11 +925,11 @@ input[type="text"].positive, input[type="numeric"].positive, input[type="email"]
   padding-right: 50px;
   background-position: right 12.5px top 50%;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/form_positive.png?1439574485'); }
+  background-image: url('../img/icons/1x/form_positive.png?1434436248'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 63, ../scss/outernet/partial/_forms.scss */
   input[type="text"].positive, input[type="numeric"].positive, input[type="email"].positive, input[type="password"].positive, input[type="file"].positive {
-    background-image: url('../img/icons/2x/form_positive.png?1439574485');
+    background-image: url('../img/icons/2x/form_positive.png?1434436346');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -849,11 +939,11 @@ input[type="text"].negative, input[type="numeric"].negative, input[type="email"]
   padding-right: 50px;
   background-position: right 12.5px top 50%;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/form_negative.png?1439574485'); }
+  background-image: url('../img/icons/1x/form_negative.png?1434436244'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 67, ../scss/outernet/partial/_forms.scss */
   input[type="text"].negative, input[type="numeric"].negative, input[type="email"].negative, input[type="password"].negative, input[type="file"].negative {
-    background-image: url('../img/icons/2x/form_negative.png?1439574485');
+    background-image: url('../img/icons/2x/form_negative.png?1434436344');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -902,11 +992,11 @@ input[type="checkbox"]:checked + label:before {
   transition: color 0.3s, background-color 0.3s, border-color 0.3s;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/checkmark.png?1439574485'); }
+  background-image: url('../img/icons/1x/checkmark.png?1434436204'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 88, ../scss/outernet/partial/_forms.scss */
   input[type="checkbox"]:checked + label:before {
-    background-image: url('../img/icons/2x/checkmark.png?1439574485');
+    background-image: url('../img/icons/2x/checkmark.png?1434436306');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -931,11 +1021,11 @@ input[type="checkbox"]:focus + label:before {
 input[type="checkbox"]:focus:checked + label:before {
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/checkmark_active.png?1439574485'); }
+  background-image: url('../img/icons/1x/checkmark_active.png?1434436206'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 101, ../scss/outernet/partial/_forms.scss */
   input[type="checkbox"]:focus:checked + label:before {
-    background-image: url('../img/icons/2x/checkmark_active.png?1439574485');
+    background-image: url('../img/icons/2x/checkmark_active.png?1434436308');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -964,25 +1054,25 @@ select {
   padding-right: 50px;
   background-repeat: no-repeat;
   background-position: right 10px top 50%;
-  background-image: url('../img/icons/1x/dropdown_open.png?1439574485'); }
-/* line 125, ../scss/outernet/mixins/_forms.scss */
+  background-image: url('../img/icons/1x/dropdown_open.png?1434436222'); }
+/* line 126, ../scss/outernet/mixins/_forms.scss */
 select::-ms-expand {
   display: none; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 115, ../scss/outernet/partial/_forms.scss */
   select {
-    background-image: url('../img/icons/2x/dropdown_open.png?1439574485');
+    background-image: url('../img/icons/2x/dropdown_open.png?1434436326');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 /* line 123, ../scss/outernet/partial/_forms.scss */
 select:hover {
-  background-image: url('../img/icons/1x/dropdown_open_hover.png?1439574485'); }
+  background-image: url('../img/icons/1x/dropdown_open_hover.png?1434436228'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 123, ../scss/outernet/partial/_forms.scss */
   select:hover {
-    background-image: url('../img/icons/2x/dropdown_open_hover.png?1439574485');
+    background-image: url('../img/icons/2x/dropdown_open_hover.png?1434436330');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -993,7 +1083,7 @@ select option {
   background: #fafafa;
   border-radius: 2px;
   padding: 0 15px; }
-/* line 137, ../scss/outernet/mixins/_forms.scss */
+/* line 138, ../scss/outernet/mixins/_forms.scss */
 select option[value] {
   color: #555555; }
 
@@ -1100,10 +1190,50 @@ select::-ms-expand {
  */
 /**
  * _forms.scss: form control definitions
+ *
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _buttons.scss: button styling
  * 
  * Copyright 2015, Outernet Inc.
  * Some rights reserved.
  * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _media_query.scss: media query support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
  * This software is free software licensed under the terms of GPLv3. See
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
@@ -1140,10 +1270,20 @@ select::-ms-expand {
  */
 /**
  * _tables.scss: table and table cell content styling
- * 
+ *
  * Copyright 2015, Outernet Inc.
  * Some rights reserved.
- * 
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
  * This software is free software licensed under the terms of GPLv3. See
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
@@ -1152,17 +1292,17 @@ select::-ms-expand {
 table {
   width: 100%;
   table-layout: fixed; }
-/* line 32, ../scss/outernet/mixins/_tables.scss */
+/* line 34, ../scss/outernet/mixins/_tables.scss */
 table th {
   font-weight: bold; }
-/* line 36, ../scss/outernet/mixins/_tables.scss */
+/* line 38, ../scss/outernet/mixins/_tables.scss */
 table tbody tr {
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd; }
-/* line 39, ../scss/outernet/mixins/_tables.scss */
+/* line 41, ../scss/outernet/mixins/_tables.scss */
 table tbody tr:hover {
   background: #fafafa; }
-/* line 44, ../scss/outernet/mixins/_tables.scss */
+/* line 46, ../scss/outernet/mixins/_tables.scss */
 table th, table td {
   vertical-align: middle;
   padding-left: 25px;
@@ -1170,10 +1310,10 @@ table th, table td {
   padding-top: 9px;
   padding-bottom: 9px;
   height: 32px; }
-/* line 47, ../scss/outernet/mixins/_tables.scss */
+/* line 49, ../scss/outernet/mixins/_tables.scss */
 table th:nth-child(1), table td:nth-child(1) {
   padding-left: 20px; }
-/* line 51, ../scss/outernet/mixins/_tables.scss */
+/* line 53, ../scss/outernet/mixins/_tables.scss */
 table th:last-child, table td:last-child {
   padding-right: 20px; }
 /* line 20, ../scss/outernet/partial/_tables.scss */
@@ -1197,7 +1337,7 @@ table input[type="text"], table input[type="numeric"], table input[type="email"]
   max-width: 100%;
   font-size: 87.5%;
   line-height: 137.5%; }
-/* line 75, ../scss/outernet/mixins/_forms.scss */
+/* line 76, ../scss/outernet/mixins/_forms.scss */
 table input[type="text"]:focus, table input[type="numeric"]:focus, table input[type="email"]:focus, table input[type="file"]:focus, table input[type="password"]:focus, table select:focus {
   font-size: 87.5%;
   line-height: 137.5%; }
@@ -1212,7 +1352,7 @@ table form {
   padding: 2px;
   position: relative;
   white-space: nowrap; }
-/* line 200, ../scss/outernet/mixins/_forms.scss */
+/* line 201, ../scss/outernet/mixins/_forms.scss */
 table form input[type="text"], table form input[type="numeric"], table form input[type="email"], table form input[type="file"], table form input[type="password"] {
   display: inline-block;
   max-width: none;
@@ -1222,26 +1362,26 @@ table form input[type="text"], table form input[type="numeric"], table form inpu
   -moz-border-radius: 1000px;
   -webkit-border-radius: 1000px;
   border-radius: 1000px; }
-/* line 212, ../scss/outernet/mixins/_forms.scss */
+/* line 213, ../scss/outernet/mixins/_forms.scss */
 table form input[type="text"]:focus, table form input[type="numeric"]:focus, table form input[type="email"]:focus, table form input[type="file"]:focus, table form input[type="password"]:focus {
   background-color: #f3f8fc; }
-/* line 178, ../scss/outernet/mixins/_forms.scss */
+/* line 179, ../scss/outernet/mixins/_forms.scss */
 table form input[type="text"], table form input[type="numeric"], table form input[type="email"], table form input[type="file"], table form input[type="password"] {
   width: 100px; }
-/* line 220, ../scss/outernet/mixins/_forms.scss */
+/* line 221, ../scss/outernet/mixins/_forms.scss */
 table form label {
   display: inline-block;
   padding-bottom: 0;
   margin-right: 0.5em;
   vertical-align: middle; }
-/* line 227, ../scss/outernet/mixins/_forms.scss */
+/* line 228, ../scss/outernet/mixins/_forms.scss */
 table form button {
   display: inline-block; }
-/* line 235, ../scss/outernet/mixins/_forms.scss */
+/* line 236, ../scss/outernet/mixins/_forms.scss */
 table form label {
   font-size: 87.5%;
   line-height: 137.5%; }
-/* line 239, ../scss/outernet/mixins/_forms.scss */
+/* line 240, ../scss/outernet/mixins/_forms.scss */
 table form input[type="text"], table form input[type="numeric"], table form input[type="email"], table form input[type="file"], table form input[type="password"] {
   padding: 2px 7.5px 3px;
   -moz-border-radius: 3px;
@@ -1254,14 +1394,14 @@ table form input[type="text"], table form input[type="numeric"], table form inpu
   -moz-border-radius: 1000px;
   -webkit-border-radius: 1000px;
   border-radius: 1000px; }
-/* line 75, ../scss/outernet/mixins/_forms.scss */
+/* line 76, ../scss/outernet/mixins/_forms.scss */
 table form input[type="text"]:focus, table form input[type="numeric"]:focus, table form input[type="email"]:focus, table form input[type="file"]:focus, table form input[type="password"]:focus {
   font-size: 87.5%;
   line-height: 137.5%; }
-/* line 178, ../scss/outernet/mixins/_forms.scss */
+/* line 179, ../scss/outernet/mixins/_forms.scss */
 table form input[type="text"], table form input[type="numeric"], table form input[type="email"], table form input[type="file"], table form input[type="password"] {
   width: 100px; }
-/* line 251, ../scss/outernet/mixins/_forms.scss */
+/* line 252, ../scss/outernet/mixins/_forms.scss */
 table form button {
   width: auto;
   min-width: 0;
@@ -1344,10 +1484,10 @@ table form button {
 
 /**
  * _accordion.scss: accordion widget styling
- * 
+ *
  * Copyright 2015, Outernet Inc.
  * Some rights reserved.
- * 
+ *
  * This software is free software licensed under the terms of GPLv3. See
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
@@ -1602,11 +1742,11 @@ table form button {
   text-transform: capitalize;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url('../img/icons/1x/hamburger.png?1439574485'); }
+  background-image: url('../img/icons/1x/hamburger.png?1434436250'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 136, ../scss/outernet/widgets/_menu.scss */
   .menu .hamburger a {
-    background-image: url('../img/icons/2x/hamburger.png?1439574485');
+    background-image: url('../img/icons/2x/hamburger.png?1434436348');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -1640,11 +1780,11 @@ table form button {
 /* line 174, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .level2-trigger {
   background-position: right 10px top 50%;
-  background-image: url('../img/icons/1x/arrow_right.png?1439574485'); }
+  background-image: url('../img/icons/1x/arrow_right.png?1434436198'); }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 174, ../scss/outernet/widgets/_menu.scss */
   .alt-menu .level2-trigger {
-    background-image: url('../img/icons/2x/arrow_right.png?1439574485');
+    background-image: url('../img/icons/2x/arrow_right.png?1434436302');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -1652,12 +1792,12 @@ table form button {
 /* line 179, ../scss/outernet/widgets/_menu.scss */
 .alt-menu .top-trigger {
   background-position: left 10px top 50%;
-  background-image: url('../img/icons/1x/arrow_left.png?1439574485');
+  background-image: url('../img/icons/1x/arrow_left.png?1434436196');
   padding-left: 40px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 179, ../scss/outernet/widgets/_menu.scss */
   .alt-menu .top-trigger {
-    background-image: url('../img/icons/2x/arrow_left.png?1439574485');
+    background-image: url('../img/icons/2x/arrow_left.png?1434436300');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -1766,6 +1906,86 @@ table form button {
  * http://www.gnu.org/licenses/gpl.txt.
  */
 /**
+ * _forms.scss: form control definitions
+ *
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _buttons.scss: button styling
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _media_query.scss: media query support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _hdpi_images.scss: helpers for high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
  * _grid.scss: simple grid system
  * 
  * Copyright 2015, Outernet Inc.
@@ -1790,20 +2010,20 @@ table form button {
  * particular browser, please add it here, with description of the solution and
  * any platforms it affects.
  */
-/* line 7, ../scss/partials/_common_elements.scss */
+/* line 8, ../scss/partials/common_elements.scss */
 html {
   -webkit-text-size-adjust: 100%; }
 
-/* line 11, ../scss/partials/_common_elements.scss */
+/* line 12, ../scss/partials/common_elements.scss */
 body {
   padding-top: 60px;
   background: #333333; }
 
-/* line 16, ../scss/partials/_common_elements.scss */
+/* line 17, ../scss/partials/common_elements.scss */
 .body {
   background: #ffffff; }
 
-/* line 26, ../scss/partials/_common_elements.scss */
+/* line 27, ../scss/partials/common_elements.scss */
 .h-bar {
   padding: 20px;
   text-align: center;
@@ -1811,11 +2031,11 @@ body {
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd; }
 
-/* line 32, ../scss/partials/_common_elements.scss */
+/* line 33, ../scss/partials/common_elements.scss */
 .h-bar.white {
   background: #ffffff; }
 
-/* line 36, ../scss/partials/_common_elements.scss */
+/* line 37, ../scss/partials/common_elements.scss */
 .h-top-bar {
   padding: 10px;
   text-align: right;
@@ -1823,28 +2043,28 @@ body {
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd; }
 
-/* line 42, ../scss/partials/_common_elements.scss */
+/* line 43, ../scss/partials/common_elements.scss */
 .tabbed-menu {
   padding: 0 20px; }
-/* line 45, ../scss/partials/_common_elements.scss */
+/* line 46, ../scss/partials/common_elements.scss */
 .tabbed-menu a, .tabbed-menu .active {
   display: inline-block;
   line-height: 58px;
   margin-right: 2em;
   border-bottom: 3px solid transparent; }
-/* line 53, ../scss/partials/_common_elements.scss */
+/* line 54, ../scss/partials/common_elements.scss */
 .tabbed-menu a:visited {
   color: #3584cf; }
-/* line 57, ../scss/partials/_common_elements.scss */
+/* line 58, ../scss/partials/common_elements.scss */
 .tabbed-menu a:hover {
   text-decoration: none;
   border-bottom-color: #28639b; }
-/* line 63, ../scss/partials/_common_elements.scss */
+/* line 64, ../scss/partials/common_elements.scss */
 .tabbed-menu .active {
   color: #bbbbbb;
   border-bottom-color: #bbbbbb; }
 
-/* line 69, ../scss/partials/_common_elements.scss */
+/* line 70, ../scss/partials/common_elements.scss */
 form.inline {
   display: inline-block;
   border: 1px solid #dddddd;
@@ -1864,7 +2084,7 @@ form.inline {
   padding: 2px;
   position: relative;
   white-space: nowrap; }
-/* line 200, ../scss/outernet/mixins/_forms.scss */
+/* line 201, ../scss/outernet/mixins/_forms.scss */
 form.inline input[type="text"], form.inline input[type="numeric"], form.inline input[type="email"], form.inline input[type="file"], form.inline input[type="password"] {
   display: inline-block;
   max-width: none;
@@ -1874,22 +2094,22 @@ form.inline input[type="text"], form.inline input[type="numeric"], form.inline i
   -moz-border-radius: 1000px;
   -webkit-border-radius: 1000px;
   border-radius: 1000px; }
-/* line 212, ../scss/outernet/mixins/_forms.scss */
+/* line 213, ../scss/outernet/mixins/_forms.scss */
 form.inline input[type="text"]:focus, form.inline input[type="numeric"]:focus, form.inline input[type="email"]:focus, form.inline input[type="file"]:focus, form.inline input[type="password"]:focus {
   background-color: #f3f8fc; }
-/* line 178, ../scss/outernet/mixins/_forms.scss */
+/* line 179, ../scss/outernet/mixins/_forms.scss */
 form.inline input[type="text"], form.inline input[type="numeric"], form.inline input[type="email"], form.inline input[type="file"], form.inline input[type="password"] {
   width: 200px; }
-/* line 220, ../scss/outernet/mixins/_forms.scss */
+/* line 221, ../scss/outernet/mixins/_forms.scss */
 form.inline label {
   display: inline-block;
   padding-bottom: 0;
   margin-right: 0.5em;
   vertical-align: middle; }
-/* line 227, ../scss/outernet/mixins/_forms.scss */
+/* line 228, ../scss/outernet/mixins/_forms.scss */
 form.inline button {
   display: inline-block; }
-/* line 200, ../scss/outernet/mixins/_forms.scss */
+/* line 201, ../scss/outernet/mixins/_forms.scss */
 form.inline input[type="text"], form.inline input[type="numeric"], form.inline input[type="email"], form.inline input[type="file"], form.inline input[type="password"] {
   display: inline-block;
   max-width: none;
@@ -1899,26 +2119,26 @@ form.inline input[type="text"], form.inline input[type="numeric"], form.inline i
   -moz-border-radius: 1000px;
   -webkit-border-radius: 1000px;
   border-radius: 1000px; }
-/* line 212, ../scss/outernet/mixins/_forms.scss */
+/* line 213, ../scss/outernet/mixins/_forms.scss */
 form.inline input[type="text"]:focus, form.inline input[type="numeric"]:focus, form.inline input[type="email"]:focus, form.inline input[type="file"]:focus, form.inline input[type="password"]:focus {
   background-color: #f3f8fc; }
-/* line 178, ../scss/outernet/mixins/_forms.scss */
+/* line 179, ../scss/outernet/mixins/_forms.scss */
 form.inline input[type="text"], form.inline input[type="numeric"], form.inline input[type="email"], form.inline input[type="file"], form.inline input[type="password"] {
   width: 100px; }
-/* line 220, ../scss/outernet/mixins/_forms.scss */
+/* line 221, ../scss/outernet/mixins/_forms.scss */
 form.inline label {
   display: inline-block;
   padding-bottom: 0;
   margin-right: 0.5em;
   vertical-align: middle; }
-/* line 227, ../scss/outernet/mixins/_forms.scss */
+/* line 228, ../scss/outernet/mixins/_forms.scss */
 form.inline button {
   display: inline-block; }
-/* line 235, ../scss/outernet/mixins/_forms.scss */
+/* line 236, ../scss/outernet/mixins/_forms.scss */
 form.inline label {
   font-size: 87.5%;
   line-height: 137.5%; }
-/* line 239, ../scss/outernet/mixins/_forms.scss */
+/* line 240, ../scss/outernet/mixins/_forms.scss */
 form.inline input[type="text"], form.inline input[type="numeric"], form.inline input[type="email"], form.inline input[type="file"], form.inline input[type="password"] {
   padding: 2px 7.5px 3px;
   -moz-border-radius: 3px;
@@ -1931,14 +2151,14 @@ form.inline input[type="text"], form.inline input[type="numeric"], form.inline i
   -moz-border-radius: 1000px;
   -webkit-border-radius: 1000px;
   border-radius: 1000px; }
-/* line 75, ../scss/outernet/mixins/_forms.scss */
+/* line 76, ../scss/outernet/mixins/_forms.scss */
 form.inline input[type="text"]:focus, form.inline input[type="numeric"]:focus, form.inline input[type="email"]:focus, form.inline input[type="file"]:focus, form.inline input[type="password"]:focus {
   font-size: 87.5%;
   line-height: 137.5%; }
-/* line 178, ../scss/outernet/mixins/_forms.scss */
+/* line 179, ../scss/outernet/mixins/_forms.scss */
 form.inline input[type="text"], form.inline input[type="numeric"], form.inline input[type="email"], form.inline input[type="file"], form.inline input[type="password"] {
   width: 100px; }
-/* line 251, ../scss/outernet/mixins/_forms.scss */
+/* line 252, ../scss/outernet/mixins/_forms.scss */
 form.inline button {
   width: auto;
   min-width: 0;
@@ -1947,43 +2167,43 @@ form.inline button {
   line-height: 137.5%;
   line-height: 100%; }
 
-/* line 104, ../scss/partials/_common_elements.scss */
+/* line 105, ../scss/partials/common_elements.scss */
 .full-page-form {
   max-width: 560px;
   margin: 0 auto;
   padding: 60px 20px; }
-/* line 107, ../scss/partials/_common_elements.scss */
+/* line 108, ../scss/partials/common_elements.scss */
 .full-page-form input[type="text"], .full-page-form input[type="numeric"], .full-page-form input[type="email"], .full-page-form input[type="file"], .full-page-form input[type="password"], .full-page-form select, .full-page-form textarea {
   min-width: 200px;
   max-width: 100%;
   width: 100%; }
-/* line 120, ../scss/partials/_common_elements.scss */
+/* line 121, ../scss/partials/common_elements.scss */
 .full-page-form .buttons {
   padding-top: 1.5em;
   text-align: center; }
 
-/* line 126, ../scss/partials/_common_elements.scss */
+/* line 127, ../scss/partials/common_elements.scss */
 .error-content {
   max-width: 560px;
   margin: 0 auto;
   padding: 60px 20px; }
-/* line 129, ../scss/partials/_common_elements.scss */
+/* line 130, ../scss/partials/common_elements.scss */
 .error-content .single {
   font-size: 125%;
   line-height: 130%;
   text-align: center; }
-/* line 134, ../scss/partials/_common_elements.scss */
+/* line 135, ../scss/partials/common_elements.scss */
 .error-content pre {
   max-height: 300px;
   overflow: scroll;
   background: #333333;
   color: #ffffff; }
-/* line 140, ../scss/partials/_common_elements.scss */
+/* line 141, ../scss/partials/common_elements.scss */
 .error-content pre code {
   background: #333333;
   color: #ffffff; }
 
-/* line 147, ../scss/partials/_common_elements.scss */
+/* line 148, ../scss/partials/common_elements.scss */
 .filters {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -1995,13 +2215,13 @@ form.inline button {
   display: block;
   width: 100%;
   clear: left; }
-/* line 151, ../scss/partials/_common_elements.scss */
+/* line 152, ../scss/partials/common_elements.scss */
 .filters #lang {
   width: 260px; }
-/* line 155, ../scss/partials/_common_elements.scss */
+/* line 156, ../scss/partials/common_elements.scss */
 .filters form {
   display: inline; }
-/* line 159, ../scss/partials/_common_elements.scss */
+/* line 160, ../scss/partials/common_elements.scss */
 .filters .langs {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -2014,7 +2234,7 @@ form.inline button {
   -webkit-transition: width 0.5s;
   transition: width 0.5s;
   width: 66.66667%; }
-/* line 163, ../scss/partials/_common_elements.scss */
+/* line 164, ../scss/partials/common_elements.scss */
 .filters .pager {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -2028,8 +2248,17 @@ form.inline button {
   transition: width 0.5s;
   width: 33.33333%;
   text-align: right; }
+/* line 169, ../scss/partials/common_elements.scss */
+.filters .content-type {
+  clear: left;
+  text-align: center; }
+/* line 172, ../scss/partials/common_elements.scss */
+.filters .content-type li {
+  display: inline-block;
+  text-transform: capitalize;
+  margin: 0 10px; }
 @media only screen and (max-width: 732px) {
-  /* line 169, ../scss/partials/_common_elements.scss */
+  /* line 180, ../scss/partials/common_elements.scss */
   .filters .langs, .filters .pager {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -2044,11 +2273,11 @@ form.inline button {
     width: 100%;
     text-align: left; } }
 
-/* line 176, ../scss/partials/_common_elements.scss */
+/* line 187, ../scss/partials/common_elements.scss */
 .info {
   padding: 20px; }
 
-/* line 180, ../scss/partials/_common_elements.scss */
+/* line 191, ../scss/partials/common_elements.scss */
 p.end, p.empty {
   font-size: 125%;
   line-height: 130%;
@@ -2056,82 +2285,24 @@ p.end, p.empty {
   text-align: center;
   padding: 1.5em 20px 2em; }
 
-/* line 188, ../scss/partials/_common_elements.scss */
+/* line 199, ../scss/partials/common_elements.scss */
 p.end {
   padding-top: 2em; }
 
-/* line 193, ../scss/partials/_common_elements.scss */
+/* line 204, ../scss/partials/common_elements.scss */
 .note .label {
   font-weight: bold;
   display: block;
   padding-left: 15px;
   padding-bottom: 4px;
   cursor: pointer; }
-/* line 197, ../scss/partials/_common_elements.scss */
+/* line 208, ../scss/partials/common_elements.scss */
 .note .large {
   line-height: 120%;
   font-size: 200%;
   color: #28639b;
   display: block;
   margin-left: 15px; }
-
-/**
- * _sprites.scss: sprite images with high-dpi display support
- *
- * Copyright 2014-2015, Outernet Inc.
- * Some rights reserved.
- *
- * This software is free software licensed under the terms of GPLv3. See
- * COPYING file that comes with the source code, or
- * http://www.gnu.org/licenses/gpl.txt.
- */
-/**
- * _hdpi_images.scss: helpers for high-dpi display support
- *
- * Copyright 2014-2015, Outernet Inc.
- * Some rights reserved.
- *
- * This software is free software licensed under the terms of GPLv3. See
- * COPYING file that comes with the source code, or
- * http://www.gnu.org/licenses/gpl.txt.
- */
-/* line 4, ../scss/partials/_footer.scss */
-footer {
-  background: #333333;
-  color: #888888;
-  text-align: center;
-  padding: 60px 20px; }
-/* line 10, ../scss/partials/_footer.scss */
-footer .logo {
-  display: inline-block;
-  vertical-align: middle;
-  background-image: url('../img/misc/1x-sa2c70d9bab.png');
-  background-position: 0 0;
-  background-repeat: no-repeat;
-  width: 260px;
-  height: 60px;
-  text-indent: -119988px;
-  overflow: hidden;
-  text-align: left;
-  text-transform: capitalize;
-  margin-bottom: 3em; }
-@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 10, ../scss/partials/_footer.scss */
-  footer .logo {
-    background-image: url('../img/misc/2x-s8f76f1acdc.png');
-    background-position: 0 0;
-    -moz-background-size: 260px 203px;
-    -o-background-size: 260px 203px;
-    -webkit-background-size: 260px 203px;
-    background-size: 260px 203px; } }
-/* line 16, ../scss/partials/_footer.scss */
-footer .progver {
-  font-weight: bold;
-  margin-bottom: 0.2em; }
-/* line 21, ../scss/partials/_footer.scss */
-footer .progver, footer .copyright {
-  font-size: 87.5%;
-  line-height: 137.5%; }
 
 /**
  * _colors.scss: color definitions
@@ -2154,17 +2325,7 @@ footer .progver, footer .copyright {
  * http://www.gnu.org/licenses/gpl.txt.
  */
 /**
- * _grid.scss: simple grid system
- * 
- * Copyright 2015, Outernet Inc.
- * Some rights reserved.
- * 
- * This software is free software licensed under the terms of GPLv3. See
- * COPYING file that comes with the source code, or
- * http://www.gnu.org/licenses/gpl.txt.
- */
-/**
- * _media_query.scss: media query support
+ * _sprites.scss: sprite images with high-dpi display support
  *
  * Copyright 2014-2015, Outernet Inc.
  * Some rights reserved.
@@ -2173,72 +2334,62 @@ footer .progver, footer .copyright {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 6, ../scss/dashboard/_ondd.scss */
-.ondd-status, .ondd-settings {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-right: 10px;
-  padding-left: 10px;
-  float: left;
-  box-sizing: border-box;
-  -moz-transition: width 0.5s;
-  -o-transition: width 0.5s;
-  -webkit-transition: width 0.5s;
-  transition: width 0.5s;
-  width: 50%; }
-@media only screen and (max-width: 640px) {
-  /* line 6, ../scss/dashboard/_ondd.scss */
-  .ondd-status, .ondd-settings {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
-    float: left;
-    box-sizing: border-box;
-    -moz-transition: width 0.5s;
-    -o-transition: width 0.5s;
-    -webkit-transition: width 0.5s;
-    transition: width 0.5s;
-    width: 100%; } }
-/* line 15, ../scss/dashboard/_ondd.scss */
-.ondd-status .bitrate .label, .ondd-status .lock .label, .ondd-status .service .label, .ondd-settings .bitrate .label, .ondd-settings .lock .label, .ondd-settings .service .label {
-  color: #888888; }
-/* line 20, ../scss/dashboard/_ondd.scss */
-.ondd-status .progress, .ondd-settings .progress {
-  max-width: 100%;
-  width: 100%; }
-/* line 25, ../scss/dashboard/_ondd.scss */
-.ondd-status .progress .label, .ondd-settings .progress .label {
-  text-transform: uppercase; }
-/* line 29, ../scss/dashboard/_ondd.scss */
-.ondd-status .no-lock, .ondd-settings .no-lock {
-  color: #c41414; }
-/* line 33, ../scss/dashboard/_ondd.scss */
-.ondd-status .has-lock, .ondd-settings .has-lock {
-  color: #058120; }
+/**
+ * _hdpi_images.scss: helpers for high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 6, ../scss/partials/footer.scss */
+footer {
+  background: #333333;
+  color: #888888;
+  text-align: center;
+  padding: 60px 20px; }
+/* line 12, ../scss/partials/footer.scss */
+footer .logo {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url('../img/misc/1x-sa2c70d9bab.png');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  width: 260px;
+  height: 60px;
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  text-transform: capitalize;
+  margin-bottom: 3em; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
+  /* line 12, ../scss/partials/footer.scss */
+  footer .logo {
+    background-image: url('../img/misc/2x-s8f76f1acdc.png');
+    background-position: 0 0;
+    -moz-background-size: 260px 203px;
+    -o-background-size: 260px 203px;
+    -webkit-background-size: 260px 203px;
+    background-size: 260px 203px; } }
+/* line 18, ../scss/partials/footer.scss */
+footer .progver {
+  font-weight: bold;
+  margin-bottom: 0.2em; }
+/* line 23, ../scss/partials/footer.scss */
+footer .progver, footer .copyright {
+  font-size: 87.5%;
+  line-height: 137.5%; }
 
-/* line 38, ../scss/dashboard/_ondd.scss */
-.signal-status, .ondd-file-list {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-right: 10px;
-  padding-left: 10px;
-  float: left;
-  box-sizing: border-box;
-  -moz-transition: width 0.5s;
-  -o-transition: width 0.5s;
-  -webkit-transition: width 0.5s;
-  transition: width 0.5s;
-  width: 100%; }
-
-/* line 8, ../scss/wizard.scss */
+/* line 7, ../../librarian_setup/static/scss/wizard.scss */
 body.initial {
   padding-top: 0; }
-/* line 11, ../scss/wizard.scss */
+/* line 10, ../../librarian_setup/static/scss/wizard.scss */
 body.initial .menu {
   display: none; }
 
-/* line 17, ../scss/wizard.scss */
+/* line 16, ../../librarian_setup/static/scss/wizard.scss */
 .menu .logo {
   text-indent: -119988px;
   overflow: hidden;
@@ -2252,7 +2403,7 @@ body.initial .menu {
   width: 152px;
   height: 22px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 17, ../scss/wizard.scss */
+  /* line 16, ../../librarian_setup/static/scss/wizard.scss */
   .menu .logo {
     background-image: url('../img/misc/2x-s8f76f1acdc.png');
     background-position: 0 -181px;
@@ -2260,15 +2411,15 @@ body.initial .menu {
     -o-background-size: 260px 203px;
     -webkit-background-size: 260px 203px;
     background-size: 260px 203px; } }
-/* line 22, ../scss/wizard.scss */
+/* line 21, ../../librarian_setup/static/scss/wizard.scss */
 .menu .steps {
   margin-right: 20px; }
 @media only screen and (max-width: 640px) {
-  /* line 25, ../scss/wizard.scss */
+  /* line 24, ../../librarian_setup/static/scss/wizard.scss */
   .menu .steps .label {
     display: none; } }
 
-/* line 33, ../scss/wizard.scss */
+/* line 32, ../../librarian_setup/static/scss/wizard.scss */
 .outernet-logo {
   text-indent: -119988px;
   overflow: hidden;
@@ -2284,7 +2435,7 @@ body.initial .menu {
   margin-top: 20px;
   margin-bottom: 8px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 33, ../scss/wizard.scss */
+  /* line 32, ../../librarian_setup/static/scss/wizard.scss */
   .outernet-logo {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -440px;
@@ -2293,91 +2444,91 @@ body.initial .menu {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 40, ../scss/wizard.scss */
+/* line 39, ../../librarian_setup/static/scss/wizard.scss */
 .wizard-steps {
   text-align: center;
   color: #bbbbbb; }
 
-/* line 46, ../scss/wizard.scss */
+/* line 45, ../../librarian_setup/static/scss/wizard.scss */
 .buttons a.button, .buttons button {
   margin-bottom: 0.5em; }
 
-/* line 54, ../scss/wizard.scss */
+/* line 53, ../../librarian_setup/static/scss/wizard.scss */
 .timezone-container select:nth-child(2), .timezone-container select:nth-child(3) {
   max-width: 48%;
   margin-right: 0.2em; }
 @media only screen and (max-width: 640px) {
-  /* line 54, ../scss/wizard.scss */
+  /* line 53, ../../librarian_setup/static/scss/wizard.scss */
   .timezone-container select:nth-child(2), .timezone-container select:nth-child(3) {
     max-width: 100%;
     margin-bottom: 0.2em; } }
 
-/* line 67, ../scss/wizard.scss */
+/* line 66, ../../librarian_setup/static/scss/wizard.scss */
 .steps {
   display: inline-block; }
-/* line 70, ../scss/wizard.scss */
+/* line 69, ../../librarian_setup/static/scss/wizard.scss */
 .steps span {
   display: inline-block; }
-/* line 74, ../scss/wizard.scss */
+/* line 73, ../../librarian_setup/static/scss/wizard.scss */
 .steps .step {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s66ef4f051d.png');
-  background-position: 0 -3955px;
+  background-image: url('../img/icons/1x-s093b8055e4.png');
+  background-position: 0 -5200px;
   background-repeat: no-repeat;
   width: 20px;
   height: 20px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 74, ../scss/wizard.scss */
+  /* line 73, ../../librarian_setup/static/scss/wizard.scss */
   .steps .step {
-    background-image: url('../img/icons/2x-s9ad74fd043.png');
-    background-position: 0 -3955px;
-    -moz-background-size: 100px 4244px;
-    -o-background-size: 100px 4244px;
-    -webkit-background-size: 100px 4244px;
-    background-size: 100px 4244px; } }
-/* line 78, ../scss/wizard.scss */
+    background-image: url('../img/icons/2x-sc22abbe6a5.png');
+    background-position: 0 -5200px;
+    -moz-background-size: 100px 5839px;
+    -o-background-size: 100px 5839px;
+    -webkit-background-size: 100px 5839px;
+    background-size: 100px 5839px; } }
+/* line 77, ../../librarian_setup/static/scss/wizard.scss */
 .steps .previous {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s66ef4f051d.png');
-  background-position: 0 -3905px;
+  background-image: url('../img/icons/1x-s093b8055e4.png');
+  background-position: 0 -5150px;
   background-repeat: no-repeat;
   width: 20px;
   height: 20px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 78, ../scss/wizard.scss */
+  /* line 77, ../../librarian_setup/static/scss/wizard.scss */
   .steps .previous {
-    background-image: url('../img/icons/2x-s9ad74fd043.png');
-    background-position: 0 -3905px;
-    -moz-background-size: 100px 4244px;
-    -o-background-size: 100px 4244px;
-    -webkit-background-size: 100px 4244px;
-    background-size: 100px 4244px; } }
-/* line 82, ../scss/wizard.scss */
+    background-image: url('../img/icons/2x-sc22abbe6a5.png');
+    background-position: 0 -5150px;
+    -moz-background-size: 100px 5839px;
+    -o-background-size: 100px 5839px;
+    -webkit-background-size: 100px 5839px;
+    background-size: 100px 5839px; } }
+/* line 81, ../../librarian_setup/static/scss/wizard.scss */
 .steps .current {
   display: inline-block;
   vertical-align: middle;
-  background-image: url('../img/icons/1x-s66ef4f051d.png');
-  background-position: 0 -3855px;
+  background-image: url('../img/icons/1x-s093b8055e4.png');
+  background-position: 0 -5100px;
   background-repeat: no-repeat;
   width: 20px;
   height: 20px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 82, ../scss/wizard.scss */
+  /* line 81, ../../librarian_setup/static/scss/wizard.scss */
   .steps .current {
-    background-image: url('../img/icons/2x-s9ad74fd043.png');
-    background-position: 0 -3855px;
-    -moz-background-size: 100px 4244px;
-    -o-background-size: 100px 4244px;
-    -webkit-background-size: 100px 4244px;
-    background-size: 100px 4244px; } }
+    background-image: url('../img/icons/2x-sc22abbe6a5.png');
+    background-position: 0 -5100px;
+    -moz-background-size: 100px 5839px;
+    -o-background-size: 100px 5839px;
+    -webkit-background-size: 100px 5839px;
+    background-size: 100px 5839px; } }
 
-/* line 87, ../scss/wizard.scss */
+/* line 86, ../../librarian_setup/static/scss/wizard.scss */
 .h-bar {
   position: relative;
   padding-bottom: 50px; }
-/* line 90, ../scss/wizard.scss */
+/* line 89, ../../librarian_setup/static/scss/wizard.scss */
 .h-bar .step-logo {
   display: block;
   position: absolute;
@@ -2385,7 +2536,7 @@ body.initial .menu {
   left: 0;
   right: 0;
   margin: 0 auto; }
-/* line 100, ../scss/wizard.scss */
+/* line 99, ../../librarian_setup/static/scss/wizard.scss */
 .h-bar .step-language {
   display: inline-block;
   vertical-align: middle;
@@ -2395,7 +2546,7 @@ body.initial .menu {
   width: 60px;
   height: 60px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 100, ../scss/wizard.scss */
+  /* line 99, ../../librarian_setup/static/scss/wizard.scss */
   .h-bar .step-language {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -1146px;
@@ -2403,7 +2554,7 @@ body.initial .menu {
     -o-background-size: 250px 1496px;
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
-/* line 100, ../scss/wizard.scss */
+/* line 99, ../../librarian_setup/static/scss/wizard.scss */
 .h-bar .step-datetime {
   display: inline-block;
   vertical-align: middle;
@@ -2413,7 +2564,7 @@ body.initial .menu {
   width: 60px;
   height: 60px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 100, ../scss/wizard.scss */
+  /* line 99, ../../librarian_setup/static/scss/wizard.scss */
   .h-bar .step-datetime {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -1056px;
@@ -2421,7 +2572,7 @@ body.initial .menu {
     -o-background-size: 250px 1496px;
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
-/* line 100, ../scss/wizard.scss */
+/* line 99, ../../librarian_setup/static/scss/wizard.scss */
 .h-bar .step-superuser {
   display: inline-block;
   vertical-align: middle;
@@ -2431,7 +2582,7 @@ body.initial .menu {
   width: 60px;
   height: 60px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 100, ../scss/wizard.scss */
+  /* line 99, ../../librarian_setup/static/scss/wizard.scss */
   .h-bar .step-superuser {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -1326px;
@@ -2439,7 +2590,7 @@ body.initial .menu {
     -o-background-size: 250px 1496px;
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
-/* line 100, ../scss/wizard.scss */
+/* line 99, ../../librarian_setup/static/scss/wizard.scss */
 .h-bar .step-ondd {
   display: inline-block;
   vertical-align: middle;
@@ -2449,7 +2600,7 @@ body.initial .menu {
   width: 60px;
   height: 60px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 100, ../scss/wizard.scss */
+  /* line 99, ../../librarian_setup/static/scss/wizard.scss */
   .h-bar .step-ondd {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -1236px;
@@ -2458,23 +2609,23 @@ body.initial .menu {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 108, ../scss/wizard.scss */
+/* line 107, ../../librarian_setup/static/scss/wizard.scss */
 .large {
   padding-left: 15px;
   color: #dddddd;
   font-size: 200%;
   line-height: 120%; }
 
-/* line 116, ../scss/wizard.scss */
+/* line 115, ../../librarian_setup/static/scss/wizard.scss */
 .note .label {
   font-weight: bold;
   display: block;
   padding-left: 15px;
   padding-bottom: 4px;
   cursor: pointer; }
-/* line 119, ../scss/wizard.scss */
+/* line 118, ../../librarian_setup/static/scss/wizard.scss */
 .note .label.inline {
   display: inline-block; }
-/* line 124, ../scss/wizard.scss */
+/* line 123, ../../librarian_setup/static/scss/wizard.scss */
 .note .large {
   color: #28639b; }
