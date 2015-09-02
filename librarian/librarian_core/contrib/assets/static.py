@@ -105,13 +105,13 @@ class Assets:
     @staticmethod
     def _js_path(s):
         if type(s) is str:
-            return 'src/' + s + '.js'
+            return s + '.js'
         return s
 
     @staticmethod
     def _scss_path(s):
         if type(s) is str:
-            return 'scss/' + s + '.scss'
+            return s + '.scss'
         return s
 
     @staticmethod
@@ -127,8 +127,14 @@ class Assets:
         assets_url = config['assets.url']
         assets_debug = config['assets.debug']
         assets = cls(assets_dir, assets_url, assets_debug)
-        for path, url in config.get('assets.sources', {}).values():
-            assets.add_static_source(path, url=url)
+
+        asset_sources = config.get('assets.sources', {})
+        asset_sources['root'] = (assets_dir, assets_url)
+        for path, url in asset_sources.values():
+            js_path = os.path.join(path, 'src')
+            scss_path = os.path.join(path, 'scss')
+            assets.add_static_source(js_path, url=url)
+            assets.add_static_source(scss_path, url=url)
 
         paths = assets.env.load_path
         assets.env.config['COMPASS_CONFIG']['additional_import_paths'] = paths
