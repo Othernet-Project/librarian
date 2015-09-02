@@ -37,48 +37,49 @@ def dictify_file_list(file_list):
 
 
 @view('file_list')
-def show_file_list(path='.'):
+def show_file_list(path=None):
     search = request.params.get('p')
+    query = search or path or '.'
     resp_format = request.params.get('f', '')
     conf = request.app.config
     is_missing = False
     is_search = False
     files = init_filemanager()
-    if search:
-        relpath = '.'
-        up = ''
-        dirs, file_list = files.get_search_results(search)
-        is_search = True
-        if not len(file_list) and len(dirs) == 1:
-            redirect(i18n_url('files:path',
-                              path=dirs[0].path.replace('\\', '/')))
-        if not dirs and not file_list:
-            is_missing = True
-            readme = _('The files you were looking for could not be found')
+    try:
+        dir_contents = files.get_dir_contents(query)
+        (path, relpath, dirs, file_list, readme) = dir_contents
+    except files.DoesNotExist:
+        if search:
+            relpath = '.'
+            up = ''
+            dirs, file_list = files.get_search_results(search)
+            is_search = True
+            if not len(file_list) and len(dirs) == 1:
+                redirect(i18n_url('files:path',
+                                  path=dirs[0].path.replace('\\', '/')))
+            if not dirs and not file_list:
+                is_missing = True
+                readme = _('The files you were looking for could not be found')
+            else:
+                readme = _('This list represents the search results')
         else:
-            readme = _('This list represents the search results')
-    else:
-        is_search = False
-        try:
-            dir_contents = files.get_dir_contents(path)
-            (path, relpath, dirs, file_list, readme) = dir_contents
-        except files.DoesNotExist:
             is_missing = True
             relpath = '.'
             dirs = []
             file_list = []
             readme = _('This folder does not exist')
-        except files.IsFileError as err:
-            if resp_format == 'json':
-                fstat = os.stat(path)
-                response.content_type = 'application/json'
-                return json.dumps(dict(
-                    name=os.path.basename(path),
-                    size=fstat[stat.ST_SIZE],
-                ))
-            options = {'download': request.params.get('filename', False)}
-            return static_file(err.path, root=files.filedir, **options)
-    up = os.path.normpath(os.path.join(path, '..'))
+    except files.IsFileError as err:
+        if resp_format == 'json':
+            fstat = os.stat(query)
+            response.content_type = 'application/json'
+            return json.dumps(dict(
+                name=os.path.basename(query),
+                size=fstat[stat.ST_SIZE],
+            ))
+        options = {'download': request.params.get('filename', False)}
+        return static_file(err.path, root=files.filedir, **options)
+
+    up = os.path.normpath(os.path.join(files.get_full_path(query), '..'))
     up = os.path.relpath(up, conf['content.filedir'])
     if resp_format == 'json':
         response.content_type = 'application/json'
