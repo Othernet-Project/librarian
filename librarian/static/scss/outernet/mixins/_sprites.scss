@@ -9,6 +9,7 @@
  * http://www.gnu.org/licenses/gpl.txt.
  */
 
+@import "compass/css3/background-size";
 @import "hdpi_images";
 
 @mixin named-sprite($map, $map-2x, $name, $dimensions: yes) {
@@ -16,7 +17,7 @@
   background-image: sprite-url($map);
   background-position: sprite-position($map, $name);
   background-repeat: no-repeat;
-  
+
   @if $dimensions == yes {
     $sfile: sprite-file($map, $name);
     width: image-width($sfile);

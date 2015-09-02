@@ -1,4 +1,6 @@
 @import "outernet/mixins/colors";
+@import "outernet/mixins/fonts";
+@import "outernet/mixins/sprites";
 
 .empty {
   @include heading-5;

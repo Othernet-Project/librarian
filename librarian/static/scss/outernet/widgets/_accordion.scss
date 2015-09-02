@@ -1,14 +1,15 @@
 /**
  * _accordion.scss: accordion widget styling
- * 
+ *
  * Copyright 2015, Outernet Inc.
  * Some rights reserved.
- * 
+ *
  * This software is free software licensed under the terms of GPLv3. See
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
 
+@import "compass/css3/transition";
 @import "outernet/mixins/colors";
 @import "outernet/mixins/hyperlinks";
 @import "outernet/mixins/sprites";
@@ -99,7 +100,7 @@
         @include transition(
           border-top-width 0.3s,
           padding-top 0.3s,
-          max-height 0.5s, 
+          max-height 0.5s,
           padding-bottom 0.3s);
       }
     }

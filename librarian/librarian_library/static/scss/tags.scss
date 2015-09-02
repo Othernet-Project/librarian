@@ -1,4 +1,6 @@
+@import "outernet/mixins/colors";
 @import "outernet/widgets/icons";
+@import "partials/common_elements";
 
 .tag-icon {
   @include icon-plain(tags);

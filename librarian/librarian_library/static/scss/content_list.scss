@@ -4,6 +4,9 @@
 @import "outernet/mixins/buttons";
 @import "outernet/mixins/hyperlinks";
 @import "outernet/mixins/media_query";
+@import "outernet/mixins/sprites";
+@import "outernet/widgets/icons";
+@import "partials/common_elements";
 
 @mixin adjust-search-width($screen-width, $input-width) {
   @include narrower-than($screen-width) {

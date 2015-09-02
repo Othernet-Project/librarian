@@ -1,15 +1,16 @@
 /**
  * _forms.scss: form control definitions
- * 
+ *
  * Copyright 2015, Outernet Inc.
  * Some rights reserved.
- * 
+ *
  * This software is free software licensed under the terms of GPLv3. See
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
 
 @import "compass/css3";
+@import "buttons";
 @import "colors";
 @import "fonts";
 @import "hdpi_images";
@@ -64,8 +65,8 @@ $form-animation-delay: 0.3s;
   outline: none;  // removes boxy outline when field is focused in Chrome
   @include regular;
   @include transition(
-    color $form-animation-delay, 
-    background-color $form-animation-delay, 
+    color $form-animation-delay,
+    background-color $form-animation-delay,
     border-color $form-animation-delay);
 }
 
@@ -110,7 +111,7 @@ $form-animation-delay: 0.3s;
 }
 
 @mixin form-help-text-layout {
-  padding-left: $form-text-offset; 
+  padding-left: $form-text-offset;
   padding-top: 6px;
 }
 
