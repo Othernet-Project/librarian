@@ -135,12 +135,23 @@ class Assets:
 
         js_bundles = [cls.parse_bundle(b)
                       for b in config.get('assets.js_bundles', [])]
+        merged_js_bundles = dict()
         for name, contents in js_bundles:
+            merged_js_bundles.setdefault(name, [])
+            merged_js_bundles[name].extend(contents)
+
+        for name, contents in merged_js_bundles.items():
             assets.add_js_bundle(name, contents)
 
         css_bundles = [cls.parse_bundle(b)
                        for b in config.get('assets.css_bundles', [])]
+        merged_css_bundles = dict()
         for name, contents in css_bundles:
+            merged_css_bundles.setdefault(name, [])
+            merged_css_bundles[name].extend(contents)
+
+        print(merged_css_bundles)
+        for name, contents in merged_css_bundles.items():
             assets.add_css_bundle(name, contents)
 
         return assets
