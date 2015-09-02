@@ -55,6 +55,7 @@ class DependencyLoader(object):
         if pkg_path not in sys.path:
             sys.path.append(pkg_path)
 
+        is_broken = False
         modules = []
         for (loader, mod_name, is_pkg) in pkgutil.iter_modules([pkg_path]):
             if whitelist is None or mod_name in whitelist:
@@ -67,11 +68,12 @@ class DependencyLoader(object):
                                       "skipped.".format(pkg_name))
                     # make sure component won't be partially installed
                     modules = []
+                    is_broken = True
                     break
                 else:
                     modules.append(mod)
 
-        return (pkg_path, modules)
+        return (pkg_path, modules, is_broken)
 
     def _get_exports_spec(self, module):
         try:
@@ -87,7 +89,19 @@ class DependencyLoader(object):
         in the component list."""
         module_names = self._component_meta.keys()
         for pkg_name in self._components:
-            (pkg_path, modules) = self._import_modules(pkg_name, module_names)
+            (pkg_path, modules, is_broken) = self._import_modules(pkg_name,
+                                                                  module_names)
+            if not modules and not is_broken:
+                # in case an installed app has no significant members for core
+                # to be loaded, add a noop `initialize` hook so it will be
+                # installed nevertheless
+                dep_id = '{0}.hooks.initialize'.format(pkg_name)
+                self._dep_tree[dep_id] = dict(fn=lambda x: x,
+                                              name='initialize',
+                                              type='hooks',
+                                              pkg_name=pkg_name,
+                                              pkg_path=pkg_path)
+                continue
             # build initial unparsed and unordered dependency tree
             for mod in modules:
                 exports, is_strict = self._get_exports_spec(mod)
