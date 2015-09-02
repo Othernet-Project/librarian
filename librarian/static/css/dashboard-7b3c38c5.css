@@ -157,7 +157,7 @@
   color: #058120; }
 
 /* line 38, ../scss/dashboard/_ondd.scss */
-.signal-status {
+.signal-status, .ondd-file-list {
   padding-top: 10px;
   padding-bottom: 10px;
   padding-right: 10px;

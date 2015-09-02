@@ -135,10 +135,6 @@ def get_bitrate(status):
     return 0
 
 
-def get_file_list():
-    return ipc.get_file_list()
-
-
 @view('ondd/_signal')
 def get_signal_status():
     return dict(status=ipc.get_status())
@@ -250,7 +246,7 @@ def set_settings():
 
 @view('ondd/_file_list')
 def show_file_list():
-    return dict(files=get_file_list())
+    return dict(files=ipc.get_transfers())
 
 
 def read_ondd_setup():
@@ -302,4 +298,4 @@ class Dashboard(DashboardPlugin):
         initial_data = read_ondd_setup()
         return dict(status=ipc.get_status(),
                     form=ONDDForm(initial_data),
-                    files=[])
+                    files=ipc.get_transfers())
