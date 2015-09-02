@@ -13,10 +13,12 @@ import stat
 import json
 import shutil
 import logging
+import functools
 import subprocess
 
 from bottle import request, abort, static_file, redirect, response
 from bottle_utils.common import to_unicode
+from bottle_utils.csrf import csrf_protect, csrf_token
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ..utils.template import template, view
@@ -91,12 +93,54 @@ def show_file_list(path='.'):
                 is_missing=is_missing, is_search=is_search)
 
 
-def go_to_parent(path):
+def get_parent_url(path):
     files = init_filemanager()
-    parent_path = os.path.relpath(os.path.dirname(path), files.filedir)
-    redirect(i18n_url('files:path', path=parent_path))
+    parent_dir = os.path.dirname(path)
+    if parent_dir:
+        parent_path = os.path.relpath(parent_dir, files.filedir)
+    else:
+        parent_path = ''
+
+    return i18n_url('files:path', path=parent_path)
 
 
+def go_to_parent(path):
+    redirect(get_parent_url(path))
+
+
+def guard_already_removed(func):
+    @functools.wraps(func)
+    def wrapper(path, **kwargs):
+        files = init_filemanager()
+        path = files.get_full_path(path)
+        if not os.path.exists(path):
+            # Translators, used as page title when a file's removal is
+            # retried, but it was already deleted before
+            title = _("File already removed")
+            # Translators, used as message when a file's removal is
+            # retried, but it was already deleted before
+            message = _("The specified file has already been removed.")
+            return template('feedback',
+                            status='success',
+                            page_title=title,
+                            message=message,
+                            redirect_url=get_parent_url(path),
+                            redirect_target=_("Files"))
+        return func(path=path, **kwargs)
+    return wrapper
+
+
+@csrf_token
+@guard_already_removed
+@view('remove_confirm')
+def delete_path_confirm(path):
+    cancel_url = request.headers.get('Referer', get_parent_url(path))
+    return dict(item_name=os.path.basename(path), cancel_url=cancel_url)
+
+
+@csrf_protect
+@guard_already_removed
+@view('feedback')
 def delete_path(path):
     files = init_filemanager()
     if not os.path.exists(path):
@@ -108,7 +152,16 @@ def delete_path(path):
         shutil.rmtree(path)
     else:
         os.unlink(path)
-    go_to_parent(path)
+
+    # Translators, used as page title of successful file removal feedback
+    page_title = _("File removed")
+    # Translators, used as message of successful file removal feedback
+    message = _("File successfully removed.")
+    return dict(status='success',
+                page_title=page_title,
+                message=message,
+                redirect_url=get_parent_url(path),
+                redirect_target=_("Files"))
 
 
 def rename_path(path):
@@ -136,9 +189,7 @@ def handle_file_action(path):
     action = request.forms.get('action')
     files = init_filemanager()
     path = files.get_full_path(path)
-    if action == 'delete':
-        delete_path(path)
-    elif action == 'rename':
+    if action == 'rename':
         rename_path(path)
     elif action == 'exec':
         if os.path.splitext(path)[1] != '.sh':
@@ -156,6 +207,10 @@ def routes(app):
     return (
         ('files:list', show_file_list,
          'GET', '/files/', dict(unlocked=True)),
+        ('files:delete_confirm', delete_path_confirm,
+         'GET', '/files/<path:path>/delete/', dict(unlocked=True)),
+        ('files:delete', delete_path,
+         'POST', '/files/<path:path>/delete/', dict(unlocked=True)),
         ('files:path', show_file_list,
          'GET', '/files/<path:path>', dict(unlocked=True)),
         ('files:action', handle_file_action,
