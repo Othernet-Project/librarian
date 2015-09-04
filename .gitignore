@@ -6,6 +6,7 @@ __pycache__/
 /tmp
 .sass-cache
 /dist
+/build
 /librarian.egg-info
 /.coverage
 /node_modules
