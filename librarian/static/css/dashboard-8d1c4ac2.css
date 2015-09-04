@@ -18,13 +18,13 @@
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 5, ../../librarian_dbmanage/static/scss/dbmanage.scss */
+/* line 5, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_dbmanage/static/scss/dbmanage.scss */
 #dbmanage .inline-form-wrapper {
   margin-bottom: 1em; }
-/* line 8, ../../librarian_dbmanage/static/scss/dbmanage.scss */
+/* line 8, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_dbmanage/static/scss/dbmanage.scss */
 #dbmanage .inline-form-wrapper form {
   display: inline-block; }
-/* line 13, ../../librarian_dbmanage/static/scss/dbmanage.scss */
+/* line 13, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_dbmanage/static/scss/dbmanage.scss */
 #dbmanage .warning {
   color: #c41414;
   font-weight: bold;
@@ -50,19 +50,19 @@
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 5, ../../librarian_diskspace/static/scss/diskspace.scss */
+/* line 5, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_diskspace/static/scss/diskspace.scss */
 #diskspace .progress {
   max-width: 100%;
   margin-bottom: 0; }
-/* line 10, ../../librarian_diskspace/static/scss/diskspace.scss */
+/* line 10, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_diskspace/static/scss/diskspace.scss */
 #diskspace .stat {
   margin-bottom: 0.5em; }
-/* line 13, ../../librarian_diskspace/static/scss/diskspace.scss */
+/* line 13, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_diskspace/static/scss/diskspace.scss */
 #diskspace .stat .number {
   font-size: 175%;
   line-height: 125%; }
 
-/* line 2, ../../librarian_logs/static/scss/logs.scss */
+/* line 2, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_logs/static/scss/logs.scss */
 #logs textarea {
   width: 100%;
   max-width: 100%;
