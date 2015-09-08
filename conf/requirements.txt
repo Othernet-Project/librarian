@@ -36,3 +36,4 @@ librarian_diskspace==0.1
 librarian_netinterfaces==0.1
 librarian_logs==0.1
 librarian_repl==0.1
+librarian_ondd==0.1
