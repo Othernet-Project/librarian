@@ -3606,84 +3606,84 @@ footer .progver, footer .copyright {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 3, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+/* line 3, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app {
   margin: 2em;
   position: relative; }
-/* line 6, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+/* line 6, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .app-item {
   margin: 1em; }
-/* line 8, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+/* line 8, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .app-item .app-info {
   display: inline-block;
   vertical-align: top; }
-/* line 12, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+/* line 12, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .app-item .field {
   display: block; }
-/* line 16, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+/* line 16, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .app-item.thumbnails .author, .content-list.app .app-item.thumbnails .download-date, .content-list.app .app-item.thumbnails .description {
   display: none; }
-/* line 19, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+/* line 19, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .app-item.thumbnails .app-info {
   display: block; }
-/* line 24, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+/* line 24, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .controls {
   position: absolute;
   top: 0;
   right: 0; }
-/* line 28, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+/* line 28, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .controls a {
   margin-left: 0.5em; }
-/* line 32, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+/* line 32, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .thumbnails-view {
   display: inline-block;
-  background-image: url('../img/icons/1x/icons.png?1441189193');
+  background-image: url('../img/icons/1x/icons.png?1441377162');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 32, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+  /* line 32, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
   .content-list.app .thumbnails-view {
-    background-image: url('../img/icons/2x/icons.png?1441189193');
+    background-image: url('../img/icons/2x/icons.png?1441377162');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 35, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+/* line 35, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .thumbnails-view:hover {
-  background-image: url('../img/icons/1x/icons_hover.png?1441189193');
+  background-image: url('../img/icons/1x/icons_hover.png?1441377162');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 35, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+  /* line 35, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
   .content-list.app .thumbnails-view:hover {
-    background-image: url('../img/icons/2x/icons_hover.png?1441189193');
+    background-image: url('../img/icons/2x/icons_hover.png?1441377162');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 39, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+/* line 39, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .details-view {
   display: inline-block;
-  background-image: url('../img/icons/1x/list.png?1441189193');
+  background-image: url('../img/icons/1x/list.png?1441377162');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 39, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+  /* line 39, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
   .content-list.app .details-view {
-    background-image: url('../img/icons/2x/list.png?1441189193');
+    background-image: url('../img/icons/2x/list.png?1441377162');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 42, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+/* line 42, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .details-view:hover {
-  background-image: url('../img/icons/1x/list_hover.png?1441189193');
+  background-image: url('../img/icons/1x/list_hover.png?1441377162');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 42, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/apps.scss */
+  /* line 42, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
   .content-list.app .details-view:hover {
-    background-image: url('../img/icons/2x/list_hover.png?1441189193');
+    background-image: url('../img/icons/2x/list_hover.png?1441377162');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -4338,14 +4338,14 @@ p.end {
   display: block;
   margin-left: 15px; }
 
-/* line 17, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 17, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .search-keyword {
   font-size: 87.5%;
   line-height: 137.5%;
   color: #888888;
   margin: 0.5em 0 0; }
 
-/* line 23, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 23, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 form.search {
   display: inline-block;
   border: 1px solid #dddddd;
@@ -4394,7 +4394,7 @@ form.search button {
   form.search input[type="text"], form.search input[type="numeric"], form.search input[type="email"], form.search input[type="file"], form.search input[type="password"] {
     width: 200px; } }
 @media only screen and (max-width: 640px) {
-  /* line 23, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+  /* line 23, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
   form.search {
     display: inline-block;
     border: 1px solid #dddddd;
@@ -4462,7 +4462,7 @@ form.search button {
     font-size: 87.5%;
     line-height: 137.5%;
     line-height: 100%; } }
-/* line 33, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 33, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 form.search .icon {
   display: inline-block;
   vertical-align: middle;
@@ -4478,7 +4478,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 33, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+  /* line 33, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
   form.search .icon {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -4715px;
@@ -4493,7 +4493,7 @@ form.search .icon {
   display: block;
   width: 100%;
   clear: left; }
-/* line 44, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 44, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li {
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -4514,7 +4514,7 @@ form.search .icon {
   padding: 0;
   backgound-color: #ffffff; }
 @media only screen and (max-width: 640px) {
-  /* line 44, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+  /* line 44, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
   .content-list li {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -4528,7 +4528,7 @@ form.search .icon {
     transition: width 0.5s;
     width: 100%;
     padding: 0; } }
-/* line 55, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 55, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li .details {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -4538,10 +4538,10 @@ form.search .icon {
   min-height: 200px;
   text-align: center; }
 @media only screen and (max-width: 640px) {
-  /* line 55, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+  /* line 55, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
   .content-list li .details {
     text-align: left; } }
-/* line 68, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 68, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li .label-archive {
   position: absolute;
   right: 0;
@@ -4549,35 +4549,35 @@ form.search .icon {
   line-height: 40px;
   padding: 0 20px;
   color: #ffffff; }
-/* line 76, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 76, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li .label-archive.label-partner {
   background: #058120; }
-/* line 80, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 80, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li .label-archive.label-sponsored {
   background: #e17502; }
-/* line 84, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 84, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li .label-archive.label-core {
   background: #3584cf; }
-/* line 89, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 89, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li h2 {
   font-size: 137.5%;
   line-height: 127%;
   max-width: 80%;
   margin: 0 auto 0.5em; }
 @media only screen and (max-width: 640px) {
-  /* line 89, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+  /* line 89, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
   .content-list li h2 {
     max-width: none;
     font-size: 125%;
     line-height: 130%; } }
-/* line 128, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 128, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li:nth-child(4n+2), .content-list li:nth-child(4n+3) {
   background-color: #eeeeee; }
-/* line 105, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 105, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details, .content-list li:nth-child(4n+3).has-thumb .details {
   background: rgba(0, 0, 0, 0.6);
   color: #bbbbbb; }
-/* line 109, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 109, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details a, .content-list li:nth-child(4n+3).has-thumb .details a {
   color: #bbbbbb; }
 /* line 60, ../scss/outernet/mixins/_hyperlinks.scss */
@@ -4586,13 +4586,13 @@ form.search .icon {
 /* line 64, ../scss/outernet/mixins/_hyperlinks.scss */
 .content-list li:nth-child(4n+2).has-thumb .details a:visited, .content-list li:nth-child(4n+3).has-thumb .details a:visited {
   color: #888888; }
-/* line 113, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 113, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details h2 a, .content-list li:nth-child(4n+3).has-thumb .details h2 a {
   color: #ffffff; }
-/* line 116, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 116, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details h2 a:visited, .content-list li:nth-child(4n+3).has-thumb .details h2 a:visited {
   color: #bbbbbb; }
-/* line 121, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 121, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li:nth-child(4n+2).has-thumb .details .delete, .content-list li:nth-child(4n+3).has-thumb .details .delete {
   color: #ffffff;
   background-color: transparent;
@@ -4607,27 +4607,27 @@ form.search .icon {
   background-color: #ffffff;
   border-color: #ffffff;
   opacity: 0.75; }
-/* line 134, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 134, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list li.has-thumb .details {
   background: rgba(255, 255, 255, 0.8); }
-/* line 140, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 140, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list .tag-form {
   display: inline-block; }
-/* line 144, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 144, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list .tags {
   display: inline-block; }
-/* line 146, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 146, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list .tags .tag-current {
   padding: 1px 6px;
   line-height: 137.5%; }
-/* line 152, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 152, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list .delete-button {
   border: none;
   background: transparent;
   padding: 0;
   display: block;
   display: inline; }
-/* line 156, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 156, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list .delete-button button {
   font-size: 16px;
   background: transparent;
@@ -4657,7 +4657,7 @@ form.search .icon {
   color: #3584cf;
   position: relative; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 156, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+  /* line 156, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
   .content-list .delete-button button {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -1890px;
@@ -4694,14 +4694,14 @@ form.search .icon {
     -o-background-size: 100px 5839px;
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
-/* line 162, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 162, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list .uninstall-button {
   border: none;
   background: transparent;
   padding: 0;
   display: block;
   display: inline; }
-/* line 166, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 166, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .content-list .uninstall-button button {
   font-size: 16px;
   background: transparent;
@@ -4731,7 +4731,7 @@ form.search .icon {
   color: #3584cf;
   position: relative; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 166, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+  /* line 166, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
   .content-list .uninstall-button button {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -5379px;
@@ -4769,11 +4769,11 @@ form.search .icon {
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
 
-/* line 173, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 173, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .load-more {
   text-align: center;
   padding: 2em 0 4em; }
-/* line 178, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 178, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .load-more button .icon {
   display: inline-block;
   vertical-align: middle;
@@ -4781,20 +4781,20 @@ form.search .icon {
   width: 21px;
   height: 5px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 178, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+  /* line 178, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
   .load-more button .icon {
     background-image: url('../img/animated/2x/loader.gif?1437151935');
     -moz-background-size: 21px, 5px;
     -o-background-size: 21px, 5px;
     -webkit-background-size: 21px, 5px;
     background-size: 21px, 5px; } }
-/* line 184, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 184, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .load-more button.active .icon {
   background-image: url('../img/animated/1x/loader_active.gif?1437151935');
   width: 21px;
   height: 5px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 184, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+  /* line 184, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
   .load-more button.active .icon {
     background-image: url('../img/animated/2x/loader_active.gif?1437151935');
     -moz-background-size: 21px, 5px;
@@ -4802,7 +4802,7 @@ form.search .icon {
     -webkit-background-size: 21px, 5px;
     background-size: 21px, 5px; } }
 
-/* line 190, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content_list.scss */
+/* line 190, ../../../../librarian-library/librarian_library/static/scss/content_list.scss */
 .to-top {
   position: fixed;
   bottom: 0;
@@ -4849,11 +4849,11 @@ form.search .icon {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 6, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/downloads.scss */
+/* line 6, ../../../../librarian-library/librarian_library/static/scss/downloads.scss */
 .space {
   color: #888888; }
 
-/* line 10, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/downloads.scss */
+/* line 10, ../../../../librarian-library/librarian_library/static/scss/downloads.scss */
 .downloads-list {
   padding: 20px; }
 /* line 38, ../scss/outernet/mixins/_grid.scss */
@@ -4862,27 +4862,27 @@ form.search .icon {
   display: block;
   width: 100%;
   clear: left; }
-/* line 13, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/downloads.scss */
+/* line 13, ../../../../librarian-library/librarian_library/static/scss/downloads.scss */
 .downloads-list li {
   margin-bottom: 2em; }
-/* line 17, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/downloads.scss */
+/* line 17, ../../../../librarian-library/librarian_library/static/scss/downloads.scss */
 .downloads-list .do {
   margin-left: 10px;
   font-size: 87.5%;
   line-height: 137.5%;
   color: #888888;
   margin-bottom: 0.5em; }
-/* line 23, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/downloads.scss */
+/* line 23, ../../../../librarian-library/librarian_library/static/scss/downloads.scss */
 .downloads-list .do:last-of-type {
   margin-bottom: 1em; }
-/* line 28, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/downloads.scss */
+/* line 28, ../../../../librarian-library/librarian_library/static/scss/downloads.scss */
 .downloads-list .label {
   font-weight: bold; }
-/* line 32, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/downloads.scss */
+/* line 32, ../../../../librarian-library/librarian_library/static/scss/downloads.scss */
 .downloads-list form {
   margin-bottom: 1em; }
 
-/* line 37, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/downloads.scss */
+/* line 37, ../../../../librarian-library/librarian_library/static/scss/downloads.scss */
 .bottom-pager {
   text-align: center;
   padding: 2em 20px; }
@@ -4917,11 +4917,11 @@ form.search .icon {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 6, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+/* line 6, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
 #pp, #page {
   width: 100px; }
 
-/* line 10, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+/* line 10, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
 .pager-button {
   border: 1px solid #bbbbbb;
   -moz-border-radius: 1000px;
@@ -4934,16 +4934,16 @@ form.search .icon {
   width: 40px;
   text-align: center;
   display: inline-block; }
-/* line 19, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+/* line 19, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
 .pager-button:hover {
   border-color: #888888; }
-/* line 23, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+/* line 23, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
 .pager-button .icon {
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
   text-transform: capitalize; }
-/* line 27, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+/* line 27, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
 .pager-button.prev .icon {
   display: inline-block;
   vertical-align: middle;
@@ -4953,7 +4953,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 27, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+  /* line 27, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
   .pager-button.prev .icon {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -715px;
@@ -4961,7 +4961,7 @@ form.search .icon {
     -o-background-size: 100px 5839px;
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
-/* line 32, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+/* line 32, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
 .pager-button:hover.prev .icon {
   display: inline-block;
   vertical-align: middle;
@@ -4971,7 +4971,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 32, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+  /* line 32, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
   .pager-button:hover.prev .icon {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -770px;
@@ -4979,7 +4979,7 @@ form.search .icon {
     -o-background-size: 100px 5839px;
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
-/* line 37, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+/* line 37, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
 .pager-button.next .icon {
   display: inline-block;
   vertical-align: middle;
@@ -4989,7 +4989,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 37, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+  /* line 37, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
   .pager-button.next .icon {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -825px;
@@ -4997,7 +4997,7 @@ form.search .icon {
     -o-background-size: 100px 5839px;
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
-/* line 42, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+/* line 42, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
 .pager-button:hover.next .icon {
   display: inline-block;
   vertical-align: middle;
@@ -5007,7 +5007,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 42, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+  /* line 42, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
   .pager-button:hover.next .icon {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -880px;
@@ -5016,7 +5016,7 @@ form.search .icon {
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
 
-/* line 48, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/pager.scss */
+/* line 48, ../../../../librarian-library/librarian_library/static/scss/pager.scss */
 .pages-count {
   color: #bbbbbb; }
 
@@ -5065,7 +5065,7 @@ form.search .icon {
  * particular browser, please add it here, with description of the solution and
  * any platforms it affects.
  */
-/* line 18, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 18, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-frame {
   position: fixed;
   top: 60px;
@@ -5079,46 +5079,46 @@ form.search .icon {
   transition: right 0.3s;
   overflow: auto;
   -webkit-overflow-scrolling: touch; }
-/* line 27, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 27, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-frame.reduced {
   right: 248px; }
-/* line 32, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 32, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-frame iframe {
   display: block;
   width: 100%;
   height: 100%; }
-/* line 37, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 37, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-frame .mejs-container button {
   min-width: auto; }
 
-/* line 44, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 44, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.generic .single-download {
   margin: 1em;
   width: 100%;
   height: 100%;
   text-align: center; }
-/* line 49, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 49, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.generic .single-download .download-button {
   display: inline-block;
   background-image: url('../img/icons/1x/loader_download_hover.png?1434436260');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 49, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 49, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.generic .single-download .download-button {
     background-image: url('../img/icons/2x/loader_download_hover.png?1434436356');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 54, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 54, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.generic .download-list {
   margin: 1em; }
-/* line 56, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 56, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.generic .download-list .file-info {
   display: inline-block;
   vertical-align: middle; }
-/* line 59, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 59, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.generic .download-list .file-info .filename {
   display: inline-block;
   width: 350px;
@@ -5126,33 +5126,33 @@ form.search .icon {
   white-space: nowrap;
   text-overflow: ellipsis;
   vertical-align: middle; }
-/* line 68, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 68, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.generic .download-list .download-link {
   display: inline-block;
   background-image: url('../img/icons/1x/loader_download_hover.png?1434436260');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 68, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 68, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.generic .download-list .download-link {
     background-image: url('../img/icons/2x/loader_download_hover.png?1434436356');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 75, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 75, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.audio .player {
   margin: 1em; }
-/* line 77, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 77, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.audio .player .playlist {
   margin-top: 1em;
   display: inline-block;
   background: black;
   padding: 10px; }
-/* line 82, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 82, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.audio .player .playlist li {
   margin: 0.5em 0; }
-/* line 85, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 85, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.audio .player .playlist .track-info {
   width: 345px;
   display: inline-block;
@@ -5161,43 +5161,43 @@ form.search .icon {
   text-overflow: ellipsis;
   vertical-align: middle;
   color: #bbbbbb; }
-/* line 94, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 94, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.audio .player .playlist .play {
-  background-image: url('../img/icons/1x/play_item.png?1441189193');
+  background-image: url('../img/icons/1x/play_item.png?1441377162');
   width: 25px;
   height: 25px;
   display: inline-block;
   vertical-align: middle; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 94, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 94, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.audio .player .playlist .play {
-    background-image: url('../img/icons/2x/play_item.png?1441189193');
+    background-image: url('../img/icons/2x/play_item.png?1441377162');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 98, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 98, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.audio .player .playlist .play:hover {
-  background-image: url('../img/icons/1x/play_item_hover.png?1441189193');
+  background-image: url('../img/icons/1x/play_item_hover.png?1441377162');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 98, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 98, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.audio .player .playlist .play:hover {
-    background-image: url('../img/icons/2x/play_item_hover.png?1441189193');
+    background-image: url('../img/icons/2x/play_item_hover.png?1441377162');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 106, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 106, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .album-item {
   float: left;
   margin: 25px; }
 @media only screen and (max-width: 320px) {
-  /* line 106, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 106, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .album-item {
     margin: 0; } }
-/* line 112, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 112, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .album-item a {
   width: 200px;
   height: 200px;
@@ -5207,122 +5207,122 @@ form.search .icon {
   vertical-align: middle;
   position: relative;
   text-align: center; }
-/* line 121, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 121, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .album-item a .thumbnail {
   height: auto;
   max-width: 100%;
   vertical-align: middle; }
-/* line 126, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 126, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .album-item a .title {
   position: absolute;
   bottom: -40px;
   left: 0;
   width: 100%;
   text-align: center; }
-/* line 136, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 136, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .top-controls {
   margin: 1em;
   position: absolute; }
-/* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 139, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .top-controls .back {
   display: inline-block;
-  background-image: url('../img/icons/1x/back.png?1441189193');
+  background-image: url('../img/icons/1x/back.png?1441377162');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 139, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .top-controls .back {
-    background-image: url('../img/icons/2x/back.png?1441189193');
+    background-image: url('../img/icons/2x/back.png?1441377162');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 142, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 142, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .top-controls .back:hover {
-  background-image: url('../img/icons/1x/back_hover.png?1441189193');
+  background-image: url('../img/icons/1x/back_hover.png?1441377162');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 142, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 142, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .top-controls .back:hover {
-    background-image: url('../img/icons/2x/back_hover.png?1441189193');
+    background-image: url('../img/icons/2x/back_hover.png?1441377162');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
-/* line 148, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 148, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .image-viewer {
   height: 100%;
   width: 100%;
   display: table; }
-/* line 152, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 152, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .image-viewer .cell {
   display: table-cell;
   vertical-align: middle;
   text-align: center; }
-/* line 157, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 157, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .image-viewer .image-container {
   vertical-align: middle;
   width: 70%; }
-/* line 160, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 160, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .image-viewer .image-container img {
   max-width: 100%; }
-/* line 164, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 164, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .image-viewer .previous {
   display: inline-block;
-  background-image: url('../img/icons/1x/prev.png?1441189193');
+  background-image: url('../img/icons/1x/prev.png?1441377162');
   width: 25px;
   height: 50px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 164, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 164, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .image-viewer .previous {
-    background-image: url('../img/icons/2x/prev.png?1441189193');
+    background-image: url('../img/icons/2x/prev.png?1441377162');
     -moz-background-size: 25px, 50px;
     -o-background-size: 25px, 50px;
     -webkit-background-size: 25px, 50px;
     background-size: 25px, 50px; } }
-/* line 167, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 167, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .image-viewer .previous:hover {
-  background-image: url('../img/icons/1x/prev_hover.png?1441189193');
+  background-image: url('../img/icons/1x/prev_hover.png?1441377162');
   width: 25px;
   height: 50px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 167, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 167, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .image-viewer .previous:hover {
-    background-image: url('../img/icons/2x/prev_hover.png?1441189193');
+    background-image: url('../img/icons/2x/prev_hover.png?1441377162');
     -moz-background-size: 25px, 50px;
     -o-background-size: 25px, 50px;
     -webkit-background-size: 25px, 50px;
     background-size: 25px, 50px; } }
-/* line 171, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 171, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .image-viewer .next {
   display: inline-block;
-  background-image: url('../img/icons/1x/next.png?1441189193');
+  background-image: url('../img/icons/1x/next.png?1441377162');
   width: 25px;
   height: 50px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 171, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 171, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .image-viewer .next {
-    background-image: url('../img/icons/2x/next.png?1441189193');
+    background-image: url('../img/icons/2x/next.png?1441377162');
     -moz-background-size: 25px, 50px;
     -o-background-size: 25px, 50px;
     -webkit-background-size: 25px, 50px;
     background-size: 25px, 50px; } }
-/* line 174, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 174, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .image-viewer .next:hover {
-  background-image: url('../img/icons/1x/next_hover.png?1441189193');
+  background-image: url('../img/icons/1x/next_hover.png?1441377162');
   width: 25px;
   height: 50px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 174, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 174, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .image-viewer .next:hover {
-    background-image: url('../img/icons/2x/next_hover.png?1441189193');
+    background-image: url('../img/icons/2x/next_hover.png?1441377162');
     -moz-background-size: 25px, 50px;
     -o-background-size: 25px, 50px;
     -webkit-background-size: 25px, 50px;
     background-size: 25px, 50px; } }
 
-/* line 182, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 182, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-meta {
   position: fixed;
   top: 60px;
@@ -5334,11 +5334,11 @@ form.search .icon {
   -webkit-transition: right 0.3s;
   transition: right 0.3s;
   width: 247px; }
-/* line 190, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 190, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-meta .inner {
   position: relative;
   height: 100%; }
-/* line 193, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 193, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-meta .inner .meta-container {
   position: absolute;
   left: 35px;
@@ -5346,24 +5346,24 @@ form.search .icon {
   top: 0;
   right: 0;
   padding: 20px; }
-/* line 201, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 201, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-meta .inner .meta-container .tag-editor .field-help {
   padding-left: 0; }
-/* line 205, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 205, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-meta .inner .meta-container .attrib {
   position: absolute;
   bottom: 20px;
   margin-bottom: 0px;
   right: 20px;
   left: 20px; }
-/* line 213, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 213, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-meta .inner .toggle {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   background: #eeeeee; }
-/* line 219, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 219, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-meta .inner .toggle .icon {
   display: inline-block;
   margin: 20px 5px;
@@ -5376,7 +5376,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 219, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 219, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader-meta .inner .toggle .icon {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -110px;
@@ -5384,7 +5384,7 @@ form.search .icon {
     -o-background-size: 100px 5839px;
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
-/* line 224, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 224, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-meta .inner .toggle .icon:hover {
   display: inline-block;
   vertical-align: middle;
@@ -5394,7 +5394,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 224, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 224, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader-meta .inner .toggle .icon:hover {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -165px;
@@ -5402,10 +5402,10 @@ form.search .icon {
     -o-background-size: 100px 5839px;
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
-/* line 230, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 230, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-meta.expanded {
   right: 0; }
-/* line 233, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 233, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-meta.expanded .toggle .icon {
   display: inline-block;
   vertical-align: middle;
@@ -5415,7 +5415,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 233, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 233, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader-meta.expanded .toggle .icon {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 0;
@@ -5423,7 +5423,7 @@ form.search .icon {
     -o-background-size: 100px 5839px;
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
-/* line 235, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+/* line 235, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader-meta.expanded .toggle .icon:hover {
   display: inline-block;
   vertical-align: middle;
@@ -5433,7 +5433,7 @@ form.search .icon {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 235, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 235, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader-meta.expanded .toggle .icon:hover {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -55px;
@@ -5442,7 +5442,7 @@ form.search .icon {
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
 @media only screen and (max-width: 640px) {
-  /* line 242, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/reader.scss */
+  /* line 242, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader-meta.expanded {
     width: 100%; } }
 
@@ -5476,12 +5476,12 @@ form.search .icon {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 4, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/remove_content.scss */
+/* line 4, ../../../../librarian-library/librarian_library/static/scss/remove_content.scss */
 .confirm.remove {
   padding-top: 3em;
   padding-bottom: 4em;
   text-align: center; }
-/* line 10, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/remove_content.scss */
+/* line 10, ../../../../librarian-library/librarian_library/static/scss/remove_content.scss */
 .confirm.remove .icon {
   display: inline-block;
   margin-bottom: 1em;
@@ -5493,7 +5493,7 @@ form.search .icon {
   width: 100px;
   height: 100px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 10, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/remove_content.scss */
+  /* line 10, ../../../../librarian-library/librarian_library/static/scss/remove_content.scss */
   .confirm.remove .icon {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -1650px;
@@ -5501,7 +5501,7 @@ form.search .icon {
     -o-background-size: 100px 5839px;
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
-/* line 16, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/remove_content.scss */
+/* line 16, ../../../../librarian-library/librarian_library/static/scss/remove_content.scss */
 .confirm.remove .main {
   font-size: 125%;
   line-height: 130%;
@@ -5976,7 +5976,7 @@ p.end {
   display: block;
   margin-left: 15px; }
 
-/* line 5, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/tags.scss */
+/* line 5, ../../../../librarian-library/librarian_library/static/scss/tags.scss */
 .tag-icon {
   display: inline-block;
   display: inline-block;
@@ -5991,7 +5991,7 @@ p.end {
   overflow: hidden;
   padding: 0 0 0 32px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 5, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/tags.scss */
+  /* line 5, ../../../../librarian-library/librarian_library/static/scss/tags.scss */
   .tag-icon {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -5250px;
@@ -6000,14 +6000,14 @@ p.end {
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
 
-/* line 10, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/tags.scss */
+/* line 10, ../../../../librarian-library/librarian_library/static/scss/tags.scss */
 .tags a {
   color: #888888;
   margin: 0 0.2em; }
-/* line 15, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/tags.scss */
+/* line 15, ../../../../librarian-library/librarian_library/static/scss/tags.scss */
 .tags form.inline {
   vertical-align: middle; }
-/* line 19, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/tags.scss */
+/* line 19, ../../../../librarian-library/librarian_library/static/scss/tags.scss */
 .tags .tag-button {
   background: transparent;
   display: inline-block;
@@ -6036,7 +6036,7 @@ p.end {
   color: #3584cf;
   position: relative; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 19, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/tags.scss */
+  /* line 19, ../../../../librarian-library/librarian_library/static/scss/tags.scss */
   .tags .tag-button {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -2460px;

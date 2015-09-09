@@ -530,17 +530,17 @@ table form button {
  * particular browser, please add it here, with description of the solution and
  * any platforms it affects.
  */
-/* line 10, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content.scss */
+/* line 10, ../../../../librarian-library/librarian_library/static/scss/content.scss */
 html {
   -webkit-text-size-adjust: 100%;
   background: #bbbbbb;
   padding: 2em; }
 @media only screen and (max-width: 640px) {
-  /* line 10, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content.scss */
+  /* line 10, ../../../../librarian-library/librarian_library/static/scss/content.scss */
   html {
     padding: 0; } }
 
-/* line 20, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content.scss */
+/* line 20, ../../../../librarian-library/librarian_library/static/scss/content.scss */
 body {
   background: #ffffff;
   padding: 2em;
@@ -548,12 +548,12 @@ body {
   margin: 0 auto;
   border: 1px solid #dddddd; }
 @media only screen and (max-width: 640px) {
-  /* line 20, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content.scss */
+  /* line 20, ../../../../librarian-library/librarian_library/static/scss/content.scss */
   body {
     padding: 20px;
     border: none; } }
 
-/* line 33, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_library/static/scss/content.scss */
+/* line 33, ../../../../librarian-library/librarian_library/static/scss/content.scss */
 img {
   max-width: 100%;
   width: auto !important;
