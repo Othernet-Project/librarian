@@ -156,6 +156,10 @@ class Notification(object):
                  dismissable=self.dismissable,
                  read_at=self._read_at,
                  user=self.user)
+
+        for key in ('notification_group_{0}'.format(request.session.id),
+                    'notification_count_{0}'.format(request.session.id)):
+            request.app.exts.cache.delete(key)
         return self
 
     def delete(self):
@@ -245,7 +249,7 @@ def to_dict(row):
     return dict((key, row[key]) for key in row.keys())
 
 
-def get_notifications(notification_ids=None, chunk_size=100):
+def filter_notifications(notification_ids=None, chunk_size=100):
     """Return all those notifications that the current user has access to. If
     `notification_ids` is specified, the result set will be further limited to
     the specified ids."""
@@ -277,6 +281,55 @@ def get_notifications(notification_ids=None, chunk_size=100):
             notification = Notification(**to_dict(row))
             if not notification.is_read:
                 yield notification
+
+
+def get_notifications():
+    db = request.db.sessions
+    user = request.user.username if request.user.is_authenticated else None
+    if user:
+        args = [user]
+        query = db.Select(sets='notifications',
+                          where='(user IS NULL OR user = ?)')
+    else:
+        args = []
+        query = db.Select(sets='notifications', where='user IS NULL')
+
+    query.where += '(dismissable = 0 OR read_at IS NULL)'
+    db.query(query, *args)
+    for row in db.results:
+        notification = Notification(**to_dict(row))
+        if not notification.is_read:
+            yield notification
+
+
+def _get_notification_count():
+    db = request.db.sessions
+    user = request.user.username if request.user.is_authenticated else None
+    if user:
+        args = [user]
+        query = db.Select('COUNT(*) as count',
+                          sets='notifications',
+                          where='(user IS NULL OR user = ?)')
+    else:
+        args = []
+        query = db.Select('COUNT(*) as count',
+                          sets='notifications',
+                          where='user IS NULL')
+    query.where += '(dismissable = 0 OR read_at IS NULL)'
+    db.query(query, *args)
+    return db.result.count
+
+
+def get_notification_count():
+    key = 'notification_count_{0}'.format(request.session.id)
+    if request.app.exts.is_installed('cache'):
+        count = request.app.exts.cache.get(key)
+        if count:
+            return count
+
+    count = _get_notification_count()
+    request.app.exts.cache.set(key, count)
+    return count
 
 
 def notifies(message, **params):

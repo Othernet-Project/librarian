@@ -10,7 +10,7 @@ from . import MenuItem
 
 from bottle_utils.i18n import lazy_gettext as _
 
-from ..utils.notifications import get_notifications
+from ..utils.notifications import get_notification_count
 
 
 class NotificationsMenuItem(MenuItem):
@@ -20,10 +20,7 @@ class NotificationsMenuItem(MenuItem):
 
     def __init__(self, *args, **kwargs):
         super(NotificationsMenuItem, self).__init__(*args, **kwargs)
-        self.notifications = list(get_notifications())
-        self.unread_count = len([notification
-                                 for notification in self.notifications
-                                 if not notification.is_read])
+        self.unread_count = get_notification_count()
 
     def is_alt_icon_visible(self):
         return self.unread_count
