@@ -76,8 +76,7 @@ def show_file_list(path=None):
                 name=os.path.basename(query),
                 size=fstat[stat.ST_SIZE],
             ))
-        options = {'download': request.params.get('filename', False)}
-        return static_file(err.path, root=files.filedir, **options)
+        return redirect(i18n_url('files:download', path=err.path))
 
     up = os.path.normpath(os.path.join(files.get_full_path(query), '..'))
     up = os.path.relpath(up, conf['content.filedir'])
@@ -92,6 +91,12 @@ def show_file_list(path=None):
         ))
     return dict(path=relpath, dirs=dirs, files=file_list, up=up, readme=readme,
                 is_missing=is_missing, is_search=is_search)
+
+
+def download_file(path):
+    files = init_filemanager()
+    options = {'download': request.params.get('filename', False)}
+    return static_file(path, root=files.filedir, **options)
 
 
 def get_parent_url(path):
@@ -186,12 +191,22 @@ def run_path(path):
     return ret, out, err
 
 
+def init_file_action(path):
+    action = request.query.get('action')
+    if action == 'delete':
+        return delete_path_confirm(path)
+
+    return show_file_list(path)
+
+
 def handle_file_action(path):
     action = request.forms.get('action')
     files = init_filemanager()
     path = files.get_full_path(path)
     if action == 'rename':
-        rename_path(path)
+        return rename_path(path)
+    elif action == 'delete':
+        return delete_path(path)
     elif action == 'exec':
         if os.path.splitext(path)[1] != '.sh':
             # For now we only support running BASH scripts
@@ -208,12 +223,10 @@ def routes(app):
     return (
         ('files:list', show_file_list,
          'GET', '/files/', dict(unlocked=True)),
-        ('files:delete_confirm', delete_path_confirm,
-         'GET', '/files/<path:path>/delete/', dict(unlocked=True)),
-        ('files:delete', delete_path,
-         'POST', '/files/<path:path>/delete/', dict(unlocked=True)),
-        ('files:path', show_file_list,
+        ('files:path', init_file_action,
          'GET', '/files/<path:path>', dict(unlocked=True)),
         ('files:action', handle_file_action,
          'POST', '/files/<path:path>', dict(unlocked=True)),
+        ('files:download', download_file,
+         'GET', '/downloads/<path:path>', dict(unlocked=True)),
     )
