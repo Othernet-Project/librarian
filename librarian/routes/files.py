@@ -76,7 +76,7 @@ def show_file_list(path=None):
                 name=os.path.basename(query),
                 size=fstat[stat.ST_SIZE],
             ))
-        return redirect(i18n_url('files:download', path=err.path))
+        return redirect(request.app.get_url('files:download', path=err.path))
 
     up = os.path.normpath(os.path.join(files.get_full_path(query), '..'))
     up = os.path.relpath(up, conf['content.filedir'])

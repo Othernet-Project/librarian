@@ -72,7 +72,7 @@ ${library_submenu.body()}
                 % endfor
                 % for f in files:
                 <tr class="file">
-                    <% fpath = i18n_url('files:download', path=f.path) %>
+                    <% fpath = url('files:download', path=f.path) %>
                     <td class="icon"><a href="${fpath}?filename=${f.name}"><span class="icon"></span></a></td>
                     <td class="name"><a href="${fpath}?filename=${f.name}">${f.name}</a></td>
                     <td class="size">${h.hsize(f.size)}</td>
