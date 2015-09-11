@@ -33,13 +33,21 @@ app = default_app()
 
 
 @cached(prefix='content', timeout=300)
-def filter_content(query, lang, tag, multipage):
+def content_count(query, lang, tag, multipage):
+    archive = open_archive()
+    return archive.get_count(query, lang, tag, multipage)
+
+
+@cached(prefix='content', timeout=300)
+def filter_content(query, lang, tag, multipage, offset, limit):
     conf = request.app.config
     archive = open_archive()
     raw_metas = archive.get_content(terms=query,
                                     lang=lang,
                                     tag=tag,
-                                    multipage=multipage)
+                                    multipage=multipage,
+                                    offset=offset,
+                                    limit=limit)
     contentdir = conf['content.contentdir']
     metas = [metadata.Meta(meta, content.to_path(meta['md5'], contentdir))
              for meta in raw_metas]
@@ -69,9 +77,15 @@ def prepare_content_list(multipage=None):
     page = Paginator.parse_page(request.params)
     per_page = Paginator.parse_per_page(request.params)
     # get content list filtered by above parsed filter params
-    metas = filter_content(query, lang, tag, multipage)
-    pager = Paginator(metas, page, per_page)
-    return dict(metadata=pager.items,
+    item_count = content_count(query, lang, tag, multipage)
+    metas = filter_content(query,
+                           lang,
+                           tag,
+                           multipage,
+                           offset=page - 1,
+                           limit=per_page)
+    pager = Paginator(range(item_count), page, per_page)
+    return dict(metadata=metas,
                 pager=pager,
                 vals=request.params.decode(),
                 query=query,
