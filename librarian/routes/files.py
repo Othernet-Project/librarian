@@ -118,8 +118,7 @@ def guard_already_removed(func):
     @functools.wraps(func)
     def wrapper(path, **kwargs):
         files = init_filemanager()
-        path = files.get_full_path(path)
-        if not os.path.exists(path):
+        if not os.path.exists(files.get_full_path(path)):
             # Translators, used as page title when a file's removal is
             # retried, but it was already deleted before
             title = _("File already removed")
@@ -149,15 +148,14 @@ def delete_path_confirm(path):
 @view('feedback')
 def delete_path(path):
     files = init_filemanager()
-    if not os.path.exists(path):
-        abort(404)
-    if os.path.isdir(path):
-        if path == files.filedir:
+    full_path = files.get_full_path(path)
+    if os.path.isdir(full_path):
+        if full_path == files.filedir:
             # FIXME: handle this case
             abort(400)
-        shutil.rmtree(path)
+        shutil.rmtree(full_path)
     else:
-        os.unlink(path)
+        os.unlink(full_path)
 
     # Translators, used as page title of successful file removal feedback
     page_title = _("File removed")
@@ -166,7 +164,7 @@ def delete_path(path):
     return dict(status='success',
                 page_title=page_title,
                 message=message,
-                redirect_url=get_parent_url(path),
+                redirect_url=get_parent_url(full_path),
                 redirect_target=_("Files"))
 
 
@@ -200,20 +198,20 @@ def init_file_action(path):
 
 
 def handle_file_action(path):
-    action = request.forms.get('action')
+    action = request.params.get('action')
     files = init_filemanager()
-    path = files.get_full_path(path)
+    full_path = files.get_full_path(path)
     if action == 'rename':
-        return rename_path(path)
+        return rename_path(full_path)
     elif action == 'delete':
         return delete_path(path)
     elif action == 'exec':
-        if os.path.splitext(path)[1] != '.sh':
+        if os.path.splitext(full_path)[1] != '.sh':
             # For now we only support running BASH scripts
             abort(400)
         logging.info("Running script '%s'", path)
-        ret, out, err = run_path(path)
-        logging.debug("Script '%s' finished with return code %s", path, ret)
+        ret, out, err = run_path(full_path)
+        logging.debug("Script '%s' finished with return code %s", full_path, ret)
         return template('exec_result', ret=ret, out=out, err=err)
     else:
         abort(400)
