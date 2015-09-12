@@ -101,6 +101,9 @@ class Notification(object):
             request.user.options['notifications'] = dict()
 
         request.user.options['notifications'][self.notification_id] = read_at
+        for key in ('notification_group_{0}'.format(request.session.id),
+                    'notification_count_{0}'.format(request.session.id)):
+            request.app.exts.cache.delete(key)
 
     def _mark_private_read(self, read_at):
         db = request.db.sessions
@@ -255,8 +258,12 @@ def filter_notifications(notification_ids, chunk_size=100):
     the specified ids."""
     db = request.db.sessions
     user = request.user.username if request.user.is_authenticated else None
-    id_groups = (notification_ids[i:i + chunk_size]
-                 for i in range(0, len(notification_ids), chunk_size))
+    if notification_ids:
+        id_groups = (notification_ids[i:i + chunk_size]
+                     for i in range(0, len(notification_ids), chunk_size))
+    else:
+        id_groups = [[]]
+
     for id_list in id_groups:
         if user:
             args = [user]
@@ -267,8 +274,10 @@ def filter_notifications(notification_ids, chunk_size=100):
             query = db.Select(sets='notifications', where='user IS NULL')
 
         query.where += '(dismissable = 0 OR read_at IS NULL)'
-        query.where += db.sqlin.__func__('notification_id', id_list)
-        args += id_list
+        if id_list:
+            query.where += db.sqlin.__func__('notification_id', id_list)
+            args += id_list
+
         db.query(query, *args)
         for row in db.results:
             notification = Notification(**to_dict(row))
@@ -310,7 +319,9 @@ def _get_notification_count():
                           where='user IS NULL')
     query.where += '(dismissable = 0 OR read_at IS NULL)'
     db.query(query, *args)
-    return db.result.count
+    unread_count = db.result.count
+    unread_count -= len(request.user.options.get('notifications', {}))
+    return unread_count
 
 
 def get_notification_count():
