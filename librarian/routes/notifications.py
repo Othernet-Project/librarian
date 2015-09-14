@@ -13,22 +13,30 @@ import datetime
 from bottle import request
 from bottle_utils.ajax import roca_view
 
-from ..utils.notifications import get_notifications, NotificationGroup
+from ..utils.notifications import (filter_notifications,
+                                   get_notifications,
+                                   NotificationGroup)
 from ..utils.template import template
 
 
 @roca_view('notification_list', '_notification_list', template_func=template)
 def notification_list():
-    notifications = get_notifications()
-    groups = NotificationGroup.group_by(notifications,
+    key = 'notification_group_{0}'.format(request.session.id)
+    if request.app.exts.is_installed('cache'):
+        groups = request.app.exts.cache.get(key)
+        if groups:
+            return dict(groups=groups)
+
+    groups = NotificationGroup.group_by(get_notifications(),
                                         by=('category', 'read_at'))
+    request.app.exts.cache.set(key, groups)
     return dict(groups=groups)
 
 
 @roca_view('notification_list', '_notification_list', template_func=template)
 def notifications_read():
     notification_ids = request.forms.getall('mark_read')
-    notifications = get_notifications(notification_ids)
+    notifications = filter_notifications(notification_ids)
     read_at = datetime.datetime.now()
     for notification in notifications:
         if notification.dismissable:
