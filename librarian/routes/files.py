@@ -76,8 +76,7 @@ def show_file_list(path=None):
                 name=os.path.basename(query),
                 size=fstat[stat.ST_SIZE],
             ))
-        options = {'download': request.params.get('filename', False)}
-        return static_file(err.path, root=files.filedir, **options)
+        return redirect(request.app.get_url('files:download', path=err.path))
 
     up = os.path.normpath(os.path.join(files.get_full_path(query), '..'))
     up = os.path.relpath(up, conf['content.filedir'])
@@ -92,6 +91,12 @@ def show_file_list(path=None):
         ))
     return dict(path=relpath, dirs=dirs, files=file_list, up=up, readme=readme,
                 is_missing=is_missing, is_search=is_search)
+
+
+def download_file(path):
+    files = init_filemanager()
+    options = {'download': request.params.get('filename', False)}
+    return static_file(path, root=files.filedir, **options)
 
 
 def get_parent_url(path):
@@ -113,8 +118,7 @@ def guard_already_removed(func):
     @functools.wraps(func)
     def wrapper(path, **kwargs):
         files = init_filemanager()
-        path = files.get_full_path(path)
-        if not os.path.exists(path):
+        if not os.path.exists(files.get_full_path(path)):
             # Translators, used as page title when a file's removal is
             # retried, but it was already deleted before
             title = _("File already removed")
@@ -144,15 +148,14 @@ def delete_path_confirm(path):
 @view('feedback')
 def delete_path(path):
     files = init_filemanager()
-    if not os.path.exists(path):
-        abort(404)
-    if os.path.isdir(path):
-        if path == files.filedir:
+    full_path = files.get_full_path(path)
+    if os.path.isdir(full_path):
+        if full_path == files.filedir:
             # FIXME: handle this case
             abort(400)
-        shutil.rmtree(path)
+        shutil.rmtree(full_path)
     else:
-        os.unlink(path)
+        os.unlink(full_path)
 
     # Translators, used as page title of successful file removal feedback
     page_title = _("File removed")
@@ -161,7 +164,7 @@ def delete_path(path):
     return dict(status='success',
                 page_title=page_title,
                 message=message,
-                redirect_url=get_parent_url(path),
+                redirect_url=get_parent_url(full_path),
                 redirect_target=_("Files"))
 
 
@@ -186,19 +189,29 @@ def run_path(path):
     return ret, out, err
 
 
+def init_file_action(path):
+    action = request.query.get('action')
+    if action == 'delete':
+        return delete_path_confirm(path)
+
+    return show_file_list(path)
+
+
 def handle_file_action(path):
-    action = request.forms.get('action')
+    action = request.params.get('action')
     files = init_filemanager()
-    path = files.get_full_path(path)
+    full_path = files.get_full_path(path)
     if action == 'rename':
-        rename_path(path)
+        return rename_path(full_path)
+    elif action == 'delete':
+        return delete_path(path)
     elif action == 'exec':
-        if os.path.splitext(path)[1] != '.sh':
+        if os.path.splitext(full_path)[1] != '.sh':
             # For now we only support running BASH scripts
             abort(400)
         logging.info("Running script '%s'", path)
-        ret, out, err = run_path(path)
-        logging.debug("Script '%s' finished with return code %s", path, ret)
+        ret, out, err = run_path(full_path)
+        logging.debug("Script '%s' finished with return code %s", full_path, ret)
         return template('exec_result', ret=ret, out=out, err=err)
     else:
         abort(400)
@@ -208,12 +221,10 @@ def routes(app):
     return (
         ('files:list', show_file_list,
          'GET', '/files/', dict(unlocked=True)),
-        ('files:delete_confirm', delete_path_confirm,
-         'GET', '/files/<path:path>/delete/', dict(unlocked=True)),
-        ('files:delete', delete_path,
-         'POST', '/files/<path:path>/delete/', dict(unlocked=True)),
-        ('files:path', show_file_list,
+        ('files:path', init_file_action,
          'GET', '/files/<path:path>', dict(unlocked=True)),
         ('files:action', handle_file_action,
          'POST', '/files/<path:path>', dict(unlocked=True)),
+        ('files:download', download_file,
+         'GET', '/downloads/<path:path>', dict(unlocked=True)),
     )

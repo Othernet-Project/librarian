@@ -64,17 +64,18 @@ ${library_submenu.body()}
                             <input type="text" name="name" value="${d.name}">
                             <button name="action" value="rename" type="submit">${_('Rename')}</button>
                         </form>
-                        ${h.form('get', action=i18n_url('files:delete_confirm', path=d.path), _class="files-delete")}
-                            <button class="delete" type="submit">${_('Delete')}</button>
+                        ${h.form('get', action=dpath, _class="files-delete")}
+                            <button class="delete" name="action" value="delete" type="submit">${_('Delete')}</button>
                         </form>
                     </td>
                 </tr>
                 % endfor
                 % for f in files:
                 <tr class="file">
+                    <% download_url = url('files:download', path=f.path) %>
                     <% fpath = i18n_url('files:path', path=f.path) %>
-                    <td class="icon"><a href="${fpath}?filename=${f.name}"><span class="icon"></span></a></td>
-                    <td class="name"><a href="${fpath}?filename=${f.name}">${f.name}</a></td>
+                    <td class="icon"><a href="${download_url}?filename=${f.name}"><span class="icon"></span></a></td>
+                    <td class="name"><a href="${download_url}?filename=${f.name}">${f.name}</a></td>
                     <td class="size">${h.hsize(f.size)}</td>
                     <td class="actions">
                         % if f.path.endswith('.sh'):
@@ -87,8 +88,8 @@ ${library_submenu.body()}
                             <input type="text" name="name" value="${f.name}">
                             <button name="action" value="rename" type="submit">${_('Rename')}</button>
                         </form>
-                        ${h.form('get', action=i18n_url('files:delete_confirm', path=f.path), _class="files-delete")}
-                            <button class="danger" type="submit">${_('Delete')}</button>
+                        ${h.form('get', action=fpath, _class="files-delete")}
+                            <button class="danger" name="action" value="delete" type="submit">${_('Delete')}</button>
                         </form>
                     </td>
                 </tr>
