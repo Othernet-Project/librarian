@@ -1,0 +1,73 @@
+/**
+ * _colors.scss: color definitions
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 5, ../../../../librarian-dbmanage/librarian_dbmanage/static/scss/dbmanage.scss */
+#dbmanage .inline-form-wrapper {
+  margin-bottom: 1em; }
+/* line 8, ../../../../librarian-dbmanage/librarian_dbmanage/static/scss/dbmanage.scss */
+#dbmanage .inline-form-wrapper form {
+  display: inline-block; }
+/* line 13, ../../../../librarian-dbmanage/librarian_dbmanage/static/scss/dbmanage.scss */
+#dbmanage .warning {
+  color: #c41414;
+  font-weight: bold;
+  max-width: 40em; }
+
+/**
+ * _grid.scss: simple grid system
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _fonts.scss: typography definitions
+ * 
+ * Copyright 2015, Outernet Inc.
+ * Some rights reserved.
+ * 
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 5, ../../../../librarian-diskspace/librarian_diskspace/static/scss/diskspace.scss */
+#diskspace .progress {
+  max-width: 100%;
+  margin-bottom: 0; }
+/* line 10, ../../../../librarian-diskspace/librarian_diskspace/static/scss/diskspace.scss */
+#diskspace .stat {
+  margin-bottom: 0.5em; }
+/* line 13, ../../../../librarian-diskspace/librarian_diskspace/static/scss/diskspace.scss */
+#diskspace .stat .number {
+  font-size: 175%;
+  line-height: 125%; }
+
+/* line 2, ../../../../librarian-logs/librarian_logs/static/scss/logs.scss */
+#logs textarea {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1em;
+  font-family: monospace;
+  font-size: 12px;
+  min-height: 300px;
+  max-height: 600px; }

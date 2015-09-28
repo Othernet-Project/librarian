@@ -1,0 +1,13 @@
+*
+!/css/
+!css/*
+!/img/
+!img/*
+!/js/
+!js/*
+!/scss/
+!scss/*
+!/src/
+!src/*
+!.gitignore
+!.webassets-manifest

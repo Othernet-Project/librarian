@@ -2508,12 +2508,12 @@ footer .progver, footer .copyright {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 5, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_setup/static/scss/setup.scss */
+/* line 5, ../../../../librarian-setup/librarian_setup/static/scss/setup.scss */
 .setup-finished {
   padding-top: 3em;
   padding-bottom: 4em;
   text-align: center; }
-/* line 11, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_setup/static/scss/setup.scss */
+/* line 11, ../../../../librarian-setup/librarian_setup/static/scss/setup.scss */
 .setup-finished .all-ok {
   display: inline-block;
   display: inline-block;
@@ -2525,7 +2525,7 @@ footer .progver, footer .copyright {
   height: 100px;
   margin-bottom: 1em; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 11, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_setup/static/scss/setup.scss */
+  /* line 11, ../../../../librarian-setup/librarian_setup/static/scss/setup.scss */
   .setup-finished .all-ok {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -2000px;
@@ -2533,12 +2533,12 @@ footer .progver, footer .copyright {
     -o-background-size: 100px 5839px;
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
-/* line 17, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_setup/static/scss/setup.scss */
+/* line 17, ../../../../librarian-setup/librarian_setup/static/scss/setup.scss */
 .setup-finished .main {
   font-size: 125%;
   line-height: 130%;
   margin: 0; }
-/* line 22, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_setup/static/scss/setup.scss */
+/* line 22, ../../../../librarian-setup/librarian_setup/static/scss/setup.scss */
 .setup-finished .sub {
   color: #bbbbbb; }
 
@@ -2563,14 +2563,14 @@ footer .progver, footer .copyright {
  * http://www.gnu.org/licenses/gpl.txt.
  */
 @media only screen and (min-width: 960px) {
-  /* line 4, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_setup/static/scss/diag.scss */
+  /* line 4, ../../../../librarian-setup/librarian_setup/static/scss/diag.scss */
   .diag {
     width: 50%;
     margin: 0 auto; } }
-/* line 10, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_setup/static/scss/diag.scss */
+/* line 10, ../../../../librarian-setup/librarian_setup/static/scss/diag.scss */
 .diag table {
   margin: 1em 0; }
-/* line 14, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_setup/static/scss/diag.scss */
+/* line 14, ../../../../librarian-setup/librarian_setup/static/scss/diag.scss */
 .diag textarea {
   width: 100%;
   max-width: 100%;
@@ -2579,11 +2579,11 @@ footer .progver, footer .copyright {
   font-size: 12px;
   min-height: 300px;
   max-height: 600px; }
-/* line 24, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_setup/static/scss/diag.scss */
+/* line 24, ../../../../librarian-setup/librarian_setup/static/scss/diag.scss */
 .diag .no-tuner {
   color: #c41414;
   font-weight: bold; }
-/* line 29, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_setup/static/scss/diag.scss */
+/* line 29, ../../../../librarian-setup/librarian_setup/static/scss/diag.scss */
 .diag .has-tuner {
   color: #058120; }
 
@@ -2970,7 +2970,7 @@ footer .progver, footer .copyright {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 12, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 12, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu .logo {
   text-indent: -119988px;
   overflow: hidden;
@@ -2984,7 +2984,7 @@ footer .progver, footer .copyright {
   width: 152px;
   height: 22px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 12, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 12, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   .menu .logo {
     background-image: url('../img/misc/2x-s8f76f1acdc.png');
     background-position: 0 -181px;
@@ -2992,20 +2992,20 @@ footer .progver, footer .copyright {
     -o-background-size: 260px 203px;
     -webkit-background-size: 260px 203px;
     background-size: 260px 203px; } }
-/* line 17, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 17, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu #nav .navicon {
   display: inline-block;
   height: 24px;
   position: relative; }
-/* line 22, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 22, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu #nav .navicon .icon {
   margin-right: 0.2em; }
-/* line 26, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 26, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu #nav .navicon .label {
   display: inline-block;
   vertical-align: middle;
   white-space: nowrap; }
-/* line 32, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 32, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu #nav .navicon .count {
   display: inline-block;
   position: absolute;
@@ -3026,7 +3026,7 @@ footer .progver, footer .copyright {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   font-weight: bold; }
-/* line 36, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 36, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu #nav .navicon .icon + .label {
   overflow: hidden;
   max-width: 0;
@@ -3035,17 +3035,17 @@ footer .progver, footer .copyright {
   -webkit-transition: max-width 0.3s;
   transition: max-width 0.3s; }
 @media only screen and (max-width: 800px) {
-  /* line 36, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 36, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   .menu #nav .navicon .icon + .label {
     max-width: none; } }
-/* line 47, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 47, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu #nav .navicon:hover .icon + .label {
   display: inline-block;
   max-width: 200px; }
-/* line 54, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 54, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu #nav .navicon.updates:hover .icon + .label {
   padding-right: 0.5em; }
-/* line 60, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 60, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu #nav .navicon.notifications .icon {
   display: inline-block;
   position: relative;
@@ -3057,7 +3057,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 60, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 60, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   .menu #nav .navicon.notifications .icon {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -220px;
@@ -3110,10 +3110,10 @@ footer .progver, footer .copyright {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   font-weight: bold; }
-/* line 64, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 64, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu #nav .navicon.notifications .notifications-label {
   display: none; }
-/* line 70, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 70, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu #nav .navicon.notifications-active .icon {
   display: inline-block;
   position: relative;
@@ -3125,7 +3125,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 70, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 70, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   .menu #nav .navicon.notifications-active .icon {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -275px;
@@ -3178,10 +3178,10 @@ footer .progver, footer .copyright {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   font-weight: bold; }
-/* line 74, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 74, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu #nav .navicon.notifications-active .notifications-label {
   display: none; }
-/* line 80, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 80, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu .dropdown.languages {
   display: inline-block;
   position: relative; }
@@ -3221,15 +3221,15 @@ footer .progver, footer .copyright {
 /* line 22, ../scss/partials/dropdown.scss */
 .menu .dropdown.languages .dropdown-body li:hover {
   background-color: #f7dcc1; }
-/* line 84, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 84, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu .dropdown.languages .dropdown-item {
   white-space: nowrap; }
-/* line 88, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 88, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu .dropdown.languages .dropdown-item .language {
   padding: 10px 20px 10px 20px;
   text-align: center;
   display: block; }
-/* line 94, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 94, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .menu .dropdown.languages .dropdown-item span.selected {
   display: inline-block;
   vertical-align: middle;
@@ -3238,7 +3238,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 94, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 94, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   .menu .dropdown.languages .dropdown-item span.selected {
     background-image: url('../img/icons/2x/checkmark_active.png?1434436308');
     -moz-background-size: 25px, 25px;
@@ -3246,27 +3246,27 @@ footer .progver, footer .copyright {
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 @media only screen and (max-width: 800px) {
-  /* line 80, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 80, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   .menu .dropdown.languages {
     display: none; } }
 
-/* line 108, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 108, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .alt-menu .icon {
   width: 30px;
   margin-right: 0.5em; }
-/* line 113, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 113, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .alt-menu .label {
   display: inline-block; }
-/* line 117, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 117, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .alt-menu .count {
   font-weight: bold; }
-/* line 119, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 119, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .alt-menu .count:before {
   content: "("; }
-/* line 122, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 122, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .alt-menu .count:after {
   content: ")"; }
-/* line 127, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 127, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 .alt-menu .level2-lang .selected {
   background: #e7f3e9;
   background-image: url('../img/icons/1x/form_positive.png?1434436248');
@@ -3274,7 +3274,7 @@ footer .progver, footer .copyright {
   background-position: right 20px top 50%;
   color: #058120; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 127, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 127, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   .alt-menu .level2-lang .selected {
     background-image: url('../img/icons/2x/form_positive.png?1434436346');
     -moz-background-size: 25px, 25px;
@@ -3282,7 +3282,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 
-/* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .library .icon, .alt-menu .library .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3292,7 +3292,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .library .icon, .alt-menu .library .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -330px;
@@ -3301,7 +3301,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .library:hover .icon, #nav .library.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3311,7 +3311,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .library:hover .icon, #nav .library.active .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -385px;
@@ -3320,7 +3320,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .files .icon, .alt-menu .files .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3330,7 +3330,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .files .icon, .alt-menu .files .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -110px;
@@ -3339,7 +3339,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .files:hover .icon, #nav .files.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3349,7 +3349,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .files:hover .icon, #nav .files.active .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -165px;
@@ -3358,7 +3358,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .apps .icon, .alt-menu .apps .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3368,7 +3368,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .apps .icon, .alt-menu .apps .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 0;
@@ -3377,7 +3377,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .apps:hover .icon, #nav .apps.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3387,7 +3387,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .apps:hover .icon, #nav .apps.active .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -55px;
@@ -3396,7 +3396,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .updates .icon, .alt-menu .updates .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3406,7 +3406,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .updates .icon, .alt-menu .updates .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -1416px;
@@ -3415,7 +3415,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .updates:hover .icon, #nav .updates.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3425,7 +3425,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .updates:hover .icon, #nav .updates.active .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -1471px;
@@ -3434,7 +3434,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .logout .icon, .alt-menu .logout .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3444,7 +3444,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .logout .icon, .alt-menu .logout .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -506px;
@@ -3453,7 +3453,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .logout:hover .icon, #nav .logout.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3463,7 +3463,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .logout:hover .icon, #nav .logout.active .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -561px;
@@ -3472,7 +3472,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .settings .icon, .alt-menu .settings .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3482,7 +3482,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .settings .icon, .alt-menu .settings .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -836px;
@@ -3491,7 +3491,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .settings:hover .icon, #nav .settings.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3501,7 +3501,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .settings:hover .icon, #nav .settings.active .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -891px;
@@ -3510,7 +3510,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .notifications .icon, .alt-menu .notifications .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3520,7 +3520,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .notifications .icon, .alt-menu .notifications .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -616px;
@@ -3529,7 +3529,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .notifications:hover .icon, #nav .notifications.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3539,7 +3539,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .notifications:hover .icon, #nav .notifications.active .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -781px;
@@ -3548,7 +3548,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .notifications_active .icon, .alt-menu .notifications_active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3558,7 +3558,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 139, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 139, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .notifications_active .icon, .alt-menu .notifications_active .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -671px;
@@ -3567,7 +3567,7 @@ footer .progver, footer .copyright {
     -webkit-background-size: 250px 1496px;
     background-size: 250px 1496px; } }
 
-/* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+/* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
 #nav .notifications_active:hover .icon, #nav .notifications_active.active .icon {
   display: inline-block;
   vertical-align: middle;
@@ -3577,7 +3577,7 @@ footer .progver, footer .copyright {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 145, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_menu/static/scss/mainmenu.scss */
+  /* line 145, ../../../../librarian-menu/librarian_menu/static/scss/mainmenu.scss */
   #nav .notifications_active:hover .icon, #nav .notifications_active.active .icon {
     background-image: url('../img/librarian/2x-s6075cbdb43.png');
     background-position: 0 -726px;
@@ -3637,26 +3637,26 @@ footer .progver, footer .copyright {
 /* line 32, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .thumbnails-view {
   display: inline-block;
-  background-image: url('../img/icons/1x/icons.png?1441377162');
+  background-image: url('../img/icons/1x/icons.png?1442518268');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 32, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
   .content-list.app .thumbnails-view {
-    background-image: url('../img/icons/2x/icons.png?1441377162');
+    background-image: url('../img/icons/2x/icons.png?1442518268');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 /* line 35, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .thumbnails-view:hover {
-  background-image: url('../img/icons/1x/icons_hover.png?1441377162');
+  background-image: url('../img/icons/1x/icons_hover.png?1442518268');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 35, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
   .content-list.app .thumbnails-view:hover {
-    background-image: url('../img/icons/2x/icons_hover.png?1441377162');
+    background-image: url('../img/icons/2x/icons_hover.png?1442518268');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -3664,26 +3664,26 @@ footer .progver, footer .copyright {
 /* line 39, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .details-view {
   display: inline-block;
-  background-image: url('../img/icons/1x/list.png?1441377162');
+  background-image: url('../img/icons/1x/list.png?1442518268');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 39, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
   .content-list.app .details-view {
-    background-image: url('../img/icons/2x/list.png?1441377162');
+    background-image: url('../img/icons/2x/list.png?1442518268');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 /* line 42, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
 .content-list.app .details-view:hover {
-  background-image: url('../img/icons/1x/list_hover.png?1441377162');
+  background-image: url('../img/icons/1x/list_hover.png?1442518268');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 42, ../../../../librarian-library/librarian_library/static/scss/apps.scss */
   .content-list.app .details-view:hover {
-    background-image: url('../img/icons/2x/list_hover.png?1441377162');
+    background-image: url('../img/icons/2x/list_hover.png?1442518268');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -5163,7 +5163,7 @@ form.search .icon {
   color: #bbbbbb; }
 /* line 94, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.audio .player .playlist .play {
-  background-image: url('../img/icons/1x/play_item.png?1441377162');
+  background-image: url('../img/icons/1x/play_item.png?1442518268');
   width: 25px;
   height: 25px;
   display: inline-block;
@@ -5171,20 +5171,20 @@ form.search .icon {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 94, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.audio .player .playlist .play {
-    background-image: url('../img/icons/2x/play_item.png?1441377162');
+    background-image: url('../img/icons/2x/play_item.png?1442518268');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 /* line 98, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.audio .player .playlist .play:hover {
-  background-image: url('../img/icons/1x/play_item_hover.png?1441377162');
+  background-image: url('../img/icons/1x/play_item_hover.png?1442518268');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 98, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.audio .player .playlist .play:hover {
-    background-image: url('../img/icons/2x/play_item_hover.png?1441377162');
+    background-image: url('../img/icons/2x/play_item_hover.png?1442518268');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -5226,26 +5226,26 @@ form.search .icon {
 /* line 139, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .top-controls .back {
   display: inline-block;
-  background-image: url('../img/icons/1x/back.png?1441377162');
+  background-image: url('../img/icons/1x/back.png?1442518268');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 139, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .top-controls .back {
-    background-image: url('../img/icons/2x/back.png?1441377162');
+    background-image: url('../img/icons/2x/back.png?1442518268');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
     background-size: 25px, 25px; } }
 /* line 142, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .top-controls .back:hover {
-  background-image: url('../img/icons/1x/back_hover.png?1441377162');
+  background-image: url('../img/icons/1x/back_hover.png?1442518268');
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 142, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .top-controls .back:hover {
-    background-image: url('../img/icons/2x/back_hover.png?1441377162');
+    background-image: url('../img/icons/2x/back_hover.png?1442518268');
     -moz-background-size: 25px, 25px;
     -o-background-size: 25px, 25px;
     -webkit-background-size: 25px, 25px;
@@ -5270,26 +5270,26 @@ form.search .icon {
 /* line 164, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .image-viewer .previous {
   display: inline-block;
-  background-image: url('../img/icons/1x/prev.png?1441377162');
+  background-image: url('../img/icons/1x/prev.png?1442518268');
   width: 25px;
   height: 50px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 164, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .image-viewer .previous {
-    background-image: url('../img/icons/2x/prev.png?1441377162');
+    background-image: url('../img/icons/2x/prev.png?1442518268');
     -moz-background-size: 25px, 50px;
     -o-background-size: 25px, 50px;
     -webkit-background-size: 25px, 50px;
     background-size: 25px, 50px; } }
 /* line 167, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .image-viewer .previous:hover {
-  background-image: url('../img/icons/1x/prev_hover.png?1441377162');
+  background-image: url('../img/icons/1x/prev_hover.png?1442518268');
   width: 25px;
   height: 50px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 167, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .image-viewer .previous:hover {
-    background-image: url('../img/icons/2x/prev_hover.png?1441377162');
+    background-image: url('../img/icons/2x/prev_hover.png?1442518268');
     -moz-background-size: 25px, 50px;
     -o-background-size: 25px, 50px;
     -webkit-background-size: 25px, 50px;
@@ -5297,26 +5297,26 @@ form.search .icon {
 /* line 171, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .image-viewer .next {
   display: inline-block;
-  background-image: url('../img/icons/1x/next.png?1441377162');
+  background-image: url('../img/icons/1x/next.png?1442518268');
   width: 25px;
   height: 50px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 171, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .image-viewer .next {
-    background-image: url('../img/icons/2x/next.png?1441377162');
+    background-image: url('../img/icons/2x/next.png?1442518268');
     -moz-background-size: 25px, 50px;
     -o-background-size: 25px, 50px;
     -webkit-background-size: 25px, 50px;
     background-size: 25px, 50px; } }
 /* line 174, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
 .reader.image .image-viewer .next:hover {
-  background-image: url('../img/icons/1x/next_hover.png?1441377162');
+  background-image: url('../img/icons/1x/next_hover.png?1442518268');
   width: 25px;
   height: 50px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
   /* line 174, ../../../../librarian-library/librarian_library/static/scss/reader.scss */
   .reader.image .image-viewer .next:hover {
-    background-image: url('../img/icons/2x/next_hover.png?1441377162');
+    background-image: url('../img/icons/2x/next_hover.png?1442518268');
     -moz-background-size: 25px, 50px;
     -o-background-size: 25px, 50px;
     -webkit-background-size: 25px, 50px;
@@ -6346,7 +6346,7 @@ p.end {
  * COPYING file that comes with the source code, or
  * http://www.gnu.org/licenses/gpl.txt.
  */
-/* line 5, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+/* line 5, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
 .empty {
   font-size: 125%;
   line-height: 130%;
@@ -6354,12 +6354,12 @@ p.end {
   text-align: center;
   padding: 0.5em 20px 2em; }
 
-/* line 13, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+/* line 13, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
 .notification-list .notification {
   position: relative;
   padding: 65px;
   text-align: left; }
-/* line 17, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+/* line 17, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
 .notification-list .notification .alert {
   position: absolute;
   top: 0;
@@ -6369,7 +6369,7 @@ p.end {
   border-style: solid;
   border-width: 65px 65px 0 0;
   border-color: #e17502 transparent transparent transparent; }
-/* line 26, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+/* line 26, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
 .notification-list .notification .alert .icon {
   display: inline-block;
   vertical-align: middle;
@@ -6382,7 +6382,7 @@ p.end {
   top: -60px;
   left: 5px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 26, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+  /* line 26, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
   .notification-list .notification .alert .icon {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -495px;
@@ -6390,7 +6390,7 @@ p.end {
     -o-background-size: 100px 5839px;
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
-/* line 32, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+/* line 32, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
 .notification-list .notification .alert .icon.dismissable {
   display: inline-block;
   vertical-align: middle;
@@ -6400,7 +6400,7 @@ p.end {
   width: 25px;
   height: 25px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.3dppx) {
-  /* line 32, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+  /* line 32, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
   .notification-list .notification .alert .icon.dismissable {
     background-image: url('../img/icons/2x-sc22abbe6a5.png');
     background-position: 0 -440px;
@@ -6408,27 +6408,27 @@ p.end {
     -o-background-size: 100px 5839px;
     -webkit-background-size: 100px 5839px;
     background-size: 100px 5839px; } }
-/* line 36, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+/* line 36, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
 .notification-list .notification .notification-body {
   position: relative; }
-/* line 38, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+/* line 38, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
 .notification-list .notification .notification-body .message {
   color: #e17502;
   margin: 0;
   width: 90%; }
-/* line 42, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+/* line 42, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
 .notification-list .notification .notification-body .message .titles {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; }
-/* line 48, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+/* line 48, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
 .notification-list .notification .notification-body .icon {
   float: right;
   display: inline-block; }
-/* line 52, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+/* line 52, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
 .notification-list .notification .notification-body .timestamp {
   color: #888888; }
-/* line 55, ../../../../../../.virtualenvs/librarian/local/lib/python2.7/site-packages/librarian_notifications/static/scss/notifications.scss */
+/* line 55, ../../../../librarian-notifications/librarian_notifications/static/scss/notifications.scss */
 .notification-list .notification .notification-body button {
   position: absolute;
   right: 0;

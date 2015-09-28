@@ -5779,8 +5779,8 @@ $.extend(mejs.MepDefaults,
 /*jslint browser: true*/
 (function ($) {
     'use strict';
-    $.contentReaders = $.contentReaders || {};
-    $.contentReaders.video = function () {
+    $.openers = $.openers || {};
+    $.openers.video = function () {
         $('video').mediaelementplayer();
     };
 }(this.jQuery));
