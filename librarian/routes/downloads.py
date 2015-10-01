@@ -17,6 +17,7 @@ from ..lib.paginator import Paginator
 from ..utils.cache import invalidates
 from ..utils.core_helpers import open_archive, filter_downloads
 from ..utils.template import view
+from ..utils.import_daemon import add_file
 
 
 @login_required()
@@ -47,8 +48,7 @@ def list_downloads():
                 metadata=paginator.items)
 
 
-def notify_content_added(content_id_list, chunk_size=100):
-    archive = open_archive()
+def notify_content_added(archive, content_id_list, notifications, chunk_size=100):
     id_list = (content_id_list[i:i + chunk_size]
                for i in range(0, len(content_id_list), chunk_size))
     for content_ids in id_list:
@@ -57,15 +57,39 @@ def notify_content_added(content_id_list, chunk_size=100):
         for content_item in content_list:
             content_data = {'id': content_item['md5'],
                             'title': content_item['title']}
-            request.app.exts.notifications.send(content_data,
+            notifications.send(content_data,
                                                 category='content')
 
 
 @invalidates(prefix=['content', 'downloads'], after=True)
-def add(file_list):
-    archive = open_archive()
+def scheduled_add(archive, file_list):
+    added = 0
+    if file_list == []:
+        file_list = [meta['md5'] for meta in filter_downloads(lang=None)]
+    for file in file_list:
+        request.app.exts.tasks.schedule(add_file, args=(archive, file,
+                                                        request.app.config))
+        added += 1
+    # Translators, used as confirmation title after the chosen updates were
+    # successfully added to the library
+    title = _("Updates queued")
+    # Translators, used as confirmation message after the chosen updates were
+    # successfully added to the library
+    message = lazy_ngettext(
+        "Updates have been queued to be added to the Library.",
+        "{update_count} updates have been queued.",
+        added
+    ).format(update_count=added)
+    return dict(page_title=title,
+                message=message,
+                redirect_url=i18n_url('downloads:list'),
+                redirect_target=_("Updates"))
+
+
+@invalidates(prefix=['content', 'downloads'], after=True)
+def add(archive, file_list):
     added_count = archive.add_to_archive(file_list)
-    notify_content_added(file_list)
+    notify_content_added(archive, file_list)
     # Translators, used as confirmation title after the chosen updates were
     # successfully added to the library
     title = _("Updates added")
@@ -83,11 +107,10 @@ def add(file_list):
 
 
 @invalidates(prefix=['content', 'downloads'], after=True)
-def add_all(*args):
+def add_all(archive, *args):
     all_files = [meta['md5'] for meta in filter_downloads(lang=None)]
-    archive = open_archive()
     added_count = archive.add_to_archive(all_files)
-    notify_content_added(all_files)
+    notify_content_added(archive, all_files)
     # Translators, used as confirmation title after the chosen updates were
     # successfully added to the library
     title = _("Updates added")
@@ -105,7 +128,7 @@ def add_all(*args):
 
 
 @invalidates(prefix=['downloads'], after=True)
-def delete(file_list):
+def delete(archive, file_list):
     spooldir = request.app.config['content.spooldir']
     removed_count = downloads.remove_downloads(spooldir, content_ids=file_list)
     # Translators, used as confirmation title after the chosen updates were
@@ -123,7 +146,7 @@ def delete(file_list):
 
 
 @invalidates(prefix=['downloads'], after=True)
-def delete_all(*args):
+def delete_all(archive, *args):
     spooldir = request.app.config['content.spooldir']
     content_ext = request.app.config['content.output_ext']
     removed_count = downloads.remove_downloads(spooldir, extension=content_ext)
@@ -145,12 +168,13 @@ def delete_all(*args):
 @view('feedback')
 def manage_downloads():
     """ Manage the downloaded content """
-    action_handlers = {'add': add,
+    action_handlers = {'add': scheduled_add,
                        'add_all': add_all,
                        'delete': delete,
                        'delete_all': delete_all}
     action = request.forms.get('action')
     file_list = request.forms.getall('selection')
+    archive = open_archive()
     try:
         handler = action_handlers[action]
     except KeyError:
@@ -167,7 +191,7 @@ def manage_downloads():
                         redirect_target=_("Updates"))
     else:
         status = 'success'
-        feedback = handler(file_list)
+        feedback = handler(archive, file_list)
 
     return dict(status=status, **feedback)
 
