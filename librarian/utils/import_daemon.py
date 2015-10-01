@@ -1,60 +1,78 @@
-from functools import wraps
+import logging
+import functools
 
-from bottle import request
-from bottle_utils.lazy import Lazy
-
-from ..utils.core_helpers import open_archive, filter_downloads
+from ..core import zipballs
+from ..core import downloads
+from ..utils.core_helpers import open_archive
 from ..utils.notifications import Notification
+from ..utils.cache import generate_key
+
+
+def cached(app, prefix='', timeout=None):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            if not app.exts.is_installed('cache'):
+                return func(*args, **kwargs)
+
+            backend = app.exts.cache
+            generated = generate_key(func.__name__, *args, **kwargs)
+            parsed_prefix = backend.parse_prefix(prefix)
+            key = '{0}{1}'.format(parsed_prefix, generated)
+            value = backend.get(key)
+            if value is None:
+                # not found in cache, or is expired, recalculate value
+                value = func(*args, **kwargs)
+                expires_in = timeout
+                if expires_in is None:
+                    expires_in = backend.default_timeout
+                backend.set(key, value, timeout=expires_in)
+            return value
+        return wrapper
+    return decorator
 
 
 def add_file(archive, file, config):
     print('+++++++++++++++++++++++++++++')
-    print(1)
+    print(file)
     notifications = Notification
-    print(2)
     archive.add_to_archive(file)
-    print(3)
     resp = archive.get_single(file)
-    print(4)
     notifications.send({'id': resp[0], 'title': resp[2]}, category='content',
-                       config=config)
+                       db=config['db']['sessions'])
     print('success')
     print('+++++++++++++++++++++++++++++')
 
 
-def check_for_updates(archive, config):
-    print('=== CHECKING FOR UPDATES ===')
-    print('getting file list')
-    file_list = [meta['md5'] for meta in filter_downloads(lang=None)]
-    print(file_list)
+def generate_file_list(app):
+    read_meta = cached(app=app)(zipballs.validate)
+    conf = app.config
+    paths = downloads.get_downloads(conf['content.spooldir'],
+                                    conf['content.output_ext'])
+    zballs = list(reversed(downloads.order_downloads(paths)))
+    meta_filename = conf['content.metadata']
+    metas = []
+    for zipball_path, timestamp in zballs:
+        try:
+            # if this works it's valid, we don't need the info though
+            read_meta(zipball_path, meta_filename=meta_filename)
+        except zipballs.ValidationError:
+            # file is probably in progress, ignore it
+            pass
+        metas.append(zipballs.get_md5_from_path(zipball_path))
+    return metas
+
+
+def check_for_updates(app):
+    config = app.config
+    archive = open_archive(config=config)
+    file_list = generate_file_list(app)
+    logging.info('Found {0} updates'.format(len(file_list)))
     for file in file_list:
         args=(archive, file, config)
-        print(args)
-        request.app.exts.tasks.schedule(add_file, args=args)
-    print('=== DONE QUEUEING ===')
+        app.exts.tasks.schedule(add_file, args=args)
 
 
-def get_config(app):
-    return app.config
-
-
-def hook(app):
-    def plugin(callback):
-        @wraps(callback)
-        def wrapper(*args, **kwargs):
-            print(app)
-            config = Lazy(get_config, app)
-            dbs = config
-            archive = open_archive(config=config, request=False)
-            app.exts.tasks.schedule(
-                check_for_updates, args=(
-                    archive, config), delay=10, periodic=True)
-            return wrapper
-    plugin.name = 'import_daemon'
-    return plugin
-
-
-def import_plugin(app):
-    print('starting import daemon')
-    app.install(hook(app))
-    print('started import daemon')
+def daemon(app):
+    app.exts.tasks.schedule(check_for_updates, args=(app,), delay=10,
+                            periodic=False)
