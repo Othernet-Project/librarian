@@ -33,15 +33,11 @@ def cached(app, prefix='', timeout=None):
 
 
 def add_file(archive, file, config):
-    print('+++++++++++++++++++++++++++++')
-    print(file)
     notifications = Notification
     archive.add_to_archive(file)
     resp = archive.get_single(file)
     notifications.send({'id': resp[0], 'title': resp[2]}, category='content',
                        db=config['db']['sessions'])
-    print('success')
-    print('+++++++++++++++++++++++++++++')
 
 
 def generate_file_list(app):
