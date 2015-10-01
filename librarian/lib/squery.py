@@ -234,10 +234,8 @@ def get_databases(db_confs, debug=False):
 
 
 def database_plugin(app):
-    print('database_plugin')
     debug = app.config['librarian.debug']
     databases = DatabaseContainer(app.config['database.connections'], debug=debug)
-    print('set config')
     app.config['db'] = databases
 
     def plugin(callback):
