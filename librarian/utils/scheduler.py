@@ -90,6 +90,7 @@ class TaskScheduler(object):
                             delay)
             else:
                 self._async(delay, self._execute, task_id, fn, args, kwargs)
+        return task_id
 
 
 def scheduler_plugin(app):
