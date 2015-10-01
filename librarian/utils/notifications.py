@@ -17,6 +17,9 @@ from bottle import request
 from bottle_utils.common import basestring, unicode
 
 
+from .cache import setup as setup_cache
+
+
 NOTIFICATION_COLS = (
     'notification_id',
     'message',
@@ -57,7 +60,8 @@ class Notification(object):
 
     @classmethod
     def send(cls, message, category=None, icon=None, priority=NORMAL,
-             expiration=0, dismissable=True, user=None, group=None):
+             expiration=0, dismissable=True, user=None, group=None,
+             config=None):
         # TODO: if group is not None, query all users of the specified group
         # and create a notification instance for each member of the group
         if not isinstance(message, basestring):
@@ -73,7 +77,7 @@ class Notification(object):
                        dismissable=dismissable,
                        read_at=None,
                        user=user)
-        instance.save()
+        instance.save(config=config)
 
     @property
     def has_expired(self):
@@ -138,9 +142,15 @@ class Notification(object):
                                 key_chain,
                                 self.message)
 
-    def save(self):
-        db = request.db.sessions
+    def save(self, config=None):
+        import pdb; pdb.set_trace()
+        config = config or request.app.config
+        db = config['db']['sessions']
+        cache = setup_cache(backend=config['cache.backend'],
+                            timeout=config['cache.timeout'],
+                            servers=config['cache.servers'])
         query = db.Replace('notifications', cols=NOTIFICATION_COLS)
+
         # allow both arbitary strings as well as json objects as notification
         # message
         if isinstance(self.message, basestring):
@@ -160,9 +170,8 @@ class Notification(object):
                  read_at=self._read_at,
                  user=self.user)
 
-        for key in ('notification_group_{0}'.format(request.session.id),
-                    'notification_count_{0}'.format(request.session.id)):
-            request.app.exts.cache.delete(key)
+        for key in ('notification_group', 'notification_count'):
+            cache.invalidate(key)
         return self
 
     def delete(self):
