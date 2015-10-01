@@ -17,7 +17,6 @@ from urlparse import urljoin
 from bottle import request, redirect, abort
 from bottle_utils.common import unicode
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
-from bottle_utils.lazy import Lazy
 
 from ..core import content as content_mod
 from ..core import downloads
@@ -56,14 +55,12 @@ LICENSES = (
 read_meta = cached()(zipballs.validate)
 
 
-def open_archive(config=None, request=True):
-    conf = config or request.app.config
-    import pdb; pdb.set_trace()
-    if request:
-        print('request = true')
+def open_archive(config=None):
+    if config == None:
+        conf = request.app.config
         db = request.db['main']
     else:
-        print('request = false')
+        conf = config or request.app.config
         db = config['db']['main']
     return Archive.setup(conf['librarian.backend'],
                          db,
