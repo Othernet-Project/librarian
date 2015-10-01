@@ -233,18 +233,17 @@ def get_databases(db_confs, debug=False):
     return DatabaseContainer(conns, debug=debug)
 
 
-def database_plugin(config):
-    debug = config['librarian.debug']
-    databases = DatabaseContainer(config['database.connections'], debug=debug)
+def database_plugin(app):
+    print('database_plugin')
+    debug = app.config['librarian.debug']
+    databases = DatabaseContainer(app.config['database.connections'], debug=debug)
+    print('set config')
+    app.config['db'] = databases
 
     def plugin(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):
-            print('set request')
             request.db = databases
-            print('set config')
-            request.app.config['db'] = databases
-            print('returning')
             return callback(*args, **kwargs)
         return wrapper
     plugin.name = 'squery'
