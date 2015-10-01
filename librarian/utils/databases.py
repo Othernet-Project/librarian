@@ -55,7 +55,5 @@ def close_databases(app):
 
 
 def database_plugin(app):
-    print('setting up databases')
     squery.pre_init(app.config)
     app.install(squery.database_plugin(app))
-    print('set up databases')
