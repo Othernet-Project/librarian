@@ -67,8 +67,12 @@ def check_for_updates(app):
     for file in file_list:
         args=(archive, file, config)
         app.exts.tasks.schedule(add_file, args=args)
+    app.exts.tasks.schedule(schedule_check, args=(app,), kwargs={'delay': 600})
+
+
+def schedule_check(app, delay=10):
+    app.exts.tasks.schedule(check_for_updates, args=(app,), delay=delay)
 
 
 def daemon(app):
-    app.exts.tasks.schedule(check_for_updates, args=(app,), delay=10,
-                            periodic=False)
+    schedule_check(app, delay=15)
