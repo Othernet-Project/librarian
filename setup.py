@@ -188,6 +188,19 @@ setup(
         ],
     },
     install_requires=DEPS,
+    # FIXME: This is just a hack. These packages should eventually end up on
+    # PyPi and be installed as usual.
+    dependency_links=[
+        'https://github.com/Outernet-Project/librarian-core/archive/master.zip#egg=librarian-core-0.1',
+        'https://github.com/Outernet-Project/librarian-notifications/archive/master.zip#egg=librarian-notifications-0.1',
+        'https://github.com/Outernet-Project/librarian-auth/archive/master.zip#egg=librarian-auth-0.1',
+        'https://github.com/Outernet-Project/librarian-version/archive/master.zip#egg=librarian-version-0.1',
+        'https://github.com/Outernet-Project/librarian-ui/archive/master.zip#egg=librarian-ui-0.1',
+        'https://github.com/Outernet-Project/librarian-setup/archive/master.zip#egg=librarian-setup-0.1',
+        'https://github.com/Outernet-Project/librarian-system/archive/master.zip#egg=librarian-system-0.1',
+        'https://github.com/Outernet-Project/librarian-menu/archive/master.zip#egg=librarian-menu-0.1',
+        'https://github.com/Outernet-Project/librarian-captive/archive/master.zip#egg=librarian-captive-0.1',
+    ],
     cmdclass={
         'test': PyTest,
         'develop': Develop,
