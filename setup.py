@@ -197,7 +197,6 @@ setup(
         'https://github.com/Outernet-Project/librarian-version/archive/master.zip#egg=librarian-version-0.1',
         'https://github.com/Outernet-Project/librarian-ui/archive/master.zip#egg=librarian-ui-0.1',
         'https://github.com/Outernet-Project/librarian-setup/archive/master.zip#egg=librarian-setup-0.1',
-        'https://github.com/Outernet-Project/librarian-system/archive/master.zip#egg=librarian-system-0.1',
         'https://github.com/Outernet-Project/librarian-menu/archive/master.zip#egg=librarian-menu-0.1',
         'https://github.com/Outernet-Project/librarian-captive/archive/master.zip#egg=librarian-captive-0.1',
     ],
