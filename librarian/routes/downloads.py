@@ -65,7 +65,6 @@ def notify_content_added(content_id_list, chunk_size=100):
 def add(file_list):
     archive = open_archive()
     added_count = archive.add_to_archive(file_list)
-    notify_content_added(file_list)
     # Translators, used as confirmation title after the chosen updates were
     # successfully added to the library
     title = _("Updates added")
