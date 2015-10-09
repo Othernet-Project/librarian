@@ -28,7 +28,7 @@ class NotificationsMenuItem(MenuItem):
     @property
     def label(self):
         unread_count = self.unread_count
-        if unread_count > 99:
+        if unread_count >= 1:
             unread_count = '!'
         lbl = '<span class="notifications-label">{}</span>'.format(
             _("Notifications"))
