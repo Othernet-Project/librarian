@@ -31,6 +31,17 @@ def row_to_dict(row):
     return dict((key, row[key]) for key in row.keys())
 
 
+def notify_cleanup(app):
+    print('checking diskspace...')
+    (free, _) = zipballs.free_space(config=app.config)
+    needed_space = zipballs.needed_space(free, config=app.config)
+    if not needed_space:
+        return
+    print('sending notification')
+
+    request.app.exts.notifications.send(needed_space, category='diskspace')
+
+
 def auto_cleanup(app):
     (free, _) = zipballs.free_space(config=app.config)
     needed_space = zipballs.needed_space(free, config=app.config)
@@ -104,6 +115,16 @@ def cleanup():
             message = _('Nothing to delete')
         return {'vals': MultiDict(), 'metadata': cleanup,
                 'message': message, 'needed': archive.needed_space()}
+
+
+def install_cleanup_notification(app):
+    try:
+        os.statvfs
+    except AttributeError:
+        raise NotSupportedError(
+            'Disk space information not available on this platform')
+
+    app.events.subscribe('background', notify_cleanup)
 
 
 def install(app, route):
