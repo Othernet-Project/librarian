@@ -55,10 +55,15 @@ LICENSES = (
 read_meta = cached()(zipballs.validate)
 
 
-def open_archive():
-    conf = request.app.config
+def open_archive(config=None):
+    if config == None:
+        conf = request.app.config
+        db = request.db['main']
+    else:
+        conf = config or request.app.config
+        db = config['db']['main']
     return Archive.setup(conf['librarian.backend'],
-                         request.db.main,
+                         db,
                          unpackdir=conf['content.unpackdir'],
                          contentdir=conf['content.contentdir'],
                          spooldir=conf['content.spooldir'],

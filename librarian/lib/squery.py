@@ -11,6 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from __future__ import print_function
 
 import re
+import os
 import sqlite3
 import logging
 from functools import wraps
@@ -232,11 +233,34 @@ def get_databases(db_confs, debug=False):
     return DatabaseContainer(conns, debug=debug)
 
 
-def database_plugin(databases):
+def database_plugin(app):
+    debug = app.config['librarian.debug']
+    databases = DatabaseContainer(app.config['database.connections'], debug=debug)
+    app.config['db'] = databases
+
     def plugin(callback):
         @wraps(callback)
         def wrapper(*args, **kwargs):
             request.db = databases
             return callback(*args, **kwargs)
         return wrapper
+    plugin.name = 'squery'
     return plugin
+
+
+def pre_init(config):
+    logging.info('Connecting to databases')
+    config['database.connections'] = {}
+    dbdir = config['database.path']
+    for n in config['database.names']:
+        dbpath = os.path.join(dbdir, n + '.sqlite')
+        conn = Connection(dbpath)
+        config['database.connections'][n] = conn
+
+
+def post_stop(config):
+    def do_stop():
+        logging.info('Closing database connections')
+        for name, conn in config['database.connections']:
+            conn.close()
+    return do_stop

@@ -36,10 +36,11 @@ class Notification(object):
     URGENT = 1
     CRITICAL = 2
     PRIORITIES = (NORMAL, URGENT, CRITICAL)
+    on_send_callbacks = []
 
     def __init__(self, notification_id, message, created_at, category=None,
                  icon=None, priority=NORMAL, expires_at=None, dismissable=True,
-                 read_at=None, user=None):
+                 read_at=None, user=None, db=None):
         self.notification_id = notification_id
         try:
             self.message = json.loads(message)
@@ -54,10 +55,15 @@ class Notification(object):
         self.dismissable = dismissable
         self._read_at = read_at
         self.user = user
+        self.db = db or request.db['sessions']
+
+    @classmethod
+    def on_send(cls, callback):
+        cls.on_send_callbacks.append(callback)
 
     @classmethod
     def send(cls, message, category=None, icon=None, priority=NORMAL,
-             expiration=0, dismissable=True, user=None, group=None):
+             expiration=0, dismissable=True, user=None, group=None, db=None):
         # TODO: if group is not None, query all users of the specified group
         # and create a notification instance for each member of the group
         if not isinstance(message, basestring):
@@ -72,8 +78,15 @@ class Notification(object):
                        expires_at=cls.calc_expiry(expiration),
                        dismissable=dismissable,
                        read_at=None,
-                       user=user)
+                       user=user,
+                       db=db)
         instance.save()
+        # when notification is sent, invoke subscribers of on_send with
+        # notification instance as their only argument
+        for callback in cls.on_send_callbacks:
+            callback(instance)
+
+        return instance
 
     @property
     def has_expired(self):
@@ -101,18 +114,14 @@ class Notification(object):
             request.user.options['notifications'] = dict()
 
         request.user.options['notifications'][self.notification_id] = read_at
-        for key in ('notification_group_{0}'.format(request.session.id),
-                    'notification_count_{0}'.format(request.session.id)):
-            request.app.exts.cache.delete(key)
 
     def _mark_private_read(self, read_at):
-        db = request.db.sessions
-        query = db.Update('notifications',
-                          read_at=':read_at',
-                          where='notification_id = :notification_id')
-        db.query(query,
-                 notification_id=self.notification_id,
-                 read_at=read_at)
+        query = self.db.Update('notifications',
+                               read_at=':read_at',
+                               where='notification_id = :notification_id')
+        self.db.query(query,
+                      notification_id=self.notification_id,
+                      read_at=read_at)
         self._read_at = read_at
 
     def mark_read(self, read_at=None):
@@ -139,8 +148,7 @@ class Notification(object):
                                 self.message)
 
     def save(self):
-        db = request.db.sessions
-        query = db.Replace('notifications', cols=NOTIFICATION_COLS)
+        query = self.db.Replace('notifications', cols=NOTIFICATION_COLS)
         # allow both arbitary strings as well as json objects as notification
         # message
         if isinstance(self.message, basestring):
@@ -148,27 +156,22 @@ class Notification(object):
         else:
             message = json.dumps(self.message)
 
-        db.query(query,
-                 notification_id=self.notification_id,
-                 message=message,
-                 created_at=self.created_at,
-                 category=self.category,
-                 icon=self.icon,
-                 priority=self.priority,
-                 expires_at=self.expires_at,
-                 dismissable=self.dismissable,
-                 read_at=self._read_at,
-                 user=self.user)
-
-        for key in ('notification_group_{0}'.format(request.session.id),
-                    'notification_count_{0}'.format(request.session.id)):
-            request.app.exts.cache.delete(key)
+        self.db.query(query,
+                      notification_id=self.notification_id,
+                      message=message,
+                      created_at=self.created_at,
+                      category=self.category,
+                      icon=self.icon,
+                      priority=self.priority,
+                      expires_at=self.expires_at,
+                      dismissable=self.dismissable,
+                      read_at=self._read_at,
+                      user=self.user)
         return self
 
     def delete(self):
-        db = request.db.sessions
-        query = db.Delete('notifications', where='notification_id = ?')
-        db.query(query, self.notification_id)
+        query = self.db.Delete('notifications', where='notification_id = ?')
+        self.db.query(query, self.notification_id)
         return self
 
     @staticmethod

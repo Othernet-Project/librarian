@@ -142,6 +142,7 @@ class Meta(object):
         self.tags = json.loads(meta.get('tags') or '{}')
         self._image = None
         self.content_path = content_path
+        self.queued = False
 
     def __getattr__(self, attr):
         try:

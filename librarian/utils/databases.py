@@ -49,9 +49,11 @@ def apply_migrations(app):
 
 
 def close_databases(app):
-    for db in app.databases.values():
-        db.close()
+    squery.post_stop(app.config)
+    #for db in app.databases.values():
+        #db.close()
 
 
 def database_plugin(app):
-    app.install(squery.database_plugin(app.databases))
+    squery.pre_init(app.config)
+    app.install(squery.database_plugin(app))
