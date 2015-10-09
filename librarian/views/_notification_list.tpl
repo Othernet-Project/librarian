@@ -4,7 +4,21 @@
                                        group.count).format(count=group.count)}</h2>
     <p class="titles">${', '.join([item.safe_message('title') for idx, item in enumerate(group.notifications) if idx < 20])}</p>
 </%def>
-<% notification_templates = {'content': content} %>
+
+<%def name="diskspace(group)">
+    <h2 class="description">
+        Please go to <a href="${i18n_url('dashboard:main')}">Settings</a> 
+        and check your disk space. 
+        % if not request.user.is_superuser:
+            You need to be 
+            <a href="${i18n_url('auth:login', next='/')}">logged in</a> as 
+            a superuser in order to delete content.
+        % endif
+    </h2>
+    <p class="size">Diskspace remaining at last check: ${group.notifications[-1].message}</p>
+    <p class="since">First triggered on ${group.notifications[0].created_at.strftime('%A, %B %d')}</p>
+</%def>
+<% notification_templates = {'content': content, 'diskspace': diskspace} %>
 
 % for group in groups:
 <li class="notification h-bar ${loop.cycle('white', '')} ${'' if group.is_read else 'unread'}">
