@@ -33,15 +33,28 @@ def row_to_dict(row):
 
 
 def notify_cleanup(app, notifications, DELAY):
-    print('checking diskspace...')
     (free, _) = zipballs.free_space(config=app.config)
     needed_space = zipballs.needed_space(free, config=app.config)
     if not needed_space:
         return
-    print('sending notification')
 
-    notifications.send(needed_space, db=app.config['db']['sessions'])
-    app.exts.tasks.schedule(notify_cleanup, args=(app, notifications, DELAY,), delay=DELAY)
+    notifications.send(hsize(needed_space), category='diskspace',
+                       db=app.config['db']['sessions'])
+    app.exts.tasks.schedule(notify_cleanup, args=(app, notifications, DELAY,),
+                            delay=DELAY)
+
+
+def install_cleanup_notification(app):
+    notifications = Notification
+    try:
+        os.statvfs
+    except AttributeError:
+        raise NotSupportedError(
+            'Disk space information not available on this platform')
+    START = 15
+    DELAY = 1200
+    app.exts.tasks.schedule(notify_cleanup, args=(app, notifications, DELAY,),
+                            delay=START)
 
 
 def auto_cleanup(app):
@@ -117,17 +130,6 @@ def cleanup():
             message = _('Nothing to delete')
         return {'vals': MultiDict(), 'metadata': cleanup,
                 'message': message, 'needed': archive.needed_space()}
-
-
-def install_cleanup_notification(app):
-    notifications = Notification
-    try:
-        os.statvfs
-    except AttributeError:
-        raise NotSupportedError(
-            'Disk space information not available on this platform')
-    DELAY = 1
-    app.exts.tasks.schedule(notify_cleanup, args=(app, notifications, DELAY,), delay=DELAY)
 
 
 def install(app, route):
