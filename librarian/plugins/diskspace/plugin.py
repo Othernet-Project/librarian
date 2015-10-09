@@ -20,6 +20,7 @@ from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
 from ...core.archive import Archive
 from ...utils.template import view
+from ...utils.notifications import Notification
 
 from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError
@@ -31,7 +32,7 @@ def row_to_dict(row):
     return dict((key, row[key]) for key in row.keys())
 
 
-def notify_cleanup(app):
+def notify_cleanup(app, notifications, DELAY):
     print('checking diskspace...')
     (free, _) = zipballs.free_space(config=app.config)
     needed_space = zipballs.needed_space(free, config=app.config)
@@ -39,7 +40,8 @@ def notify_cleanup(app):
         return
     print('sending notification')
 
-    request.app.exts.notifications.send(needed_space, category='diskspace')
+    notifications.send(needed_space, db=app.config['db']['sessions'])
+    app.exts.tasks.schedule(notify_cleanup, args=(app, notifications, DELAY,), delay=DELAY)
 
 
 def auto_cleanup(app):
@@ -118,13 +120,14 @@ def cleanup():
 
 
 def install_cleanup_notification(app):
+    notifications = Notification
     try:
         os.statvfs
     except AttributeError:
         raise NotSupportedError(
             'Disk space information not available on this platform')
-
-    app.events.subscribe('background', notify_cleanup)
+    DELAY = 1
+    app.exts.tasks.schedule(notify_cleanup, args=(app, notifications, DELAY,), delay=DELAY)
 
 
 def install(app, route):
