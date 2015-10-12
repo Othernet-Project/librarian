@@ -1,0 +1,15 @@
+@import "outernet/partial/_tables";
+
+table {
+  $delete: 1;
+  $delete-width: 40px;
+  $date: 2;
+  $date-width: 40px;
+  $size: 3;
+  $size-width: 40px;
+  
+  @include table-col-width($delete, $delete-width);
+  @include table-col-width($date, $date-width);
+  @include table-col-width($size, $size-width);
+
+}
