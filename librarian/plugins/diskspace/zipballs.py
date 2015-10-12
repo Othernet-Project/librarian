@@ -144,6 +144,22 @@ def clone_zipball(zipball):
     return dict((key, zipball[key]) for key in zipball.keys())
 
 
+def list_all_zipballs(db=None, config=None):
+    """ Return a generator of all zipball metadata
+
+    The generator will stop yielding when zipballs are exhausted
+    """
+    # TODO: tests
+    zipballs = iter(get_old_content(db=db))
+    config = config or request.app.config
+    contentdir = config['content.contentdir']
+    for zipball in zipballs:
+        zipball = clone_zipball(zipball)
+        if 'size' not in zipball:
+            zipball['size'] = get_content_size(zipball['md5'], contentdir)
+        yield zipball
+
+
 def cleanup_list(free_space, db=None, config=None):
     """ Return a generator of zipball metadata necessary to free enough space
 
