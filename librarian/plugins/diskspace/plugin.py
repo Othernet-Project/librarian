@@ -82,7 +82,7 @@ def auto_cleanup(app):
 def cleanup_list():
     """ Render a list of items that can be deleted """
     free = zipballs.free_space()[0]
-    return {'metadata': zipballs.cleanup_list(free),
+    return {'metadata': zipballs.list_all_zipballs(),
             'needed': zipballs.needed_space(free)}
 
 
@@ -105,7 +105,7 @@ def cleanup():
         # Translators, used as response to innvalid HTTP request
         abort(400, _('Invalid request'))
     free = zipballs.free_space()[0]
-    cleanup = list(zipballs.cleanup_list(free))
+    cleanup = list(zipballs.list_all_zipballs())
     selected = get_selected(forms)
     metadata = list(cleanup)
     selected = [z for z in metadata if z['md5'] in selected]
@@ -134,7 +134,12 @@ def cleanup():
         if selected:
             archive.remove_from_archive([z['md5'] for z in selected])
             request.app.exts.cache.invalidate(prefix='content')
-            redirect(i18n_url('content:list'))
+            message = str(
+                # Translators, used when user has removed content through
+                # cleanup, %s is replaced with number of files
+                _('%s files removed from library')) % len(selected)
+            return {'vals': forms, 'metadata': metadata, 'message': message,
+                    'needed': zipballs.needed_space(free)}
         else:
             # Translators, error message shown on clean-up page when there was
             # no deletable content
