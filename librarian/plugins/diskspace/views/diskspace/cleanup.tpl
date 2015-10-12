@@ -2,7 +2,7 @@
 
 <%block name="title">
 ## Translators, used as page title
-${_('Library clean-up')}
+${_('Library Clean-Up')}
 </%block>
 
 <%block name="heading">
@@ -42,7 +42,9 @@ ${_('There is enough free space on storage')}
             % for meta in metadata:
             <tr>
             <td>
-            ${h.vcheckbox('selection', meta['md5'], vals, default=True)}
+            <% id = 'selection-{}'.format(meta['md5']) %>
+            ${h.vcheckbox(id, meta['md5'], vals, default=True)}
+            <label for="${id}">
             </td>
             <td>${meta['updated'].strftime('%m-%d')}</td>
             <td><a href="${i18n_url('content:reader', content_id=meta['md5'])}">${meta['title']}</a></td>
@@ -65,3 +67,7 @@ ${_('There is enough free space on storage')}
     </p>
     % endif
 </form>
+## Translators, used as button lable for checking all boxes
+<button id="select">${_('Select All')}</button>
+## Translators, used as button lable for unchecking all boxes
+<button id="deselect">${_('Deselect All')}</button>
