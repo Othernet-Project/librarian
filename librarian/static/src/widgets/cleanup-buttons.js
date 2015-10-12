@@ -1,9 +1,9 @@
 (function (window, $) {
 
-  $("#deselect").click(function() {
+  $(".deselect").click(function() {
     $('input[type=checkbox]').prop('checked', false);
-  };
-  $("#select").click(function() {
+  });
+  $(".select").click(function() {
     $('input[type=checkbox]').prop('checked', true);
   });
 
