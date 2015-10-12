@@ -86,6 +86,17 @@ def cleanup_list():
             'needed': zipballs.needed_space(free)}
 
 
+def get_selected(forms, prefix="selection-"):
+    """ Returns a list of md5s from a FormsDict object and a kwarg 'prefix' """
+    md5s = []
+    for key, value in forms.items():
+        if key[0:len(prefix)] != prefix:
+            print('not equal')
+            continue
+        md5s.append(value)
+    return md5s
+
+
 @view('diskspace/cleanup', message=None, vals=MultiDict())
 def cleanup():
     forms = request.forms
@@ -95,7 +106,7 @@ def cleanup():
         abort(400, _('Invalid request'))
     free = zipballs.free_space()[0]
     cleanup = list(zipballs.cleanup_list(free))
-    selected = forms.getall('selection')
+    selected = get_selected(forms)
     metadata = list(cleanup)
     selected = [z for z in metadata if z['md5'] in selected]
     if action == 'check':
