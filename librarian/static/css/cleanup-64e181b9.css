@@ -244,7 +244,11 @@ table td:nth-of-type(2) {
   width: 40px; }
 /* line 85, ../scss/outernet/mixins/_tables.scss */
 table th:nth-of-type(3) {
-  width: 40px; }
+  width: 60px; }
 /* line 89, ../scss/outernet/mixins/_tables.scss */
 table td:nth-of-type(3) {
-  width: 40px; }
+  width: 60px; }
+
+/* line 17, ../scss/cleanup.scss */
+.size {
+  white-space: nowrap; }

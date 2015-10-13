@@ -1,5 +1,5 @@
 {
-    "css/cleanup-%(version)s.css": "5621a137", 
+    "css/cleanup-%(version)s.css": "64e181b9", 
     "css/content-%(version)s.css": "6fa87c97", 
     "css/dashboard-%(version)s.css": "7b3c38c5", 
     "css/main-%(version)s.css": "7cac7d35", 
@@ -9,5 +9,5 @@
     "js/files-%(version)s.js": "d969cdea", 
     "js/reader-%(version)s.js": "f53cfcd4", 
     "js/setup-%(version)s.js": "10ea5fdc", 
-    "js/ui-%(version)s.js": "92190867"
+    "js/ui-%(version)s.js": "2fd07a80"
 }
