@@ -22,6 +22,7 @@ from ...core.archive import Archive
 from ...utils.template import view
 from ...utils.notifications import Notification
 from ...lib.auth import login_required
+from ...lib.paginator import Paginator
 
 from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError
@@ -84,7 +85,15 @@ def auto_cleanup(app):
 def cleanup_list():
     """ Render a list of items that can be deleted """
     free = zipballs.free_space()[0]
-    return {'metadata': zipballs.list_all_zipballs(),
+    # parse pagination params
+    page = Paginator.parse_page(request.params)
+    per_page = Paginator.parse_per_page(request.params)
+    # get md5s to into Paginator
+    md5s = zipballs.list_all_zipballs()
+    # paginate query results
+    paginator = Paginator(md5s, page, per_page)
+    return {'pager': paginator,
+            'metadata': paginator.items,
             'needed': zipballs.needed_space(free)}
 
 

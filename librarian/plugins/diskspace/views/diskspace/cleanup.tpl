@@ -1,4 +1,5 @@
 <%inherit file="../base.tpl"/>
+<%namespace name="simple_pager" file="../_simple_pager.tpl"/>
 
 <link rel="stylesheet" href="${assets['css/cleanup']}" />
 
@@ -55,6 +56,9 @@ ${_('Library Clean-Up')}
                 <button type="submit" name="action" value="delete">${_('Delete selected now')}</button>
             </p>
         </div>
+        <div class="bottom-pager">
+            ${simple_pager.prev_next_pager()}
+        </div>
 
         <table id="cleanup-list">
             <tr class="header">
@@ -80,6 +84,9 @@ ${_('Library Clean-Up')}
             </tr>
             % endfor
         </table>
+        <div class="bottom-pager">
+            ${simple_pager.prev_next_pager()}
+        </div>
         <div class="h-bar">
             <p class="buttons">
                 ## Translators, used as button lable for checking all boxes
