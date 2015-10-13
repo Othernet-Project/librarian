@@ -13,3 +13,4 @@ __pycache__/
 /librarian/static/dist
 /librarian/static/assets.json
 .webassets-cache
+dev.ini
