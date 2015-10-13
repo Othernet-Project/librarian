@@ -9,5 +9,5 @@
     "js/files-%(version)s.js": "d969cdea", 
     "js/reader-%(version)s.js": "f53cfcd4", 
     "js/setup-%(version)s.js": "10ea5fdc", 
-    "js/ui-%(version)s.js": "2fd07a80"
+    "js/ui-%(version)s.js": "a1e0ea2f"
 }
