@@ -150,14 +150,16 @@ def list_all_zipballs(db=None, config=None):
     The generator will stop yielding when zipballs are exhausted
     """
     # TODO: tests
-    zipballs = iter(get_old_content(db=db))
+    zipballs = get_old_content(db=db)
     config = config or request.app.config
     contentdir = config['content.contentdir']
+    zipball_list = []
     for zipball in zipballs:
         zipball = clone_zipball(zipball)
         if 'size' not in zipball:
             zipball['size'] = get_content_size(zipball['md5'], contentdir)
-        yield zipball
+        zipball_list.append(zipball)
+    return zipball_list
 
 
 def cleanup_list(free_space, db=None, config=None):
