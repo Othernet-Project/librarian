@@ -51,7 +51,8 @@ ${_('Library Clean-Up')}
                 <button type="button" class="deselect">${_('Deselect All')}</button>
 
                 ## Translators, used as button label for clean-up preview button
-                <button type="submit" name="action" value="check">${_('How much space does this free up?')}</button>
+                <button type="button" class="check">${_('How much space does this free up?')}</button>
+                
                 ## Translators, used as button label for clean-up start button, user selects content to be deleted before using this button
                 <button type="submit" name="action" value="delete">${_('Delete selected now')}</button>
             </p>
@@ -95,7 +96,8 @@ ${_('Library Clean-Up')}
                 <button type="button" class="deselect">${_('Deselect All')}</button>
 
                 ## Translators, used as button label for clean-up preview button
-                <button type="submit" name="action" value="check">${_('How much space does this free up?')}</button>
+                <button type="button" class="check">${_('How much space does this free up?')}</button>
+                
                 ## Translators, used as button label for clean-up start button, user selects content to be deleted before using this button
                 <button type="submit" name="action" value="delete">${_('Delete selected now')}</button>
             </p>
