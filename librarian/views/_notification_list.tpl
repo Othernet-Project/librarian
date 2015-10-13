@@ -7,8 +7,8 @@
 
 <%def name="diskspace(group)">
     <h2 class="description">
-        Please go to <a href="${i18n_url('dashboard:main')}">Settings</a> 
-        and check your disk space. 
+        Please go to the <a href="${i18n_url('plugins:diskspace:cleanup')}">clean up tool</a> 
+        and remove unwanted content, your disk is getting full. 
         % if not request.user.is_superuser:
             You need to be 
             <a href="${i18n_url('auth:login', next='/')}">logged in</a> as 
