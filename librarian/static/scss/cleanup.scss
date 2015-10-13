@@ -6,10 +6,14 @@ table {
   $date: 2;
   $date-width: 40px;
   $size: 3;
-  $size-width: 40px;
+  $size-width: 60px;
   
   @include table-col-width($delete, $delete-width);
   @include table-col-width($date, $date-width);
   @include table-col-width($size, $size-width);
 
+}
+
+.size {
+  white-space: nowrap;
 }

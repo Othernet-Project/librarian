@@ -75,7 +75,7 @@ ${_('Library Clean-Up')}
             <label for="${id}">
             </td>
             <td>${meta['updated'].strftime('%m-%d')}</td>
-            <td>${h.hsize(meta['size'])}</td>
+            <td class="size">${h.hsize(meta['size'])}</td>
             <td><a href="${i18n_url('content:reader', content_id=meta['md5'])}">${meta['title']}</a></td>
             </tr>
             % endfor
