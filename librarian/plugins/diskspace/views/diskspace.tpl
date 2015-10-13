@@ -6,12 +6,17 @@ ${space_info.space(free, total)}
 </p>
 
 % if needed:
-<p class="warning">
-## Translators, this is a warning message appearing when disk space is below minimum
-${_('You are running low on disk space.')}
-## Translators, this is a button label that leads to page for library cleanup
-<a href="${i18n_url('plugins:diskspace:cleanup')}">${_('Free some space now')}</a>
-</p>
+    <p class="warning">
+        ## Translators, this is a warning message appearing when disk space is below minimum
+        ${_('You are running low on disk space.')}
+        ## Translators, this is a button label that leads to page for library cleanup
+        ${_('Free some space now using the diskspace cleanup tool ')}
+        <a href="${i18n_url('plugins:diskspace:cleanup')}">here.</a>
+    </p>
+% else:
+    <p class="warning">
+    If you would like to remove lots of content at once, use the <a href="${i18n_url('plugins:diskspace:cleanup')}">cleanup tool.</a>
+    </p>
 % endif
 
 <div class="content-archive">
