@@ -13,10 +13,10 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import logging
 import os
 
-from bottle import request, redirect, MultiDict, abort
+from bottle import request, MultiDict, abort
 
 from bottle_utils.html import hsize
-from bottle_utils.i18n import lazy_gettext as _, i18n_url
+from bottle_utils.i18n import lazy_ngettext, lazy_gettext as _, i18n_path
 
 from ...core.archive import Archive
 from ...utils.template import view
@@ -100,7 +100,7 @@ def get_selected(forms, prefix="selection-"):
 
 
 @login_required()
-@view('diskspace/cleanup', message=None, vals=MultiDict())
+@view('feedback')
 def cleanup():
     forms = request.forms
     action = forms.get('action', 'check')
@@ -137,6 +137,20 @@ def cleanup():
         if selected:
             archive.remove_from_archive([z['md5'] for z in selected])
             request.app.exts.cache.invalidate(prefix='content')
+            # Translators, used as confirmation message after the chosen updates were
+            # successfully removed from the library
+            selected_len = len(selected)
+            message = lazy_ngettext(
+                "Content has been removed from the Library.",
+                "{update_count} updates have been added to the Library.",
+                selected_len
+            ).format(update_count=selected_len)
+            return dict(status='success',
+                page_title='Library Clean-Up',
+                message=message,
+                redirect_url=i18n_path('/p/diskspace/cleanup/'),
+                redirect_target=_("Cleanup"))
+
             message = str(
                 # Translators, used when user has removed content through
                 # cleanup, %s is replaced with number of files
@@ -148,7 +162,7 @@ def cleanup():
             # no deletable content
             message = _('Nothing to delete')
         return {'vals': MultiDict(), 'metadata': cleanup,
-                'message': message, 'needed': archive.needed_space()}
+                'message': message, 'needed': zipballs.needed_space(free)}
 
 
 def install(app, route):
