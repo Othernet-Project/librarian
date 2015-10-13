@@ -95,9 +95,28 @@ def cleanup_list():
     # get md5s to into Paginator
     md5s = zipballs.list_all_zipballs()
     paginator = setup_pager(md5s)
-    return {'pager': paginator,
-            'metadata': paginator.items,
+
+    res = {'pager': paginator, 'metadata': paginator.items,
             'needed': zipballs.needed_space(free)}
+
+    check = request.params.get('check')
+    if check != None:
+        checked = check.split(',')
+        selected = [z for z in md5s if z['md5'] in checked]
+        if not selected:
+            # Translators, used as message to user when clean-up is started
+            # without selecting any content
+            message = _('No content selected')
+        else:
+            tot = hsize(sum([s['size'] for s in selected]))
+            message = str(
+                # Translators, used when user is previewing clean-up, %s is
+                # replaced by amount of content that can be freed in bytes,
+                # KB, MB, etc
+                _('%s can be freed by removing selected content')) % tot
+        res['message'] = message
+        res['vals'] = selected
+    return res
 
 
 def get_selected(forms, prefix="selection-"):
@@ -105,34 +124,24 @@ def get_selected(forms, prefix="selection-"):
     md5s = []
     for key, value in forms.items():
         if key[0:len(prefix)] != prefix:
-            print('not equal')
             continue
         md5s.append(value)
     return md5s
 
 
 @login_required()
-@view('diskspace/cleanup')
-def check_size(selected, response):
-    if not selected:
-        # Translators, used as message to user when clean-up is started
-        # without selecting any content
-        message = _('No content selected')
-    else:
-        tot = hsize(sum([s['size'] for s in selected]))
-        message = str(
-            # Translators, used when user is previewing clean-up, %s is
-            # replaced by amount of content that can be freed in bytes,
-            # KB, MB, etc
-            _('%s can be freed by removing selected content')) % tot
-    response['message'] = message
-    response['pager'] = setup_pager(response['metadata'])
-    return response
-
-
-@login_required()
 @view('feedback')
-def cleanup_content(selected, response):
+def cleanup():
+    forms = request.forms
+    action = forms.get('action', 'check')
+    if action not in ['delete']:
+        # Translators, used as response to innvalid HTTP request
+        abort(400, _('Invalid request'))
+    free = zipballs.free_space()[0]
+    cleanup = list(zipballs.list_all_zipballs())
+    selected = get_selected(forms)
+    metadata = list(cleanup)
+    selected = [z for z in metadata if z['md5'] in selected]
     conf = request.app.config
     archive = Archive.setup(conf['librarian.backend'],
                             request.db.main,
@@ -148,7 +157,7 @@ def cleanup_content(selected, response):
         selected_len = len(selected)
         message = lazy_ngettext(
             "Content has been removed from the Library.",
-            "{update_count} updates have been added to the Library.",
+            "{update_count} updates have been removed from the Library.",
             selected_len
         ).format(update_count=selected_len)
         return dict(status='success',
@@ -161,35 +170,14 @@ def cleanup_content(selected, response):
             # Translators, used when user has removed content through
             # cleanup, %s is replaced with number of files
             _('%s files removed from library')) % len(selected)
-        response['message'] = message
-        return response
+        return {'vals': forms, 'metadata': metadata, 'message': message,
+                'needed': zipballs.needed_space(free)}
     else:
         # Translators, error message shown on clean-up page when there was
         # no deletable content
         message = _('Nothing to delete')
-    response['message'] = message
-    response['vals'] = MultiDict()
-    return response
-
-
-def cleanup():
-    forms = request.forms
-    action = forms.get('action', 'check')
-    if action not in ['check', 'delete']:
-        # Translators, used as response to innvalid HTTP request
-        abort(400, _('Invalid request'))
-    free = zipballs.free_space()[0]
-    cleanup = list(zipballs.list_all_zipballs())
-    selected = get_selected(forms)
-    metadata = list(cleanup)
-    selected = [z for z in metadata if z['md5'] in selected]
-    response = {'vals': forms, 'metadata': metadata,
-                'needed': zipballs.needed_space(free)}
-    if action == 'check':
-        html = check_size(selected, response)
-    elif action == 'delete':
-        html = cleanup_content(selected, response)
-    return html
+    return {'vals': MultiDict(), 'metadata': metadata, 'message': message,
+            'needed': zipballs.needed_space(free)}
 
 
 def install(app, route):
