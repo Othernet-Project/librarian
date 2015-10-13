@@ -21,6 +21,7 @@ from bottle_utils.i18n import lazy_gettext as _, i18n_url
 from ...core.archive import Archive
 from ...utils.template import view
 from ...utils.notifications import Notification
+from ...lib.auth import login_required
 
 from ..dashboard import DashboardPlugin
 from ..exceptions import NotSupportedError
@@ -78,6 +79,7 @@ def auto_cleanup(app):
     logging.info(msg)
 
 
+@login_required()
 @view('diskspace/cleanup', message=None, vals=MultiDict())
 def cleanup_list():
     """ Render a list of items that can be deleted """
@@ -97,6 +99,7 @@ def get_selected(forms, prefix="selection-"):
     return md5s
 
 
+@login_required()
 @view('diskspace/cleanup', message=None, vals=MultiDict())
 def cleanup():
     forms = request.forms
