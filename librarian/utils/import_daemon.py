@@ -4,7 +4,6 @@ import functools
 from ..core import zipballs
 from ..core import downloads
 from ..utils.core_helpers import open_archive
-from ..utils.notifications import Notification
 from ..utils.cache import generate_key
 
 
@@ -33,11 +32,8 @@ def cached(app, prefix='', timeout=None):
 
 
 def add_file(archive, file, config):
-    notifications = Notification
     archive.add_to_archive(file)
-    resp = archive.get_single(file)
-    notifications.send({'id': resp[0], 'title': resp[2]}, category='content',
-                       db=config['db']['sessions'])
+    logging.info('added {} to library'.format(file))
 
 
 def generate_file_list(app):
