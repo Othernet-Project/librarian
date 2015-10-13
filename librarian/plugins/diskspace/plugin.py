@@ -80,18 +80,21 @@ def auto_cleanup(app):
     logging.info(msg)
 
 
+def setup_pager(meta_list):
+    """ takes a list of items and sets up a pager for them """
+    page = Paginator.parse_page(request.params)
+    per_page = Paginator.parse_per_page(request.params)
+    return Paginator(meta_list, page, per_page)
+
+
 @login_required()
 @view('diskspace/cleanup', message=None, vals=MultiDict())
 def cleanup_list():
     """ Render a list of items that can be deleted """
     free = zipballs.free_space()[0]
-    # parse pagination params
-    page = Paginator.parse_page(request.params)
-    per_page = Paginator.parse_per_page(request.params)
     # get md5s to into Paginator
     md5s = zipballs.list_all_zipballs()
-    # paginate query results
-    paginator = Paginator(md5s, page, per_page)
+    paginator = setup_pager(md5s)
     return {'pager': paginator,
             'metadata': paginator.items,
             'needed': zipballs.needed_space(free)}
@@ -109,7 +112,66 @@ def get_selected(forms, prefix="selection-"):
 
 
 @login_required()
+@view('diskspace/cleanup')
+def check_size(selected, response):
+    if not selected:
+        # Translators, used as message to user when clean-up is started
+        # without selecting any content
+        message = _('No content selected')
+    else:
+        tot = hsize(sum([s['size'] for s in selected]))
+        message = str(
+            # Translators, used when user is previewing clean-up, %s is
+            # replaced by amount of content that can be freed in bytes,
+            # KB, MB, etc
+            _('%s can be freed by removing selected content')) % tot
+    response['message'] = message
+    response['pager'] = setup_pager(response['metadata'])
+    return response
+
+
+@login_required()
 @view('feedback')
+def cleanup_content(selected, response):
+    conf = request.app.config
+    archive = Archive.setup(conf['librarian.backend'],
+                            request.db.main,
+                            unpackdir=conf['content.unpackdir'],
+                            contentdir=conf['content.contentdir'],
+                            spooldir=conf['content.spooldir'],
+                            meta_filename=conf['content.metadata'])
+    if selected:
+        archive.remove_from_archive([z['md5'] for z in selected])
+        request.app.exts.cache.invalidate(prefix='content')
+        # Translators, used as confirmation message after the chosen updates were
+        # successfully removed from the library
+        selected_len = len(selected)
+        message = lazy_ngettext(
+            "Content has been removed from the Library.",
+            "{update_count} updates have been added to the Library.",
+            selected_len
+        ).format(update_count=selected_len)
+        return dict(status='success',
+            page_title='Library Clean-Up',
+            message=message,
+            redirect_url=i18n_path('/p/diskspace/cleanup/'),
+            redirect_target=_("Cleanup"))
+
+        message = str(
+            # Translators, used when user has removed content through
+            # cleanup, %s is replaced with number of files
+            _('%s files removed from library')) % len(selected)
+        response['message'] = message
+        return response
+    else:
+        # Translators, error message shown on clean-up page when there was
+        # no deletable content
+        message = _('Nothing to delete')
+    response['message'] = message
+    response['vals'] = MultiDict()
+    return response
+
+
 def cleanup():
     forms = request.forms
     action = forms.get('action', 'check')
@@ -121,57 +183,13 @@ def cleanup():
     selected = get_selected(forms)
     metadata = list(cleanup)
     selected = [z for z in metadata if z['md5'] in selected]
-    if action == 'check':
-        if not selected:
-            # Translators, used as message to user when clean-up is started
-            # without selecting any content
-            message = _('No content selected')
-        else:
-            tot = hsize(sum([s['size'] for s in selected]))
-            message = str(
-                # Translators, used when user is previewing clean-up, %s is
-                # replaced by amount of content that can be freed in bytes,
-                # KB, MB, etc
-                _('%s can be freed by removing selected content')) % tot
-        return {'vals': forms, 'metadata': metadata, 'message': message,
+    response = {'vals': forms, 'metadata': metadata,
                 'needed': zipballs.needed_space(free)}
-    else:
-        conf = request.app.config
-        archive = Archive.setup(conf['librarian.backend'],
-                                request.db.main,
-                                unpackdir=conf['content.unpackdir'],
-                                contentdir=conf['content.contentdir'],
-                                spooldir=conf['content.spooldir'],
-                                meta_filename=conf['content.metadata'])
-        if selected:
-            archive.remove_from_archive([z['md5'] for z in selected])
-            request.app.exts.cache.invalidate(prefix='content')
-            # Translators, used as confirmation message after the chosen updates were
-            # successfully removed from the library
-            selected_len = len(selected)
-            message = lazy_ngettext(
-                "Content has been removed from the Library.",
-                "{update_count} updates have been added to the Library.",
-                selected_len
-            ).format(update_count=selected_len)
-            return dict(status='success',
-                page_title='Library Clean-Up',
-                message=message,
-                redirect_url=i18n_path('/p/diskspace/cleanup/'),
-                redirect_target=_("Cleanup"))
-
-            message = str(
-                # Translators, used when user has removed content through
-                # cleanup, %s is replaced with number of files
-                _('%s files removed from library')) % len(selected)
-            return {'vals': forms, 'metadata': metadata, 'message': message,
-                    'needed': zipballs.needed_space(free)}
-        else:
-            # Translators, error message shown on clean-up page when there was
-            # no deletable content
-            message = _('Nothing to delete')
-        return {'vals': MultiDict(), 'metadata': cleanup,
-                'message': message, 'needed': zipballs.needed_space(free)}
+    if action == 'check':
+        html = check_size(selected, response)
+    elif action == 'delete':
+        html = cleanup_content(selected, response)
+    return html
 
 
 def install(app, route):
