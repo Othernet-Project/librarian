@@ -144,13 +144,22 @@ def clone_zipball(zipball):
     return dict((key, zipball[key]) for key in zipball.keys())
 
 
-def list_all_zipballs(db=None, config=None):
+def list_all_zipballs(limit, offset, db=None, config=None):
     """ Return a generator of all zipball metadata
 
     The generator will stop yielding when zipballs are exhausted
     """
     # TODO: tests
-    zipballs = get_old_content(db=db)
+    db.query("""
+             SELECT md5, updated, title, views, tags, archive
+             FROM zipballs
+             ORDER BY tags IS NULL DESC,
+                      views ASC,
+                      updated ASC,
+                      archive LIKE 'ephem%' DESC
+             LIMIT :limit OFFSET :offset
+             """, limit=limit, offset=offset)
+    zipballs = db.results
     config = config or request.app.config
     contentdir = config['content.contentdir']
     zipball_list = []
@@ -159,7 +168,7 @@ def list_all_zipballs(db=None, config=None):
         if 'size' not in zipball:
             zipball['size'] = get_content_size(zipball['md5'], contentdir)
         zipball_list.append(zipball)
-    return sorted(zipball_list, key=lambda zip: zip['title'])
+    return zipball_list
 
 
 def cleanup_list(free_space, db=None, config=None):
