@@ -252,3 +252,8 @@ table td:nth-of-type(3) {
 /* line 17, ../scss/cleanup.scss */
 .size {
   white-space: nowrap; }
+
+/* line 21, ../scss/cleanup.scss */
+.pager {
+  text-align: center;
+  padding: 2em 20px; }
