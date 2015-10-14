@@ -1,7 +1,4 @@
 (function (window, $) {
-  $(document).ready(function () {
-    $('input[type=checkbox]').prop('checked', false);
-  });
 
   $(".deselect").click(function() {
     $('input[type=checkbox]').prop('checked', false);
@@ -12,13 +9,12 @@
 
   $(".check").click(function() {
     var md5_list = [];
-    $('input[type=checkbox]').each(function () {
-      var md5 = (this.checked ? $(this).attr('value') : "");
-      if (md5 === "") {
-        return;
-      }
+    var serial_form = $('form').serializeArray();
+    for (var i = 0; i < serial_form.length; i++) {
+      var md5 = serial_form[i].name;
+      console.log(md5);
       md5_list.push(md5);
-    });
+    }
     var page = $('.pager').data('page');
     var base_string = location.href.replace(location.search,"");
     var new_href = base_string + '?p=' + page + '&check=' + md5_list.join(separator=',');
