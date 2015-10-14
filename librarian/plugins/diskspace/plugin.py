@@ -153,9 +153,8 @@ def cleanup():
         abort(400, _('Invalid request'))
 
     offset = (page - 1) * per_page
-    cleanup = list(zipballs.list_all_zipballs(per_page, offset, db=db, config=config))
     selected = get_selected(forms)
-    metadata = list(cleanup)
+    metadata = zipballs.list_all_zipballs(-1, offset, db=db, config=config)
     selected = [z for z in metadata if z['md5'] in selected]
     conf = request.app.config
     archive = Archive.setup(conf['librarian.backend'],
