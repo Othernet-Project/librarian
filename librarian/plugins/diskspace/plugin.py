@@ -80,29 +80,34 @@ def auto_cleanup(app):
     logging.info(msg)
 
 
-def setup_pager(meta_list):
-    """ takes a list of items and sets up a pager for them """
-    page = Paginator.parse_page(request.params)
-    per_page = Paginator.parse_per_page(request.params)
-    return Paginator(meta_list, page, per_page)
-
-
 @login_required()
 @view('diskspace/cleanup', message=None, vals=MultiDict())
 def cleanup_list():
     """ Render a list of items that can be deleted """
+    db = request.db['main']
+    config = request.app.config
     free = zipballs.free_space()[0]
-    # get md5s to into Paginator
-    md5s = zipballs.list_all_zipballs()
-    paginator = setup_pager(md5s)
+    # get count to trick paginator
+    db.query("""
+             SELECT COUNT(md5) AS count
+             FROM zipballs;
+             """)
+    count = db.result['count']
+    page = Paginator.parse_page(request.params)
+    per_page = Paginator.parse_per_page(request.params)
+    paginator = Paginator(range(count), page, per_page)
 
-    res = {'pager': paginator, 'metadata': paginator.items,
+    limit = page * per_page
+    offset = (page - 1) * per_page
+    meta = zipballs.list_all_zipballs(limit, offset, db=db, config=config)
+
+    res = {'pager': paginator, 'metadata': meta,
             'needed': zipballs.needed_space(free)}
 
     check = request.params.get('check')
     if check != None:
         checked = check.split(',')
-        selected = [z for z in md5s if z['md5'] in checked]
+        selected = [z for z in meta if z['md5'] in checked]
         if not selected:
             # Translators, used as message to user when clean-up is started
             # without selecting any content
