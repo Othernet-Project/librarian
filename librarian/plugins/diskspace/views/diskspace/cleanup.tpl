@@ -7,6 +7,8 @@
 ${_('Library Clean-Up')}
 </%block>
 
+<% select_list = [(x+1, x+1) for x in range(pager.pages)] %>
+
 <%def name="cleanup_pager()">
     <div class="pager" data-page="${pager.page}">
         % if pager.has_prev:
@@ -14,8 +16,13 @@ ${_('Library Clean-Up')}
         <a href="${i18n_url('plugins:diskspace:cleanup', p=pager.page - 1)}" class="pager-button prev"><span class="icon">${_('previous')}</span></a>
         % endif
 
+
         <span class="pages-count">
-        ${_('Page %(current)s of %(total)s') % dict(current=pager.page, total=pager.pages)}
+        ${_('Page ')}
+            <span class="pages-list">
+                ${h.vselect('page-select', select_list, {'page-select': pager.page})}
+            </span>
+        ${_(' of %(total)s') % dict(total=pager.pages)}
         </span>
 
         % if pager.has_next:
