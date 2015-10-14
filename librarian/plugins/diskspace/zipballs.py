@@ -154,9 +154,9 @@ def list_all_zipballs(limit, offset, db=None, config=None):
              SELECT md5, updated, title, views, tags, archive
              FROM zipballs
              ORDER BY tags IS NULL DESC,
+                      archive LIKE 'ephem%' DESC,
                       views ASC,
-                      updated ASC,
-                      archive LIKE 'ephem%' DESC
+                      updated ASC
              LIMIT :limit OFFSET :offset
              """, limit=limit, offset=offset)
     zipballs = db.results
