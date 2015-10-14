@@ -1,5 +1,4 @@
 <%inherit file="../base.tpl"/>
-<%namespace name="simple_pager" file="../_simple_pager.tpl"/>
 
 <link rel="stylesheet" href="${assets['css/cleanup']}" />
 
@@ -7,6 +6,24 @@
 ## Translators, used as page title
 ${_('Library Clean-Up')}
 </%block>
+
+<%def name="cleanup_pager()">
+    <div class="pager" data-page="${pager.page}">
+        % if pager.has_prev:
+        ## Translators, used in the pager 
+        <a href="${i18n_url('plugins:diskspace:cleanup', p=pager.page - 1)}" class="pager-button prev"><span class="icon">${_('previous')}</span></a>
+        % endif
+
+        <span class="pages-count">
+        ${_('Page %(current)s of %(total)s') % dict(current=pager.page, total=pager.pages)}
+        </span>
+
+        % if pager.has_next:
+        ## Translators, used in the pager
+        <a href="${i18n_url('plugins:diskspace:cleanup', p=pager.page + 1)}" class="pager-button next"><span class="icon">${_('next')}</span></a>
+        % endif
+    </div>
+</%def>
 
 <div class="h-bar">
     <h1>
@@ -57,9 +74,8 @@ ${_('Library Clean-Up')}
                 <button type="submit" name="action" value="delete">${_('Delete selected now')}</button>
             </p>
         </div>
-        <div class="bottom-pager">
-            ${simple_pager.prev_next_pager()}
-        </div>
+
+        ${cleanup_pager()}
 
         <table id="cleanup-list">
             <tr class="header">
@@ -85,9 +101,9 @@ ${_('Library Clean-Up')}
             </tr>
             % endfor
         </table>
-        <div class="bottom-pager">
-            ${simple_pager.prev_next_pager()}
-        </div>
+
+        ${cleanup_pager()}
+        
         <div class="h-bar">
             <p class="buttons">
                 ## Translators, used as button lable for checking all boxes
