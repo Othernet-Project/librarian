@@ -92,7 +92,7 @@ ${_('Library Clean-Up')}
             <tr>
             <td>
             <% id = 'selection-{}'.format(meta['md5']) %>
-            ${h.vcheckbox(id, meta['md5'], vals, default=True)}
+            ${h.vcheckbox(id, meta['md5'], vals, default=False)}
             <label for="${id}">
             </td>
             <td>${meta['updated'].strftime('%m-%d')}</td>
