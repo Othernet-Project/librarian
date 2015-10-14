@@ -112,6 +112,7 @@ def cleanup_list():
             # Translators, used as message to user when clean-up is started
             # without selecting any content
             message = _('No content selected')
+            values = []
         else:
             values = {
                 name: md5 for (name, md5) in
@@ -142,12 +143,19 @@ def get_selected(forms, prefix="selection-"):
 @view('feedback')
 def cleanup():
     forms = request.forms
+    db = request.db['main']
+    config = request.app.config
+    page = Paginator.parse_page(request.params)
+    per_page = Paginator.parse_per_page(request.params)
+
     action = forms.get('action', 'check')
     if action not in ['delete']:
         # Translators, used as response to innvalid HTTP request
         abort(400, _('Invalid request'))
-    free = zipballs.free_space()[0]
-    cleanup = list(zipballs.list_all_zipballs())
+
+    limit = page * per_page
+    offset = (page - 1) * per_page
+    cleanup = list(zipballs.list_all_zipballs(limit, offset, db=db, config=config))
     selected = get_selected(forms)
     metadata = list(cleanup)
     selected = [z for z in metadata if z['md5'] in selected]
@@ -174,19 +182,13 @@ def cleanup():
             message=message,
             redirect_url=i18n_path('/p/diskspace/cleanup/'),
             redirect_target=_("Cleanup"))
-
-        message = str(
-            # Translators, used when user has removed content through
-            # cleanup, %s is replaced with number of files
-            _('%s files removed from library')) % len(selected)
-        return {'vals': forms, 'metadata': metadata, 'message': message,
-                'needed': zipballs.needed_space(free)}
     else:
-        # Translators, error message shown on clean-up page when there was
-        # no deletable content
-        message = _('Nothing to delete')
-    return {'vals': MultiDict(), 'metadata': metadata, 'message': message,
-            'needed': zipballs.needed_space(free)}
+        message = _("Nothing to delete.\n The library has not been modified.")
+        return dict(status='error',
+            page_title='Library Clean-Up',
+            message=message,
+            redirect_url=i18n_path('/p/diskspace/cleanup/'),
+            redirect_target=_("Cleanup"))
 
 
 def install(app, route):
