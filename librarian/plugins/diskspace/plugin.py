@@ -97,9 +97,8 @@ def cleanup_list():
     per_page = Paginator.parse_per_page(request.params)
     paginator = Paginator(range(count), page, per_page)
 
-    limit = page * per_page
     offset = (page - 1) * per_page
-    meta = zipballs.list_all_zipballs(limit, offset, db=db, config=config)
+    meta = zipballs.list_all_zipballs(per_page, offset, db=db, config=config)
 
     res = {'pager': paginator, 'metadata': meta,
             'needed': zipballs.needed_space(free)}
@@ -153,9 +152,8 @@ def cleanup():
         # Translators, used as response to innvalid HTTP request
         abort(400, _('Invalid request'))
 
-    limit = page * per_page
     offset = (page - 1) * per_page
-    cleanup = list(zipballs.list_all_zipballs(limit, offset, db=db, config=config))
+    cleanup = list(zipballs.list_all_zipballs(per_page, offset, db=db, config=config))
     selected = get_selected(forms)
     metadata = list(cleanup)
     selected = [z for z in metadata if z['md5'] in selected]
