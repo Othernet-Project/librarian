@@ -159,7 +159,7 @@ def list_all_zipballs(db=None, config=None):
         if 'size' not in zipball:
             zipball['size'] = get_content_size(zipball['md5'], contentdir)
         zipball_list.append(zipball)
-    return zipball_list
+    return sorted(zipball_list, key=lambda zip: zip['title'])
 
 
 def cleanup_list(free_space, db=None, config=None):
