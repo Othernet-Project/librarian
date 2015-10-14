@@ -108,6 +108,10 @@ def cleanup_list():
             # without selecting any content
             message = _('No content selected')
         else:
+            values = {
+                name: md5 for (name, md5) in
+                (('selection-{}'.format(zipball['md5']), zipball['md5'])
+                for zipball in selected)}
             tot = hsize(sum([s['size'] for s in selected]))
             message = str(
                 # Translators, used when user is previewing clean-up, %s is
@@ -115,7 +119,7 @@ def cleanup_list():
                 # KB, MB, etc
                 _('%s can be freed by removing selected content')) % tot
         res['message'] = message
-        res['vals'] = selected
+        res['vals'] = values
     return res
 
 

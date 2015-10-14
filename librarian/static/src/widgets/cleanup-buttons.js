@@ -11,7 +11,7 @@
     var md5_list = [];
     var serial_form = $('form').serializeArray();
     for (var i = 0; i < serial_form.length; i++) {
-      var md5 = serial_form[i].name;
+      var md5 = serial_form[i].value;
       console.log(md5);
       md5_list.push(md5);
     }
