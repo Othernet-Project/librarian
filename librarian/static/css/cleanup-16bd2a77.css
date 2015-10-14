@@ -257,3 +257,7 @@ table td:nth-of-type(3) {
 .pager {
   text-align: center;
   padding: 2em 20px; }
+
+/* line 26, ../scss/cleanup.scss */
+#page-select {
+  max-width: 100px; }
