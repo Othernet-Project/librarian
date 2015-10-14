@@ -19,8 +19,9 @@
       }
       md5_list.push(md5);
     });
+    var page = $('.pager').data('page');
     var base_string = location.href.replace(location.search,"");
-    var new_href = base_string + '?check=' + md5_list.join(separator=',');
+    var new_href = base_string + '?p=' + page + '&check=' + md5_list.join(separator=',');
     location.href = new_href;
   });
 
