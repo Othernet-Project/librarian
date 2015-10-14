@@ -21,4 +21,10 @@
     location.href = new_href;
   });
 
+  $(".pages-list").change(function () {
+    var page = $("option:selected", this)[0].value;
+    var base_string = location.href.replace(location.search,"");
+    var new_href = base_string + '?p=' + page;
+    location.href = new_href;
+  });
 }(this, jQuery));
