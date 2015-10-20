@@ -7,6 +7,7 @@ IPC calls mocked:
 /settings
 
 """
+
 from gevent import monkey
 monkey.patch_all(thread=False, aggressive=True)
 
@@ -80,6 +81,7 @@ def rand_transfer():
     </transfer>
     """ % (rand_fname(), rand_hash(), random.randrange(4000, 5000), random.randrange(1, 4000), 'yes')
 
+
 def send_transfers_response(sock):
     response = """<?xml version="1.0" encoding="UTF-8"?>
 <response code="200">
@@ -95,6 +97,7 @@ def send_transfers_response(sock):
   </streams>
 </response>\0""" % (rand_transfer(), rand_transfer(), rand_transfer())
     sock.sendall(response)
+
 
 def send_status_response(sock):
     response = """<?xml version="1.0" encoding="UTF-8"?>
@@ -129,6 +132,7 @@ def send_settings_response(sock):
     </tuner>
 </response>\0"""
     sock.sendall(response)
+
 
 def request_handler(sock, address):
     request = read_request(sock)
