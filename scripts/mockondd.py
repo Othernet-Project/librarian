@@ -7,6 +7,9 @@ IPC calls mocked:
 /settings
 
 """
+
+from __future__ import print_function
+
 from gevent import monkey
 monkey.patch_all(thread=False, aggressive=True)
 
@@ -15,8 +18,8 @@ import re
 import argparse
 import random
 import socket
-
 from contextlib import contextmanager
+from functools import wraps
 
 from gevent.server import StreamServer
 
@@ -55,11 +58,6 @@ def read_request(sock, buff_size=2048):
     return data[:-1].decode(IN_ENCODING)
 
 
-status_re = re.compile('.*status.*')
-transfers_re = re.compile('.*transfers.*')
-settings_re = re.compile('.*settings.*')
-
-
 def rand_fname():
     return 'files/file-%s.txt' % str(random.randrange(1, 100))
 
@@ -80,8 +78,21 @@ def rand_transfer():
     </transfer>
     """ % (rand_fname(), rand_hash(), random.randrange(4000, 5000), random.randrange(1, 4000), 'yes')
 
-def send_transfers_response(sock):
-    response = """<?xml version="1.0" encoding="UTF-8"?>
+
+def sender(fn):
+    @wraps(fn)
+    def wrapper(sock, debug=False):
+        res = fn()
+        if debug:
+            print('===>', res)
+        sock.sendall(res + '\0')
+        sock.close()
+    return wrapper
+
+
+@sender
+def send_transfers_response():
+    return """<?xml version="1.0" encoding="UTF-8"?>
 <response code="200">
   <streams>
     <stream>
@@ -93,11 +104,12 @@ def send_transfers_response(sock):
       </transfers>
     </stream>
   </streams>
-</response>\0""" % (rand_transfer(), rand_transfer(), rand_transfer())
-    sock.sendall(response)
+</response>""" % (rand_transfer(), rand_transfer(), rand_transfer())
 
-def send_status_response(sock):
-    response = """<?xml version="1.0" encoding="UTF-8"?>
+
+@sender
+def send_status_response():
+    return """<?xml version="1.0" encoding="UTF-8"?>
 <response code="200">
     <tuner>
         <lock>yes</lock>
@@ -111,12 +123,12 @@ def send_status_response(sock):
             <ident>outernet-0</ident>
         </stream>
     </streams>
-</response>\0"""
-    sock.sendall(response)
+</response>"""
 
 
-def send_settings_response(sock):
-    response = """<?xml version="1.0" encoding="UTF-8"?>
+@sender
+def send_settings_response():
+    return """<?xml version="1.0" encoding="UTF-8"?>
 <response code="200">
     <tuner>
         <delivery>DVB-S</delivery>
@@ -127,18 +139,34 @@ def send_settings_response(sock):
         <tone>yes</tone>
         <azimuth/>
     </tuner>
-</response>\0"""
-    sock.sendall(response)
+</response>"""
 
-def request_handler(sock, address):
-    request = read_request(sock)
-    if status_re.match(request):
-        send_status_response(sock)
-    elif transfers_re.match(request):
-        send_transfers_response(sock)
-    elif settings_re.match(request):
-        send_settings_response(sock)
-    sock.close()
+
+@sender
+def send_default_response():
+    return """<?xml version="1.0" encoding="UTF-8"?>
+<response code="204"/>
+"""
+
+
+ENDPOINT_MAPPING = (
+    (re.compile('<get.*status.*'), send_status_response),
+    (re.compile('<get.*transfers.*'), send_transfers_response),
+    (re.compile('<get.*settings.*'), send_settings_response),
+    (re.compile('.*'), send_default_response), # catch-all
+)
+
+
+def get_handler(debug=False):
+    def request_handler(sock, address):
+        request = read_request(sock)
+        if debug:
+            print('<===', request)
+        for rxp, refn in ENDPOINT_MAPPING:
+            if not rxp.match(request):
+                continue
+            refn(sock, debug)
+    return request_handler
 
 
 def main():
@@ -146,10 +174,12 @@ def main():
     parser.add_argument('--socket', metavar='PATH',
                         help='Path to socket',
                         default=SOCKET_PATH)
+    parser.add_argument('--verbose', action='store_true',
+                        help='Print out requests and responses')
     args = parser.parse_args()
 
     with open_socket(args.socket) as sock:
-        server = StreamServer(sock, request_handler)
+        server = StreamServer(sock, get_handler(args.verbose))
         server.serve_forever()
 
 
