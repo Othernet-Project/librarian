@@ -14,7 +14,6 @@ webassets==0.10.1
 librarian-core>=0.1
 librarian-notifications>=0.1
 librarian-auth>=0.1
-librarian-version>=0.1
 librarian-ui>=0.1
 librarian-setup>=0.1
 librarian-menu>=0.1
