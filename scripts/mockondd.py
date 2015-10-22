@@ -125,6 +125,7 @@ def send_status_response():
     snr = round(random.randrange(0, 16) / 10.0, 2)
     signal = random.randrange(0, 100)
     bitrate = random.randrange(15000, 93400)
+    bitrate = random.choice([bitrate, bitrate, bitrate, 0])
     lock = random.choice(('yes', 'yes', 'yes', 'yes', 'no'))
     return """<?xml version="1.0" encoding="UTF-8"?>
 <response code="200">
