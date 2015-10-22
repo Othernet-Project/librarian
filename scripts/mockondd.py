@@ -121,7 +121,7 @@ def send_transfers_response():
 
 @sender
 def send_status_response():
-    snr = round(random.randrange(0, 16) / 10, 2)
+    snr = round(random.randrange(0, 16) / 10.0, 2)
     signal = random.randrange(0, 100)
     bitrate = random.randrange(15000, 93400)
     lock = random.choice(('yes', 'no'))
