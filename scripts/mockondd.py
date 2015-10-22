@@ -65,9 +65,19 @@ def rand_fname():
 def rand_hash():
     return "%032x" % random.getrandbits(128)
 
+EMPTY_TRANSFER = """
+    <transfer>
+          <carousel_id>1</carousel_id>
+          <path></path>
+          <hash></hash>
+          <block_count>0</block_count>
+          <block_received>0</block_received>
+          <complete></complete>
+    </transfer>
+    """
 
 def rand_transfer():
-    return """
+    random_data = """
     <transfer>
           <carousel_id>1</carousel_id>
           <path>%s</path>
@@ -76,7 +86,9 @@ def rand_transfer():
           <block_received>%d</block_received>
           <complete>%s</complete>
     </transfer>
-    """ % (rand_fname(), rand_hash(), random.randrange(4000, 5000), random.randrange(1, 4000), 'yes')
+    """ % (rand_fname(), rand_hash(), random.randrange(4000, 5000),
+           random.randrange(1, 4000), random.choice(['yes', 'no']))
+    return random.choice([random_data, EMPTY_TRANSFER])
 
 
 def sender(fn):
