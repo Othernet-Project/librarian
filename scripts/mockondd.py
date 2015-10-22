@@ -88,7 +88,8 @@ def rand_transfer():
     </transfer>
     """ % (rand_fname(), rand_hash(), random.randrange(4000, 5000),
            random.randrange(1, 4000), random.choice(['yes', 'no']))
-    return random.choice([random_data, EMPTY_TRANSFER])
+    return random.choice([random_data, random_data, random_data,
+                          EMPTY_TRANSFER])
 
 
 def sender(fn):
@@ -124,7 +125,7 @@ def send_status_response():
     snr = round(random.randrange(0, 16) / 10.0, 2)
     signal = random.randrange(0, 100)
     bitrate = random.randrange(15000, 93400)
-    lock = random.choice(('yes', 'no'))
+    lock = random.choice(('yes', 'yes', 'yes', 'yes', 'no'))
     return """<?xml version="1.0" encoding="UTF-8"?>
 <response code="200">
     <tuner>
