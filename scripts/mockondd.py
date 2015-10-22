@@ -109,21 +109,25 @@ def send_transfers_response():
 
 @sender
 def send_status_response():
+    snr = round(random.randrange(0, 16) / 10, 2)
+    signal = random.randrange(0, 100)
+    bitrate = random.randrange(15000, 93400)
+    lock = random.choice(('yes', 'no'))
     return """<?xml version="1.0" encoding="UTF-8"?>
 <response code="200">
     <tuner>
-        <lock>yes</lock>
-        <signal>65</signal>
-        <snr>0.00</snr>
+        <lock>{lock}</lock>
+        <signal>{signal}</signal>
+        <snr>{snr}</snr>
     </tuner>
     <streams>
         <stream>
             <pid>65</pid>
-            <bitrate>55355</bitrate>
+            <bitrate>{bitrate}</bitrate>
             <ident>outernet-0</ident>
         </stream>
     </streams>
-</response>"""
+</response>""".format(lock=lock, signal=signal, snr=snr, bitrate=bitrate)
 
 
 @sender
