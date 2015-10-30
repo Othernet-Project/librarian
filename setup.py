@@ -34,16 +34,8 @@ def read(fname):
     return content
 
 
-def read_reqs(fname):
-    return read(fname).strip().split('\n')
-
-
 def in_scriptdir(path):
     return os.path.join(SCRIPTDIR, os.path.normpath(path))
-
-
-REQPATH = in_scriptdir('conf/requirements.txt')
-DEPS = read_reqs(REQPATH)
 
 
 def rebuild_catalogs():
@@ -187,7 +179,15 @@ setup(
             'librarian = librarian.app:main',
         ],
     },
-    install_requires=DEPS,
+    install_requires=[
+        'librarian-core',
+        'librarian-notifications',
+        'librarian-auth',
+        'librarian-ui',
+        'librarian-setup',
+        'librarian-menu',
+        'librarian-captive',
+    ],
     # FIXME: This is just a hack. These packages should eventually end up on
     # PyPi and be installed as usual.
     dependency_links=[
