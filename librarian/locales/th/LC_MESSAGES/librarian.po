@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Librarian\n"
 "Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2015-11-04 12:10+0100\n"
+"POT-Creation-Date: 2015-11-04 15:44+0100\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,72 +20,77 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: librarian_ui/views/base.tpl:72
+#: librarian_ui/views/base.tpl:73
 msgid "Toggle apps menu"
 msgstr ""
 
-#: librarian_ui/views/base.tpl:83
+#: librarian_ui/views/base.tpl:84
 msgid "Toggle context menu"
 msgstr ""
 
 #. Translators, label for context menu language switcher
 #. Translators, used as label for language
-#: librarian_ui/views/base.tpl:95 librarian_library/forms.py:25
+#: librarian_ui/views/base.tpl:96 librarian_library/forms.py:25
 #: librarian_library/views/library/content_list.tpl:68
 msgid "Language"
 msgstr ""
 
 #. Translators, link to settings dashboard in the context menu
-#: librarian_ui/views/base.tpl:111 librarian_dashboard/menuitems.py:18
+#: librarian_ui/views/base.tpl:112 librarian_dashboard/menuitems.py:18
 msgid "Settings"
 msgstr ""
 
 #. Translators, link shown in context menu when user is logged in.
-#: librarian_ui/views/base.tpl:113 librarian_auth/menuitems.py:9
+#: librarian_ui/views/base.tpl:114 librarian_auth/menuitems.py:9
 msgid "Log out"
 msgstr ""
 
 #. Translators, link shown in context menu when user is not logged in.
-#: librarian_ui/views/base.tpl:116
+#: librarian_ui/views/base.tpl:117
 msgid "Log in"
 msgstr ""
 
 #. Translators, label on back button that appears at the top of
 #. context menu's submenu
-#: librarian_ui/views/base.tpl:123
+#: librarian_ui/views/base.tpl:124
 msgid "Back to menu"
 msgstr ""
 
 #. Translators, used as a label for guest account (unauthenticated user)
-#: librarian_ui/views/base.tpl:150
+#: librarian_ui/views/base.tpl:152
 msgid "guest"
 msgstr ""
 
-#: librarian_ui/views/base.tpl:166
+#: librarian_ui/views/base.tpl:168
 msgid "Toggle status"
 msgstr ""
 
-#: librarian_ui/views/base.tpl:176
+#: librarian_ui/views/base.tpl:178
 msgid "Info"
 msgstr ""
 
-#: librarian_ui/views/base.tpl:179
+#: librarian_ui/views/base.tpl:181
 msgid "Notifications"
 msgstr ""
 
-#: librarian_ui/views/base.tpl:199
+#: librarian_ui/views/base.tpl:202
 #: librarian_filemanager/views/filemanager/list.tpl:47
 msgid "Loading"
 msgstr ""
 
-#: librarian_ui/views/base.tpl:205 librarian_ui/views/base.tpl:210
+#: librarian_ui/views/base.tpl:208 librarian_ui/views/base.tpl:213
 msgid "Content could not be loaded"
 msgstr ""
 
 #. Translators, message shown next to a spinning load icon
-#: librarian_ui/views/base.tpl:216
+#: librarian_ui/views/base.tpl:219
 msgid "Loading..."
 msgstr "Loading..."
+
+#: librarian_ui/views/ui/feedback.tpl:12
+#, python-brace-format
+msgid "You'll be taken to {target} in {seconds} seconds."
+msgstr ""
 
 #. Translators, used as page title
 #. Translators, used as access denied page heading
@@ -151,7 +156,11 @@ msgstr ""
 msgid "Error details are not available."
 msgstr ""
 
-#: librarian_ui/views/errors/500.tpl:32 librarian_logs/views/logs.tpl:5
+#: librarian_ui/views/errors/500.tpl:32
+msgid "Return to main page"
+msgstr ""
+
+#: librarian_ui/views/errors/500.tpl:33 librarian_logs/views/logs.tpl:5
 msgid "Download application log"
 msgstr "Download application log"
 
@@ -176,24 +185,28 @@ msgid "wired"
 msgstr ""
 
 #. Translators, network interface IP address
-#: librarian_netinterfaces/views/netinterfaces.tpl:24
+#: librarian_netinterfaces/views/netinterfaces.tpl:29
 msgid "IP address:"
 msgstr ""
 
-#. Translators, shown when network interface is disconnected
-#: librarian_netinterfaces/views/netinterfaces.tpl:26
-#: librarian_netinterfaces/views/netinterfaces.tpl:32
-msgid "disconnected"
+#. Translators, network interface default gateway
+#: librarian_netinterfaces/views/netinterfaces.tpl:34
+msgid "Default gateway:"
 msgstr ""
 
 #. Translators, network interface IP address (IPv6)
-#: librarian_netinterfaces/views/netinterfaces.tpl:30
+#: librarian_netinterfaces/views/netinterfaces.tpl:39
 msgid "IPv6 address:"
 msgstr ""
 
+#. Translators, network interface IP address
+#: librarian_netinterfaces/views/netinterfaces.tpl:44
+msgid "Interface name:"
+msgstr ""
+
 #. Translators, used as page title
-#: librarian_filemanager/menuitems.py:8 librarian_filemanager/routes.py:95
-#: librarian_filemanager/routes.py:123 librarian_filemanager/routes.py:133
+#: librarian_filemanager/menuitems.py:8 librarian_filemanager/routes.py:100
+#: librarian_filemanager/routes.py:128 librarian_filemanager/routes.py:138
 #: librarian_filemanager/views/filemanager/list.tpl:8
 #: librarian_filemanager/views/opener/opener_list.tpl:6
 #: librarian_library/views/library/content_list.tpl:86
@@ -202,33 +215,33 @@ msgstr "ไฟล์"
 
 #. Translators, used as page title when a file's removal is
 #. retried, but it was already deleted before
-#: librarian_filemanager/routes.py:86
+#: librarian_filemanager/routes.py:91
 msgid "File already removed"
 msgstr ""
 
 #. Translators, used as message when a file's removal is
 #. retried, but it was already deleted before
-#: librarian_filemanager/routes.py:89
+#: librarian_filemanager/routes.py:94
 msgid "The specified file has already been removed."
 msgstr ""
 
 #. Translators, used as page title of successful file removal feedback
-#: librarian_filemanager/routes.py:116
+#: librarian_filemanager/routes.py:121
 msgid "File removed"
 msgstr ""
 
 #. Translators, used as message of successful file removal feedback
-#: librarian_filemanager/routes.py:118
+#: librarian_filemanager/routes.py:123
 msgid "File successfully removed."
 msgstr ""
 
 #. Translators, used as page title of unsuccessful file removal feedback
-#: librarian_filemanager/routes.py:126
+#: librarian_filemanager/routes.py:131
 msgid "File not removed"
 msgstr ""
 
 #. Translators, used as message of unsuccessful file removal feedback
-#: librarian_filemanager/routes.py:128
+#: librarian_filemanager/routes.py:133
 msgid "File could not be removed."
 msgstr ""
 
@@ -347,7 +360,7 @@ msgid "Explore"
 msgstr ""
 
 #: librarian_filemanager/views/opener/_opener_list.tpl:17
-#: librarian_dbmanage/views/dbmanage.tpl:8
+#: librarian_dbmanage/views/dbmanage.tpl:6
 msgid "Download"
 msgstr ""
 
@@ -433,8 +446,8 @@ msgstr ""
 
 #. Translators, shown after emergency reset
 #: librarian_auth/routes/emergency_reset.py:73
-#, python-format
-msgid "You may now log in as '%(username)s'."
+#, python-brace-format
+msgid "You may now log in as '{username}'."
 msgstr ""
 
 #. Translators, used as page title on feedback page
@@ -444,8 +457,8 @@ msgstr ""
 
 #. Translators, shown after password has been changed
 #: librarian_auth/routes/auth.py:94
-#, python-format
-msgid "Password for username '%(username)s' has been set."
+#, python-brace-format
+msgid "Password for username '{username}' has been set."
 msgstr ""
 
 #: librarian_auth/views/setup/step_superuser.tpl:7
@@ -482,19 +495,19 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: librarian_auth/views/auth/_reset_password.tpl:15
+#: librarian_auth/views/auth/_reset_password.tpl:14
 msgid ""
 "This is the 6-digit number you were asked to write down when you created "
 "your user account."
 msgstr ""
 
-#: librarian_auth/views/auth/_reset_password.tpl:39
+#: librarian_auth/views/auth/_reset_password.tpl:27
 msgid "Change password"
 msgstr ""
 
 #. Translators, used as page title
 #: librarian_auth/views/auth/login.tpl:6
-#: librarian_auth/views/auth/_login.tpl:13
+#: librarian_auth/views/auth/_login.tpl:11
 msgid "Login"
 msgstr ""
 
@@ -516,7 +529,7 @@ msgstr ""
 #. Translators, used as page title
 #: librarian_auth/views/auth/reset_password.tpl:6
 #: librarian_auth/views/auth/reset_password.tpl:11
-#: librarian_auth/views/auth/_login.tpl:16
+#: librarian_auth/views/auth/_login.tpl:14
 msgid "Reset your password"
 msgstr ""
 
@@ -825,115 +838,23 @@ msgstr ""
 msgid "Storage devices"
 msgstr ""
 
-#. Translators, used as response to innvalid HTTP request
-#: librarian_diskspace/routes.py:25
-msgid "Invalid request"
-msgstr "Invalid request"
-
-#. Translators, used as message to user when clean-up is started
-#. without selecting any content
-#: librarian_diskspace/routes.py:35
-msgid "No content selected"
-msgstr "No content selected"
-
-#. Translators, used when user is previewing clean-up, %s is
-#. replaced by amount of content that can be freed in bytes,
-#. KB, MB, etc
-#: librarian_diskspace/routes.py:42
-#, python-format
-msgid "%s can be freed by removing selected content"
-msgstr "%s can be freed by removing selected content"
-
-#. Translators, error message shown on clean-up page when there was
-#. no deletable content
-#: librarian_diskspace/routes.py:59
-msgid "Nothing to delete"
-msgstr "ไม่มีอะไรให้ลบ"
-
-#. Translators, used as label for storage space indicator
-#: librarian_diskspace/views/diskspace/_space_info.tpl:7
-msgid "Storage space"
-msgstr ""
-
-#. Translators, %(free)s and %(total)s are placeholders for disk space amount, please leave them as they are.
-#: librarian_diskspace/views/diskspace/_space_info.tpl:10
-#, python-format
-msgid "%(free)s free of %(total)s"
-msgstr ""
-
-#. Translators, used as page title
-#. Translators, used as page heading on clean-up page
-#: librarian_diskspace/views/diskspace/cleanup.tpl:5
-#: librarian_diskspace/views/diskspace/cleanup.tpl:10
-msgid "Library clean-up"
-msgstr "ทำความสะอาดห้องสมุด"
-
-#. Translators, %s represents the amount of space in bytes, KB, MB, etc
-#: librarian_diskspace/views/diskspace/cleanup.tpl:20
-#, python-format
-msgid "%s more space should be freed."
-msgstr "%s more space should be freed."
-
-#. Translators, note that appears on clean-up page when user goes to it even though there is enough space
-#: librarian_diskspace/views/diskspace/cleanup.tpl:25
-msgid "There is enough free space on storage"
-msgstr "มีพื้นที่จัดเก็บมากพอในนี้"
-
-#. Translators, in table header on clean-up page, above checkboxes for marking deletion candidates
-#: librarian_diskspace/views/diskspace/cleanup.tpl:33
-msgid "delete?"
-msgstr "ลบ?"
-
-#. Translators, in table header on clean-up page, date added to library
-#: librarian_diskspace/views/diskspace/cleanup.tpl:35
-msgid "date"
-msgstr "วันที่"
-
-#. Translators, in table header on clean-up page, content title
-#: librarian_diskspace/views/diskspace/cleanup.tpl:37
-msgid "title"
-msgstr "หัวเรื่อง"
-
-#. Translators, in table header on clean-up page, content size on disk
-#: librarian_diskspace/views/diskspace/cleanup.tpl:39
-msgid "size"
-msgstr "ขนาด"
-
-#. Translators, note that appears on clean-up page inside the table where deletion candidates would normally be shown
-#: librarian_diskspace/views/diskspace/cleanup.tpl:55
-msgid "There is enough free space. No clean-up needed."
-msgstr "There is enough free space. No clean-up needed."
-
-#. Translators, used as button label for clean-up preview button
-#: librarian_diskspace/views/diskspace/cleanup.tpl:62
-msgid "How much space does this free up?"
-msgstr "How much space does this free up?"
-
-#. Translators, used as button label for clean-up start button, user selects content to be deleted before using this button
-#: librarian_diskspace/views/diskspace/cleanup.tpl:64
-msgid "Delete selected now"
-msgstr "Delete selected now"
-
-#. Translators, this is a warning message appearing when disk space is below minimum
-#: librarian_diskspace/views/dashboard/diskspace.tpl:10
-msgid "You are running low on disk space."
-msgstr "พื้นที้จัดเก็บของคุณเหลือน้อย"
-
-#. Translators, this is a button label that leads to page for library cleanup
+#. Translators, used as description of storage device
 #: librarian_diskspace/views/dashboard/diskspace.tpl:12
-msgid "Free some space now"
-msgstr "Free some space now"
+msgid "intenal storage"
+msgstr ""
 
-#. Translators, used as a label in content library stats section on dashboard, preceded by count of items in the library
-#: librarian_diskspace/views/dashboard/diskspace.tpl:20
-msgid "item in the library"
-msgid_plural "items in the library"
-msgstr[0] ""
+#. Translators, used as description of storage device
+#: librarian_diskspace/views/dashboard/diskspace.tpl:17
+#: librarian_diskspace/views/dashboard/diskspace.tpl:22
+msgid "removable storage"
+msgstr ""
 
-#. Translators, used as a label in content library stats section on dashboard, preceded by library size in bytes, KB, MB, etc
-#: librarian_diskspace/views/dashboard/diskspace.tpl:26
-msgid "used space"
-msgstr "พื้นที่จัดเก็บที่ใช้ไป"
+#. Translators, this is used next to disk space usage indicator in settings
+#. panel. The {used}, {total}, and {free} are placeholders.
+#: librarian_diskspace/views/dashboard/diskspace.tpl:42
+#, python-brace-format
+msgid "{used} of {total} ({free} free)"
+msgstr ""
 
 #: librarian_opener_html/hooks.py:8
 msgid "Read"
@@ -983,6 +904,10 @@ msgstr ""
 
 #: librarian_setup/views/setup/setup_base.tpl:40
 msgid "Back"
+msgstr ""
+
+#: librarian_setup/views/setup/setup_base.tpl:42
+msgid "Finish"
 msgstr ""
 
 #. Translators, used as dashboard section title
@@ -1267,28 +1192,79 @@ msgstr ""
 msgid "Database rebuild"
 msgstr "Database rebuild"
 
-#: librarian_dbmanage/views/dbmanage.tpl:4
+#: librarian_dbmanage/views/dbmanage.tpl:2
 msgid "Database size"
 msgstr "Database size"
 
 #. Translators, refers to database backup
-#: librarian_dbmanage/views/dbmanage.tpl:12
+#: librarian_dbmanage/views/dbmanage.tpl:10
 msgid "Backup"
 msgstr "Backup"
 
 #. Translators, refers to database rebuild feature
-#: librarian_dbmanage/views/dbmanage.tpl:17
+#: librarian_dbmanage/views/dbmanage.tpl:15
 msgid "Rebuild"
 msgstr "Rebuild"
 
 #. Translators, note about database rebuild shown on dashboard
-#: librarian_dbmanage/views/dbmanage.tpl:23
+#: librarian_dbmanage/views/dbmanage.tpl:21
 msgid ""
 "Database rebuild will cause all tags to be lost. It will also put Librarian "
 "into maintenance mode and prevent users from accessing content."
 msgstr ""
 "Database rebuild will cause all tags to be lost. It will also put Librarian "
 "into maintenance mode and prevent users from accessing content."
+
+#~ msgid "Invalid request"
+#~ msgstr "Invalid request"
+
+#~ msgid "No content selected"
+#~ msgstr "No content selected"
+
+#~ msgid "%s can be freed by removing selected content"
+#~ msgstr "%s can be freed by removing selected content"
+
+#~ msgid "Nothing to delete"
+#~ msgstr "ไม่มีอะไรให้ลบ"
+
+#~ msgid "Library clean-up"
+#~ msgstr "ทำความสะอาดห้องสมุด"
+
+#~ msgid "%s more space should be freed."
+#~ msgstr "%s more space should be freed."
+
+#~ msgid "There is enough free space on storage"
+#~ msgstr "มีพื้นที่จัดเก็บมากพอในนี้"
+
+#~ msgid "delete?"
+#~ msgstr "ลบ?"
+
+#~ msgid "date"
+#~ msgstr "วันที่"
+
+#~ msgid "title"
+#~ msgstr "หัวเรื่อง"
+
+#~ msgid "size"
+#~ msgstr "ขนาด"
+
+#~ msgid "There is enough free space. No clean-up needed."
+#~ msgstr "There is enough free space. No clean-up needed."
+
+#~ msgid "How much space does this free up?"
+#~ msgstr "How much space does this free up?"
+
+#~ msgid "Delete selected now"
+#~ msgstr "Delete selected now"
+
+#~ msgid "You are running low on disk space."
+#~ msgstr "พื้นที้จัดเก็บของคุณเหลือน้อย"
+
+#~ msgid "Free some space now"
+#~ msgstr "Free some space now"
+
+#~ msgid "used space"
+#~ msgstr "พื้นที่จัดเก็บที่ใช้ไป"
 
 #~ msgid "Updates"
 #~ msgstr "อัพเดต"
