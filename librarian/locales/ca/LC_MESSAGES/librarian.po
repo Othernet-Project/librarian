@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Librarian\n"
 "Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2015-11-04 15:44+0100\n"
+"POT-Creation-Date: 2015-11-04 18:20+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Josep Comas <extern@jcomas.net>\n"
 "Language-Team: \n"
@@ -845,7 +845,7 @@ msgstr ""
 
 #. Translators, used as description of storage device
 #: librarian_diskspace/views/dashboard/diskspace.tpl:12
-msgid "intenal storage"
+msgid "internal storage"
 msgstr ""
 
 #. Translators, used as description of storage device
