@@ -31,9 +31,12 @@ def cached(app, prefix='', timeout=None):
     return decorator
 
 
-def add_file(archive, file, config):
-    archive.add_to_archive(file)
-    logging.info('added {} to library'.format(file))
+def add_file(archive, cid, config):
+    ret = archive.add_to_archive(cid)
+    if ret == 0:
+        logging.error('{} could not be added to library'.format(cid))
+    else:
+        logging.info('{} added to library'.format(cid))
 
 
 def generate_file_list(app):
@@ -41,27 +44,17 @@ def generate_file_list(app):
     conf = app.config
     paths = downloads.get_downloads(conf['content.spooldir'],
                                     conf['content.output_ext'])
-    zballs = list(reversed(downloads.order_downloads(paths)))
-    meta_filename = conf['content.metadata']
-    metas = []
-    for zipball_path, timestamp in zballs:
-        try:
-            # if this works it's valid, we don't need the info though
-            read_meta(zipball_path, meta_filename=meta_filename)
-        except zipballs.ValidationError:
-            # file is probably in progress, ignore it
-            pass
-        metas.append(zipballs.get_md5_from_path(zipball_path))
-    return metas
+    return downloads.order_downloads(paths, reverse=True)
 
 
 def check_for_updates(app):
     config = app.config
+    meta_filename = conf['content.metadata']
     archive = open_archive(config=config)
-    file_list = generate_file_list(app)
-    logging.info('Found {0} updates'.format(len(file_list)))
-    for file in file_list:
-        args=(archive, file, config)
+    updates = generate_file_list(app)
+    for path in updates:
+        cid = zipballs.get_md5_from_path(path)
+        args=(archive, cid, config)
         app.exts.tasks.schedule(add_file, args=args)
     app.exts.tasks.schedule(schedule_check, args=(app,), kwargs={'delay': 600})
 

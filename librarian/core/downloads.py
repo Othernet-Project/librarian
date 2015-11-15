@@ -78,16 +78,17 @@ def get_downloads(spooldir, extension):
             yield entry.path
 
 
-def order_downloads(downloads):
+def order_downloads(downloads, reverse=False):
     """ Order zipball paths by timestamp and return timestamps
 
     :param zipballs:  iterable containing zipballs such as return value of
                       ``get_downloads`` function
+    :param reverse:   return results in reverse order
     :returns:         iterable contianing two-tuples of zipballs and their
                       timestamps
     """
-    zipdates = [(z, os.stat(z).st_mtime) for z in downloads]
-    return sorted(zipdates, key=lambda x: x[1])
+    zipdates = ((z, os.stat(z).st_mtime) for z in downloads)
+    return sorted(zipdates, key=lambda x: x[1], reverse=reverse)
 
 
 def safe_remove(path):
