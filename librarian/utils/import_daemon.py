@@ -48,13 +48,13 @@ def generate_file_list(app):
 
 
 def check_for_updates(app):
-    config = app.config
+    conf = app.config
     meta_filename = conf['content.metadata']
-    archive = open_archive(config=config)
+    archive = open_archive(config=conf)
     updates = generate_file_list(app)
-    for path in updates:
+    for path, _ in updates:
         cid = zipballs.get_md5_from_path(path)
-        args=(archive, cid, config)
+        args = (archive, cid, conf)
         app.exts.tasks.schedule(add_file, args=args)
     app.exts.tasks.schedule(schedule_check, args=(app,), kwargs={'delay': 600})
 
