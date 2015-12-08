@@ -6,11 +6,11 @@ __pycache__/
 /tmp
 .sass-cache
 /dist
+/build
 /librarian.egg-info
 /.coverage
 /node_modules
 *.log
-/librarian/static/dist
-/librarian/static/assets.json
+/librarian/static/
 .webassets-cache
 dev.ini
