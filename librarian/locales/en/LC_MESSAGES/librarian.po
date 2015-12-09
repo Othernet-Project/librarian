@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Librarian\n"
 "Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2015-12-02 14:56+0100\n"
+"POT-Creation-Date: 2015-12-09 19:01+0100\n"
 "Language: en-us\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -10,194 +10,174 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. Translators, errorm essage shown when emergency reset token is
-#. invalid
-#: librarian_auth/forms.py:26
-msgid "This emergency reset token is invalid"
-msgstr "This emergency reset token is invalid"
+#: librarian_ui/lang.py:20
+msgid "any language"
+msgstr "any language"
 
-#: librarian_auth/forms.py:53
-msgid "Please enter the correct username and password."
-msgstr "Please enter the correct username and password."
+#. Translators, shown on error page as error code when error code
+#. is unknown.
+#: librarian_ui/lang.py:35 librarian_ui/views/errors/_error_page.tpl:13
+msgid "unknown"
+msgstr "unknown"
 
-#. Translators, used as label for a login field
-#. Translators, used as label in create user form
-#: librarian_auth/forms.py:56 librarian_auth/forms.py:77
-msgid "Username"
-msgstr "Username"
+#: librarian_ui/views/base.tpl:74
+msgid "Toggle apps menu"
+msgstr "Toggle apps menu"
 
-#: librarian_auth/forms.py:57 librarian_auth/forms.py:79
-msgid "username"
-msgstr "username"
+#: librarian_ui/views/base.tpl:85
+msgid "Toggle context menu"
+msgstr "Toggle context menu"
 
-#. Translators, used as label for a password field
-#. Translators, used as label in create user form
-#. Translators, used as label in password reset form
-#: librarian_auth/forms.py:60 librarian_auth/forms.py:81
-#: librarian_auth/forms.py:106
-msgid "Password"
-msgstr "Password"
+#. Translators, label for context menu language switcher
+#. Translators, used as label for language
+#: librarian_ui/views/base.tpl:97 librarian_library/forms.py:25
+msgid "Language"
+msgstr "Language"
 
-#: librarian_auth/forms.py:61 librarian_auth/forms.py:83
-#: librarian_auth/forms.py:108
-msgid "password"
-msgstr "password"
-
-#: librarian_auth/forms.py:74 librarian_auth/forms.py:98
-#: librarian_auth/forms.py:123
-msgid "The entered passwords do not match."
-msgstr "The entered passwords do not match."
-
-#. Translators, used as label in create user form
-#. Translators, used as label in password reset form
-#: librarian_auth/forms.py:85 librarian_auth/forms.py:110
-msgid "Confirm Password"
-msgstr "Confirm Password"
-
-#: librarian_auth/forms.py:87 librarian_auth/forms.py:112
-msgid "confirm password"
-msgstr "confirm password"
-
-#: librarian_auth/forms.py:99
-msgid "Password reset token does not match any user"
-msgstr "Password reset token does not match any user"
-
-#. Translators, used as label in create user form
-#: librarian_auth/forms.py:102 librarian_auth/views/setup/step_superuser.tpl:25
-#: librarian_auth/views/auth/_emergency_reset.tpl:13
-msgid "Password reset token"
-msgstr "Password reset token"
-
-#. Translators, used as error message for emergency reset token form
-#. field
-#: librarian_auth/forms.py:126
-msgid "Invalid emergency reset token"
-msgstr "Invalid emergency reset token"
-
-#. Translators, used as label for emergency reset token field
-#: librarian_auth/forms.py:130
-msgid "Emergency reset token"
-msgstr "Emergency reset token"
-
-#. Translators, link shown in context menu when user is logged in.
-#: librarian_auth/menuitems.py:9 librarian_ui/views/base.tpl:115
-msgid "Log out"
-msgstr "Log out"
-
-#. Translators, used as page title on feedback page
-#: librarian_auth/routes/emergency_reset.py:68
-msgid "Emergency reset successful"
-msgstr "Emergency reset successful"
-
-#. Translators, used as link label on feedback page in "You
-#. will be taken to log-in page..."
-#: librarian_auth/routes/emergency_reset.py:71 librarian_auth/routes/auth.py:92
-msgid "log-in page"
-msgstr "log-in page"
-
-#. Translators, shown after emergency reset
-#: librarian_auth/routes/emergency_reset.py:73
-#, python-brace-format
-msgid "You may now log in as '{username}'."
-msgstr "You may now log in as '{username}'."
-
-#. Translators, used as page title on feedback page
-#: librarian_auth/routes/auth.py:89
-msgid "New password was set"
-msgstr "New password was set"
-
-#. Translators, shown after password has been changed
-#: librarian_auth/routes/auth.py:94
-#, python-brace-format
-msgid "Password for username '{username}' has been set."
-msgstr "Password for username '{username}' has been set."
-
-#: librarian_auth/views/setup/step_superuser.tpl:7
-msgid "Superuser account"
-msgstr "Superuser account"
-
-#: librarian_auth/views/setup/step_superuser.tpl:12
-msgid ""
-"The superuser account is used to maintain the library and configure the "
-"receiver."
-msgstr ""
-"The superuser account is used to maintain the library and configure the "
-"receiver."
-
-#. Translators, shown as a message under the password reset token.
-#. Password reset token is a 6-digit number that is used to reset
-#. the user password.
-#: librarian_auth/views/setup/step_superuser.tpl:31
-#: librarian_auth/views/auth/_emergency_reset.tpl:19
-msgid ""
-"Please write this password reset token down and store it securely. You will "
-"need it if you ever need to reset your password."
-msgstr ""
-"Please write this password reset token down and store it securely. You will "
-"need it if you ever need to reset your password."
-
-#. Translators, help text displayed below emergency reset token field
-#: librarian_auth/views/auth/_emergency_reset.tpl:8
-msgid "Please contact Outernet to obtain your emergency reset token."
-msgstr "Please contact Outernet to obtain your emergency reset token."
-
-#. Translators, used as label for button that performs emergency reset
-#: librarian_auth/views/auth/_emergency_reset.tpl:25
-msgid "Reset"
-msgstr "Reset"
-
-#: librarian_auth/views/auth/_reset_password.tpl:14
-msgid ""
-"This is the 6-digit number you were asked to write down when you created "
-"your user account."
-msgstr ""
-"This is the 6-digit number you were asked to write down when you created "
-"your user account."
-
-#: librarian_auth/views/auth/_reset_password.tpl:27
-msgid "Change password"
-msgstr "Change password"
-
-#. Translators, used as page title
-#: librarian_auth/views/auth/login.tpl:6
-#: librarian_auth/views/auth/_login.tpl:11
-msgid "Login"
-msgstr "Login"
-
-#. Translators, used as page title
-#: librarian_auth/views/auth/login.tpl:11
-msgid "Log into Librarian"
-msgstr "Log into Librarian"
-
-#. Translators, used as page title
-#: librarian_auth/views/auth/emergency_reset.tpl:5
-msgid "Emergency reset"
-msgstr "Emergency reset"
-
-#. Translators, used as page heading
-#: librarian_auth/views/auth/emergency_reset.tpl:9
-msgid "Perform emergency reset"
-msgstr "Perform emergency reset"
-
-#. Translators, used as page title
-#: librarian_auth/views/auth/reset_password.tpl:6
-#: librarian_auth/views/auth/reset_password.tpl:11
-#: librarian_auth/views/auth/_login.tpl:14
-msgid "Reset your password"
-msgstr "Reset your password"
-
-#. Translators, used as page title
 #. Translators, link to settings dashboard in the context menu
-#: librarian_dashboard/menuitems.py:18
+#. Translators, used as page title
+#: librarian_ui/views/base.tpl:113 librarian_dashboard/menuitems.py:18
 #: librarian_dashboard/views/dashboard/dashboard.tpl:6
-#: librarian_ui/views/base.tpl:113
 msgid "Settings"
 msgstr "Settings"
 
-#. Translators, displayed when an unforeseen error happens in one of the dashboard plugins
-#: librarian_dashboard/views/dashboard/plugin_error.tpl:2
-msgid "An error occurred during the rendering of this plugin."
-msgstr "An error occurred during the rendering of this plugin."
+#. Translators, link shown in context menu when user is logged in.
+#: librarian_ui/views/base.tpl:115 librarian_auth/menuitems.py:9
+msgid "Log out"
+msgstr "Log out"
+
+#. Translators, link shown in context menu when user is not logged in.
+#: librarian_ui/views/base.tpl:118
+msgid "Log in"
+msgstr "Log in"
+
+#. Translators, label on back button that appears at the top of
+#. context menu's submenu
+#: librarian_ui/views/base.tpl:125
+msgid "Back to menu"
+msgstr "Back to menu"
+
+#. Translators, used as a label for guest account (unauthenticated user)
+#: librarian_ui/views/base.tpl:153
+msgid "guest"
+msgstr "guest"
+
+#: librarian_ui/views/base.tpl:175
+msgid "Info"
+msgstr "Info"
+
+#: librarian_ui/views/base.tpl:178
+msgid "Notifications"
+msgstr "Notifications"
+
+#: librarian_ui/views/base.tpl:199
+#: librarian_filemanager/views/filemanager/list.tpl:47
+msgid "Loading"
+msgstr "Loading"
+
+#: librarian_ui/views/base.tpl:205 librarian_ui/views/base.tpl:210
+msgid "Content could not be loaded"
+msgstr "Content could not be loaded"
+
+#. Translators, message shown next to a spinning load icon
+#: librarian_ui/views/base.tpl:216
+msgid "Loading..."
+msgstr "Loading..."
+
+#: librarian_ui/views/base.tpl:221
+msgid "Toggle status"
+msgstr "Toggle status"
+
+#. Translators, used as link label for link that takes user back to
+#. a page from which they came (usually used when they temporarily
+#. visit the current page to change some option such as language)
+#: librarian_ui/views/ui/lang_list.tpl:10
+msgid "Back to previous page"
+msgstr "Back to previous page"
+
+#: librarian_ui/views/ui/feedback.tpl:19
+#, python-brace-format
+msgid "You'll be taken to {target} in {seconds} seconds."
+msgstr "You'll be taken to {target} in {seconds} seconds."
+
+#. Translators, used as page title
+#. Translators, used as access denied page heading
+#: librarian_ui/views/errors/403.tpl:5 librarian_ui/views/errors/403.tpl:10
+msgid "Forbidden"
+msgstr "Forbidden"
+
+#. Translators, shown when user is denied access to a page
+#: librarian_ui/views/errors/403.tpl:20
+msgid "You are not authorized to access this page or the page has expired."
+msgstr "You are not authorized to access this page or the page has expired."
+
+#. Translators, used as page title
+#. Translators, used as error page heading
+#: librarian_ui/views/errors/404.tpl:5 librarian_ui/views/errors/404.tpl:10
+msgid "Page not found"
+msgstr "Page not found"
+
+#: librarian_ui/views/errors/404.tpl:18
+msgid "The page you were looking for could not be found"
+msgstr "The page you were looking for could not be found"
+
+#: librarian_ui/views/errors/404.tpl:19
+msgid "main page"
+msgstr "main page"
+
+#: librarian_ui/views/errors/404.tpl:20
+#, python-brace-format
+msgid "You will be redirected to {target} in {seconds} seconds."
+msgstr "You will be redirected to {target} in {seconds} seconds."
+
+#. Translators, used as page title
+#. Translators, used as maintenance page heading
+#: librarian_ui/views/errors/503.tpl:5 librarian_ui/views/errors/503.tpl:10
+msgid "Under maintenance"
+msgstr "Under maintenance"
+
+#: librarian_ui/views/errors/503.tpl:19
+msgid ""
+"Librarian is currently in maintenance mode. Please wait a few minutes and "
+"try again."
+msgstr ""
+"Librarian is currently in maintenance mode. Please wait a few minutes and "
+"try again."
+
+#. Translators, used as page title
+#. Translators, used as error page heading
+#: librarian_ui/views/errors/500.tpl:5 librarian_ui/views/errors/500.tpl:10
+msgid "Error"
+msgstr "Error"
+
+#: librarian_ui/views/errors/500.tpl:19
+msgid ""
+"Librarian has failed to fulfill your request due to unexpected error in the "
+"program."
+msgstr ""
+"Librarian has failed to fulfill your request due to unexpected error in the "
+"program."
+
+#: librarian_ui/views/errors/500.tpl:21
+msgid "Details are provided below."
+msgstr "Details are provided below."
+
+#: librarian_ui/views/errors/500.tpl:23
+msgid "Error details are not available."
+msgstr "Error details are not available."
+
+#: librarian_ui/views/errors/500.tpl:32
+msgid "Return to main page"
+msgstr "Return to main page"
+
+#: librarian_ui/views/errors/500.tpl:33
+msgid "Download application log"
+msgstr "Download application log"
+
+#. Translators, shown on error page below the error title
+#: librarian_ui/views/errors/_error_page.tpl:10
+msgid "Error code:"
+msgstr "Error code:"
 
 #. Translators, used as page title
 #: librarian_filemanager/menuitems.py:8 librarian_filemanager/routes.py:102
@@ -304,9 +284,12 @@ msgid "Deleted files and folders cannot be recovered."
 msgstr "Deleted files and folders cannot be recovered."
 
 #. Translators, used as title of content removal confirmation button
+#. Translators, used as label for folder/file delete button
 #: librarian_filemanager/views/filemanager/remove_confirm.tpl:28
-msgid "Remove"
-msgstr "Remove"
+#: librarian_filemanager/views/filemanager/_list.tpl:31
+#, fuzzy
+msgid "Delete"
+msgstr "delete?"
 
 #. Translators, used as title of content removal cancellation button
 #: librarian_filemanager/views/filemanager/remove_confirm.tpl:30
@@ -330,20 +313,9 @@ msgstr "Folder path or search keywords"
 msgid "Start search"
 msgstr "Start search"
 
-#: librarian_filemanager/views/filemanager/list.tpl:47
-#: librarian_ui/views/base.tpl:199
-msgid "Loading"
-msgstr "Loading"
-
 #: librarian_filemanager/views/filemanager/list.tpl:57
 msgid "Folder listing could not be loaded. Please try again in a few seconds."
 msgstr "Folder listing could not be loaded. Please try again in a few seconds."
-
-#. Translators, used as label for folder/file delete button
-#: librarian_filemanager/views/filemanager/_list.tpl:31
-#, fuzzy
-msgid "Delete"
-msgstr "delete?"
 
 #. Translators, label for a link that takes the user to
 #. main file/folder list from search results.
@@ -373,8 +345,6 @@ msgid "in {}"
 msgstr "in {}"
 
 #: librarian_filemanager/views/opener/opener_detail.tpl:27
-#: librarian_library/views/content_readers/image.tpl:97
-#: librarian_library/views/content_readers/audio.tpl:39
 #, python-brace-format
 msgid "{date} by {publisher}."
 msgstr "{date} by {publisher}."
@@ -389,179 +359,309 @@ msgstr "List files"
 msgid "Download"
 msgstr "Download"
 
-#: librarian_ui/lang.py:20
-msgid "any language"
-msgstr "any language"
+#. Translators, used as page title
+#: librarian_twitter/menuitems.py:8
+#: librarian_twitter/views/twitter/twitter.tpl:7
+msgid "Twitter"
+msgstr "Twitter"
 
-#. Translators, shown on error page as error code when error code
-#. is unknown.
-#: librarian_ui/lang.py:35 librarian_ui/views/errors/_error_page.tpl:13
-msgid "unknown"
-msgstr "unknown"
+#: librarian_twitter/views/twitter/twitter.tpl:19
+msgid "Tweets"
+msgstr "Tweets"
 
-#: librarian_ui/views/base.tpl:74
-msgid "Toggle apps menu"
-msgstr "Toggle apps menu"
+#: librarian_twitter/views/twitter/twitter.tpl:22
+msgid "Handles"
+msgstr "Handles"
 
-#: librarian_ui/views/base.tpl:85
-msgid "Toggle context menu"
-msgstr "Toggle context menu"
-
-#. Translators, label for context menu language switcher
-#. Translators, used as label for language
-#: librarian_ui/views/base.tpl:97 librarian_library/forms.py:25
-msgid "Language"
-msgstr "Language"
-
-#. Translators, link shown in context menu when user is not logged in.
-#: librarian_ui/views/base.tpl:118
-msgid "Log in"
-msgstr "Log in"
-
-#. Translators, label on back button that appears at the top of
-#. context menu's submenu
-#: librarian_ui/views/base.tpl:125
-msgid "Back to menu"
-msgstr "Back to menu"
-
-#. Translators, used as a label for guest account (unauthenticated user)
-#: librarian_ui/views/base.tpl:153
-msgid "guest"
-msgstr "guest"
-
-#: librarian_ui/views/base.tpl:175
-msgid "Info"
-msgstr "Info"
-
-#: librarian_ui/views/base.tpl:178
-msgid "Notifications"
-msgstr "Notifications"
-
-#: librarian_ui/views/base.tpl:205 librarian_ui/views/base.tpl:210
-msgid "Content could not be loaded"
-msgstr "Content could not be loaded"
-
-#. Translators, message shown next to a spinning load icon
-#: librarian_ui/views/base.tpl:216
-msgid "Loading..."
-msgstr "Loading..."
-
-#: librarian_ui/views/base.tpl:221
-msgid "Toggle status"
-msgstr "Toggle status"
-
-#. Translators, used as link label for link that takes user back to
-#. a page from which they came (usually used when they temporarily
-#. visit the current page to change some option such as language)
-#: librarian_ui/views/ui/lang_list.tpl:10
-msgid "Back to previous page"
-msgstr "Back to previous page"
-
-#: librarian_ui/views/ui/feedback.tpl:19
+#. Translators, message used when no tweets are found for a given handle
+#: librarian_twitter/views/twitter/twitter.tpl:36
 #, python-brace-format
-msgid "You'll be taken to {target} in {seconds} seconds."
-msgstr "You'll be taken to {target} in {seconds} seconds."
+msgid "Sorry! No tweets could be found with the user name \"{handle}\""
+msgstr "Sorry! No tweets could be found with the user name \"{handle}\""
 
-#. Translators, used as page title
-#. Translators, used as access denied page heading
-#: librarian_ui/views/errors/403.tpl:5 librarian_ui/views/errors/403.tpl:10
-msgid "Forbidden"
-msgstr "Forbidden"
-
-#. Translators, shown when user is denied access to a page
-#: librarian_ui/views/errors/403.tpl:20
-msgid "You are not authorized to access this page or the page has expired."
-msgstr "You are not authorized to access this page or the page has expired."
-
-#. Translators, used as page title
-#. Translators, used as error page heading
-#: librarian_ui/views/errors/404.tpl:5 librarian_ui/views/errors/404.tpl:10
-msgid "Page not found"
-msgstr "Page not found"
-
-#: librarian_ui/views/errors/404.tpl:18
-msgid "The page you were looking for could not be found"
-msgstr "The page you were looking for could not be found"
-
-#: librarian_ui/views/errors/404.tpl:19
-msgid "main page"
-msgstr "main page"
-
-#: librarian_ui/views/errors/404.tpl:20
+#: librarian_twitter/views/twitter/twitter.tpl:41
 #, python-brace-format
-msgid "You will be redirected to {target} in {seconds} seconds."
-msgstr "You will be redirected to {target} in {seconds} seconds."
+msgid "Showing tweets from @{handle}."
+msgstr "Showing tweets from @{handle}."
+
+#: librarian_twitter/views/twitter/twitter.tpl:44
+msgid "Go back to all teweets"
+msgstr "Go back to all teweets"
+
+#: librarian_twitter/views/twitter/twitter.tpl:75
+msgid "previous"
+msgstr "previous"
+
+#: librarian_twitter/views/twitter/twitter.tpl:75
+msgid "next"
+msgstr "next"
+
+#. Translators, message used when no twitter handles are present
+#: librarian_twitter/views/twitter/twitter.tpl:86
+msgid ""
+"Sorry, no twitter handles could be found. Please wait for some tweets to be "
+"downloaded and imported"
+msgstr ""
+"Sorry, no twitter handles could be found. Please wait for some tweets to be "
+"downloaded and imported"
+
+#. Translators, errorm essage shown when emergency reset token is
+#. invalid
+#: librarian_auth/forms.py:26
+msgid "This emergency reset token is invalid"
+msgstr "This emergency reset token is invalid"
+
+#: librarian_auth/forms.py:53
+msgid "Please enter the correct username and password."
+msgstr "Please enter the correct username and password."
+
+#. Translators, used as label for a login field
+#. Translators, used as label in create user form
+#: librarian_auth/forms.py:56 librarian_auth/forms.py:77
+msgid "Username"
+msgstr "Username"
+
+#: librarian_auth/forms.py:57 librarian_auth/forms.py:79
+msgid "username"
+msgstr "username"
+
+#. Translators, used as label for a password field
+#. Translators, used as label in create user form
+#. Translators, used as label in password reset form
+#: librarian_auth/forms.py:60 librarian_auth/forms.py:81
+#: librarian_auth/forms.py:106
+msgid "Password"
+msgstr "Password"
+
+#: librarian_auth/forms.py:61 librarian_auth/forms.py:83
+#: librarian_auth/forms.py:108
+msgid "password"
+msgstr "password"
+
+#: librarian_auth/forms.py:74 librarian_auth/forms.py:98
+#: librarian_auth/forms.py:123
+msgid "The entered passwords do not match."
+msgstr "The entered passwords do not match."
+
+#. Translators, used as label in create user form
+#. Translators, used as label in password reset form
+#: librarian_auth/forms.py:85 librarian_auth/forms.py:110
+msgid "Confirm Password"
+msgstr "Confirm Password"
+
+#: librarian_auth/forms.py:87 librarian_auth/forms.py:112
+msgid "confirm password"
+msgstr "confirm password"
+
+#: librarian_auth/forms.py:99
+msgid "Password reset token does not match any user"
+msgstr "Password reset token does not match any user"
+
+#. Translators, used as label in create user form
+#: librarian_auth/forms.py:102 librarian_auth/views/auth/_reset_token.tpl:3
+msgid "Password reset token"
+msgstr "Password reset token"
+
+#. Translators, used as error message for emergency reset token form
+#. field
+#: librarian_auth/forms.py:126
+msgid "Invalid emergency reset token"
+msgstr "Invalid emergency reset token"
+
+#. Translators, used as label for emergency reset token field
+#: librarian_auth/forms.py:130
+msgid "Emergency reset token"
+msgstr "Emergency reset token"
+
+#. Translators, used as page title on feedback page
+#: librarian_auth/routes/emergency_reset.py:68
+msgid "Emergency reset successful"
+msgstr "Emergency reset successful"
+
+#. Translators, used as link label on feedback page in "You
+#. will be taken to log-in page..."
+#: librarian_auth/routes/emergency_reset.py:71 librarian_auth/routes/auth.py:92
+msgid "log-in page"
+msgstr "log-in page"
+
+#. Translators, shown after emergency reset
+#: librarian_auth/routes/emergency_reset.py:73
+#, python-brace-format
+msgid "You may now log in as '{username}'."
+msgstr "You may now log in as '{username}'."
+
+#. Translators, used as page title on feedback page
+#: librarian_auth/routes/auth.py:89
+msgid "New password was set"
+msgstr "New password was set"
+
+#. Translators, shown after password has been changed
+#: librarian_auth/routes/auth.py:94
+#, python-brace-format
+msgid "Password for username '{username}' has been set."
+msgstr "Password for username '{username}' has been set."
+
+#: librarian_auth/views/setup/step_superuser.tpl:8
+msgid "Superuser account"
+msgstr "Superuser account"
+
+#: librarian_auth/views/setup/step_superuser.tpl:13
+msgid ""
+"The superuser account is used to maintain the library and configure the "
+"receiver."
+msgstr ""
+"The superuser account is used to maintain the library and configure the "
+"receiver."
+
+#. Translators, help text displayed below emergency reset token field
+#: librarian_auth/views/auth/_emergency_reset.tpl:10
+msgid "Please contact Outernet to obtain your emergency reset token."
+msgstr "Please contact Outernet to obtain your emergency reset token."
+
+#. Translators, used as label for button that performs emergency reset
+#: librarian_auth/views/auth/_emergency_reset.tpl:17
+msgid "Reset"
+msgstr "Reset"
+
+#: librarian_auth/views/auth/_reset_password.tpl:14
+msgid ""
+"This is the 6-digit number you were asked to write down when you created "
+"your user account."
+msgstr ""
+"This is the 6-digit number you were asked to write down when you created "
+"your user account."
+
+#: librarian_auth/views/auth/_reset_password.tpl:27
+msgid "Change password"
+msgstr "Change password"
 
 #. Translators, used as page title
-#. Translators, used as maintenance page heading
-#: librarian_ui/views/errors/503.tpl:5 librarian_ui/views/errors/503.tpl:10
-msgid "Under maintenance"
-msgstr "Under maintenance"
-
-#: librarian_ui/views/errors/503.tpl:19
-msgid ""
-"Librarian is currently in maintenance mode. Please wait a few minutes and "
-"try again."
-msgstr ""
-"Librarian is currently in maintenance mode. Please wait a few minutes and "
-"try again."
+#: librarian_auth/views/auth/login.tpl:6
+#: librarian_auth/views/auth/_login.tpl:11
+msgid "Login"
+msgstr "Login"
 
 #. Translators, used as page title
-#. Translators, used as error page heading
-#: librarian_ui/views/errors/500.tpl:5 librarian_ui/views/errors/500.tpl:10
-msgid "Error"
-msgstr "Error"
+#: librarian_auth/views/auth/login.tpl:11
+msgid "Log into Librarian"
+msgstr "Log into Librarian"
 
-#: librarian_ui/views/errors/500.tpl:19
+#. Translators, shown as a message under the password reset token.
+#. Password reset token is a 6-digit number that is used to reset
+#. the user password.
+#: librarian_auth/views/auth/_reset_token.tpl:9
 msgid ""
-"Librarian has failed to fulfill your request due to unexpected error in the "
-"program."
+"Please write this password reset token down and store it securely. You will "
+"need it if you ever need to reset your password."
 msgstr ""
-"Librarian has failed to fulfill your request due to unexpected error in the "
-"program."
+"Please write this password reset token down and store it securely. You will "
+"need it if you ever need to reset your password."
 
-#: librarian_ui/views/errors/500.tpl:21
-msgid "Details are provided below."
-msgstr "Details are provided below."
+#. Translators, used as page title
+#: librarian_auth/views/auth/emergency_reset.tpl:5
+msgid "Emergency reset"
+msgstr "Emergency reset"
 
-#: librarian_ui/views/errors/500.tpl:23
-msgid "Error details are not available."
-msgstr "Error details are not available."
+#. Translators, used as page heading
+#: librarian_auth/views/auth/emergency_reset.tpl:9
+msgid "Perform emergency reset"
+msgstr "Perform emergency reset"
 
-#: librarian_ui/views/errors/500.tpl:32
-msgid "Return to main page"
-msgstr "Return to main page"
-
-#: librarian_ui/views/errors/500.tpl:33 librarian_logs/views/logs.tpl:5
-msgid "Download application log"
-msgstr "Download application log"
-
-#. Translators, shown on error page below the error title
-#: librarian_ui/views/errors/_error_page.tpl:10
-msgid "Error code:"
-msgstr "Error code:"
+#. Translators, used as page title
+#: librarian_auth/views/auth/reset_password.tpl:6
+#: librarian_auth/views/auth/reset_password.tpl:11
+#: librarian_auth/views/auth/_login.tpl:14
+msgid "Reset your password"
+msgstr "Reset your password"
 
 #. Translators, used as dashboard section title
-#: librarian_logs/dashboard_plugin.py:26
-msgid "Application logs"
-msgstr "Application logs"
+#: librarian_netinterfaces/dashboard_plugin.py:22
+msgid "Network interfaces"
+msgstr "Network interfaces"
 
-#. Translators, used as note in Application logs section
-#: librarian_logs/views/logs.tpl:2
-msgid "Logs are shown in reverse chronological order"
-msgstr "Logs are shown in reverse chronological order"
+#. Translators, network interface type shown in network interface list
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:7
+msgid "wireless"
+msgstr "wireless"
 
-#: librarian_logs/views/logs.tpl:6
-msgid "Download system log"
-msgstr "Download system log"
+#. Translators, network interface type shown in network interaface list
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:11
+msgid "bridge"
+msgstr "bridge"
 
-#: librarian_opener_html/hooks.py:8
-msgid "Read"
-msgstr "Read"
+#. Translators, network interface type shown in network interface list
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:15
+msgid "wired"
+msgstr "wired"
+
+#. Translators, human-friendly label for bridge interface with
+#. administrator-specified name (e.g., br0) replacing the
+#. {name} placeholder.
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:31
+#, python-brace-format
+msgid "Ethernet bridge ({name})"
+msgstr "Ethernet bridge ({name})"
+
+#. Translators, network interface IP address
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:41
+msgid "IP address:"
+msgstr "IP address:"
+
+#. Translators, network interface default gateway
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:48
+msgid "Default gateway:"
+msgstr "Default gateway:"
+
+#. Translators, network interface IP address (IPv6)
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:55
+msgid "IPv6 address:"
+msgstr "IPv6 address:"
+
+#. Translators, network interface IP address
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:61
+msgid "Interface name:"
+msgstr "Interface name:"
+
+#. Translators, displayed when an unforeseen error happens in one of the dashboard plugins
+#: librarian_dashboard/views/dashboard/plugin_error.tpl:2
+msgid "An error occurred during the rendering of this plugin."
+msgstr "An error occurred during the rendering of this plugin."
 
 #: librarian_opener_video/hooks.py:8
 msgid "Watch"
 msgstr "Watch"
+
+#. Translators, used as page title
+#: librarian_notifications/views/notification_list.tpl:6
+#: librarian_notifications/views/notification_list.tpl:11
+msgid "Messages"
+msgstr "Messages"
+
+#: librarian_notifications/views/_notification_list.tpl:8
+#, python-brace-format
+msgid "A content item has been added to the Library with the following title:"
+msgid_plural ""
+"{count} content items have been added to the Library with the following "
+"titles:"
+msgstr[0] ""
+"A content item has been added to the Library with the following title:"
+msgstr[1] ""
+"{count} content items have been added to the Library with the following "
+"titles:"
+
+#. Translators, used as label for discarding all unread notifications
+#: librarian_notifications/views/_notification_list.tpl:29
+msgid "Mark all as read"
+msgstr "Mark all as read"
+
+#: librarian_notifications/views/_notification_list.tpl:51
+msgid "Dismiss"
+msgstr "Dismiss"
+
+#. Translators, note that appears on notifications page when there are no new notifications
+#: librarian_notifications/views/_notification_list.tpl:61
+msgid "There are no new notifications"
+msgstr "There are no new notifications"
 
 #. Translators, used as label for date and time setup
 #: librarian_library/forms.py:37
@@ -841,10 +941,59 @@ msgstr "Audio"
 msgid "Video"
 msgstr "Video"
 
-#: librarian_library/views/content_readers/image.tpl:53
+#: librarian_opener_audio/hooks.py:8
+msgid "Listen"
+msgstr "Listen"
+
+#: librarian_opener_image/hooks.py:8
+msgid "View"
+msgstr "View"
+
+#: librarian_opener_image/views/openers/album.tpl:17
+msgid "Image {} of {}"
+msgstr "Image {} of {}"
+
+#. Translators, used as dashboard section title
+#: librarian_diskspace/dashboard_plugin.py:30
+msgid "Storage devices"
+msgstr "Storage devices"
+
+#. Translators, used as description of storage device
+#: librarian_diskspace/views/dashboard/diskspace.tpl:12
+msgid "internal storage"
+msgstr "internal storage"
+
+#. Translators, used as description of storage device
+#: librarian_diskspace/views/dashboard/diskspace.tpl:17
+#: librarian_diskspace/views/dashboard/diskspace.tpl:22
+msgid "removable storage"
+msgstr "removable storage"
+
+#. Translators, this is used next to disk space usage indicator in settings
+#. panel. The {used}, {total}, and {free} are placeholders.
+#: librarian_diskspace/views/dashboard/diskspace.tpl:42
 #, python-brace-format
-msgid "Image {index} of {count}"
-msgstr "Image {index} of {count}"
+msgid "{used} of {total} ({free} free)"
+msgstr "{used} of {total} ({free} free)"
+
+#: librarian_opener_html/hooks.py:8
+msgid "Read"
+msgstr "Read"
+
+#. Translators, used as dashboard section title
+#: librarian_logs/dashboard_plugin.py:26
+msgid "Application logs"
+msgstr "Application logs"
+
+#. Translators, used as note in Application logs section
+#: librarian_logs/views/logs/dashboard.tpl:2
+msgid "Logs are shown in reverse chronological order"
+msgstr "Logs are shown in reverse chronological order"
+
+#. Translators, used as label for a button that allows download of system logs
+#: librarian_logs/views/logs/dashboard.tpl:6
+msgid "Download system logs"
+msgstr "Download system logs"
 
 #. Translators, used as page title
 #: librarian_setup/views/diag.tpl:4 librarian_setup/views/diag.tpl:9
@@ -1143,103 +1292,17 @@ msgstr "Please select the satellite you'd like to receive data from."
 msgid "Test settings"
 msgstr "Test settings"
 
-#. Translators, used as page title
-#: librarian_notifications/views/notification_list.tpl:6
-#: librarian_notifications/views/notification_list.tpl:11
-msgid "Messages"
-msgstr "Messages"
+#~ msgid "Remove"
+#~ msgstr "Remove"
 
-#: librarian_notifications/views/_notification_list.tpl:8
-#, python-brace-format
-msgid "A content item has been added to the Library with the following title:"
-msgid_plural ""
-"{count} content items have been added to the Library with the following "
-"titles:"
-msgstr[0] ""
-"A content item has been added to the Library with the following title:"
-msgstr[1] ""
-"{count} content items have been added to the Library with the following "
-"titles:"
+#~ msgid "Download system log"
+#~ msgstr "Download system log"
 
-#. Translators, used as label for discarding all unread notifications
-#: librarian_notifications/views/_notification_list.tpl:29
-msgid "Mark all as read"
-msgstr "Mark all as read"
+#~ msgid "Image {index} of {count}"
+#~ msgstr "Image {index} of {count}"
 
-#: librarian_notifications/views/_notification_list.tpl:51
-msgid "Dismiss"
-msgstr "Dismiss"
-
-#. Translators, note that appears on notifications page when there are no new notifications
-#: librarian_notifications/views/_notification_list.tpl:61
-msgid "There are no new notifications"
-msgstr "There are no new notifications"
-
-#. Translators, used as page title
-#: librarian_twitter/menuitems.py:8
-#: librarian_twitter/views/twitter/twitter.tpl:7
-msgid "Twitter"
-msgstr "Twitter"
-
-#: librarian_twitter/views/twitter/twitter.tpl:19
-msgid "Tweets"
-msgstr "Tweets"
-
-#: librarian_twitter/views/twitter/twitter.tpl:22
-msgid "Handles"
-msgstr "Handles"
-
-#. Translators, message used when no tweets are found for a given handle
-#: librarian_twitter/views/twitter/twitter.tpl:36
-msgid "Sorry! No tweets could be found with the user name \"{}\""
-msgstr "Sorry! No tweets could be found with the user name \"{}\""
-
-#: librarian_twitter/views/twitter/twitter.tpl:41
-#, python-brace-format
-msgid "Showing tweets from @{handle}."
-msgstr "Showing tweets from @{handle}."
-
-#: librarian_twitter/views/twitter/twitter.tpl:44
-msgid "Go back to all teweets"
-msgstr "Go back to all teweets"
-
-#: librarian_twitter/views/twitter/twitter.tpl:75
-msgid "previous"
-msgstr "previous"
-
-#: librarian_twitter/views/twitter/twitter.tpl:75
-msgid "next"
-msgstr "next"
-
-#. Translators, message used when no twitter handles are present
-#: librarian_twitter/views/twitter/twitter.tpl:86
-msgid ""
-"Sorry, no twitter handles could be found. Please wait for some tweets to be "
-"downloaded and imported"
-msgstr ""
-"Sorry, no twitter handles could be found. Please wait for some tweets to be "
-"downloaded and imported"
-
-#~ msgid "Network interfaces"
-#~ msgstr "Network interfaces"
-
-#~ msgid "wireless"
-#~ msgstr "wireless"
-
-#~ msgid "wired"
-#~ msgstr "wired"
-
-#~ msgid "IP address:"
-#~ msgstr "IP address:"
-
-#~ msgid "Default gateway:"
-#~ msgstr "Default gateway:"
-
-#~ msgid "IPv6 address:"
-#~ msgstr "IPv6 address:"
-
-#~ msgid "Interface name:"
-#~ msgstr "Interface name:"
+#~ msgid "Sorry! No tweets could be found with the user name \"{}\""
+#~ msgstr "Sorry! No tweets could be found with the user name \"{}\""
 
 #~ msgid "Confirm Removal"
 #~ msgstr "Confirm Removal"
@@ -1272,18 +1335,6 @@ msgstr ""
 
 #~ msgid "Specified tag was not found"
 #~ msgstr "Specified tag was not found"
-
-#~ msgid "Storage devices"
-#~ msgstr "Storage devices"
-
-#~ msgid "internal storage"
-#~ msgstr "internal storage"
-
-#~ msgid "removable storage"
-#~ msgstr "removable storage"
-
-#~ msgid "{used} of {total} ({free} free)"
-#~ msgstr "{used} of {total} ({free} free)"
 
 #~ msgid "Content database"
 #~ msgstr "Content database"
