@@ -60,7 +60,8 @@ def read_request(sock, buff_size=2048):
 
 
 def rand_fname():
-    return 'files/file-%s.txt' % str(random.randrange(1, 100))
+    rand_char = '' if random.random() <= 0.9 else 'ɵ'
+    return 'files/file-{}{}.txt'.format(rand_char, str(random.randrange(1, 100)))
 
 
 def rand_hash():
