@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 mockondd.py: Quick and dirty ONDD mock
 
@@ -160,6 +161,37 @@ def send_settings_response():
 </response>"""
 
 
+EMPTY_EVENTS = """<?xml version="1.0" encoding="utf-8"?>
+<response code="200">
+    <events>
+    </events>
+</response>
+"""
+
+def rand_event():
+    return """
+    <event>
+    <type>file_complete</type>
+    <path>{}</path>
+    </event>
+    """.format(rand_fname())
+
+
+@sender
+def send_events_response():
+    if random.random() > 0.6:
+        return EMPTY_EVENTS
+    else:
+        events = [rand_event() for _ in range(0, random.randrange(1, 10))]
+        events = ' '.join(events)
+        return """<?xml version="1.0" encoding="utf-8"?>
+<response code="200">
+    <events>
+    {}
+    </events>
+</response>""".format(events)
+
+
 @sender
 def send_default_response():
     return """<?xml version="1.0" encoding="UTF-8"?>
@@ -171,6 +203,7 @@ ENDPOINT_MAPPING = (
     (re.compile('<get.*status.*'), send_status_response),
     (re.compile('<get.*transfers.*'), send_transfers_response),
     (re.compile('<get.*settings.*'), send_settings_response),
+    (re.compile('<get.*events.*'), send_events_response),
     (re.compile('.*'), send_default_response), # catch-all
 )
 
