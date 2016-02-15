@@ -101,7 +101,6 @@ def sender(fn):
         if debug:
             print('===>', res)
         sock.sendall(res + '\0')
-        sock.close()
     return wrapper
 
 
