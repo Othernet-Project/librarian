@@ -214,9 +214,9 @@ def get_handler(debug=False):
         if debug:
             print('<===', request)
         for rxp, refn in ENDPOINT_MAPPING:
-            if not rxp.match(request):
-                continue
-            refn(sock, debug)
+            if rxp.match(request):
+                refn(sock, debug)
+                break
     return request_handler
 
 
