@@ -13,4 +13,5 @@ __pycache__/
 *.log
 /librarian/static/
 .webassets-cache
+.webassets-manifest
 dev.ini
