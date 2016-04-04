@@ -85,4 +85,3 @@ class SettingsManager(object):
                 attrs[name] = field_cls(**kwargs)
 
         return type('SettingsForm', (form.Form,), attrs)
-
