@@ -18,3 +18,5 @@ __pycache__/
 .webassets-cache
 .webassets-manifest
 dev.ini
+/.tox
+/.cache
