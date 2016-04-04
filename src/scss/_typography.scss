@@ -1,0 +1,36 @@
+@import "base/params";
+
+img {
+  max-width: 100%;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1em;
+}
+
+h1 {
+  font-size: 200%;
+  line-height: 110%;
+}
+
+h2 {
+  font-size: 180%;
+  margin-top: 1rem;
+  border-bottom: $o-separator-border;
+  padding-bottom: 0.5rem;
+}
+
+.subtitle-buttons {
+  display: block;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1rem;
+  text-align: right;
+  margin: 0 0 1rem;
+}
+

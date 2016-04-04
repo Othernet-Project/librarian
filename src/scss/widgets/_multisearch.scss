@@ -1,0 +1,116 @@
+@import "base/params";
+@import "base/panels";
+@import "base/media_query";
+@import "elements/icons";
+
+.o-multisearch {
+  // Basic geometry
+  width: $o-multisearch-width;
+  @include double-split-panel($o-multisearch-select-width, $o-multisearch-button-width, $o-multisearch-height);
+
+  @include narrower-than(520px) {
+    display: none;
+  }
+
+  & > .o-#{$o-container-class} {
+    padding: $o-multisearch-vertical-padding 0;
+
+    &:first-child {
+      padding-left: $o-multisearch-horizontal-padding;
+
+      @include narrower-than(740px) {
+        display: none;
+      }
+    }
+
+    &:last-child {
+      padding-right: $o-multisearch-horizontal-padding;
+    }
+
+    &:nth-child(2) {
+      @include narrower-than(740px) {
+        left: 0;
+
+        input {
+          border-left: $o-widget-border;
+          @include border-top-left-radius($o-clickable-target-corner-radius);
+          @include border-bottom-left-radius($o-clickable-target-corner-radius);
+        }
+      }
+    }
+  }
+
+  // Child elements
+  select, input[type=text], button, label {
+    display: inline-block;
+    width: $o-multisearch-input-width;
+    vertical-align: middle;
+    margin: 0;
+  }
+
+  input[type=text] {
+    // Reset borders so it merges with elements on both side    
+    @include border-radius(0);
+    border-left: 0;
+    border-right: 0;
+    background: $o-multisearch-field-background;
+    @include transition(background 0.5s);
+
+    &:focus,
+    &:hover {
+      background: white;
+    }
+  }
+
+  select {
+    @include border-top-right-radius(0);
+    @include border-bottom-right-radius(0);
+  }
+
+  button {
+    @include border-top-left-radius(0);
+    @include border-bottom-left-radius(0);
+    border: 1px solid $o-multisearch-widget-background;
+    background: $o-multisearch-widget-background;
+    color: $o-multisearch-widget-text;
+
+    &:hover,
+    &:focus {
+      background: $o-accent;
+      color: $o-negative-base;
+      border-color: $o-accent;
+    }
+  }
+
+  label {
+    // Typography
+    font-family: $o-base-font;
+    font-size: $o-base-text-size;
+    font-weight: normal;
+    text-align: center;
+
+    // Base geometry
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    padding: 0.3rem 0.2rem;
+
+    // Styling
+    border: 1px solid $o-multisearch-widget-background;
+    background: $o-multisearch-widget-background;
+    color: $o-multisearch-widget-text;
+  }
+
+  .o-multisearch-button-icon {
+    @if $o-multisearch-icon {
+      font-size: $o-multisearch-icon-size;
+      @include icon($o-multisearch-icon);
+    }
+  }
+
+  .o-multisearch-button-label {
+    @if $o-multisearch-show-label == no {
+      display: none;   
+    }
+  }
+}

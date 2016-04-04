@@ -1,0 +1,136 @@
+@import "compass/css3";
+@import "compass/typography/text/replacement";
+
+@import "base/params";
+@import "elements/images";
+@import "elements/icons";
+
+$o-pulldown-menubar-height: $o-pulldown-menubar-hbar-height + $o-pulldown-menubar-menu-height;
+
+.o-pulldown-menubar {
+  // Element characteristics
+  display: block;
+
+  // Styling
+  background: $o-pulldown-menubar-background;
+  color: $o-pulldown-menubar-text-color;
+  @include box-shadow(0 0 2px transparentize($o-base, 0.5));
+
+  // Basic geometry
+  position: fixed;
+  top: -$o-pulldown-menubar-menu-height; // hides menu from view
+  left: $o-pulldown-menubar-default-pos-left;
+  right: $o-pulldown-menubar-default-pos-right;
+  height: $o-pulldown-menubar-height;
+  z-index: 10;
+
+  // FX
+  @include transition(top $o-animation-speed);
+
+  // Alternative states
+
+  &.open {
+    top: 0; 
+
+    .o-pulldown-menubar-hbar-activator {
+      // Styling
+      background-color: $o-pulldown-menubar-hbar-activator-highlight-color;
+      color: $o-pulldown-menubar-hbar-activator-highlight-text-color;
+    }
+
+    .o-pulldown-menubar-hbar-activator-icon {
+      // Icon
+      @include icon($o-pulldown-menubar-hbar-activator-open-icon);
+    }
+  }
+
+  // Child containers
+
+  .o-pulldown-menubar-menu {
+    // Basic geometry
+    position: relative;
+    width: 100%;
+    height: $o-pulldown-menubar-menu-height;
+
+    // Styling
+    background-color: $o-pulldown-menubar-menu-background;
+    color: $o-pulldown-menubar-menu-text-color;
+  }
+
+  .o-pulldown-menubar-hbar {
+    // Basic geometry
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: $o-pulldown-menubar-hbar-height;
+  }
+    
+  .o-pulldown-menubar-hbar-activator {
+    // Basic geometry
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: $o-pulldown-menubar-hbar-activator-width;
+    height: 100%;
+
+    // Styling
+    text-align: center;
+    text-decoration: none;
+    line-height: $o-pulldown-menubar-hbar-height;
+    background-color: $o-pulldown-menubar-background;
+    color: $o-pulldown-menubar-text-color;
+    @include border-bottom-right-radius($o-pulldown-menubar-activator-corner-radius);
+
+    // FX
+    
+    @include transition(background-color $o-animation-speed);
+
+    &:hover, &:focus {
+      background: $o-pulldown-menubar-hbar-activator-highlight-color;
+      color: $o-pulldown-menubar-hbar-activator-highlight-text-color;
+    }
+  }
+
+  .o-pulldown-menubar-hbar-bar {
+    // Basic geometry
+    position: absolute;
+    left: $o-pulldown-menubar-hbar-activator-width;
+    right: 0;
+    top: 0;
+    height: 100%;
+  }
+
+  .o-pulldown-menubar-hbar-activator-label {
+    // Basic geometry
+    position: relative;
+    top: -1px;
+
+    .o-pulldown-menubar-hbar-activator-label-icon {
+      font-size: 1200%;
+      @include transition(color $o-animation-speed);
+      overflow: hidden; // Fixes large font cover area below hbar
+      color: $o-negative-base;
+    }
+
+    .o-pulldown-menubar-hbar-activator-label-text {
+      display: none;
+    }
+  }
+
+  .o-pulldown-menubar-hbar-activator-icon {
+    // Basic geometry
+    vertical-align: middle;
+    position: relative;
+
+    // Styling
+    font-size: $o-pulldown-menubar-hbar-activator-icon-size;
+
+    // Icon
+    @include icon($o-pulldown-menubar-hbar-activator-closed-icon);
+
+    // FX
+    @include transition(color $o-animation-speed);
+  }
+}

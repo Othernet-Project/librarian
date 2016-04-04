@@ -1,0 +1,19 @@
+@import "base/params";
+
+.o-main-panel {
+  // Basic geometry
+  position: fixed;
+  top: $o-main-panel-top-offset;
+  bottom: $o-main-panel-bottom-offset;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+
+  // Fixed issue where overflowing element on iOS scrolls without the 
+  // rubber-band effect.
+  -webkit-overflow-scrolling: touch;
+
+  .o-main-inner {
+    padding: $o-main-panel-inner-padding;
+  }
+}

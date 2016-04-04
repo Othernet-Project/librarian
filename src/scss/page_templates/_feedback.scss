@@ -1,0 +1,24 @@
+@import "base/params";
+
+.feedback-icon {
+  text-align: center;
+  font-size: 400%;
+  margin: 3rem 0;
+}
+
+.feedback-success .feedback-icon {
+  color: $o-friendly;
+}
+
+.feedback-error .feedbac-icon {
+  color: $o-critical;
+}
+
+.feedback-main {
+  font-size: 120%;
+  text-align: center;
+}
+
+.feedback-sub {
+  text-align: center;
+}

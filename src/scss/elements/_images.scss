@@ -1,0 +1,7 @@
+@import "base/sprites";
+
+$image-sprite: sprite-map('elements/1x/*.png', $spacing: 30px);
+$image-sprite-2x: sprite-map('elements/2x/*.png', $spacing: 60px);
+@mixin image-sprite($name, $dimensions: yes) {
+  @include sprite($image-sprite, $image-sprite-2x, $name, $dimensions);
+}

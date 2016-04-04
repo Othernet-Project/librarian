@@ -1,0 +1,73 @@
+@import "compass/css3";
+@import "base/params";
+
+.o-tabbable {
+  position: relative;
+
+  .o-tab-handles {
+    // Basic geometry
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: $o-clickable-target-size;
+
+    // Styling
+    border-right: $o-separator-border;
+  }
+
+  .o-tab-panels {
+    // Basic geometry
+    margin-left: $o-clickable-target-size;
+    padding: 1rem 1rem 3rem;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .o-tab-handle-activator {
+    // Typography
+    font-size: 180%;
+    text-align: center;
+    line-height: $o-clickable-target-size;
+
+    // Basic geometry
+    display: inline-block;
+    width: 100%;
+    color: $o-base-text-color;
+
+    // Stylng
+    border-right: 2px solid transparent;
+    border-bottom: $o-separator-border;
+
+    // FX
+    @include transition(border-right-color $o-animation-speed);
+
+    // Alternative states
+    &:hover,
+    &:focus {
+      color: $o-accent;
+    }
+
+    &.active {
+      border-right-color: $o-accent;
+    }
+  }
+
+  .o-tab-handle-activator-icon {
+    width: 100%;
+    height: 100%;
+  }
+
+  .o-tab-handle-activator-label {
+    display: none;
+  }
+
+  .o-tab-panel {
+    display: none;
+    position: relative;
+
+    &.active {
+      display: block;
+    }
+  }
+}

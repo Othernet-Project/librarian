@@ -1,0 +1,139 @@
+@import "compass/css3";
+@import "base/params";
+@import "elements/icons";
+
+
+@include keyframes(blink) {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@include keyframes(fadein) {
+  0% {
+    background-color: transparentize($o-modal-overlay-color, 1);
+  }
+  100% {
+    background-color: $o-modal-overlay-color;
+  }
+}
+
+@include keyframes(popin) {
+  0% {
+    top: -2000px;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+.o-modal-overlay {
+  // Basic geometry
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  @include display-flex;
+  @include align-items(center);
+
+  // Stylng
+  background-color: $o-modal-overlay-color;
+  cursor: pointer;
+
+  // FX
+  @include animation(fadein 2s);
+
+  // Panel
+
+  .o-modal-window {
+    // Basic geometry
+    position: relative;
+    margin: 0 auto;
+    max-width: $o-modal-window-max-width;
+    width: 90%;
+    overflow-y: auto;
+    max-height: $o-modal-window-max-height;
+    min-height: $o-modal-window-min-height;
+    padding: $o-modal-window-padding;
+
+    // FX
+    @include animation(popin 0.5s);
+
+    // Styling
+    background: $o-modal-window-background;
+    color: $o-modal-window-text;
+    @include box-shadow($o-modal-window-shadow);
+
+    &.o-full-screen {
+      position: absolute;
+      max-width: 100%;
+      max-height: 100%;
+      top: 0.5rem;
+      bottom: 0.5rem;
+      width: auto;
+      left: 0.5rem;
+      right: 0.5rem;
+      overflow-y: hidden;
+
+      .o-modal-content {
+        position: absolute;
+        top: 3rem;
+        right: 1rem;
+        left: 1rem;
+        bottom: 1rem;
+      }
+    }
+  }
+
+  .o-modal-spinner {
+    // Basic geometry
+    display: block;
+    font-size: 180%;
+    text-align: center;
+    margin: 4rem 0;
+  }
+
+  .o-modal-spinner-loading-indicator {
+    animation: blink 1s infinite;
+  }
+
+  .o-modal-close {
+    // Typography
+    font-size: $o-modal-close-icon-size;
+
+    // Basic geometry
+    display: block;
+    position: absolute;
+    top: $o-modal-close-top-offset;
+    right: $o-modal-close-right-offset;
+
+    // Styling
+    @include border-top-left-radius(0);
+    @include border-top-right-radius(0);
+    border-top: 0;
+  }
+
+  .o-modal-close-label {
+    @if $o-modal-close-show-label == no {
+      display: none;
+    }
+  }
+
+  .o-modal-close-icon {
+    // Icon
+    @include icon($o-modal-close-icon);
+
+    // Basic geometry
+    position: relative;
+    top: -3px;  // For some reason, icon is way too low, so adjust it
+  }
+}
+

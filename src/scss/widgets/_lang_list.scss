@@ -1,0 +1,27 @@
+@import "base/params";
+
+.language-list-back {
+  text-align: right;
+}
+
+.language-list {
+  li {
+    border-bottom: $o-separator-border;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  a {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0;
+  }
+
+  .icon {
+    position: absolute;
+    top: 0.5rem;
+    right: 0;
+  }
+}

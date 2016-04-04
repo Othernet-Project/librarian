@@ -1,0 +1,38 @@
+@import "compass/css3";
+@import "base/params";
+
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=date],
+input[type=search],
+input[type=url],
+input[type=tel],
+input[type=number],
+select {
+  // Basic geometry
+  padding: $o-input-padding;
+  height: $o-input-height;
+  width: 100%;
+
+  // Typography
+  font-size: $o-input-text-size;
+  font-family: $o-input-font;
+
+  // Styling
+  background: $o-input-background;
+  color: $o-input-text-color;
+  border: 1px solid $o-input-background;
+
+  @include transition(background 0.5s);
+
+  // Alternative state
+  &:hover,
+  &:focus {
+    background: $o-input-focus-background;
+  }
+}
+
+input[type=checkbox] {
+  vertical-align: middle;
+}

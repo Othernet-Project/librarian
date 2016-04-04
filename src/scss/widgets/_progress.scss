@@ -1,0 +1,142 @@
+@import "compass/css3";
+@import "base/params";
+
+$o-progress-background: $o-dark-material;
+$o-progress-low: $o-warning;
+$o-progress-normal: $o-accent;
+$o-progress-face: $o-foreground-material;
+
+$o-progress-step: 5;  // 5% steps
+$o-progress-iterations: round(100 / $o-progress-step);
+$o-progress-increment: 360 / $o-progress-iterations;
+
+$o-progress-bar-width: 5px;
+$o-progress-bar-size: 48px;
+
+$o-progress-mini-width: 5px;
+$o-progress-mini-size: 28px;
+
+@mixin front-gradient($degs, $color: $o-progress-normal) {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+
+  $degs: $degs + 90;
+  @if $degs == 90 {
+    background: $o-progress-background;
+  }
+  @else if $degs < 270 {
+    @include background-image(
+      linear-gradient(90deg, $o-progress-background 50%, transparent 50%, transparent), 
+      linear-gradient($degs * 1deg, $color 50%, $o-progress-background 50%, $o-progress-background)
+    );
+  }
+  @else {
+    @include background-image(
+      linear-gradient($degs * 1deg, $color 50%, transparent 50%, transparent), 
+      linear-gradient(270deg, $color 50%, $o-progress-background 50%, $o-progress-background)    
+    );
+  }
+}
+
+@mixin indicator-base($size) {
+  // Basic geometry
+  position: relative;
+  display: inline-block;
+  @include border-radius(2000rem);  // Fully rounded
+  width: $size;
+  height: $size;
+}
+
+@mixin bar-base($width, $size) {
+  // Basic geometry
+  position: absolute;
+  top: $width;
+  left: $width;
+  right: $width;
+  bottom: $width;
+  line-height: $size - $width * 2;
+  display: inline-block;
+  @include border-radius(2000rem);
+}
+
+@mixin progress-base {
+  text-align: center;
+  display: inline-block;
+}
+
+.o-progress {
+  @include progress-base;
+
+  .o-progress-indicator {
+    @include indicator-base($o-progress-bar-size);
+  }
+
+  .o-progress-value {
+    @include bar-base($o-progress-bar-width, $o-progress-bar-size);
+
+    // Styling
+    background: $o-progress-face;
+    @include box-shadow($o-thin-overlay-shadow);
+  }
+
+  @for $i from 0 through $o-progress-iterations {
+    $percentage: $i * $o-progress-step;
+    $degs: round($percentage * 3.6);
+    .o-progress-percentage-#{$percentage} {
+      @include front-gradient($degs);
+    }
+  }
+  
+  .o-progress-label {
+    // Typography
+    font-size: 90%;
+    text-transform: uppercase;
+
+    // Basic geometry
+    display: block;
+  }
+}
+
+.o-progress-mini {
+  @include progress-base;
+  vertical-align: middle;
+
+  .o-progress-indicator {
+    @include indicator-base($o-progress-mini-size);
+  }
+
+  .o-progress-icon {
+    @include bar-base($o-progress-mini-width, $o-progress-mini-size);
+
+    // Styling
+    background: $o-progress-face;
+
+    .icon {
+      // The icons are normally aligned middle, but in case of progress bar 
+      // this makes the icon appear off-center. Vertically aligning to baseline
+      // fixes this issue.
+      vertical-align: baseline;
+    }
+  }
+
+  @for $i from 0 through $o-progress-iterations {
+    $percentage: $i * $o-progress-step;
+    $degs: round($percentage * 3.6);
+    .o-progress-percentage-#{$percentage} {
+      @include front-gradient($degs);
+    }
+  }
+  
+}
+
+

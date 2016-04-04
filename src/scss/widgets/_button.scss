@@ -1,0 +1,88 @@
+@import "compass/css3";
+@import "base/params";
+
+button,
+.button {
+  // Basic geometry
+  padding: $o-button-padding;
+  height: $o-input-height;
+
+  // Typography
+  font-size: $o-input-text-size;
+  font-family: $o-input-font;
+  line-height: $o-button-line-height;
+  text-decoration: none;
+
+  // Styling
+  background: $o-accent;
+  color: $o-negative-base;
+
+  // Border
+  border: 1px solid $o-accent;
+  border-radius: $o-input-corner-radius;
+
+  // Interaction
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+
+  @include transition(background 0.5s, border-color 0.5s, color 0.5s);
+
+  // Alternative 
+  &:hover,
+  &:focus {
+    border-color: $o-dp-background;
+    background: $o-dp-background;
+    color: $o-negative-base;
+  }
+
+  &.clean {
+    padding: 0;
+    height: auto;
+    background: transparent;
+    border: 0;
+    @include border-radius(0);
+    color: $o-base;
+
+    &:hover,
+    &:focus {
+      background: transparent;
+      color: $o-accent;
+      @include background-image(none);
+    }
+  }
+
+  .icon {
+    font-size: 120%;
+  }
+}
+
+button.nobutton {
+  background: transparent;
+  border: 0;
+  padding: 0;
+
+  color: $o-accent;
+
+  &:focus,
+  &:hover {
+    color: $o-base-text-color;
+  }
+}
+
+.buttons {
+  // Typography
+  text-align: right;
+
+  // Basic geometry
+  margin-top: 1rem;
+  padding-top: 1rem;
+  margin-bottom: 1rem;
+
+  // Styling
+  border-top: 1px solid $o-accent;
+}
+
+a.button {
+  padding: 0.36rem 1rem;
+}

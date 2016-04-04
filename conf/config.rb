@@ -9,6 +9,7 @@ css_dir = "#{basedir}/static/css"
 sass_dir = "src/scss"
 images_dir = "#{basedir}/static/img"
 javascripts_dir = "#{basedir}/static/js"
+fonts_dir = "#{basedir}/static/font"
 
 # You can select your preferred output style here (can be overridden via the command line):
 # output_style = :expanded or :nested or :compact or :compressed

@@ -1,0 +1,117 @@
+@import "compass/css3";
+@import "base/params";
+@import "elements/icons";
+
+@include keyframes(slide-up) {
+  from {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    max-height: 100px;
+  }
+  to {
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: 0px;
+  }
+}
+
+@mixin field-note {
+    // Typography
+    font-style: italic;
+
+    // Basic geometry
+    position: relative;
+    display: block;
+    padding-left: 2rem;
+    margin-top: 0.2rem;
+
+    &:before {
+      @include icon-base;
+      position: absolute;
+      font-size: 120%;
+      left: 0.7rem;
+      top: 0;
+    }
+}
+
+form {
+  .o-field-help-message {
+    @include field-note;
+
+    // Styling
+    color: $o-form-help-text-color;
+
+    // Icon
+    @include icon($o-form-help-icon);
+  }
+
+  .o-field-error-message {
+    @include field-note;
+
+    // Styling
+    color: $o-form-error-text-color;
+
+    // Icon
+    @include icon($o-form-error-icon);
+  }
+}
+
+.o-form-messages {
+  background: transparentize($o-friendly, 0.9);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.o-form-error {
+  // Basic geometry
+  padding: 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  
+  // Styling
+  background: transparentize($o-form-error-text-color, 0.9);
+  color: $o-form-error-text-color;
+  @include icon($o-form-error-icon);
+  
+  &:before {
+    @include icon-base;
+    margin-right: 0.2rem;
+  }
+
+  @include animation-name(slide-up);
+  @include animation-delay(5s);
+  @include animation-duration(1s);
+  @include animation-fill-mode(forwards);
+}
+
+.o-form-message {
+  // Basic geometry
+  padding: 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+
+  // Styling
+  background: transparentize($o-friendly, 0.9);
+  color: $o-friendly;
+  @include icon($o-form-help-icon);
+  
+  &:before {
+    @include icon-base;
+    margin-right: 0.2rem;
+  }
+
+  @include animation-name(slide-up);
+  @include animation-delay(5s);
+  @include animation-duration(1s);
+  @include animation-fill-mode(forwards);
+}
+
+.o-field-error {
+  label {
+    color: $o-form-error-text-color;
+  }
+
+  input, select, textarea {
+    border-color: $o-form-error-text-color;
+  }
+}

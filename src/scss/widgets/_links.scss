@@ -1,0 +1,11 @@
+a {
+  // Typography
+  text-decoration: none;
+
+  // Styling
+  color: $o-accent;
+
+  &:hover {
+    color: darken($o-accent, 30);   
+  }
+}

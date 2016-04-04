@@ -1,0 +1,88 @@
+@import "compass/css3";
+@import "base/params";
+@import "elements/icons";
+
+.o-collapsible {
+  // 1px margin ensures that the top border of the topmost collapsible is 
+  // visible.
+  margin-top: 1px;
+
+  .o-collapsible-section {
+    // Basic geometry
+    position: relative;
+    overflow: hidden;
+    max-height: 80rem;
+
+    // FX
+    @include transition(max-height $o-animation-speed);
+
+    // Header
+    & > :nth-child(1) {
+      // Typography
+      line-height: $o-clickable-target-size;
+      font-size: 120%;
+
+      // Basic geometry
+      position: relative;
+      margin: 0;
+      padding-left: 1rem;
+      z-index: 1;
+      height: $o-clickable-target-size;
+
+      // Styling
+      cursor: pointer;
+      background: $o-dp-background;
+
+      a {
+        display: block;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+
+        color: $o-dp-text;
+      }
+
+      .icon {
+        // Typography
+        font-size: 180%;
+
+        // Basic geometry
+        vertical-align: middle;
+
+        // Icon
+        @include icon(expand-up);
+      }
+
+      &:hover,
+      &:focus {
+        background: $o-accent;
+
+        a {
+          color: $o-base-text-color;
+        }
+      }
+    }
+
+    // Container
+    & > :nth-child(2) {
+      // Basic geometry
+      padding: 20px;
+      overflow: hidden;
+      margin: 0;
+
+      // Styling
+      background: $o-material;
+    }  
+
+    &.o-collapsed > :nth-child(1) .icon {
+      @include icon(expand-down);
+    }
+
+    &.o-collapsed  {
+      // We use !important here because JavaScript will set the max-height of 
+      // uncollapsed section on the element itself making that height higher
+      // priority in the cascade.
+      max-height: $o-clickable-target-size !important;
+    }
+  }
+}

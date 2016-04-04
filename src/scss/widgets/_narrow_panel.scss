@@ -1,0 +1,22 @@
+@import "compass/css3";
+@import "base/params";
+@import "base/media_query";
+
+.o-narrow-panel {
+  // Basic geometry
+  max-width: 36rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  position: relative;
+  
+  // Styling
+  background: $o-thin-overlay-material;
+  @include border-radius($o-clickable-target-corner-radius);
+  @include box-shadow($o-thin-overlay-shadow);
+
+  @include narrower-than($phone-portrait-wide) {
+    @include border-radius(0);
+    margin: 0;
+  }
+}
+

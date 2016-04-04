@@ -1,0 +1,18 @@
+@import "base/params";
+
+label {
+  // Typography
+  font-weight: bold;
+
+  // Basic geometry
+  display: block;
+  margin-bottom: 0.3rem;
+
+  // Styling
+  cursor: pointer;
+}
+
+input[type=checkbox] + label {
+  display: inline;
+  vertical-align: middle;
+}

@@ -1,0 +1,81 @@
+@import "compass/css3";
+@import "base/params";
+
+.o-context-menu {
+  // Basic initial geometry
+  position: fixed;
+  right: -$o-context-menu-width - 1rem;
+  z-index: 20;
+
+  // Basic geometry
+  top: $o-context-menu-top-offset;
+  width: $o-context-menu-width;
+  padding: $o-context-menu-padding;
+  padding-right: $o-context-menu-padding + 1rem;
+
+  // Styling
+  background: $o-context-menu-background;
+  @include border-top-left-radius($o-input-corner-radius);
+  @include border-bottom-left-radius($o-input-corner-radius);
+  @include box-shadow($o-front-shadow);
+
+  // FX
+  @include transition(right $o-long-animation-speed cubic-bezier(0.5, 0, 0.2, 1.2)); 
+
+  &.open {
+    right: -1rem;
+  }
+
+  // Child elements
+
+  .o-context-menu-menuitem {
+    // Typography
+    font-size: $o-context-menu-text-size;
+    text-decoration: none;
+    padding-bottom: $o-context-menu-menuitem-spacing / 2;
+    padding-top: $o-context-menu-menuitem-spacing / 2;
+
+    // Basic geometry
+    display: block;
+
+    // Styling
+    color: $o-context-menu-text-color;
+    border-bottom: $o-separator-border;
+
+    // Alternative state
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    &:hover,
+    &:focus {
+      color: $o-context-menu-highlight-color;
+    }
+
+    &.disabled,
+    &:hover.disabled,
+    &:focus.disabled {
+      color: $o-context-menu-disabled-color;
+      cursor: default;
+    }
+  }
+
+  .o-context-menu-menuitem-icon {
+    font-size: $o-context-menu-text-size * 1.2;
+    vertical-align: middle;
+  }
+
+  .o-context-menu-menuitem-label {
+    vertical-align: middle;  // Keep labels aligned with fonts
+  }
+
+  .o-context-menu-separator {
+    // Basic geometry
+    display: block;
+    height: $o-context-menu-separator-size;
+
+    // Styling
+    background: $o-context-menu-separator-color;
+  }
+}

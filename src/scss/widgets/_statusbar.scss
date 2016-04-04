@@ -1,0 +1,116 @@
+@import "compass/css3";
+
+@import "base/params";
+@import "elements/icons";
+
+$sb-hbar-height: 2.2rem;
+
+.o-statusbar {
+  // Basic geometry
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  // No height given here, because we don't want the sidebar to be restricted
+  // to a fixed height.
+
+  // FX
+  &.open {
+    .o-statusbar-status {
+      max-height: 40rem;
+    }
+
+    .o-statusbar-hbar-activator-icon {
+      @include icon($o-statusbar-hbar-activator-open-icon);
+    }
+  }
+
+  // Child elements
+
+  .o-statusbar-hbar {
+    // Basic geometry
+    position: relative;
+    height: $sb-hbar-height;
+    width: 100%;
+    @include box-shadow(0 0 5px transparentize(black, 0.6));
+
+    // Styling
+    background: $o-dp-background;
+    color: $o-negative-base;
+
+    &.clickable {
+      cursor: pointer;
+    }
+  }
+
+  .o-statusbar-status {
+    // Basic geometry
+    max-height: 0;  // Completely collapsed initially
+    overflow: hidden;
+    margin: 0;
+
+    // FX
+    @include transition(max-height $o-animation-speed);
+  }
+
+  .o-statusbar-hbar-activator {
+    // Basic geometry
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 3rem;
+    color: $o-negative-base;
+    height: 100%;
+    line-height: $sb-hbar-height;
+
+    .o-statusbar-hbar-activator-label {
+      display: none;
+    }
+
+    &:hover,
+    &:focus {
+      color: $o-accent;
+    }
+  }
+
+  .o-statusbar-hbar-activator-icon {
+    // Basic geometry
+    width: 100%;
+    height: 100%;
+
+    // Styling
+    font-size: $o-statusbar-hbar-activator-icon-size;
+    text-align: center;
+
+    // Icon
+    @include icon($o-statusbar-hbar-activator-closed-icon);
+  }
+
+  .o-statusbar-hbar-quick-status {
+    padding: 0.3rem 1rem;
+
+    .separator {
+      // Basic geometry
+      with: 0;
+      height: 100%;
+      position: relative;
+      margin: 0 0.3rem;
+
+
+      // Styling
+      border-right: $o-widget-border;
+    }
+
+    .icon {
+      font-size: 150%;
+
+      &.alert {
+        color: $o-warning;
+      }
+    }
+  }
+
+  .o-statusbar-panel-content {
+    background: $o-material;
+  }
+}

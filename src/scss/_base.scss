@@ -1,0 +1,33 @@
+@import "compass/css3";
+@import "base/params";
+@import "base/browser_fixes";
+
+* {
+  // http://caniuse.com/#search=box-sizing
+  @include box-sizing(border-box);
+}
+
+// Remove dotted focus ring from most elements in Firefox
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
+
+// Remove dotted focus ring from select box in Firefox
+select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 $o-input-text-color;
+}
+
+html {
+  font-family: $o-base-font;
+  font-size: $o-base-text-size;
+  line-height: $o-base-line-height;
+  background: $o-dark-material;
+  color: $o-base-text-color;
+  @include ios-font-size-fix;
+}
+
+body {
+  // Allow elements to go off the left and right edge without scrollbars 
+  // appearing at the bottom or page scrolling sideways.
+  overflow-x: hidden;
+}

@@ -1,0 +1,63 @@
+@import "compass/css3";
+@import "base/params";
+
+$o-menu-icon-size: 5rem !default;
+$o-menu-icon-spacing: 1rem !default;
+
+.o-apps-menu {
+  // The menu items flow horizontally, so we disable wrapping
+  white-space: nowrap;
+
+  // Basic geometry
+  padding: 1rem;
+  min-width: 100%;
+  height: 100%;
+  overflow-x: auto;
+
+  a {
+    color: $o-negative-base;
+
+    &:hover,
+    &:focus {
+      .o-apps-menu-icon {
+        border: 1px solid $o-negative-base;
+      }
+    }
+  }
+
+  .o-apps-menu-item {
+    // Typography
+    text-align: center;
+
+    // Basic geometry
+    width: $o-menu-icon-size * 1.5;
+    display: inline-block;
+    vertical-align: top;
+    marign-right: $o-menu-icon-spacing;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .o-apps-menu-icon {
+    width: $o-menu-icon-size;
+    height: $o-menu-icon-size;
+    @include border-radius(200px);
+    @include display-flex;
+    @include align-items(center);
+    border: 1px solid transparent;
+    margin: 0 auto 0.4rem;
+
+    .icon {
+      margin: 0 auto;
+      font-size: $o-menu-icon-size * 0.8;
+    }
+  }
+
+  .o-apps-menu-current {
+    .o-apps-menu-icon {
+      background: darken($o-pulldown-menubar-menu-background, 10);
+    }
+  }
+}
