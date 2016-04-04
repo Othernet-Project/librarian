@@ -1,0 +1,56 @@
+@import "base/params";
+
+
+.diskspace-storageinfo {
+  .storage-detail {
+    display: block;
+    margin-left: 4rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .storage-name {
+    // Typography
+    text-transform: uppercase;
+  }
+
+  .storage-type {
+    // Typography
+    font-style: italic;
+    font-size: 90%;
+
+    // Basic geometry
+    margin-bottom: 0.5rem;
+  }
+
+  .storage-icon {
+    // Typography
+    font-size: 300%;
+    line-height: 75%;
+
+    // Basic geometry
+    float: left;
+    margin-right: 1rem;
+    vertical-align: top;
+  }
+
+  .diskspace-consolidate {
+    margin-top: 0.3rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.diskspace-consolidate-instructions {
+  margin-bottom: 2rem;
+}
+
+.diskspace-consolidation-started {
+  border-color: $o-friendly;
+  background: $o-friendly;
+  color: $o-negative-base;
+
+  &:hover {
+    border-color: $o-friendly;
+    background: $o-friendly;
+    color: $o-negative-base;
+  }
+}
