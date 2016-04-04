@@ -1,0 +1,106 @@
+/**
+ * PANELS
+ *
+ * Panels are generic containers. They can be nested within each other, and 
+ * they don't have any inherent styling. Styling for panel groups is applied
+ * using the mixins in this module. Each mixin defines the layout of a fixed
+ * set of panels (e.g., split-panel deals with a single parent, and two 
+ * children).
+ *
+ * All panels should have a class specified by global $o-container-class 
+ * variable in the params module.
+ */
+
+
+/**
+ * split-panel($split)
+ *
+ * Panel that has two child containers that split the width at certain 
+ * coordinate given by $split argument.
+ *
+ * Children span the entire height of the parent container, and parent has a 
+ * specific height given by the $height argument.
+ *
+ * The $split-from-right argument can either be yes or no. If splitting is done
+ * from right, then the right side panel would be that wide, otherwise the 
+ * $split width is given to the left panel.
+ *
+ */
+@mixin split-panel($split, $height, $split-from-right: yes)  {
+  // Basic geometry
+  display: block;
+  position: relative;
+  height: $height;
+
+  & > .o-#{$o-container-class} {
+    // Basic geometry
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    @if $split-from-right == yes {
+      &:first-child {
+        left: 0;
+        right: $split
+      }
+
+      &:last-child {
+        width: $split;
+        right: 0;
+      }
+    } 
+    @else {
+      &:first-child {
+        left: 0;
+        width: $split;
+      }
+      
+      &:last-child {
+        left: $split;
+        right: 0;
+      }
+    }
+  }
+}
+
+
+/**
+ * double-split-panel($split-left, $split-right, $height)
+ *
+ * Panel that contains three children, of which the first is left-aligned, with
+ * fixed width specified by $split-left argument, last is right-aligned with
+ * a width given by $split-right argument, and second child takes up the 
+ * remaining space between them. Note that $split-right argument is counted 
+ * from the right edge, not from left.
+ *
+ * The containing panel height is given by the $height argument, and the child 
+ * panels span the full height.
+ */
+@mixin double-split-panel($split-left, $split-right, $height) {
+  // Basic geometry
+  display: block;
+  position: relative;
+  height: $height;
+
+  & > .o-#{$o-container-class} {
+    // Basic geometry
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    &:first-child {
+      left: 0;
+      width: $split-left;
+    }
+
+    &:last-child {
+      right: 0;
+      width: $split-right;
+    }
+
+    &:nth-child(2) {
+      left: $split-left;
+      right: $split-right;
+    }
+  }
+}

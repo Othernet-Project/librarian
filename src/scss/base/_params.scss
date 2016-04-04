@@ -1,0 +1,184 @@
+/**
+ * This module contains base variables that are used to re-skin (customize) the 
+ * Librarian UI toolkit.
+ *
+ * Recommended way to customize the variables is to load a separate module 
+ * containing customized values _before_ this module.
+ */
+
+// Typography
+$o-base-font: Arial, Helvetica, "Liberation Sans", "Open Sans", sans-serif !default;
+$o-base-text-size: 14px !default;
+$o-base-line-height: 140% !default;
+
+// Colors
+$o-base: #333 !default;                             // black
+$o-negative-base: #fff !default;                    // white
+$o-accent: #089bd2 !default;                        // outernet blue
+$o-critical: #cc3737 !default;                      // red
+$o-warning: #efa417 !default;                       // orange
+$o-friendly: #5d7b0a !default;                      // deep greeen
+$o-material: #eee !default;                         // light grey
+$o-negative-material: #444 !default;                // dark grey
+$o-dark-material: #ddd !default;                    // light grey
+$o-foreground-material: white !default;             // white (d'oh!)
+$o-background: #f8f8f8 !default;                    // very light grey
+$o-shadow: $o-material !default;
+$o-outline: #aaa !default;                          // dark grey
+$o-outline-highlight: #ccc !default;                // medium grey
+$o-base-text-color: $o-base !default;
+$o-clickable-target-color: #fafafa !default;
+$o-clickable-target-shading: $o-clickable-target-color darken($o-clickable-target-color, 10) !default;
+$o-disabled: $o-outline !default;
+$o-thin-overlay-material: transparentize($o-foreground-material, 0.25) !default;
+$o-thin-overlay-shadow: 0 0 3px transparentize(black, 0.9) !default;
+$o-light-grey: #aaa !default;
+
+// Dark panel colors
+$o-dp-background: #444;
+$o-dp-text: #aaa;
+$o-dp-widget: #666;
+$o-dp-widget-text: #aaa;
+$o-dp-field: #ddd;
+$o-dp-field-text: #444;
+
+// Styling
+$o-widget-border: 1px solid $o-outline !default;
+$o-separator-border: 1px solid $o-dark-material !default;
+
+// Geometry
+$o-clickable-target-size: 3rem !default;
+$o-clickable-target-corner-radius: 0.3rem;
+$o-input-width: 14rem;
+
+// FX
+$o-animation-speed: 0.3s !default;
+$o-long-animation-speed: $o-animation-speed * 2 !default;
+$o-front-shadow: 0 0 10px transparentize($o-base, 0.6);
+
+// ELEMENTS
+
+$o-container-class: panel;
+
+// WIDGETS
+
+// General
+$o-input-text-color: $o-base !default;
+$o-input-height: 2.1rem !default;
+$o-input-text-size: 1rem !default;
+$o-input-font: $o-base-font !default;
+$o-input-background: $o-dp-field !default;
+$o-input-focus-background: $o-negative-base !default;
+$o-input-outline-color: $o-outline !default;
+$o-input-outline-highlight-color: $o-outline-highlight !default;
+$o-input-outline: 1px solid $o-input-outline-color !default;
+$o-input-corner-radius: $o-clickable-target-corner-radius !default;
+$o-input-padding: 0.4rem 1rem !default;
+$o-input-horizontal-spacing: 0.4rem !default;
+$o-input-focus-outline: $o-accent !default;
+
+// Button
+$o-button-padding: 0 1rem !default;
+$o-button-line-height: 120% !default;
+$o-button-font-size: 1rem !default;
+$o-button-face-color: $o-accent !default;
+$o-button-text-color: $o-negative-base !default;
+$o-button-horizontal-spacing: 0.4rem !default;
+$o-button-hover-text-color: $o-accent !default;
+$o-button-hover-face-color: $o-dp-widget !default;
+
+// Forms
+$o-form-help-icon: info !default;
+$o-form-help-text-color: $o-friendly !default;
+$o-form-error-icon: alert !default;
+$o-form-error-text-color: $o-critical !default;
+
+// Modal window
+$o-modal-overlay-color: transparentize($o-base, 0.4) !default;
+$o-modal-window-max-width: 35rem !default;
+$o-modal-window-max-height: 90% !default;
+$o-modal-window-min-height: 20% !default;
+$o-modal-window-shadow: 0 0 10px transparentize($o-base, 0.2) !default;
+$o-modal-window-padding: 3rem 1rem 1rem !default;
+$o-modal-window-background: $o-dp-background !default;
+$o-modal-window-text: $o-dp-text !default;
+$o-modal-close-show-label: no !default;
+$o-modal-close-icon: close !default;
+$o-modal-close-icon-size: 180% !default;
+$o-modal-close-top-offset: 0 !default;
+$o-modal-close-right-offset: 1rem !default;
+
+// Pulldown menubar
+$o-pulldown-menubar-hbar-height: $o-clickable-target-size * 1.3 !default;
+$o-pulldown-menubar-menu-height: $o-clickable-target-size * 3 !default;
+$o-pulldown-menubar-default-pos-left: 0 !default;
+$o-pulldown-menubar-default-pos-right: 0 !default;
+$o-pulldown-menubar-background: $o-dp-background !default;
+$o-pulldown-menubar-text-color: $o-dp-text !default;
+$o-pulldown-menubar-hbar-activator-width: 16rem !default;
+$o-pulldown-menubar-hbar-activator-highlight-color: $o-accent !default;
+$o-pulldown-menubar-hbar-activator-highlight-text-color: $o-negative-base !default;
+$o-pulldown-menubar-hbar-activator-icon-color: $o-pulldown-menubar-text-color !default;
+$o-pulldown-menubar-hbar-activator-icon-size: 180% !default;
+$o-pulldown-menubar-hbar-activator-closed-icon: "expand-down" !default;
+$o-pulldown-menubar-hbar-activator-open-icon: "expand-up" !default;
+$o-pulldown-menubar-hbar-use-logo: yes !default;
+$o-pulldown-menubar-hbar-logo: logo !default;
+$o-pulldown-menubar-menu-background: $o-accent !default;
+$o-pulldown-menubar-menu-text-color: $o-negative-base !default;
+$o-pulldown-menubar-activator-corner-radius: 0.4rem !default;
+
+// Main panel
+$o-main-panel-top-offset: $o-pulldown-menubar-hbar-height !default;
+$o-main-panel-bottom-offset: 2rem !default;
+$o-main-panel-padding: 0 !default;
+$o-main-panel-inner-padding: 1rem !default;
+
+// Status bar
+$o-statusbar-hbar-height: $o-clickable-target-size * 0.75 !default;
+$o-statusbar-status-height: 10rem !default;
+$o-statusbar-hbar-activator-width: $o-clickable-target-size !default;
+$o-statusbar-hbar-show-label: no !default;
+$o-statusbar-hbar-activator-closed-icon: "expand-up" !default;
+$o-statusbar-hbar-activator-open-icon: "expand-down" !default;
+$o-statusbar-hbar-activator-icon-size: 180% !default;
+$o-statusbar-hbar-activator-icon-color: $o-base-text-color !default;
+$o-statusbar-hbar-activator-icon-top-offset: 0.2rem !default;
+
+// Contextbar
+$o-contextbar-text-color: $o-dp-text !default;
+$o-contextbar-height: 100% !default;
+$o-contextbar-menu-icon-width: $o-clickable-target-size * 1.5 !default;
+$o-contextbar-menu-icon-top-offset: 0.7rem !default;
+$o-contextbar-menu-icon-size: 220%;
+$o-contextbar-menu-highlight-color: $o-accent !default;
+$o-contextbar-menu-highlight-text-color: $o-negative-base !default;
+
+// Context menu
+$o-context-menu-top-offset: $o-pulldown-menubar-hbar-height + 1rem !default;
+$o-context-menu-width: 18rem !default;
+$o-context-menu-padding: 1rem !default;
+$o-context-menu-background: $o-foreground-material !default;
+$o-context-menu-text-color: $o-base-text-color !default;
+$o-context-menu-text-size: 120% !default;
+$o-context-menu-menuitem-spacing: 1rem !default;
+$o-context-menu-highlight-color: $o-accent !default;
+$o-context-menu-separator-size: 4px !default;
+$o-context-menu-separator-color: $o-dark-material;
+$o-context-menu-disabled-color: $o-disabled;
+
+// Multisearch
+$o-multisearch-width: 100% !default;
+$o-multisearch-height: 100% !default;
+$o-multisearch-select-width: $o-input-width !default;;
+$o-multisearch-button-width: $o-clickable-target-size * 2 !default;
+$o-multisearch-input-width: 100% !default;
+$o-multisearch-show-label: no !default;
+$o-multisearch-vertical-padding: 0.8rem !default;
+$o-multisearch-horizontal-padding: 2rem !default;
+$o-multisearch-icon: search !default;
+$o-multisearch-icon-size: 180% !default;
+$o-multisearch-field-background: $o-dp-field !default;
+$o-multisearch-widget-background: $o-dp-widget !default;
+$o-multisearch-widget-text: $o-dp-widget-text !default;
+

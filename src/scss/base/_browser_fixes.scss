@@ -1,0 +1,28 @@
+/**
+ * This module contains fixes for various browsers. When adding a fix for a
+ * particular browser, please add it here, with description of the solution and
+ * any platforms it affects.
+ */
+
+// This fix addresses the issue where scrolling inside an iframe causes the
+// whole page to be scrolled instead of just the iframe contents. This fix must
+// be applied to *enclosing element* not the iframe itself.
+//
+// Applicable to iOS Safari on versions of iOS 5 through 8.
+//
+@mixin ios-iframe-fix {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+// This fixes the issue where changing the screen orientation in iOS Safari
+// causes font size to change. Furthermore, reverting to original orientation
+// does not cause the font size to return to normal. This fix should be applied
+// to the <HTML> element.
+//
+// Applicable to iOS Safari
+@mixin ios-font-size-fix {
+  -webkit-text-size-adjust: 100%;
+}
+
