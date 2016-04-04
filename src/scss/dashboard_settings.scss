@@ -1,0 +1,18 @@
+@import "base/params";
+
+.settings {
+  .group {
+    border-top: $o-separator-border;
+    padding-top: 1rem;
+    margin-bottom: 1em;
+
+    &:last-child {
+      border-bottom: $o-separator-border;
+    }
+
+    .group-title {
+      text-transform: uppercase;
+      padding-right: 1rem;
+    }
+  }
+}
