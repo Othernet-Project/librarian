@@ -1,0 +1,74 @@
+@import "compass/css3";
+@import "base/params";
+
+.notification-default {
+  // Basic geometry
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+
+  // Styling
+  border: $o-separator-border;
+  background: $o-foreground-material;
+  @include box-shadow($o-thin-overlay-shadow);
+
+  .notification-delete {
+    // Basic geometry
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: $o-clickable-target-size;
+    height: 100%;
+    background: $o-material;
+    font-size: 180%;
+
+    &:hover,
+    &:focus {
+      background: $o-critical;
+      color: $o-negative-base;
+    }
+  }
+
+  .notification-body {
+    margin-right: $o-clickable-target-size;
+  }
+
+  .notification-delete-label {
+    display: none;
+  }
+
+  .notification-meta {
+    // Typography
+    font-size: 90%;
+    font-weight: bold;
+
+    // Basic geometry
+    margin-bottom: 0.2rem;
+  }
+}
+
+.notification {
+  @extend .notification-default;
+  &.critical {
+    background: $o-critical;
+    color: $o-negative-base;
+  }
+  &.urgent {
+    background: $o-warning;
+    color: $o-negative-base;
+  }
+  &.normal {
+    background: $o-negative-base;
+  }
+}
+
+#notifications-tab {
+  // Basic geomtery
+  padding-top: 2.6rem;
+
+  .subtitle-buttons {
+    top: 0;
+    right: 0;
+  }
+} 
+
