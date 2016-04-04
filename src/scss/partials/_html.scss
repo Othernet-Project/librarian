@@ -1,0 +1,43 @@
+.views-reader {
+  // Basic geometry
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  // Styling
+  background: $o-thin-overlay-material;
+
+  // iOS iframe fix
+  //
+  // The overflow-scrolling rule allows the *container* to scroll when content 
+  // is larger than itself. This is contrary to how we normally do it which is
+  // simply let the iframe scroll.
+  //
+  // We also allow the container to overflow in order to let the 
+  // overflow-scroll rule do it's thing.
+  //
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+}
+
+.views-reader-frame {
+  // Basic geometry
+  display: block;
+  width: 100%;
+
+  // iOS iframe fix (cont'd)
+  //
+  // Now that the container is set to overflow, we need to let the iframe 
+  // extend as much as it wants. For some reason, on desktop, iframe wants to
+  // remain tiny, but on iOS it wants to grow as tall as the document it 
+  // contains.
+  //
+  // Because of this, we give the min-height (instead of height), and cause it 
+  // to still be 100% tall in well-behaved browsers. Using height here would 
+  // cause the iframe to be just as large as the container, and container would 
+  // no longer overflow.
+  //
+  min-height: 100%;
+}

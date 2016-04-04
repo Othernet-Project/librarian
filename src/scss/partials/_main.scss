@@ -1,0 +1,218 @@
+@import "base";
+@import "playlist";
+
+$views-sidebar-width: 300px;
+$views-sidebar-min: 48px;
+$views-sidebar-anim: 0.5s;
+$views-sidebar-cutoff: 740px;
+$views-tab-cutoff: 840px;
+
+@mixin views-at-cutoff {
+  @include narrower-than($views-sidebar-cutoff) {
+    @content;
+  }
+}
+
+.views-container {
+  // We make views container take up as much space as possible so that the 
+  // layout of individual facet UIs can be as flexible as possible. Note that 
+  // we're **not** using the overflow property here so that UIs that require a 
+  // long scrolling list can do that without additional CSS. It's the job of 
+  // the facet's own UI to select an appropriate overflow value.
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  clear: both;
+  overflow-x: hidden;
+}
+
+.views-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-x: hidden;
+
+  @include transition(right $views-sidebar-anim);
+
+  .with-sidebar & {
+    right: $views-sidebar-width;
+
+    @include views-at-cutoff {
+      right: 100%;
+    }
+  }
+
+  .sidebar-hidden & {
+    right: $views-sidebar-min;
+
+    @include views-at-cutoff {
+      right: 10%;
+    }
+  }
+
+  .note {
+    display: block;
+    background: $o-thin-overlay-material;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    font-size: 200%;
+    text-align: center;
+  }
+}
+
+.views-sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: $views-sidebar-width;
+
+  @include transition(right $views-sidebar-anim);
+
+  @include views-at-cutoff {
+    width: 100%;
+  }
+
+  .sidebar-hidden & {
+    right: $views-sidebar-min - $views-sidebar-width;
+
+    @include views-at-cutoff {
+      right: -90%;
+    }
+  }
+
+  .views-sidebar-content {
+    position: absolute;
+    overflow-x: hidden;
+    overflow-y: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  &.with-sidebar-handle .views-sidebar-content {
+    top: 3rem;
+  }
+}
+
+.views-sidebar-retract {
+  display: inline-block;
+  color: lighten($o-base-text-color, 30);
+  margin: 1rem 0.5rem 0;
+
+  &:hover {
+    color: $o-accent;
+  }
+
+  .sidebar-hidden & {
+    // Make the retract button cover the entire width and height of the sidebar
+    // when it's hidden (i.e., partially showing from the edge).
+    position: absolute;
+    margin: 0;
+    padding: 1rem 0.5rem 0;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .icon {
+    @include transition(transform $views-sidebar-anim);
+    font-size: 220%;
+
+    .sidebar-hidden & {
+      @include transform(rotateY(180deg));
+    }
+  }
+
+  .label {
+    text-transform: uppercase;
+    @include transition(opacity $views-sidebar-anim);
+
+    .sidebar-hidden & {
+      opacity: 0;
+    }
+  }
+}
+
+.views-sidebar-content {
+  opacity: 1;
+  @include transition(opacity $views-sidebar-anim);
+
+  .sidebar-hidden & {
+    opacity: 0.2;
+  }
+}
+
+.views-tabs-strip {
+  height: 2rem;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+
+  .views-tabs-strip-tab {
+    // Geometry
+    display: inline-block;
+    padding: 0 1rem;
+    line-height: 2rem;
+    height: 2rem;
+    margin: 0 0.2rem;
+
+    &:focus,
+    &:hover {
+      background: $o-accent;
+      color: $o-negative-base;
+    }
+
+    background-color: darken($o-material, 20);
+    color: $o-base-text-color;
+
+    // Text styling
+    text-transform: uppercase;
+
+    border-right: $o-separator-border;
+    border-top: $o-separator-border;
+
+    @include border-top-left-radius($o-clickable-target-corner-radius);
+    @include border-top-right-radius($o-clickable-target-corner-radius);
+
+    .icon {
+      font-size: 130%;
+    }
+
+    @include narrower-than($views-tab-cutoff) {
+      .label {
+        display: none;
+      }
+    }
+  }
+
+  .views-tabs-tab-current {
+    background: $o-thin-overlay-material;
+  }
+
+  .views-tabs-special {
+    background: $o-accent;
+    color: $o-negative-base;
+
+    &:hover,
+    &:focus {
+      background: $o-dp-background;
+    }
+
+    .icon {
+      font-size: 150%;
+    }
+
+    .label {
+      display: none;
+    }
+  }
+}

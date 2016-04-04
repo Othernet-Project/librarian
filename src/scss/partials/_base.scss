@@ -1,0 +1,27 @@
+@import "compass/css3";
+@import "base/params";
+@import "base/media_query";
+@import "compass/typography/text/replacement";
+
+@mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin valign($child, $align: middle) {
+  white-space: nowrap;
+
+  &:after {
+    content: '';
+    height: 100%;
+    width: 0;
+    display: inline-block;
+    vertical-align: $align;
+  }
+
+  #{$child} {
+    display: inline-block;
+    vertical-align: $align;
+  }
+}

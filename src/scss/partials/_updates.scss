@@ -1,0 +1,21 @@
+@import "base";
+  
+.file-list-changelog {
+  padding: 2.5rem 0.5rem;
+  margin: 0;
+
+  font-size: 150%;
+  background: $o-thin-overlay-material;
+  border-bottom: $o-separator-border;
+  text-transform: uppercase;
+  text-align: center;
+  color: lighten($o-base-text-color, 20);
+}
+
+.file-list-pager {
+  border-top: 1px solid $o-outline;
+  background: $o-thin-overlay-material;
+  padding: 1rem 0.5rem 2rem;
+  margin: 0;
+  text-align: center;
+}

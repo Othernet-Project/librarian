@@ -1,0 +1,36 @@
+@import "compass/css3/images";
+
+.mejs-oskin .mejs-controls {
+  .mejs-prev-button  {
+    top: 10px;
+    left: 25%;
+    margin: 10px 0 0 -20px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .mejs-next-button  {
+    top: 10px;
+    right: 20%;
+    margin: 10px 0 0 -20px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .mejs-prev button {
+    width: 40px;
+    height: 40px;
+    background: transparent image-url('controls-wmp-playlist.png') no-repeat 0 -40px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mejs-next button {
+    width: 40px;
+    height: 40px;
+    background: transparent image-url('controls-wmp-playlist.png') no-repeat;
+    margin: 0;
+    padding: 0;
+  }
+}
+

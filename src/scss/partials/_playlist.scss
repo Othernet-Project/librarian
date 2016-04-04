@@ -1,0 +1,131 @@
+@import "base";
+
+$playlist-sidebar-width: 300px;
+$playlist-sidebar-closed-width: 48px;
+$playlist-sidebar-animation-speed: 0.5s;
+
+
+.playlist-list {
+  .playlist-list-item {
+    overflow: hidden;
+    margin: 0 0 0.5rem;
+
+    a {
+      width: 100%;
+      height: 100%;
+      display: block;
+      color: $o-base-text-color;
+      background: darken($o-dark-material, 10);
+      padding: 0.3rem 0.5rem;
+      @include ellipsis;
+      @include transition(color 0.5s, background 0.5s);
+
+      &:hover,
+      &:focus {
+        background: $o-accent;
+        color: white;
+      }
+    }
+
+    &.playlist-list-item-current {
+      a {
+        color: $o-base-text-color;
+        cursor: default;
+        background: $o-thin-overlay-material;
+
+        &:hover,
+        &:focus {
+          color: $o-accent;
+        }
+      }
+    }
+  }
+
+  .playlist-list-duration {
+    display: inline-block;
+    text-align: right;
+    width: 3rem;
+    margin-right: 0.5rem;
+  }
+}
+
+.playlist-metadata {
+  margin-bottom: 2rem;
+
+  h2 {
+    margin: 1rem 0 0.5rem;
+    padding: 0 1rem 0.5rem;
+    font-size: 120%;
+    border-bottom-color: darken($o-dark-material, 20);
+  }
+
+  p {
+    margin: 0 0 1rem;
+    padding: 0 1rem;
+  }
+
+  .playlist-metadata-buttons {
+    border-top: 1px solid $o-outline;
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+
+  .playlist-item-author {
+    font-style: italic;
+  }
+
+  .label {
+    display: inline-block;
+    font-size: 90%;
+    text-transform: uppercase;
+  }
+
+  .value span {
+    vertical-align: middle;
+  }
+
+  .icon {
+    font-size: 150%;
+  }
+}
+
+.playlist-tabs {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  .label {
+    display: none;
+  }
+
+  .icon {
+    font-size: 150%;
+  }
+
+  a {
+    display: inline-block;
+    color: lighten($o-base-text-color, 30);
+    margin-left: 1rem;
+
+    @include transition(color 0.3s);
+
+    &.active {
+      color: $o-base-text-color;
+    }
+
+    &:hover,
+    &:focus {
+      color: $o-accent;
+    }
+  }
+}
+
+.with-tabs {
+  .playlist-section {
+    display: none;
+  }
+
+  .playlist-section-open {
+    display: block;
+  }
+}

@@ -1,0 +1,26 @@
+@import "base";
+
+$clip-sidebar-width: 300px;
+$clip-sidebar-closed-width: 48px;
+$clip-sidebar-animation-speed: 0.5s;
+
+.video-controls {
+  padding: 1rem;
+  background: $o-thin-overlay-material;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-x: hidden;
+}
+
+#video-controls-video-wrapper {
+  // Basic geometry
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+
+  background: black;
+}

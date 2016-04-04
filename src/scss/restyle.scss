@@ -1,0 +1,98 @@
+@import "base/params";
+@import "compass/reset";
+
+/**
+ * HTML content styling overrides
+ */
+
+html {
+  background: $o-material;
+  color: $o-base-text-color;
+}
+
+body {
+  margin: 2rem auto;
+  max-width: 600px;
+  padding: 1rem;
+  font-family: Georgia, "Times New Roman", Bookman, serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 140%;
+  background: #fff;
+  color: #555;
+}
+
+h1, h2, h3, h4, h5 {
+  line-height: 120%;
+  margin: 3rem 0 2rem;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 200%;
+}
+
+h2 {
+  font-size: 170%;
+}
+
+h3 {
+  font-size: 140%;
+}
+
+h4 {
+  font-size: 120%;
+}
+
+h5 {
+  font-size: 100%;
+}
+
+img {
+  display: inline-block;
+  max-width: 100%;
+  max-height: none;
+  width: auto !important;
+  height: auto !important;
+  border: 1px solid $o-outline;
+}
+
+strong, b {
+  font-weight: bold;
+}
+
+em, i {
+  font-style: italic;
+}
+
+blockquote {
+  border-left: 0.5rem solid $o-outline;
+  padding-left: 1rem;
+  margin: 1rem 0 2rem;
+}
+
+ul, ol {
+  li {
+    margin-left: 2rem;
+    padding-left: 1rem;
+  }
+}
+
+ul li {
+  list-style: disc;
+}
+
+ol li {
+  list-style: decimal;
+}
+
+p {
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+code, pre {
+  font-family: monospace;
+  font-size: 110%;
+}
