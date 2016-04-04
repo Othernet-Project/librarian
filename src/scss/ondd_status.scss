@@ -1,0 +1,84 @@
+@import "compass/css3";
+@import "base/params";
+
+@include keyframes(blink) {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.ondd-status-panel {
+  position: relative;
+  border: $o-separator-border;
+  background: $o-material;
+  padding-bottom: 1rem;
+
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  
+  .ondd-main-status {
+    // Basic geometry
+    margin-bottom: 1rem;
+  }
+
+  .ondd-quick-status {
+    // Typography
+    font-size: 140%;
+    text-transform: uppercase;
+    padding: 0.3rem 1rem;
+
+    // Basic geometry
+    display: inline-block;
+    margin-right: 0.5rem;
+    @include border-bottom-right-radius($o-clickable-target-corner-radius);
+
+    // Styling
+    color: $o-negative-base;
+    background: $o-critical;
+
+    &.ondd-all-ok {
+      background: $o-accent;
+    }
+  }
+
+
+  .ondd-status-icons {
+    // Typography
+    line-height: 100%;
+    font-size: 140%;
+    margin-bottom: 0;
+
+    // Basic geometry
+    position: absolute;
+    right: 0.5rem;
+    top: 0.2rem;
+
+    .ondd-status-ng {
+      // Styling
+      color: $o-critical;
+
+      // FX
+      @include animation(blink linear 0.5s infinite);
+    }
+  }
+
+  .ondd-status-indicators {
+    white-space: nowrap;
+    display: block;
+    @include display-flex;
+    @include justify-content(space-around);
+
+    .o-progress {
+      margin: 0 0.5rem;
+    }
+  }
+}

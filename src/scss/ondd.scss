@@ -1,0 +1,96 @@
+@import "compass/css3";
+@import "base/media_query";
+@import "base/params";
+
+$ondd-cutoff: 786px;
+$ondd-too-wide: 1000px;
+
+.ondd-cache-bar {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 0.3rem;
+    background: white;
+    margin-bottom: 0.5rem;
+}
+
+.ondd-cache-bar-indicator {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: $o-accent;
+}
+
+.ondd-cache-bar-percentage-lcd {
+  margin-bottom: 1rem;
+}
+
+.ondd-cache-alert {
+  background: $o-critical;
+  color: $o-negative-base;
+  padding: 0.5rem 1rem;
+  margin-bottom: 2rem;
+  font-weight: bold; 
+}
+
+.ondd-status .left {
+  // Basic geometry
+  float: left;
+  width: 40%;
+
+  @include wider-than($ondd-too-wide) {
+    width: 400px;
+  }
+
+  @include narrower-than($ondd-cutoff) {
+    float: none;
+    width: auto;
+  }
+}
+
+.ondd-status .right {
+  // Basic geometry
+  margin-left: 40%;
+  padding-left: 2rem;
+  max-width: 400px;
+
+  @include wider-than($ondd-too-wide) {
+    margin-left: 400px;
+  }
+
+  @include narrower-than($ondd-cutoff) {
+    margin-left: 0;
+    padding-left: 0;
+    max-width: 100%;
+  }
+}
+
+.ondd-status-panel {
+  margin-bottom: 1rem;
+}
+
+.ondd-file-list {
+  // Basic geometry
+  margin-bottom: 1rem;
+
+  li {
+    // Typography
+    white-space: nowrap;
+
+    // Basic geometry
+    padding: 0.5rem 0;
+
+    // Styling
+    border-bottom: $o-separator-border;
+
+    &:first-child {
+      border-top: $o-separator-border;
+    }
+
+    .o-progress-mini {
+      margin-right: 1rem;
+    }
+  }
+}
