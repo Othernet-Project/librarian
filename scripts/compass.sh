@@ -17,7 +17,7 @@ case "$ACTION" in
     stop)
         if [ -f "$COMPASS_PID" ]
         then
-            kill -s TERM $(cat "$COMPASS_PID")
+            kill -s INT $(cat "$COMPASS_PID")
             rm "$COMPASS_PID"
         else
             exit 1

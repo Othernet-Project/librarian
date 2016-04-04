@@ -1,0 +1,31 @@
+@import "compass/css3";
+@import "base/params";
+
+.token-note {
+  // Basic layout
+  padding: 0.5rem;
+  border: 1px solid $o-friendly;
+
+  // Styling
+  background: transparentize($o-friendly, 0.9);
+  color: $o-friendly;
+
+  .label {
+    // Typography
+    font-weight: bold;
+
+    // Basic geometry
+    display: block;
+  }
+
+  .large {
+    // Typography
+    font-size: 200%;
+    letter-spacing: 0.3rem;
+    text-align: center;
+
+    // Basic geometry
+    display: block;
+    margin: 2rem 0;
+  }
+}

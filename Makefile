@@ -1,9 +1,4 @@
-COFFEE_SRC = src/coffee
-JSDIR = librarian/static/js
-SCSS_SRC = src/scss
-COMPASS_CONF = conf/config.rb
-SCRIPTS = scripts
-EXCLUDE = vendor
+include conf/Makefile.in
 
 COMPASS_PID = .compass_pid
 COFFEE_PID = .coffee_pid

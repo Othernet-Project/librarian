@@ -1,12 +1,14 @@
 require 'compass/import-once/activate'
 # Require any additional compass plugins here.
 
+basedir = "librarian"
+
 # Set this to the root of your project when deployed:
 http_path = "/static/"
-css_dir = "librarian/static/css"
+css_dir = "#{basedir}/static/css"
 sass_dir = "src/scss"
-images_dir = "librarian/static/img"
-javascripts_dir = "librarian/static/js"
+images_dir = "#{basedir}/static/img"
+javascripts_dir = "#{basedir}/static/js"
 
 # You can select your preferred output style here (can be overridden via the command line):
 # output_style = :expanded or :nested or :compact or :compressed
