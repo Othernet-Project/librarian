@@ -1,0 +1,24 @@
+@import "compass/css3";
+@import "base/params";
+
+#dashboard-logs {
+  textarea {
+    // Typography
+    font-family: monospace;
+    font-size: 12px;
+
+    // Basic geometry
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1em;
+    min-height: 300px;
+    max-height: 600px;
+    padding: 1rem;
+
+    // Styling
+    border: $o-widget-border;
+    background: $o-base-text-color;
+    color: $o-negative-base;
+    @include border-radius($o-clickable-target-corner-radius);
+  }
+}
