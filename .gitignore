@@ -11,7 +11,10 @@ __pycache__/
 /.coverage
 /node_modules
 *.log
-/librarian/static/
+/librarian/static/css/*
+!/librarian/static/css/vendor/
+/librarian/static/js/*
+!/librarian/static/js/vendor/
 .webassets-cache
 .webassets-manifest
 dev.ini
