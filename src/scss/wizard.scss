@@ -1,0 +1,26 @@
+@import "compass/css3";
+@import "compass/typography/text/replacement";
+@import "base/params";
+
+.o-pulldown-menubar {
+  // Override the pulldown menubar settings
+  top: 0;
+  height: $o-pulldown-menubar-hbar-height;
+}
+
+.wizard-steps {
+  // Typography
+  text-align: center;
+
+  // Basic geometry
+  padding-top: 1rem;
+
+  .step {
+    font-size: 160%;
+  }
+}
+
+.step-logo > .icon {
+  position: relative;
+  top: -3px;
+}

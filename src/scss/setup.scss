@@ -1,0 +1,17 @@
+.image {
+  text-align: center;
+
+  a {
+    width: image-width('outernet_beta.png') / 2;
+    display: inline-block;
+  }
+}
+
+.welcome {
+  text-align: center;
+  font-size: 180%;
+}
+
+.buttons {
+  text-align: center;
+}
