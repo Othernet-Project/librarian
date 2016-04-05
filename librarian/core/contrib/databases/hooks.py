@@ -18,7 +18,7 @@ EXPORTS = {
 
 
 def initialize(supervisor):
-    supervisor.exts.databases = DatabaseContainer()
+    supervisor.exts.databases = DatabaseContainer({})
     supervisor.exts.commands.register('dump_tables',
                                       dump_tables,
                                       '--dump-tables',
