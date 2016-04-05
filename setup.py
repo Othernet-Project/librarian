@@ -3,7 +3,8 @@
 import os
 import sys
 import shutil
-from subprocess import check_output
+from os.path import normpath, join
+from subprocess import check_output, call
 from distutils.cmd import Command
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
@@ -24,7 +25,7 @@ if '--snapshot' in sys.argv:
 
 def read(fname):
     """ Return content of specified file """
-    path = os.path.join(SCRIPTDIR, fname)
+    path = join(SCRIPTDIR, fname)
     if PY3:
         f = open(path, 'r', encoding='utf8')
     else:
@@ -35,12 +36,14 @@ def read(fname):
 
 
 def in_scriptdir(path):
-    return os.path.join(SCRIPTDIR, os.path.normpath(path))
+    return join(SCRIPTDIR, normpath(path))
 
 
 def rebuild_catalogs():
-    import subprocess
-    subprocess.call('python scripts/cmpmsgs.py librarian/locales', shell=True)
+    try:
+        call('python scripts/cmpmsgs.py librarian/locales', shell=True)
+    except:
+        pass
 
 
 def clean_pyc():
@@ -48,12 +51,12 @@ def clean_pyc():
     for root, dirs, files in os.walk(SCRIPTDIR):
         for f in files:
             if os.path.splitext(f)[1] == '.pyc':
-                path = os.path.join(root, f)
+                path = join(root, f)
                 print("removing '%s'" % path)
                 os.unlink(path)
         for d in dirs:
             if d == '__pycache__':
-                path = os.path.join(root, d)
+                path = join(root, d)
                 print("removing '%s'" % path)
                 shutil.rmtree(path)
 
@@ -92,6 +95,29 @@ class Package(SdistCommand):
 class Clean(Command):
     def run(self):
         clean_pyc()
+
+
+class LocalMirror(Command):
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        mirrordir = normpath('/tmp/pypi')
+        requirements = join(SCRIPTDIR,
+                            normpath('dependencies/requirements.txt'))
+        try:
+            os.makedirs(mirrordir)
+        except OSError:
+            pass
+        cmd = ('pip2pi --normalize-package-names "{}" --no-deps '
+               '--no-binary :all: -r "{}"').format(mirrordir, requirements)
+        print(cmd)
+        call(cmd, shell=True)
 
 
 class Siege(Command):
@@ -202,7 +228,8 @@ setup(
     cmdclass={
         'test': PyTest,
         'develop': Develop,
-        'sdist': Package,
+        'deps': LocalMirror,
+        'prepare': Package,
         'uncache': Clean,
         'siege': Siege,
         'phantom': Phantom,
