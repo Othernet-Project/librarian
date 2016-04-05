@@ -55,7 +55,7 @@ class DirInfo(CDFObject):
 
     def store(self):
         """Store dirinfo data structure in database."""
-        db = self.supervisor.exts.databases[self.DATABASE_NAME]
+        db = exts.databases[self.DATABASE_NAME]
         data = self.clean_data() or {self.NO_LANGUAGE: {}}
         for language, info in data.items():
             to_write = dict(path=self.path, language=language)
@@ -66,18 +66,17 @@ class DirInfo(CDFObject):
             db.execute(query, to_write)
 
     def delete(self):
-        db = self.supervisor.exts.databases[self.DATABASE_NAME]
+        db = exts.databases[self.DATABASE_NAME]
         query = db.Delete(self.TABLE_NAME, where='path = %s')
         db.execute(query, (self.path,))
-        self.supervisor.exts.cache.delete(self.get_cache_key(self.path))
+        exts.cache.delete(self.get_cache_key(self.path))
 
     def read_file(self):
         """Read dirinfo file from disk."""
         info_file_path = os.path.join(self.path, self.FILENAME)
-        fsal = self.supervisor.exts.fsal
-        if fsal.exists(info_file_path):
+        if exts.fsal.exists(info_file_path):
             try:
-                with fsal.open(info_file_path, 'r') as info_file:
+                with exts.fsal.open(info_file_path, 'r') as info_file:
                     info = [to_unicode(line) for line in info_file.readlines()]
 
                 for line in info:
@@ -96,7 +95,7 @@ class DirInfo(CDFObject):
                 logging.exception(msg)
 
     @classmethod
-    def search(cls, supervisor, terms=None, language=None):
+    def search(cls, terms=None, language=None):
         db = exts.databases[cls.DATABASE_NAME]
         q = db.Select(sets=cls.TABLE_NAME, what='path')
         if language:
@@ -107,7 +106,7 @@ class DirInfo(CDFObject):
             terms = '%' + terms.lower() + '%'
         rows = db.fetchiter(q, dict(language=language, terms=terms))
         paths = (r['path'] for r in rows)
-        return cls.from_db(supervisor, paths).itervalues()
+        return cls.from_db(paths).itervalues()
 
     @classmethod
     def fetch(cls, db, paths):
