@@ -34,9 +34,9 @@ class SettingsManager(object):
 
     def add_group(self, name, label):
         if name in self._groups:
-            raise ValueError("Group already exists.")
-
+            return False
         self._groups[name] = Group.create(label)
+        return True
 
     def add_field(self, name, group, label, value_type, help_text=None,
                   required=False, default=None, choices=None):
