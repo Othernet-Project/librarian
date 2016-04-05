@@ -28,10 +28,9 @@ class NotificationCleanupTask(Task):
 
     @classmethod
     def install(cls):
-        instance = cls()
         db = exts.databases.notifications
         default_expiry = exts.config['notifications.default_expiry']
-        exts.tasks.schedule(instance,
+        exts.tasks.schedule(cls(),
                             args=(db, default_expiry),
                             periodic=True,
                             delay=default_expiry)

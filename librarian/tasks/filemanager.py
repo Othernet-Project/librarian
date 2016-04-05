@@ -18,7 +18,7 @@ class CheckDirInfoTask(Task):
         for dirinfo in entries.values():
             dirinfo.delete()
 
-    def check_dirinfo(self, event):
+    def run(self, event):
         if not self.is_dirinfo(event):
             return
         dirname = os.path.dirname(event.src)

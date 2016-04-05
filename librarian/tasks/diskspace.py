@@ -53,6 +53,6 @@ class CheckDiskspaceTask(Task):
         instance.run()
         refresh_rate = exts.config['diskspace.refresh_rate']
         if refresh_rate:
-            exts.tasks.schedule(instance.run,
+            exts.tasks.schedule(instance,
                                 delay=refresh_rate,
                                 periodic=True)

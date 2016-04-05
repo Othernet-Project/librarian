@@ -58,9 +58,8 @@ class CheckNewContentTask(Task):
 
     @classmethod
     def install(cls):
-        instance = cls()
         refresh_rate = exts.config['facets.refresh_rate']
-        exts.tasks.schedule(instance,
+        exts.tasks.schedule(cls(),
                             args=(refresh_rate,),
                             delay=refresh_rate)
 
@@ -100,4 +99,4 @@ class ScanFacetsTask(Task):
             start_delay = exts.config.get('facets.scan_delay', SCAN_DELAY)
             step_delay = exts.config.get('facets.scan_step_delay', STEP_DELAY)
             kwargs = dict(step_delay=step_delay, config=exts.config)
-            exts.tasks.schedule(scan_facets, kwargs=kwargs, delay=start_delay)
+            exts.tasks.schedule(cls(), kwargs=kwargs, delay=start_delay)
