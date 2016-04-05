@@ -1,6 +1,7 @@
 # Global
 TMPDIR := ./tmp
-SCRIPTS = scripts
+LOCAL_MIRROR = /tmp/pypi
+MIRROR_REQ = ./dependencies/requirements.txt
 
 # Assets-related
 ASSETS_DIR = ./ui_assets_src
@@ -25,13 +26,22 @@ FSAL_PID = $(TMPDIR)/.fsal_pid
 	recompile-assets \
 	prepare \
 	start \
+	stop \
 	start-fsal \
 	start-coffee \
 	start-compass \
 	stop-compass \
 	stop-coffee
 
+prepare:
+	pip install pip2pi
+	pip2pi --normalize-package-names $(LOCAL_MIRROR) --no-deps \
+		--no-binary :all: -r $(MIRROR_REQ)
+	pip install -e . --extra-index-url file://$(LOCAL_MIRROR) 
+
 start: start-asset start-fsal
+
+stop: stop-assets stop-fsal
 
 start-assets: $(COMPASS_PID) $(COFFEE_PID)
 
