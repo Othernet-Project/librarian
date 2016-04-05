@@ -172,6 +172,9 @@ class Supervisor:
 
     def _load_components(self):
         components = self.config['app.components'] or []
+        # add root package to the beginning of the list
+        pkg_name = __name__.split('.')[0]
+        components = [pkg_name] + components
         # load default core components if core override flag was not set
         if not self.config.get('app.core_override'):
             core_components = self._get_core_components()
