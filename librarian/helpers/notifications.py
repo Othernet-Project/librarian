@@ -2,10 +2,10 @@ from bottle import request
 
 from ..core.contrib.templates.decorators import template_helper
 from ..core.exts import ext_container as exts
-from .notifications import (to_dict,
-                            Notification,
-                            NotificationGroup,
-                            NOTIFICATION_COLS)
+from ..data.notifications import (to_dict,
+                                  Notification,
+                                  NotificationGroup,
+                                  NOTIFICATION_COLS)
 
 
 FIXED_COLS = ['n.' + c for c in NOTIFICATION_COLS]

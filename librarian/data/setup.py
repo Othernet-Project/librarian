@@ -16,8 +16,8 @@ from bottle import request
 
 from librarian_core.contrib.templates.renderer import template
 
-from .decorators import AUTO_CONFIGURATORS
-from .wizard import Wizard
+from ..decorators.setup import AUTO_CONFIGURATORS
+from ..presentation.wizard import Wizard
 
 
 class Setup(object):
