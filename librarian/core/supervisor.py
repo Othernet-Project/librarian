@@ -108,6 +108,7 @@ class Supervisor:
         self.config_path = get_config_path(default=default_path)
         self.config = self.app.config = self._load_config(self.config_path)
         self.config['root'] = root_dir
+        self.exts.config = self.config
 
     def _install_hook(self, name, fn, **kwargs):
         self.exts.events.subscribe(name, fn)
