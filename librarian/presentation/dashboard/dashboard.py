@@ -11,7 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import logging
 import os
 
-from librarian_core.contrib.templates.renderer import template
+from librarian.core.contrib.templates.renderer import template
 
 
 class DashboardPlugin(object):
@@ -45,8 +45,7 @@ class DashboardPlugin(object):
     template_lookup_base = os.path.dirname(__file__)
     classes = []
     plugin_error_template = 'dashboard/plugin_error.tpl'
-    priority=1
-
+    priority = 1
 
     def get_name(self):
         """ Return section name """

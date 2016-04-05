@@ -3,7 +3,7 @@ import datetime
 import mock
 import pytest
 
-from librarian_notifications import notifications as mod
+import librarian.data.notifications as mod
 
 
 class TestNotification(object):
