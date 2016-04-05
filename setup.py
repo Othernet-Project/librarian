@@ -40,10 +40,7 @@ def in_scriptdir(path):
 
 
 def rebuild_catalogs():
-    try:
-        call('python scripts/cmpmsgs.py librarian/locales', shell=True)
-    except:
-        pass
+    call('python scripts/cmpmsgs.py librarian/locales', shell=True)
 
 
 def clean_pyc():
