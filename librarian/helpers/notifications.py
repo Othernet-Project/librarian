@@ -1,7 +1,7 @@
 from bottle import request
 
-from librarian_core.contrib.templates.decorators import template_helper
-
+from ..core.contrib.templates.decorators import template_helper
+from ..core.exts import ext_container as exts
 from .notifications import (to_dict,
                             Notification,
                             NotificationGroup,
@@ -9,6 +9,13 @@ from .notifications import (to_dict,
 
 
 FIXED_COLS = ['n.' + c for c in NOTIFICATION_COLS]
+
+
+def invalidate_notification_cache(notification):
+    # for now jsut invalidate the whole cache, no matter if it's a
+    # private notification
+    for key in ('notification_group', 'notification_count'):
+        exts.cache.invalidate(key)
 
 
 def get_user_groups(user):
