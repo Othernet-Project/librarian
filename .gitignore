@@ -20,3 +20,4 @@ __pycache__/
 dev.ini
 /.tox
 /.cache
+/docs/build
