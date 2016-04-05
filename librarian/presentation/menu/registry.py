@@ -33,7 +33,7 @@ class MenuItemRegistry(object):
 
     def sort(self, config):
         for (name, group) in config.items():
-            if not name.startswith('menu.'):
+            if not name.startswith('menu.') or name == 'menu.items':
                 continue
             group_name = name.replace('menu.', '')
 
