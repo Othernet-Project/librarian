@@ -1,16 +1,20 @@
 
 
-def repl_start(supervisor):
-    from .repl import start_repl
-    namespace = dict(supervisor=supervisor)
-    message = 'Press Ctrl-C to shut down Librarian.'
-    supervisor.repl_thread = start_repl(namespace, message)
+class ReplCommand(object):
+    name = 'repl'
+    option = '--repl'
+    action = 'store_true'
+    help = "Start interactive shell after servers start"
 
+    def repl_start(self, supervisor):
+        from ..utils.repl import start_repl
+        namespace = dict(supervisor=supervisor)
+        message = 'Press Ctrl-C to shut down Librarian.'
+        self.repl_thread = start_repl(namespace, message)
 
-def repl_shutdown(supervisor):
-    supervisor.repl_thread.join()
+    def repl_shutdown(self, supervisor):
+        self.repl_thread.join()
 
-
-def repl(arg, supervisor):
-    supervisor.events.subscribe(supervisor.POST_START, repl_start)
-    supervisor.events.subscribe(supervisor.SHUTDOWN, repl_shutdown)
+    def __call__(self, arg, supervisor):
+        supervisor.events.subscribe(supervisor.POST_START, self.repl_start)
+        supervisor.events.subscribe(supervisor.SHUTDOWN, self.repl_shutdown)
