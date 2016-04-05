@@ -13,24 +13,36 @@ JS_NOPRUNE = $(JS_OUT)/vendor
 COMPASS_PID = $(TMPDIR)/.compass_pid
 COFFEE_PID = $(TMPDIR)/.coffee_pid
 
-.PHONY: watch-assets stop-assets restart-assets recompile-assets
+.PHONY: \
+	stop-assets \
+	restart-assets \
+	recompile-assets \
+	start-coffee \
+	start-compass \
+	stop-compass \
+	stop-coffee
 
-watch-assets: $(COMPASS_PID) $(COFFEE_PID) $(DEMO_COMPASS_PID) \
-	$(DEMO_COFFEE_PID)
+start-assets: $(COMPASS_PID) $(COFFEE_PID)
 
-stop-assets:
-	$(SCRIPTS)/compass.sh stop $(COMPASS_PID)
-	$(SCRIPTS)/coffee.sh stop $(COFFEE_PID)
+stop-assets: stop-compass stop-coffee
 
-restart-assets: stop watch
+$(COMPASS_PID):
+	compass watch -c $(COMPASS_CONF) & echo $$! > $@
+
+$(COFFEE_PID):
+	coffee --bare --watch --output $(JS_OUT) $(COFFEE_SRC) & echo $$! > $@
+
+stop-compass: $(COMPASS_PID)
+	kill -s TERM $$(cat $<)
+	rm $<
+
+stop-coffee: $(COFFEE_PID)
+	kill -s INT $$(cat $<)
+	rm $<
+
+restart-assets: stop-assets watch-assets
 
 recompile-assets: 
 	compass compile --force -c $(COMPASS_CONF)
 	find $(JS_OUT) -path $(JS_NOPRUNE) -prune -o -name "*.js" -exec rm {} +
 	coffee --bare -c --output $(JS_OUT) $(COFFEE_SRC)
-
-$(COMPASS_PID): $(SCRIPTS)/compass.sh
-	$< start $@ $(COMPASS_CONF)
-
-$(COFFEE_PID): $(SCRIPTS)/coffee.sh
-	$< start $@ $(COFFEE_SRC) $(JS_OUT)
