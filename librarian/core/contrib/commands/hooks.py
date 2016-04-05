@@ -4,7 +4,7 @@ from .registry import CommandLineHandler
 
 EXPORTS = {
     'initialize': {
-        'depends_on': ['librarian_core.contrib.system.hooks.initialize']
+        'depends_on': ['librarian.core.contrib.system.hooks.initialize']
     },
     'init_complete': {}
 }

@@ -3,7 +3,7 @@ from .commands import create_superuser
 
 EXPORTS = {
     'initialize': {
-        'depends_on': ['librarian_core.contrib.databases.hooks.initialize']
+        'depends_on': ['librarian.core.contrib.databases.hooks.initialize']
     }
 }
 

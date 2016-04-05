@@ -8,7 +8,7 @@ from .users import User
 EXPORTS = {
     'user_plugin': {
         'depends_on': [
-            'librarian_core.contrib.sessions.plugins.session_plugin'
+            'librarian.core.contrib.sessions.plugins.session_plugin'
         ]
     }
 }

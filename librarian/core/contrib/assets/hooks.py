@@ -9,10 +9,10 @@ from .static import Assets
 EXPORTS = {
     'component_member_loaded': {},
     'initialize': {
-        'depends_on': ['librarian_core.contrib.commands.hooks.initialize']
+        'depends_on': ['librarian.core.contrib.commands.hooks.initialize']
     },
     'init_complete': {
-        'required_by': ['librarian_core.contrib.commands.hooks.init_complete']
+        'required_by': ['librarian.core.contrib.commands.hooks.init_complete']
     }
 }
 
