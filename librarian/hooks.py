@@ -38,8 +38,8 @@ def register_commands():
         exts.commands.register(command_cls.name,
                                command_cls(),
                                command_cls.option,
-                               command_cls.action,
-                               command_cls.help)
+                               action=command_cls.action,
+                               help=command_cls.help)
 
 
 def register_menu_items():
