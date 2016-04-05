@@ -18,6 +18,25 @@ Development environment and running Librarian
 
 Please see the documentation in ``docs/dev_env.rst``.
 
+Running the test suite
+======================
+
+To run the test suite, you must first build a local package repository. The
+reason for this is that not all packages Librarian depends on are found in the
+official Python package repository.
+
+First install the `pip2pi <https://github.com/wolever/pip2pi>`_ package with::
+
+    $ pip install pip2pi
+
+Next run the ``localmirror`` command::
+
+    $ python setup.py localmirror
+
+This creates a local mirror containing only the packages needed by Librarian in
+``tmp/pypi``. The ``tox.ini`` file is already configured to take advantage of
+this mirror if found.
+
 Contributing interface translations
 ===================================
 
