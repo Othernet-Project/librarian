@@ -1,4 +1,3 @@
-import functools
 import importlib
 
 from fsal.client import FSAL
@@ -11,15 +10,6 @@ from .data.setup import Setup, SetupWizard
 from .helpers.notifications import invalidate_notification_cache
 from .presentation.dashboard.registry import DashboardPluginRegistry
 from .presentation.menu.registry import MenuItemRegistry
-from .tasks.diskspace import check_diskspace
-from .tasks.facets import check_new_content, scan_facets
-from .tasks.filemanager import check_dirinfo
-from .tasks.notifications import notification_cleanup
-from .tasks.ondd import query_cache_storage_status
-
-
-SCAN_DELAY = 5
-STEP_DELAY = 0.5
 
 
 def import_attr(path):
@@ -78,6 +68,12 @@ def register_settings():
         exts.settings.add_field(**field.rules)
 
 
+def install_tasks():
+    for task_path in exts.config['background.tasks']:
+        task_cls = import_attr(task_path)
+        task_cls.install()
+
+
 def initialize(supervisor):
     install_extensions()
     register_commands()
@@ -85,8 +81,6 @@ def initialize(supervisor):
     register_dashboard_plugins()
     register_wizard_steps()
     register_settings()
-    exts.events.subscribe('FS_EVENT',
-                          functools.partial(check_dirinfo, supervisor))
 
 
 def init_complete(supervisor):
@@ -94,49 +88,5 @@ def init_complete(supervisor):
     exts.menuitems.sort(supervisor.config)
 
 
-def schedule_diskspace_check(supervisor):
-    check_diskspace(supervisor)
-    refresh_rate = exts.config['diskspace.refresh_rate']
-    if not refresh_rate:
-        return
-    exts.tasks.schedule(check_diskspace,
-                        args=(supervisor,),
-                        delay=refresh_rate,
-                        periodic=True)
-
-
-def schedule_facets_scan(supervisor):
-    refresh_rate = exts.config['facets.refresh_rate']
-    exts.tasks.schedule(check_new_content,
-                        args=(supervisor, refresh_rate),
-                        delay=refresh_rate)
-    if exts.config.get('facets.scan', False):
-        start_delay = exts.config.get('facets.scan_delay', SCAN_DELAY)
-        step_delay = exts.config.get('facets.scan_step_delay', STEP_DELAY)
-        kwargs = dict(step_delay=step_delay, config=exts.config)
-        exts.tasks.schedule(scan_facets, kwargs=kwargs, delay=start_delay)
-
-
-def schedule_notification_cleanup():
-    # schedule notification cleanup task
-    db = exts.databases.notifications
-    default_expiry = exts.config['notifications.default_expiry']
-    exts.tasks.schedule(notification_cleanup,
-                        args=(db, default_expiry),
-                        periodic=True,
-                        delay=default_expiry)
-
-
-def schedule_ondd_cache_check(supervisor):
-    refresh_rate = exts.config['ondd.cache_refresh_rate']
-    exts.tasks.schedule(query_cache_storage_status,
-                        args=(supervisor,),
-                        delay=refresh_rate,
-                        periodic=True)
-
-
 def post_start(supervisor):
-    schedule_notification_cleanup()
-    schedule_diskspace_check(supervisor)
-    schedule_facets_scan(supervisor)
-    schedule_ondd_cache_check(supervisor)
+    install_tasks()
