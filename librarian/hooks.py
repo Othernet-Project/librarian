@@ -5,11 +5,11 @@ from ondd_ipc.ipc import ONDDClient
 
 from .core.exts import ext_container as exts
 from .data.notifications import Notification
-from .data.settings import SettingsManager
 from .data.setup import Setup, SetupWizard
 from .helpers.notifications import invalidate_notification_cache
 from .presentation.dashboard.registry import DashboardPluginRegistry
 from .presentation.menu.registry import MenuItemRegistry
+from .presentation.settings import SettingsManager
 
 
 def import_attr(path):
