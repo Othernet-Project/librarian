@@ -1,6 +1,6 @@
 import mock
 
-import librarian_dashboard.dashboard as mod
+import librarian.presentation.dashboard.dashboard as mod
 
 
 @mock.patch.object(mod, 'template')

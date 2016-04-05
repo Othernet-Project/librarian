@@ -16,7 +16,7 @@ import uuid
 from bottle import request
 from bottle_utils.common import basestring, unicode
 
-from librarian_core.utils import utcnow
+from librarian.core.utils import utcnow
 
 
 NOTIFICATION_COLS = (
