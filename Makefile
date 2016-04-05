@@ -1,13 +1,15 @@
 # Global
 TMPDIR := ./tmp
+SCRIPTS = scripts
 
 # Assets-related
-COFFEE_SRC = src/coffee
-JSDIR = librarian/static/js
-SCSS_SRC = src/scss
-COMPASS_CONF = conf/config.rb
-SCRIPTS = scripts
-EXCLUDE = vendor
+ASSETS_DIR = ./ui_assets_src
+OUTPUT_DIR = ./librarian/static
+COMPASS_CONF = $(ASSETS_DIR)/compass.rb
+COFFEE_SRC = $(ASSETS_DIR)/coffee
+SCSS_SRC = $(ASSETS_DIR)/scss
+JS_OUT = $(OUTPUT_DIR)/js
+JS_NOPRUNE = $(JS_OUT)/vendor
 COMPASS_PID = $(TMPDIR)/.compass_pid
 COFFEE_PID = $(TMPDIR)/.coffee_pid
 
@@ -24,11 +26,11 @@ restart-assets: stop watch
 
 recompile-assets: 
 	compass compile --force -c $(COMPASS_CONF)
-	find $(JSDIR) -path $(JSDIR)/$(EXCLUDE) -prune -o -name "*.js" -exec rm {} +
-	coffee --bare -c --output $(JSDIR) $(COFFEE_SRC)
+	find $(JS_OUT) -path $(JS_NOPRUNE) -prune -o -name "*.js" -exec rm {} +
+	coffee --bare -c --output $(JS_OUT) $(COFFEE_SRC)
 
 $(COMPASS_PID): $(SCRIPTS)/compass.sh
 	$< start $@ $(COMPASS_CONF)
 
 $(COFFEE_PID): $(SCRIPTS)/coffee.sh
-	$< start $@ $(COFFEE_SRC) $(JSDIR)
+	$< start $@ $(COFFEE_SRC) $(JS_OUT)
