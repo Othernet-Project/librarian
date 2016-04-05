@@ -2,3 +2,4 @@ include README.rst
 include COPYING
 recursive-include scripts *
 recursive-include librarian *
+recursive-include dependencies *
