@@ -75,7 +75,7 @@ def install_tasks():
 
 
 def initialize(supervisor):
-    install_extensions()
+    install_extensions(supervisor)
     register_commands()
     register_menu_items()
     register_dashboard_plugins()
