@@ -3,7 +3,7 @@ librarian
 =========
 
 Librarian is a web server that allows users to view and download files stored
-on Outernet Receivers. In essence it is similar to a typical static web 
+on Outernet receivers. In essence it is similar to a typical static web 
 server's directory index with bells and whistles.
 
 Generating documentation
