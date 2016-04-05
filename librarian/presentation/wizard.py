@@ -239,6 +239,20 @@ class Wizard(object):
             return func
         return decorator
 
+    def register_class(self, cls):
+        self.register(cls.name,
+                      cls.get,
+                      template=cls.template,
+                      method='GET',
+                      index=cls.index,
+                      test=cls.test)
+        self.register(cls.name,
+                      cls.post,
+                      template=cls.template,
+                      method='POST',
+                      index=cls.index,
+                      test=cls.test)
+
     def remove_gaps(self):
         """Inplace removal of eventual gaps between registered step indexes."""
         original = [None] * (max(self.steps.keys() or [self.start_index]) + 1)
