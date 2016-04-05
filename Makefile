@@ -28,18 +28,22 @@ FSAL_PID = $(TMPDIR)/.fsal_pid
 
 .PHONY: \
 	stop-assets \
-	restart-assets \
-	recompile-assets \
 	prepare \
 	local-mirror \
 	start \
 	stop \
 	restart \
+	restart-assets \
+	restart-fsal \
+	start-assets \
+	stop-assets \
 	start-fsal \
+	stop-fsal \
 	start-coffee \
 	start-compass \
 	stop-compass \
 	stop-coffee \
+	recompile-assets \
 	docs
 
 prepare: local-mirror $(FSAL_CONF) $(LIBRARIAN_CONF)
@@ -54,17 +58,17 @@ start: start-assets start-fsal
 
 stop: stop-assets stop-fsal
 
-restart: stop
-	# We don't use start as a dependency because we need a 5s pause
-	echo "Waiting for things to settle..."
-	sleep 5
-	make start
+restart: restart-assets rstart-fsal
 
 start-assets: $(COMPASS_PID) $(COFFEE_PID)
 
 stop-assets: stop-compass stop-coffee
 
-start-fsal: $(FSAL_PID)
+restart-assets: stop-assets watch-assets
+
+start-compass: $(COMPASS_PID)
+
+start-coffee: $(COFFEE_PID)
 
 stop-compass: $(COMPASS_PID)
 	-kill -s TERM $$(cat $<)
@@ -74,11 +78,17 @@ stop-coffee: $(COFFEE_PID)
 	-kill -s INT $$(cat $<)
 	-rm $<
 
+start-fsal: $(FSAL_PID)
+
 stop-fsal: $(FSAL_PID)
 	-kill -s TERM $$(cat $<)
 	-rm $<
 
-restart-assets: stop-assets watch-assets
+restart-fsal: stop-fsal
+	# We don't use start as a dependency because we need a 5s pause
+	echo "Waiting for things to settle..."
+	sleep 5
+	make start-fsal
 
 recompile-assets:
 	compass compile --force -c $(COMPASS_CONF)
