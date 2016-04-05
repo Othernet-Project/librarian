@@ -2,36 +2,28 @@
 librarian
 =========
 
-Librarian is an archive manager for Outernet Receiver. 
-
-It reads the content of a directory where the content has been downloaded from 
-the satellite receiver, and allows the user to sort, remove, and accept new
-content into the Outernet Receiver's content archive. It also provides an
-interface for browsing the archive. Finally, it provides mechanisms for
-self-updating.
-
-The current version does not provide any search capability. That feature is
-planned for future releases.
+Librarian is a web server that allows users to view and download files stored
+on Outernet Receivers. In essence it is similar to a typical static web 
+server's directory index with bells and whistles.
 
 Development environment and running Librarian
 =============================================
 
-Please see the documentation in ``docs/dev_env.rst``.
+TODO
+
 
 Contributing interface translations
 ===================================
 
 You can either translate using the .po files in the project directory, or use
-the hosted version `on POEditor`_ (recommended). Note that Librarian is
-currently under active development, so strings *will* change from time to time.
+the hosted version `on POEditor
+<https://poeditor.com/join/project?hash=90911b6fc31f2d68c7debd999aa078c6>`_
+(recommended). Note that Librarian is always under active development, so
+strings *will* change from time to time, and sometimes the contributed
+translations may be completely removed.
 
 If you are contributing, or considering contributing translations, please swing
-by our forums_ and say hello.
-
-Testing translations
---------------------
-
-Please see the documentation in ``docs/translations.rst`` for more information.
+by our `forums <https://discuss.outernet.is/>`_ and say hello.
 
 List of translation contributors
 --------------------------------
@@ -159,14 +151,12 @@ knowledge:
 Reporting bugs and feature requests
 ===================================
 
-Bugs and feature requests can be posted either in our forums_ or in the GitHub
-`issue tracker`_.
+Bugs and feature requests can be posted either in our `forums
+<https://discuss.outernet.is/>`_ or in the GitHub
+`issue tracker <https://github.com/Outernet-Project/librarian/issues>`_.
 
-.. _Vagrant: http://www.vagrantup.com/
-.. _custom Vagrant base box: https://github.com/Outernet-Project/archlinux-vagrant
-.. _VritualBox: https://www.virtualbox.org/
-.. _port 8080: http://localhost:8080/
-.. _on POEditor: https://poeditor.com/join/project?hash=90911b6fc31f2d68c7debd999aa078c6
-.. _forums: https://discuss.outernet.is/
-.. _issue tracker: https://github.com/Outernet-Project/librarian/issues
-.. _Python download page: https://www.python.org/downloads/
+License
+=======
+
+Librarian and supporting code are released under GPLv3 or later. Please see
+``COPYING`` file in the source tree.
