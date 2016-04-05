@@ -2,7 +2,8 @@
 TMPDIR := ./tmp
 LOCAL_MIRROR = /tmp/pypi
 MIRROR_REQ = ./dependencies/requirements.txt
-SAMPLES = ./docs/samples
+DOCS = ./docs
+SAMPLES = $(DOCS)/samples
 SITE_PACKAGES := $(shell python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
 
 # Assets-related
@@ -38,7 +39,8 @@ FSAL_PID = $(TMPDIR)/.fsal_pid
 	start-coffee \
 	start-compass \
 	stop-compass \
-	stop-coffee
+	stop-coffee \
+	docs
 
 prepare: local-mirror $(FSAL_CONF) $(LIBRARIAN_CONF)
 	pip install -e . --extra-index-url file://$(LOCAL_MIRROR)
@@ -82,6 +84,12 @@ recompile-assets:
 	compass compile --force -c $(COMPASS_CONF)
 	find $(JS_OUT) -path $(JS_NOPRUNE) -prune -o -name "*.js" -exec rm {} +
 	coffee --bare -c --output $(JS_OUT) $(COFFEE_SRC)
+
+docs: clean-doc
+	make -C $(DOCS) html
+
+clean-doc:
+	make -C $(DOCS) clean
 
 $(COMPASS_PID): $(TMPDIR)
 	compass watch -c $(COMPASS_CONF) & echo $$! > $@
