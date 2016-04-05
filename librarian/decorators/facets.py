@@ -3,8 +3,8 @@ import functools
 from bottle import abort, request
 from bottle_utils.html import urlunquote
 
-from .facets.facets import Facets
-from .facets.archive import FacetsArchive
+from ..data.facets.facets import Facets
+from ..data.facets.archive import FacetsArchive
 
 
 def with_facets(abort_if_not_found=True):

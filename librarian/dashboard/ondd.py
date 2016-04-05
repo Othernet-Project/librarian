@@ -13,12 +13,10 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from bottle import request
 from bottle_utils.i18n import lazy_gettext as _
 
-from librarian_core.contrib.templates.decorators import template_helper
-from librarian_dashboard.dashboard import DashboardPlugin
-
-from .consts import PRESETS
-from .forms import ONDDForm
-from .setup import read_ondd_setup
+from ..core.contrib.templates.decorators import template_helper
+from ..forms.ondd import ONDDForm
+from ..helpers.ondd import read_ondd_setup, PRESETS
+from ..presentation.dashboard.dashboard import DashboardPlugin
 
 
 COMPARE_KEYS = ('frequency', 'symbolrate', 'polarization', 'delivery',
@@ -73,4 +71,3 @@ class ONDDDashboardPlugin(DashboardPlugin):
                     SNR_MAX=snr_max,
                     selected_preset=preset,
                     cache_status=cache_status)
-

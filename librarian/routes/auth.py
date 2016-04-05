@@ -17,11 +17,10 @@ from bottle_utils.form import ValidationError
 from bottle_utils.csrf import csrf_protect, csrf_token
 from bottle_utils.i18n import i18n_path, i18n_url, lazy_gettext as _
 
-from librarian_core.contrib.auth.users import User
-from librarian_core.contrib.templates.decorators import template_helper
-from librarian_core.contrib.templates.renderer import template
-
-from ..forms import LoginForm, PasswordResetForm
+from ..core.contrib.auth.users import User
+from ..core.contrib.templates.decorators import template_helper
+from ..core.contrib.templates.renderer import template
+from ..forms.auth import LoginForm, PasswordResetForm
 
 
 def http_redirect(path, code=303):

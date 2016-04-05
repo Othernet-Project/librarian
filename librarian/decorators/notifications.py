@@ -2,7 +2,7 @@ import functools
 
 from bottle import request
 
-from .notifications import Notification
+from ..data.notifications import Notification
 
 
 def notifies(message, **params):

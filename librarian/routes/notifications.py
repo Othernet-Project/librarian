@@ -11,11 +11,10 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from bottle import request
 from bottle_utils.ajax import roca_view
 
-from librarian_core.contrib.templates.renderer import template
-from librarian_core.utils import utcnow
-
-from .helpers import get_notifications, get_notification_groups
-from .notifications import NotificationGroup
+from ..core.contrib.templates.renderer import template
+from ..core.utils import utcnow
+from ..data.notifications import NotificationGroup
+from ..helpers.notifications import get_notifications, get_notification_groups
 
 
 @roca_view('notification_list', '_notification_list', template_func=template)

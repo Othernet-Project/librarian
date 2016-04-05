@@ -11,7 +11,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from bottle_utils.ajax import roca_view
 
-from librarian_core.contrib.templates.renderer import template
+from ..core.contrib.templates.renderer import template
 
 
 EXPORTS = {

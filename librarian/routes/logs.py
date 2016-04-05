@@ -1,12 +1,12 @@
-import datetime
-from StringIO import StringIO
+from datetime import datetime
 from os.path import basename, dirname, splitext
+from StringIO import StringIO
 
-from fdsend import send_file
 from bottle import request, static_file
-from librarian_core.contrib.system.version import get_base_version
+from fdsend import send_file
 
-from .diagnostics import generate_report
+from ..core.contrib.system.version import get_base_version
+from ..data.diagnostics import generate_report
 
 
 def send_logfile(log_path):
@@ -14,7 +14,7 @@ def send_logfile(log_path):
     log_dir = dirname(log_path)
     filename = basename(log_path)
     (name, ext) = splitext(filename)
-    timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     params = dict(name=name, version=version, timestamp=timestamp, ext=ext)
     new_filename = '{name}_{version}_{timestamp}{ext}'.format(**params)
     return static_file(filename, root=log_dir, download=new_filename)
@@ -27,7 +27,7 @@ def send_applog():
 
 def send_diags():
     platform = request.app.config['platform.name']
-    timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     diag_file_name = 'diags_{}_{}.log.txt'.format(platform, timestamp)
 
     syslog_path = request.app.config['logging.syslog']

@@ -1,4 +1,4 @@
-from .facets.archive import FacetsArchive
+from ..data.facets.archive import FacetsArchive
 
 
 class RefillFacetsCommand(object):

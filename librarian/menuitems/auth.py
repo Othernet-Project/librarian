@@ -1,7 +1,7 @@
 from bottle import request
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
 
-from librarian_menu.menu import MenuItem
+from ..presentation.menu.menu import MenuItem
 
 
 class LogoutMenuItem(MenuItem):

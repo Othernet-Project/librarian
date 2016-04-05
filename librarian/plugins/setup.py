@@ -3,7 +3,7 @@ import functools
 from bottle import request, redirect
 from bottle_utils.i18n import i18n_url
 
-from librarian_core.contrib.templates.renderer import template
+from ..core.contrib.templates.renderer import template
 
 
 NO_XHR_TEMPLATE = 'setup/no_xhr.tpl'

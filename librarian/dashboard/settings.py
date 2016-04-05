@@ -13,7 +13,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from bottle import request
 from bottle_utils.i18n import lazy_gettext as _
 
-from librarian_dashboard.dashboard import DashboardPlugin
+from ..presentation.dashboard.dashboard import DashboardPlugin
 
 
 class SettingsDashboardPlugin(DashboardPlugin):
@@ -29,4 +29,3 @@ class SettingsDashboardPlugin(DashboardPlugin):
         form_cls = settings.get_form()
         return dict(form=form_cls(),
                     groups=settings.groups)
-

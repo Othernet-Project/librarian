@@ -10,8 +10,8 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 from bottle import request
 
-from librarian_auth.decorators import login_required
-from librarian_core.contrib.templates.renderer import view
+from ..core.contrib.templates.renderer import view
+from ..decorators.auth import login_required
 
 
 @login_required()

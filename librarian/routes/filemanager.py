@@ -17,23 +17,22 @@ from bottle_utils.csrf import csrf_protect, csrf_token
 from bottle_utils.html import urlunquote, quoted_url
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
-from librarian_core.contrib.cache.decorators import cached
-from librarian_core.contrib.templates.decorators import template_helper
-from librarian_core.contrib.templates.renderer import template, view
-from librarian_content.facets.utils import (get_facets,
-                                            get_facet_types,
-                                            is_facet_valid,
-                                            find_html_index)
-from librarian_ui.paginator import Paginator
-
-from .manager import Manager
-from .helpers import (title_name,
-                      durify,
-                      get_selected,
-                      get_adjacent,
-                      get_thumb_path,
-                      find_root,
-                      aspectify)
+from ..core.contrib.cache.decorators import cached
+from ..core.contrib.templates.decorators import template_helper
+from ..core.contrib.templates.renderer import template, view
+from ..data.facets.utils import (get_facets,
+                                 get_facet_types,
+                                 is_facet_valid,
+                                 find_html_index)
+from ..data.manager import Manager
+from ..helpers.filemanager import (title_name,
+                                   durify,
+                                   get_selected,
+                                   get_adjacent,
+                                   get_thumb_path,
+                                   find_root,
+                                   aspectify)
+from ..presentation.paginator import Paginator
 
 
 FACET_MAPPING = {

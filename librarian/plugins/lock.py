@@ -2,7 +2,7 @@ import functools
 
 from bottle import request, abort
 
-from .lock import is_locked
+from ..utils.lock import is_locked
 
 
 def plugin(supervisor):
