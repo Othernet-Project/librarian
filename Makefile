@@ -1,19 +1,28 @@
-include conf/Makefile.in
+# Global
+TMPDIR := ./tmp
 
-COMPASS_PID = .compass_pid
-COFFEE_PID = .coffee_pid
+# Assets-related
+COFFEE_SRC = src/coffee
+JSDIR = librarian/static/js
+SCSS_SRC = src/scss
+COMPASS_CONF = conf/config.rb
+SCRIPTS = scripts
+EXCLUDE = vendor
+COMPASS_PID = $(TMPDIR)/.compass_pid
+COFFEE_PID = $(TMPDIR)/.coffee_pid
 
-.PHONY: watch stop restart recompile
+.PHONY: watch-assets stop-assets restart-assets recompile-assets
 
-watch: $(COMPASS_PID) $(COFFEE_PID) $(DEMO_COMPASS_PID) $(DEMO_COFFEE_PID)
+watch-assets: $(COMPASS_PID) $(COFFEE_PID) $(DEMO_COMPASS_PID) \
+	$(DEMO_COFFEE_PID)
 
-stop:
+stop-assets:
 	$(SCRIPTS)/compass.sh stop $(COMPASS_PID)
 	$(SCRIPTS)/coffee.sh stop $(COFFEE_PID)
 
-restart: stop watch
+restart-assets: stop watch
 
-recompile: 
+recompile-assets: 
 	compass compile --force -c $(COMPASS_CONF)
 	find $(JSDIR) -path $(JSDIR)/$(EXCLUDE) -prune -o -name "*.js" -exec rm {} +
 	coffee --bare -c --output $(JSDIR) $(COFFEE_SRC)
