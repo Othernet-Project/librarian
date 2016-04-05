@@ -228,7 +228,7 @@ setup(
     cmdclass={
         'test': PyTest,
         'develop': Develop,
-        'deps': LocalMirror,
+        'localmirror': LocalMirror,
         'prepare': Package,
         'uncache': Clean,
         'siege': Siege,
