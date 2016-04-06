@@ -38,7 +38,7 @@ class Manager(object):
         self.config = supervisor.config
 
     def get_dirinfos(self, paths):
-        return DirInfo.from_db(self.supervisor, paths, immediate=True)
+        return DirInfo.from_db(paths, immediate=True)
 
     def get_facets(self, files):
         return get_facets(f.rel_path for f in files)
@@ -151,8 +151,7 @@ class Manager(object):
     def search_dirinfos(self, query):
         default_lang = request.user.options.get('content_language', None)
         lang = request.params.get('language', default_lang)
-        dirinfos = DirInfo.search(
-            self.supervisor, terms=query, language=lang)
+        dirinfos = DirInfo.search(terms=query, language=lang)
         dirs = []
         for d in dirinfos:
             success, fso = self.fsal_client.get_fso(d.path)
