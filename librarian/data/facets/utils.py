@@ -7,9 +7,8 @@ import logging
 
 from bottle import request
 
-from librarian_core.exts import ext_container as exts
-from librarian_core.utils import is_string
-
+from ...core.exts import ext_container as exts
+from ...core.utils import is_string
 from .facets import Facets
 from .archive import FacetsArchive
 from .processors import (get_facet_processors,
