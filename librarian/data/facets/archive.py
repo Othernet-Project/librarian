@@ -130,7 +130,7 @@ class FacetsArchive(object):
         if facet_type:
             data = self.apply_key_filter(data, facet_type)
         if data:
-            return Facets(supervisor=None, path=None, data=data)
+            return Facets(path=None, data=data)
 
     def get_all_facets(self, dirpath, facet_type=None):
         params = {'path': dirpath}
@@ -139,7 +139,7 @@ class FacetsArchive(object):
             q.where += 'facet_types = %(type)s'
             params['type'] = facet_type
         data = self.many(q, params)
-        return (Facets(supervisor=None, path=None, data=d) for d in data)
+        return (Facets(path=None, data=d) for d in data)
 
     def update_facets(self, path):
         processors = get_facet_processors(path)
@@ -179,7 +179,7 @@ class FacetsArchive(object):
         terms = '%' + terms.lower() + '%'
         params = dict(terms=terms, facet_type=facet_type_id)
         results = self.db.fetchiter(q, params)
-        return (Facets(None, None, data=row) for row in results)
+        return (Facets(None, data=row) for row in results)
 
     def _generate_filter(self, q, terms=None, facet_type=None):
         if terms:

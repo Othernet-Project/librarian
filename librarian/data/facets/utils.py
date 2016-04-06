@@ -165,7 +165,7 @@ def generate_partial_facets(path, supervisor):
     facets = FacetsArchive.create_partial(path)
     for processor in get_facet_processors(path):
         processor.process_file(facets, path, partial=True)
-    return Facets(supervisor, path, facets)
+    return Facets(path, facets)
 
 
 def schedule_facets_generation(config, *args, **kwargs):
