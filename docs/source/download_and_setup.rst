@@ -67,6 +67,8 @@ This will perform the following:
 - install Librarian editably (using ``pip install -e``)
 - install dependencies from the local package index
 
+See also :doc:`editable_install`.
+
 Starting FSAL
 -------------
 
