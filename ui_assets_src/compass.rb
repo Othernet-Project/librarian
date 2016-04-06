@@ -6,7 +6,7 @@ basedir = "librarian"
 # Set this to the root of your project when deployed:
 http_path = "/static/"
 css_dir = "#{basedir}/static/css"
-sass_dir = "src/scss"
+sass_dir = "ui_assets_src/scss"
 images_dir = "#{basedir}/static/img"
 javascripts_dir = "#{basedir}/static/js"
 fonts_dir = "#{basedir}/static/font"
