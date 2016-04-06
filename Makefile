@@ -16,9 +16,11 @@ JS_OUT = $(OUTPUT_DIR)/js
 JS_NOPRUNE = $(JS_OUT)/vendor
 
 # FSAL-related
+FSAL_SAMPLE = $(SAMPLES)/fsal.ini
 FSAL_CONF := $(TMPDIR)/fsal.ini
 
 # Librarian-related
+LIBRARIAN_SAMPLE = $(SAMPLES)/librarian.ini
 LIBRARIAN_CONF := $(TMPDIR)/librarian.ini
 
 # PID files
@@ -70,19 +72,18 @@ start-compass: $(COMPASS_PID)
 
 start-coffee: $(COFFEE_PID)
 
-stop-compass: $(COMPASS_PID)
-	-kill -s TERM $$(cat $<)
-	-rm $<
+stop-compass:
+	-kill -s TERM $$(cat $(COMPASS_PID))
+	-rm $(COMPASS_PID)
 
-stop-coffee: $(COFFEE_PID)
-	-kill -s INT $$(cat $<)
-	-rm $<
+stop-coffee:
+	-kill -s INT $$(cat $(COFFEE_PID))
+	-rm $(COFFEE_PID)
 
 start-fsal: $(FSAL_PID)
 
-stop-fsal: $(FSAL_PID)
-	-kill -s TERM $$(cat $<)
-	-rm $<
+stop-fsal:
+	-kill -s TERM $$(cat $(FSAL_PID))
 
 restart-fsal: stop-fsal
 	# We don't use start as a dependency because we need a 5s pause
@@ -107,14 +108,14 @@ $(COMPASS_PID): $(TMPDIR)
 $(COFFEE_PID): $(TMPDIR)
 	coffee --bare --watch --output $(JS_OUT) $(COFFEE_SRC) & echo $$! > $@
 
-$(FSAL_PID): $(FSAL_CONF) $(TMPDIR)
-	fsal-daemon --conf $(FSAL_CONF) --pid-file $@ && echo $$! > $@
+$(FSAL_PID): $(TMPDIR)
+	fsal-daemon --conf $(FSAL_CONF) --pid-file $@
 
-$(FSAL_CONF): $(TMPDIR)
-	cat $(SAMPLES)/fsal.ini | sed 's|PREFIX|$(SITE_PACKAGES)|' > $@
+$(FSAL_CONF): $(FSAL_SAMPLE) $(TMPDIR)
+	cat $< | sed 's|PREFIX|$(SITE_PACKAGES)|' > $@
 
-$(LIBRARIAN_CONF): $(TMPDIR)
-	cat $(SAMPLES)/librarian.ini > $@
+$(LIBRARIAN_CONF): $(LIBRARIAN_SAMPLE) $(TMPDIR)
+	cat $< > $@
 
 $(TMPDIR):
 	mkdir -p $@
