@@ -3,3 +3,6 @@ include COPYING
 recursive-include scripts *
 recursive-include librarian *
 recursive-include dependencies *
+include docs/Makefile
+recursive-include docs/source *
+recursive-include docs/samples *

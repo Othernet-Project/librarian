@@ -3,33 +3,32 @@ librarian
 =========
 
 Librarian is a web server that allows users to view and download files stored
-on Outernet Receivers. In essence it is similar to a typical static web 
+on Outernet receivers. In essence it is similar to a typical static web 
 server's directory index with bells and whistles.
 
-Development environment and running Librarian
-=============================================
+Generating documentation
+========================
 
-TODO
+To generate the documentation, you need to have Python and `Sphinx
+<www.sphinx-doc.org>`_ installed. Once you have the prerequisites run
+``make``::
 
+    $ make docs
+
+The generated documentation will be found in ``docs/build/html``.
 
 Running the test suite
 ======================
 
-To run the test suite, you must first build a local package repository. The
-reason for this is that not all packages Librarian depends on are found in the
-official Python package repository.
+To run the tests first prepare the development environment according to the
+documentation::
 
-First install the `pip2pi <https://github.com/wolever/pip2pi>`_ package with::
+    $ make prepare
 
-    $ pip install pip2pi
+You will need to have `Tox <http://codespeak.net/tox/>`_ installed. Then run
+the tests by simply executing the ``tox`` command::
 
-Next run the ``localmirror`` command::
-
-    $ python setup.py localmirror
-
-This creates a local mirror containing only the packages needed by Librarian in
-``tmp/pypi``. The ``tox.ini`` file is already configured to take advantage of
-this mirror if found.
+    $ tox
 
 Contributing interface translations
 ===================================
