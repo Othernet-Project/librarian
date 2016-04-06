@@ -11,15 +11,23 @@ class Assets:
         self.directory = os.path.abspath(directory)
         self.url = url
         self.debug = debug
-        self.env = webassets.Environment(directory=self.directory,
-                                         url=url,
-                                         debug=debug,
-                                         url_expire=True)
-        self.env.append_path(self.directory, url=url)
-        self.env.versions = 'hash'
-        self.env.manifest = 'file'
+        self.env = self._env_factory(directory, url, debug)
+
+    @staticmethod
+    def _env_factory(directory, url, debug):
+        """
+        Create a ``webassets.Environment`` instance which will manage the
+        assets for this object.
+        """
+        env = webassets.Environment(directory=directory, url=url, debug=debug,
+                                    url_expire=True)
+        env.append_path(directory, url=url)
+        env.versions = 'hash'
+        env.manifest = 'file'
         if not debug:
-            self.env.auto_build = False
+            env.auto_build = False
+            # ^-- FIXME: kinda looks like it could be `env.auto_build = debug`
+        return env
 
     def add_static_source(self, path, url=None):
         """
@@ -53,7 +61,7 @@ class Assets:
         This method returns the ``Bundle`` object. Bundle object can be used
         for nesting within other bundles.
         """
-        assets = [self._js_path(a) for a in assets]
+        assets = [self._js_path(a) for a in self._unique(assets)]
         out_path = 'js/' + out + '-%(version)s.js'
         bundle = webassets.Bundle(*assets, filters='rjsmin', output=out_path)
         self.env.register('js/' + out, bundle)
@@ -73,13 +81,13 @@ class Assets:
 
         Assets is an iterable containing the bundle's contents. They must be
         specified in correct load order. Similar to output path, the asset
-        paths are specified without the ``scss/`` directory and ``.scss``
+        paths are specified without the ``css/`` directory and ``.css``
         extension. These are appended to the paths autmatically.
 
         This method returns the ``Bundle`` object which can be used to nest
         within other bundles.
         """
-        assets = [self._css_path(a) for a in assets]
+        assets = [self._css_path(a) for a in self._unique(assets)]
         out_path = 'css/' + out + '-%(version)s.css'
         bundle = webassets.Bundle(*assets, filters='cssmin', output=out_path)
         self.env.register('css/' + out, bundle)
@@ -92,25 +100,63 @@ class Assets:
         return self.get(name)
 
     @staticmethod
+    def _unique(seq):
+        """
+        Generator that yields elements of a sequence in order they appear
+        without repeating already yielded elements.
+        """
+        seen = set()
+        for i in seq:
+            if i in seen:
+                continue
+            seen.add(i)
+            yield i
+
+    @staticmethod
     def _js_path(s):
+        """
+        Return a string with '.js' extension if input is a string, otherwise
+        return input value verbatim.
+        """
         if type(s) is str:
             return s + '.js'
         return s
 
     @staticmethod
     def _css_path(s):
+        """
+        Return a string with '.css' extension if input is a string, otherwise
+        return input value verbatim.
+        """
         if type(s) is str:
             return s + '.css'
         return s
 
     @staticmethod
     def parse_bundle(bundle):
+        """
+        Parse a bundle line. The bundle line has the folowing format:
+
+        NAME: CONTENT
+
+        NAME is a bundle name which will be used to get the bundle. When
+        registering a bundle, 'js/' or 'css/' prefix will be prepended to NAME,
+        depending on whether bundle is a JavaScript or CSS bundle.
+
+        CONTENT is a comma-separated list of paths that comprise the bunde.
+        Whitespace around commas is not significant (e.g., 'foo, bar' is the
+        same as 'foo,bar', and same as 'foo , bar').
+        """
         bundle_name, bundle_content = [b.strip() for b in bundle.split(':')]
         bundle_content = [b.strip() for b in bundle_content.split(',')]
         return bundle_name, bundle_content
 
     @classmethod
     def merge_bundles(cls, bundles):
+        """
+        Merge the values of the keys with the same name in a list of bundle
+        dicts. Return value is a single dict.
+        """
         merged = dict()
         for name, contents in [cls.parse_bundle(b) for b in bundles]:
             merged.setdefault(name, [])
@@ -119,13 +165,14 @@ class Assets:
 
     @classmethod
     def from_config(cls, config):
-        """ Create Assets instance from dict-like config object """
+        """
+        Create Assets instance from dict-like config object.
+        """
         assets_dir = os.path.join(config['root'], config['assets.directory'])
         assets_url = config['assets.url']
         assets_debug = config['assets.debug']
         assets = cls(assets_dir, assets_url, assets_debug)
         asset_sources = config.get('assets.sources', {})
-        asset_sources['root'] = (assets_dir, assets_url)
         for path, url in asset_sources.values():
             assets.add_static_source(os.path.join(path, 'css'), url=url)
             assets.add_static_source(os.path.join(path, 'js'), url=url)

@@ -25,17 +25,31 @@ def component_member_loaded(supervisor, member, config):
     supervisor.config.setdefault('assets.js_bundles', [])
     supervisor.config.setdefault('assets.css_bundles', [])
     pkg_name = member['pkg_name']
-    if pkg_name not in supervisor.config['assets.sources']:
-        static_dir = config.pop('assets.directory', DEFAULT_STATIC_ROOT)
-        static_path = os.path.join(member['pkg_path'], static_dir)
-        static_url = config.pop('assets.url', DEFAULT_STATIC_URL)
-        js_bundles = config.pop('assets.js_bundles', [])
-        css_bundles = config.pop('assets.css_bundles', [])
-        if static_path and os.path.exists(static_path):
-            src_pair = (static_path, static_url)
-            supervisor.config['assets.sources'][pkg_name] = src_pair
-            supervisor.config['assets.js_bundles'].extend(js_bundles)
-            supervisor.config['assets.css_bundles'].extend(css_bundles)
+
+    if pkg_name in supervisor.config['assets.sources']:
+        # Assets alredy loaded for this component member, nothing to do
+        return
+
+    # Add the source path / URL mapping
+    static_dir = config.pop('assets.directory', DEFAULT_STATIC_ROOT)
+    static_path = os.path.join(member['pkg_path'], static_dir)
+    if not static_path or not os.path.exists(static_path):
+        # Path not found, nothing to do
+        return
+    static_url = config.pop('assets.url', DEFAULT_STATIC_URL)
+    src_pair = (static_path, static_url)
+    supervisor.config['assets.sources'][pkg_name] = src_pair
+
+    if pkg_name == 'librarian':
+        # This is the main component. All bundles are already in the main
+        # configuration file and we can skip extension here.
+        return
+
+    # Add the bundles
+    js_bundles = config.pop('assets.js_bundles', [])
+    css_bundles = config.pop('assets.css_bundles', [])
+    supervisor.config['assets.js_bundles'].extend(js_bundles)
+    supervisor.config['assets.css_bundles'].extend(css_bundles)
 
 
 def initialize(supervisor):
