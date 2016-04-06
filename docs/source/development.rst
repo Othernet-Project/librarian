@@ -32,8 +32,7 @@ This chapter will be divided into several chapters, mostly following the steps
 one would normally take when approaching the Librarian code base for the first
 time.
 
-Sections in this chapter
-========================
+Topics covered:
 
 .. toctree::
     :maxdepth: 1
@@ -41,3 +40,8 @@ Sections in this chapter
     download_and_setup
     source_code_layout
     architecture_overview
+    core_api
+    working_with_fsal
+    database_access
+    static_assets
+    external_librarian_components

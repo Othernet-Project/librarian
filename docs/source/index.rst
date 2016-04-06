@@ -22,9 +22,11 @@ Table of contents
 =================
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
     
+    user_manual
     development
+    api_documentation
     make_targets
     git_repository_layout
 
