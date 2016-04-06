@@ -52,12 +52,3 @@ def notifications_read():
         request.app.supervisor.exts.cache.delete(key)
 
     return dict(groups=[grp for grp in groups if not grp.is_read])
-
-
-def routes(app):
-    return (
-        ('notifications:list', notification_list,
-         'GET', '/notifications/', {}),
-        ('notifications:read', notifications_read,
-         'POST', '/notifications/', {}),
-    )

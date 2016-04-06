@@ -30,12 +30,3 @@ def save_settings():
                 groups=settings.groups,
                 message=_('Settings saved.'),
                 redirect_url=i18n_url('dashboard:main'))
-
-
-def routes(config):
-    return (
-        ('settings:load', show_settings_form,
-         'GET', '/settings/', dict(unlocked=True)),
-        ('settings:save', save_settings,
-         'POST', '/settings/', dict(unlocked=True)),
-    )

@@ -6,9 +6,8 @@ from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
 from bottle_utils.html import hsize
 
-from librarian_core.contrib.templates.renderer import template
-from librarian_core.exts import ext_container as exts
-
+from ..core.contrib.templates.renderer import template
+from ..core.exts import ext_container as exts
 from ..data import storage
 
 gettext = lambda x: x
@@ -163,14 +162,3 @@ def schedule_consolidate(storages):
                     message=message,
                     redirect_url=i18n_url('dashboard:main'),
                     redirect_target=_("settings"))
-
-
-def routes(app):
-    return (
-        ('diskspace:show_consolidate_form', show_consolidate_form,
-         'GET', '/diskspace/consolidate/', {}),
-        ('diskspace:consolidate', schedule_consolidate,
-         'POST', '/diskspace/consolidate/', {}),
-        ('diskspace:consolidate_state', consolidate_state,
-         'GET', '/diskspace/consolidate/state', {})
-    )

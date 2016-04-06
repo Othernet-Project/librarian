@@ -37,6 +37,9 @@ def ensure_dir(path):
 
 
 def register_database(name, pkg_name, basepath=None):
+    if name in exts.databases:
+        return
+
     params = dict(host=exts.config['database.host'],
                   port=exts.config['database.port'],
                   database=name,

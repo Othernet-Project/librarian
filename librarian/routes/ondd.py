@@ -65,19 +65,3 @@ def show_cache_status():
                'alert': False}
     cache_status = request.app.supervisor.exts.cache.get('ondd.cache')
     return dict(cache_status=cache_status or default)
-
-
-def routes(config):
-    skip_plugins = config['app.skip_plugins']
-    return (
-        ('ondd:status', get_signal_status,
-         'GET', '/ondd/status/', dict(unlocked=True, skip=skip_plugins)),
-        ('ondd:files', show_file_list,
-         'GET', '/ondd/files/', dict(unlocked=True, skip=skip_plugins)),
-        ('ondd:cache_status', show_cache_status,
-         'GET', '/ondd/cache/', dict(unlocked=True, skip=skip_plugins)),
-        ('ondd:settings', show_settings_form,
-         'GET', '/ondd/settings/', dict(unlocked=True)),
-        ('ondd:settings', set_settings,
-         'POST', '/ondd/settings/', dict(unlocked=True)),
-    )

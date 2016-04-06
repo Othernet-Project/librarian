@@ -12,20 +12,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from bottle_utils.ajax import roca_view
 
 from ..core.contrib.templates.renderer import template
-
-
-EXPORTS = {
-        'routes': {'required_by':
-                   ['librarian_core.contrib.system.routes.routes']}
-}
+from ..helpers import lang  # NOQA
 
 
 @roca_view('ui/lang_list', 'ui/_lang_list', template_func=template)
 def lang_list():
     return dict()
-
-
-def routes(config):
-    return (
-        ('ui:lang_list', lang_list, 'GET', '/languages/', {}),
-    )

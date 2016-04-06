@@ -22,7 +22,7 @@ def with_facets(abort_if_not_found=True):
                     abort(404)
                 return func(path=path, facets=None, **kwargs)
 
-            facets = Facets(request.app.supervisor, data.path, data=data)
+            facets = Facets(data.path, data=data)
             return func(path=path, facets=facets, **kwargs)
         return wrapper
     return decorator
