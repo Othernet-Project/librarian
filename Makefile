@@ -49,7 +49,8 @@ FSAL_PID = $(TMPDIR)/.fsal_pid
 	stop-coffee \
 	recompile-assets \
 	reindex \
-	docs
+	docs \
+	clean-doc
 
 prepare: local-mirror $(FSAL_CONF) $(LIBRARIAN_CONF)
 	pip install -e . --upgrade --extra-index-url file://$(LOCAL_MIRROR)/simple
