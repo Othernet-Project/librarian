@@ -205,6 +205,7 @@ setup(
     install_requires=[
         'beautifulsoup4',
         'bottle',
+        'bottle-fdsend',
         'bottle-streamline',
         'bottle-utils',
         'chainable-validators',
@@ -219,6 +220,7 @@ setup(
         'psycopg2',
         'python-dateutil',
         'pytz',
+        'setuptools',
         'squery-pg',
         'webassets',
     ],
