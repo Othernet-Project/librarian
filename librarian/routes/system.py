@@ -13,8 +13,8 @@ import logging
 from bottle import request, redirect, abort
 from bottle_utils.i18n import i18n_url
 
-from ..i18n.utils import is_i18n_enabled
-from ..templates.renderer import view
+from ..core.contrib.i18n.utils import is_i18n_enabled
+from ..core.contrib.templates.renderer import view
 
 
 def root_handler():
@@ -58,18 +58,3 @@ def error_503(exc):
 
 def all_404(path):
     abort(404)
-
-
-def routes(config):
-    route_config = (
-        # This route handler is added because unhandled missing pages cause
-        # bottle to _not_ install any plugins, and some are essential to
-        # rendering of the 404 page (e.g., i18n, sessions, auth).
-        ('sys:all404', all_404, ['GET', 'POST'], '<path:path>', dict()),
-    )
-    if config.get('app.default_route'):
-        route_config = (
-            ('sys:root', root_handler, 'GET', '/', dict()),
-        ) + route_config
-
-    return route_config

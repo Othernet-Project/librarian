@@ -1,12 +1,18 @@
 from os.path import basename
 
+from bottle import error
+
 from . import (auth, dashboard, diskspace, emergency_reset, filemanager, lang,
-               logs, notifications, ondd, settings, setup)
+               logs, notifications, ondd, settings, setup, system)
 
 
 def routes(config):
     skip_plugins = config['app.skip_plugins']
-    return (
+    error(403)(system.error_403)
+    error(404)(system.error_404)
+    error(500)(system.error_500)
+    error(503)(system.error_503)
+    route_config = (
         ('auth:login_form', auth.show_login_form,
          'GET', '/login/', {}),
         ('auth:login', auth.login,
@@ -67,4 +73,13 @@ def routes(config):
          'GET', '/setup/exit/', {}),
         ('setup:diag', setup.diag,
          'GET', '/diag/', {}),
+        # This route handler is added because unhandled missing pages cause
+        # bottle to _not_ install any plugins, and some are essential to
+        # rendering of the 404 page (e.g., i18n, sessions, auth).
+        ('sys:all404', system.all_404, ['GET', 'POST'], '<path:path>', dict()),
     )
+    if config.get('app.default_route'):
+        route_config = (
+            ('sys:root', system.root_handler, 'GET', '/', dict()),
+        ) + route_config
+    return route_config
