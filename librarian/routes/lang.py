@@ -23,9 +23,3 @@ EXPORTS = {
 @roca_view('ui/lang_list', 'ui/_lang_list', template_func=template)
 def lang_list():
     return dict()
-
-
-def routes(config):
-    return (
-        ('ui:lang_list', lang_list, 'GET', '/languages/', {}),
-    )

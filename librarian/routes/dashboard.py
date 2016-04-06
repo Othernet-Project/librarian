@@ -19,9 +19,3 @@ from ..decorators.auth import login_required
 def dashboard():
     """ Render the dashboard """
     return dict(plugins=request.app.supervisor.exts.dashboard.plugins)
-
-
-def routes(config):
-    return (
-        ('dashboard:main', dashboard, 'GET', '/dashboard/', {}),
-    )

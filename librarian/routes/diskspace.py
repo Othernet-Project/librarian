@@ -163,14 +163,3 @@ def schedule_consolidate(storages):
                     message=message,
                     redirect_url=i18n_url('dashboard:main'),
                     redirect_target=_("settings"))
-
-
-def routes(app):
-    return (
-        ('diskspace:show_consolidate_form', show_consolidate_form,
-         'GET', '/diskspace/consolidate/', {}),
-        ('diskspace:consolidate', schedule_consolidate,
-         'POST', '/diskspace/consolidate/', {}),
-        ('diskspace:consolidate_state', consolidate_state,
-         'GET', '/diskspace/consolidate/state', {})
-    )

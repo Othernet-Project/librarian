@@ -311,16 +311,3 @@ def handle_file_action(path):
         return delete_path(path)
     else:
         abort(400)
-
-
-def routes(config):
-    return (
-        ('files:list', init_file_action,
-         'GET', '/files/', dict(unlocked=True)),
-        ('files:path', init_file_action,
-         'GET', '/files/<path:path>', dict(unlocked=True)),
-        ('files:action', handle_file_action,
-         'POST', '/files/<path:path>', dict(unlocked=True)),
-        ('files:direct', direct_file,
-         'GET', '/direct/<path:path>', dict(unlocked=True)),
-    )

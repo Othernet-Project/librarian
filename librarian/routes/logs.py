@@ -41,12 +41,3 @@ def send_diags():
                      ctype='text/plain',
                      attachment=True,
                      charset='utf-8')
-
-
-def routes(config):
-    log_name = basename(config['logging.output'])
-    opts = dict(unlocked=True)
-    return (
-        ('sys:applog', send_applog, 'GET', '/{0}'.format(log_name), opts),
-        ('sys:syslog', send_diags, 'GET', '/syslog', opts),
-    )

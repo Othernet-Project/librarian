@@ -45,11 +45,3 @@ def exit_wizard():
     next_path = request.params.get('next', '/')
     request.app.supervisor.exts.setup_wizard.exit()
     redirect(next_path)
-
-
-def routes(app):
-    return (
-        ('setup:main', enter_wizard, ['GET', 'POST'], '/setup/', {}),
-        ('setup:exit', exit_wizard, ['GET'], '/setup/exit/', {}),
-        ('setup:diag', diag, 'GET', '/diag/', {}),
-    )
