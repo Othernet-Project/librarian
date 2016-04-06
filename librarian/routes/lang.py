@@ -17,7 +17,7 @@ from ..helpers import lang  # NOQA
 
 EXPORTS = {
         'routes': {'required_by':
-                   ['librarian_core.contrib.system.routes.routes']}
+                   ['librarian.core.contrib.system.routes.routes']}
 }
 
 
