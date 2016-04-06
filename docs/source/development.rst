@@ -38,6 +38,7 @@ Topics covered:
     :maxdepth: 1
 
     download_and_setup
+    local_file_library
     source_code_layout
     architecture_overview
     core_api
