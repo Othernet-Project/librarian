@@ -97,6 +97,7 @@ recompile-assets:
 	@compass compile --force -c $(COMPASS_CONF)
 	@find $(JS_OUT) -path $(JS_NOPRUNE) -prune -o -name "*.js" -exec rm {} +
 	@coffee --bare -c --output $(JS_OUT) $(COFFEE_SRC)
+	@librarian --assets
 
 docs: clean-doc
 	@make -C $(DOCS) html
