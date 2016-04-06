@@ -6,10 +6,8 @@ from itertools import izip_longest
 from bottle import request
 from bottle_utils.common import to_unicode
 
-from librarian_content.facets.utils import (
-    get_facets, get_dir_facets, get_archive)
-
 from .dirinfo import DirInfo
+from .facets.utils import get_facets, get_dir_facets, get_archive
 
 
 # Match any string that starts with a period, or has at least one path
