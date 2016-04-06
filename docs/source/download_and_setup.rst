@@ -15,7 +15,7 @@ In order to get Librarian up and running, you will need:
 - Python 2.7.x (well, of course!)
 - Build tools (GNU make, autotools, gcc, etc)
 - PostgreSQL server
-- A location where you wish to store test content
+- ffmpeg and ffprobe
 
 The build tools can be installed on most Linux systems using packages like
 ``build-essential``, ``base-devel``, and similar. On some systems (those that
@@ -23,6 +23,11 @@ have separate 'development' or 'source' packages) you may also need the Python
 headers (development package such as ``python-dev``, ``python-devel``, etc),
 PostgreSQL headers and libev headers. Enumerating distro-specific packages is
 completely outside the scope of this text.
+
+The ``ffmpeg`` and ``ffprobe`` command line utilities are also needed. These
+are used when extracting metadata and creating image and video thumbnails.
+Consult your distro's documentation for information on what packages provide
+these tools.
 
 Obtaining the sources
 ---------------------
