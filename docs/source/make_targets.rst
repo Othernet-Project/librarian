@@ -24,4 +24,6 @@ stop-fsal           stop FSAL
 restart-fsal        resart FSAL
 recompile-assets    recompile the static assets from scractch
 docs                generate the HTML documentation
+clean-doc           clean the generated HTML documentation
+reindex             initiate FSAL's reindexing of local file collection
 ==================  ===========================================================
