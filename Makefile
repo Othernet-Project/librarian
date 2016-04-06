@@ -19,6 +19,7 @@ JS_NOPRUNE = $(JS_OUT)/vendor
 # FSAL-related
 FSAL_SAMPLE = $(SAMPLES)/fsal.ini
 FSAL_CONF := $(TMPDIR)/fsal.ini
+FSAL_SOCK := $(TMPDIR)/fsal.ctrl
 
 # Librarian-related
 LIBRARIAN_SAMPLE = $(SAMPLES)/librarian.ini
@@ -47,6 +48,7 @@ FSAL_PID = $(TMPDIR)/.fsal_pid
 	stop-compass \
 	stop-coffee \
 	recompile-assets \
+	reindex \
 	docs
 
 prepare: local-mirror $(FSAL_CONF) $(LIBRARIAN_CONF)
@@ -103,6 +105,9 @@ docs: clean-doc
 
 clean-doc:
 	@make -C $(DOCS) clean
+
+reindex: $(FSAL_SOCK)
+	@python scripts/reindex.py -s $(FSAL_SOCK)
 
 $(COMPASS_PID): $(TMPDIR)
 	@compass watch -c $(COMPASS_CONF) & echo $$! > $@
