@@ -12,7 +12,7 @@ import os
 
 from bottle import request, redirect
 
-from librarian_core.contrib.templates.renderer import view
+from ..core.contrib.templates.renderer import view
 
 
 def has_tuner():

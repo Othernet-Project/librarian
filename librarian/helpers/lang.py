@@ -13,8 +13,8 @@ from __future__ import unicode_literals
 
 from bottle_utils.i18n import lazy_gettext as _
 
-from librarian_core.contrib.i18n.consts import LOCALES, LANGS
-from librarian_core.contrib.templates.decorators import template_helper
+from ..core.contrib.i18n.consts import LOCALES, LANGS
+from ..core.contrib.templates.decorators import template_helper
 
 
 SELECT_LANGS = [('', _('any language'))] + LANGS

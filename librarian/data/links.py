@@ -4,7 +4,7 @@ links.py: Module to maintain linked content files
 
 from sqlize_pg.builder import Replace, Delete, Select
 
-from librarian_core.exts import ext_container as exts
+from ..core.exts import ext_container as exts
 
 
 TABLE_NAME = 'links'

@@ -1,8 +1,7 @@
 from bottle import request
 
-from librarian_core.contrib.i18n.utils import set_current_locale
-
-from .options import Options
+from ..core.contrib.auth.options import Options
+from ..core.contrib.i18n.utils import set_current_locale
 
 
 @Options.collector('language')

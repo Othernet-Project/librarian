@@ -1,3 +1,7 @@
-def plugin(*args, **kwargs):
+def plugin(supervisor):
     # FIXME: Not implemented
-    pass
+    def noop(fn):
+        def wrapper(*args, **kwargs):
+            return fn(*args, **kwargs)
+        return wrapper
+    return noop

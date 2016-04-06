@@ -14,8 +14,7 @@ import os
 
 from bottle import request
 
-from librarian_core.contrib.templates.renderer import template
-
+from ..core.contrib.templates.renderer import template
 from ..decorators.setup import AUTO_CONFIGURATORS
 from ..presentation.wizard import Wizard
 

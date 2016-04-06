@@ -3,7 +3,7 @@ from bottle import request
 from ..core.contrib.auth.helpers import identify_database
 from ..core.contrib.auth.users import User
 from ..core.contrib.auth.utils import generate_random_key
-from ..data.setup.decorators import autoconfigure
+from ..decorators.setup import autoconfigure
 from ..forms.auth import RegistrationForm
 
 
@@ -13,7 +13,7 @@ autoconfigure('csrf.secret')(generate_random_key)
 
 class SuperuserStep:
     name = 'superuser'
-    index = 3
+    index = 2
     template = 'setup/step_superuser.tpl',
 
     @staticmethod

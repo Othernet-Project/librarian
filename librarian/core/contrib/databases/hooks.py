@@ -26,7 +26,7 @@ def initialize(supervisor):
 
 
 def component_member_loaded(supervisor, member, config):
-    for dbname in config.get('databases', []):
+    for dbname in config.get('database.names', []):
         register_database(dbname, member['pkg_name'])
 
 

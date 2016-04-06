@@ -1,4 +1,3 @@
-import logging
 
 
 class DashboardPluginRegistry(object):
@@ -13,8 +12,8 @@ class DashboardPluginRegistry(object):
     def sort(self):
         # Install dashboard plugins for plugins that have them
         self.installed = [i[1]() for i in sorted(self.collected.items(),
-                                               key=lambda c: c[1].priority,
-                                               reverse=True)]
+                                                 key=lambda c: c[1].priority,
+                                                 reverse=True)]
 
     @property
     def plugins(self):

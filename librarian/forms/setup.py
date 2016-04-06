@@ -2,7 +2,7 @@ from bottle import request
 from bottle_utils import form
 from bottle_utils.i18n import lazy_gettext as _
 
-from librarian_core.contrib.i18n.consts import LANGS
+from ..core.contrib.i18n.consts import LANGS
 
 
 def get_default_locale(locales, config):

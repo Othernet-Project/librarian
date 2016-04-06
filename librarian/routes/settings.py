@@ -2,7 +2,7 @@ from bottle import request
 from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
-from librarian_core.contrib.templates.renderer import template
+from ..core.contrib.templates.renderer import template
 
 
 @roca_view('settings/settings', 'settings/_settings_form',
@@ -39,4 +39,3 @@ def routes(config):
         ('settings:save', save_settings,
          'POST', '/settings/', dict(unlocked=True)),
     )
-

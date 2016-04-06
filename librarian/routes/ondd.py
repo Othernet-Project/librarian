@@ -4,10 +4,9 @@ from bottle import request
 from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
 
-from librarian_core.contrib.templates.renderer import template, view
-
-from .forms import ONDDForm
-from .consts import get_form_data_for_preset
+from ..core.contrib.templates.renderer import template, view
+from ..forms.ondd import ONDDForm
+from ..helpers.ondd import get_form_data_for_preset
 
 
 @view('ondd/_status')

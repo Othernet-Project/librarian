@@ -3,26 +3,23 @@ import logging
 from bottle import request
 from bottle_utils.i18n import lazy_gettext as _
 
-from .forms import ONDDForm
+from ..forms.ondd import ONDDForm
+from ..helpers.ondd import read_ondd_setup
 
 
 class ONDDStep:
     name = 'ondd'
+    index = 3
     template = 'setup/step_ondd.tpl'
 
     @staticmethod
-    def read_ondd_setup():
-        initial_data = request.app.supervisor.exts.setup.get('ondd')
-        return {} if isinstance(initial_data, bool) else initial_data
-
-    @classmethod
-    def test(cls):
+    def test():
         ondd_client = request.app.supervisor.exts.ondd
         ondd_alive = ondd_client.ping()
         if not ondd_alive:
             # If ondd is not running, skip the step
             return False
-        settings = cls.read_ondd_setup()
+        settings = read_ondd_setup()
         if settings is None:
             # Settings is None if ONDD configuration has never been performed
             return True
@@ -31,7 +28,7 @@ class ONDDStep:
             # is present. This is allowed, as user is allowed to skip through
             # the setup step without setting the tuner settings.
             return False
-        form = ONDDForm(cls.read_ondd_setup())
+        form = ONDDForm(read_ondd_setup())
         return not form.is_valid()
 
     @staticmethod

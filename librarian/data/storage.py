@@ -15,7 +15,7 @@ import pyudev
 import hwd.udev
 import hwd.storage
 
-from librarian_core.exts import ext_container as exts
+from ..core.exts import ext_container as exts
 
 
 CONSOLIDATE_KEY = 'consolidate_current_id'

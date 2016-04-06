@@ -1,10 +1,9 @@
 from bottle import request
 
-from librarian_core.contrib.i18n.utils import (set_default_locale,
-                                               set_current_locale,
-                                               get_enabled_locales)
-
-from .forms import get_language_form
+from ..core.contrib.i18n.utils import (set_default_locale,
+                                       set_current_locale,
+                                       get_enabled_locales)
+from ..forms.setup import get_language_form
 
 
 class LanguageStep:

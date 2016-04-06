@@ -9,8 +9,7 @@ from bottle_utils.html import hsize
 from librarian_core.contrib.templates.renderer import template
 from librarian_core.exts import ext_container as exts
 
-import storage
-from .storage import get_content_storages
+from ..data import storage
 
 gettext = lambda x: x
 
@@ -71,7 +70,7 @@ def consolidate_partial(dest):
 def with_storages(fn):
     @functools.wraps(fn)
     def wrapper(*args, **kwargs):
-        storages = get_content_storages()
+        storages = storage.get_content_storages()
         kwargs['storages'] = storages
         return fn(*args, **kwargs)
     return wrapper

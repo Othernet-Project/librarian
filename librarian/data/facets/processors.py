@@ -2,7 +2,7 @@ import os
 
 from librarian_core.exts import ext_container as exts
 
-import links
+from .. import links
 from .facets import FACET_TYPES
 from .metadata import (runnable, ImageMetadata, AudioMetadata,
                        VideoMetadata, HtmlMetadata)

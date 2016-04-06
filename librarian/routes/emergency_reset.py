@@ -15,10 +15,9 @@ from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
 from bottle_utils.csrf import csrf_protect, csrf_token
 
-from librarian_core.contrib.auth.users import User
-from librarian_core.contrib.templates.renderer import template
-
-from ..forms import EmergencyResetForm
+from ..core.contrib.auth.users import User
+from ..core.contrib.templates.renderer import template
+from ..forms.auth import EmergencyResetForm
 
 
 @roca_view('auth/emergency_reset', 'auth/_emergency_reset', template_func=template)

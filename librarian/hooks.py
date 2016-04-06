@@ -1,4 +1,5 @@
 import importlib
+import logging
 
 from fsal.client import FSAL
 from ondd_ipc.ipc import ONDDClient
@@ -16,8 +17,13 @@ def import_attr(path):
     separated = path.split('.')
     mod_path = '.'.join(separated[:-1])
     attr_name = separated[-1]
-    mod = importlib.import_module(mod_path)
-    return getattr(mod, attr_name)
+    try:
+        mod = importlib.import_module(mod_path)
+    except ImportError:
+        logging.error('Failed to import {}'.format(mod_path))
+        raise
+    else:
+        return getattr(mod, attr_name)
 
 
 def install_extensions(supervisor):
@@ -38,8 +44,8 @@ def register_commands():
         exts.commands.register(command_cls.name,
                                command_cls(),
                                command_cls.option,
-                               command_cls.action,
-                               command_cls.help)
+                               action=command_cls.action,
+                               help=command_cls.help)
 
 
 def register_menu_items():

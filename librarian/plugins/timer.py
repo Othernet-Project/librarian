@@ -1,4 +1,4 @@
-from .timer import request_timer
+from ..utils.timer import request_timer
 
 
 EXPORTS = {

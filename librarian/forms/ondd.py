@@ -4,13 +4,11 @@ from bottle_utils.i18n import lazy_gettext as _
 
 from ondd_ipc.utils import needs_tone, freq_conv
 
-from . import consts
-
-from ..helpers.ondd import has_tuner
+from ..helpers import ondd
 
 
 class ONDDForm(form.Form):
-    PRESETS = consts.PRESETS
+    PRESETS = ondd.PRESETS
     messages = {
         'tuning_error': _("Tuner configuration could not be saved. "
                           "Please make sure that the tuner is connected.")
@@ -22,7 +20,7 @@ class ONDDForm(form.Form):
         validators=[form.Required(messages={
             'required': _('Invalid choice for LNB type')
         })],
-        choices=consts.LNB_TYPES
+        choices=ondd.LNB_TYPES
     )
     frequency = form.IntegerField(
         _("Frequency"),
@@ -48,7 +46,7 @@ class ONDDForm(form.Form):
     )
     delivery = form.SelectField(
         _("Delivery system"),
-        choices=consts.DELIVERY,
+        choices=ondd.DELIVERY,
         # Translators, error message when wrong delivery system is selected
         validators=[
             form.Required(messages={
@@ -58,7 +56,7 @@ class ONDDForm(form.Form):
     )
     modulation = form.SelectField(
         _("Modulation"),
-        choices=consts.MODULATION,
+        choices=ondd.MODULATION,
         # Translators, error message when wrong modulation mode is selected
         validators=[
             form.Required(messages={
@@ -68,7 +66,7 @@ class ONDDForm(form.Form):
     )
     polarization = form.SelectField(
         _("Polarization"),
-        choices=consts.POLARIZATION,
+        choices=ondd.POLARIZATION,
         # Translators, error message when wrong polarization is selected
         validators=[
             form.Required(messages={
@@ -78,7 +76,7 @@ class ONDDForm(form.Form):
     )
 
     def validate(self):
-        if not has_tuner():
+        if not ondd.has_tuner():
             # Translators, error message shown when a tuner is not detected
             raise form.ValidationError('tuning_error', {})
 
@@ -92,8 +90,8 @@ class ONDDForm(form.Form):
                         symbolrate=symbolrate,
                         delivery=delivery,
                         tone=needs_tone(frequency, lnb),
-                        modulation=dict(consts.MODULATION)[modulation],
-                        voltage=consts.VOLTS[polarization])
+                        modulation=dict(ondd.MODULATION)[modulation],
+                        voltage=ondd.VOLTS[polarization])
         ondd_client = request.app.supervisor.exts.ondd
         response = ondd_client.set_settings(**settings)
         if not response.startswith('2'):
