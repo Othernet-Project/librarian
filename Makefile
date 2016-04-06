@@ -1,5 +1,6 @@
 # Global
 TMPDIR := ./tmp
+LIBRARY = $(TMPDIR)/library
 LOCAL_MIRROR = /tmp/pypi
 MIRROR_REQ = ./dependencies/requirements.txt
 DOCS = ./docs
@@ -80,7 +81,7 @@ stop-coffee:
 	@-kill -s INT $$(cat $(COFFEE_PID))
 	@-rm $(COFFEE_PID)
 
-start-fsal: $(FSAL_PID)
+start-fsal: $(LIBRARY) $(FSAL_PID)
 
 stop-fsal:
 	@-kill -s TERM $$(cat $(FSAL_PID))
@@ -116,6 +117,9 @@ $(FSAL_CONF): $(FSAL_SAMPLE) $(TMPDIR)
 
 $(LIBRARIAN_CONF): $(LIBRARIAN_SAMPLE) $(TMPDIR)
 	@cat $< > $@
+
+$(LIBRARY):
+	@mkdir -p $@
 
 $(TMPDIR):
 	@mkdir -p $@
