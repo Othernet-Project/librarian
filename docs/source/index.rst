@@ -29,8 +29,7 @@ Table of contents
     user_manual
     development
     api_documentation
-    make_targets
-    git_repository_layout
+    appendices
 
 
 Source code
