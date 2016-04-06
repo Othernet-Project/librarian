@@ -53,7 +53,7 @@ local-mirror:
 	pip install --upgrade pip
 	pip install --upgrade pip2pi
 	pip2pi --normalize-package-names $(LOCAL_MIRROR) --no-deps \
-		--no-binary :all: -r $(MIRROR_REQ)
+		--no-binary :all: --pre -r $(MIRROR_REQ)
 
 start: start-assets start-fsal
 

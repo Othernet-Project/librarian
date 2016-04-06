@@ -2,6 +2,7 @@ beautifulsoup4==4.4.1
 bottle==0.12.9
 bottle-fdsend==0.1.1
 bottle-utils==1.0
+bottle-streamline==1.0.dev2
 chainable-validators==0.8.2
 confloader==1.0
 cssmin==0.2.0
