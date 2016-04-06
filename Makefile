@@ -1,25 +1,120 @@
-include conf/Makefile.in
+# Global
+TMPDIR := ./tmp
+LOCAL_MIRROR = /tmp/pypi
+MIRROR_REQ = ./dependencies/requirements.txt
+DOCS = ./docs
+SAMPLES = $(DOCS)/samples
+SITE_PACKAGES := $(shell python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
 
-COMPASS_PID = .compass_pid
-COFFEE_PID = .coffee_pid
+# Assets-related
+ASSETS_DIR = ./ui_assets_src
+OUTPUT_DIR = ./librarian/static
+COMPASS_CONF = $(ASSETS_DIR)/compass.rb
+COFFEE_SRC = $(ASSETS_DIR)/coffee
+SCSS_SRC = $(ASSETS_DIR)/scss
+JS_OUT = $(OUTPUT_DIR)/js
+JS_NOPRUNE = $(JS_OUT)/vendor
 
-.PHONY: watch stop restart recompile
+# FSAL-related
+FSAL_CONF := $(TMPDIR)/fsal.ini
 
-watch: $(COMPASS_PID) $(COFFEE_PID) $(DEMO_COMPASS_PID) $(DEMO_COFFEE_PID)
+# Librarian-related
+LIBRARIAN_CONF := $(TMPDIR)/librarian.ini
 
-stop:
-	$(SCRIPTS)/compass.sh stop $(COMPASS_PID)
-	$(SCRIPTS)/coffee.sh stop $(COFFEE_PID)
+# PID files
+COMPASS_PID = $(TMPDIR)/.compass_pid
+COFFEE_PID = $(TMPDIR)/.coffee_pid
+FSAL_PID = $(TMPDIR)/.fsal_pid
 
-restart: stop watch
+.PHONY: \
+	stop-assets \
+	prepare \
+	local-mirror \
+	start \
+	stop \
+	restart \
+	restart-assets \
+	restart-fsal \
+	start-assets \
+	stop-assets \
+	start-fsal \
+	stop-fsal \
+	start-coffee \
+	start-compass \
+	stop-compass \
+	stop-coffee \
+	recompile-assets \
+	docs
 
-recompile: 
+prepare: local-mirror $(FSAL_CONF) $(LIBRARIAN_CONF)
+	pip install -e . --extra-index-url file://$(LOCAL_MIRROR)
+
+local-mirror:
+	pip install pip2pi
+	pip2pi --normalize-package-names $(LOCAL_MIRROR) --no-deps \
+		--no-binary :all: -r $(MIRROR_REQ)
+
+start: start-assets start-fsal
+
+stop: stop-assets stop-fsal
+
+restart: restart-assets rstart-fsal
+
+start-assets: $(COMPASS_PID) $(COFFEE_PID)
+
+stop-assets: stop-compass stop-coffee
+
+restart-assets: stop-assets watch-assets
+
+start-compass: $(COMPASS_PID)
+
+start-coffee: $(COFFEE_PID)
+
+stop-compass: $(COMPASS_PID)
+	-kill -s TERM $$(cat $<)
+	-rm $<
+
+stop-coffee: $(COFFEE_PID)
+	-kill -s INT $$(cat $<)
+	-rm $<
+
+start-fsal: $(FSAL_PID)
+
+stop-fsal: $(FSAL_PID)
+	-kill -s TERM $$(cat $<)
+	-rm $<
+
+restart-fsal: stop-fsal
+	# We don't use start as a dependency because we need a 5s pause
+	echo "Waiting for things to settle..."
+	sleep 5
+	make start-fsal
+
+recompile-assets:
 	compass compile --force -c $(COMPASS_CONF)
-	find $(JSDIR) -path $(JSDIR)/$(EXCLUDE) -prune -o -name "*.js" -exec rm {} +
-	coffee --bare -c --output $(JSDIR) $(COFFEE_SRC)
+	find $(JS_OUT) -path $(JS_NOPRUNE) -prune -o -name "*.js" -exec rm {} +
+	coffee --bare -c --output $(JS_OUT) $(COFFEE_SRC)
 
-$(COMPASS_PID): $(SCRIPTS)/compass.sh
-	$< start $@ $(COMPASS_CONF)
+docs: clean-doc
+	make -C $(DOCS) html
 
-$(COFFEE_PID): $(SCRIPTS)/coffee.sh
-	$< start $@ $(COFFEE_SRC) $(JSDIR)
+clean-doc:
+	make -C $(DOCS) clean
+
+$(COMPASS_PID): $(TMPDIR)
+	compass watch -c $(COMPASS_CONF) & echo $$! > $@
+
+$(COFFEE_PID): $(TMPDIR)
+	coffee --bare --watch --output $(JS_OUT) $(COFFEE_SRC) & echo $$! > $@
+
+$(FSAL_PID): $(FSAL_CONF) $(TMPDIR)
+	fsal-daemon --conf $(FSAL_CONF) --pid-file $@ && echo $$! > $@
+
+$(FSAL_CONF): $(TMPDIR)
+	cat $(SAMPLES)/fsal.ini | sed 's|PREFIX|$(SITE_PACKAGES)|' > $@
+
+$(LIBRARIAN_CONF): $(TMPDIR)
+	cat $(SAMPLES)/librarian.ini > $@
+
+$(TMPDIR):
+	mkdir -p $@
