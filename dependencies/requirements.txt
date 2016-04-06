@@ -2,6 +2,8 @@ beautifulsoup4==4.4.1
 bottle==0.12.9
 bottle-fdsend==0.1.1
 bottle-utils==1.0
+bottle-streamline==1.0.dev2
+chainable-validators==0.8.2
 confloader==1.0
 cssmin==0.2.0
 # fsal
@@ -21,6 +23,7 @@ python-dateutil==2.4.2
 pytz==2015.7
 pyudev==0.18.1
 scandir==1.2
+setuptools==20.6.7
 six==1.10.0
 sqlize-pg==1.0
 squery-pg==1.1
