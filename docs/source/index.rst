@@ -8,8 +8,8 @@ Librarian is a content index manager and interface for `Outernet
 <https://outernet.is/>`_ receivers. It is one of the two key components that
 allow users to access the content that is broadast on Outernet. [#]_
 
-This documentation provides an overview of both Librarian usage, and its inner
-workings. The first few chapters will guide you through the Librarian
+This documentation provides an overview of both Librarian usage, and its
+internals. The first few chapters will guide you through the Librarian
 interface, followed by chapters that illuminate the inner workings of this
 application.
 
