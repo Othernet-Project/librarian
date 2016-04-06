@@ -40,6 +40,11 @@ def component_member_loaded(supervisor, member, config):
     src_pair = (static_path, static_url)
     supervisor.config['assets.sources'][pkg_name] = src_pair
 
+    if pkg_name == 'librarian':
+        # This is the main component. All bundles are already in the main
+        # configuration file and we can skip extension here.
+        return
+
     # Add the bundles
     js_bundles = config.pop('assets.js_bundles', [])
     css_bundles = config.pop('assets.css_bundles', [])
