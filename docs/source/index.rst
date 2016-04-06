@@ -2,6 +2,8 @@
 Librarian
 *********
 
+.. figure:: images/librarian_intro.png
+
 Librarian is a content index manager and interface for `Outernet
 <https://outernet.is/>`_ receivers. It is one of the two key components that
 allow users to access the content that is broadast on Outernet. [#]_
