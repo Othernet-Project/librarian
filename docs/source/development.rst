@@ -39,6 +39,5 @@ Sections in this chapter
     :maxdepth: 1
 
     download_and_setup
-    git_repository_layout
-    command_line_options
+    source_code_layout
     architecture_overview

@@ -26,6 +26,7 @@ Table of contents
     
     development
     make_targets
+    git_repository_layout
 
 
 Source code
