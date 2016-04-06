@@ -28,7 +28,7 @@ def routes(config):
         ('diskspace:consolidate', diskspace.schedule_consolidate,
          'POST', '/diskspace/consolidate/', {}),
         ('diskspace:consolidate_state', diskspace.consolidate_state,
-         'GET', '/diskspace/consolidate/state', {})
+         'GET', '/diskspace/consolidate/state', {}),
         ('files:list', filemanager.init_file_action,
          'GET', '/files/', dict(unlocked=True)),
         ('files:path', filemanager.init_file_action,
