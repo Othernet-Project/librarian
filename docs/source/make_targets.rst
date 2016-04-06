@@ -1,6 +1,5 @@
-************************
 Appendix A: make targets
-************************
+========================
 
 The following make targets are available.
 

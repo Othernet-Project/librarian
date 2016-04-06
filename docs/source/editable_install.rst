@@ -1,6 +1,5 @@
-********************************************
 Appendix C: Installing dependencies editably
-********************************************
+============================================
 
 Editable install feature (setuptools, pip) allows us to install a dependency
 package into a virtualenv (or in global site-packages) such that it links to a
