@@ -6,9 +6,8 @@ from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
 from bottle_utils.html import hsize
 
-from librarian_core.contrib.templates.renderer import template
-from librarian_core.exts import ext_container as exts
-
+from ..core.contrib.templates.renderer import template
+from ..core.exts import ext_container as exts
 from ..data import storage
 
 gettext = lambda x: x
