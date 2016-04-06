@@ -21,6 +21,7 @@ from ..core.contrib.auth.users import User
 from ..core.contrib.templates.decorators import template_helper
 from ..core.contrib.templates.renderer import template
 from ..forms.auth import LoginForm, PasswordResetForm
+from ..helpers import auth  # NOQA
 
 
 def http_redirect(path, code=303):

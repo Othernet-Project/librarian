@@ -12,6 +12,7 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 from bottle_utils.ajax import roca_view
 
 from ..core.contrib.templates.renderer import template
+from ..helpers import lang  # NOQA
 
 
 EXPORTS = {
