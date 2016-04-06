@@ -47,10 +47,11 @@ FSAL_PID = $(TMPDIR)/.fsal_pid
 	docs
 
 prepare: local-mirror $(FSAL_CONF) $(LIBRARIAN_CONF)
-	pip install -e . --extra-index-url file://$(LOCAL_MIRROR)
+	pip install -e . --upgrade --extra-index-url file://$(LOCAL_MIRROR)/simple
 
 local-mirror:
-	pip install pip2pi
+	pip install --upgrade pip
+	pip install --upgrade pip2pi
 	pip2pi --normalize-package-names $(LOCAL_MIRROR) --no-deps \
 		--no-binary :all: -r $(MIRROR_REQ)
 
