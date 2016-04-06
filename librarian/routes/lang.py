@@ -15,12 +15,6 @@ from ..core.contrib.templates.renderer import template
 from ..helpers import lang  # NOQA
 
 
-EXPORTS = {
-        'routes': {'required_by':
-                   ['librarian.core.contrib.system.routes.routes']}
-}
-
-
 @roca_view('ui/lang_list', 'ui/_lang_list', template_func=template)
 def lang_list():
     return dict()

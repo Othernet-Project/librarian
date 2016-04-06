@@ -40,9 +40,6 @@ FACET_MAPPING = {
     'image': 'gallery',
     'audio': 'playlist',
 }
-EXPORTS = {
-    'routes': {'required_by': ['librarian_core.contrib.system.routes.routes']}
-}
 
 
 def get_parent_path(path):
