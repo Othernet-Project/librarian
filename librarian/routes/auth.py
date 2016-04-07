@@ -12,16 +12,18 @@ import urlparse
 
 from bottle import request, response
 from bottle_utils.ajax import roca_view
+from bottle_utils.csrf import csrf_token, csrf_protect
 from bottle_utils.html import set_qparam
 from bottle_utils.form import ValidationError
-from bottle_utils.csrf import csrf_protect, csrf_token
 from bottle_utils.i18n import i18n_path, i18n_url, lazy_gettext as _
+from streamline import XHRPartialFormRoute
 
 from ..core.contrib.auth.users import User
 from ..core.contrib.templates.decorators import template_helper
 from ..core.contrib.templates.renderer import template
 from ..forms.auth import LoginForm, PasswordResetForm
 from ..helpers import auth  # NOQA
+from ..utils.route_mixins import CSRFRouteMixin, RedirectRouteMixin
 
 
 def http_redirect(path, code=303):
@@ -41,23 +43,15 @@ def is_authenticated():
     return not request.no_auth and request.user.is_authenticated
 
 
-@roca_view('auth/login', 'auth/_login', template_func=template)
-@csrf_token
-def show_login_form():
-    return dict(form=LoginForm(), next_path=request.params.get('next', '/'))
+class Login(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
+    template_func = template
+    template_name = 'auth/login'
+    partial_template_name = 'auth/_login'
+    form_factory = LoginForm
 
-
-@roca_view('auth/login', 'auth/_login', template_func=template)
-@csrf_protect
-def login():
-    next_path = request.params.get('next', '/')
-
-    form = LoginForm(request.params)
-    if form.is_valid():
-        request.user.options.process('language')
-        return http_redirect(i18n_path(next_path))
-
-    return dict(next_path=next_path, form=form)
+    def form_valid(self):
+        self.request.user.options.process('language')
+        self.perform_redirect()
 
 
 def logout():

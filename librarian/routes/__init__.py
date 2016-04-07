@@ -2,6 +2,7 @@ from os.path import basename
 
 from bottle import error
 
+from ..core.exts import ext_container as exts
 from . import (auth, dashboard, diskspace, emergency_reset, filemanager, lang,
                logs, notifications, ondd, settings, setup, system)
 
@@ -12,11 +13,8 @@ def routes(config):
     error(404)(system.error_404)
     error(500)(system.error_500)
     error(503)(system.error_503)
+    auth.Login.route('/login/', name='auth:login', app=exts.bottle_app)
     route_config = (
-        ('auth:login_form', auth.show_login_form,
-         'GET', '/login/', {}),
-        ('auth:login', auth.login,
-         'POST', '/login/', {}),
         ('auth:logout', auth.logout,
          'GET', '/logout/', {}),
         ('auth:reset_form', auth.show_reset_form,
