@@ -76,7 +76,8 @@ def routes(config):
         # This route handler is added because unhandled missing pages cause
         # bottle to _not_ install any plugins, and some are essential to
         # rendering of the 404 page (e.g., i18n, sessions, auth).
-        ('sys:all404', system.all_404, ['GET', 'POST'], '<path:path>', dict()),
+        ('sys:all404', system.all_404,
+         ['GET', 'POST'], '/<path:path>', dict()),
     )
     if config.get('app.default_route'):
         route_config = (
