@@ -92,6 +92,8 @@ class Session(object):
     def rotate(self):
         self.delete()
         self.id = self.generate_session_id()
+        self.set_cookie(request.app.config['session.cookie_name'],
+                        request.app.config['session.secret'])
         return self.save()
 
     def expire(self):
