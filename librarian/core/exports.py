@@ -448,3 +448,45 @@ class Configuration(MemberList):
                 # Omit exports from master configuration
                 continue
             self.supervisor.config[k] = v
+
+
+def Commands(MemberList):
+    """
+    This class manages command argument handlers.
+    """
+    type = 'commands'
+
+    def __init__(self, supervisor):
+        super(Commands, self).__init__(supervisor)
+        self.parser = argparse.ArgumentParser()
+        self.handlers = {}
+
+    def collect(self, component):
+        commands = component.get_export('commands', [])
+        for command in commands:
+            try:
+                handler = component.get_object(command)
+            except ImportError:
+                logging.error('Could not load handler {} for component '
+                              '{}'.format(command, component.name))
+                continue
+            handler.component = component.name
+            self.register(handler)
+
+    def install_member(self, handler):
+        name = handler.name
+        if name in self.handlers:
+            logging.warn('Duplicate registration for command: {}'.format(name))
+            return
+        self.handlers[name] = handler
+        self.parser.add_argument(handler.flags, dest=handler.name,
+                                 *handler.args, **handler.kwargs)
+        for arg in handler.extra_args:
+            self.parser.add_argument(**arg)
+
+    def post_install(self):
+        args = self.parser.parse_args()
+        arglist = list(vars(args).keys())
+        for name, handler in self.handlers:
+            if name in arglist:
+                handler(args)
