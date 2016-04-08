@@ -114,7 +114,7 @@ class EmergencyReset(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
         # If user is already logged in, redirect to password reset page
         # There's no need to do anything heavy-handed in this case.
         if self.request.user.is_authenticated:
-            return self.redirect(i18n_url('auth:reset_form'))
+            return self.redirect(i18n_url('auth:password_reset'))
         return super(EmergencyReset, self).get()
 
     def form_valid(self):
