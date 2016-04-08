@@ -433,4 +433,52 @@ used::
 Command line argument handlers
 ------------------------------
 
-TODO
+Command line argument handlers are functions that can handle arbitrary
+user-defined arguments. To mark a function as a command handler, you need to
+use the :py:func:`~librarian.core.exports.command` decorator. Here is an
+example::
+
+    from librarian.core.exports import command
+
+    @command('awesome', '--make-awesome', action='store_true')
+    def awesome_command(args):
+        ....
+
+The first argument to the decorator is the command name, which is used to
+tell if the command should run. The second argument is a flag that is used on
+the command line to invoke this command. Other arguments are passed as is to
+the :py:meth:`argparse.ArgumentParser.add_argument` method.
+
+A command may register additional arguments that it wants to use. These
+aruguments are specified as an iterable of dicts, where each dict is a set of
+keyword arguments for the :py:meth:`~argparse.ArgumentParser.add_argument`
+method. For example::
+
+    extras = (
+        dict(flags=['--awesome-level', '-L'], metavar='LEVEL', default=2]),
+        dict(flags=['--ignore-lame', '-I'], action='store_true'),
+    )
+
+    @command('awesome', '--make-awesome', extra_args=extras,
+             action='store_true')
+    def awesome_command(args):
+        ...
+
+The above example adds '--awsome-level' and '--ignore-lame' arguments. Note
+that flags can be either a single string, or a list of strings.
+
+To find out more about writing command handlers, see
+:doc:`handling_command_line_arguments`.
+
+To export handlers, we use the ``commands`` options in the exports section::
+
+    [exports]
+
+    commands = commands.fantastic_command
+
+The option accepts one or more names of the function objects.
+
+.. warning::
+    Command names have to be unique across all commands in the commands member
+    group. If a command has the same name as another command, it will not be
+    used.
