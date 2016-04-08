@@ -48,6 +48,14 @@ class TokenValidator(form.Validator):
         return sha256.hexdigest()
 
 
+class RequiredIfNotAuthenticated(form.Required):
+
+    def validate(self, data):
+        if request.user.is_authenticated:
+            return True
+        return super(RequiredIfNotAuthenticated, self).validate(data)
+
+
 class LoginForm(form.Form):
     messages = {
         'login_error': _("Please enter the correct username and password.")
@@ -99,9 +107,11 @@ class PasswordResetForm(form.Form):
         'invalid_token': _('Password reset token does not match any user'),
     }
     # Translators, used as label in create user form
-    reset_token = form.StringField(_("Password reset token"),
-                                   validators=[form.Required()],
-                                   placeholder='123456')
+    reset_token = form.StringField(
+        _("Password reset token"),
+        validators=[RequiredIfNotAuthenticated()],
+        placeholder='123456'
+    )
     # Translators, used as label in password reset form
     password1 = form.PasswordField(_("Password"),
                                    validators=[form.Required()],
@@ -116,6 +126,12 @@ class PasswordResetForm(form.Form):
         password2 = self.processed_data['password2']
         if password1 != password2:
             raise form.ValidationError('password_match', {})
+
+        user = (request.user if request.user.is_authenticated else
+                User.from_reset_token(self.processed_data['reset_token']))
+        if not user:
+            raise form.ValidationError('invalid_token', {'value': ''})
+        self.processed_data['username'] = user.username
 
 
 class EmergencyResetForm(RegistrationForm):
