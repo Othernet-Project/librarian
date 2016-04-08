@@ -98,7 +98,7 @@ before = depends_on
 hook = functools.partial(_metadata, name='hook')
 
 
-def command(name, flags, extra_arguments=[], *args, **kwargs):
+def command(name, flags, extra_arguments=[], **kwargs):
     """
     Decorator that marks a function as a command handler.
 
@@ -108,7 +108,7 @@ def command(name, flags, extra_arguments=[], *args, **kwargs):
 
     The ``flags`` argument is either the argument name or command line flags.
 
-    Any additional args and kwargs will be passed to the parser's
+    Any additional keyword arguments will be passed to the parser's
     ``add_argument()`` method.
 
     If the handler needs to register additional arguments, they may be passed
@@ -118,7 +118,6 @@ def command(name, flags, extra_arguments=[], *args, **kwargs):
     def decorator(fn):
         fn.name = name
         fn.flags = flags
-        fn.args = args
         fn.kwargs = kwargs
         fn.extra_arguments = extra_arguments
         return fn
@@ -483,13 +482,19 @@ def Commands(MemberList):
             logging.warn('Duplicate registration for command: {}'.format(name))
             return
         self.handlers[name] = handler
+        # Build add_argument() args.
         kwargs = handler.kwargs.copy()
         kwargs['dest'] = name
+        # Ensure flags are positional arguments and are a list
         args = to_list(handler.flags)
-        args.extend(list(handler.args))
         self.parser.add_argument(*args, **kwargs),
         for arg in handler.extra_args:
-            self.parser.add_argument(**arg)
+            arg = arg.copy()
+            # Flags should be positional args, so we have to remove from the
+            # kwargs and process them a bit.
+            flags = arg.pop('flags', [])
+            flags = to_list(flags)
+            self.parser.add_argument(*flags, **arg)
 
     def post_install(self):
         args = self.parser.parse_args()
