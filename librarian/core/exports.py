@@ -346,7 +346,12 @@ class MemberGroupBase(object):
         """
         self.pre_install()
         for member in self.get_ordered_members():
-            self.install_member(member)
+            try:
+                self.install_member(member)
+            except Exception:
+                logging.exception(
+                    'Error while installing {} member: {}'.format(
+                        self.type, member))
         self.events.publish(MEMBER_GROUP_INSTALLED, group_type=self.type)
         self.post_install()
 
