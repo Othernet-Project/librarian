@@ -98,6 +98,33 @@ before = depends_on
 hook = functools.partial(_metadata, name='hook')
 
 
+def command(name, flags, extra_arguments=[], *args, **kwargs):
+    """
+    Decorator that marks a function as a command handler.
+
+    The ``name`` argument will be used to identify the argument that will
+    trigger this command (and is also used as ``dest`` argument to the
+    ``argparse.ArgumentParser.add_argument()`` method.
+
+    The ``flags`` argument is either the argument name or command line flags.
+
+    Any additional args and kwargs will be passed to the parser's
+    ``add_argument()`` method.
+
+    If the handler needs to register additional arguments, they may be passed
+    as an iterable of dicts using the optional ``extra_arguments`` argument.
+    The dicts will be passed to the parser's ``add_argument()`` as kwargs.
+    """
+    def decorator(fn):
+        fn.name = name
+        fn.flags = flags
+        fn.args = args
+        fn.kwargs = kwargs
+        fn.extra_arguments = extra_arguments
+        return fn
+    return decorator
+
+
 def import_package(name):
     """
     Import a package give fully qualified name and return the package object as
