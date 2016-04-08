@@ -470,6 +470,10 @@ def Commands(MemberList):
                 logging.error('Could not load handler {} for component '
                               '{}'.format(command, component.name))
                 continue
+            if not hasattr(handler, 'name'):
+                logging.error('Invalid handler {} for component {}'.format(
+                    command, component.name))
+                continue
             handler.component = component.name
             self.register(handler)
 
