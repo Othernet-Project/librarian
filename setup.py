@@ -211,6 +211,7 @@ setup(
         'chainable-validators',
         'confloader>=1.0',
         'cssmin',
+        'disentangler',
         'fsal',
         'gevent',
         'greentasks',
