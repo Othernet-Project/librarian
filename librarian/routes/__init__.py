@@ -3,8 +3,8 @@ from os.path import basename
 from bottle import error
 
 from ..core.exts import ext_container as exts
-from . import (auth, dashboard, diskspace, emergency_reset, filemanager, lang,
-               logs, notifications, ondd, settings, setup, system)
+from . import (auth, dashboard, diskspace, filemanager, lang, logs,
+               notifications, ondd, settings, setup, system)
 
 
 def routes(config):
@@ -16,11 +16,8 @@ def routes(config):
     auth.Login.route('/login/', app=exts.bottle_app)
     auth.Logout.route('/logout/', app=exts.bottle_app)
     auth.PasswordReset.route('/reset-password/', app=exts.bottle_app)
+    auth.EmergencyReset.route('/emergency/', app=exts.bottle_app)
     route_config = (
-        ('emergency:reset_form', emergency_reset.show_emergency_reset_form,
-         'GET', '/emergency/', {'skip': ['sessions']}),
-        ('emergency:reset', emergency_reset.reset,
-         'POST', '/emergency/', {'skip': ['sessions']}),
         ('dashboard:main', dashboard.dashboard,
          'GET', '/dashboard/', {}),
         ('diskspace:show_consolidate_form', diskspace.show_consolidate_form,
