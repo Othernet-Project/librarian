@@ -1,0 +1,426 @@
+Components and component members
+================================
+
+Components are, simply put, subapplications. They have their own templates,
+satic assets, route handlers, database migrations, and so on. Each of these
+things are called 'component members'. Some members may require load ordering
+(e.g., plugins may depend on other plugins, some routes may require to be
+registered after others or before others). We call these ordering requirements
+'component member dependencies'.
+
+Component member groups
+-----------------------
+
+Component member groups (CMGs) are groups of component members by type. We
+currently have the following groups:
+
+- databases
+- templates
+- static assets
+- hooks
+- plugins
+- WSGI middleware
+- route handlers
+- command line argument handlers
+
+Each component may have one or more members that belong to one of the CMGs. The
+CMGs are also known as component member type. 
+
+All members from all components that belong to the same group comprise that
+group. Although this may sound simple enough, it is worth keeping in mind that
+it *is* possible to step on other component's assets/templates/databases if you
+are no careful as members are not namespaced. For example, if component A has a
+template named 'foo', and component B also has that template, the last
+component's template will always take precendece and override any previously
+found templates of the same name. Also, keep in mind that overriding templates
+in this way *intentionally* is also a bad idea, as the override order is an
+implementation detail that may change in future without notice.
+
+Component configuration file
+----------------------------
+
+Each component has a configuration file. This confugration file is in .ini
+format.
+
+The component member exports are specified in the ``[exports]`` section.
+
+In the following subsections, we will repeat the section header every time, but
+do keep in mind that all exports go under a single ``[exports]`` heading.
+
+.. note::
+    The exact format used in the configuration files is covered `in confloader
+    module documentation
+    <http://confloader.readthedocs.org/en/latest/writing_ini.html>`_.
+
+Object and path references
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When specifying relative paths in the configuration options, you cannot use
+double-dot notation anywhere. For example, ``static_dir = ../foo`` is not
+allowed. The path resolver code will automatically strip out the ``../`` part.
+
+When refering to objects (functions, classes, etc), Python name in dotted path
+format is used (e.g., ``hooks.on_initialize``). These names are resolved
+relative to the component's package (the package is prefixed to the name before
+importing). Multiple dots will be treated as a single dot, and any leading dots
+will be stripped.
+
+Options with mutiple values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some options allow one or more values. For a single value we write::
+
+    option = value
+
+For multiple values, we use a slightly different format::
+
+    option =
+        value 1
+        value 2
+
+Remember to add a newline before the first value and indent all lines until the
+next option. Each line is treated as a separate value.
+
+Databases
+---------
+
+Components can use one or more databases. Use of a database is completely
+optional, and components that do not specify any databases will not have them.
+
+There are two configuration options that are used for configuring databases::
+
+    [exports]
+
+    databases = mycomponent
+
+    migrations = migrations.package
+
+If a components wants to use a database, the first option is required. The
+``databases`` option can be used to specify one or more database that the
+component wants to use.
+
+The ``migrations`` option is used to point to a Python package that contains
+database migrations. This option is optional, and the default value is
+``migrations``. The package names are resolved relative to the component's
+package name. The package must contain subpackages that match the database
+name(s).
+
+For more information on working with databases, see
+:doc:`working_with_databases`.
+
+.. warning::
+    Try to pick a database name that will be reasonably unique across
+    components.
+
+Templates
+---------
+
+By default, templates used in a component are looked for in a directory called
+'views', located inside the component's package directory. This can be changed
+by specifying one or more alternative locations. For example::
+
+    [exports]
+
+    templats = templates
+
+It is important to remember that templates are resolved relative to template
+driectories, regardless of how many leves of hierarchy there is between the
+package directory and the template directory.
+
+To illustrate template resolution, let's take a look at a concrete example.
+Let's say the directory layout is as follows::
+
+    package/
+        templates/
+            foo/
+                foo1.tpl
+                foo2.tpl
+            bar/
+                baz/
+                    baz1.tpl
+                    baz2.tpl
+                bar1.tpl
+                bar2.tpl
+
+If we used the second configuration from the examples above, and we ask for a
+template named 'foo1', it will be found at 'templates/foo/foo1.tpl'. If we ask
+for 'foo/foo1', it will not be found, because neither 'foo' or 'bar'
+directories have a subdirectory called 'foo'. Asking for 'baz/baz1' will match
+'templates/bar/baz/baz1'.
+
+If we used the first configuration, 'foo1' would fail to resolve, while
+'foo/foo1' would work.
+
+For more information on working with templates, see
+:doc:`working_with_templates`.
+
+.. warning::
+    Try to make template names unique, as templates may step on each other. If
+    two components define templates that are named the same, they will override
+    each other in unpredictable ways.
+
+Static assets
+-------------
+
+Before we talk about configuration options for static assets, we must
+understand that there are two kinds of static assets. We differentiate between
+*source assets* and *bundles*. 
+
+Source assets are files that are found inside the static assets directory,
+while bundles are collections of source assets that are bundled (concatenated)
+together to form the final timestamped file that will be used in the templates.
+Furthermore, bundles are generated on the fly, and only the source files are
+required to be present in the source tree.
+
+Options related to static assets are used to specify the directory where the
+source files are kept, and enumerate the JavaScript and CSS bundles that your
+component needs.
+
+By default, the source assets are looked up in ``static`` directory within the
+package directory. To change this behavior, we can use the ``static_dir``
+option. ::
+
+    [exports]
+
+    static_dir = assets
+
+.. note::
+    The static directory is expected to contain 'js' and 'css' subdirectories.
+    There is currently no way to change this.
+
+Bundles are defined using two options::
+
+    [exports]
+
+    js_bundles =
+        article: autoscroll, comment
+        summary: autoscroll, imagebox
+
+    css_bundles =
+        article: article_layout
+        summary: summary_layout
+
+This confiuration creates two JavaScript bundles, and two CSS bundles. The
+JavaScript bundle 'article' contains concatenated and minified sources of
+'static/js/autoscroll.js' and 'static/js/comment.js'. As you can see, the
+static assets directory and 'js/' subdirectory are automatically added to the
+name, as is the '.js' extension.
+
+For more information on working with templates, see
+:doc:`working_with_static_assets`.
+
+.. warning::
+    Note that using bundle names that are defined in other components will
+    cause the bundles to be merged and the source assets from those bundles
+    will be concatenated in the order the components themselves are registered.
+
+Hooks
+-----
+
+Hooks are functions that are executed for events. In context of component
+exports, these events are system events emitted by the supervisor.
+
+Every function that is going to be used as a hook must be decorated with a
+:py:func:`~librarian.core.exports.hook` decorator. ::
+
+    from librarian.core.exports import hook
+
+    @hook('initialize')
+    def on_initialize(supervisor):
+        # do something when component is initializing...
+
+The valid values for the hook decorator are:
+
+- 'initialize': Component is initializing
+- 'component_member_loaded': Component finished loading
+- 'init_complete': All components finished loading
+- 'pre_start': Server is about to start
+- 'post_start': Server has started
+- 'background': New background loop cycle
+- 'shutdown': Server is about to go down
+- 'immediate_shutdown': Server is about to go down in an emergency
+
+Of these, actually useful ones are probably 'initialize',
+'component_member_loaded', 'init_complete', and 'background'. The 'background'
+even is interesting in particular, as it allows the component to repeatedly
+execute code on an interval. More information on event handling and supervisor
+hooks can be found in :doc:`event_system`.
+
+Once we have the decorated functions, we can list them in the configuration
+file using the ``hooks`` option::
+
+    [exports]
+
+    hooks = hooks.on_initialize
+
+In this case, we have an ``on_initialize`` function in a ``hooks`` module.
+
+Plugins
+-------
+
+Plugins are classes and functions that follow the `Bottle's plugin API
+<http://bottlepy.org/docs/dev/plugindev.html>`_. Just like middleware, plugins
+are applied in order like an onion skin. The last plugin that is registered is
+applied first, and the first plugin registered will be applied last. The
+request is intercepted by the last (outermost) plugin, and is passed through
+down the chain to the innermost plugin, which hands it over to the actual
+request handler. ::
+
+    plugins:        p1   p2   p3   p4   |
+                    |    |    |    |    |
+    reuqest  --->---+----+----+----+----+--\
+                    |    |    |    |    |  |  request handler
+    response ---<---+----+----+----+----+--/
+                    |    |    |    |    |
+
+The above diagram graphically shows the way plugin code is executed. In terms
+of Python code, you can think of it has having multiple decorators applied to
+the handler function, where the first plugin that is registered is the first
+decorator::
+
+    @plugin1
+    @plugin2
+    @plugin3
+    @plugin4
+    def handler():
+        pass
+
+Because of the way plugins work, the order in which they are reigstered becomes
+import. Plugin registration, therefore, supports dependecy delcration.
+
+.. note::
+    Dependency/dependents declaration is completely optional. It is only needed
+    if order matters. If you are reasonably sure that it does not matter where
+    in the stack your plugin is executed, you may skip to the end of this
+    subsection.
+
+Plugins can declare dependencies on each other using
+:py:func:`~librarian.core.exports.depends_on` and
+:py:func:`~librarian.core.exports.requried_by` decorators. For semantic
+clarity, these two decorators have aliases, which are
+:py:func:`~librarian.core.exports.after` and
+:py:func:`~librarian.core.exports.before`, respectively. 
+
+Alternatively, plugins may have :py:attr:`depends_on` and
+:py:attr:`required_by` attributes (if, for example, your plugin is a class).
+These attributes are the equivalent to
+:py:func:`~librarian.core.exports.depends_on` and
+:py:func:`~librarian.core.exports.requried_by` decorators, respectively.
+
+Here are a few examples::
+
+    import functools
+
+    from librarian.core.exports import *
+
+    
+    @depend_on('foo')
+    def my_plugin(handler):
+        ....
+    my_plugin.name = 'myawesomeplugin'
+
+    @before(['bar', 'baz'])
+    def my_other_plugin(handler):
+        ....
+    my_other_plugin.name = 'myfantasticplugin'
+
+
+    class MyPlugin(object):
+        name = 'myexcuisiteplugin'
+        api = 2
+        dependencies = ['foo', 'bar']
+        dependents = 'baz'
+
+        def __call__(self, handler):
+            ....
+
+Note that each plugin has a ``name`` attribute. This name is used to identify
+the plugin, and this is the name that is used to refer to other plugins in the
+dependency/dependents declaration decorators and attributes. Also note that the
+depdency/dependents declaration can be a single string, or a list of strings.
+
+Once we have our plugins with dependencies we enumerate them in the exports::
+
+    [exports]
+
+    plugins = plugins.my_plugin
+
+We can specify one or more plugins in the ``plugins`` option.
+
+The values are names of the plugin functions or classes in dotted path format
+(e.g., what we would use in an import), and are resolved with component's
+package name prepended. In the example, we have a ``my_plugin`` function in the
+``plugins`` module. The ``plugins`` module itself is expected to be found in
+the component package.
+
+For a complete list of plugins that are used in Librarian, please refer to
+:doc:`list_of_librarian_plugins`.
+
+WSGI middleware
+---------------
+
+WSGI middleware follow the same rules as plugins. Unlike plugins, though, WSGI
+middleware do not have a ``name`` attribue, and are referred to by their full
+module path (e.g., ``librarian.core.i18n.I18NMiddleware``).
+
+Declaring in the configuration is done using the ``middleware`` option, listing
+one or more names of the middleware classes::
+
+    [export]
+
+    middleware = 
+        middleware.HeroicMiddleware
+        middleware.FantasticMiddleware
+
+Route handlers
+--------------
+
+When it comes to route handlers, there are two things to keep in mind.
+
+- Librarian uses class-based route handlers wich have their own registration
+  methods and properties
+- routes may be subject to dependency resolution just like plugins and
+  middleware
+
+For more information on class-based route handlers, see
+:doc:`handling_requests`.
+
+Dependencies are declared by adding :py:attr:`depends_on` and
+:py:attr:`required_by` attributes to the route class. These attributes can
+refer to one or more route names. The route names are defined on the classes.
+
+.. note::
+    The dependency and dependents declarations only determine the order in
+    which route handlers are *registered* and not the order in which they are
+    *matched*. The latter is determined by the path pattern and Bottle's
+    routing algorithm.
+
+Here is an example::
+
+    from streamline import RouteBase
+
+
+    class MyRoute(RouteBase):
+        name = 'mycomponent:myroute'
+        depends_on = 'files:list'
+
+The above example declares ``MyRoute``'s dependency on ``'files:list'``.
+
+To declare route handlers and have them registered, we use the ``routes``
+option in the exports. One or more names of the route handler classes can be
+used::
+
+    [exports]
+
+    routes =
+        routes.MyRoute
+        routes.YourRoute
+
+.. warning::
+    Be careful about how you name the routes. Names are not guaranteed to be
+    unique across the entirety of Librarian and any external components.
+
+Command line argument handlers
+------------------------------
+
+TODO

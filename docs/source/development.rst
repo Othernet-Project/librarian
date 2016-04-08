@@ -46,3 +46,4 @@ Topics covered:
     database_access
     static_assets
     external_librarian_components
+    components_exports
