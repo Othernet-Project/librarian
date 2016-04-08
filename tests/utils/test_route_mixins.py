@@ -94,7 +94,7 @@ def test_redirect_route_mixin_get_default_context(get_next_path):
 
 @mock.patch.object(mod, 'i18n_path')
 @mock.patch.object(mod.RedirectRouteMixin, 'get_next_path')
-def test_redirect_route_mixin_get_redirect_url(get_next_path, i18n_path):
+def test_redirect_route_mixin_get_next_url(get_next_path, i18n_path):
     i18n_path.return_value = '/en/some/path/'
 
     class TestRoute(mod.RedirectRouteMixin, MockedRouteBase):
@@ -102,13 +102,13 @@ def test_redirect_route_mixin_get_redirect_url(get_next_path, i18n_path):
 
     inst = TestRoute()
     inst.request.url = 'http://localhost/'
-    assert inst.get_redirect_url() == 'http://localhost/en/some/path/'
+    assert inst.get_next_url() == 'http://localhost/en/some/path/'
     assert inst.get_next_path.called
     i18n_path.assert_called_with(get_next_path.return_value)
 
 
-@mock.patch.object(mod.RedirectRouteMixin, 'get_redirect_url')
-def test_redirect_route_mixin_perform_redirect_default(get_redirect_url):
+@mock.patch.object(mod.RedirectRouteMixin, 'get_next_url')
+def test_redirect_route_mixin_perform_redirect_default(get_next_url):
 
     class TestRoute(mod.RedirectRouteMixin, MockedRouteBase):
         pass
@@ -117,12 +117,12 @@ def test_redirect_route_mixin_perform_redirect_default(get_redirect_url):
 
     inst.perform_redirect()
     inst.response.set_header.assert_called_with('Location',
-                                                get_redirect_url.return_value)
+                                                get_next_url.return_value)
     assert inst.response.status == 303
 
 
-@mock.patch.object(mod.RedirectRouteMixin, 'get_redirect_url')
-def test_redirect_route_mixin_perform_redirect_custom(get_redirect_url):
+@mock.patch.object(mod.RedirectRouteMixin, 'get_next_url')
+def test_redirect_route_mixin_perform_redirect_custom(get_next_url):
 
     class TestRoute(mod.RedirectRouteMixin, MockedRouteBase):
         pass

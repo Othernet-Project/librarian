@@ -24,15 +24,15 @@ class RedirectRouteMixin(object):
         return self.request.params.get(self.next_url_parameter_name,
                                        self.default_next_path)
 
+    def get_next_url(self):
+        next_path = i18n_path(self.get_next_path())
+        return urlparse.urljoin(self.request.url, next_path)
+
     def get_default_context(self):
         ctx = super(RedirectRouteMixin, self).get_default_context()
         ctx[self.next_context_parameter_name] = self.get_next_path()
         return ctx
 
-    def get_redirect_url(self):
-        next_path = i18n_path(self.get_next_path())
-        return urlparse.urljoin(self.request.url, next_path)
-
     def perform_redirect(self, url=None, status=303):
-        self.response.set_header('Location', url or self.get_redirect_url())
+        self.response.set_header('Location', url or self.get_next_url())
         self.response.status = status
