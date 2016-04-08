@@ -107,6 +107,18 @@ def test_redirect_route_mixin_get_next_url(get_next_path, i18n_path):
     i18n_path.assert_called_with(get_next_path.return_value)
 
 
+@mock.patch.object(mod.RedirectRouteMixin, 'get_next_path')
+def test_redirect_route_mixin_add_next_parameter(get_next_path):
+    get_next_path.return_value = '/next/path/'
+
+    class TestRoute(mod.RedirectRouteMixin, MockedRouteBase):
+        pass
+
+    inst = TestRoute()
+    exp = '/main/route/?next=/next/path/'
+    assert inst.add_next_parameter('/main/route/') == exp
+
+
 @mock.patch.object(mod.RedirectRouteMixin, 'get_next_url')
 def test_redirect_route_mixin_perform_redirect_default(get_next_url):
 
