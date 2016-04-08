@@ -15,7 +15,7 @@ def routes(config):
     error(503)(system.error_503)
     auth.Login.route('/login/', app=exts.bottle_app)
     auth.Logout.route('/logout/', app=exts.bottle_app)
-    auth.ResetPassword.route('/reset-password/', app=exts.bottle_app)
+    auth.PasswordReset.route('/reset-password/', app=exts.bottle_app)
     route_config = (
         ('emergency:reset_form', emergency_reset.show_emergency_reset_form,
          'GET', '/emergency/', {'skip': ['sessions']}),

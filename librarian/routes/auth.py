@@ -37,10 +37,10 @@ class Logout(RedirectRouteMixin, RouteBase):
         return ''
 
 
-class ResetPassword(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
+class PasswordReset(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
     template_func = template
-    template_name = 'auth/reset_password'
-    partial_template_name = 'auth/_reset_password'
+    template_name = 'auth/password_reset'
+    partial_template_name = 'auth/_password_reset'
     form_factory = PasswordResetForm
 
     def form_valid(self):
