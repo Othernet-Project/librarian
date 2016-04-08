@@ -296,9 +296,6 @@ class MemberGroupBase(object):
     attribute. Additionally, the events extension is available as
     :py:attr:`events` attribute.
     """
-    #: String that identifies the member group.
-    type = None
-
     def __init__(self, supervisor):
         self.supervisor = supervisor
         self.events = self.supervisor.ext.events
@@ -336,6 +333,13 @@ class MemberGroupBase(object):
         Method called after installation is done.
         """
         pass
+
+    @property
+    def type(self):
+        """
+        Returns a string that identifies the member group.
+        """
+        return self.__class__.__name__.lower()
 
     def install(self):
         """
@@ -436,8 +440,6 @@ class Configuration(MemberList):
     """
     This class manages component-specific configuration.
     """
-    type = 'configuration'
-
     def collect(self, component):
         self.register(component)
 
@@ -453,8 +455,6 @@ def Commands(MemberList):
     """
     This class manages command argument handlers.
     """
-    type = 'commands'
-
     def __init__(self, supervisor):
         super(Commands, self).__init__(supervisor)
         self.parser = argparse.ArgumentParser()
@@ -508,8 +508,6 @@ class Databases(MemberList):
     """
     This class handles database members.
     """
-    type = 'databases'
-
     def __init__(self, supervisor):
         super(Databases, self).__init__(supervisor)
         exts = supervisor.exts
