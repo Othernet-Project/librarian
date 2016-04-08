@@ -101,7 +101,7 @@ def test_redirect_route_mixin_get_next_url(get_next_path, i18n_path):
         pass
 
     inst = TestRoute()
-    inst.request.url = 'http://localhost/'
+    inst.request.url = 'http://localhost/here/there/'
     assert inst.get_next_url() == 'http://localhost/en/some/path/'
     assert inst.get_next_path.called
     i18n_path.assert_called_with(get_next_path.return_value)
