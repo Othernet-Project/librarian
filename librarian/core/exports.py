@@ -483,8 +483,11 @@ def Commands(MemberList):
             logging.warn('Duplicate registration for command: {}'.format(name))
             return
         self.handlers[name] = handler
-        self.parser.add_argument(handler.flags, dest=handler.name,
-                                 *handler.args, **handler.kwargs)
+        kwargs = handler.kwargs.copy()
+        kwargs['dest'] = name
+        args = to_list(handler.flags)
+        args.extend(list(handler.args))
+        self.parser.add_argument(*args, **kwargs),
         for arg in handler.extra_args:
             self.parser.add_argument(**arg)
 
