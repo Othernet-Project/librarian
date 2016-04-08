@@ -432,3 +432,19 @@ class MemberDependencyList(MemberGroupBase):
         for name in ordered:
             yield self.registry[name]
 
+
+class Configuration(MemberList):
+    """
+    This class manages component-specific configuration.
+    """
+    type = 'configuration'
+
+    def collect(self, component):
+        self.register(component)
+
+    def install_member(self, component):
+        for k, v in component.config.items():
+            if k.startswith('exports.'):
+                # Omit exports from master configuration
+                continue
+            self.supervisor.config[k] = v
