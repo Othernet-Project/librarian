@@ -40,9 +40,19 @@ Component configuration file
 ----------------------------
 
 Each component has a configuration file. This confugration file is in .ini
-format.
+format. By default, the configuration files will be looked up in 'config.ini'
+inside the package. A different location can be specified in the package's
+``__init__`` module by adding a :py:data:`CONFIG` constant. For example::
 
-The component member exports are specified in the ``[exports]`` section.
+    # mycomponent/__init__.py
+    CONFIG = 'configs/mycomponent.ini'
+
+This path is relative to the package directory and follows the same rules as
+the paths declared elsewhere in the configuration file itself: cannot contain
+double-dots, cannot be an absolute path, and so on.
+
+The component member exports are specified in the ``[exports]`` section of the
+configuration file.
 
 In the following subsections, we will repeat the section header every time, but
 do keep in mind that all exports go under a single ``[exports]`` heading.
