@@ -200,7 +200,7 @@ class Component(object):
     def __init__(self, name):
         self.name = name
         self.pkg, self.pkgdir = import_package(name)
-        self.config_path = getattr(self.pkg, 'config', self.CONFIG_PATH)
+        self.config_path = getattr(self.pkg, 'CONFIG', self.CONFIG_PATH)
         self._config = None
 
     def pkgpath(self, relpath):
