@@ -7,6 +7,14 @@ class muter(object):
     """
     Iterator that can be mutated while being iterated over.
 
+    The :py:class:`muter` objects support ``len()``, but not ``reversed(d)``.
+    Membership test with ``in`` operator is also supported.
+
+    The ``len()`` call to a :py:class:`muter` object is stable during iteration
+    (always returns the *current* length of the iterator, including items that
+    have already been iterated over). The number of remaining elements can be
+    obtained by accessing the :py:attr:`~muter.remaining` attribute.
+
     Example::
 
         >>> more_items = iter([4, 5, 6])
@@ -26,11 +34,27 @@ class muter(object):
         >>> m.reset()
         >>> list(m)
         [1, 2, 3, 4, 5, 6]
+        >>> list(m)
+        []
+        >>> len(m)
+        6
+        >>> m.reset()
+        >>> for i in m:
+        ...    print(m.remaining)
+        ...
+        5
+        4
+        3
+        2
+        1
 
     """
     def __init__(self, iter=[]):
-        self._iter = deque(iter)
-        self._past = deque()
+        self._iter = deque(iter)  # items to iterate over
+        self._past = deque()      # items that have been iterated over
+
+    def __len__(self):
+        return len(self._iter) + len(self._past)
 
     def reset(self):
         """
@@ -39,6 +63,10 @@ class muter(object):
         self._past.extend(self._iter)
         self._iter = self._past
         self._past = deque()
+
+    @property
+    def remaining(self):
+        return len(self._iter)
 
     def append(self, element):
         """

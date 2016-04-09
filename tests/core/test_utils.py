@@ -71,3 +71,27 @@ def test_append_during_iter_for_loop():
         appender(m)
         out.append(i)
     assert out == [1, 2, 3, 4, 5, 6]
+
+
+def test_inclusion_test():
+    m = mod.muter([1, 2, 3])
+    assert 1 in m
+    assert 2 in m
+    assert 5 not in m
+
+
+def test_len():
+    m = mod.muter([1, 2, 3])
+    assert len(m) == 3
+    m.append(4)
+    assert len(m) == 4
+    m.next()
+    assert len(m) == 4
+
+
+def test_remaining():
+    m = mod.muter([1, 2, 3])
+    out = []
+    for i in m:
+        out.append(m.remaining)
+    assert out == [2, 1, 0]
