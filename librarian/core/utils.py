@@ -19,10 +19,11 @@ class muter(object):
     The :py:class:`muter` objects support ``len()``, but not ``reversed(d)``.
     Membership test with ``in`` operator is also supported.
 
-    The ``len()`` call to a :py:class:`muter` object is stable during iteration
-    (always returns the *current* length of the iterator, including items that
-    have already been iterated over). The number of remaining elements can be
-    obtained by accessing the :py:attr:`~muter.remaining` attribute.
+    The ``len()`` call to a :py:class:`muter` object is unstable during
+    iteration (always returns the *current* length of the iterator, including
+    items that have already been iterated over). The number of remaining
+    elements can be obtained by accessing the :py:attr:`~muter.remaining`
+    attribute.
 
     The :py:class:`muter` objects have a :py:meth:`~muter.reset` method. This
     method resets (rewinds) the iterator to the the starting position. The
