@@ -213,7 +213,7 @@ class Component(object):
             return default
 
 
-class CollectorBase(object):
+class Collector(object):
     """
     This is the base class for member group collectors. This class defines two
     stub methods that must be implemented in all subclasses.
@@ -308,7 +308,7 @@ class CollectorBase(object):
         self.events.publish(MEMBER_GROUP_INSTALLED, group_type=self.type)
 
 
-class ListCollector(CollectorBase):
+class ListCollector(Collector):
     """
     Base collector that provides interfaces for component member registration
     without dependency resolution.
@@ -333,7 +333,7 @@ class ListCollector(CollectorBase):
             yield obj
 
 
-class DependencyCollector(CollectorBase):
+class DependencyCollector(Collector):
     """
     Base collector that provides intrerfaces for component member registration
     with dependency resolution.
@@ -384,7 +384,7 @@ class DependencyCollector(CollectorBase):
 class Collectors(ListCollector):
     """
     This class handles member group collector exports. The member group
-    collectors should be :py:class:`CollectorBase` subclasses that manage
+    collectors should be :py:class:`Collector` subclasses that manage
     individual groups.
     """
     def collect(self, component):
