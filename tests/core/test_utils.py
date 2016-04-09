@@ -11,6 +11,27 @@ from librarian.core import utils as mod
 MOD = mod.__name__
 
 
+@pytest.mark.parametrize('val,out', [
+    ('', ['']),
+    (None, []),
+    ('foo', ['foo']),
+    (['foo', 'bar'], ['foo', 'bar']),
+    (('foo', 'bar'), [('foo', 'bar')]),
+])
+def test_to_list(val, out):
+    assert mod.to_list(val) == out
+
+
+@pytest.mark.parametrize('obj,name,res', [
+    ('foo', 'join', True),
+    ('foo', 'bogus', False),
+    (1, 'conjugate', True),
+    (1, 'numerator', False),  # <-- not callable
+])
+def test_hasmethod(obj, name, res):
+    assert mod.hasmethod(obj, name) == res
+
+
 def test_muter_basic_iteration():
     m = mod.muter([1, 2, 3])
     out = []

@@ -3,6 +3,25 @@ from collections import deque
 from .contrib.databases.utils import *  # NOQA
 
 
+def to_list(val):
+    """
+    Return lists as is, and wrap any other type into a list containing the
+    input value. If value is ``None``, then return an empty list.
+    """
+    if val is None:
+        return []
+    if type(val) is list:
+        return val
+    return [val]
+
+
+def hasmethod(obj, name):
+    """
+    Returns ``True`` if object has a callable attribute ``name``.
+    """
+    return hasattr(getattr(obj, name, None), '__call__')
+
+
 class muter(object):
     """
     Iterator that can be mutated while being iterated over.
