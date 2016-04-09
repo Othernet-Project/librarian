@@ -239,16 +239,8 @@ Every function that is going to be used as a hook must be decorated with a
     def on_initialize(supervisor):
         # do something when component is initializing...
 
-The valid values for the hook decorator are:
-
-- 'pre_start': Server is about to start
-- 'post_start': Server has started
-- 'background': New background loop cycle
-- 'shutdown': Server is about to go down
-- 'immediate_shutdown': Server is about to go down in an emergency
-- 'exp.collected': Component exports of some type were collected
-- 'exp.installed': Component exports of some type were installed
-- 'exp.finished': All components have been processed
+Any of the system and custom events can be used. For the full list of events
+and their meaing, see :doc:`list_of_system_events`.
 
 Of these, actually useful ones are probably 'initialize',
 'component_member_loaded', 'init_complete', and 'background'. The 'background'
