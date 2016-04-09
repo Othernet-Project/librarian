@@ -6,6 +6,27 @@ from .contrib.databases.utils import *  # NOQA
 class muter(object):
     """
     Iterator that can be mutated while being iterated over.
+
+    Example::
+
+        >>> more_items = iter([4, 5, 6])
+        >>> def appender(obj):
+        ...    for i in more_items:
+        ...        obj.append(i)
+        ...
+        >>> m = muter([1, 2, 3])
+        >>> out = []
+        >>> for i in m:
+        ...    appender(m)
+        ...    out.append(i)
+        >>> out
+        [1, 2, 3, 4, 5, 6]
+        >>> list(m)
+        []
+        >>> m.reset()
+        >>> list(m)
+        [1, 2, 3, 4, 5, 6]
+
     """
     def __init__(self, iter=[]):
         self._iter = deque(iter)
