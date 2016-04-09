@@ -5,8 +5,12 @@ from ..exports import DependencyCollector
 
 class Plugins(DependencyCollector):
     """
-    This collector collects Bottle plugins.
+    This collector collects Bottle plugins. All plugins are installed in
+    reverse order. This ensures that the last-installed plugin is invoked first
+    when handling requests.
     """
+    reverse_order = True
+
     def collect(self, component):
         plugins = component.get_export('plugins', [])
         for p in plugins:
