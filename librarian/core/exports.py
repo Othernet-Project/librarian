@@ -42,6 +42,9 @@ MEMBER_GROUP_COLLECTED = 'exp.collected'
 #: Event name used to signal that a member group has finished installing
 MEMBER_GROUP_INSTALLED = 'exp.installed'
 
+#: Event named used to signal the end of exports processing
+EXPORTS_FINISHED = 'exp.finished'
+
 
 # DECORATORS
 
@@ -463,7 +466,9 @@ class Exports(object):
 
     def process_components(self):
         """
-        Collect and install all component exports.
+        Collect and install all component exports. The
+        :py:data:`EXPORTS_FINISHED` event is fired when all components have
+        been processed.
         """
         self.collectors.reset()
         for collector in self.collectors():
@@ -472,3 +477,4 @@ class Exports(object):
             # something wrong with the Collector implementation.
             collector.collectall(self.components)
             collector.install()
+        self.supervisor.ext.events.publish(EXPORTS_FINISHED)
