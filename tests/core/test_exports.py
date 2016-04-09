@@ -179,6 +179,26 @@ def test_registry_with_no_dependencies():
     assert list(r.get_ordered_members()) == [foo, bar, baz]
 
 
+def test_registry_with_reverse_ordering():
+    def foo():
+        pass
+    foo.name = 'foo'
+
+    def bar():
+        pass
+    bar.name = 'bar'
+
+    def baz():
+        pass
+    baz.name = 'baz'
+
+    r = mod.DependencyCollector(mock.Mock())
+    r.reverse_order = True
+    r.register(foo)
+    r.register(bar)
+    r.register(baz)
+    assert list(r.get_ordered_members()) == [baz, bar, foo]
+
 # COLLECTORS COLLECTOR
 
 

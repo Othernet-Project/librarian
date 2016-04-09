@@ -227,6 +227,9 @@ class Collector(object):
     :py:class:`ListCollector` and :py:class:`DepenencyCollector` classes,
     though this class is a perfectly valid base for collectors.
     """
+    #: Whether component order should be reversed before installation
+    reverse_order = False
+
     def __init__(self, supervisor):
         self.supervisor = supervisor
         self.events = self.supervisor.ext.events
@@ -329,7 +332,10 @@ class ListCollector(Collector):
         """
         Generator that yields objects in the order they were registered in.
         """
-        for obj in self.registry:
+        ordered = self.registry
+        if self.reverse_order:
+            ordered = reversed(ordered)
+        for obj in ordered:
             yield obj
 
 
@@ -377,6 +383,8 @@ class DependencyCollector(Collector):
         dependencies.
         """
         ordered = self.resolver.solve()
+        if self.reverse_order:
+            ordered = reversed(ordered)
         for name in ordered:
             yield self.registry[name]
 
