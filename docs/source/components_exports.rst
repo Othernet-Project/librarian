@@ -482,3 +482,10 @@ The option accepts one or more names of the function objects.
     Command names have to be unique across all commands in the commands member
     group. If a command has the same name as another command, it will not be
     used.
+
+Further reading
+---------------
+
+All of the exported component members are collected by collectors. If you wish
+to find out more about the collector API and writing your own collectors, see
+:doc:`writing_component_member_collectors`.
