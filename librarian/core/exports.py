@@ -13,16 +13,13 @@ import os
 import re
 import sys
 import logging
-import argparse
 import functools
 import importlib
+import collections
 from os.path import join
 
 from confloader import ConfDict
 from disentangler import Disentangler
-from squery_pg.squery_pg import DatabaseContainer, Database, migrate
-
-from .contrib.assets import Assets as AssetsMgr
 
 
 try:
@@ -36,9 +33,6 @@ except NameError:
 
 #: Event name used to signal that a member group has finished installing
 MEMBER_GROUP_INSTALLED = 'exp.installed'
-
-#: Event name used to signal that a database is ready
-DATABASE_READY = 'exp.dbready'
 
 
 # OTHER CONSTANTS
@@ -166,7 +160,7 @@ def fully_qualified_name(pkg, name):
     Example::
 
         >>> import foo.bar
-        >>> MemberGroupBase.fully_qualified_name(foo.bar, 'baz')
+        >>> CollectorBase.fully_qualified_name(foo.bar, 'baz')
         'foo.bar.baz'
 
     """
@@ -228,7 +222,7 @@ class Component(object):
     def __init__(self, name):
         self.name = name
         self.pkg, self.pkgdir = import_package(name)
-        self.config_path = getattr(self.pkg, 'CONFIG', self.CONFIG_PATH)
+        self._config_path = getattr(self.pkg, 'CONFIG', self.CONFIG_PATH)
         self._config = None
 
     def pkgpath(self, relpath, noerror=False):
@@ -264,7 +258,7 @@ class Component(object):
         """
         Path of the configuration file.
         """
-        return self.pkgpath(self.config_path)
+        return self.pkgpath(self._config_path)
 
     @property
     def config(self):
@@ -291,15 +285,19 @@ class Component(object):
             return default
 
 
-class MemberGroupBase(object):
+class CollectorBase(object):
     """
-    This class defines two stub methods that must be implemented in all
-    subclasses.
+    This is the base class for member group collectors. This class defines two
+    stub methods that must be implemented in all subclasses.
 
     All member group classes are instantiated with a supervisor instance. The
     supervisor instance is available through the :py:attr:`supervisor`
     attribute. Additionally, the events extension is available as
     :py:attr:`events` attribute.
+
+    The subclasses should be based on one of the more concrete
+    :py:class:`ListCollector` and :py:class:`DepenencyCollector` classes,
+    though this class is a perfectly valid base for collectors.
     """
     def __init__(self, supervisor):
         self.supervisor = supervisor
@@ -348,9 +346,8 @@ class MemberGroupBase(object):
 
     def install(self):
         """
-        Called by the supervior to install all component members from this
-        group. After installing is finished, a
-        :py:data:`MEMBER_GROUP_INSTALLED` event is fired.
+        Install all component members from this group. After installing is
+        finished, a :py:data:`MEMBER_GROUP_INSTALLED` event is fired.
         """
         self.pre_install()
         for member in self.get_ordered_members():
@@ -360,20 +357,18 @@ class MemberGroupBase(object):
                 logging.exception(
                     'Error while installing {} member: {}'.format(
                         self.type, member))
-        self.events.publish(MEMBER_GROUP_INSTALLED, group_type=self.type)
         self.post_install()
+        self.events.publish(MEMBER_GROUP_INSTALLED, group_type=self.type)
 
 
-class MemberList(MemberGroupBase):
+class ListCollector(CollectorBase):
     """
-    Base member list provides interfaces for component member registration
-    without dependency resolution. The concrete member lists should implement
-    :py:meth:`~Memberlist.install` and :py:meth:`~MemberList.collect methods
-    only.
+    Base collector that provides interfaces for component member registration
+    without dependency resolution.
     """
 
     def __init__(self, supervisor):
-        super(MemberList, self).__init__(supervisor)
+        super(ListCollector, self).__init__(supervisor)
         self.registry = []
 
     def register(self, obj):
@@ -391,19 +386,17 @@ class MemberList(MemberGroupBase):
             yield obj
 
 
-class MemberDependencyList(MemberGroupBase):
+class DependencyCollector(CollectorBase):
     """
-    Base registry class that provides intrerfaces for component member
-    registration and dependency resolution. The concrete member registries
-    should implement the :py:meth:`~MemberDependencyList.install` and
-    :py:meth:`~MemberDependencyList.collect` methods only.
+    Base collector that provides intrerfaces for component member registration
+    with dependency resolution.
     """
 
     #: Exception raised when dependency is not resolvable.
     UnresolvableDependency = Disentangler.UnresolvableDependency
 
     def __init__(self, supervisor):
-        super(MemberDependencyList, self).__init__(supervisor)
+        super(DependencyCollector, self).__init__(supervisor)
         self.registry = {}
         self.resolver = Disentangler.new()
 
@@ -441,166 +434,75 @@ class MemberDependencyList(MemberGroupBase):
             yield self.registry[name]
 
 
-class Configuration(MemberList):
+class Collectors(ListCollector):
     """
-    This class manages component-specific configuration.
+    This class handles member group collector exports. The member group
+    collectors should be :py:class:`CollectorBase` subclasses that manage
+    individual groups.
     """
     def collect(self, component):
-        self.register(component)
-
-    def install_member(self, component):
-        for k, v in component.config.items():
-            if k.startswith('exports.'):
-                # Omit exports from master configuration
-                continue
-            self.supervisor.config[k] = v
-
-
-def Commands(MemberList):
-    """
-    This class manages command argument handlers.
-    """
-    def __init__(self, supervisor):
-        super(Commands, self).__init__(supervisor)
-        self.parser = argparse.ArgumentParser()
-        self.handlers = {}
-
-    def collect(self, component):
-        commands = component.get_export('commands', [])
-        for command in commands:
+        collectors = component.get_export('collectors', [])
+        for collector in collectors:
             try:
-                handler = component.get_object(command)
+                collector = component.get_object(collector)
             except ImportError:
-                logging.error('Could not load handler {} for component '
-                              '{}'.format(command, component.name))
+                logging.exception('Could not import collector')
                 continue
-            if not hasattr(handler, 'name'):
-                logging.error('Invalid handler {} for component {}'.format(
-                    command, component.name))
-                continue
-            handler.component = component.name
-            self.register(handler)
+            self.register(collector)
 
-    def install_member(self, handler):
-        name = handler.name
-        if name in self.handlers:
-            logging.warn('Duplicate registration for command: {}'.format(name))
-            return
-        self.handlers[name] = handler
-        # Build add_argument() args.
-        kwargs = handler.kwargs.copy()
-        kwargs['dest'] = name
-        # Ensure flags are positional arguments and are a list
-        args = to_list(handler.flags)
-        self.parser.add_argument(*args, **kwargs),
-        for arg in handler.extra_args:
-            arg = arg.copy()
-            # Flags should be positional args, so we have to remove from the
-            # kwargs and process them a bit.
-            flags = arg.pop('flags', [])
-            flags = to_list(flags)
-            self.parser.add_argument(*flags, **arg)
-
-    def post_install(self):
-        args = self.parser.parse_args()
-        arglist = list(vars(args).keys())
-        for name, handler in self.handlers:
-            if name in arglist:
-                handler(args)
+    def install_member(self, collector):
+        self.supervisor.exports.add_collector(collector)
 
 
-class Databases(MemberList):
+class Exports(object):
     """
-    This class handles database members.
+    This class manages the exports collection process. It also provides an API
+    for extending the collector list with arbitrary user-specified component
+    member group collectors.
     """
+    #: List of default collectors
+    DEFAULT_COLLECTORS = [Collectors]
+
+    #: Name of the configuration key that has the components list
+    COMPONENTS_CONF = 'app.components'
+
     def __init__(self, supervisor):
-        super(Databases, self).__init__(supervisor)
-        exts = supervisor.exts
-        self.databases = exts.databases = DatabaseContainer({})
-        self.host = exts.config['database.host']
-        self.port = exts.config['database.port']
-        self.user = exts.config['database.user']
-        self.password = exts.config['database.password']
-        self.debug = True  # FIXME: get the value from a sane location
+        self.member_groups = []
+        self.supervisor = supervisor
+        self.components = self.get_components()
+        self.init_collector_list()
 
-    def get_connection(self, dbname):
+    def init_collector_list(self):
         """
-        Get a connection object for a given database.
+        Initialize a new collector list.
         """
-        return Database.connect(dataase=dbname, host=self.host, port=self.port,
-                                user=self.user, password=self.password,
-                                debug=self.debug)
+        self.collectors = collections.deque(self.DEFAULT_COLLECTORS)
 
-    def collect(self, component):
-        migrations = component.get_export('migrations', default='migrations')
-        databases = component.get_export('databases', default=[])
-        for dbname in databases:
-            migration_pkg = '{}.{}.{}'.format(component.name, migrations,
-                                              dbname)
-            self.register((dbname, migration_pkg, component.name))
-            logging.debug('Registered database {} for {}'.format(
-                dbname, component.name))
+    def get_components(self):
+        """
+        Return a list of components that should participate in the collection
+        process. The components are obtained from the key defined by the
+        :py:attr:`~Exports.COMPONENTS_CONF` attribute.
 
-    def install_member(self, database):
-        dbname, migrations_pkg, component_name = database
-        dbconn = self.get_connection(dbname)
-        dbconn.package_name = component_name
-        self.databases[dbname] = dbconn
-        migrate(dbconn, migrations_pkg, self.supervisor.config)
-        self.event.publish(DATABASE_READY, name=dbname, db=dbconn)
-        logging.info('Database {} installed for {}'.format(
-            dbname, component_name))
+        The component that owns the supervisor is always prepended to the list.
+        This component is obtained by accessing supervisor's
+        :py:attr:`ROOT_PKG` attribute.
+        """
+        # When getting the component list, we make a copy, so we don't mutate
+        # the original found in the configuration.
+        comps = self.supervisor.config.get(self.COMPONENTS_CONF, [])[:]
+        # Add the package in which supervisor is found as first component
+        comps.insert(0, self.supervisor.ROOT_PKG)
+        return comps
 
+    def add_collector(self, collector):
+        """
+        Add a collector class to the list of collectors.
+        """
+        self.collectors.append(collector)
 
-class Assets(MemberList):
-    """
-    This class manages component static assets.
-    """
-    def __init__(self, supervisor):
-        super(Assets, self).__init__(supervisor)
-        self.root = self.supervisor.config['root']
-        self.debug = self.supervisor.config['assets.debug']
-        self.url = self.supervisor.config['assets.url']
-        assets_dir = self.supervisor.config['assets.directory']
-        self.output = join(self.root, assets_dir)
-        self.assets = AssetsMgr(directory=self.output, url=self.url,
-                                debug=self.debug)
-        self.bundles = {'js': {}, 'css': {}}
-        self.sources = []
+    def collect(self):
+        pass
 
-    def collect(self, component):
-        assets_dir = component.get_export('static_dir', 'static')
-        jsdir = component.pkgpath(join(assets_dir, 'js'), noerror=True)
-        cssdir = component.pkgpath(join(assets_dir, 'css'), noerror=True)
-        jsbundles = component.get_export('js_bundles', [])
-        cssbundles = component.get_export('css_bundles', [])
-        self.register((jsdir, cssdir, jsbundles, cssbundles))
-
-    @staticmethod
-    def parse_bundle(bundle):
-        target, sources = bundle.split(':')
-        target.strip()
-        sources = [s.strip() for s in sources.split(',')]
-        return target, sources
-
-    def install_bundles(self, dir, bundles, bundle_type):
-        if not all([dir, bundles]):
-            return
-        self.sources.append(dir)
-        bundle_dict = self.bundles[bundle_type]
-        for target, sources in (self.parse_bundle(b) for b in bundles):
-            bundle_dict.set_default(target, [])
-            bundle_dict[target].extend(sources)
-
-    def install_member(self, assets):
-        jsdir, cssdir, jsbundles, cssbundles = assets
-        self.install_bundles(jsdir, jsbundles, 'js')
-        self.install_bundles(cssdir, cssbundles, 'css')
-
-    def post_install(self):
-        for d in self.sources:
-            self.assets.add_static_source(d)
-        for target, sources in self.bundles['js'].items():
-            self.assets.add_js_bundle(target, sources)
-        for target, sources in self.bundles['css'].items():
-            self.assets.add_css_bundle(target, sources)
+    def install(self):
+        pass

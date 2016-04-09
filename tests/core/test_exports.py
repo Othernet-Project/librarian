@@ -106,69 +106,6 @@ def test_fully_qualified_name(name, out):
     assert mod.fully_qualified_name(core, name) == out
 
 
-# MEMBER LISTS AND REGISTRIES
-
-
-def test_registry():
-    @mod.depends_on('bar')  # must come after bar
-    def foo():
-        pass
-    foo.name = 'foo'
-
-    def bar():
-        pass
-    bar.name = 'bar'
-
-    @mod.required_by('foo')  # must come before foo
-    def baz():
-        pass
-    baz.name = 'baz'
-
-    r = mod.MemberDependencyList(None)
-    r.register(foo)
-    r.register(bar)
-    r.register(baz)
-    assert list(r.get_ordered_members()) == [baz, bar, foo]
-
-
-def test_missing_dependency():
-    @mod.depends_on('bar')  # must come after bar
-    def foo():
-        pass
-    foo.name = 'foo'
-
-    @mod.required_by('baz')  # must come before foo
-    def bar():
-        pass
-    bar.name = 'bar'
-
-    r = mod.MemberDependencyList(None)
-    r.register(foo)
-    r.register(bar)
-    with pytest.raises(r.UnresolvableDependency):
-        list(r.get_ordered_members())
-
-
-def test_registry_with_no_dependencies():
-    def foo():
-        pass
-    foo.name = 'foo'
-
-    def bar():
-        pass
-    bar.name = 'bar'
-
-    def baz():
-        pass
-    baz.name = 'baz'
-
-    r = mod.MemberDependencyList(None)
-    r.register(foo)
-    r.register(bar)
-    r.register(baz)
-    assert list(r.get_ordered_members()) == [foo, bar, baz]
-
-
 # COMPONENT
 
 
@@ -224,3 +161,115 @@ def test_config_exports(config_path):
     config_path.return_value = os.path.join(TESTDIR, 'samples/config.ini')
     c = mod.Component('librarian')
     assert c.get_export('databases') == ['facets', 'files', 'notifications']
+
+
+# BASE COLLECTOR CLASSES
+
+
+def test_registry():
+    @mod.depends_on('bar')  # must come after bar
+    def foo():
+        pass
+    foo.name = 'foo'
+
+    def bar():
+        pass
+    bar.name = 'bar'
+
+    @mod.required_by('foo')  # must come before foo
+    def baz():
+        pass
+    baz.name = 'baz'
+
+    r = mod.DependencyCollector(mock.Mock())
+    r.register(foo)
+    r.register(bar)
+    r.register(baz)
+    assert list(r.get_ordered_members()) == [baz, bar, foo]
+
+
+def test_missing_dependency():
+    @mod.depends_on('bar')  # must come after bar
+    def foo():
+        pass
+    foo.name = 'foo'
+
+    @mod.required_by('baz')  # must come before foo
+    def bar():
+        pass
+    bar.name = 'bar'
+
+    r = mod.DependencyCollector(mock.Mock())
+    r.register(foo)
+    r.register(bar)
+    with pytest.raises(r.UnresolvableDependency):
+        list(r.get_ordered_members())
+
+
+def test_registry_with_no_dependencies():
+    def foo():
+        pass
+    foo.name = 'foo'
+
+    def bar():
+        pass
+    bar.name = 'bar'
+
+    def baz():
+        pass
+    baz.name = 'baz'
+
+    r = mod.DependencyCollector(mock.Mock())
+    r.register(foo)
+    r.register(bar)
+    r.register(baz)
+    assert list(r.get_ordered_members()) == [foo, bar, baz]
+
+
+# COLLECTORS COLLECTOR
+
+
+def test_collector_collection():
+    supervisor = mock.Mock()
+    component = mock.Mock()
+    component.get_export.return_value = ['foo.bar.baz']
+    collector = component.get_object.return_value
+    c = mod.Collectors(supervisor)
+    c.collect(component)
+    assert c.registry == [collector]
+
+
+def test_collector_importerror():
+    supervisor = mock.Mock()
+    component = mock.Mock()
+    component.get_export.return_value = ['foo.bar.baz']
+    component.get_object.side_effect = ImportError
+    c = mod.Collectors(supervisor)
+    c.collect(component)  # <-- no exception
+    assert c.registry == []
+
+
+def test_collector_install_member():
+    supervisor = mock.Mock()
+    component = mock.Mock()
+    component.get_export.return_value = ['foo.bar.baz']
+    collector = component.get_object.return_value
+    c = mod.Collectors(supervisor)
+    c.collect(component)
+    c.install()
+    supervisor.exports.add_collector.assert_called_once_with(collector)
+
+
+# EXPORTS CLASS
+
+
+def test_get_components():
+    supervisor = mock.Mock()
+    supervisor.ROOT_PKG = 'root'
+    supervisor.config = {'app.components': ['foo', 'bar', 'baz']}
+    e = mod.Exports(supervisor)
+    assert e.get_components() == ['root', 'foo', 'bar', 'baz']
+
+
+
+
