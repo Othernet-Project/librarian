@@ -461,12 +461,14 @@ class Exports(object):
         """
         self.collectors.append(collector)
 
-    def collect(self):
+    def process_components(self):
+        """
+        Collect and install all component exports.
+        """
         self.collectors.reset()
         for collector in self.collectors():
+            # It is assumed here that any exceptions will not bubble up to this
+            # level. If an exception somehow manages to bubble up here, there's
+            # something wrong with the Collector implementation.
             collector.collectall(self.components)
-
-    def install(self):
-        self.collectors.reset()
-        for collector in self.collectors():
             collector.install()
