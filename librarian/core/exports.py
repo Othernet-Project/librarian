@@ -311,6 +311,26 @@ class Collector(object):
         self.events.publish(MEMBER_GROUP_INSTALLED, group_type=self.type)
 
 
+class ObjectCollectorMixin(object):
+    """
+    Mixin for collectors that collect and register Python objects.
+    """
+    export_key = None
+
+    def collect(self, component):
+        member_list = component.get_export(self.export_key, [])
+        for name in member_list:
+            try:
+                obj = component.get_object(name)
+            except ImportError:
+                logging.exception(
+                    'Could not import member {} from {}'.format(
+                        name, component.name))
+                continue
+            else:
+                self.register(obj)
+
+
 class ListCollector(Collector):
     """
     Base collector that provides interfaces for component member registration

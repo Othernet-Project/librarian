@@ -199,6 +199,40 @@ def test_registry_with_reverse_ordering():
     r.register(baz)
     assert list(r.get_ordered_members()) == [baz, bar, foo]
 
+
+# OBJECT COLLECTION MIXIN
+
+
+def test_object_collect():
+    class MyCollector(mod.ObjectCollectorMixin):
+        def __init__(self):
+            self.collected = []
+
+        def register(self, obj):
+            self.collected.append(obj)
+    comp = mock.Mock()
+    comp.get_export.return_value = [1, 2, 3]
+    comp.get_object.side_effect = ('foo', 'bar', 'baz')
+    m = MyCollector()
+    m.collect(comp)
+    assert m.collected == ['foo', 'bar', 'baz']
+
+
+def test_object_collect_with_exception():
+    class MyCollector(mod.ObjectCollectorMixin):
+        def __init__(self):
+            self.collected = []
+
+        def register(self, obj):
+            self.collected.append(obj)
+    comp = mock.Mock()
+    comp.get_export.return_value = [1, 2, 3]
+    comp.get_object.side_effect = ('foo', ImportError, 'baz')
+    m = MyCollector()
+    m.collect(comp)
+    assert m.collected == ['foo', 'baz']
+
+
 # COLLECTORS COLLECTOR
 
 
