@@ -15,11 +15,12 @@ import sys
 import logging
 import functools
 import importlib
-import collections
 from os.path import join
 
 from confloader import ConfDict
 from disentangler import Disentangler
+
+from .utils import muter, to_list, hasmethod
 
 
 try:
@@ -30,6 +31,8 @@ except NameError:
 
 # EVENT NAMES
 
+#: Event name used to signal that a member group has been collected
+MEMBER_GROUP_COLLECTED = 'exp.collected'
 
 #: Event name used to signal that a member group has finished installing
 MEMBER_GROUP_INSTALLED = 'exp.installed'
@@ -48,17 +51,6 @@ DOUBLEDOT = (
 
 # Replacement pattern for Python name cleanup
 MULTIDOTS = re.compile(r'\.\.+')
-
-
-def to_list(val):
-    """
-    Make sure strings are lists containing the string.
-    """
-    if val is None:
-        return []
-    if type(val) in [bytes, unicode]:
-        return [val]
-    return val
 
 
 def _metadata(data, name):
@@ -303,6 +295,13 @@ class CollectorBase(object):
         self.supervisor = supervisor
         self.events = self.supervisor.ext.events
 
+    @property
+    def type(self):
+        """
+        Returns a string that identifies the member group.
+        """
+        return self.__class__.__name__.lower()
+
     def collect(self, component):
         """
         This method must be implemneted by a subclass. The caller must invoke
@@ -310,6 +309,25 @@ class CollectorBase(object):
         call the :py:meth:`register` method to register collected objects.
         """
         raise NotImplementedError('Subclass must implement this method')
+
+    def collectall(self, components):
+        """
+        Collect all components from the given list. The ``components`` argument
+        should be an iterable of :py:class:`Component` objects. The
+        :py:meth:`~Collector.collect` method is called on each object in the
+        iterable. Exceptions in the :py:meth:`~Collector.collect` method are
+        silenced and logged.
+
+        When collection is finished, a :py:data:`MEMBER_GROUP_COLLECTED` event
+        is fired.
+        """
+        for component in components:
+            try:
+                self.collect(component)
+            except Exception:
+                logging.exception('{} failed to collect {}'.format(
+                    self.type, component.name))
+        self.events.publish(MEMBER_GROUP_COLLECTED, group_type=self.type)
 
     def get_ordered_members(self):
         """
@@ -336,13 +354,6 @@ class CollectorBase(object):
         Method called after installation is done.
         """
         pass
-
-    @property
-    def type(self):
-        """
-        Returns a string that identifies the member group.
-        """
-        return self.__class__.__name__.lower()
 
     def install(self):
         """
@@ -448,6 +459,10 @@ class Collectors(ListCollector):
             except ImportError:
                 logging.exception('Could not import collector')
                 continue
+            hasmeth = functools.partial(hasmethod, collector)
+            if not all([hasmeth('install'), hasmeth('collectall')]):
+                logging.error('Invalid API for collector {}'.format(collector))
+                continue
             self.register(collector)
 
     def install_member(self, collector):
@@ -470,13 +485,24 @@ class Exports(object):
         self.member_groups = []
         self.supervisor = supervisor
         self.components = self.get_components()
-        self.init_collector_list()
+        self.initialized = []
+        self.collectors = muter(self.DEFAULT_COLLECTORS)
 
-    def init_collector_list(self):
+    def load_components(self):
         """
-        Initialize a new collector list.
+        Instantiate :py:class:`Component` object for each component in the
+        :py:attr:`components` list. Components that cannot be loaded are logged
+        and silently dropped. This method can only be invoked once. On
+        subsequent calls, it does not do anything.
         """
-        self.collectors = collections.deque(self.DEFAULT_COLLECTORS)
+        if self.initialized:
+            return
+        for c in self.components:
+            try:
+                self.initialized.append(Component(c))
+            except ImportError:
+                logging.exception('Could not load component {}'.format(c))
+                continue
 
     def get_components(self):
         """
@@ -502,7 +528,11 @@ class Exports(object):
         self.collectors.append(collector)
 
     def collect(self):
-        pass
+        self.collectors.reset()
+        for collector in self.collectors():
+            collector.collectall(self.components)
 
     def install(self):
-        pass
+        self.collectors.reset()
+        for collector in self.collectors():
+            collector.install()

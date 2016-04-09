@@ -249,6 +249,17 @@ def test_collector_importerror():
     assert c.registry == []
 
 
+def test_collector_with_invalid_methods():
+    supervisor = mock.Mock()
+    component = mock.Mock()
+    component.get_export.return_value = ['foo.bar.baz']
+    collector = component.get_object.return_value
+    del collector.install
+    c = mod.Collectors(supervisor)
+    c.collect(component)
+    assert c.registry == []
+
+
 def test_collector_install_member():
     supervisor = mock.Mock()
     component = mock.Mock()
@@ -271,5 +282,36 @@ def test_get_components():
     assert e.get_components() == ['root', 'foo', 'bar', 'baz']
 
 
+def test_exports_init_with_default_collectors():
+    supervisor = mock.Mock()
+    supervisor.ROOT_PKG = 'root'
+    supervisor.config = {'app.components': ['foo', 'bar', 'baz']}
+    e = mod.Exports(supervisor)
+    assert list(e.collectors) == [mod.Collectors]
 
 
+@mock.patch(MOD + '.Component')
+def test_exports_component_load(Component):
+    supervisor = mock.Mock()
+    supervisor.ROOT_PKG = 'root'
+    supervisor.config = {'app.components': ['foo', 'bar', 'baz']}
+    e = mod.Exports(supervisor)
+    e.load_components()
+    assert len(e.initialized) == 4
+    Component.assert_has_calls([
+        mock.call('root'),
+        mock.call('foo'),
+        mock.call('bar'),
+        mock.call('baz')
+    ])
+
+
+@mock.patch(MOD + '.Component')
+def test_exports_component_load_fail(Component):
+    supervisor = mock.Mock()
+    supervisor.ROOT_PKG = 'root'
+    supervisor.config = {'app.components': ['foo', 'bar', 'baz']}
+    Component.side_effect = ImportError
+    e = mod.Exports(supervisor)
+    e.load_components()
+    assert len(e.initialized) == 0
