@@ -66,6 +66,9 @@ class muter(object):
 
     @property
     def remaining(self):
+        """
+        Returns the number of items left in iteration.
+        """
         return len(self._iter)
 
     def append(self, element):
