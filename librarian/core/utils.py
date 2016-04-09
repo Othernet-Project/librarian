@@ -7,6 +7,15 @@ class muter(object):
     """
     Iterator that can be mutated while being iterated over.
 
+    The main difference between :py:class:`muter` objects and other iterator
+    types offered by the Python's standard library is that these objects
+    support mutation during iteration. In particular, new elements can be
+    appended to the end of the iterator even when iterating over it. The
+    :py:meth:`~muter.append` method is used to append new items to the
+    iterator. While iterating, the code simply continues to iterate as long as
+    there are elements in the iterator, even if those elements were added afte
+    the iteration had already started.
+
     The :py:class:`muter` objects support ``len()``, but not ``reversed(d)``.
     Membership test with ``in`` operator is also supported.
 
@@ -14,6 +23,12 @@ class muter(object):
     (always returns the *current* length of the iterator, including items that
     have already been iterated over). The number of remaining elements can be
     obtained by accessing the :py:attr:`~muter.remaining` attribute.
+
+    The :py:class:`muter` objects have a :py:meth:`~muter.reset` method. This
+    method resets (rewinds) the iterator to the the starting position. The
+    :py:meth:`~muter.reset` method can be safely called even during iteration,
+    making it possible to 'restart' iteration under some conditions (or ending
+    up with an infinite iteration if abused).
 
     Example::
 
@@ -78,6 +93,10 @@ class muter(object):
         in an exception.
         """
         self._iter.append(element)
+
+    # The methods below are deliberately undocumented. They are there to
+    # satisfy the requirements for iterator types, and should be considered an
+    # implenentation detail.
 
     def next(self):
         try:
