@@ -1,6 +1,24 @@
+import os
+import re
+import sys
+import importlib
+
 from collections import deque
 
+# FIXME: remove these imports
 from .contrib.databases.utils import *  # NOQA
+
+
+# Replacement patterns for path cleanup
+DOUBLEDOT = (
+    # Please keep the order intact, it *is* significant!
+    (re.compile(r'^\.\./'), ''),
+    (re.compile(r'/\.\./(\.\./)*'), '/'),
+    (re.compile(r'/\.\.$'), ''),
+)
+
+# Replacement pattern for Python name cleanup
+MULTIDOTS = re.compile(r'\.\.+')
 
 
 def to_list(val):
@@ -20,6 +38,65 @@ def hasmethod(obj, name):
     Returns ``True`` if object has a callable attribute ``name``.
     """
     return hasattr(getattr(obj, name, None), '__call__')
+
+
+def import_package(name):
+    """
+    Import a package give fully qualified name and return the package object as
+    well as the absolute path to the package's directory.
+    """
+    pkg = importlib.import_module(name)
+    pkgdir = os.path.dirname(os.path.abspath(pkg.__file__))
+    if pkgdir not in sys.path:
+        sys.path.append(pkgdir)
+    return pkg, pkgdir
+
+
+def import_object(name):
+    """
+    Import an object given fully qualified name.
+
+    For a name 'foo.bar.baz', this is equivalent to::
+
+        from foo.bar import baz
+
+    """
+    try:
+        mod, obj = name.rsplit('.', 1)
+    except ValueError:
+        raise ImportError('Cannot import name {}'.format(name))
+    mod = importlib.import_module(mod)
+    try:
+        return getattr(mod, obj)
+    except AttributeError:
+        raise ImportError('Cannot import name {}'.format(name))
+
+
+def fully_qualified_name(pkg, name):
+    """
+    Returns fully qualified name of an object given a package object and
+    relative name in dotted path notation.
+
+    Example::
+
+        >>> import foo.bar
+        >>> CollectorBase.fully_qualified_name(foo.bar, 'baz')
+        'foo.bar.baz'
+
+    """
+    name = MULTIDOTS.sub('.', name)
+    name = name.strip('.')
+    return '{}.{}'.format(pkg.__name__, name)
+
+
+def strip_path(path):
+    """
+    Removes any leading slashes and double-dots from paths and normalizes them.
+    """
+    path = path.strip()
+    for rxp, repl in DOUBLEDOT:
+        path = rxp.sub(repl, path)
+    return os.path.normpath(path.strip('/'))
 
 
 class muter(object):

@@ -32,6 +32,50 @@ def test_hasmethod(obj, name, res):
     assert mod.hasmethod(obj, name) == res
 
 
+def test_doubledot_patterns():
+    leading = mod.DOUBLEDOT[0][0]
+    assert leading.search('../foo/')
+    assert not leading.search('/foo/')
+    assert leading.sub('', '../foo/') == 'foo/'
+
+    middle = mod.DOUBLEDOT[1][0]
+    assert middle.search('/foo/../bar/')
+    assert not middle.search('/foo/..bar/')
+    assert middle.sub('/', '/foo/../bar/') == '/foo/bar/'
+    assert middle.sub('/', '/foo/../../bar/') == '/foo/bar/'
+
+    trailing = mod.DOUBLEDOT[2][0]
+    assert trailing.search('/foo/..')
+    assert not trailing.search('/foo/')
+    assert trailing.sub('', '/foo/..') == '/foo'
+
+
+@pytest.mark.parametrize('path,out', [
+    ('foo/bar/baz/', 'foo/bar/baz'),
+    ('/foo/bar/baz', 'foo/bar/baz'),
+    ('foo/bar../baz', 'foo/bar../baz'),
+    ('foo/bar..baz/', 'foo/bar..baz'),
+    ('../foo/bar', 'foo/bar'),
+    ('foo/bar/../../..', 'foo/bar'),
+    ('foo/../../../bar', 'foo/bar'),
+])
+def test_strip_paths(path, out):
+    assert mod.strip_path(path) == out
+
+
+@pytest.mark.parametrize('name,out', [
+    ('foo.bar', 'librarian.core.foo.bar'),
+    ('.foo.bar', 'librarian.core.foo.bar'),
+    ('foo..bar', 'librarian.core.foo.bar'),
+    ('foo...bar', 'librarian.core.foo.bar'),
+    ('..foo.bar', 'librarian.core.foo.bar'),
+    ('foo.bar..', 'librarian.core.foo.bar'),
+])
+def test_fully_qualified_name(name, out):
+    from librarian import core
+    assert mod.fully_qualified_name(core, name) == out
+
+
 def test_muter_basic_iteration():
     m = mod.muter([1, 2, 3])
     out = []

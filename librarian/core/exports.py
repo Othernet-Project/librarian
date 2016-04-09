@@ -10,17 +10,22 @@ exports.
 # file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import os
-import re
-import sys
 import logging
 import functools
-import importlib
 from os.path import join
 
 from confloader import ConfDict
 from disentangler import Disentangler
 
-from .utils import muter, to_list, hasmethod
+from .utils import (
+    muter,
+    to_list,
+    hasmethod,
+    strip_path,
+    import_package,
+    import_object,
+    fully_qualified_name,
+)
 
 
 try:
@@ -38,20 +43,7 @@ MEMBER_GROUP_COLLECTED = 'exp.collected'
 MEMBER_GROUP_INSTALLED = 'exp.installed'
 
 
-# OTHER CONSTANTS
-
-
-# Replacement patterns for path cleanup
-DOUBLEDOT = (
-    # Please keep the order intact, it *is* significant!
-    (re.compile(r'^\.\./'), ''),
-    (re.compile(r'/\.\./(\.\./)*'), '/'),
-    (re.compile(r'/\.\.$'), ''),
-)
-
-# Replacement pattern for Python name cleanup
-MULTIDOTS = re.compile(r'\.\.+')
-
+# DECORATORS
 
 def _metadata(data, name):
     """
@@ -110,65 +102,6 @@ def command(name, flags, extra_arguments=[], **kwargs):
         fn.extra_arguments = extra_arguments
         return fn
     return decorator
-
-
-def import_package(name):
-    """
-    Import a package give fully qualified name and return the package object as
-    well as the absolute path to the package's directory.
-    """
-    pkg = importlib.import_module(name)
-    pkgdir = os.path.dirname(os.path.abspath(pkg.__file__))
-    if pkgdir not in sys.path:
-        sys.path.append(pkgdir)
-    return pkg, pkgdir
-
-
-def import_object(name):
-    """
-    Import an object given fully qualified name.
-
-    For a name 'foo.bar.baz', this is equivalent to::
-
-        from foo.bar import baz
-
-    """
-    try:
-        mod, obj = name.rsplit('.', 1)
-    except ValueError:
-        raise ImportError('Cannot import name {}'.format(name))
-    mod = importlib.import_module(mod)
-    try:
-        return getattr(mod, obj)
-    except AttributeError:
-        raise ImportError('Cannot import name {}'.format(name))
-
-
-def fully_qualified_name(pkg, name):
-    """
-    Returns fully qualified name of an object given a package object and
-    relative name in dotted path notation.
-
-    Example::
-
-        >>> import foo.bar
-        >>> CollectorBase.fully_qualified_name(foo.bar, 'baz')
-        'foo.bar.baz'
-
-    """
-    name = MULTIDOTS.sub('.', name)
-    name = name.strip('.')
-    return '{}.{}'.format(pkg.__name__, name)
-
-
-def strip_path(path):
-    """
-    Removes any leading slashes and double-dots from paths and normalizes them.
-    """
-    path = path.strip()
-    for rxp, repl in DOUBLEDOT:
-        path = rxp.sub(repl, path)
-    return os.path.normpath(path.strip('/'))
 
 
 def get_object_name(obj):
