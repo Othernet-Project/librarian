@@ -290,6 +290,14 @@ def test_exports_init_with_default_collectors():
     assert list(e.collectors) == [mod.Collectors]
 
 
+def test_exports_init_adds_supervisor_exports_attr():
+    supervisor = mock.Mock()
+    supervisor.ROOT_PKG = 'root'
+    supervisor.config = {'app.components': ['foo', 'bar', 'baz']}
+    e = mod.Exports(supervisor)
+    assert supervisor.exports is e
+
+
 @mock.patch(MOD + '.Component')
 def test_exports_component_load(Component):
     supervisor = mock.Mock()

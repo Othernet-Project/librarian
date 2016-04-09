@@ -484,6 +484,7 @@ class Exports(object):
     def __init__(self, supervisor):
         self.member_groups = []
         self.supervisor = supervisor
+        self.supervisor.exports = self
         self.components = self.get_components()
         self.initialized = []
         self.collectors = muter(self.DEFAULT_COLLECTORS)
