@@ -21,10 +21,6 @@ class Commands(ListCollector):
             except ImportError:
                 logging.exception('Could not import handler')
                 continue
-            if not hasattr(handler, 'name'):
-                logging.error('Invalid handler {} for component {}'.format(
-                    command, component.name))
-                continue
             handler.component = component.name
             self.register(handler)
 
