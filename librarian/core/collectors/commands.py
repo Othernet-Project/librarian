@@ -1,6 +1,7 @@
 import logging
 import argparse
 
+from ..utils import hasmethod
 from ..exports import ListCollector, to_list
 
 
@@ -50,5 +51,11 @@ class Commands(ListCollector):
         args = self.parser.parse_args()
         arglist = list(vars(args).keys())
         for name, handler in self.handlers:
-            if name in arglist:
+            if name not in arglist:
+                continue
+            if hasmethod(handler, 'run'):
+                # This is probably a class-based handler
+                handler = handler()
+                handler.run(args)
+            else:
                 handler(args)

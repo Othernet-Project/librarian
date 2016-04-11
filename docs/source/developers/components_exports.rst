@@ -470,6 +470,20 @@ method. For example::
 The above example adds '--awesome-level' and '--ignore-lame' arguments. Note
 that flags can be either a single string, or a list of strings.
 
+The command line argument handlers can also be written as classes as well. The
+arguments passed to the :py:func:`~librarian.core.exports.command` decorator
+can be written as attributes on the class. The command handler class must also
+implement a :py:meth:`run` method which is invoked with an object containing
+parsed command line arguments arguments as its own argument. For example::
+
+    class AwesomeCommand(object):
+        name = 'awesome'
+        flags = '--make-awesome'
+        ation = 'store_true'
+
+        def run(self, args):
+            ....
+
 To find out more about writing command handlers, see
 :doc:`command_line_arguments`.
 
