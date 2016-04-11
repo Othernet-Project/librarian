@@ -331,6 +331,30 @@ class ObjectCollectorMixin(object):
                 self.register(obj)
 
 
+class RegistryInstallerMixin(object):
+    """
+    Mixin for collectors that use a registry object to install members. The
+    registry class is assumed to be instantiated without any arguments, and is
+    stored on exts container under an attribute given by
+    :py:attr:`~RegistryInstallerMixin.ext_name`  attribute. The class is
+    specified using :py:attr:`~RegistryInstallerMixin.registry_class`
+    attribute.
+
+    The registry class must implement a :py:meth:`register` method that takes
+    the collected member as its sole argument.
+    """
+    registry_class = None
+    ext_name = None
+
+    def __init__(self, *args, **kwargs):
+        super(RegistryInstallerMixin, self).__init__(*args, **kwargs)
+        self.regobj = self.registry_class()
+        setattr(self.supervisor.exts, self.ext_name, self.regobj)
+
+    def install_member(self, member):
+        self.regobj.register(member)
+
+
 class ListCollector(Collector):
     """
     Base collector that provides interfaces for component member registration

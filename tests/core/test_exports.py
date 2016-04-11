@@ -233,6 +233,21 @@ def test_object_collect_with_exception():
     assert m.collected == ['foo', 'baz']
 
 
+# REGISTRY INSTALLER MIXIN
+
+
+def test_registry_installer():
+    class MyCollector(mod.RegistryInstallerMixin, mod.ListCollector):
+        registry_class = mock.Mock()
+        ext_name = 'foo'
+    regobj = MyCollector.registry_class.return_value
+    supervisor = mock.Mock()
+    m = MyCollector(supervisor)
+    m.install_member('foo')
+    assert supervisor.exts.foo == regobj
+    regobj.register.assert_called_once_with('foo')
+
+
 # COLLECTORS COLLECTOR
 
 
