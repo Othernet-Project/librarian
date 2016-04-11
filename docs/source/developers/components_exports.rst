@@ -309,7 +309,7 @@ import. Plugin registration, therefore, supports dependency declaration.
 
 Plugins can declare dependencies on each other using
 :py:func:`~librarian.core.exports.depends_on` and
-:py:func:`~librarian.core.exports.requried_by` decorators. For semantic
+:py:func:`~librarian.core.exports.required_by` decorators. For semantic
 clarity, these two decorators have aliases, which are
 :py:func:`~librarian.core.exports.after` and
 :py:func:`~librarian.core.exports.before`, respectively. 
@@ -318,7 +318,7 @@ Alternatively, plugins may have :py:attr:`depends_on` and
 :py:attr:`required_by` attributes (if, for example, your plugin is a class).
 These attributes are the equivalent to
 :py:func:`~librarian.core.exports.depends_on` and
-:py:func:`~librarian.core.exports.requried_by` decorators, respectively.
+:py:func:`~librarian.core.exports.required_by` decorators, respectively.
 
 Here are a few examples::
 
@@ -327,7 +327,7 @@ Here are a few examples::
     from librarian.core.exports import *
 
     
-    @depend_on('foo')
+    @depends_on('foo')
     def my_plugin(handler):
         ....
     my_plugin.name = 'myawesomeplugin'
