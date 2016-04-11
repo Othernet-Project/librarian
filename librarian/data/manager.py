@@ -6,6 +6,7 @@ from itertools import izip_longest
 from bottle import request
 from bottle_utils.common import to_unicode
 
+from ..core.exts import ext_container as exts
 from .dirinfo import DirInfo
 from .facets.utils import get_facets, get_dir_facets, get_archive
 
@@ -31,11 +32,6 @@ def unique_results(*iterables):
 class Manager(object):
 
     META_FILES = DirInfo.FILENAME
-
-    def __init__(self, supervisor):
-        self.supervisor = supervisor
-        self.fsal_client = self.supervisor.exts.fsal
-        self.config = supervisor.config
 
     def get_dirinfos(self, paths):
         return DirInfo.from_db(paths, immediate=True)
@@ -92,7 +88,7 @@ class Manager(object):
         return (dirs, self._extend_files(files, limit), meta)
 
     def get(self, path):
-        success, fso = self.fsal_client.get_fso(path)
+        success, fso = exts.fsal.get_fso(path)
         if not success:
             return None
         if fso.is_dir():
@@ -102,7 +98,7 @@ class Manager(object):
         return fso
 
     def list(self, path, show_hidden=False):
-        (success, dirs, files) = self.fsal_client.list_dir(path)
+        (success, dirs, files) = exts.fsal.list_dir(path)
         if not show_hidden:
             dirs = nohidden(dirs)
             files = nohidden(files)
@@ -111,11 +107,11 @@ class Manager(object):
 
     def list_descendants(self, path, show_hidden=False, **kwargs):
         kwargs.setdefault('ignored_paths', []).extend(
-            self.config.get('changelog.ignored_paths', []))
+            exts.config.get('changelog.ignored_paths', []))
         (success,
          count,
          dirs,
-         files) = self.fsal_client.list_descendants(path, **kwargs)
+         files) = exts.fsal.list_descendants(path, **kwargs)
         if not show_hidden:
             dirs = nohidden(dirs)
             files = nohidden(files)
@@ -124,7 +120,7 @@ class Manager(object):
         return (success, count, dirs, files, meta)
 
     def search(self, query, show_hidden=False):
-        (dirs, files, is_match) = self.fsal_client.search(query)
+        (dirs, files, is_match) = exts.fsal.search(query)
         if not is_match:
             facets_results = self.search_facets(query)
             dirinfo_results = self.search_dirinfos(query)
@@ -141,7 +137,7 @@ class Manager(object):
         files = []
         for f in facets:
             path = os.path.join(f['path'], f['file'])
-            success, fso = self.fsal_client.get_fso(path)
+            success, fso = exts.fsal.get_fso(path)
             if not success:
                 continue
             fso.facets = f
@@ -154,7 +150,7 @@ class Manager(object):
         dirinfos = DirInfo.search(terms=query, language=lang)
         dirs = []
         for d in dirinfos:
-            success, fso = self.fsal_client.get_fso(d.path)
+            success, fso = exts.fsal.get_fso(d.path)
             if not success:
                 continue
             fso.dirinfo = d
@@ -162,19 +158,19 @@ class Manager(object):
         return dirs
 
     def isdir(self, path):
-        return self.fsal_client.isdir(path)
+        return exts.fsal.isdir(path)
 
     def isfile(self, path):
-        return self.fsal_client.isfile(path)
+        return exts.fsal.isfile(path)
 
     def exists(self, path):
-        return self.fsal_client.exists(path)
+        return exts.fsal.exists(path)
 
     def remove(self, path):
-        return self.fsal_client.remove(path)
+        return exts.fsal.remove(path)
 
     def move(self, src, dst):
-        return self.fsal_client.move(src, dst)
+        return exts.fsal.move(src, dst)
 
     def copy(self, src, dst):
-        return self.fsal_client.copy(src, dst)
+        return exts.fsal.copy(src, dst)

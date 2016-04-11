@@ -69,7 +69,7 @@ def get_file_list(path=None, defaults=None):
 
     show_hidden = request.params.get('hidden', 'no') == 'yes'
 
-    manager = Manager(request.app.supervisor)
+    manager = Manager()
     if is_search:
         (dirs, files, meta, is_match) = manager.search(query, show_hidden)
         relpath = '.' if not is_match else query
@@ -95,7 +95,7 @@ def get_file_list(path=None, defaults=None):
 
 @cached(prefix='descendants', timeout=300)
 def get_descendant_count(path, span):
-    manager = Manager(request.app.supervisor)
+    manager = Manager()
     (_, count, _, _, _) = manager.list_descendants(path,
                                                    count=True,
                                                    span=span,
@@ -106,7 +106,7 @@ def get_descendant_count(path, span):
 def get_descendants(path):
     span = request.app.config['changelog.span']
     count = get_descendant_count(path, span)
-    manager = Manager(request.app.supervisor)
+    manager = Manager()
     # parse pagination params
     page = Paginator.parse_page(request.params)
     per_page = Paginator.parse_per_page(request.params)
@@ -193,7 +193,7 @@ def direct_file(path):
 def guard_already_removed(func):
     @functools.wraps(func)
     def wrapper(path, **kwargs):
-        manager = Manager(request.app.supervisor)
+        manager = Manager()
         if not manager.exists(path):
             # Translators, used as page title when a file's removal is
             # retried, but it was already deleted before
@@ -223,7 +223,7 @@ def delete_path_confirm(path):
 @guard_already_removed
 @view('ui/feedback')
 def delete_path(path):
-    manager = Manager(request.app.supervisor)
+    manager = Manager()
     (success, error) = manager.remove(path)
     if success:
         # Translators, used as page title of successful file removal feedback
