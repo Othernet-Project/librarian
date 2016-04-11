@@ -8,6 +8,7 @@ class Middleware(ObjectCollectorMixin, DependencyCollector):
     becomes the outermost (first to handle the request) in the middleware
     stack.
     """
+    export_key = 'middleware'
     reverse_order = True
 
     def install_member(self, middleware):
