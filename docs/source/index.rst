@@ -14,7 +14,7 @@ interface, followed by chapters that illuminate the inner workings of this
 application.
 
 If you are a programmer eager to modify Librarian or contribute to the project,
-please skip ahead to :doc:`development`.
+please skip ahead to :doc:`developers/index`.
 
 .. note::
     This documentation is work in progress and there are many missing chapters.

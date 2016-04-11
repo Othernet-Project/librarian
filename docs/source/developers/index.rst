@@ -44,5 +44,6 @@ Topics covered:
     working_with_databases
     working_with_templates
     working_with_static_assets
+    working_with_events
     command_line_arguments
     writing_component_member_collectors

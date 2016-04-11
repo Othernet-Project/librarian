@@ -4,7 +4,7 @@ Writing component member collectors
 Before a component can become part of the application, it needs to declare all
 of its moving and non-moving parts and have them collected and installed. For
 more information on the particulars of declaring (or 'exporting') these parts,
-please read the :doc:`component_exports` section.
+please read the :doc:`components_exports` section.
 
 Overview of component member collection and installation
 --------------------------------------------------------
@@ -192,4 +192,4 @@ Further reading
 
 For more information on collector API and classes mentioned in this tutorial,
 please refer to the API documentation for the 
-:doc:`../api/librarian.core.exports` module.
+:doc:`../api/core.exports` module.

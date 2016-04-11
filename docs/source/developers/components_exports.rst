@@ -251,7 +251,7 @@ Every function that is going to be used as a hook must be decorated with a
         # do something when component is initializing...
 
 Any of the system and custom events can be used. For the full list of events
-and their meaning, see :doc:`list_of_system_events`.
+and their meaning, see :doc:`../appendices/list_of_system_events`.
 
 Of these, actually useful ones are probably 'initialize',
 'component_member_loaded', 'init_complete', and 'background'. The 'background'
@@ -367,7 +367,7 @@ package name prepended. In the example, we have a ``my_plugin`` function in the
 the component package.
 
 For a complete list of plugins that are used in Librarian, please refer to
-:doc:`list_of_librarian_plugins`.
+:doc:`../appendices/list_of_librarian_plugins`.
 
 WSGI middleware
 ---------------

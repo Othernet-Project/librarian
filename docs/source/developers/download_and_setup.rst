@@ -34,8 +34,8 @@ Obtaining the sources
 
 Sources can be obtained by cloning from the `Librarian GitHub repository
 <https://github.com/Outernet-Project/librarian/>`_. (Also see
-:doc:`git_repository_layout`.) To clone the complete source tree from the mater
-branch::
+:doc:`../appendices/git_repository_layout`.) To clone the complete source tree
+from the mater branch::
 
     $ git clone https://github.com/Outernet-Project/librarian.git
 
@@ -72,7 +72,7 @@ This will perform the following:
 - install Librarian editably (using ``pip install -e``)
 - install dependencies from the local package index
 
-See also :doc:`editable_install`.
+See also :doc:`../appendices/editable_install`.
 
 Starting FSAL
 -------------
