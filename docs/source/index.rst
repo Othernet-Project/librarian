@@ -26,10 +26,10 @@ Table of contents
 .. toctree::
     :maxdepth: 2
     
-    user_manual
-    development
-    api_documentation
-    appendices
+    manual/index
+    developers/index
+    appendices/index
+    api/index
 
 
 Source code

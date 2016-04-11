@@ -246,7 +246,7 @@ Of these, actually useful ones are probably 'initialize',
 'component_member_loaded', 'init_complete', and 'background'. The 'background'
 even is interesting in particular, as it allows the component to repeatedly
 execute code on an interval. More information on event handling and supervisor
-hooks can be found in :doc:`event_system`.
+hooks can be found in :doc:`working_with_events`.
 
 Once we have the decorated functions, we can list them in the configuration
 file using the ``hooks`` option::
@@ -460,7 +460,7 @@ The above example adds '--awsome-level' and '--ignore-lame' arguments. Note
 that flags can be either a single string, or a list of strings.
 
 To find out more about writing command handlers, see
-:doc:`handling_command_line_arguments`.
+:doc:`command_line_arguments`.
 
 To export handlers, we use the ``commands`` options in the exports section::
 

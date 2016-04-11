@@ -46,7 +46,7 @@ the repository, and then clone the forked repository.
 To download a snapshot of the repository, you can use the download button on
 the `GitHub repository page <https://github.com/Outernet-Project/librarian/>`_.
 
-.. figure:: images/github_download_button.png
+.. figure:: ../images/github_download_button.png
     :align: center
 
     "Download ZIP" button is located just above the file/directory list to the
