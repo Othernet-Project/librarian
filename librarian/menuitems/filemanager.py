@@ -8,3 +8,4 @@ class FilesMenuItem(MenuItem):
     label = _("Files")
     icon_class = 'files'
     route = 'files:list'
+    route_args = {'path': ''}
