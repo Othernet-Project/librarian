@@ -26,15 +26,15 @@ currently have the following groups:
 Each component may have one or more members that belong to one of the CMGs. The
 CMGs are also known as component member type. 
 
-All members from all components that belong to the same group comprise that
-group. Although this may sound simple enough, it is worth keeping in mind that
-it *is* possible to step on other component's assets/templates/databases if you
-are not careful, as members are not namespaced. For example, if component A has
-a template named 'foo', and component B also has that template, the last
-component's template will always take precendece and override any previously
-found templates of the same name. Also, keep in mind that overriding templates
-in this way *intentionally* is also a bad idea, as the override order is an
-implementation detail that may change in future without notice.
+A single component group consists of all members of the same type from all
+components. Although this may sound simple enough, it is worth keeping in mind
+that it *is* possible to step on other component's assets/templates/databases
+if you are not careful, as members are not namespaced. For example, if
+component A has a template named 'foo', and component B also has that template,
+the last component's template will always take precendece and override any
+previously found templates of the same name. Also, keep in mind that overriding
+templates in this way *intentionally* is also a bad idea, as the override order
+is an implementation detail that may change in future without notice.
 
 Component configuration file
 ----------------------------
