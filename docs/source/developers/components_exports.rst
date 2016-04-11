@@ -68,12 +68,15 @@ Object and path references
 When specifying relative paths in the configuration options, you cannot use
 double-dot notation anywhere. For example, ``static_dir = ../foo`` is not
 allowed. The path resolver code will automatically strip out the ``../`` part.
+The paths are always resolved relative to the package directory and must point
+to locations within it.
 
 When refering to objects (functions, classes, etc), Python name in dotted path
 format is used (e.g., ``hooks.on_initialize``). These names are resolved
 relative to the component's package (the package is prefixed to the name before
 importing). Multiple dots will be treated as a single dot, and any leading dots
-will be stripped.
+will be stripped. The names must point to importable objects. In most cases,
+failure to import an object will result in omission of that object.
 
 Options with mutiple values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
