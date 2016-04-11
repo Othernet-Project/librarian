@@ -2,7 +2,7 @@ import logging
 
 from squery_pg.squery_pg import DatabaseContainer, Database, migrate
 
-from ..exports import ListCollector
+from ..exports import ListCollector, to_list
 
 
 class Databases(ListCollector):
@@ -32,7 +32,7 @@ class Databases(ListCollector):
 
     def collect(self, component):
         migrations = component.get_export('migrations', default='migrations')
-        databases = component.get_export('databases', default=[])
+        databases = to_list(component.get_export('databases', default=[]))
         for dbname in databases:
             migration_pkg = '{}.{}.{}'.format(component.name, migrations,
                                               dbname)

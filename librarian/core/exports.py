@@ -318,7 +318,7 @@ class ObjectCollectorMixin(object):
     export_key = None
 
     def collect(self, component):
-        member_list = component.get_export(self.export_key, [])
+        member_list = to_list(component.get_export(self.export_key, []))
         for name in member_list:
             try:
                 obj = component.get_object(name)

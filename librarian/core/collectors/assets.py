@@ -2,7 +2,7 @@ from os.path import join
 
 from .contrib.assets import Assets as AssetsMgr
 
-from ..exports import ListCollector
+from ..exports import ListCollector, to_list
 
 
 class Assets(ListCollector):
@@ -25,8 +25,8 @@ class Assets(ListCollector):
         assets_dir = component.get_export('static_dir', 'static')
         jsdir = component.pkgpath(join(assets_dir, 'js'), noerror=True)
         cssdir = component.pkgpath(join(assets_dir, 'css'), noerror=True)
-        jsbundles = component.get_export('js_bundles', [])
-        cssbundles = component.get_export('css_bundles', [])
+        jsbundles = to_list(component.get_export('js_bundles', []))
+        cssbundles = to_list(component.get_export('css_bundles', []))
         self.register((jsdir, cssdir, jsbundles, cssbundles))
 
     @staticmethod
