@@ -31,7 +31,9 @@ class Commands(ListCollector):
     def install_member(self, handler):
         name = handler.name
         if name in self.handlers:
-            logging.warn('Duplicate registration for command: {}'.format(name))
+            existing = self.handlers[name]
+            logging.warn('Duplicate registration for command {}: handler {} '
+                         'is already using this name'.format(name, existing))
             return
         self.handlers[name] = handler
         # Build add_argument() args.
