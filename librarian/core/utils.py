@@ -109,7 +109,7 @@ class muter(object):
     appended to the end of the iterator even when iterating over it. The
     :py:meth:`~muter.append` method is used to append new items to the
     iterator. While iterating, the code simply continues to iterate as long as
-    there are elements in the iterator, even if those elements were added afte
+    there are elements in the iterator, even if those elements were added after
     the iteration had already started.
 
     The :py:class:`muter` objects support ``len()``, but not ``reversed(d)``.
@@ -122,7 +122,7 @@ class muter(object):
     attribute.
 
     The :py:class:`muter` objects have a :py:meth:`~muter.reset` method. This
-    method resets (rewinds) the iterator to the the starting position. The
+    method resets (rewinds) the iterator to the starting position. The
     :py:meth:`~muter.reset` method can be safely called even during iteration,
     making it possible to 'restart' iteration under some conditions (or ending
     up with an infinite iteration if abused).
@@ -193,7 +193,7 @@ class muter(object):
 
     # The methods below are deliberately undocumented. They are there to
     # satisfy the requirements for iterator types, and should be considered an
-    # implenentation detail.
+    # implementation detail.
 
     def next(self):
         try:
