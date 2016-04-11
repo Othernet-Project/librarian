@@ -2,28 +2,19 @@ import logging
 import argparse
 
 from ..utils import hasmethod
-from ..exports import ListCollector, to_list
+from ..exports import ObjectCollectorMixin, ListCollector, to_list
 
 
-class Commands(ListCollector):
+class Commands(ObjectCollectorMixin, ListCollector):
     """
     This class manages command argument handlers.
     """
+    export_key = 'commands'
+
     def __init__(self, supervisor):
         super(Commands, self).__init__(supervisor)
         self.parser = argparse.ArgumentParser()
         self.handlers = {}
-
-    def collect(self, component):
-        commands = component.get_export('commands', [])
-        for command in commands:
-            try:
-                handler = component.get_object(command)
-            except ImportError:
-                logging.exception('Could not import handler')
-                continue
-            handler.component = component.name
-            self.register(handler)
 
     def install_member(self, handler):
         name = handler.name
