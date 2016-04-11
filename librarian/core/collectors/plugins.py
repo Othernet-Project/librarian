@@ -7,6 +7,7 @@ class Plugins(ObjectCollectorMixin, DependencyCollector):
     reverse order. This ensures that the last-installed plugin is invoked first
     when handling requests.
     """
+    export_key = 'plugins'
     reverse_order = True
 
     def install_member(self, plugin):
