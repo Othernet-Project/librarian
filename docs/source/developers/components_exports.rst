@@ -2,7 +2,7 @@ Components and component members
 ================================
 
 Components are, simply put, subapplications. They have their own templates,
-satic assets, route handlers, database migrations, and so on. Each of these
+static assets, route handlers, database migrations, and so on. Each of these
 things are called 'component members'. Some members may require load ordering
 (e.g., plugins may depend on other plugins, some routes may require to be
 registered after others or before others). We call these ordering requirements
@@ -31,7 +31,7 @@ components. Although this may sound simple enough, it is worth keeping in mind
 that it *is* possible to step on other component's assets/templates/databases
 if you are not careful, as members are not namespaced. For example, if
 component A has a template named 'foo', and component B also has that template,
-the last component's template will always take precendece and override any
+the last component's template will always take precedence and override any
 previously found templates of the same name. Also, keep in mind that overriding
 templates in this way *intentionally* is also a bad idea, as the override order
 is an implementation detail that may change in future without notice.
@@ -39,7 +39,7 @@ is an implementation detail that may change in future without notice.
 Component configuration file
 ----------------------------
 
-Each component has a configuration file. This confugration file is in .ini
+Each component has a configuration file. This configuration file is in .ini
 format. By default, the configuration files will be looked up in 'config.ini'
 inside the package. A different location can be specified in the package's
 ``__init__`` module by adding a :py:data:`CONFIG` constant. For example::
@@ -71,7 +71,7 @@ allowed. The path resolver code will automatically strip out the ``../`` part.
 The paths are always resolved relative to the package directory and must point
 to locations within it.
 
-When refering to objects (functions, classes, etc), Python name in dotted path
+When referring to objects (functions, classes, etc), Python name in dotted path
 format is used (e.g., ``hooks.on_initialize``). These names are resolved
 relative to the component's package (the package is prefixed to the name before
 importing). Multiple dots will be treated as a single dot, and any leading dots
@@ -137,7 +137,7 @@ by specifying one or more alternative locations. For example::
     templats = templates
 
 It is important to remember that templates are resolved relative to template
-driectories, regardless of how many leves of hierarchy there is between the
+directories, regardless of how many leaves of hierarchy there is between the
 package directory and the template directory.
 
 To illustrate template resolution, let's take a look at a concrete example.
@@ -213,7 +213,7 @@ Bundles are defined using two options::
         article: article_layout
         summary: summary_layout
 
-This confiuration creates two JavaScript bundles, and two CSS bundles. The
+This configuration creates two JavaScript bundles, and two CSS bundles. The
 JavaScript bundle 'article' contains concatenated and minified sources of
 'static/js/autoscroll.js' and 'static/js/comment.js'. As you can see, the
 static assets directory and 'js/' subdirectory are automatically added to the
@@ -243,7 +243,7 @@ Every function that is going to be used as a hook must be decorated with a
         # do something when component is initializing...
 
 Any of the system and custom events can be used. For the full list of events
-and their meaing, see :doc:`list_of_system_events`.
+and their meaning, see :doc:`list_of_system_events`.
 
 Of these, actually useful ones are probably 'initialize',
 'component_member_loaded', 'init_complete', and 'background'. The 'background'
@@ -290,8 +290,8 @@ decorator::
     def handler():
         pass
 
-Because of the way plugins work, the order in which they are reigstered becomes
-import. Plugin registration, therefore, supports dependecy delcration.
+Because of the way plugins work, the order in which they are registered becomes
+import. Plugin registration, therefore, supports dependency declaration.
 
 .. note::
     Dependency/dependents declaration is completely optional. It is only needed
@@ -342,7 +342,7 @@ Here are a few examples::
 Note that each plugin has a ``name`` attribute. This name is used to identify
 the plugin, and this is the name that is used to refer to other plugins in the
 dependency/dependents declaration decorators and attributes. Also note that the
-depdency/dependents declaration can be a single string, or a list of strings.
+dependency/dependents declaration can be a single string, or a list of strings.
 
 Once we have our plugins with dependencies we enumerate them in the exports::
 
@@ -365,7 +365,7 @@ WSGI middleware
 ---------------
 
 WSGI middleware follow the same rules as plugins. Unlike plugins, though, WSGI
-middleware do not have a ``name`` attribue, and are referred to by their full
+middleware do not have a ``name`` attribute, and are referred to by their full
 module path (e.g., ``librarian.core.i18n.I18NMiddleware``).
 
 Declaring in the configuration is done using the ``middleware`` option, listing
@@ -382,7 +382,7 @@ Route handlers
 
 When it comes to route handlers, there are two things to keep in mind.
 
-- Librarian uses class-based route handlers wich have their own registration
+- Librarian uses class-based route handlers which have their own registration
   methods and properties
 - routes may be subject to dependency resolution just like plugins and
   middleware
@@ -445,7 +445,7 @@ the command line to invoke this command. Other arguments are passed as is to
 the :py:meth:`argparse.ArgumentParser.add_argument` method.
 
 A command may register additional arguments that it wants to use. These
-aruguments are specified as an iterable of dicts, where each dict is a set of
+arguments are specified as an iterable of dicts, where each dict is a set of
 keyword arguments for the :py:meth:`~argparse.ArgumentParser.add_argument`
 method. For example::
 
@@ -459,7 +459,7 @@ method. For example::
     def awesome_command(args):
         ...
 
-The above example adds '--awsome-level' and '--ignore-lame' arguments. Note
+The above example adds '--awesome-level' and '--ignore-lame' arguments. Note
 that flags can be either a single string, or a list of strings.
 
 To find out more about writing command handlers, see
