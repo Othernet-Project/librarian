@@ -169,8 +169,8 @@ If we ask for a template named 'foo1', it will be found at
 because neither 'foo' or 'bar' directories have a subdirectory called 'foo'.
 Asking for 'baz/baz1' will match 'templates/bar/baz/baz1'.
 
-On the other hand, if our configuration look at the example at the top of this
-subsection, 'foo1' would not resolve, while 'foo/foo1' would work.
+On the other hand, if our configuration looked like the example at the top of
+this subsection, 'foo1' would not resolve, while 'foo/foo1' would work.
 
 For more information on working with templates, see
 :doc:`working_with_templates`.
