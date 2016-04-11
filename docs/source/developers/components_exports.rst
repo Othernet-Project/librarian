@@ -227,7 +227,7 @@ JavaScript bundle 'article' contains concatenated and minified sources of
 static assets directory and 'js/' subdirectory are automatically added to the
 name, as is the '.js' extension.
 
-For more information on working with templates, see
+For more information on working with static assets, see
 :doc:`working_with_static_assets`.
 
 .. warning::
