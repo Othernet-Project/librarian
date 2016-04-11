@@ -134,7 +134,7 @@ by specifying one or more alternative locations. For example::
 
     [exports]
 
-    templats = templates
+    templates = templates
 
 It is important to remember that templates are resolved relative to template
 directories, regardless of how many leaves of hierarchy there is between the
@@ -155,14 +155,22 @@ Let's say the directory layout is as follows::
                 bar1.tpl
                 bar2.tpl
 
-If we used the second configuration from the examples above, and we ask for a
-template named 'foo1', it will be found at 'templates/foo/foo1.tpl'. If we ask
-for 'foo/foo1', it will not be found, because neither 'foo' or 'bar'
-directories have a subdirectory called 'foo'. Asking for 'baz/baz1' will match
-'templates/bar/baz/baz1'.
+With this structure, let's take a look at what would happen if your
+configuration looked like this::
 
-If we used the first configuration, 'foo1' would fail to resolve, while
-'foo/foo1' would work.
+    [exports]
+
+    tempates =
+        templates/foo
+        templates/bar
+
+If we ask for a template named 'foo1', it will be found at
+'templates/foo/foo1.tpl'. If we ask for 'foo/foo1', it will not be found,
+because neither 'foo' or 'bar' directories have a subdirectory called 'foo'.
+Asking for 'baz/baz1' will match 'templates/bar/baz/baz1'.
+
+On the other hand, if our configuration look at the example at the top of this
+subsection, 'foo1' would not resolve, while 'foo/foo1' would work.
 
 For more information on working with templates, see
 :doc:`working_with_templates`.
