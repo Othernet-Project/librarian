@@ -1,23 +1,14 @@
 import logging
 
-from ..exports import ListCollector
+from ..exports import ObjectCollectorMixin, ListCollector
 
 
-class Hooks(ListCollector):
+class Hooks(ObjectCollectorMixin, ListCollector):
     """
     This class collects event hooks that should be installed during supervisor
     start-up.
     """
-    def collect(self, component):
-        hooks = component.get_export('hooks', [])
-        for h in hooks:
-            try:
-                hook = component.get_object(h)
-            except ImportError:
-                logging.exception('Failed to import hook {}'.format(h))
-                continue
-            hook.component = component.name
-            self.register(hook)
+    export_key = 'hooks'
 
     def install_member(self, hook):
         hook_name = getattr(hook, 'hook', None)
