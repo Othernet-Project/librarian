@@ -341,8 +341,8 @@ Here are a few examples::
     class MyPlugin(object):
         name = 'myexcuisiteplugin'
         api = 2
-        dependencies = ['foo', 'bar']
-        dependents = 'baz'
+        depends_on = ['foo', 'bar']
+        required_by = 'baz'
 
         def __call__(self, handler):
             ....
