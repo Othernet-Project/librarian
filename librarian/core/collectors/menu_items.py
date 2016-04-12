@@ -7,6 +7,6 @@ class MenuItems(ObjectCollectorMixin, RegistryInstallerMixin, ListCollector):
     """
     This collector collects menu items.
     """
-    ext_name = 'menu_items'
+    export_key = 'menu_items'
     registry_class = MenuItemRegistry
     ext_name = 'menu'
