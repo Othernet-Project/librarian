@@ -103,7 +103,10 @@ class Manager(object):
             dirs = nohidden(dirs)
             files = nohidden(files)
         (dirs, files, meta) = self._process_listing(dirs, files, limit=path)
-        return (success, dirs, files, meta)
+        return dict(success=success,
+                    dirs=dirs,
+                    files=files,
+                    meta=meta)
 
     def list_descendants(self, path, show_hidden=False, **kwargs):
         kwargs.setdefault('ignored_paths', []).extend(
@@ -117,7 +120,11 @@ class Manager(object):
             files = nohidden(files)
 
         (dirs, files, meta) = self._process_listing(dirs, files)
-        return (success, count, dirs, files, meta)
+        return dict(success=success,
+                    count=count,
+                    dirs=dirs,
+                    files=files,
+                    meta=meta)
 
     def search(self, query, show_hidden=False):
         (dirs, files, is_match) = exts.fsal.search(query)
@@ -130,7 +137,10 @@ class Manager(object):
             dirs = nohidden(dirs)
             files = nohidden(files)
         (dirs, files, meta) = self._process_listing(dirs, files)
-        return (dirs, files, meta, is_match)
+        return dict(dirs=dirs,
+                    files=files,
+                    meta=meta,
+                    is_match=is_match)
 
     def search_facets(self, query, facet_type=None):
         facets = get_archive().search(query, facet_type=facet_type)
