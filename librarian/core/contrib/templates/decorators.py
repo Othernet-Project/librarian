@@ -52,9 +52,9 @@ class template_helper(object):
     __metaclass__ = LookupHelper
     registry = AttrDict()
 
-    def __init__(self, name=None, path=None):
-        self.name = name
-        self.path = path.split('.') if path else []
+    def __init__(self, alias=None, namespace=None):
+        self.alias = alias
+        self.path = namespace.split('.') if namespace else []
 
     def __call__(self, fn):
         namespace = self.registry
@@ -62,7 +62,7 @@ class template_helper(object):
             namespace.setdefault(segment, AttrDict())
             namespace = namespace[segment]
 
-        namespace[self.name or fn.__name__] = fn
+        namespace[self.alias or fn.__name__] = fn
         return fn
 
 
