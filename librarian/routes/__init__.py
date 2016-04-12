@@ -3,11 +3,13 @@ from os.path import basename
 from bottle import error
 
 from ..core.exts import ext_container as exts
+from ..utils.filters import safepath_filter
 from . import (auth, dashboard, diskspace, filemanager, lang, logs,
                notifications, ondd, settings, setup, system)
 
 
 def routes(config):
+    exts.bottle_app.router.add_filter('safepath', safepath_filter)
     skip_plugins = config['app.skip_plugins']
     error(403)(system.error_403)
     error(404)(system.error_404)
@@ -17,6 +19,7 @@ def routes(config):
     auth.Logout.route('/logout/', app=exts.bottle_app)
     auth.PasswordReset.route('/reset-password/', app=exts.bottle_app)
     auth.EmergencyReset.route('/emergency/', app=exts.bottle_app)
+    filemanager.FileList.route('/files/<path:safepath>', app=exts.bottle_app)
     route_config = (
         ('dashboard:main', dashboard.dashboard,
          'GET', '/dashboard/', {}),
@@ -26,10 +29,6 @@ def routes(config):
          'POST', '/diskspace/consolidate/', {}),
         ('diskspace:consolidate_state', diskspace.consolidate_state,
          'GET', '/diskspace/consolidate/state', {}),
-        ('files:list', filemanager.init_file_action,
-         'GET', '/files/<path:re:.*?>', dict(unlocked=True)),
-        ('files:action', filemanager.handle_file_action,
-         'POST', '/files/<path:path>', dict(unlocked=True)),
         ('files:direct', filemanager.direct_file,
          'GET', '/direct/<path:path>', dict(unlocked=True)),
         ('ui:lang_list', lang.lang_list,

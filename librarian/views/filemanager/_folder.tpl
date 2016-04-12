@@ -9,7 +9,7 @@
 </%def>
 
 <%def name="file_delete(path)">
-    <form action="${i18n_url('files:path', path=path)}" class="file-list-delete file-list-control">
+    <form action="${i18n_url('filemanager:filelist', path=path)}" class="file-list-delete file-list-control">
         <input type="hidden" name="action" value="delete">
         <button class="nobutton" type="submit">
             <span class="icon icon-no-outline"></span>
@@ -49,7 +49,7 @@
     description = d.dirinfo.get(request.locale, 'description', None)
     default_view = d.dirinfo.get(request.locale, 'view', None)
     varg = {'view': default_view} if default_view else {}
-    dpath = i18n_url('files:path', path=d.rel_path, **varg)
+    dpath = i18n_url('filemanager:filelist', path=d.rel_path, **varg)
     cover_url = th.get_folder_cover(d)
     icon, icon_is_url = th.get_folder_icon(d)
     %>
@@ -95,7 +95,7 @@
         # be there or `h` variable becomes unavailable to the rest of the def.
         h.quoted_url  # <-- again, don't remove this
         fpath = th.get_view_path(f)
-        apath = i18n_url('files:path', path=f.rel_path)
+        apath = i18n_url('filemanager:filelist', path=f.rel_path)
         parent_view = 'generic' if is_search else None
         parent_url = th.get_parent_url(f.rel_path, parent_view)
         icon, is_thumb = th.get_file_thumb(f)

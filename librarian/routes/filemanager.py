@@ -11,143 +11,144 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 import os
 import functools
 
-from bottle import request, abort, static_file, redirect
+from bottle import request, abort, static_file
 from bottle_utils.ajax import roca_view
 from bottle_utils.csrf import csrf_protect, csrf_token
 from bottle_utils.html import urlunquote, quoted_url
-from bottle_utils.i18n import lazy_gettext as _, i18n_url
+from bottle_utils.i18n import lazy_gettext as _
+from streamline import XHRPartialRoute
 
+from ..core.exts import ext_container as exts
 from ..core.contrib.cache.decorators import cached
-from ..core.contrib.templates.decorators import template_helper
 from ..core.contrib.templates.renderer import template, view
+from ..data.facets.facets import FacetTypes
 from ..data.facets.utils import (get_facets,
                                  get_facet_types,
                                  is_facet_valid,
                                  find_html_index)
 from ..data.manager import Manager
-from ..helpers.filemanager import (title_name,
-                                   durify,
-                                   get_selected,
-                                   get_adjacent,
-                                   get_thumb_path,
+from ..helpers.filemanager import (get_parent_path,
+                                   get_parent_url,
                                    find_root,
-                                   aspectify)
+                                   get_thumb_path)
 from ..presentation.paginator import Paginator
+from ..utils.route_mixins import CSRFRouteMixin
 
 
-FACET_MAPPING = {
-    'video': 'clips',
-    'image': 'gallery',
-    'audio': 'playlist',
-}
+class FileList(XHRPartialRoute):
+    template_name = 'filemanager/main'
+    partial_template_name = 'filemanager/_main'
+    template_func = template
 
+    ROOT_PATH = '.'
+    QUERY_KEY = 'q'
+    SHOW_HIDDEN_KEY = 'hidden'
+    SELECTED_KEY = 'selected'
+    VIEW_KEY = 'view'
+    VALID_VIEWS = ['updates'] + FacetTypes.names()
+    DEFAULT_VIEW = FacetTypes.HTML
+    UNFILTERED_FACET_TYPES = (FacetTypes.GENERIC, FacetTypes.UPDATES)
 
-def get_parent_path(path):
-    return os.path.normpath(os.path.join(path, '..'))
+    def __init__(self, *args, **kwargs):
+        super(FileList, self).__init__(*args, **kwargs)
+        self.manager = Manager()
 
+    def unquoted(self, key):
+        try:
+            value = self.request.params[key]
+        except KeyError:
+            return None
+        else:
+            return urlunquote(value).strip()
 
-@template_helper
-def get_parent_url(path, view=None):
-    parent_path = get_parent_path(path)
-    vargs = {'view': view} if view else {}
-    return i18n_url('files:path', path=parent_path, **vargs)
+    @property
+    def is_search(self):
+        return self.QUERY_KEY in self.request.params
 
+    @property
+    def query(self):
+        return self.unquoted(self.QUERY_KEY)
 
-def go_to_parent(path):
-    redirect(get_parent_url(path))
+    @property
+    def selected(self):
+        return self.unquoted(self.SELECTED_KEY)
 
+    @property
+    def show_hidden(self):
+        return self.request.params.get(self.SHOW_HIDDEN_KEY, 'no') == 'yes'
 
-def get_file_list(path=None, defaults=None):
-    defaults = defaults or {}
-    try:
-        query = urlunquote(request.params['q']).strip()
-    except KeyError:
-        query = path or '.'
-        is_search = False
-    else:
-        is_search = True
+    def set_view(self, context, relpaths):
+        view = self.request.params.get(self.VIEW_KEY, None)
+        # use html view if it wasn't specfied explicitly
+        if not view or view == FacetTypes.HTML:
+            context['index_file'] = find_html_index(relpaths, any_html=False)
+        # if no index file matches, fall back to generic view
+        if not view and not context['index_file']:
+            view = FacetTypes.GENERIC
+        # if requested view is not valid, fall back to generic view
+        if view not in self.VALID_VIEWS:
+            view = FacetTypes.GENERIC
+        # update context with best matching view
+        context.update(view=view)
 
-    show_hidden = request.params.get('hidden', 'no') == 'yes'
+    def get_file_list(self, query):
+        if self.is_search:
+            result = self.manager.search(query, self.show_hidden)
+            relpath = self.ROOT_PATH if not result['is_match'] else query
+        else:
+            result = self.manager.list(query, self.show_hidden)
+            relpath = query
+            if not result['success']:
+                self.abort(404)
+        return dict(path=relpath,
+                    current=self.manager.get(relpath),
+                    up=get_parent_path(relpath),
+                    dirs=result['dirs'],
+                    files=result['files'])
 
-    manager = Manager()
-    if is_search:
-        (dirs, files, meta, is_match) = manager.search(query, show_hidden)
-        relpath = '.' if not is_match else query
-        is_search = not is_match
-        success = True  # search is always successful
-    else:
-        (success, dirs, files, meta) = manager.list(query, show_hidden)
-        if not success:
-            abort(404)
-        relpath = query
-    current = manager.get(relpath)
-    up = get_parent_path(relpath)
-    data = defaults.copy()
-    data.update(dict(path=relpath,
-                     current=current,
-                     dirs=dirs,
-                     files=files,
-                     up=up,
-                     is_search=is_search,
-                     is_successful=success))
-    return data
+    @cached(prefix='descendants', timeout=300)
+    def __get_update_count(self, path, span):
+        result = self.manager.list_descendants(path,
+                                               count=True,
+                                               span=span,
+                                               entry_type=0)
+        return result['count']
 
+    def fetch_updates(self, context):
+        span = exts.config['changelog.span']
+        count = self.__get_update_count(context['path'], span)
+        # parse pagination params
+        page = Paginator.parse_page(request.params)
+        per_page = Paginator.parse_per_page(request.params)
+        pager = Paginator(count, page, per_page)
+        (offset, limit) = pager.items
+        results = self.manager.list_descendants(context['path'],
+                                                offset=offset,
+                                                limit=limit,
+                                                order='-create_time',
+                                                span=span,
+                                                entry_type=0,
+                                                show_hidden=False)
+        context.update(pager=pager, files=results['files'])
 
-@cached(prefix='descendants', timeout=300)
-def get_descendant_count(path, span):
-    manager = Manager()
-    (_, count, _, _, _) = manager.list_descendants(path,
-                                                   count=True,
-                                                   span=span,
-                                                   entry_type=0)
-    return count
-
-
-def get_descendants(path):
-    span = request.app.config['changelog.span']
-    count = get_descendant_count(path, span)
-    manager = Manager()
-    # parse pagination params
-    page = Paginator.parse_page(request.params)
-    per_page = Paginator.parse_per_page(request.params)
-    pager = Paginator(count, page, per_page)
-    (offset, limit) = pager.items
-    (_, _, _, files, _) = manager.list_descendants(path,
-                                                   offset=offset,
-                                                   limit=limit,
-                                                   order='-create_time',
-                                                   span=span,
-                                                   entry_type=0,
-                                                   show_hidden=False)
-    return dict(pager=pager, files=files)
-
-
-@roca_view('filemanager/main', 'filemanager/_main', template_func=template)
-def show_list_view(path, view, defaults):
-    selected = request.query.get('selected', None)
-    if selected:
-        selected = urlunquote(selected)
-    data = defaults.copy()
-    paths = [f.rel_path for f in data['files']]
-    data['facet_types'] = get_facet_types(paths)
-    is_search = data.get('is_search', False)
-    is_successful = data.get('is_successful', True)
-    original_view = data.get('original_view')
-    if not is_search and is_successful:
-        # If no view was specified and we have an index file, then
-        # we switch to the reader tab
-        if view == 'html' or not original_view:
-            data['index_file'] = find_html_index(paths, any_html=False)
-            view = 'html' if data['index_file'] else view
-            data['view'] = view
-
-        if view == 'updates':
-            data.update(get_descendants(path))
-        elif view != 'generic':
-            data['files'] = filter(
-                lambda f: is_facet_valid(f.rel_path, view), data['files'])
-    data['selected'] = selected
-    return data
+    def get(self, path):
+        path = path or self.ROOT_PATH
+        ctx = self.get_file_list(self.query or path)
+        relpaths = [f.rel_path for f in ctx['files']]
+        ctx.update(is_search=self.is_search,
+                   selected=self.selected,
+                   facet_types=get_facet_types(relpaths))
+        self.set_view(ctx, relpaths)
+        if not self.is_search:
+            # updates override the files list with a custom one
+            if view == FacetTypes.UPDATES:
+                self.fetch_updates(ctx)
+            # limit the list of files to only those that can be handled
+            # within the chosen view
+            if view not in self.UNFILTERED_FACET_TYPES:
+                ctx['files'] = [f for f in ctx['files']
+                                if is_facet_valid(f.rel_path, view)]
+        return ctx
 
 
 @roca_view('filemanager/info', 'filemanager/_info', template_func=template)
@@ -167,11 +168,6 @@ def show_info_view(path, view, meta, defaults):
 
 
 def show_view(path, view, defaults):
-    # Add all helpers
-    defaults.update(dict(titlify=title_name, durify=durify,
-                         get_selected=get_selected, get_adjacent=get_adjacent,
-                         aspectify=aspectify))
-
     defaults.update(get_file_list(path))
     meta = request.query.get('info')
     if meta:
@@ -247,18 +243,6 @@ def delete_path(path):
                 redirect_target=_("file list"))
 
 
-def rename_path(path):
-    new_name = request.forms.get('name')
-    if not new_name:
-        go_to_parent(path)
-
-    manager = Manager(request.app.supervisor)
-    new_name = os.path.normpath(new_name)
-    new_path = os.path.join(os.path.dirname(path), new_name)
-    manager.move(path, new_path)
-    go_to_parent(path)
-
-
 def retrieve_thumb_url(path, defaults):
     thumb_url = None
     thumb_path = get_thumb_path(urlunquote(request.query.get('target')))
@@ -279,32 +263,3 @@ def retrieve_thumb_url(path, defaults):
 
     return dict(url=thumb_url)
 
-
-def init_file_action(path=None):
-    if path:
-        path = urlunquote(path)
-    else:
-        path = '.'
-    # Use 'generic' as default view
-    original_view = request.query.get('view')
-    view = original_view or 'generic'
-    defaults = dict(path=path,
-                    view=view,
-                    original_view=original_view)
-    action = request.query.get('action')
-    if action == 'delete':
-        return delete_path_confirm(path)
-    elif action == 'thumb':
-        return retrieve_thumb_url(path, defaults)
-    return show_view(path, view, defaults)
-
-
-def handle_file_action(path):
-    path = urlunquote(path)
-    action = request.forms.get('action')
-    if action == 'rename':
-        return rename_path(path)
-    elif action == 'delete':
-        return delete_path(path)
-    else:
-        abort(400)
