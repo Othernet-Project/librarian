@@ -45,6 +45,17 @@ EXTENSION_VIEW_MAPPING = {
 }
 
 
+def get_parent_path(path):
+    return os.path.normpath(os.path.join(path, '..'))
+
+
+@template_helper
+def get_parent_url(path, view=None):
+    parent_path = get_parent_path(path)
+    vargs = {'view': view} if view else {}
+    return i18n_url('files:path', path=parent_path, **vargs)
+
+
 def get_file(files, path):
     return next(ifilter(lambda f: f.rel_path == path, files), None)
 
