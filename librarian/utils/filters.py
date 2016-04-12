@@ -5,7 +5,7 @@ def safepath_filter(config):
     regexp = r'.*?'
 
     def to_python(match):
-        return urlunquote(match.group())
+        return urlunquote(match)
 
     def to_url(path):
         return urlquote(path)
