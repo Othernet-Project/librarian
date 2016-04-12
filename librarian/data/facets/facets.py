@@ -13,13 +13,37 @@ from __future__ import unicode_literals
 from .base import CDFObject
 
 
-FACET_TYPES = {
-    'generic': 1,
-    'html': 2,
-    'video': 4,
-    'audio': 8,
-    'image': 16,
-}
+class FacetTypes:
+    # Special purpose-meta types
+    UPDATES = 'updates'
+    # Actual facet types
+    GENERIC = 'generic'
+    HTML = 'html'
+    VIDEO = 'video'
+    AUDIO = 'audio'
+    IMAGE = 'image'
+    MAPPING = {
+        GENERIC: 1,
+        HTML: 2,
+        VIDEO: 4,
+        AUDIO: 8,
+        IMAGE: 16,
+    }
+
+    @classmethod
+    def bitmask(cls, name):
+        return cls.MAPPING[name]
+
+    @classmethod
+    def is_valid(cls, name):
+        return name in cls.MAPPING
+
+    @classmethod
+    def names(cls):
+        return cls.MAPPING.keys()
+
+
+FACET_TYPES = FacetTypes.MAPPING  # For backwards compatibility
 
 
 class Facets(CDFObject):
