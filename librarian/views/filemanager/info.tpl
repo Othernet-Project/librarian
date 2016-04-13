@@ -4,7 +4,7 @@
 <%block name="title">
     ## Translators, used as page title on a page that shows file details
     <% metadata = entry.facets %>
-    ${_('{title} details').format(title=metadata.get('title') or titlify(metadata['file']))}
+    ${_('{title} details').format(title=metadata.get('title') or th.facets.titlify(metadata['file']))}
 </%block>
 
 ${info.body()}

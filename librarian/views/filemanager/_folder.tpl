@@ -50,8 +50,8 @@
     default_view = d.dirinfo.get(request.locale, 'view', None)
     varg = {'view': default_view} if default_view else {}
     dpath = i18n_url('filemanager:file_list', path=d.rel_path, **varg)
-    cover_url = th.get_folder_cover(d)
-    icon, icon_is_url = th.get_folder_icon(d)
+    cover_url = th.facets.get_folder_cover(d)
+    icon, icon_is_url = th.facets.get_folder_icon(d)
     %>
     <li class="file-list-item file-list-directory${' with-controls' if with_controls else ''}" role="row" aria-selected="false" tabindex>
         <a href="${dpath}" data-type="directory" class="file-list-link">
@@ -67,7 +67,7 @@
             <%self:file_info_inner>
                 ## NAME
                 <span class="file-list-name">
-                    ${th.get_folder_name(d) | h}
+                    ${th.facets.get_folder_name(d) | h}
                 </span>
                 ## DESCRIPTION
                 % if description:
@@ -94,11 +94,11 @@
         # following line, which otherwise appears completely useless, **MUST** 
         # be there or `h` variable becomes unavailable to the rest of the def.
         h.quoted_url  # <-- again, don't remove this
-        fpath = th.get_view_path(f)
+        fpath = th.facets.get_view_path(f)
         apath = i18n_url('filemanager:file_list', path=f.rel_path)
         parent_view = 'generic' if is_search else None
         parent_url = th.get_parent_url(f.rel_path, parent_view)
-        icon, is_thumb = th.get_file_thumb(f)
+        icon, is_thumb = th.facets.get_file_thumb(f)
         title = f.facets.get('title')
         desc = f.facets.get('description')
     %>

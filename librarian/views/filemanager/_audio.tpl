@@ -17,8 +17,8 @@
         <span class="note">${_('No music files to be played.')}</span>
     % else:
         <%
-        selected_entry = get_selected(files, selected)
-        thumb_path = th.get_thumb_path(selected_entry.rel_path, default=None)
+        selected_entry = th.facets.get_selected(files, selected)
+        thumb_path = th.facets.get_thumb_path(selected_entry.rel_path, default=None)
         if thumb_path:
             cover_url = h.quoted_url('files:direct', path=thumb_path)
             custom_cover = True
@@ -33,7 +33,7 @@
             <div class="audio-controls-albumart" id="audio-controls-albumart">
                 <img src="${cover_url}" class="audio-controls-cover${' audio-controls-custom-cover' if custom_cover else ''}">
                 <div class="audio-controls-title" id="audio-controls-title">
-                    <h2>${metadata.get('title') or titlify(metadata.get('file'))}</h2>
+                    <h2>${metadata.get('title') or th.facets.titlify(metadata.get('file'))}</h2>
                     <p>${metadata.get('author', _('Unknown author'))}</p>
                 </div>
             </div>
@@ -50,7 +50,7 @@
 <%def name="sidebar()">
     % if 'audio' in facet_types:
         <%
-        selected_entry = get_selected(files, selected)
+        selected_entry = th.facets.get_selected(files, selected)
         %>
         ${self.sidebar_playlist(files, selected_entry)}
     % endif
@@ -70,15 +70,15 @@
     file = entry.name
     current = entry.name == selected_entry.name
     file_path = entry.rel_path
-    url = i18n_url('files:path', view=view, path=path, selected=file)
-    meta_url = i18n_url('files:path', view=view, path=path, info=file)
+    url = i18n_url('filemanager:file_list', view=view, path=path, selected=file)
+    meta_url = i18n_url('filemanager:file_list', view=view, path=path, info=file)
     direct_url = h.quoted_url('files:direct', path=file_path)
-    get_thumb_url = i18n_url('files:path', path=path, target=file_path, action='thumb', facet='audio')
+    get_thumb_url = i18n_url('filemanager:file_list', path=path, target=file_path, action='thumb', facet='audio')
     metadata = entry.facets
-    title = metadata.get('title') or titlify(file)
+    title = metadata.get('title') or th.facets.titlify(file)
     author = metadata.get('author') or _('Unknown Artist')
     duration = metadata.get('duration', 0)
-    hduration = durify(duration)
+    hduration = th.facets.durify(duration)
     size = metadata.get('size', 0)
     %>
     <li

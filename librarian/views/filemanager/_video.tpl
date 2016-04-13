@@ -16,7 +16,7 @@
 <span class="note">${_('No video files to be played.')}</span>
 % else:
 <%
-  selected_entry = get_selected(files, selected)
+  selected_entry = th.facets.get_selected(files, selected)
   video_url = h.quoted_url('files:direct', path=selected_entry.rel_path)
 %>
 <div class="video-controls" id="video-controls">
@@ -27,7 +27,7 @@
 <%def name="sidebar()">
     %if 'video' in facet_types:
         <%
-        selected_entry = get_selected(files, selected)
+        selected_entry = th.facets.get_selected(files, selected)
         %>
         ${self.sidebar_playlist(files, selected_entry)}
     %endif
@@ -47,14 +47,14 @@
         file = entry.name
         current = entry.name == selected_entry.name
         file_path = entry.rel_path
-        url = i18n_url('files:path', view=view, path=path, selected=file)
-        meta_url = i18n_url('files:path', view=view, path=path, info=file)
+        url = i18n_url('filemanager:file_list', view=view, path=path, selected=file)
+        meta_url = i18n_url('filemanager:file_list', view=view, path=path, info=file)
         direct_url = h.quoted_url('files:direct', path=file_path)
         metadata = entry.facets
-        title = metadata.get('title') or titlify(file)
+        title = metadata.get('title') or th.facets.titlify(file)
         description = metadata.get('description') or _('No description')
         duration = metadata.get('duration', 0)
-        hduration = durify(duration)
+        hduration = th.facets.durify(duration)
         width = metadata.get('width', 0)
         height = metadata.get('height', 0)
     %>

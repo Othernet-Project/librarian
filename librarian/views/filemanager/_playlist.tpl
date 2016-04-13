@@ -34,7 +34,7 @@
 <%def name="sidebar_playlist_item_metadata_duration(metadata)">
     ## Translators, used as label for audio/video duration in playlist's info
     ## panel.
-    ${self.sidebar_playlist_meta_line('duration', _('Duration:'), durify(metadata.get('duration', 0)))}
+    ${self.sidebar_playlist_meta_line('duration', _('Duration:'), th.facets.durify(metadata.get('duration', 0)))}
 </%def>
 
 <%def name="sidebar_playlist_video_dimensions(metadata)">
@@ -76,7 +76,7 @@
 <%def name="sidebar_playlist_aspect_ratio(metadata)">
     ## Translators, used as label for image/video aspect ratio (e.g., 4:3,
     ## 16:9) in playlist's info panel.
-    ${self.sidebar_playlist_meta_line('aspect', _('Aspect ratio:'), aspectify(metadata.get('width', 0), metadata.get('height', 0)))}
+    ${self.sidebar_playlist_meta_line('aspect', _('Aspect ratio:'), th.facets.aspectify(metadata.get('width', 0), metadata.get('height', 0)))}
 </%def>
 
 <%def name="sidebar_playlist_item_metadata(entry)">
@@ -88,7 +88,7 @@
 <%def name="sidebar_playlist_item_details(entry)">
     <% metadata = entry.facets %>
     <h2 class="playlist-item-title">
-        ${metadata.get('title') or titlify(entry.name) | h}
+        ${metadata.get('title') or th.facets.titlify(entry.name) | h}
     </h2>
     ${self.sidebar_playlist_item_metadata(entry)}
     <p class="playlist-metadata-buttons">

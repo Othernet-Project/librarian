@@ -141,13 +141,13 @@ class FileList(XHRPartialRoute):
         self.set_view(ctx, relpaths)
         if not self.is_search:
             # updates override the files list with a custom one
-            if view == FacetTypes.UPDATES:
+            if ctx['view'] == FacetTypes.UPDATES:
                 self.fetch_updates(ctx)
             # limit the list of files to only those that can be handled
             # within the chosen view
-            if view not in self.UNFILTERED_FACET_TYPES:
+            if ctx['view'] not in self.UNFILTERED_FACET_TYPES:
                 ctx['files'] = [f for f in ctx['files']
-                                if is_facet_valid(f.rel_path, view)]
+                                if is_facet_valid(f.rel_path, ctx['view'])]
         return ctx
 
 

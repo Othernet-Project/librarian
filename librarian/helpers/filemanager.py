@@ -53,7 +53,7 @@ def get_parent_path(path):
 def get_parent_url(path, view=None):
     parent_path = get_parent_path(path)
     vargs = {'view': view} if view else {}
-    return i18n_url('files:path', path=parent_path, **vargs)
+    return i18n_url('filemanager:file_list', path=parent_path, **vargs)
 
 
 def get_file(files, path):
@@ -172,7 +172,7 @@ def get_folder_view_url(fsobj):
     """
     default_view = fsobj.dirinfo.get(request.locale, 'view', None)
     varg = {'view': default_view} if default_view else {}
-    return i18n_url('files:path', path=fsobj.rel_path, **varg)
+    return i18n_url('filemanager:file_list', path=fsobj.rel_path, **varg)
 
 
 @template_helper(namespace='facets')
@@ -200,7 +200,7 @@ def get_view_path(fsobj):
     if not view:
         return quoted_url('files:direct', path=fsobj.rel_path)
     parent = os.path.dirname(fsobj.rel_path) or '.'
-    return i18n_url('files:path', path=parent, view=view, selected=fsobj.name)
+    return i18n_url('filemanager:file_list', path=parent, view=view, selected=fsobj.name)
 
 
 @template_helper(namespace='facets')
