@@ -13,7 +13,7 @@
     <div class="file-list-current${' with-cover' if cover else ''}">
         % if cover:
             <div class="file-list-current-cover file-list-current-block">
-                <img src="${h.quoted_url('files:direct', path=current.other_path(cover))}">
+                <img src="${h.quoted_url('filemanager:direct', path=current.other_path(cover))}">
             </div>
         % endif
         <div class="file-list-current-info file-list-current-block">

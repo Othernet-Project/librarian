@@ -47,7 +47,7 @@ def get_views(facet_types):
         ## - Link to complete file list if invalid path is requested
         ## - Link to parent directory if no search query and not at top-level
         % if is_search or not is_successful:
-            <a href="${i18n_url('filemanager:file_list', path='')}" class="views-tabs-strip-tab views-tabs-special">
+            <a href="${i18n_url('filemanager:list', path='')}" class="views-tabs-strip-tab views-tabs-special">
                 <span class="file-list-icon icon icon-arrow-left"></span>
                 ## Translators, label for a link that takes the user to
                 ## main file/folder list from search results.
@@ -55,7 +55,7 @@ def get_views(facet_types):
             </a>
         % elif path != '.':
             <% uppath = '' if up == '.' else up + '/'%>
-            <a href="${i18n_url('filemanager:file_list', path=up)}" class="views-tabs-strip-tab views-tabs-special">
+            <a href="${i18n_url('filemanager:list', path=up)}" class="views-tabs-strip-tab views-tabs-special">
                 <span class="file-list-icon icon icon-folder-up"></span>
                 ## Translators, label for a link that takes the user up
                 ## one level in folder hierarchy.
@@ -65,7 +65,7 @@ def get_views(facet_types):
         <% views = get_default_views() if is_search else get_views(facet_types) %>
         % for name, label in views:
             <%
-            view_url = i18n_url('filemanager:file_list', path=path, view=name)
+            view_url = i18n_url('filemanager:list', path=path, view=name)
             current = name == view
             icon = FACET_ICON_MAPPING[name]
             %>

@@ -7,9 +7,9 @@
         <%
             selected_entry = th.facets.get_selected(files, selected)
             previous, next = th.facets.get_adjacent(files, selected_entry)
-            previous_url = i18n_url('filemanager:file_list', view=view, path=path, selected=previous.name)
-            next_url = i18n_url('filemanager:file_list', view=view, path=path, selected=next.name)
-            direct_url = h.quoted_url('files:direct', path=selected_entry.rel_path)
+            previous_url = i18n_url('filemanager:list', view=view, path=path, selected=previous.name)
+            next_url = i18n_url('filemanager:list', view=view, path=path, selected=next.name)
+            direct_url = h.quoted_url('filemanager:direct', path=selected_entry.rel_path)
         %>
         <div class="gallery-current-image" id="gallery-current-image">
             <img class="gallery-current-image-img" src='${direct_url}'/>
@@ -58,10 +58,10 @@
         file = entry.name
         current = entry == selected_entry
         file_path = entry.rel_path
-        url = i18n_url('filemanager:file_list', view=view, path=path, selected=file)
-        meta_url = i18n_url('filemanager:file_list', view=view, path=path, info=file)
-        direct_url = h.quoted_url('files:direct', path=file_path)
-        thumb_url = h.quoted_url('files:direct', path=th.facets.get_thumb_path(file_path))
+        url = i18n_url('filemanager:list', view=view, path=path, selected=file)
+        meta_url = i18n_url('filemanager:details', view=view, path=path, info=file)
+        direct_url = h.quoted_url('filemanager:direct', path=file_path)
+        thumb_url = h.quoted_url('filemanager:direct', path=th.facets.get_thumb_path(file_path))
         metadata = entry.facets
         title = metadata.get('title') or th.facets.titlify(file)
         img_width = metadata.get('width', 0)

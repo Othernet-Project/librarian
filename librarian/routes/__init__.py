@@ -19,7 +19,11 @@ def routes(config):
     auth.Logout.route('/logout/', app=exts.bottle_app)
     auth.PasswordReset.route('/reset-password/', app=exts.bottle_app)
     auth.EmergencyReset.route('/emergency/', app=exts.bottle_app)
-    filemanager.FileList.route('/files/<path:safepath>', app=exts.bottle_app)
+    filemanager.List.route('/files/<path:safepath>', app=exts.bottle_app)
+    filemanager.Details.route('/details/<path:safepath>', app=exts.bottle_app)
+    filemanager.Direct.route('/direct/<path:safepath>', app=exts.bottle_app)
+    filemanager.Delete.route('/delete/<path:safepath>', app=exts.bottle_app)
+    filemanager.Thumb.route('/thumb/<path:safepath>', app=exts.bottle_app)
     route_config = (
         ('dashboard:main', dashboard.dashboard,
          'GET', '/dashboard/', {}),
@@ -29,8 +33,6 @@ def routes(config):
          'POST', '/diskspace/consolidate/', {}),
         ('diskspace:consolidate_state', diskspace.consolidate_state,
          'GET', '/diskspace/consolidate/state', {}),
-        ('files:direct', filemanager.direct_file,
-         'GET', '/direct/<path:path>', dict(unlocked=True)),
         ('ui:lang_list', lang.lang_list,
          'GET', '/languages/', {}),
         ('sys:applog', logs.send_applog,

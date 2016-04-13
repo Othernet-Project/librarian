@@ -9,7 +9,7 @@
 </%def>
 
 <%def name="file_delete(path)">
-    <form action="${i18n_url('filemanager:file_list', path=path)}" class="file-list-delete file-list-control">
+    <form action="${i18n_url('filemanager:delete', path=path)}" class="file-list-delete file-list-control">
         <input type="hidden" name="action" value="delete">
         <button class="nobutton" type="submit">
             <span class="icon icon-no-outline"></span>
@@ -20,7 +20,7 @@
 </%def>
 
 <%def name="file_download(path)">
-    <a href="${url('files:direct', path=h.urlquote(path))}" class="file-list-control">
+    <a href="${url('filemanager:direct', path=h.urlquote(path))}" class="file-list-control">
         <span class="icon icon-download-outline"></span>
         <span class="label">${_('Download')}</span>
     </a>
@@ -49,7 +49,7 @@
     description = d.dirinfo.get(request.locale, 'description', None)
     default_view = d.dirinfo.get(request.locale, 'view', None)
     varg = {'view': default_view} if default_view else {}
-    dpath = i18n_url('filemanager:file_list', path=d.rel_path, **varg)
+    dpath = i18n_url('filemanager:list', path=d.rel_path, **varg)
     cover_url = th.facets.get_folder_cover(d)
     icon, icon_is_url = th.facets.get_folder_icon(d)
     %>
@@ -95,7 +95,7 @@
         # be there or `h` variable becomes unavailable to the rest of the def.
         h.quoted_url  # <-- again, don't remove this
         fpath = th.facets.get_view_path(f)
-        apath = i18n_url('filemanager:file_list', path=f.rel_path)
+        apath = i18n_url('filemanager:list', path=f.rel_path)
         parent_view = 'generic' if is_search else None
         parent_url = th.get_parent_url(f.rel_path, parent_view)
         icon, is_thumb = th.facets.get_file_thumb(f)

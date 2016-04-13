@@ -20,13 +20,13 @@
         selected_entry = th.facets.get_selected(files, selected)
         thumb_path = th.facets.get_thumb_path(selected_entry.rel_path, default=None)
         if thumb_path:
-            cover_url = h.quoted_url('files:direct', path=thumb_path)
+            cover_url = h.quoted_url('filemanager:direct', path=thumb_path)
             custom_cover = True
         else:
             cover_url = assets.url + 'img/albumart-placeholder.png'
             custom_cover = False
 
-        audio_url = h.quoted_url('files:direct', path=selected_entry.rel_path)
+        audio_url = h.quoted_url('filemanager:direct', path=selected_entry.rel_path)
         metadata = selected_entry.facets
         %>
         <div class="audio-controls" id="audio-controls">
@@ -70,10 +70,10 @@
     file = entry.name
     current = entry.name == selected_entry.name
     file_path = entry.rel_path
-    url = i18n_url('filemanager:file_list', view=view, path=path, selected=file)
-    meta_url = i18n_url('filemanager:file_list', view=view, path=path, info=file)
-    direct_url = h.quoted_url('files:direct', path=file_path)
-    get_thumb_url = i18n_url('filemanager:file_list', path=path, target=file_path, action='thumb', facet='audio')
+    url = i18n_url('filemanager:list', view=view, path=path, selected=file)
+    meta_url = i18n_url('filemanager:details', view=view, path=path, info=file)
+    direct_url = h.quoted_url('filemanager:direct', path=file_path)
+    get_thumb_url = i18n_url('filemanager:thumb', path=file_path, facet='audio')
     metadata = entry.facets
     title = metadata.get('title') or th.facets.titlify(file)
     author = metadata.get('author') or _('Unknown Artist')

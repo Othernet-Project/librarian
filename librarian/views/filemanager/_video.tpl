@@ -17,7 +17,7 @@
 % else:
 <%
   selected_entry = th.facets.get_selected(files, selected)
-  video_url = h.quoted_url('files:direct', path=selected_entry.rel_path)
+  video_url = h.quoted_url('filemanager:direct', path=selected_entry.rel_path)
 %>
 <div class="video-controls" id="video-controls">
     ${video_control(video_url)}
@@ -47,9 +47,9 @@
         file = entry.name
         current = entry.name == selected_entry.name
         file_path = entry.rel_path
-        url = i18n_url('filemanager:file_list', view=view, path=path, selected=file)
-        meta_url = i18n_url('filemanager:file_list', view=view, path=path, info=file)
-        direct_url = h.quoted_url('files:direct', path=file_path)
+        url = i18n_url('filemanager:list', view=view, path=path, selected=file)
+        meta_url = i18n_url('filemanager:details', view=view, path=path, info=file)
+        direct_url = h.quoted_url('filemanager:direct', path=file_path)
         metadata = entry.facets
         title = metadata.get('title') or th.facets.titlify(file)
         description = metadata.get('description') or _('No description')

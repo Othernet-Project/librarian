@@ -6,6 +6,6 @@
     %>
 
     <div class="views-reader" id="views-reader">
-        <iframe class="views-reader-frame" src="${h.quoted_url('files:direct', path=full_path)}" id="views-reader-frame" data-override-partial="${assets['css/overrides']}" data-override-full="${assets['css/restyle']}"></iframe>
+        <iframe class="views-reader-frame" src="${h.quoted_url('filemanager:direct', path=full_path)}" id="views-reader-frame" data-override-partial="${assets['css/overrides']}" data-override-full="${assets['css/restyle']}"></iframe>
     </div>
 % endif

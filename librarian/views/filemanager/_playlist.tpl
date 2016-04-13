@@ -92,7 +92,7 @@
     </h2>
     ${self.sidebar_playlist_item_metadata(entry)}
     <p class="playlist-metadata-buttons">
-        <a href="${url('files:direct', path=h.urlquote(entry.rel_path))}" class="button" target="_blank">
+        <a href="${h.quoted_url('filemanager:direct', path=entry.rel_path)}" class="button" target="_blank">
             <span class="icon icon-download"></span>
             <span class="label">
                 ${_('Download')}

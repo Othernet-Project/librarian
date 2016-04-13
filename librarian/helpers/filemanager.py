@@ -53,7 +53,7 @@ def get_parent_path(path):
 def get_parent_url(path, view=None):
     parent_path = get_parent_path(path)
     vargs = {'view': view} if view else {}
-    return i18n_url('filemanager:file_list', path=parent_path, **vargs)
+    return i18n_url('filemanager:list', path=parent_path, **vargs)
 
 
 def get_file(files, path):
@@ -139,14 +139,14 @@ def get_folder_cover(fsobj):
     if cover:
         # There is a cover image
         cover_path = fsobj.other_path(cover)
-        return quoted_url('files:direct', path=cover_path)
+        return quoted_url('filemanager:direct', path=cover_path)
     # Look for default cover
     default_cover = fsobj.other_path('cover.jpg')
     if not request.app.supervisor.exts.fsal.exists(default_cover):
         return
     fsobj.dirinfo.set('cover', 'cover.jpg')
     fsobj.dirinfo.store()
-    return quoted_url('files:direct', path=default_cover)
+    return quoted_url('filemanager:direct', path=default_cover)
 
 
 @template_helper(namespace='facets')
@@ -158,7 +158,7 @@ def get_folder_icon(fsobj):
     icon = fsobj.dirinfo.get(request.locale, 'icon', None)
     if icon:
         # Dirinfo has an icon, so let's use that
-        return quoted_url('files:direct', path=fsobj.other_path(icon)), True
+        return quoted_url('filemanager:direct', path=fsobj.other_path(icon)), True
     # Since dirinfo does not have an icon for us, we'll see if there's an icon
     # for a view
     view = fsobj.dirinfo.get(request.locale, 'view', 'generic')
@@ -172,7 +172,7 @@ def get_folder_view_url(fsobj):
     """
     default_view = fsobj.dirinfo.get(request.locale, 'view', None)
     varg = {'view': default_view} if default_view else {}
-    return i18n_url('filemanager:file_list', path=fsobj.rel_path, **varg)
+    return i18n_url('filemanager:list', path=fsobj.rel_path, **varg)
 
 
 @template_helper(namespace='facets')
@@ -198,9 +198,12 @@ def get_view_path(fsobj):
     ext = fsobj.rel_path.rsplit('.', 1)[-1]
     view = EXTENSION_VIEW_MAPPING.get(ext)
     if not view:
-        return quoted_url('files:direct', path=fsobj.rel_path)
+        return quoted_url('filemanager:direct', path=fsobj.rel_path)
     parent = os.path.dirname(fsobj.rel_path) or '.'
-    return i18n_url('filemanager:file_list', path=parent, view=view, selected=fsobj.name)
+    return i18n_url('filemanager:list',
+                    path=parent,
+                    view=view,
+                    selected=fsobj.name)
 
 
 @template_helper(namespace='facets')
@@ -222,7 +225,7 @@ def get_file_thumb(fsobj):
         # No thumb for this file, so let's try an icon
         return get_file_icon(fsobj), False
     else:
-        return quoted_url('files:direct', path=thumb), True
+        return quoted_url('filemanager:direct', path=thumb), True
 
 
 @template_helper(namespace='facets')
