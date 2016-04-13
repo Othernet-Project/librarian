@@ -7,5 +7,5 @@ class FilesMenuItem(MenuItem):
     name = 'files'
     label = _("Files")
     icon_class = 'files'
-    route = 'filemanager:filelist'
+    route = 'filemanager:file_list'
     route_args = {'path': ''}
