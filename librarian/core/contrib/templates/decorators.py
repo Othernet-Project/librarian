@@ -52,9 +52,14 @@ class template_helper(object):
     __metaclass__ = LookupHelper
     registry = AttrDict()
 
-    def __init__(self, alias=None, namespace=None):
-        self.alias = alias
-        self.path = namespace.split('.') if namespace else []
+    def __init__(self, fn_or_alias=None, namespace=None):
+        if callable(fn_or_alias):
+            self.alias = None
+            self.path = []
+            self(fn_or_alias)
+        else:
+            self.alias = fn_or_alias
+            self.path = namespace.split('.') if namespace else []
 
     def __call__(self, fn):
         namespace = self.registry
