@@ -49,7 +49,7 @@ def get_parent_path(path):
     return os.path.normpath(os.path.join(path, '..'))
 
 
-@template_helper
+@template_helper()
 def get_parent_url(path, view=None):
     parent_path = get_parent_path(path)
     vargs = {'view': view} if view else {}

@@ -115,7 +115,7 @@ def read_ondd_setup():
     return {} if isinstance(initial_data, bool) else initial_data
 
 
-@template_helper
+@template_helper()
 def has_tuner():
     TUNER_DEV_PATH = '/dev/dvb/adapter0/frontend0'
     return os.path.exists(TUNER_DEV_PATH)
