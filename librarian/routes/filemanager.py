@@ -83,18 +83,20 @@ class List(FileRouteMixin, XHRPartialRoute):
         return self.request.params.get(self.SHOW_HIDDEN_KEY, 'no') == 'yes'
 
     def set_view(self, context, relpaths):
-        view = self.view
-        # use html view if it wasn't specfied explicitly
-        if not view or view == FacetTypes.HTML:
+        use_view = self.view
+        # use default(html) view if it wasn't specfied explicitly or is not
+        # valid
+        if use_view not in self.VALID_VIEWS:
+            use_view = self.DEFAULT_VIEW
+        # find index file in case html view is used
+        if use_view == FacetTypes.HTML:
             context['index_file'] = find_html_index(relpaths, any_html=False)
-        # if no index file matches, fall back to generic view
-        if not view and not context['index_file']:
-            view = FacetTypes.GENERIC
-        # if requested view is not valid, fall back to generic view
-        if view not in self.VALID_VIEWS:
-            view = FacetTypes.GENERIC
+            # if no index file is found and html view is not explicitly chosen,
+            # fall back to generic view
+            if not self.view and not context['index_file']:
+                use_view = FacetTypes.GENERIC
         # update context with best matching view
-        context.update(view=view)
+        context.update(view=use_view)
 
     def get_file_list(self, query):
         if self.is_search:
