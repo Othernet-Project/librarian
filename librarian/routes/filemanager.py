@@ -13,6 +13,7 @@ import os
 from bottle import static_file
 from bottle_utils.html import urlunquote
 from bottle_utils.i18n import lazy_gettext as _
+from bottle_utils.lazy import caching_lazy
 from streamline import RouteBase, XHRPartialRoute, TemplateFormRoute
 
 from ..core.exts import ext_container as exts
@@ -40,6 +41,7 @@ class FileRouteMixin(object):
     def __init__(self, *args, **kwargs):
         super(FileRouteMixin, self).__init__(*args, **kwargs)
         self.manager = Manager()
+        self.context = dict()
 
     @property
     def view(self):
@@ -82,23 +84,51 @@ class List(FileRouteMixin, XHRPartialRoute):
     def show_hidden(self):
         return self.request.params.get(self.SHOW_HIDDEN_KEY, 'no') == 'yes'
 
-    def set_view(self, context, relpaths):
+    def get_context(self):
+        context = super(List, self).get_context()
+        context.update(is_search=self.is_search, selected=self.selected)
+        return context
+
+    def detect_facet_types(self):
+        paths = self.get_file_paths()
+        facet_types = get_facet_types(paths)
+        self.context.update(facet_types=facet_types)
+
+    def filter_files(self, view):
+        filtered_files = [f for f in self.context.get('files', [])
+                          if is_facet_valid(f.rel_path, view)]
+        self.context.update(files=filtered_files)
+
+    def find_index(self):
+        paths = self.get_file_paths()
+        index_file = find_html_index(paths, any_html=False)
+        self.context.update(index_file=index_file)
+        return index_file is not None
+
+    def prepare_view(self):
         use_view = self.view
         # use default(html) view if it wasn't specfied explicitly or is not
         # valid
         if use_view not in self.VALID_VIEWS:
             use_view = self.DEFAULT_VIEW
         # find index file in case html view is used
-        if use_view == FacetTypes.HTML:
-            context['index_file'] = find_html_index(relpaths, any_html=False)
-            # if no index file is found and html view is not explicitly chosen,
-            # fall back to generic view
-            if not self.view and not context['index_file']:
-                use_view = FacetTypes.GENERIC
+        if (use_view == FacetTypes.HTML and
+                not self.find_index() and
+                not self.view):
+            # if no index file is found and html view was not explicitly
+            # chosen, but as a default view, fall back to generic view
+            use_view = FacetTypes.GENERIC
+        # updates override the files list with a custom one
+        if use_view == FacetTypes.UPDATES:
+            self.prepare_updates()
+        # limit the list of files to only those that can be handled
+        # within the chosen view
+        if use_view not in self.UNFILTERED_FACET_TYPES:
+            self.filter_files(use_view)
         # update context with best matching view
-        context.update(view=use_view)
+        self.context.update(view=use_view)
 
-    def get_file_list(self, query):
+    def prepare_file_list(self, query):
         if self.is_search:
             result = self.manager.search(query, self.show_hidden)
             relpath = self.ROOT_PATH if not result['is_match'] else query
@@ -107,11 +137,15 @@ class List(FileRouteMixin, XHRPartialRoute):
             relpath = query
             if not result['success']:
                 self.abort(404)
-        return dict(path=relpath,
-                    current=self.manager.get(relpath),
-                    up=get_parent_path(relpath),
-                    dirs=result['dirs'],
-                    files=result['files'])
+        self.context.update(path=relpath,
+                            current=self.manager.get(relpath),
+                            up=get_parent_path(relpath),
+                            dirs=result['dirs'],
+                            files=result['files'])
+
+    @caching_lazy
+    def get_file_paths(self):
+        return [f.rel_path for f in self.context.get('files', [])]
 
     @cached(prefix='descendants', timeout=300)
     def __get_update_count(self, path, span):
@@ -121,41 +155,30 @@ class List(FileRouteMixin, XHRPartialRoute):
                                                entry_type=0)
         return result['count']
 
-    def fetch_updates(self, context):
+    def prepare_updates(self):
         span = exts.config['changelog.span']
-        count = self.__get_update_count(context['path'], span)
+        count = self.__get_update_count(self.context['path'], span)
         # parse pagination params
         page = Paginator.parse_page(self.request.params)
         per_page = Paginator.parse_per_page(self.request.params)
         pager = Paginator(count, page, per_page)
         (offset, limit) = pager.items
-        results = self.manager.list_descendants(context['path'],
+        results = self.manager.list_descendants(self.context['path'],
                                                 offset=offset,
                                                 limit=limit,
                                                 order='-create_time',
                                                 span=span,
                                                 entry_type=0,
                                                 show_hidden=False)
-        context.update(pager=pager, files=results['files'])
+        self.context.update(pager=pager, files=results['files'])
 
     def get(self, path):
-        path = path or self.ROOT_PATH
-        ctx = self.get_file_list(self.search_query or path)
-        relpaths = [f.rel_path for f in ctx['files']]
-        ctx.update(is_search=self.is_search,
-                   selected=self.selected,
-                   facet_types=get_facet_types(relpaths))
-        self.set_view(ctx, relpaths)
+        query = self.search_query or path or self.ROOT_PATH
+        self.prepare_file_list(query)
+        self.detect_facet_types()
         if not self.is_search:
-            # updates override the files list with a custom one
-            if ctx['view'] == FacetTypes.UPDATES:
-                self.fetch_updates(ctx)
-            # limit the list of files to only those that can be handled
-            # within the chosen view
-            if ctx['view'] not in self.UNFILTERED_FACET_TYPES:
-                ctx['files'] = [f for f in ctx['files']
-                                if is_facet_valid(f.rel_path, ctx['view'])]
-        return ctx
+            self.prepare_view()
+        return self.context
 
 
 class Details(FileRouteMixin, XHRPartialRoute):
