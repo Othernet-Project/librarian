@@ -9,12 +9,11 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
-import functools
 
 from bottle import static_file
 from bottle_utils.html import urlunquote
 from bottle_utils.i18n import lazy_gettext as _
-from streamline import XHRPartialRoute, RouteBase
+from streamline import RouteBase, XHRPartialRoute, TemplateFormRoute
 
 from ..core.exts import ext_container as exts
 from ..core.contrib.cache.decorators import cached
@@ -25,6 +24,7 @@ from ..data.facets.utils import (get_facets,
                                  is_facet_valid,
                                  find_html_index)
 from ..data.manager import Manager
+from ..forms.filemanager import DeleteForm
 from ..helpers.filemanager import (get_parent_path,
                                    get_parent_url,
                                    find_root,
@@ -197,67 +197,75 @@ class Direct(RouteBase):
             return static_file(path, root=root, download=download)
 
 
-class Delete(CSRFRouteMixin, RouteBase):
+class Delete(CSRFRouteMixin, TemplateFormRoute):
     template_func = template
-    confirm_template = 'filemanager/remove_confirm'
-    success_template = 'ui/feedback'
-
-    def guard_already_removed(func):
-        @functools.wraps(func)
-        def wrapper(self, path, **kwargs):
-            if not self.manager.exists(path):
-                # Translators, used as page title when a file's removal is
-                # retried, but it was already deleted before
-                title = _("File already removed")
-                # Translators, used as message when a file's removal is
-                # retried, but it was already deleted before
-                message = _("The specified file has already been removed.")
-                return template('feedback',
-                                status='success',
-                                page_title=title,
-                                message=message,
-                                redirect_url=get_parent_url(path),
-                                redirect_target=_("Files"))
-            return func(self, path=path, **kwargs)
-        return wrapper
+    template_name = 'filemanager/remove_confirm'
+    form_factory = DeleteForm
 
     def __init__(self, *args, **kwargs):
         super(Delete, self).__init__(*args, **kwargs)
         self.manager = Manager()
 
-    @guard_already_removed
-    def get(self, path):
+    def get_unbound_form(self):
+        form_factory = self.get_form_factory()
+        initial = dict(path=self.request.url_args['path'])
+        return form_factory(initial)
+
+    def get_context(self):
+        context = super(Delete, self).get_context()
+        path = self.request.url_args['path']
         cancel_url = self.request.headers.get('Referer', get_parent_url(path))
-        context = dict(item_name=os.path.basename(path),
+        context.update(path=path,
+                       item_name=os.path.basename(path),
                        cancel_url=cancel_url)
-        return self.template_func(self.confirm_template, context)
+        return context
+
+    def already_removed(self, path):
+        # Translators, used as page title when a file's removal is
+        # retried, but it was already deleted before
+        page_title = _("File already removed")
+        # Translators, used as message when a file's removal is
+        # retried, but it was already deleted before
+        message = _("The specified file has already been removed.")
+        body = self.template_func('ui/feedback.tpl',
+                                  status='success',
+                                  page_title=page_title,
+                                  message=message,
+                                  redirect_url=get_parent_url(path),
+                                  redirect_target=_("Files"))
+        return self.HTTPResponse(body)
 
     def removal_succeeded(self, path):
         # Translators, used as page title of successful file removal feedback
         page_title = _("File removed")
         # Translators, used as message of successful file removal feedback
         message = _("File successfully removed.")
-        context = dict(status='success',
-                       page_title=page_title,
-                       message=message,
-                       redirect_url=get_parent_url(path),
-                       redirect_target=_("file list"))
-        return self.template_func(self.result_template, context)
+        body = self.template_func('ui/feedback.tpl',
+                                  status='success',
+                                  page_title=page_title,
+                                  message=message,
+                                  redirect_url=get_parent_url(path),
+                                  redirect_target=_("file list"))
+        return self.HTTPResponse(body)
 
     def removal_failed(self, path):
         # Translators, used as page title of unsuccessful file removal feedback
         page_title = _("File not removed")
         # Translators, used as message of unsuccessful file removal feedback
         message = _("File could not be removed.")
-        context = dict(status='error',
-                       page_title=page_title,
-                       message=message,
-                       redirect_url=get_parent_url(path),
-                       redirect_target=_("file list"))
-        return self.template_func(self.result_template, context)
+        body = self.template_func('ui/feedback.tpl',
+                                  status='error',
+                                  page_title=page_title,
+                                  message=message,
+                                  redirect_url=get_parent_url(path),
+                                  redirect_target=_("file list"))
+        return self.HTTPResponse(body)
 
-    @guard_already_removed
-    def post(self, path):
+    def form_invalid(self, path):
+        return self.already_removed(path)
+
+    def form_valid(self, path):
+        path = self.form.processed_data['path']
         (success, error) = self.manager.remove(path)
         if success:
             return self.removal_succeeded(path)

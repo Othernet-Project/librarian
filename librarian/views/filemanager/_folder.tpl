@@ -10,7 +10,6 @@
 
 <%def name="file_delete(path)">
     <form action="${i18n_url('filemanager:delete', path=path)}" class="file-list-delete file-list-control">
-        <input type="hidden" name="action" value="delete">
         <button class="nobutton" type="submit">
             <span class="icon icon-no-outline"></span>
             ## Translators, used as label for folder/file delete button
