@@ -1,5 +1,3 @@
-from os.path import basename
-
 from bottle import error
 
 from ..core.exts import ext_container as exts
@@ -27,6 +25,8 @@ def routes(config):
     filemanager.Delete.route('/delete/<path:safepath>', app=exts.bottle_app)
     filemanager.Thumb.route('/thumb/<path:safepath>', app=exts.bottle_app)
     lang.List.route(app=exts.bottle_app)
+    logs.SendAppLog.route(app=exts.bottle_app)
+    logs.SendDiag.route(app=exts.bottle_app)
     notifications.List.route(app=exts.bottle_app)
     ondd.Status.route(app=exts.bottle_app)
     ondd.FileList.route(app=exts.bottle_app)
@@ -37,10 +37,6 @@ def routes(config):
     setup.Exit.route(app=exts.bottle_app)
     setup.Diag.route(app=exts.bottle_app)
     route_config = (
-        ('sys:applog', logs.send_applog,
-         'GET', '/' + basename(config['logging.output']), dict(unlocked=True)),
-        ('sys:syslog', logs.send_diags,
-         'GET', '/syslog', dict(unlocked=True)),
         # This route handler is added because unhandled missing pages cause
         # bottle to _not_ install any plugins, and some are essential to
         # rendering of the 404 page (e.g., i18n, sessions, auth).
