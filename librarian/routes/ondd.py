@@ -56,7 +56,7 @@ class Settings(XHRPartialFormRoute):
     template_func = template
     template_name = 'ondd/settings'
     partial_template_name = 'ondd/_settings_form'
-    form_facotry = ONDDForm
+    form_factory = ONDDForm
 
     def form_valid(self):
         logging.info('ONDD: tuner settings updated')
