@@ -29,6 +29,7 @@ def routes(config):
     ondd.FileList.route(app=exts.bottle_app)
     ondd.CacheStatus.route(app=exts.bottle_app)
     ondd.Settings.route(app=exts.bottle_app)
+    settings.Settings.route(app=exts.bottle_app)
     route_config = (
         ('dashboard:main', dashboard.dashboard,
          'GET', '/dashboard/', {}),
@@ -42,10 +43,6 @@ def routes(config):
          'GET', '/' + basename(config['logging.output']), dict(unlocked=True)),
         ('sys:syslog', logs.send_diags,
          'GET', '/syslog', dict(unlocked=True)),
-        ('settings:load', settings.show_settings_form,
-         'GET', '/settings/', dict(unlocked=True)),
-        ('settings:save', settings.save_settings,
-         'POST', '/settings/', dict(unlocked=True)),
         ('setup:main', setup.enter_wizard,
          ['GET', 'POST'], '/setup/', {}),
         ('setup:exit', setup.exit_wizard,
