@@ -102,14 +102,6 @@ PRESETS = [
 ]
 
 
-def get_form_data_for_preset(index, defaults={}):
-    for p in PRESETS:
-        label, pindex, data = p
-        if index == pindex:
-            return data
-    return defaults
-
-
 def read_ondd_setup():
     initial_data = exts.setup.get('ondd')
     return {} if isinstance(initial_data, bool) else initial_data

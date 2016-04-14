@@ -10,7 +10,6 @@ from . import (auth, dashboard, diskspace, filemanager, lang, logs,
 
 def routes(config):
     exts.bottle_app.router.add_filter('safepath', safepath_filter)
-    skip_plugins = config['app.skip_plugins']
     error(403)(system.error_403)
     error(404)(system.error_404)
     error(500)(system.error_500)
@@ -26,6 +25,10 @@ def routes(config):
     filemanager.Thumb.route('/thumb/<path:safepath>', app=exts.bottle_app)
     lang.List.route(app=exts.bottle_app)
     notifications.List.route(app=exts.bottle_app)
+    ondd.Status.route(app=exts.bottle_app)
+    ondd.FileList.route(app=exts.bottle_app)
+    ondd.CacheStatus.route(app=exts.bottle_app)
+    ondd.Settings.route(app=exts.bottle_app)
     route_config = (
         ('dashboard:main', dashboard.dashboard,
          'GET', '/dashboard/', {}),
@@ -39,16 +42,6 @@ def routes(config):
          'GET', '/' + basename(config['logging.output']), dict(unlocked=True)),
         ('sys:syslog', logs.send_diags,
          'GET', '/syslog', dict(unlocked=True)),
-        ('ondd:status', ondd.get_signal_status,
-         'GET', '/ondd/status/', dict(unlocked=True, skip=skip_plugins)),
-        ('ondd:files', ondd.show_file_list,
-         'GET', '/ondd/files/', dict(unlocked=True, skip=skip_plugins)),
-        ('ondd:cache_status', ondd.show_cache_status,
-         'GET', '/ondd/cache/', dict(unlocked=True, skip=skip_plugins)),
-        ('ondd:settings', ondd.show_settings_form,
-         'GET', '/ondd/settings/', dict(unlocked=True)),
-        ('ondd:settings', ondd.set_settings,
-         'POST', '/ondd/settings/', dict(unlocked=True)),
         ('settings:load', settings.show_settings_form,
          'GET', '/settings/', dict(unlocked=True)),
         ('settings:save', settings.save_settings,
