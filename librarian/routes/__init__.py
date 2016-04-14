@@ -30,6 +30,9 @@ def routes(config):
     ondd.CacheStatus.route(app=exts.bottle_app)
     ondd.Settings.route(app=exts.bottle_app)
     settings.Settings.route(app=exts.bottle_app)
+    setup.Enter.route(app=exts.bottle_app)
+    setup.Exit.route(app=exts.bottle_app)
+    setup.Diag.route(app=exts.bottle_app)
     route_config = (
         ('dashboard:main', dashboard.dashboard,
          'GET', '/dashboard/', {}),
@@ -43,12 +46,6 @@ def routes(config):
          'GET', '/' + basename(config['logging.output']), dict(unlocked=True)),
         ('sys:syslog', logs.send_diags,
          'GET', '/syslog', dict(unlocked=True)),
-        ('setup:main', setup.enter_wizard,
-         ['GET', 'POST'], '/setup/', {}),
-        ('setup:exit', setup.exit_wizard,
-         'GET', '/setup/exit/', {}),
-        ('setup:diag', setup.diag,
-         'GET', '/diag/', {}),
         # This route handler is added because unhandled missing pages cause
         # bottle to _not_ install any plugins, and some are essential to
         # rendering of the 404 page (e.g., i18n, sessions, auth).
