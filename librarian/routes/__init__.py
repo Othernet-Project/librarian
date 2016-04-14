@@ -24,6 +24,7 @@ def routes(config):
     filemanager.Direct.route('/direct/<path:safepath>', app=exts.bottle_app)
     filemanager.Delete.route('/delete/<path:safepath>', app=exts.bottle_app)
     filemanager.Thumb.route('/thumb/<path:safepath>', app=exts.bottle_app)
+    lang.List.route(app=exts.bottle_app)
     route_config = (
         ('dashboard:main', dashboard.dashboard,
          'GET', '/dashboard/', {}),
@@ -33,8 +34,6 @@ def routes(config):
          'POST', '/diskspace/consolidate/', {}),
         ('diskspace:consolidate_state', diskspace.consolidate_state,
          'GET', '/diskspace/consolidate/state', {}),
-        ('ui:lang_list', lang.lang_list,
-         'GET', '/languages/', {}),
         ('sys:applog', logs.send_applog,
          'GET', '/' + basename(config['logging.output']), dict(unlocked=True)),
         ('sys:syslog', logs.send_diags,
