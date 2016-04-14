@@ -43,7 +43,7 @@ class List(XHRPartialFormRoute):
         first_id = self.form.processed_data['notification_id']
         groups = NotificationGroup.group_by(get_notifications(),
                                             by=('category', 'read_at'))
-        if not self.form.mark_read_all:
+        if not self.form.should_mark_all():
             # limit the list of groups to match only the one which needs to
             # be marked as read. matching is done by using the id of the first
             # notification object from the group, so even if new notifications

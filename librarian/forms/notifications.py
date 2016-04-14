@@ -11,6 +11,5 @@ class NotificationForm(form.Form):
     notification_id = form.StringField()
     action = form.SelectField(choices=ACTIONS)
 
-    @property
-    def mark_read_all(self):
+    def should_mark_all(self):
         return self.processed_data['action'] == self.MARK_READ_ALL
