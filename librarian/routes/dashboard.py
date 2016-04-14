@@ -16,6 +16,7 @@ from ..decorators.auth import login_required
 
 
 class Dashboard(TemplateRoute):
+    name = 'dashboard:main'
     path = '/dashboard/'
     template_func = template
     template_name = 'dashboard/dashboard'
