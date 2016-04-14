@@ -30,7 +30,7 @@ ${_('Error')}
 
     <p class="buttons">
     <a class="button" href="${url('/')}">${_('Return to main page')}</a>
-    <a class="button" href="${url('sys:applog')}">${_('Download application log')}</a>
+    <a class="button" href="${url('logs:send_app_log')}">${_('Download application log')}</a>
     </p>
 </%block>
 
