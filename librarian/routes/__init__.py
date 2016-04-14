@@ -18,6 +18,7 @@ def routes(config):
     auth.Logout.route('/logout/', app=exts.bottle_app)
     auth.PasswordReset.route('/reset-password/', app=exts.bottle_app)
     auth.EmergencyReset.route('/emergency/', app=exts.bottle_app)
+    dashboard.Dashboard.route(app=exts.bottle_app)
     filemanager.List.route('/files/<path:safepath>', app=exts.bottle_app)
     filemanager.Details.route('/details/<path:safepath>', app=exts.bottle_app)
     filemanager.Direct.route('/direct/<path:safepath>', app=exts.bottle_app)
@@ -34,8 +35,6 @@ def routes(config):
     setup.Exit.route(app=exts.bottle_app)
     setup.Diag.route(app=exts.bottle_app)
     route_config = (
-        ('dashboard:main', dashboard.dashboard,
-         'GET', '/dashboard/', {}),
         ('diskspace:show_consolidate_form', diskspace.show_consolidate_form,
          'GET', '/diskspace/consolidate/', {}),
         ('diskspace:consolidate', diskspace.schedule_consolidate,

@@ -8,14 +8,18 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from bottle import request
+from streamline import TemplateRoute
 
-from ..core.contrib.templates.renderer import view
+from ..core.contrib.templates.renderer import template
+from ..core.exts import ext_container as exts
 from ..decorators.auth import login_required
 
 
-@login_required()
-@view('dashboard/dashboard')
-def dashboard():
-    """ Render the dashboard """
-    return dict(plugins=request.app.supervisor.exts.dashboard.plugins)
+class Dashboard(TemplateRoute):
+    path = '/dashboard/'
+    template_func = template
+    template_name = 'dashboard/dashboard'
+
+    @login_required()
+    def get(self):
+        return dict(plugins=exts.dashboard.plugins)
