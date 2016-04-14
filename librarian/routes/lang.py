@@ -16,8 +16,10 @@ from ..helpers import lang  # NOQA
 
 
 class List(XHRPartialRoute):
-    name = 'ui:lang_list'
     path = '/languages/'
     template_func = template
     template_name = 'ui/lang_list'
     partial_template_name = 'ui/_lang_list'
+
+    def get(self):
+        return {}
