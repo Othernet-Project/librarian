@@ -25,6 +25,7 @@ def routes(config):
     filemanager.Delete.route('/delete/<path:safepath>', app=exts.bottle_app)
     filemanager.Thumb.route('/thumb/<path:safepath>', app=exts.bottle_app)
     lang.List.route(app=exts.bottle_app)
+    notifications.List.route(app=exts.bottle_app)
     route_config = (
         ('dashboard:main', dashboard.dashboard,
          'GET', '/dashboard/', {}),
@@ -38,10 +39,6 @@ def routes(config):
          'GET', '/' + basename(config['logging.output']), dict(unlocked=True)),
         ('sys:syslog', logs.send_diags,
          'GET', '/syslog', dict(unlocked=True)),
-        ('notifications:list', notifications.notification_list,
-         'GET', '/notifications/', {}),
-        ('notifications:read', notifications.notifications_read,
-         'POST', '/notifications/', {}),
         ('ondd:status', ondd.get_signal_status,
          'GET', '/ondd/status/', dict(unlocked=True, skip=skip_plugins)),
         ('ondd:files', ondd.show_file_list,
