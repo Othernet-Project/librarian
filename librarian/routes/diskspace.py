@@ -13,7 +13,7 @@ gettext = lambda x: x
 
 
 class ConsolidateState(RouteBase):
-    path = '/diskspace/consolidate/state'
+    path = '/diskspace/consolidate/state/'
 
     def get(self):
         return dict(active=storage.get_consolidate_status())
