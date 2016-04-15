@@ -16,7 +16,7 @@ class ConsolidateState(RouteBase):
     path = '/diskspace/consolidate/state'
 
     def get(self):
-        return dict(active=storage.get_consoildate_status())
+        return dict(active=storage.get_consolidate_status())
 
 
 class Consolidate(XHRPartialFormRoute):
@@ -76,7 +76,7 @@ class Consolidate(XHRPartialFormRoute):
     def get_context(self):
         context = super(Consolidate, self).get_context()
         context.update(storages=storage.get_content_storages(),
-                       active_storage_id=storage.get_consoildate_status(),
+                       active_storage_id=storage.get_consolidate_status(),
                        target_id=self.request.params.get('storage_id'))
         return context
 
