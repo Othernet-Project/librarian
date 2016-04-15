@@ -16,7 +16,7 @@ class SendAppLog(RouteBase):
     def path(self):
         return '/' + basename(self.config['logging.output'])
 
-    def send_applog(self):
+    def get(self):
         log_path = self.config['logging.output']
         version = get_base_version(self.config) or ''
         log_dir = dirname(log_path)
