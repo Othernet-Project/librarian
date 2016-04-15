@@ -39,7 +39,7 @@ class List(XHRPartialFormRoute):
             key = key_tmpl.format(self.request.session.id)
             exts.cache.delete(key)
 
-    def form_valid(self):
+    def get_markable_groups(self):
         first_id = self.form.processed_data['notification_id']
         groups = NotificationGroup.group_by(get_notifications(),
                                             by=('category', 'read_at'))
@@ -50,6 +50,10 @@ class List(XHRPartialFormRoute):
             # are added to the group since the last fetch by the client, it
             # will still be able to find the correct group.
             groups = [grp for grp in groups if grp.first_id == first_id]
+        return groups
+
+    def form_valid(self):
+        groups = self.get_markable_groups()
         # loop through the groups and mark them as read
         for group in groups:
             self.mark_read(group.notifications)
