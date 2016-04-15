@@ -213,7 +213,7 @@ class HtmlMetadata(BaseMetadata):
                 # <meta http-equiv="content-language">
                 pragma = meta.get('http-equiv', '').lower()
                 if pragma == 'content-language':
-                    self.data['language'] == meta.get('content')
+                    self.data['language'] = meta.get('content')
             if dom.html:
                 lang = dom.html.get('lang') or self.data.get('language', '')
                 self.data['language'] = lang
