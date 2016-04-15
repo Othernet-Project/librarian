@@ -21,18 +21,25 @@ def iter_lines(lines):
         yield lines.pop()
 
 
+def iter_log(file_obj, last_n_lines):
+    return iter_lines(list(file_obj)[-last_n_lines:])
+
+
 class Diag(TemplateRoute):
     path = '/diag/'
     template_func = template
     template_name = 'diag/diag'
 
-    def get(self):
-        if exts.setup_wizard.is_completed:
-            self.redirect('/')
+    def get_log_iterator(self):
         logpath = self.config['logging.syslog']
         with open(logpath, 'rt') as log:
-            logs = iter_lines(list(log)[-100:])
-        return dict(logs=logs, has_tuner=has_tuner())
+            return iter_log(log)
+
+    def get(self):
+        if exts.setup_wizard.is_completed:
+            return self.redirect('/')
+        return dict(logs=self.get_log_iterator(),
+                    has_tuner=has_tuner())
 
 
 class Enter(RouteBase):
