@@ -76,20 +76,59 @@ def batches(data, batch_size=1000):
         yield batch
 
 
+class aggregator(object):
+    """
+    Base py:class:`aggregator`, meant only to provide the skeleton for
+    subclasses.
+    """
+    type = None
+    method = None
+
+
+class appender(aggregator):
+    """
+    Appends each result set to a list.
+    """
+    type = list
+    method = staticmethod(lambda agg, x: agg.append(x))
+
+
+class extender(aggregator):
+    """
+    Extends the aggregator list with each result set.
+    """
+    type = list
+    method = staticmethod(lambda agg, x: agg.extend(x))
+
+
+class updater(aggregator):
+    """
+    Updates the aggregator dict with each result set.
+    """
+    type = dict
+    method = staticmethod(lambda agg, x: agg.update(x))
+
+
 class batched(object):
     """
     Decorator that makes the specified iterable by index (``arg``) or by name
     (``kwarg``) of a function call split up into batches, and calls the wrapped
     function with batches of that data.
-    If ``aggregate`` is set, the results will be collected into a list and
-    returned, otherwise it yields the result(s) of the calls individually.
+    If ``aggregator`` is specified, the results will be collected into a new
+    instance of py:attr:`aggregator.type`, using py:attr:`aggregator.method`
+    (defined on the same py:class:`aggregator` class) and returned, otherwise
+    it yields the result(s) of the calls individually.
     The parameter ``flat`` is used only if ``aggregate`` is set, and it implies
     that the wrapped function returns a list or tuple. When set, during
     aggregation the aggregator list will be extended with the result set,
     instead of appending to it.
     """
-    def __init__(self, arg=None, kwarg=None, batch_size=1000, aggregate=False,
-                 flat=False):
+    #: Generic aggregators
+    appender = appender
+    extender = extender
+    updater = updater
+
+    def __init__(self, arg=None, kwarg=None, batch_size=1000, aggregator=None):
         # proper interface usage checks
         if not arg and not kwarg:
             raise TypeError("Either ``arg`` or ``kwarg`` is needed.")
@@ -98,8 +137,7 @@ class batched(object):
         self._index = arg
         self._name = kwarg
         self._batch_size = batch_size
-        self._aggregate = aggregate
-        self._flat = flat
+        self._aggregator = aggregator
 
     def _invoke(self, fn, args, kwargs, batchable, aggregator):
         for batch in batches(batchable, self._batch_size):
@@ -128,13 +166,13 @@ class batched(object):
                 batchable = kwargs[self._name]
             # set up result aggregator if it's needed
             result = aggregator = None
-            if self._aggregate:
-                result = []
-                aggregator = result.extend if self._flat else result.append
+            if self._aggregator:
+                result = self._aggregator.type()
+                aggregator = functools.partial(self._aggregator.method, result)
             # perform batched invocation of ``fn``
             generator = self._invoke(fn, args, kwargs, batchable, aggregator)
             # if no aggregation was requested, return the generator itself
-            if not self._aggregate:
+            if not self._aggregator:
                 return generator
             # otherwise evaluate generator and return the collected results
             list(generator)
