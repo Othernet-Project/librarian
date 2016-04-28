@@ -48,11 +48,10 @@ def as_iterable(params=None):
         def wrapper(*args, **kwargs):
             # patch positional arguments, if needed
             if indexes:
-                # copy args into a list as it's a tuple by default
-                args = list(args)
-                for idx in indexes:
-                    if not is_iterable(args[idx]):
-                        args[idx] = [args[idx]]
+                # copy `args` into a new list and wrap it's elements in a list
+                # on the specified indexes, which are not iterables themselves
+                args = [[x] if i in indexes and not is_iterable(x) else x
+                        for (i, x) in enumerate(args)]
             # patch keyword arguments, if needed
             if keys:
                 for key in keys:
