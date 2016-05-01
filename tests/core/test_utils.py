@@ -105,6 +105,13 @@ def test_batch(size, out):
         [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]],
         [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]],
     ), (
+        dict(arg=2, batch_size=2, lazy=False),
+        [0, 1, range(10), 3],
+        dict(a=1, b=2),
+        None,
+        None,
+        [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]],
+    ), (
         dict(arg=2, batch_size=2, aggregator=mod.batched.appender),
         [0, 1, range(10), 3],
         dict(a=1, b=2),
@@ -139,7 +146,10 @@ def test_batched(opts, in_args, in_kwargs, ret_type, ret_data, batches):
     fn = mod.batched(**opts)(mocked_fn)
     ret = fn(*in_args, **in_kwargs)
     # check return type
-    assert isinstance(ret, ret_type)
+    if ret_type is None:
+        assert ret is ret_type
+    else:
+        assert isinstance(ret, ret_type)
     # check returned data from batches
     if isinstance(ret, types.GeneratorType):
         for (result, expected) in zip(ret, ret_data):

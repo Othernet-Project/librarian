@@ -117,17 +117,17 @@ class batched(object):
     instance of py:attr:`aggregator.type`, using py:attr:`aggregator.method`
     (defined on the same py:class:`aggregator` class) and returned, otherwise
     it yields the result(s) of the calls individually.
-    The parameter ``flat`` is used only if ``aggregate`` is set, and it implies
-    that the wrapped function returns a list or tuple. When set, during
-    aggregation the aggregator list will be extended with the result set,
-    instead of appending to it.
+    ``lazy`` is used in case no ``aggregator`` was specified, and it determines
+    whether a generator will be returned, or the batches will be evaluated
+    in-place.
     """
     #: Generic aggregators
     appender = appender
     extender = extender
     updater = updater
 
-    def __init__(self, arg=None, kwarg=None, batch_size=1000, aggregator=None):
+    def __init__(self, arg=None, kwarg=None, batch_size=1000, aggregator=None,
+                 lazy=True):
         # proper interface usage checks
         if not arg and not kwarg:
             raise TypeError("Either ``arg`` or ``kwarg`` is needed.")
@@ -137,6 +137,7 @@ class batched(object):
         self._name = kwarg
         self._batch_size = batch_size
         self._aggregator = aggregator
+        self._lazy = lazy
 
     def _invoke(self, fn, args, kwargs, batchable, aggregator):
         for batch in batches(batchable, self._batch_size):
@@ -171,7 +172,7 @@ class batched(object):
             # perform batched invocation of ``fn``
             generator = self._invoke(fn, args, kwargs, batchable, aggregator)
             # if no aggregation was requested, return the generator itself
-            if not self._aggregator:
+            if not self._aggregator and self._lazy:
                 return generator
             # otherwise evaluate generator and return the collected results
             list(generator)
