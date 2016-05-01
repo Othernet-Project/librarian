@@ -11,10 +11,7 @@ from ..data.diagnostics import generate_report
 
 
 class SendAppLog(RouteBase):
-
-    @property
-    def path(self):
-        return '/' + basename(self.config['logging.output'])
+    path = '/applog'
 
     def get(self):
         log_path = self.config['logging.output']

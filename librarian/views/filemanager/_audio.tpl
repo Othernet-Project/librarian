@@ -13,7 +13,7 @@
 </%def>
 
 <%def name="view_main()">
-    % if 'audio' not in facet_types:
+    % if 'audio' not in current.facets['facet_types']:
         <span class="note">${_('No music files to be played.')}</span>
     % else:
         <%
@@ -48,7 +48,7 @@
 </%def>
 
 <%def name="sidebar()">
-    % if 'audio' in facet_types:
+    % if 'audio' in current.facets['facet_types']:
         <%
         selected_entry = th.facets.get_selected(files, selected)
         %>

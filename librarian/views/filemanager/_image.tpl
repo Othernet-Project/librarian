@@ -1,7 +1,7 @@
 <%inherit file="_playlist.tpl" />
 
 <div class='gallery-container' id="gallery-container">
-    % if 'image' not in facet_types:
+    % if 'image' not in current.facets['facet_types']:
         <span class="note">${_('No images to be shown.')}</span>
     % else:
         <%
@@ -36,7 +36,7 @@
 </div>
 
 <%def name="sidebar()">
-    % if 'image' in facet_types:
+    % if 'image' in current.facets['facet_types']:
         <%
             selected_entry = th.facets.get_selected(files, selected)
         %>

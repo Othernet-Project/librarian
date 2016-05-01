@@ -1,11 +1,10 @@
 import functools
 import logging
-import collections
 
 from fsal.events import EVENT_CREATED, EVENT_DELETED, EVENT_MODIFIED
 
 from ..core.exts import ext_container as exts
-from ..data.facets.utils import get_archive
+from ..data.facets.archive import Archive
 from . import Task
 
 
@@ -40,20 +39,23 @@ class CheckNewContentTask(Task):
 
     @reschedule_content_check
     def run(self):
-        facets_archive = get_archive(db=exts.databases.facets,
-                                     config=exts.config)
+        archive = Archive()
         changes_found = False
+        analyzable = []
+        removable = []
         for event in exts.fsal.get_changes():
             changes_found = True
-            fpath = event.src
+            path = event.src
             is_file = not event.is_dir
             if is_file and event.event_type in (EVENT_CREATED, EVENT_MODIFIED):
-                logging.info(u"Update file facets: '{}'".format(fpath))
-                facets_archive.update_facets(fpath)
+                logging.info(u"Update file facets: '{}'".format(path))
+                analyzable.append(path)
             elif is_file and event.event_type == EVENT_DELETED:
-                logging.info(u"Removing file facets: '{}'".format(fpath))
-                facets_archive.remove_facets(fpath)
+                logging.info(u"Removing file facets: '{}'".format(path))
+                removable.append(path)
             exts.events.publish('FS_EVENT', event)
+        archive.remove(removable)
+        archive.analyze(analyzable)
         return changes_found
 
     @classmethod
@@ -66,37 +68,15 @@ class CheckNewContentTask(Task):
 
 class ScanFacetsTask(Task):
 
-    def run(self, path_queue=None, step_delay=0, config=None):
-        if path_queue is None:
-            path_queue = collections.deque()
-            path_queue.append('.')
-        if not path_queue:
-            logging.info(u'Facets scan complete.')
-            return
-
-        dir_path = path_queue.popleft()
-        logging.debug(u'Scanning facets for files in {}'.format(dir_path))
-        success, dirs, files = exts.fsal.list_dir(dir_path)
-        if not success:
-            logging.warn(
-                u'Facets scan for {} stopped. Invalid path.'.format(dir_path))
-            return
-
-        archive = get_archive(config=config)
-        for f in files:
-            if not archive.get_facets(f.rel_path):
-                logging.info(u"Update file facets: '{}'".format(f.rel_path))
-                archive.update_facets(f.rel_path)
-        path_queue.extend((d.rel_path for d in dirs))
-
-        kwargs = dict(path_queue=path_queue, step_delay=step_delay,
-                      config=config)
-        exts.tasks.schedule(self, kwargs=kwargs)
+    def run(self, step_delay=0):
+        archive = Archive()
+        archive.scan(delay=step_delay)
 
     @classmethod
     def install(cls):
         if exts.config.get('facets.scan', False):
             start_delay = exts.config.get('facets.scan_delay', SCAN_DELAY)
             step_delay = exts.config.get('facets.scan_step_delay', STEP_DELAY)
-            kwargs = dict(step_delay=step_delay, config=exts.config)
-            exts.tasks.schedule(cls(), kwargs=kwargs, delay=start_delay)
+            exts.tasks.schedule(cls(),
+                                kwargs=dict(step_delay=step_delay),
+                                delay=start_delay)

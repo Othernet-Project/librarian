@@ -2,9 +2,9 @@ import functools
 
 from bottle_utils.common import to_bytes
 
-from ...core.contrib.cache.utils import generate_key
-from ...core.contrib.databases.utils import row_to_dict
-from ...core.exts import ext_container as exts
+from ..core.contrib.cache.utils import generate_key
+from ..core.contrib.databases.utils import row_to_dict
+from ..core.exts import ext_container as exts
 
 
 class CDFObject(object):
@@ -20,9 +20,10 @@ class CDFObject(object):
 
     row_to_dict = staticmethod(row_to_dict)
 
-    def __init__(self, path, data=None):
+    def __init__(self, path, data=None, db=None):
         self.path = path
         self._data = row_to_dict(data or dict())
+        self._db = db or exts.databases[self.DATABASE_NAME]
 
     def get_data(self):
         return self._data
@@ -42,17 +43,17 @@ class CDFObject(object):
         return to_bytes(cls.CACHE_KEY_TEMPLATE.format(generated))
 
     @classmethod
-    def from_file(cls, path):
+    def from_file(cls, path, db=None):
         """Read a single entry from file, store it in database and cache the
         data."""
-        instance = cls(path)
+        instance = cls(path, db=db)
         instance.read_file()
         instance.store()
         exts.cache.set(cls.get_cache_key(path), instance.get_data())
         return instance
 
     @classmethod
-    def from_db(cls, paths, immediate=False):
+    def from_db(cls, paths, immediate=False, db=None):
         """Read multiple entries from database and cache the retrieved raw data.
         If no entries are found in the database, a background task will be
         scheduled to read the data from file."""
@@ -68,7 +69,7 @@ class CDFObject(object):
         # attempt reading ids that were not found in cache from database in
         # batches, so it won't exceed the parameter limit for very large number
         # of items
-        db = exts.databases[cls.DATABASE_NAME]
+        db = db or exts.databases[cls.DATABASE_NAME]
         batches = (remaining[i:i + db.MAX_VARIABLE_NUMBER]
                    for i in range(0, len(remaining), db.MAX_VARIABLE_NUMBER))
         found = set()
@@ -80,7 +81,7 @@ class CDFObject(object):
         instances = dict()
         for (path, data) in entries.items():
             if data or cls.ALLOW_EMPTY_INSTANCES:
-                obj = cls(path, data)
+                obj = cls(path, data, db=db)
                 instances[path] = obj
             # cache only raw data, not object instance
             key = cls.get_cache_key(path)
@@ -95,6 +96,5 @@ class CDFObject(object):
                 else:
                     exts.tasks.schedule(dinfo_gen)
             if cls.ALLOW_EMPTY_INSTANCES and path not in instances:
-                instances[path] = cls(path)
-
+                instances[path] = cls(path, db=db)
         return instances

@@ -7,7 +7,7 @@ import re
 from bottle_utils.common import to_unicode
 
 from ..core.exts import ext_container as exts
-from .facets.base import CDFObject
+from .base import CDFObject
 
 
 class DirInfo(CDFObject):

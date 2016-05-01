@@ -12,7 +12,7 @@
     </div>
 </%def>
 
-% if 'video' not in facet_types:
+% if 'video' not in current.facets['facet_types']:
 <span class="note">${_('No video files to be played.')}</span>
 % else:
 <%
@@ -25,7 +25,7 @@
 % endif
 
 <%def name="sidebar()">
-    %if 'video' in facet_types:
+    %if 'video' in current.facets['facet_types']:
         <%
         selected_entry = th.facets.get_selected(files, selected)
         %>

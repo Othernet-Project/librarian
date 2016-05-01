@@ -12,7 +12,7 @@ from bottle_utils.i18n import lazy_gettext as _, lazy_ngettext as ngettext
 
 from ..core.utils import utcnow
 from ..core.contrib.templates.decorators import template_helper
-from ..data.facets.processors import FacetProcessorBase
+from ..data.facets.processors import Processor
 
 
 ICON_MAPPINGS = {
@@ -45,15 +45,14 @@ EXTENSION_VIEW_MAPPING = {
 }
 
 
-def get_parent_path(path):
-    return os.path.normpath(os.path.join(path, '..'))
-
-
 @template_helper()
-def get_parent_url(path, view=None):
-    parent_path = get_parent_path(path)
-    vargs = {'view': view} if view else {}
-    return i18n_url('filemanager:list', path=parent_path, **vargs)
+def basename(path):
+    return os.path.basename(path)
+
+
+def get_parent_url(path):
+    parent_path = os.path.dirname(path)
+    return i18n_url('filemanager:list', path=parent_path)
 
 
 def get_file(files, path):
@@ -236,7 +235,7 @@ def get_thumb_path(srcpath, default=None):
         return srcpath
     else:
         config = request.app.config
-        processors = FacetProcessorBase.get_processors(srcpath)
+        processors = Processor.for_path(srcpath)
         try:
             proc_cls = filter(lambda p: p.name != 'generic', processors)[0]
         except IndexError:

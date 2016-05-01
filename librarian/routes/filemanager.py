@@ -13,39 +13,32 @@ import os
 from bottle import static_file
 from bottle_utils.html import urlunquote
 from bottle_utils.i18n import lazy_gettext as _
-from bottle_utils.lazy import caching_lazy
 from streamline import RouteBase, XHRPartialRoute, TemplateFormRoute
 
-from ..core.exts import ext_container as exts
-from ..core.contrib.cache.decorators import cached
 from ..core.contrib.templates.renderer import template
-from ..data.facets.facets import FacetTypes
-from ..data.facets.utils import (get_facets,
-                                 get_facet_types,
-                                 is_facet_valid,
-                                 find_html_index)
+from ..data.facets.facettypes import FacetTypes
 from ..data.manager import Manager
 from ..forms.filemanager import DeleteForm
-from ..helpers.filemanager import (get_parent_path,
-                                   get_parent_url,
-                                   find_root,
-                                   get_thumb_path)
+from ..helpers.filemanager import get_parent_url, find_root, get_thumb_path
 from ..presentation.paginator import Paginator
 from ..utils.route_mixins import CSRFRouteMixin
 
 
 class FileRouteMixin(object):
-    ROOT_PATH = '.'
     VIEW_KEY = 'view'
+    VALID_VIEWS = FacetTypes.names(include_meta=True)
+    DEFAULT_VIEW = FacetTypes.GENERIC
 
     def __init__(self, *args, **kwargs):
         super(FileRouteMixin, self).__init__(*args, **kwargs)
         self.manager = Manager()
-        self.context = dict()
 
-    @property
-    def view(self):
-        return self.request.params.get(self.VIEW_KEY, None)
+    def get_view(self):
+        view = self.request.params.get(self.VIEW_KEY, None)
+        # use default view if it wasn't specfied explicitly or it's not valid
+        if view not in self.VALID_VIEWS:
+            return self.DEFAULT_VIEW
+        return view
 
     def unquoted(self, key):
         try:
@@ -62,123 +55,57 @@ class List(FileRouteMixin, XHRPartialRoute):
     template_func = template
 
     QUERY_KEY = 'q'
-    SHOW_HIDDEN_KEY = 'hidden'
+    HIDDEN_KEY = 'hidden'
     SELECTED_KEY = 'selected'
-    VALID_VIEWS = ['updates'] + FacetTypes.names()
-    DEFAULT_VIEW = FacetTypes.HTML
-    UNFILTERED_FACET_TYPES = (FacetTypes.GENERIC, FacetTypes.UPDATES)
 
-    @property
-    def is_search(self):
-        return self.QUERY_KEY in self.request.params
-
-    @property
-    def search_query(self):
-        return self.unquoted(self.QUERY_KEY)
-
-    @property
-    def selected(self):
-        return self.unquoted(self.SELECTED_KEY)
-
-    @property
-    def show_hidden(self):
-        return self.request.params.get(self.SHOW_HIDDEN_KEY, 'no') == 'yes'
-
-    def get_context(self):
-        context = super(List, self).get_context()
-        context.update(is_search=self.is_search, selected=self.selected)
-        return context
-
-    def detect_facet_types(self):
-        paths = self.get_file_paths()
-        facet_types = get_facet_types(paths)
-        self.context.update(facet_types=facet_types)
-
-    def filter_files(self, view):
-        filtered_files = [f for f in self.context.get('files', [])
-                          if is_facet_valid(f.rel_path, view)]
-        self.context.update(files=filtered_files)
-
-    def find_index(self):
-        paths = self.get_file_paths()
-        index_file = find_html_index(paths, any_html=False)
-        self.context.update(index_file=index_file)
-        return index_file is not None
-
-    def prepare_view(self):
-        use_view = self.view
-        # use default(html) view if it wasn't specfied explicitly or is not
-        # valid
-        if use_view not in self.VALID_VIEWS:
-            use_view = self.DEFAULT_VIEW
-        # find index file in case html view is used
-        if (use_view == FacetTypes.HTML and
-                not self.find_index() and
-                not self.view):
-            # if no index file is found and html view was not explicitly
-            # chosen, but as a default view, fall back to generic view
-            use_view = FacetTypes.GENERIC
-        # updates override the files list with a custom one
-        if use_view == FacetTypes.UPDATES:
-            self.prepare_updates()
-        # limit the list of files to only those that can be handled
-        # within the chosen view
-        if use_view not in self.UNFILTERED_FACET_TYPES:
-            self.filter_files(use_view)
-        # update context with best matching view
-        self.context.update(view=use_view)
-
-    def prepare_file_list(self, query):
-        if self.is_search:
-            result = self.manager.search(query, self.show_hidden)
-            relpath = self.ROOT_PATH if not result['is_match'] else query
-        else:
-            result = self.manager.list(query, self.show_hidden)
-            relpath = query
-            if not result['success']:
-                self.abort(404)
-        self.context.update(path=relpath,
-                            current=self.manager.get(relpath),
-                            up=get_parent_path(relpath),
-                            dirs=result['dirs'],
-                            files=result['files'])
-
-    @caching_lazy
-    def get_file_paths(self):
-        return [f.rel_path for f in self.context.get('files', [])]
-
-    @cached(prefix='descendants', timeout=300)
-    def __get_update_count(self, path, span):
-        result = self.manager.list_descendants(path,
-                                               count=True,
-                                               span=span,
-                                               entry_type=0)
-        return result['count']
-
-    def prepare_updates(self):
-        span = exts.config['changelog.span']
-        count = self.__get_update_count(self.context['path'], span)
+    def paginate(self, count):
         # parse pagination params
         page = Paginator.parse_page(self.request.params)
         per_page = Paginator.parse_per_page(self.request.params)
-        pager = Paginator(count, page, per_page)
-        (offset, limit) = pager.items
-        results = self.manager.list_descendants(self.context['path'],
-                                                offset=offset,
-                                                limit=limit,
-                                                order='-create_time',
-                                                span=span,
-                                                entry_type=0,
-                                                show_hidden=False)
-        self.context.update(pager=pager, files=results['files'])
+        return Paginator(count, page, per_page)
+
+    def search(self, path, show_hidden):
+        default_lang = self.request.user.options.get('content_language')
+        language = self.request.params.get('language', default_lang)
+        return self.manager.search(path,
+                                   show_hidden=show_hidden,
+                                   language=language)
+
+    def updates(self, path, show_hidden):
+        count = self.manager.descendants(path,
+                                         count=True,
+                                         show_hidden=show_hidden)
+        pager = self.paginate(count)
+        result = self.manager.descendants(path,
+                                          offset=pager.offset,
+                                          limit=pager.limit,
+                                          show_hidden=show_hidden)
+        result.update(pager=pager)
+        return result
+
+    def list(self, path, show_hidden, facet_type):
+        try:
+            return self.manager.list(path,
+                                     facet_type=facet_type,
+                                     show_hidden=show_hidden)
+        except self.manager.InvalidQuery:
+            self.abort(404)
 
     def get(self, path):
-        query = self.search_query or path or self.ROOT_PATH
-        self.prepare_file_list(query)
-        self.detect_facet_types()
-        if not self.is_search:
-            self.prepare_view()
-        return self.context
+        view = self.get_view()
+        path = self.unquoted(self.QUERY_KEY) or path or self.manager.get_root()
+        show_hidden = self.request.params.get(self.HIDDEN_KEY, 'no') == 'yes'
+        is_search = self.QUERY_KEY in self.request.params
+        if is_search:
+            result = self.search(path, show_hidden)
+        elif view == FacetTypes.UPDATES:
+            result = self.updates(path, show_hidden)
+        else:
+            result = self.list(path, show_hidden, view)
+        result.update(is_search=is_search,
+                      view=view,
+                      selected=self.unquoted(self.SELECTED_KEY))
+        return result
 
 
 class Details(FileRouteMixin, XHRPartialRoute):
@@ -187,26 +114,17 @@ class Details(FileRouteMixin, XHRPartialRoute):
     template_func = template
 
     META_KEY = 'info'
-    DEFAULT_VIEW = FacetTypes.GENERIC
-
-    @property
-    def meta(self):
-        return self.unquoted(self.META_KEY)
 
     def get(self, path):
-        path = path or self.ROOT_PATH
-        view = self.view or self.DEFAULT_VIEW
-        file_path = os.path.join(path, self.meta)
-        fso = self.manager.get(file_path)
-        if not fso:
+        path = path or self.manager.get_root()
+        view = self.get_view()
+        file_path = os.path.join(path, self.unquoted(self.META_KEY))
+        try:
+            fso = self.manager.get(file_path, facet_type=view)
+        except self.manager.InvalidQuery:
             # There is no such file
             self.abort(404)
-        try:
-            facets = list(get_facets((file_path,), facet_type=view))[0]
-        except IndexError:
-            self.abort(404)
         else:
-            fso.facets = facets
             return dict(entry=fso, view=view)
 
 

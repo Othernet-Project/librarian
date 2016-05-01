@@ -1,13 +1,11 @@
+import itertools
 import os
 
 from ...core.exts import ext_container as exts
 from .. import links
-from .facets import FACET_TYPES
+from .facettypes import FacetTypes
 from .metadata import (runnable, ImageMetadata, AudioMetadata,
                        VideoMetadata, HtmlMetadata)
-
-
-IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png']
 
 
 def split_name(fname):
@@ -21,67 +19,7 @@ def get_extension(fname):
     return ext
 
 
-def strip_extension(fname):
-    name, _ = split_name(fname)
-    return name
-
-
-def is_html_file(ext):
-    return ext in HtmlFacetProcessor.EXTENSIONS
-
-
-def get_facet_processors(path):
-    all_processors = FacetProcessorBase.subclasses()
-    valid_processors = [p() for p in all_processors if p.can_process(path)]
-    return valid_processors
-
-
-class FacetProcessorBase(object):
-    name = None
-
-    def __init__(self):
-        if self.name is None:
-            raise TypeError("Usage of abstract processor is not allowed."
-                            "`name` attribute must be defined.")
-        self.fsal = exts.fsal
-
-    def process_file(self, facets, path, partial=False):
-        meta = self._get_metadata(path, partial)
-        facets.update(meta)
-        facets['facet_types'] |= FACET_TYPES[self.name]
-        return True
-
-    def deprocess_file(self, facets, path):
-        pass
-
-    def _get_metadata(self, path, partial):
-        raise NotImplemented()
-
-    @classmethod
-    def can_process(cls, path):
-        if hasattr(cls, 'EXTENSIONS'):
-            extensions = list(getattr(cls, 'EXTENSIONS'))
-            return get_extension(path) in extensions
-        return False
-
-    @classmethod
-    def get_processors(cls, path):
-        processors = []
-        for processor_cls in cls.subclasses():
-            if processor_cls.can_process(path):
-                processors.append(processor_cls)
-        if processors:
-            return processors
-        else:
-            raise RuntimeError("No processor found for the given type.")
-
-    @classmethod
-    def subclasses(cls, source=None):
-        source = source or cls
-        result = source.__subclasses__()
-        for child in result:
-            result.extend(cls.subclasses(source=child))
-        return result
+class ThumbProcessorMixin(object):
 
     @staticmethod
     def determine_thumb_path(imgpath, thumbdir, extension):
@@ -114,68 +52,189 @@ class FacetProcessorBase(object):
         return result
 
 
-class GenericFacetProcessor(FacetProcessorBase):
-    name = 'generic'
+class Processor(object):
+    """
+    Base py:class:`Processor` class. Subclasses are expected to override the
+    following attributes:
 
-    def _get_metadata(self, *args, **kwargs):
-        return {}
+    - py:attr:`name`: should match the definition from py:class:`FacetTypes`
+    - py:attr:`metadata_class`: optional, class which performs extraction of
+    metadata
+
+    Methods (optional):
+
+    - py:meth:`get_metadata`: returns a dict with obtained meta information
+    - py:class:`deprocess_file`: perform additional cleanup when the facet
+    entry is being deleted
+    """
+    name = None
+    metadata_class = None
+
+    def __init__(self, fsal=None):
+        if self.name is None:
+            raise TypeError("Usage of abstract processor is not allowed."
+                            "`name` attribute must be defined.")
+        self.fsal = fsal or exts.fsal
+        self.keys = FacetTypes.keys(self.name, specialized_only=True)
+
+    def process_file(self, path, data=None, partial=False):
+        """
+        Returns either the passed in ``data`` dict if specified, or a new one
+        if not, with the extracted meta information from the given ``path``
+        merged into it. If the ``partial`` flag is set, only a brief,
+        efficiently attainable subset of the information is returned.
+        """
+        # check must go against ``None`` to maintain the contract of using the
+        # passed in dict
+        data = dict() if data is None else data
+        meta = self.get_metadata(path, partial)
+        bitmask = FacetTypes.to_bitmask(self.name)
+        data.update(path=path,
+                    facet_types=data.get('facet_types', 0) | bitmask,
+                    **meta)
+        return data
+
+    def deprocess_file(self, path):
+        """
+        Called when a facet entry is deleted from the database. Subclasses may
+        implement this method if special cleanup is needed.
+        """
+        pass
+
+    def get_metadata(self, path, partial):
+        """
+        It is expected to return a dict object containing the attained metadata
+        from ``path``. The ``partial`` flag indicates whether only rudimentary,
+        very quickly attainable information is expected to be returned, or to
+        perform a full processing of the target.
+        Subclasses may override this method if the default implementation needs
+        to be refined for more advanced cases.
+        """
+        if partial or not self.metadata_class:
+            # no additional meta information will be available (besides the
+            # common data)
+            return {}
+        # perform full (possibly expensive) processing of metadata
+        try:
+            meta = self.metadata_class(self.fsal, path)
+        except IOError:
+            return {}
+        else:
+            return dict((k, getattr(meta, k)) for k in self.keys)
+
+    @classmethod
+    def can_process(cls, path):
+        """
+        Return whether the processor can handle a given ``path``.
+        """
+        if hasattr(cls, 'EXTENSIONS'):
+            extensions = list(getattr(cls, 'EXTENSIONS'))
+            return get_extension(path) in extensions
+        return False
+
+    @classmethod
+    def for_path(cls, path):
+        """
+        Return all the applicable processors for a given ``path``.
+        """
+        processors = [proc_cls for proc_cls in cls.subclasses()
+                      if proc_cls.can_process(path)]
+        if not processors:
+            raise RuntimeError("No processor found for the given path.")
+        return processors
+
+    @classmethod
+    def for_type(cls, facet_type):
+        """
+        Return all the applicable processors for a given ``facet_type``.
+        """
+        for proc_cls in cls.subclasses():
+            if proc_cls.name == facet_type:
+                return proc_cls
+        raise RuntimeError("No processor found for the given facet type.")
+
+    @classmethod
+    def subclasses(cls, source=None):
+        """
+        Return all the subclasses of ``cls``.
+        """
+        source = source or cls
+        result = source.__subclasses__()
+        for child in result:
+            result.extend(cls.subclasses(source=child))
+        return result
+
+
+class GenericFacetProcessor(Processor):
+    name = FacetTypes.GENERIC
 
     @classmethod
     def can_process(cls, path):
         return True
 
 
-class HtmlFacetProcessor(FacetProcessorBase):
-    name = 'html'
+class HtmlFacetProcessor(Processor):
+    name = FacetTypes.HTML
+    metadata_class = HtmlMetadata
 
     EXTENSIONS = ['html', 'htm', 'xhtml']
-
     INDEX_NAMES = ['index', 'main', 'start']
+    FILE_NAMES = list(reversed(['.'.join(p)
+                                for p in itertools.product(INDEX_NAMES,
+                                                           EXTENSIONS)]))
 
-    def process_file(self, facets, path, partial=False):
-        meta, assets = self._get_metadata(path, partial)
-        facets.update(meta)
-        facets['facet_types'] |= FACET_TYPES[self.name]
+    @classmethod
+    def _score(cls, filename):
+        """
+        Return the passed in ``filename``'s position in the candidate list or
+        ``-1`` if it's not in there.
+        """
+        try:
+            return cls.FILE_NAMES.index(filename)
+        except ValueError:
+            return -1
 
+    @classmethod
+    def use_index(cls, new, old):
+        """
+        Return ``True`` if ``new`` filename is a better candidate for being
+        the index file, or ``False`` if it isn't. Filenames are scored based
+        on their position in the list. The higher the score, the better the
+        candidate is."""
+        return cls._score(old) < cls._score(new)
+
+    def process_file(self, path, data=None, partial=False):
+        data = super(HtmlFacetProcessor, self).process_file(path,
+                                                            data=data,
+                                                            partial=partial)
+        assets = data.pop('assets', None)
         links.update_links(path, assets or (), clear=True)
-        return True
+        return data
 
-    def deprocess_file(self, facets, path):
+    def deprocess_file(self, path):
         links.remove_links(path)
 
-    def _get_metadata(self, path, partial):
+    def get_metadata(self, path, partial):
         if partial:
-            return {}, None
+            return {}
         try:
-            meta = HtmlMetadata(self.fsal, path)
-            keys = ('author', 'title', 'description', 'keywords',
-                    'language', 'copyright')
-            data = {}
-            for key in keys:
-                data[key] = getattr(meta, key)
+            meta = self.metadata_class(self.fsal, path)
+        except IOError:
+            return {}
+        else:
+            data = dict((k, getattr(meta, k)) for k in self.keys)
+            # the value must be a bool, not string
             data['outernet_formatting'] = (meta.outernet_formatting == 'true')
-            return data, meta.assets
-        except IOError:
-            return {}, None
+            # `assets` will be popped out before passing it back to the caller
+            data['assets'] = meta.assets
+            return data
 
 
-class ImageFacetProcessor(FacetProcessorBase):
-    name = 'image'
+class ImageFacetProcessor(Processor, ThumbProcessorMixin):
+    name = FacetTypes.IMAGE
+    metadata_class = ImageMetadata
 
-    EXTENSIONS = IMAGE_EXTENSIONS
-
-    def _get_metadata(self, path, partial):
-        if partial:
-            return {}
-        try:
-            meta = ImageMetadata(self.fsal, path)
-            return {
-                'title': meta.title,
-                'width': meta.width,
-                'height': meta.height
-            }
-        except IOError:
-            return {}
+    IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png']
 
     @staticmethod
     @runnable()
@@ -192,25 +251,11 @@ class ImageFacetProcessor(FacetProcessorBase):
         ]
 
 
-class AudioFacetProcessor(FacetProcessorBase):
-    name = 'audio'
+class AudioFacetProcessor(Processor, ThumbProcessorMixin):
+    name = FacetTypes.AUDIO
+    metadata_class = AudioMetadata
 
     EXTENSIONS = ['mp3', 'wav', 'ogg']
-
-    def _get_metadata(self, path, partial):
-        if partial:
-            return {}
-        try:
-            meta = AudioMetadata(self.fsal, path)
-            return {
-                'author': meta.author,
-                'title': meta.title,
-                'album': meta.album,
-                'genre': meta.genre,
-                'duration': meta.duration
-            }
-        except IOError:
-            return {}
 
     @staticmethod
     @runnable()
@@ -226,26 +271,11 @@ class AudioFacetProcessor(FacetProcessorBase):
         ]
 
 
-class VideoFacetProcessor(FacetProcessorBase):
-    name = 'video'
+class VideoFacetProcessor(Processor, ThumbProcessorMixin):
+    name = FacetTypes.VIDEO
+    metadata_class = VideoMetadata
 
     EXTENSIONS = ['mp4', 'wmv', 'webm', 'flv', 'ogv']
-
-    def _get_metadata(self, path, partial):
-        if partial:
-            return {}
-        try:
-            meta = VideoMetadata(self.fsal, path)
-            return {
-                'title': meta.title,
-                'author': meta.author,
-                'description': meta.description,
-                'width': meta.width,
-                'height': meta.height,
-                'duration': meta.duration,
-            }
-        except IOError:
-            return {}
 
     @staticmethod
     @runnable()

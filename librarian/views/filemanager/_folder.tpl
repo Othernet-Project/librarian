@@ -95,8 +95,8 @@
         h.quoted_url  # <-- again, don't remove this
         fpath = th.facets.get_view_path(f)
         apath = i18n_url('filemanager:list', path=f.rel_path)
-        parent_view = 'generic' if is_search else None
-        parent_url = th.get_parent_url(f.rel_path, parent_view)
+        vargs = {'view': 'generic'} if is_search else {}
+        parent_url = i18n_url('filemanager:list', path=f.parent, **vargs)
         icon, is_thumb = th.facets.get_file_thumb(f)
         title = f.facets.get('title')
         desc = f.facets.get('description')
@@ -120,7 +120,7 @@
                 </span>
                 % if is_search and f.parent:
                     <span class="file-list-description">
-                        ${_(u"in {}").format(esc(f.parent))}
+                        ${_(u"in {}").format(esc(th.basename(f.parent)))}
                     </span>
                 % else:
                     % if title:
