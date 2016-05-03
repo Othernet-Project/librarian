@@ -296,7 +296,7 @@ class Archive(object):
         q = self._db.Delete(self.FACETS_TABLE)
         self._db.execute(q)
 
-    def scan(self, path=None, blocking=False, delay=0):
+    def scan(self, path=None, depth=0, maxdepth=None, blocking=False, delay=0):
         """
         Traverse ``path`` and py:meth:`analyze` all encountered files, either
         asynchronous or in blocking mode (depending on the state of the
@@ -310,12 +310,20 @@ class Archive(object):
             return
         # schedule paths to be analyzed, in the same ``blocking`` manner
         self.analyze((fso.rel_path for fso in files), blocking=blocking)
+        # if we reached specified ``max_depth``, do not go any deeper
+        if maxdepth is not None and depth == maxdepth:
+            return
         # scan subfolders
         for fso in dirs:
             if blocking:
-                self.scan(fso.rel_path, blocking=blocking)
+                self.scan(fso.rel_path,
+                          depth=depth + 1,
+                          maxdepth=maxdepth,
+                          blocking=blocking)
             else:
                 kwargs = dict(path=fso.rel_path,
+                              depth=depth + 1,
+                              maxdepth=maxdepth,
                               blocking=blocking,
                               delay=delay)
                 self._tasks.schedule(self.scan, kwargs=kwargs, delay=delay)
