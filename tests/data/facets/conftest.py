@@ -110,7 +110,9 @@ def processors():
     process_file.counter = 0
     # set up mocked processors that just write something in the dict
     proc1 = mock.Mock()
+    proc1.name = 'generic'
     proc1.return_value.process_file.side_effect = process_file
     proc2 = mock.Mock()
+    proc2.name = 'html'
     proc2.return_value.process_file.side_effect = process_file
     return (proc1, proc2)

@@ -118,5 +118,5 @@ def test_for_type_success():
     ('index.html', 'main.html', False),
     ('index.htm', 'main.html', False),
 ])
-def test_use_index(old, new, use):
-    assert mod.HtmlFacetProcessor.use_index(new, old) is use
+def test_is_entry_point(old, new, use):
+    assert mod.HtmlFacetProcessor.is_entry_point(new, old) is use

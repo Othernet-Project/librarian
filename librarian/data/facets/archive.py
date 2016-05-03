@@ -22,6 +22,8 @@ class Archive(object):
     #: Database tables
     FACETS_TABLE = 'facets'
     FOLDERS_TABLE = 'folders'
+    #: Database columns for folders
+    FOLDERS_KEYS = ('path', 'facet_types', 'main')
     #: Default root path, relative to FSAL's base directory
     ROOT_PATH = '.'
     #: Aliases for imported classes
@@ -43,7 +45,16 @@ class Archive(object):
             logging.debug(u"Analyzing %s", path)
             data = dict()
             for proc_cls in self.Processor.for_path(path):
+                # store entry point on parent folder if available
+                if proc_cls.is_entry_point(path):
+                    parent = os.path.dirname(path)
+                    main = os.path.basename(path)
+                    bitmask = self.FacetTypes.to_bitmask(proc_cls.name)
+                    self._save_parent(parent, main=main, facet_types=bitmask)
+                # gather metadata from current processor into ``data``
                 proc_cls(self._fsal).process_file(path, data=data)
+            # store gathered metadata from all applicable processors for the
+            # current path
             self.save(data)
             logging.debug(u"Facet data stored for %s", path)
 
@@ -189,29 +200,49 @@ class Archive(object):
         return dict((row['path'], row)
                     for row in self._db.fetchiter(q, params))
 
-    def _update_parent(self, path, facet_type):
+    def _save_parent(self, path, **kwargs):
         """
-        Find the folder entry by the given ``path`` and update it's bitmask
-        with the given ``facet_type`` value. If the folder entry does not
-        exist yet, create it. In both cases, return the folder object.
+        Find the folder entry by the given ``path`` and update it's values
+        with given data in ``kwargs``. If the folder entry does not exist
+        yet, create it. In both cases, return the folder object.
         """
+        clean = dict((k, v) for (k, v) in kwargs.items()
+                     if k in self.FOLDERS_KEYS)
         q = self._db.Select(sets=self.FOLDERS_TABLE, where='path = %s')
         folder = self._db.fetchone(q, (path,))
-        if folder:
-            # folder entry found, just update it's bitmask
-            q = self._db.Update(self.FOLDERS_TABLE,
-                                facet_types='%(facet_types)s',
-                                where='id = %(id)s')
-            bitmask = folder['facet_types'] | facet_type
-            self._db.execute(q, dict(id=folder['id'], facet_types=bitmask))
-            return folder
-        # no folder entry, create it now
-        q = self._db.Insert(self.FOLDERS_TABLE,
-                            cols=['path', 'facet_types'])
-        self._db.execute(q, dict(path=path, facet_types=facet_type))
-        # fetch newly created folder
-        q = self._db.Select(sets=self.FOLDERS_TABLE, where='path = %s')
-        return self._db.fetchone(q, (path,))
+        if not folder:
+            # no folder entry, create it now
+            clean.update(path=path)
+            q = self._db.Insert(self.FOLDERS_TABLE, cols=clean.keys())
+            self._db.execute(q, clean)
+            # fetch newly created folder
+            q = self._db.Select(sets=self.FOLDERS_TABLE, where='path = %s')
+            return self._db.fetchone(q, (path,))
+        # folder entry found, just update existing data
+        cols = dict((k, '%({})s'.format(k)) for k in clean.keys())
+        q = self._db.Update(self.FOLDERS_TABLE,
+                            where='path = %(path)s',
+                            **cols)
+        # copy original folder data
+        to_update = dict(folder)
+        facet_types = clean.pop('facet_types', 0)
+        main = clean.pop('main', None)
+        # if main is specified, check if existing one scores higher maybe
+        if main and facet_types:
+            # when main is being changed, ``facet_types`` always represents
+            # a single type
+            (facet_type,) = self.FacetTypes.from_bitmask(facet_types)
+            # write new main only if it has higher score than existing
+            proc_cls = self.Processor.for_type(facet_type)
+            if proc_cls.is_entry_point(main, to_update.get('main')):
+                # new main scored higher than existing, use it
+                clean.update(main=main)
+        # add new bitmask value to existing (if specified)
+        facet_types |= to_update['facet_types']
+        # update folder data with new values
+        to_update.update(facet_types=facet_types, path=path, **clean)
+        self._db.execute(q, to_update)
+        return to_update
 
     def save(self, data):
         """
@@ -222,7 +253,8 @@ class Archive(object):
                             if k in self.FacetTypes.keys())
         # update parent folder's bitmask and fetch it's id
         parent = os.path.dirname(cleaned_data['path'])
-        folder = self._update_parent(parent, cleaned_data['facet_types'])
+        folder = self._save_parent(parent,
+                                   facet_types=cleaned_data['facet_types'])
         # now that folder id is available, save the facet entry
         cleaned_data['folder'] = folder['id']
         with self._db.transaction():

@@ -9,9 +9,11 @@ import librarian.data.facets.archive as mod
 # UNIT TESTS
 
 
+@mock.patch.object(mod.Archive, '_save_parent')
 @mock.patch.object(mod.Archive, 'save')
 @mock.patch.object(mod.Processor, 'for_path')
-def test__analyze(for_path, save, processors):
+def test__analyze(for_path, save, _save_parent, processors):
+    processors[0].is_entry_point.return_value = False
     for_path.return_value = processors
     # trigger processor updates
     archive = mod.Archive()
@@ -19,6 +21,9 @@ def test__analyze(for_path, save, processors):
     # the dict passed to save should contain the data from all processors
     expected = {0: '/path/to/file', 1: '/path/to/file'}
     save.assert_called_once_with(expected)
+    _save_parent.assert_called_once_with('/path/to',
+                                         main='file',
+                                         facet_types=2)
 
 
 @mock.patch.object(mod.Archive, '_analyze')
@@ -201,16 +206,17 @@ def test_search(populated_database):
     compare_facet_sets(result, expected)
 
 
-@mock.patch.object(mod.Archive, '_update_parent')
-def test_save(_update_parent, populated_database):
+@mock.patch.object(mod.Archive, '_save_parent')
+def test_save(_save_parent, populated_database):
     (folders, facets, databases) = populated_database
-    _update_parent.return_value = folders[0]
+    _save_parent.return_value = folders[0]
     data = {'path': '/path/to/file',
             'facet_types': mod.FacetTypes.to_bitmask(mod.FacetTypes.VIDEO)}
     archive = mod.Archive(db=databases.facets)
     saved = archive.save(data)
     parent = os.path.dirname(data['path'])
-    _update_parent.assert_called_once_with(parent, data['facet_types'])
+    _save_parent.assert_called_once_with(parent,
+                                         facet_types=data['facet_types'])
     assert saved['path'] == data['path']
     assert saved['facet_types'] == data['facet_types']
 

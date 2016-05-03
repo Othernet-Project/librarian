@@ -123,6 +123,18 @@ class Processor(object):
             return dict((k, getattr(meta, k)) for k in self.keys)
 
     @classmethod
+    def is_entry_point(cls, new, old=None):
+        """
+        Processors handling types of more complex structure can elect a main
+        file which serves as a default entry point when opening a folder with
+        a specific facet. Returning ``True`` will tell the caller that the
+        passed in ``path`` can be used as the entry point. ``new`` should be
+        the path to the new candidate for election, and ``old`` should be the
+        existing one, which could affect the decision.
+        """
+        return False
+
+    @classmethod
     def can_process(cls, path):
         """
         Return whether the processor can handle a given ``path``.
@@ -195,13 +207,16 @@ class HtmlFacetProcessor(Processor):
             return -1
 
     @classmethod
-    def use_index(cls, new, old):
+    def is_entry_point(cls, new, old=None):
         """
-        Return ``True`` if ``new`` filename is a better candidate for being
-        the index file, or ``False`` if it isn't. Filenames are scored based
-        on their position in the list. The higher the score, the better the
+        Return ``True`` if ``new`` path is a better candidate for being the
+        index file, or ``False`` if it isn't. Filenames are scored based on
+        their position in the list. The higher the score, the better the
         candidate is."""
-        return cls._score(old) < cls._score(new)
+        # get filenames of passed in paths
+        old_name = os.path.basename(old) if old else None
+        new_name = os.path.basename(new) if new else None
+        return cls._score(old_name) < cls._score(new_name)
 
     def process_file(self, path, data=None, partial=False):
         data = super(HtmlFacetProcessor, self).process_file(path,
