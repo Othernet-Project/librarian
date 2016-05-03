@@ -33,6 +33,9 @@ class FileRouteMixin(object):
         super(FileRouteMixin, self).__init__(*args, **kwargs)
         self.manager = Manager()
 
+    def has_requested_view(self):
+        return self.VIEW_KEY in self.request.params
+
     def get_view(self):
         view = self.request.params.get(self.VIEW_KEY, None)
         # use default view if it wasn't specfied explicitly or it's not valid
@@ -91,6 +94,16 @@ class List(FileRouteMixin, XHRPartialRoute):
         except self.manager.InvalidQuery:
             self.abort(404)
 
+    def promote_view(self, view, available_views):
+        # for explicitly chosen views, no auto-promition will be applied
+        if self.has_requested_view():
+            return view
+        # when no view was chosen, auto-promition is allowed
+        if FacetTypes.HTML in available_views:
+            return FacetTypes.HTML
+        # no better match, stick with original plan
+        return view
+
     def get(self, path):
         view = self.get_view()
         path = self.unquoted(self.QUERY_KEY) or path or self.manager.get_root()
@@ -102,6 +115,9 @@ class List(FileRouteMixin, XHRPartialRoute):
             result = self.updates(path, show_hidden)
         else:
             result = self.list(path, show_hidden, view)
+        # perform view promotion, if available
+        available_views = result['current'].facets['facet_types']
+        view = self.promote_view(view, available_views)
         result.update(is_search=is_search,
                       view=view,
                       selected=self.unquoted(self.SELECTED_KEY))
