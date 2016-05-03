@@ -114,19 +114,23 @@ def test_partial_for_type(for_path, for_type, processors):
 
 
 @mock.patch.object(mod.Archive, 'scan')
-def test_parent(scan, populated_database):
+def test_parent_found(scan, populated_database):
     (folders, facets, databases) = populated_database
     archive = mod.Archive(db=databases.facets)
-    # test case when found
     for folder in folders:
         bitmask = folder['facet_types']
         expected = dict(facet_types=mod.FacetTypes.from_bitmask(bitmask),
                         main=folder['main'],
                         path=folder['path'])
         assert archive.parent(folder['path']) == expected
-    assert not scan.called
-    # test case when not found
-    expected = {'path': '/does/not/exist', 'facet_types': ['generic']}
+
+
+@mock.patch.object(mod.Archive, 'scan')
+def test_parent_not_found(scan, databases):
+    archive = mod.Archive(db=databases.facets)
+    expected = {'path': '/does/not/exist',
+                'main': None,
+                'facet_types': ['generic']}
     assert archive.parent('/does/not/exist') == expected
     scan.assert_called_once_with('/does/not/exist')
 
