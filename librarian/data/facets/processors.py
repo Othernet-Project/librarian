@@ -249,7 +249,7 @@ class ImageFacetProcessor(Processor, ThumbProcessorMixin):
     name = FacetTypes.IMAGE
     metadata_class = ImageMetadata
 
-    IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png']
+    EXTENSIONS = ['jpg', 'jpeg', 'png']
 
     @staticmethod
     @runnable()
