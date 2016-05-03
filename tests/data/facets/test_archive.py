@@ -132,7 +132,7 @@ def test_parent_not_found(scan, databases):
                 'main': None,
                 'facet_types': ['generic']}
     assert archive.parent('/does/not/exist') == expected
-    scan.assert_called_once_with('/does/not/exist')
+    scan.assert_called_once_with('/does/not/exist', maxdepth=0, blocking=True)
 
 
 def compare_facet_sets(result, expected):

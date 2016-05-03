@@ -122,9 +122,9 @@ class Archive(object):
         if not folder:
             facet_types = self.FacetTypes.to_bitmask(self.FacetTypes.GENERIC)
             folder = self._save_parent(path, facet_types=facet_types)
-            # schedule a background task that will analyze the requested path
-            # and add the relevant data, if any found
-            self.scan(path)
+            # perform a blocking scan of only the folder being queried, without
+            # going any deeper
+            self.scan(path, maxdepth=0, blocking=True)
         # found folder entry, return relevant information only
         names = self.FacetTypes.from_bitmask(folder['facet_types'])
         return dict(facet_types=names, path=path, main=folder['main'])
