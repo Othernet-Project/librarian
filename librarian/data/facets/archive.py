@@ -120,11 +120,19 @@ class Archive(object):
         q = self._db.Select(sets=self.FOLDERS_TABLE, where='path = %(path)s')
         folder = self._db.fetchone(q, dict(path=path))
         if not folder:
-            facet_types = self.FacetTypes.to_bitmask(self.FacetTypes.GENERIC)
-            folder = self._save_parent(path, facet_types=facet_types)
             # perform a blocking scan of only the folder being queried, without
             # going any deeper
             self.scan(path, maxdepth=0, blocking=True)
+            # re-fetch the freshly scanned folder
+            folder = self._db.fetchone(q, dict(path=path))
+            if not folder:
+                # in case the freshly scanned folder does not contain any files
+                # only subfolders (or is empty), there will be no parent folder
+                # entry created too, because it's creation is triggered only
+                # from the file analyzer to store facet data on parent folder
+                # so we need to store a generic folder entry right here
+                bitmask = self.FacetTypes.to_bitmask(self.FacetTypes.GENERIC)
+                folder = self._save_parent(path, facet_types=bitmask)
         # found folder entry, return relevant information only
         names = self.FacetTypes.from_bitmask(folder['facet_types'])
         return dict(facet_types=names, path=path, main=folder['main'])
