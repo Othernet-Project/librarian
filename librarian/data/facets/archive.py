@@ -36,6 +36,21 @@ class Archive(object):
         self._fsal = kwargs.get('fsal', exts.fsal)
         self._tasks = kwargs.get('tasks', exts.tasks)
 
+    def partial(self, path, facet_type=None):
+        """
+        Let the processor of the chosen ``facet_type`` return information about
+        the given ``path`` that is quickly attainable. If ``facet_type`` is not
+        specified, choose the processor automatically using the ``path``.
+        """
+        if facet_type:
+            proc_cls = self.Processor.for_type(facet_type)
+            return proc_cls(self._fsal).process_file(path, partial=True)
+        # paths may get multiple processors
+        data = dict()
+        for proc_cls in self.Processor.for_path(path):
+            proc_cls(self._fsal).process_file(path, data=data, partial=True)
+        return data
+
     def _analyze(self, paths):
         """
         Called by the public py:meth:`analyze` method and performs the heavy
@@ -94,21 +109,6 @@ class Archive(object):
         """
         keys = cls.FacetTypes.keys(facet_type)
         return dict((k, v) for (k, v) in facet_data.items() if k in keys)
-
-    def partial(self, path, facet_type=None):
-        """
-        Let the processor of the chosen ``facet_type`` return information about
-        the given ``path`` that is quickly attainable. If ``facet_type`` is not
-        specified, choose the processor automatically using the ``path``.
-        """
-        if facet_type:
-            proc_cls = self.Processor.for_type(facet_type)
-            return proc_cls(self._fsal).process_file(path, partial=True)
-        # paths may get multiple processors
-        data = dict()
-        for proc_cls in self.Processor.for_path(path):
-            proc_cls(self._fsal).process_file(path, data=data, partial=True)
-        return data
 
     def parent(self, path):
         """
