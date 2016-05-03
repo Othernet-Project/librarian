@@ -139,10 +139,7 @@ class Processor(object):
         """
         Return whether the processor can handle a given ``path``.
         """
-        if hasattr(cls, 'EXTENSIONS'):
-            extensions = list(getattr(cls, 'EXTENSIONS'))
-            return get_extension(path) in extensions
-        return False
+        return get_extension(path) in cls.EXTENSIONS
 
     @classmethod
     def for_path(cls, path):

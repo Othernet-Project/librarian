@@ -75,6 +75,14 @@ def test_can_process(path, processable):
     assert Proc.can_process(path) is processable
 
 
+def test_can_process_missing_extensions():
+    class FailProc(mod.Processor):
+        pass
+
+    with pytest.raises(AttributeError):
+        FailProc.can_process('test')
+
+
 @mock.patch.object(mod.Processor, 'subclasses')
 def test_for_path_fail(subclasses):
     subclasses.return_value = []
