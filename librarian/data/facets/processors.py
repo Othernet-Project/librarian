@@ -219,8 +219,11 @@ class HtmlFacetProcessor(Processor):
         data = super(HtmlFacetProcessor, self).process_file(path,
                                                             data=data,
                                                             partial=partial)
-        assets = data.pop('assets', None)
-        links.update_links(path, assets or (), clear=True)
+        if not partial:
+            # assets won't be available for partial processing anyway, and
+            # update involves a lot of queries anyway, so skip it
+            assets = data.pop('assets', None)
+            links.update_links(path, assets or (), clear=True)
         return data
 
     def deprocess_file(self, path):
