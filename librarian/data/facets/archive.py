@@ -1,3 +1,4 @@
+import functools
 import logging
 import os
 
@@ -36,63 +37,106 @@ class Archive(object):
         self._fsal = kwargs.get('fsal', exts.fsal)
         self._tasks = kwargs.get('tasks', exts.tasks)
 
-    def partial(self, path, facet_type=None):
+    def _analyze(self, path, partial, callback):
         """
-        Let the processor of the chosen ``facet_type`` return information about
-        the given ``path`` that is quickly attainable. If ``facet_type`` is not
-        specified, choose the processor automatically using the ``path``.
+        Called by the public py:meth:`~Archive.analyze` method and performs
+        the heavy lifting to obtain and return facet data, with optionally
+        invoking a ``callback`` function with obtained facet data, if it was
+        specified.
         """
-        if facet_type:
-            proc_cls = self.Processor.for_type(facet_type)
-            return proc_cls(self._fsal).process_file(path, partial=True)
-        # paths may get multiple processors
+        logging.debug(u"Analyze[%s] %s", ('FULL', 'PARTIAL')[partial], path)
         data = dict()
         for proc_cls in self.Processor.for_path(path):
-            proc_cls(self._fsal).process_file(path, data=data, partial=True)
+            # store entry point on parent folder if available
+            if proc_cls.is_entry_point(path):
+                main = os.path.basename(path)
+                parent = os.path.dirname(path)
+                bitmask = self.FacetTypes.to_bitmask(proc_cls.name)
+                self._save_parent(parent, main=main, facet_types=bitmask)
+            # gather metadata from current processor into ``data``
+            proc_cls(self._fsal).process_file(path, data=data, partial=partial)
+        # invoke specified ``callback`` if available with gathered metadata
+        # and then return the same
+        if callback:
+            callback(data)
         return data
-
-    def _analyze(self, paths):
-        """
-        Called by the public py:meth:`analyze` method and performs the heavy
-        lifting to obtain and store facet data.
-        """
-        for path in paths:
-            logging.debug(u"Analyzing %s", path)
-            data = dict()
-            for proc_cls in self.Processor.for_path(path):
-                # store entry point on parent folder if available
-                if proc_cls.is_entry_point(path):
-                    parent = os.path.dirname(path)
-                    main = os.path.basename(path)
-                    bitmask = self.FacetTypes.to_bitmask(proc_cls.name)
-                    self._save_parent(parent, main=main, facet_types=bitmask)
-                # gather metadata from current processor into ``data``
-                proc_cls(self._fsal).process_file(path, data=data)
-            # store gathered metadata from all applicable processors for the
-            # current path
-            self.save(data)
-            logging.debug(u"Facet data stored for %s", path)
 
     @as_iterable(params=[1])
     @batched(arg=1, batch_size=10, aggregator=batched.updater)
-    def analyze(self, paths, partial=False, blocking=False):
+    def analyze(self, paths, partial=False, callback=None):
         """
         Analyze the given ``paths`` to determine which facet types can handle
         them, write the found information into the database and if the flag
         ``partial`` is set, return efficiently attainable basic information
-        about the paths. The ``blocking`` flag controls whether deep analysis
-        will be immediately done, or just scheduled to run asynchronously.
+        about the paths. The optional ``callback`` argument determines if the
+        analysis will run asynchronously, invoking the ``callback`` function
+        with the obtained data, or in blocking mode, returning the data.
         """
-        if blocking:
-            self._analyze(paths)
+        if not callback:
+            return dict((path, self._analyze(path, partial, callback))
+                        for path in paths)
+        # schedule background task to perform analysis of ``paths``
+        fn = functools.partial(self._analyze,
+                               partial=partial,
+                               callback=callback)
+        self._tasks.schedule(lambda paths: map(fn, paths), args=(paths,))
+        return {}
+
+    def _scan(self, path, partial, callback, maxdepth, depth, delay):
+        """
+        Called by the public py:meth:`~Archive.scan` method and performs
+        the heavy lifting to traverse the directory tree and callback or
+        yield the results of py:meth:`~Archive.analyze`.
+        """
+        path = path or self.ROOT_PATH
+        (success, dirs, files) = self._fsal.list_dir(path)
+        if not success:
+            logging.warn(u"Scan stopped. Invalid path: '{}'".format(path))
+            raise StopIteration()
+        # schedule paths to be analyzed, in the same blocking manner
+        file_paths = (fso.rel_path for fso in files)
+        facets = self.analyze(file_paths, partial=partial)
+        if callback:
+            callback(facets)
         else:
-            self._tasks.schedule(self._analyze, args=(paths,))
-        # a dict must be returned in any case in order to comply with the
-        # requirements of py:attr:`batched.updater`
-        if not partial:
-            # don't bother if no partial data was requested
-            return {}
-        return dict((path, self.partial(path)) for path in paths)
+            yield facets
+        # if we reached specified ``maxdepth``, do not go any deeper
+        if maxdepth is not None and depth == maxdepth:
+            raise StopIteration()
+        # scan subfolders
+        for fso in dirs:
+            kwargs = dict(path=fso.rel_path,
+                          partial=partial,
+                          callback=callback,
+                          maxdepth=maxdepth,
+                          depth=depth + 1,
+                          delay=delay)
+            if callback:
+                self._tasks.schedule(self.scan, kwargs=kwargs, delay=delay)
+            else:
+                for facets in self._scan(**kwargs):
+                    yield facets
+
+    def scan(self, path=None, partial=False, callback=None, maxdepth=None,
+             depth=0, delay=0):
+        """
+        Traverse ``path`` and py:meth:`~Archive.analyze` all encountered files.
+        In case ``callback`` is specified, the traversing will be performed
+        asynchronously, with each next level scheduled as a separate background
+        task, and invoking ``callback`` with each result set separately. If
+        ``callback`` was not specified, it will behave as an iterator, yielding
+        the results of scan on each level. ``delay`` is used only in async mode
+        and it represents the amount of seconds before the next directory is to
+        be scanned. ``maxdepth`` can limit how deep the scan is allowed to
+        traverse directory tree.
+        """
+        generator = self._scan(path, partial, callback, maxdepth, depth, delay)
+        if callback:
+            # evaluate generator(because no-one else will) so that ``callback``
+            # actually gets executed
+            return list(generator)
+        # return unevaluated generator
+        return generator
 
     def _keep_supported(self, paths, facet_type):
         """
@@ -120,19 +164,15 @@ class Archive(object):
         q = self._db.Select(sets=self.FOLDERS_TABLE, where='path = %(path)s')
         folder = self._db.fetchone(q, dict(path=path))
         if not folder:
-            # perform a blocking scan of only the folder being queried, without
-            # going any deeper
-            self.scan(path, maxdepth=0, blocking=True)
-            # re-fetch the freshly scanned folder
-            folder = self._db.fetchone(q, dict(path=path))
-            if not folder:
-                # in case the freshly scanned folder does not contain any files
-                # only subfolders (or is empty), there will be no parent folder
-                # entry created too, because it's creation is triggered only
-                # from the file analyzer to store facet data on parent folder
-                # so we need to store a generic folder entry right here
-                bitmask = self.FacetTypes.to_bitmask(self.FacetTypes.GENERIC)
-                folder = self._save_parent(path, facet_types=bitmask)
+            # perform a blocking partial scan of only the folder being queried
+            # without going any deeper
+            (facets,) = self.scan(path, partial=True, maxdepth=0)
+            # prepare iterator over facet_type values only
+            itypes = (f['facet_types'] for f in facets.values())
+            default = self.FacetTypes.to_bitmask(self.FacetTypes.GENERIC)
+            # calculate bitmask for the whole folder
+            bitmask = functools.reduce(lambda acc, x: acc | x, itypes, default)
+            folder = self._save_parent(path, facet_types=bitmask)
         # found folder entry, return relevant information only
         names = self.FacetTypes.from_bitmask(folder['facet_types'])
         return dict(facet_types=names, path=path, main=folder['main'])
@@ -183,6 +223,9 @@ class Archive(object):
         # stored in database, but while that information becomes available,
         # return quickly attainable basic information for them as placeholders
         if missing:
+            # schedule background deep scan of missing paths
+            self.analyze(missing, callback=self.save)
+            # fetch partials quickly
             partials = self.analyze(missing, partial=True)
             data.update(partials)
         return data
@@ -265,12 +308,23 @@ class Archive(object):
                                    facet_types=cleaned_data['facet_types'])
         # now that folder id is available, save the facet entry
         cleaned_data['folder'] = folder['id']
-        with self._db.transaction():
-            q = self._db.Replace(self.FACETS_TABLE,
-                                 constraints=['path'],
-                                 cols=cleaned_data.keys())
-            self._db.execute(q, cleaned_data)
+        q = self._db.Replace(self.FACETS_TABLE,
+                             constraints=['path'],
+                             cols=cleaned_data.keys())
+        self._db.execute(q, cleaned_data)
+        logging.debug(u"Facet data stored for %s", cleaned_data['path'])
         return cleaned_data
+
+    def save_many(self, facets):
+        """
+        Helper method that can accept the structure produced by most of the
+        query methods, e.g. py:meth:`~Archive.analyze`, and invoke for each
+        path:data pair from ``facets`` the py:meth:`~Archive.save` method.
+        """
+        # ``executemany`` would be a better fit instead of individual saves,
+        # but since we rely on the folder id as well, it's not doable just now
+        for data in facets.values():
+            self.save(data)
 
     @as_iterable(params=[1])
     @batched(arg=1, batch_size=999, lazy=False)
@@ -295,7 +349,10 @@ class Archive(object):
         """
         with self._db.transaction():
             self.clear()
-            self.scan(blocking=True)
+            # as this method is most likely going to be invoked only by the
+            # command handler, it must be a blocking scan
+            for facets in self.scan():
+                self.save_many(facets)
 
     def clear(self):
         """
@@ -303,35 +360,3 @@ class Archive(object):
         """
         q = self._db.Delete(self.FACETS_TABLE)
         self._db.execute(q)
-
-    def scan(self, path=None, depth=0, maxdepth=None, blocking=False, delay=0):
-        """
-        Traverse ``path`` and py:meth:`analyze` all encountered files, either
-        asynchronous or in blocking mode (depending on the state of the
-        ``blocking`` flag). ``delay`` represents the amount of seconds before
-        the next directory is to be scanned.
-        """
-        path = path or self.ROOT_PATH
-        (success, dirs, files) = self._fsal.list_dir(path)
-        if not success:
-            logging.warn(u"Scan stopped. Invalid path: '{}'".format(path))
-            return
-        # schedule paths to be analyzed, in the same ``blocking`` manner
-        self.analyze((fso.rel_path for fso in files), blocking=blocking)
-        # if we reached specified ``max_depth``, do not go any deeper
-        if maxdepth is not None and depth == maxdepth:
-            return
-        # scan subfolders
-        for fso in dirs:
-            if blocking:
-                self.scan(fso.rel_path,
-                          depth=depth + 1,
-                          maxdepth=maxdepth,
-                          blocking=blocking)
-            else:
-                kwargs = dict(path=fso.rel_path,
-                              depth=depth + 1,
-                              maxdepth=maxdepth,
-                              blocking=blocking,
-                              delay=delay)
-                self._tasks.schedule(self.scan, kwargs=kwargs, delay=delay)

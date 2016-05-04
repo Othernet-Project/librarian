@@ -72,7 +72,7 @@ class ScanFacetsTask(Task):
 
     def run(self, step_delay=0):
         archive = Archive()
-        archive.scan(delay=step_delay)
+        archive.scan(callback=archive.save_many, delay=step_delay)
 
     @classmethod
     def install(cls):
