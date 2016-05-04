@@ -54,8 +54,10 @@ class CheckNewContentTask(Task):
                 logging.info(u"Removing file facets: '{}'".format(path))
                 removable.append(path)
             exts.events.publish('FS_EVENT', event)
-        archive.remove(removable)
-        archive.analyze(analyzable)
+        if removable:
+            archive.remove(removable)
+        if analyzable:
+            archive.analyze(analyzable)
         return changes_found
 
     @classmethod
