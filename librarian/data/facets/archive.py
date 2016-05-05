@@ -25,6 +25,8 @@ class Archive(object):
     FOLDERS_TABLE = 'folders'
     #: Database columns for folders
     FOLDERS_KEYS = ('path', 'facet_types', 'main')
+    #: Events
+    ENTRY_POINT_FOUND = 'entry_point_found'
     #: Default root path, relative to FSAL's base directory
     ROOT_PATH = '.'
     #: Aliases for imported classes
@@ -36,6 +38,8 @@ class Archive(object):
         self._config = kwargs.get('config', exts.config)
         self._fsal = kwargs.get('fsal', exts.fsal)
         self._tasks = kwargs.get('tasks', exts.tasks)
+        self._events = kwargs.get('events', exts.events)
+        self._events.subscribe(self.ENTRY_POINT_FOUND, self._entry_point_found)
 
     def _analyze(self, path, partial, callback):
         """
@@ -49,10 +53,10 @@ class Archive(object):
         for proc_cls in self.Processor.for_path(path):
             # store entry point on parent folder if available
             if proc_cls.is_entry_point(path):
-                main = os.path.basename(path)
-                parent = os.path.dirname(path)
-                bitmask = self.FacetTypes.to_bitmask(proc_cls.name)
-                self._save_parent(parent, main=main, facet_types=bitmask)
+                facet_type = self.FacetTypes.to_bitmask(proc_cls.name)
+                self._events.publish(self.ENTRY_POINT_FOUND,
+                                     path=path,
+                                     facet_type=facet_type)
             # gather metadata from current processor into ``data``
             proc_cls(self._fsal).process_file(path, data=data, partial=partial)
         # invoke specified ``callback`` if available with gathered metadata
@@ -250,6 +254,11 @@ class Archive(object):
             params.update(bitmask=bitmask)
         return dict((row['path'], row)
                     for row in self._db.fetchiter(q, params))
+
+    def _entry_point_found(self, path, facet_type):
+        main = os.path.basename(path)
+        parent = os.path.dirname(path)
+        self._save_parent(parent, main=main, facet_types=facet_type)
 
     def _save_parent(self, path, **kwargs):
         """

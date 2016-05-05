@@ -10,10 +10,10 @@ import librarian.data.facets.archive as mod
 # UNIT TESTS
 
 
-@mock.patch.object(mod.Archive, '_save_parent')
+@mock.patch.object(mod, 'exts')
 @mock.patch.object(mod.Archive, 'save')
 @mock.patch.object(mod.Processor, 'for_path')
-def test__analyze(for_path, save, _save_parent, processors):
+def test__analyze(for_path, save, exts, processors):
     processors[0].is_entry_point.return_value = False
     for_path.return_value = processors
     callback = mock.Mock()
@@ -22,9 +22,9 @@ def test__analyze(for_path, save, _save_parent, processors):
     archive._analyze('/path/to/file', False, callback)
     # the dict passed to save should contain the data from all processors
     expected = {0: '/path/to/file', 1: '/path/to/file'}
-    _save_parent.assert_called_once_with('/path/to',
-                                         main='file',
-                                         facet_types=2)
+    exts.events.publish.assert_called_once_with(mod.Archive.ENTRY_POINT_FOUND,
+                                                path='/path/to/file',
+                                                facet_type=2)
     callback.assert_called_once_with(expected)
 
 
