@@ -179,19 +179,21 @@ class Manager(object):
         """
         span = self._config['changelog.span']
         ignored_paths = self._config.get('changelog.ignored_paths', [])
+        is_count = kwargs.get('count', False)
+        order = None if is_count else '-create_time'
         (success,
          count,
          dirs,
          files) = self._fsal.list_descendants(path,
                                               entry_type=0,
-                                              order='-create_time',
+                                              order=order,
                                               span=span,
                                               ignored_paths=ignored_paths,
                                               **kwargs)
         if not success:
             raise self.InvalidQuery(path)
         # check if only the number of descendants was requested
-        if kwargs.get('count', False):
+        if is_count:
             return count
         # a complete listing was requested, perform regular post-processing
         return self._prepare_listing(dirs,
