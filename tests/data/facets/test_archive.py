@@ -15,50 +15,34 @@ import librarian.data.facets.archive as mod
 def test__analyze(for_path, save, _save_parent, processors):
     processors[0].is_entry_point.return_value = False
     for_path.return_value = processors
+    callback = mock.Mock()
     # trigger processor updates
     archive = mod.Archive()
-    archive._analyze(['/path/to/file'])
+    archive._analyze('/path/to/file', False, callback)
     # the dict passed to save should contain the data from all processors
     expected = {0: '/path/to/file', 1: '/path/to/file'}
-    save.assert_called_once_with(expected)
     _save_parent.assert_called_once_with('/path/to',
                                          main='file',
                                          facet_types=2)
+    callback.assert_called_once_with(expected)
 
 
 @mock.patch.object(mod.Archive, '_analyze')
 def test_analyze_blocking(_analyze):
     archive = mod.Archive()
-    archive.analyze('path', blocking=True)
-    _analyze.assert_called_once_with(['path'])
+    expected = {'path': _analyze.return_value}
+    assert archive.analyze('path') == expected
+    _analyze.assert_called_once_with('path', False, None)
 
 
 @mock.patch.object(mod, 'exts')
 @mock.patch.object(mod.Archive, '_analyze')
 def test_analyze_nonblocking(_analyze, exts):
     archive = mod.Archive()
-    archive.analyze('path', blocking=False)
+    callback = mock.Mock()
+    assert archive.analyze('path', callback=callback) == {}
     assert not _analyze.called
-    exts.tasks.schedule.assert_called_once_with(archive._analyze,
-                                                args=(['path'],))
-
-
-@mock.patch.object(mod.Archive, 'partial')
-@mock.patch.object(mod, 'exts')
-def test_analyze_partial(exts, partial):
-    archive = mod.Archive()
-    expected = {'path1': partial.return_value, 'path2': partial.return_value}
-    assert archive.analyze(['path1', 'path2'], partial=True) == expected
-    partial.assert_has_calls([mock.call('path1'), mock.call('path2')])
-
-
-@mock.patch.object(mod.Archive, 'partial')
-@mock.patch.object(mod, 'exts')
-def test_analyze_impartial(exts, partial):
-    archive = mod.Archive()
-    expected = {}
-    assert archive.analyze(['path1', 'path2'], partial=False) == expected
-    assert not partial.called
+    assert exts.tasks.schedule.called
 
 
 @mock.patch.object(mod.Processor, 'for_type')
@@ -88,28 +72,6 @@ def test_strip(src, expected, facet_type):
     assert mod.Archive.strip(src, facet_type) == expected
 
 
-@mock.patch.object(mod.Processor, 'for_type')
-@mock.patch.object(mod.Processor, 'for_path')
-def test_partial_for_path(for_path, for_type, processors):
-    for_path.return_value = processors
-    # trigger processor updates
-    archive = mod.Archive()
-    expected = {0: '/path/to/file', 1: '/path/to/file'}
-    assert archive.partial('/path/to/file') == expected
-    assert not for_type.called
-
-
-@mock.patch.object(mod.Processor, 'for_type')
-@mock.patch.object(mod.Processor, 'for_path')
-def test_partial_for_type(for_path, for_type, processors):
-    for_type.return_value = processors[0]
-    # trigger processor updates
-    archive = mod.Archive()
-    expected = {0: '/path/to/file'}
-    assert archive.partial('/path/to/file', facet_type='generic') == expected
-    assert not for_path.called
-
-
 # INTEGRATION TESTS FOR DATABASE QUERIES
 
 
@@ -125,14 +87,20 @@ def test_parent_found(scan, populated_database):
         assert archive.parent(folder['path']) == expected
 
 
+@mock.patch.object(mod.Archive, '_save_parent')
 @mock.patch.object(mod.Archive, 'scan')
-def test_parent_not_found(scan, databases):
+def test_parent_not_found(scan, _save_parent, databases):
+    scan.return_value = [{'/1': {'facet_types': 2},
+                          '/2': {'facet_types': 8},
+                          '/3': {'facet_types': 2}}]
+    _save_parent.return_value = {'main': None, 'facet_types': 11}
     archive = mod.Archive(db=databases.facets)
     expected = {'path': '/does/not/exist',
                 'main': None,
-                'facet_types': ['generic']}
+                'facet_types': ['generic', 'html', 'audio']}
     assert archive.parent('/does/not/exist') == expected
-    scan.assert_called_once_with('/does/not/exist', maxdepth=0, blocking=True)
+    scan.assert_called_once_with('/does/not/exist', partial=True, maxdepth=0)
+    _save_parent.assert_called_once_with('/does/not/exist', facet_types=11)
 
 
 def compare_facet_sets(result, expected):
@@ -181,7 +149,9 @@ def test_get(analyze, _keep_supported, populated_database):
     result = archive.get(paths, facet_type=existing_types[-1])
     # compare results against expected filtered data
     compare_facet_sets(result, expected)
-    analyze.assert_called_once_with(set(non_existent), partial=True)
+    calls = [mock.call(set(non_existent), callback=archive.save),
+             mock.call(set(non_existent), partial=True)]
+    analyze.assert_has_calls(calls)
 
 
 def first_facet_type(facets):
