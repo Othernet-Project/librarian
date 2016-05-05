@@ -106,7 +106,7 @@ class DirInfo(CDFObject):
             terms = '%' + terms.lower() + '%'
         rows = db.fetchiter(q, dict(language=language, terms=terms))
         paths = (r['path'] for r in rows)
-        return cls.from_db(paths).itervalues()
+        return cls.from_db(paths)
 
     @classmethod
     def fetch(cls, db, paths):
