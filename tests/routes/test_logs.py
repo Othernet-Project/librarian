@@ -3,13 +3,6 @@ import mock
 import librarian.routes.logs as mod
 
 
-@mock.patch.object(mod.SendAppLog, 'request')
-def test_send_app_log_path(request):
-    request.app.config = {'logging.output': '/path/to/logfile.log'}
-    route = mod.SendAppLog()
-    assert route.path == '/logfile.log'
-
-
 @mock.patch.object(mod, 'datetime')
 @mock.patch.object(mod, 'get_base_version')
 @mock.patch.object(mod, 'static_file')
