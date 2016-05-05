@@ -179,7 +179,9 @@ class Archive(object):
             folder = self._save_parent(path, facet_types=bitmask)
         # found folder entry, return relevant information only
         names = self.FacetTypes.from_bitmask(folder['facet_types'])
-        return dict(facet_types=names, path=path, main=folder['main'])
+        return dict(facet_types=names + [self.FacetTypes.UPDATES],
+                    path=path,
+                    main=folder['main'])
 
     def for_parent(self, path, facet_type=None):
         """
