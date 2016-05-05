@@ -1,4 +1,5 @@
 import os
+import types
 
 import mock
 import pytest
@@ -43,6 +44,75 @@ def test_analyze_nonblocking(_analyze, exts):
     assert archive.analyze('path', callback=callback) == {}
     assert not _analyze.called
     assert exts.tasks.schedule.called
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, 'analyze')
+def test__scan_list_dir_fail(analyze, exts):
+    exts.fsal.list_dir.return_value = (False, [], [])
+    archive = mod.Archive()
+    assert list(archive._scan('path', False, None, None, 0, 0)) == []
+    assert not analyze.called
+
+
+@pytest.mark.parametrize('maxdepth,levels', [
+    (0, 1),
+    (1, 2),
+])
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, 'analyze')
+def test__scan_maxdepth(analyze, exts, maxdepth, levels):
+    exts.fsal.list_dir.return_value = (True, [mock.Mock(rel_path='dir1')], [])
+    archive = mod.Archive()
+    expected = [analyze.return_value] * levels
+    assert list(archive._scan('path', False, None, maxdepth, 0, 0)) == expected
+    assert exts.fsal.list_dir.call_count == levels
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, 'analyze')
+def test__scan_callback(analyze, exts):
+    callback = mock.Mock()
+    exts.fsal.list_dir.return_value = (True, [mock.Mock(rel_path='dir1')], [])
+    archive = mod.Archive()
+    assert list(archive._scan('path', False, callback, 1, 0, 1)) == []
+    callback.assert_called_once_with(analyze.return_value)
+    kwargs = dict(path='dir1',
+                  partial=False,
+                  callback=callback,
+                  maxdepth=1,
+                  depth=1,
+                  delay=1)
+    exts.tasks.schedule.assert_called_once_with(archive.scan,
+                                                kwargs=kwargs,
+                                                delay=1)
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, 'analyze')
+def test__scan_generator(analyze, exts):
+    exts.fsal.list_dir.return_value = (True, [mock.Mock(rel_path='dir1')], [])
+    archive = mod.Archive()
+    # due to the above set up mock, it will yield infinitely so test only
+    # a couple cases
+    generator = archive._scan('path', False, None, None, 0, 0)
+    assert next(generator) == analyze.return_value
+    assert next(generator) == analyze.return_value
+    assert next(generator) == analyze.return_value
+    assert analyze.call_count == 3
+
+
+@pytest.mark.parametrize('callback,ret_type', [
+    (None, types.GeneratorType),
+    (lambda x: x, list),
+])
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, 'analyze')
+def test_scan_return_value(analyze, exts, callback, ret_type):
+    exts.fsal.list_dir.return_value = (True, [], [])
+    archive = mod.Archive()
+    ret = archive.scan(callback=callback)
+    assert isinstance(ret, ret_type)
 
 
 @mock.patch.object(mod.Processor, 'for_type')
