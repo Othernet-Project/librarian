@@ -495,7 +495,8 @@ class Archive(object):
         # calculate bitmask for the whole folder
         bitmask = functools.reduce(lambda acc, x: acc | x, itypes, default)
         raw_data = dict(path=path, type=DIRECTORY_TYPE, content_types=bitmask)
-        return self.save(raw_data)
+        self.save(raw_data)
+        return self.get(path)[path]
 
     def search(self, terms, content_type=None, language=None):
         """

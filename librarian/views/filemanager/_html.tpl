@@ -2,7 +2,7 @@
     <span class="note">${_('No documents to be shown.')}</span>
 % else:
     <%
-    full_path = th.join(path, selected or current.meta.get('main'))
+    full_path = th.join(path, selected_name or current.meta.get('main'))
     %>
 
     <div class="views-reader" id="views-reader">

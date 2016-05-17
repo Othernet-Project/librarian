@@ -115,17 +115,19 @@ class List(FileRouteMixin, XHRPartialRoute):
         path = self.unquoted(self.QUERY_KEY) or path or self.manager.get_root()
         show_hidden = self.request.params.get(self.HIDDEN_KEY, 'no') == 'yes'
         is_search = self.QUERY_KEY in self.request.params
+        selected = self.unquoted(self.SELECTED_KEY)
         if is_search:
             result = self.search(path, show_hidden)
         elif view == self.UPDATES_VIEW:
             result = self.updates(path, show_hidden)
         else:
-            selected = self.unquoted(self.SELECTED_KEY)
             result = self.list(path, show_hidden, view, selected)
         # perform view promotion, if available
         available_views = result['current'].meta.content_type_names
         view = self.promote_view(view, available_views)
-        result.update(is_search=is_search, view=view)
+        result.update(is_search=is_search,
+                      view=view,
+                      selected_name=selected)
         return result
 
 
