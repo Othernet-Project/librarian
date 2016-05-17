@@ -224,7 +224,7 @@ class HtmlMetadata(BaseMetadata):
                 self.data['language'] = lang
             if dom.title:
                 self.data['title'] = dom.title.string
-            is_formatting_on = self.data['outernet_formatting'] == 'true'
+            is_formatting_on = self.data.get('outernet_formatting') == 'true'
             self.data['outernet_formatting'] = is_formatting_on
             self.data['assets'] = self.extract_asset_paths(dom)
             dom.decompose()
