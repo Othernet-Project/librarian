@@ -3,9 +3,18 @@ import os
 
 from ...core.exts import ext_container as exts
 from .. import links
-from .facettypes import FacetTypes
-from .metadata import (runnable, ImageMetadata, AudioMetadata,
-                       VideoMetadata, HtmlMetadata)
+from .contenttypes import ContentTypes
+from .metadata import (runnable,
+                       NO_LANGUAGE,
+                       ImageMetadata,
+                       AudioMetadata,
+                       VideoMetadata,
+                       HtmlMetadata,
+                       DirectoryMetadata)
+
+
+FILE_TYPE = 0
+DIRECTORY_TYPE = 1
 
 
 def split_name(fname):
@@ -57,14 +66,14 @@ class Processor(object):
     Base py:class:`Processor` class. Subclasses are expected to override the
     following attributes:
 
-    - py:attr:`name`: should match the definition from py:class:`FacetTypes`
+    - py:attr:`name`: should match the definition from py:class:`ContentTypes`
     - py:attr:`metadata_class`: optional, class which performs extraction of
     metadata
 
     Methods (optional):
 
     - py:meth:`get_metadata`: returns a dict with obtained meta information
-    - py:class:`deprocess_file`: perform additional cleanup when the facet
+    - py:class:`deprocess_file`: perform additional cleanup when the metadata
     entry is being deleted
     """
     name = None
@@ -75,7 +84,21 @@ class Processor(object):
             raise TypeError("Usage of abstract processor is not allowed."
                             "`name` attribute must be defined.")
         self.fsal = fsal or exts.fsal
-        self.keys = FacetTypes.keys(self.name, specialized_only=True)
+        self.keys = ContentTypes.keys(self.name)
+
+    def _merge(self, source, destination):
+        """
+        Copy dict of lang:metadata pairs from ``source`` into ``destination``.
+        """
+        # iterate over ``source``'s lang:meta pairs
+        for (language, src_section) in source.items():
+            # existing metadata might not have the current language
+            dest_section = destination.get(language, {})
+            # merge ``language``'s ``src_section`` into ``dest_section``
+            dest_section.update(src_section)
+            # put back (or insert) merged ``dest_section`` that was just
+            # updated with ``src_section`` into ``desctination``
+            destination[language] = dest_section
 
     def process_file(self, path, data=None, partial=False):
         """
@@ -87,11 +110,21 @@ class Processor(object):
         # check must go against ``None`` to maintain the contract of using the
         # passed in dict
         data = dict() if data is None else data
-        meta = self.get_metadata(path, partial)
-        bitmask = FacetTypes.to_bitmask(self.name)
+        new_metadata = self.get_metadata(path, partial)
+        # if metadata is not multilang, wrap it in a dict under ``NO_LANGUAGE``
+        # key, otherwise leave it as-is
+        if not self.metadata_class or not self.metadata_class.multilang:
+            new_metadata = {NO_LANGUAGE: new_metadata}
+        # merge with existing metadata, not overwrite it
+        existing_metadata = data.get('metadata', {})
+        self._merge(new_metadata, existing_metadata)
+        bitmask = ContentTypes.to_bitmask(self.name)
         data.update(path=path,
-                    facet_types=data.get('facet_types', 0) | bitmask,
-                    **meta)
+                    content_types=data.get('content_types', 0) | bitmask,
+                    metadata=existing_metadata)
+        if not partial:
+            fs_type = DIRECTORY_TYPE if self.fsal.isdir(path) else FILE_TYPE
+            data.update(type=fs_type)
         return data
 
     def deprocess_file(self, path):
@@ -153,14 +186,14 @@ class Processor(object):
         return processors
 
     @classmethod
-    def for_type(cls, facet_type):
+    def for_type(cls, content_type):
         """
-        Return all the applicable processors for a given ``facet_type``.
+        Return all the applicable processors for a given ``content_type``.
         """
         for proc_cls in cls.subclasses():
-            if proc_cls.name == facet_type:
+            if proc_cls.name == content_type:
                 return proc_cls
-        raise RuntimeError("No processor found for the given facet type.")
+        raise RuntimeError("No processor found for the given content type.")
 
     @classmethod
     def subclasses(cls, source=None):
@@ -175,7 +208,7 @@ class Processor(object):
 
 
 class GenericFacetProcessor(Processor):
-    name = FacetTypes.GENERIC
+    name = ContentTypes.GENERIC
 
     @classmethod
     def can_process(cls, path):
@@ -183,7 +216,7 @@ class GenericFacetProcessor(Processor):
 
 
 class HtmlFacetProcessor(Processor):
-    name = FacetTypes.HTML
+    name = ContentTypes.HTML
     metadata_class = HtmlMetadata
 
     EXTENSIONS = ['html', 'htm', 'xhtml']
@@ -238,15 +271,13 @@ class HtmlFacetProcessor(Processor):
             return {}
         else:
             data = dict((k, getattr(meta, k)) for k in self.keys)
-            # the value must be a bool, not string
-            data['outernet_formatting'] = (meta.outernet_formatting == 'true')
             # `assets` will be popped out before passing it back to the caller
             data['assets'] = meta.assets
             return data
 
 
 class ImageFacetProcessor(Processor, ThumbProcessorMixin):
-    name = FacetTypes.IMAGE
+    name = ContentTypes.IMAGE
     metadata_class = ImageMetadata
 
     EXTENSIONS = ['jpg', 'jpeg', 'png']
@@ -267,7 +298,7 @@ class ImageFacetProcessor(Processor, ThumbProcessorMixin):
 
 
 class AudioFacetProcessor(Processor, ThumbProcessorMixin):
-    name = FacetTypes.AUDIO
+    name = ContentTypes.AUDIO
     metadata_class = AudioMetadata
 
     EXTENSIONS = ['mp3', 'wav', 'ogg']
@@ -287,7 +318,7 @@ class AudioFacetProcessor(Processor, ThumbProcessorMixin):
 
 
 class VideoFacetProcessor(Processor, ThumbProcessorMixin):
-    name = FacetTypes.VIDEO
+    name = ContentTypes.VIDEO
     metadata_class = VideoMetadata
 
     EXTENSIONS = ['mp4', 'wmv', 'webm', 'flv', 'ogv']
@@ -309,3 +340,32 @@ class VideoFacetProcessor(Processor, ThumbProcessorMixin):
             "vfr",
             dest
         ]
+
+
+class DirectoryProcessor(Processor):
+    name = ContentTypes.DIRECTORY
+    metadata_class = DirectoryMetadata
+
+    DIRINFO_FILENAME = '.dirinfo'
+
+    @classmethod
+    def can_process(cls, path):
+        return os.path.basename(path) == cls.DIRINFO_FILENAME
+
+    def process_file(self, *args, **kwargs):
+        data = super(DirectoryProcessor, self).process_file(*args, **kwargs)
+        # for each passed in dirinfo file, the data should be associated with
+        # the path of the directory itself, not the dirinfo file
+        dirpath = os.path.dirname(data['path'])
+        data.update(path=dirpath)
+        return data
+
+    def get_metadata(self, path, partial):
+        if partial:
+            return {}
+        try:
+            meta = self.metadata_class(self.fsal, path)
+        except IOError:
+            return {}
+        else:
+            return meta.data

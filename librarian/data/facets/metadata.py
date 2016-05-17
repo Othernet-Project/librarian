@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import os
+import re
 import json
 import gevent
 import logging
@@ -15,6 +16,7 @@ from bs4 import BeautifulSoup
 
 
 FFPROBE_CMD = 'ffprobe -v quiet -i HOLDER1 -show_entries HOLDER2 -print_format json'
+NO_LANGUAGE = ''
 
 
 def run_command(command, timeout, debug=False):
@@ -67,6 +69,9 @@ def find_in_dicts(dicts, tags):
 
 
 class BaseMetadata(object):
+    #: Determines whether the returned metadata is available in multiple
+    #: languages or not
+    multilang = False
 
     def __init__(self, fsal, path):
         self.fsal = fsal
@@ -213,20 +218,22 @@ class HtmlMetadata(BaseMetadata):
                 # <meta http-equiv="content-language">
                 pragma = meta.get('http-equiv', '').lower()
                 if pragma == 'content-language':
-                    self.data['language'] == meta.get('content')
+                    self.data['language'] = meta.get('content')
             if dom.html:
                 lang = dom.html.get('lang') or self.data.get('language', '')
                 self.data['language'] = lang
             if dom.title:
                 self.data['title'] = dom.title.string
-            self.extract_asset_paths(dom)
+            is_formatting_on = self.data['outernet_formatting'] == 'true'
+            self.data['outernet_formatting'] = is_formatting_on
+            self.data['assets'] = self.extract_asset_paths(dom)
             dom.decompose()
 
     def __getattr__(self, name):
         return self.data.get(name, '')
 
     def extract_asset_paths(self, dom):
-        self.assets = []
+        assets = []
         links = (
             get_tag_attr(dom.find_all('link'), 'href'),
             get_tag_attr(dom.find_all('script'), 'src'),
@@ -237,10 +244,34 @@ class HtmlMetadata(BaseMetadata):
         for url in itertools.chain(*links):
             is_local, path = get_local_path(dirpath, url)
             if is_local:
-                self.assets.append(path)
-
+                assets.append(path)
+        return assets
 
 ImageMetadata = FFmpegImageMetadata
 
 
 VideoMetadata = FFmpegAudioVideoMetadata
+
+
+class DirectoryMetadata(BaseMetadata):
+    multilang = True
+
+    SPLITTER = '='
+    ENTRY_REGEX = re.compile(r'(\w+)\[(\w+)\]')
+
+    def __init__(self, *args, **kwargs):
+        super(DirectoryMetadata, self).__init__(*args, **kwargs)
+        self.data = dict()
+        # read and convert to unicode all lines
+        with self.fsal.open(self.path, 'r') as dirinfo_file:
+            raw = [to_unicode(line) for line in dirinfo_file.readlines()]
+        # unpack each line
+        for line in raw:
+            (key, value) = line.split(self.SPLITTER)
+            match = self.ENTRY_REGEX.match(key)
+            if match:
+                (key, language) = match.groups()
+            else:
+                language = NO_LANGUAGE
+            self.data.setdefault(language, {})
+            self.data[language][key] = value.strip()

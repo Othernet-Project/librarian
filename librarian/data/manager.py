@@ -1,3 +1,4 @@
+import itertools
 import mimetypes
 import os
 import re
@@ -46,10 +47,12 @@ class Manager(object):
         self._fsal = kwargs.get('fsal', exts.fsal)
         self._config = kwargs.get('config', exts.config)
         self._databases = kwargs.get('databases', exts.databases)
-        self._archive = Archive(db=self._databases.facets,
+        self._archive = Archive(db=self._databases.meta,
                                 config=self._config,
                                 fsal=self._fsal,
-                                tasks=kwargs.get('tasks', exts.tasks))
+                                cache=kwargs.get('cache', exts.cache),
+                                tasks=kwargs.get('tasks', exts.tasks),
+                                events=kwargs.get('events', exts.events))
 
     def get_root(self):
         """
@@ -63,83 +66,92 @@ class Manager(object):
         """
         return self.RE_PATH_WITH_HIDDEN.match(fso.rel_path)
 
-    def _prepare_dirs(self, dirs, dirinfos=None, show_hidden=False):
+    def _prepare_dirs(self, dirs, metas, show_hidden):
         """
-        Add dirinfo entries to each file system object and filter those out
-        that should not be visible. In case ``dirinfos`` was not passed in,
-        fetch the data in place.
+        Add meta entries to each file system object and filter those out
+        that should not be visible.
         """
-        if dirinfos is None:
-            dirinfos = DirInfo.from_db([fso.rel_path for fso in dirs],
-                                       immediate=True)
         # iterate over fso objects, collect and return only those that should
         # be visible
         filtered = []
         for fso in dirs:
-            if self._is_hidden(fso):
+            # ignore hidden entries if requested
+            if not show_hidden and self._is_hidden(fso):
                 continue
             # assign extra data to fso objects
-            fso.dirinfo = dirinfos[fso.rel_path]
+            fso.meta = metas[fso.rel_path]
             filtered.append(fso)
         return filtered
 
-    def _prepare_files(self, files, facets=None, facet_type=None,
-                       show_hidden=False):
+    def _prepare_files(self, files, metas, show_hidden, selected=None):
         """
-        Add facet entries to each file system object and filter those out
+        Add meta entries to each file system object and filter those out
         which shouldn't be visible or their name is on the py:attr:`IGNORED`
-        list. If ``facets`` was not passed in,  or there are paths missing
-        from it, fetch the data in place. If ``facet_type`` is specified,
-        entries that do not belong to a specific facet type will be ignored.
+        list. If ``metas`` was not passed in,  or there are paths missing
+        from it, fetch the data in place. If ``content_type`` is specified,
+        entries that do not belong to a specific content type will be ignored.
         """
-        facets = facets or {}
-        file_paths = set(fso.rel_path for fso in files)
-        # get set of missing facet paths (paths of file entries that have no
-        # facet data in ``facets`` dict)
-        missing_facet_paths = file_paths.difference(facets.keys())
-        if missing_facet_paths:
-            facets.update(self._archive.get(missing_facet_paths, facet_type))
         # iterate over fso objects, collect and return only those that should
         # be visible
         filtered = []
+        found_selected = None
         for fso in files:
-            # ignore entries that do not belong to the specified ``facet_type``
-            if fso.rel_path not in facets:
+            # ignore entries that are on the global ignore list
+            if fso.name in self.IGNORED:
                 continue
-            # ignore entries that are on the global ignore list, or are hidden
-            if fso.name in self.IGNORED or self._is_hidden(fso):
+            # ignore hidden entries if requested
+            if not show_hidden and self._is_hidden(fso):
                 continue
             # assign extra data to fso objects
-            mimetype, encoding = mimetypes.guess_type(fso.rel_path)
+            try:
+                fso.meta = metas[fso.rel_path]
+            except KeyError:
+                # ignore entries that have no found facet since they probably
+                # do not belong to the requested content type
+                continue
+            (mimetype, _) = mimetypes.guess_type(fso.rel_path)
             fso.mimetype = mimetype
-            fso.facets = facets[fso.rel_path]
             filtered.append(fso)
-        return filtered
+            if selected and fso.name == selected:
+                found_selected = fso
+        found_selected = found_selected or (filtered[0] if filtered else None)
+        return (filtered, found_selected)
 
-    def _prepare_listing(self, dirs, files, **extra):
+    def _prepare_listing(self, path, dirs, files, **extra):
         """
         Wrap the passed in ``dirs`` and ``files`` in their respective iterators
         returning them in a dictionary with all the ``extra`` data included as
         optional keyword arguments and the fetched facet types for the given
         parent `path`.
         """
+        metas = extra.pop('metas', {})
+        content_type = extra.pop('content_type', {})
+        fso_paths = set(fso.rel_path for fso in itertools.chain(dirs, files))
+        # get set of missing facet paths (paths of file entries that have no
+        # facet data in ``facets`` dict)
+        missing_meta_paths = fso_paths.difference(metas.keys())
+        if missing_meta_paths:
+            metas.update(self._archive.get(missing_meta_paths, content_type))
         # path is guaranteed to be valid at this point
-        path = extra.get('path')
-        (_, current) = self._fsal.get_fso(path)
         # get parent folder information (pointed at by ``path``)
-        current.facets = self._archive.parent(path)
-        current.dirinfo = DirInfo.from_db([path], immediate=True).get(path, {})
+        (_, current) = self._fsal.get_fso(path or '.')
+        force_refresh = extra.pop('force_refresh', False)
+        current.meta = self._archive.parent(path, force_refresh)
         show_hidden = extra.pop('show_hidden', False)
-        dirs = self._prepare_dirs(dirs,
-                                  dirinfos=extra.pop('dirinfos', None),
-                                  show_hidden=show_hidden)
-        files = self._prepare_files(files,
-                                    facets=extra.pop('facets', None),
-                                    facet_type=extra.pop('facet_type', None),
-                                    show_hidden=show_hidden)
-        return dict(dirs=dirs, files=files, current=current, **extra)
+        selected = extra.pop('selected', None)
+        dirs = self._prepare_dirs(dirs, metas, show_hidden)
+        (files, selected) = self._prepare_files(files,
+                                                metas,
+                                                show_hidden,
+                                                selected)
+        return dict(path=path,
+                    dirs=dirs,
+                    files=files,
+                    current=current,
+                    selected=selected,
+                    **extra)
 
-    def get(self, path, facet_type=None):
+    def get(self, path, content_type=None):
         """
         Return a single file system object for the given ``path``.
         """
@@ -147,28 +159,33 @@ class Manager(object):
         if not success:
             raise self.InvalidQuery(path)
         # post-process single entries the same way as with list or search
+        metas = self._archive.get(path, content_type, partial=False)
         if fso.is_dir():
-            (fso,) = self._prepare_dirs([fso])
+            (fso,) = self._prepare_dirs([fso], metas, True)
         else:
-            (fso,) = self._prepare_files([fso], facet_type=facet_type)
+            (files, _) = self._prepare_files([fso], metas, True)
+            (fso,) = files
         return fso
 
-    def list(self, path, facet_type, show_hidden=False):
+    def list(self, path, content_type, show_hidden=False, selected=None):
         """
         Return all direct children of the given ``path``. The operation is
         essentially equal to a regular directory listing.
         """
-        (success, dirs, files) = self._fsal.list_dir(path)
+        # fsal cannot accept empty root
+        (success, dirs, files) = self._fsal.list_dir(path or '.')
         if not success:
             raise self.InvalidQuery(path)
         # use the more efficient query method for directory listings
-        facets = self._archive.for_parent(path, facet_type)
-        return self._prepare_listing(dirs,
+        metas = self._archive.for_parent(path, content_type)
+        return self._prepare_listing(path,
+                                     dirs,
                                      files,
-                                     facets=facets,
-                                     facet_type=facet_type,
-                                     show_hidden=show_hidden,
-                                     path=path)
+                                     metas=metas,
+                                     content_type=content_type,
+                                     selected=selected,
+                                     force_refresh=not metas,
+                                     show_hidden=show_hidden)
 
     def descendants(self, path, show_hidden=False, **kwargs):
         """
@@ -184,7 +201,7 @@ class Manager(object):
         (success,
          count,
          dirs,
-         files) = self._fsal.list_descendants(path,
+         files) = self._fsal.list_descendants(path or '.',
                                               entry_type=0,
                                               order=order,
                                               span=span,
@@ -196,13 +213,13 @@ class Manager(object):
         if is_count:
             return count
         # a complete listing was requested, perform regular post-processing
-        return self._prepare_listing(dirs,
+        return self._prepare_listing(path,
+                                     dirs,
                                      files,
                                      show_hidden=show_hidden,
-                                     path=path,
                                      count=count)
 
-    def search(self, query, show_hidden=False, **kwargs):
+    def search(self, query, show_hidden=False, language=None):
         """
         Perform a file-system level search, extended with the results of a
         py:class:`Archive`` and py:class:`DirInfo`` based search. In case the
@@ -210,37 +227,24 @@ class Manager(object):
         be performed, instead it will behave similarly as if a regular
         directory listing was requested.
         """
-        path = query
         (dirs, files, is_match) = self._fsal.search(query)
-        facets = {}
-        dirinfos = {}
+        path = query if is_match else self.ROOT_PATH
+        metas = {}
         if not is_match:
-            path = self.ROOT_PATH
-            facets = self._archive.search(query)
-            dirinfos = DirInfo.search(terms=query,
-                                      language=kwargs.get('language'))
-        # in case no match was found, both ``facets`` and ``dirinfos`` contain
-        # search results for a different set of paths than those found in
-        # ``dirs`` and ``files``. the difference between them must be
-        # compensated for on both sides.
-        dir_paths = set(fso.rel_path for fso in dirs)
-        file_paths = set(fso.rel_path for fso in files)
-        dirinfo_paths = set(dirinfos.keys())
-        facet_paths = set(facets.keys())
-        # merge missing dirinfo data into the dirinfo search results
-        dirinfos.update(DirInfo.from_db(dir_paths.difference(dirinfo_paths),
-                                        immediate=True))
-        # add dirs and files that were present only in dirinfo and facet
-        # search results to the results of the file system level search
-        missing = (list(dirinfo_paths.difference(dir_paths)) +
-                   list(facet_paths.difference(file_paths)))
-        (success, missing_dirs, missing_files) = self._fsal.filter(missing)
-        return self._prepare_listing(dirs + missing_dirs,
+            metas = self._archive.search(query, language=language)
+        # in case no match was found, ``metas`` contain search results for a
+        # different set of paths than those found in ``dirs`` and ``files``.
+        # the difference between them must be compensated for on both sides.
+        found_paths = (fso.rel_path for fso in itertools.chain(dirs, files))
+        # add dirs and files that were present only in meta search results to
+        # the results of the file system level search
+        missing = set(metas.keys()).difference(found_paths)
+        (_, missing_dirs, missing_files) = self._fsal.filter(missing)
+        return self._prepare_listing(path,
+                                     dirs + missing_dirs,
                                      files + missing_files,
                                      show_hidden=show_hidden,
-                                     dirinfos=dirinfos,
-                                     facets=facets,
-                                     path=path,
+                                     metas=metas,
                                      is_match=is_match)
 
     def isdir(self, path):
