@@ -45,8 +45,8 @@
 
 <%def name="folder(d, with_controls=False)">
     <%
-    description = d.dirinfo.get(request.locale, 'description', None)
-    default_view = d.dirinfo.get(request.locale, 'view', None)
+    description = d.meta.get('description', request.locale)
+    default_view = d.meta.get('view', request.locale)
     varg = {'view': default_view} if default_view else {}
     dpath = i18n_url('filemanager:list', path=d.rel_path, **varg)
     cover_url = th.facets.get_folder_cover(d)
@@ -98,8 +98,8 @@
         vargs = {'view': 'generic'} if is_search else {}
         parent_url = i18n_url('filemanager:list', path=f.parent, **vargs)
         icon, is_thumb = th.facets.get_file_thumb(f)
-        title = f.facets.get('title')
-        desc = f.facets.get('description')
+        title = f.meta.get('title')
+        desc = f.meta.get('description')
     %>
     <li class="file-list-item file-list-file${' with-controls' if with_controls else ''}${' file-list-search-result' if is_search else ''}" role="row" aria-selected="false" tabindex>
         <a

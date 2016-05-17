@@ -1,8 +1,8 @@
-% if 'html' not in current.facets['facet_types']:
+% if 'html' not in current.meta.content_type_names:
     <span class="note">${_('No documents to be shown.')}</span>
 % else:
     <%
-    full_path = th.join(path, selected or current.facets['main'])
+    full_path = th.join(path, selected or current.meta.get('main'))
     %>
 
     <div class="views-reader" id="views-reader">

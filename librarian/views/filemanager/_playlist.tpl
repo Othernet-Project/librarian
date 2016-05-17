@@ -1,7 +1,7 @@
 <%def name="sidebar_playlist_item(entry, selected_entry)" />
 
 <%def name="sidebar_playlist_item_metadata_desc(metadata)">
-    %if 'description' in metadata:
+    %if metadata.has_key('description'):
         <p class="playlist-item-description">
             ${metadata.get('description') or _('No description')}
         </p>
@@ -34,15 +34,15 @@
 <%def name="sidebar_playlist_item_metadata_duration(metadata)">
     ## Translators, used as label for audio/video duration in playlist's info
     ## panel.
-    ${self.sidebar_playlist_meta_line('duration', _('Duration:'), th.facets.durify(metadata.get('duration', 0)))}
+    ${self.sidebar_playlist_meta_line('duration', _('Duration:'), th.facets.durify(metadata.get('duration', default=0)))}
 </%def>
 
 <%def name="sidebar_playlist_video_dimensions(metadata)">
     <% 
         # We use min(width, height) here to account for veritcally oriented 
         # videos where width and height is flipped.
-        width = metadata.get('width', 0)
-        height = metadata.get('height', 0)
+        width = metadata.get('width', default=0)
+        height = metadata.get('height', default=0)
         is_hd = min(width, height) >= 720
     %>
 
@@ -59,8 +59,8 @@
 
 <%def name="sidebar_playlist_image_dimensions(metadata)">
     <%
-        width = metadata.get('width', 0)
-        height = metadata.get('height', 0)
+        width = metadata.get('width', default=0)
+        height = metadata.get('height', default=0)
         mpx = round(width * height / 1000000.0, 1)
     %>
     <p class="playlist-item-dimensions">
@@ -76,17 +76,17 @@
 <%def name="sidebar_playlist_aspect_ratio(metadata)">
     ## Translators, used as label for image/video aspect ratio (e.g., 4:3,
     ## 16:9) in playlist's info panel.
-    ${self.sidebar_playlist_meta_line('aspect', _('Aspect ratio:'), th.facets.aspectify(metadata.get('width', 0), metadata.get('height', 0)))}
+    ${self.sidebar_playlist_meta_line('aspect', _('Aspect ratio:'), th.facets.aspectify(metadata.get('width', default=0), metadata.get('height', default=0)))}
 </%def>
 
 <%def name="sidebar_playlist_item_metadata(entry)">
-    <% metadata = entry.facets %>
+    <% metadata = entry.meta %>
     ${self.sidebar_playlist_item_metadata_desc(metadata)}
     ${self.sidebar_playlist_item_metadata_author(metadata)}
 </%def>
 
 <%def name="sidebar_playlist_item_details(entry)">
-    <% metadata = entry.facets %>
+    <% metadata = entry.meta %>
     <h2 class="playlist-item-title">
         ${metadata.get('title') or th.facets.titlify(entry.name) | h}
     </h2>

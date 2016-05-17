@@ -12,12 +12,11 @@
     </div>
 </%def>
 
-% if 'video' not in current.facets['facet_types']:
+% if 'video' not in current.meta.content_type_names:
 <span class="note">${_('No video files to be played.')}</span>
 % else:
 <%
-  selected_entry = th.facets.get_selected(files, selected)
-  video_url = h.quoted_url('filemanager:direct', path=selected_entry.rel_path)
+  video_url = h.quoted_url('filemanager:direct', path=selected.rel_path)
 %>
 <div class="video-controls" id="video-controls">
     ${video_control(video_url)}
@@ -25,16 +24,13 @@
 % endif
 
 <%def name="sidebar()">
-    %if 'video' in current.facets['facet_types']:
-        <%
-        selected_entry = th.facets.get_selected(files, selected)
-        %>
-        ${self.sidebar_playlist(files, selected_entry)}
+    %if 'video' in current.meta.content_type_names:
+        ${self.sidebar_playlist(files, selected)}
     %endif
 </%def>
 
 <%def name="sidebar_playlist_item_metadata(entry)">
-    <% metadata = entry.facets %>
+    <% metadata = entry.meta %>
     ${self.sidebar_playlist_item_metadata_desc(metadata)}
     ${self.sidebar_playlist_item_metadata_author(metadata)}
     ${self.sidebar_playlist_item_metadata_duration(metadata)}
@@ -50,13 +46,13 @@
         url = i18n_url('filemanager:list', view=view, path=path, selected=file)
         meta_url = i18n_url('filemanager:details', view=view, path=path, info=file)
         direct_url = h.quoted_url('filemanager:direct', path=file_path)
-        metadata = entry.facets
+        metadata = entry.meta
         title = metadata.get('title') or th.facets.titlify(file)
         description = metadata.get('description') or _('No description')
-        duration = metadata.get('duration', 0)
+        duration = metadata.get('duration', default=0)
         hduration = th.facets.durify(duration)
-        width = metadata.get('width', 0)
-        height = metadata.get('height', 0)
+        width = metadata.get('width', default=0)
+        height = metadata.get('height', default=0)
     %>
     <li
     class="playlist-list-item ${'playlist-list-item-current' if current else ''}"

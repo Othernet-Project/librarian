@@ -2,10 +2,9 @@
 
 <% 
     is_super = request.user.is_superuser 
-    name = current.dirinfo.get(request.locale, 'name', 
-                               th.facets.titlify(current.name))
-    cover = current.dirinfo.get(request.locale, 'cover', None)
-    desc = current.dirinfo.get(request.locale, 'description', None)
+    name = current.meta.get('name', request.locale, th.facets.titlify(current.name))
+    cover = current.meta.get('cover', request.locale)
+    desc = current.meta.get('description', request.locale)
     needs_intro = cover or desc
 %>
 

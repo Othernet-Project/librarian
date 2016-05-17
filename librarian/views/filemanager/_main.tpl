@@ -5,6 +5,10 @@
 
 _ = lambda x: x
 
+UNCONDITIONAL_VIEWS = (
+    'updates',
+)
+
 FACET_VIEW_MAPPINGS = (
     ('generic', _('Browse')),
     ('image', _('Gallery')),
@@ -30,7 +34,7 @@ def get_default_views():
 
 def get_views(facet_types):
     for name, label in FACET_VIEW_MAPPINGS:
-        if name in facet_types:
+        if name in facet_types or name in UNCONDITIONAL_VIEWS:
             yield (name, label)
 %>
 
@@ -59,7 +63,7 @@ def get_views(facet_types):
             <span class="label">${_('Go up one level')}</span>
         </a>
         % endif
-        <% views = get_default_views() if is_search else get_views(current.facets['facet_types']) %>
+        <% views = get_default_views() if is_search else get_views(current.meta.content_type_names) %>
         % for name, label in views:
             <%
             view_url = i18n_url('filemanager:list', path=path, view=name)

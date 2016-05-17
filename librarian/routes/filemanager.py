@@ -16,7 +16,7 @@ from bottle_utils.i18n import lazy_gettext as _
 from streamline import RouteBase, XHRPartialRoute, TemplateFormRoute
 
 from ..core.contrib.templates.renderer import template
-from ..data.facets.facettypes import FacetTypes
+from ..data.facets.contenttypes import ContentTypes
 from ..data.manager import Manager
 from ..forms.filemanager import DeleteForm
 from ..helpers.filemanager import get_parent_url, find_root, get_thumb_path
@@ -25,9 +25,14 @@ from ..utils.route_mixins import CSRFRouteMixin
 
 
 class FileRouteMixin(object):
+    #: Key under which to look for the requested view in query parameters
     VIEW_KEY = 'view'
-    VALID_VIEWS = FacetTypes.names(include_meta=True)
-    DEFAULT_VIEW = FacetTypes.GENERIC
+    #: Special purpose views
+    UPDATES_VIEW = 'updates'
+    #: List of allowed view names
+    VALID_VIEWS = ContentTypes.names() + [UPDATES_VIEW]
+    #: In case an invalid view is specified, or none, fallback to this view
+    DEFAULT_VIEW = ContentTypes.GENERIC
 
     def __init__(self, *args, **kwargs):
         super(FileRouteMixin, self).__init__(*args, **kwargs)
@@ -86,10 +91,11 @@ class List(FileRouteMixin, XHRPartialRoute):
         result.update(pager=pager)
         return result
 
-    def list(self, path, show_hidden, facet_type):
+    def list(self, path, show_hidden, content_type, selected):
         try:
             return self.manager.list(path,
-                                     facet_type=facet_type,
+                                     content_type=content_type,
+                                     selected=selected,
                                      show_hidden=show_hidden)
         except self.manager.InvalidQuery:
             self.abort(404)
@@ -99,8 +105,8 @@ class List(FileRouteMixin, XHRPartialRoute):
         if self.has_requested_view():
             return view
         # when no view was chosen, auto-promition is allowed
-        if FacetTypes.HTML in available_views:
-            return FacetTypes.HTML
+        if ContentTypes.HTML in available_views:
+            return ContentTypes.HTML
         # no better match, stick with original plan
         return view
 
@@ -111,16 +117,15 @@ class List(FileRouteMixin, XHRPartialRoute):
         is_search = self.QUERY_KEY in self.request.params
         if is_search:
             result = self.search(path, show_hidden)
-        elif view == FacetTypes.UPDATES:
+        elif view == self.UPDATES_VIEW:
             result = self.updates(path, show_hidden)
         else:
-            result = self.list(path, show_hidden, view)
+            selected = self.unquoted(self.SELECTED_KEY)
+            result = self.list(path, show_hidden, view, selected)
         # perform view promotion, if available
-        available_views = result['current'].facets['facet_types']
+        available_views = result['current'].meta.content_type_names
         view = self.promote_view(view, available_views)
-        result.update(is_search=is_search,
-                      view=view,
-                      selected=self.unquoted(self.SELECTED_KEY))
+        result.update(is_search=is_search, view=view)
         return result
 
 
@@ -136,7 +141,7 @@ class Details(FileRouteMixin, XHRPartialRoute):
         view = self.get_view()
         file_path = os.path.join(path, self.unquoted(self.META_KEY))
         try:
-            fso = self.manager.get(file_path, facet_type=view)
+            fso = self.manager.get(file_path, content_type=view)
         except self.manager.InvalidQuery:
             # There is no such file
             self.abort(404)

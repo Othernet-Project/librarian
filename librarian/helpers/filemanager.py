@@ -85,13 +85,6 @@ def aspectify(w, h):
 
 
 @template_helper(namespace='facets')
-def get_selected(collection, selected=None):
-    selected_entries = list(filter(lambda f: f.name == selected,
-                                   collection))
-    return selected_entries[0] if selected_entries else collection[0]
-
-
-@template_helper(namespace='facets')
 def get_adjacent(collection, current, loop=True):
     current_idx = collection.index(current)
     if loop:
@@ -134,7 +127,7 @@ def join(*args):
 
 @template_helper(namespace='facets')
 def get_folder_cover(fsobj):
-    cover = fsobj.dirinfo.get(request.locale, 'cover', None)
+    cover = fsobj.meta.get('cover', request.locale)
     if cover:
         # There is a cover image
         cover_path = fsobj.other_path(cover)
@@ -154,13 +147,13 @@ def get_folder_icon(fsobj):
     Return folder icon or icon URL and a flag that tells us whether icon is a
     URL or not
     """
-    icon = fsobj.dirinfo.get(request.locale, 'icon', None)
+    icon = fsobj.meta.get('icon', request.locale)
     if icon:
         # Dirinfo has an icon, so let's use that
         return quoted_url('filemanager:direct', path=fsobj.other_path(icon)), True
-    # Since dirinfo does not have an icon for us, we'll see if there's an icon
-    # for a view
-    view = fsobj.dirinfo.get(request.locale, 'view', 'generic')
+    # Since metadata does not have an icon for us, we'll see if there's an
+    # icon for a view
+    view = fsobj.meta.get('view', request.locale, 'generic')
     return 'folder' if view == 'generic' else view, False
 
 
@@ -169,7 +162,7 @@ def get_folder_view_url(fsobj):
     """
     Returns the url of the default view for specified folder.
     """
-    default_view = fsobj.dirinfo.get(request.locale, 'view', None)
+    default_view = fsobj.meta.get('view', request.locale)
     varg = {'view': default_view} if default_view else {}
     return i18n_url('filemanager:list', path=fsobj.rel_path, **varg)
 
@@ -178,9 +171,9 @@ def get_folder_view_url(fsobj):
 def get_folder_name(fsobj):
     """
     Return folder title, name, or filesystem name, whichever is present in the
-    dirinfo.
+    metadata.
     """
-    name = fsobj.dirinfo.get(request.locale, 'name', None)
+    name = fsobj.meta.get('name', request.locale)
     return name or fsobj.name
 
 
