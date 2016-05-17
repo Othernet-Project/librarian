@@ -4,7 +4,6 @@ import os
 import re
 
 from ..core.exts import ext_container as exts
-from .dirinfo import DirInfo
 from .facets.archive import Archive
 
 
@@ -35,10 +34,6 @@ class Manager(object):
     InvalidQuery = InvalidQuery
     #: Alias for py:attr:`Archive.ROOT_PATH`
     ROOT_PATH = Archive.ROOT_PATH
-    #: List of filenames which should be ignored
-    IGNORED = (
-        DirInfo.FILENAME,
-    )
     #: Match any string that starts with a period, or has at least one path
     #: separator followed by a period
     RE_PATH_WITH_HIDDEN = re.compile(r'^(\.|.*{}\.)'.format(os.sep))
@@ -86,19 +81,16 @@ class Manager(object):
     def _prepare_files(self, files, metas, show_hidden, selected=None):
         """
         Add meta entries to each file system object and filter those out
-        which shouldn't be visible or their name is on the py:attr:`IGNORED`
-        list. If ``metas`` was not passed in,  or there are paths missing
-        from it, fetch the data in place. If ``content_type`` is specified,
-        entries that do not belong to a specific content type will be ignored.
+        which shouldn't be visible. If ``metas`` was not passed in,  or there
+        are paths missing from it, fetch the data in place. If ``content_type``
+        is specified, entries that do not belong to a specific content type
+        will be ignored.
         """
         # iterate over fso objects, collect and return only those that should
         # be visible
         filtered = []
         found_selected = None
         for fso in files:
-            # ignore entries that are on the global ignore list
-            if fso.name in self.IGNORED:
-                continue
             # ignore hidden entries if requested
             if not show_hidden and self._is_hidden(fso):
                 continue
