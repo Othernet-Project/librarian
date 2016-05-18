@@ -2,7 +2,7 @@ import itertools
 import os
 
 from ...core.exts import ext_container as exts
-from .. import links
+from . import links
 from .contenttypes import ContentTypes
 from .metadata import (runnable,
                        NO_LANGUAGE,
