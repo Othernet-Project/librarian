@@ -1,56 +1,20 @@
 from __future__ import unicode_literals
 
+import itertools
+import json
+import logging
 import os
 import re
-import json
-import gevent
-import logging
-import datetime
 import urlparse
-import functools
-import itertools
-import subprocess
 
 from bottle_utils.common import to_unicode
 from bs4 import BeautifulSoup
 
+from .utils import run_command
+
 
 FFPROBE_CMD = 'ffprobe -v quiet -i HOLDER1 -show_entries HOLDER2 -print_format json'
 NO_LANGUAGE = ''
-
-
-def run_command(command, timeout, debug=False):
-    start = datetime.datetime.now()
-    process = subprocess.Popen(command, stdout=subprocess.PIPE)
-    if debug:
-        logging.debug(
-            'Command ({}) started at pid {}'.format(
-                ' '.join(command), process.pid))
-    while process.poll() is None:
-        gevent.sleep(0.1)
-        now = datetime.datetime.now()
-        if (now - start).seconds > timeout:
-            if debug:
-                logging.debug(
-                    'Command ({}) ran past timeout of {} secs and'
-                    ' will be terminated'.format(' '.join(command), timeout))
-            process.kill()
-            return (None, None)
-    if debug:
-        logging.debug(
-            'Command with pid {} ended normally with return code {}'.format(
-                process.pid, process.returncode))
-    return (process.returncode, process.stdout.read())
-
-
-def runnable(timeout=5, debug=True):
-    def decorator(func):
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            cmd = func(*args, **kwargs)
-            return run_command(cmd, timeout=timeout, debug=debug)
-        return wrapper
-    return decorator
 
 
 def build_ffprobe_command(path, entries=('format', 'streams')):

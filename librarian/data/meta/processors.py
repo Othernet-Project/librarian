@@ -4,13 +4,13 @@ import os
 from ...core.exts import ext_container as exts
 from . import links
 from .contenttypes import ContentTypes
-from .metadata import (runnable,
-                       NO_LANGUAGE,
+from .metadata import (NO_LANGUAGE,
                        ImageMetadata,
                        AudioMetadata,
                        VideoMetadata,
                        HtmlMetadata,
                        DirectoryMetadata)
+from .utils import runnable
 
 
 FILE_TYPE = 0
