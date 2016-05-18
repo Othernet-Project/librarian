@@ -1,4 +1,4 @@
-from ..data.facets.archive import Archive
+from ..data.meta.archive import Archive
 
 
 class RefillFacetsCommand(object):

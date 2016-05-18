@@ -12,7 +12,7 @@ from bottle_utils.i18n import lazy_gettext as _, lazy_ngettext as ngettext
 
 from ..core.utils import utcnow
 from ..core.contrib.templates.decorators import template_helper
-from ..data.facets.processors import Processor
+from ..data.meta.processors import Processor
 
 
 ICON_MAPPINGS = {

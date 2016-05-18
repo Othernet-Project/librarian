@@ -4,7 +4,7 @@ import logging
 from fsal.events import EVENT_CREATED, EVENT_DELETED, EVENT_MODIFIED
 
 from ..core.exts import ext_container as exts
-from ..data.facets.archive import Archive
+from ..data.meta.archive import Archive
 from . import Task
 
 

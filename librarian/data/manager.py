@@ -4,7 +4,7 @@ import os
 import re
 
 from ..core.exts import ext_container as exts
-from .facets.archive import Archive
+from .meta.archive import Archive
 
 
 class Error(Exception):

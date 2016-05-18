@@ -16,8 +16,8 @@ from bottle_utils.i18n import lazy_gettext as _
 from streamline import RouteBase, XHRPartialRoute, TemplateFormRoute
 
 from ..core.contrib.templates.renderer import template
-from ..data.facets.contenttypes import ContentTypes
 from ..data.manager import Manager
+from ..data.meta.contenttypes import ContentTypes
 from ..forms.filemanager import DeleteForm
 from ..helpers.filemanager import get_parent_url, find_root, get_thumb_path
 from ..presentation.paginator import Paginator
