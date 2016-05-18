@@ -121,7 +121,7 @@ class Processor(object):
         generated metadata structure is something like:
 
         {
-            '/path/1': {
+            '/path/original': {
                 'path': '/path/1',
                 'type': FILE OR FOLDER,
                 'content_types': CONTENT TYPE BITMASK,
@@ -130,7 +130,7 @@ class Processor(object):
                     'de': {...},
                 }
             },
-            '/path/2': {
+            '/path/redirected/if/any': {
                 'path': '/path/2',
                 'type': FILE OR FOLDER,
                 'content_types': CONTENT TYPE BITMASK,
