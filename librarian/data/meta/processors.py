@@ -75,6 +75,7 @@ class Processor(object):
     - py:class:`deprocess_file`: perform additional cleanup when the metadata
     entry is being deleted
     """
+    _subclasses = ()
     name = None
     metadata_class = None
 
@@ -243,11 +244,9 @@ class Processor(object):
         """
         Return all the applicable processors for a given ``path``.
         """
-        processors = [proc_cls for proc_cls in cls.subclasses()
-                      if proc_cls.can_process(path)]
-        if not processors:
-            raise RuntimeError("No processor found for the given path.")
-        return processors
+        cls._subclasses = cls._subclasses or cls.subclasses()
+        return (proc_cls for proc_cls in cls._subclasses
+                if proc_cls.can_process(path))
 
     @classmethod
     def for_type(cls, content_type):
