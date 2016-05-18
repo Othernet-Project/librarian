@@ -250,6 +250,7 @@ class Archive(object):
         logging.debug(u"Analyze[%s] %s", ('FULL', 'PARTIAL')[partial], path)
         data = dict()
         for proc_cls in self.Processor.for_path(path):
+            processor = proc_cls(path, fsal=self._fsal)
             # store entry point on parent folder if available
             if proc_cls.is_entry_point(path):
                 content_type = self.ContentTypes.to_bitmask(proc_cls.name)
@@ -257,10 +258,10 @@ class Archive(object):
                                      path=path,
                                      content_type=content_type)
             # gather metadata from current processor into ``data``
-            proc_cls(self._fsal).process_file(path, data=data, partial=partial)
+            processor.process(data=data, partial=partial)
         # invoke specified ``callback`` if available with gathered metadata
         # and then return the same
-        wrapped = self.MetaWrapper(data)
+        wrapped = dict((k, self.MetaWrapper(v)) for (k, v) in data.items())
         if callback:
             callback(wrapped)
         return wrapped
@@ -280,8 +281,10 @@ class Archive(object):
         returning the data.
         """
         if not callback:
-            return dict((path, self._analyze(path, partial, callback))
-                        for path in paths)
+            ret_val = dict()
+            for path in paths:
+                ret_val.update(self._analyze(path, partial, callback))
+            return ret_val
         # schedule background task to perform analysis of ``paths``
         func = functools.partial(self._analyze,
                                  partial=partial,
@@ -455,7 +458,7 @@ class Archive(object):
         if missing:
             if partial:
                 # schedule background deep scan of missing paths
-                self.analyze(missing, callback=self.save)
+                self.analyze(missing, callback=self.save_many)
                 # fetch partials quickly
                 partials = self.analyze(missing, partial=True)
                 data.update(partials)
