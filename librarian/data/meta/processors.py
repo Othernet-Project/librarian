@@ -1,3 +1,13 @@
+"""
+File system object processors that orchestrate metadata extraction, and provide
+additional content type specific helpers.
+
+Copyright 2014-2015, Outernet Inc.
+Some rights reserved.
+
+This software is free software licensed under the terms of GPLv3. See COPYING
+file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
+"""
 import itertools
 import os
 
@@ -15,17 +25,6 @@ from .utils import runnable
 
 FILE_TYPE = 0
 DIRECTORY_TYPE = 1
-
-
-def split_name(fname):
-    name, ext = os.path.splitext(fname)
-    ext = ext[1:].lower()
-    return name, ext
-
-
-def get_extension(fname):
-    _, ext = split_name(fname)
-    return ext
 
 
 class ThumbProcessorMixin(object):
@@ -79,12 +78,17 @@ class Processor(object):
     name = None
     metadata_class = None
 
-    def __init__(self, fsal=None):
+    def __init__(self, path, **kwargs):
         if self.name is None:
             raise TypeError("Usage of abstract processor is not allowed."
                             "`name` attribute must be defined.")
-        self.fsal = fsal or exts.fsal
+        self.path = path
+        self.fsal = kwargs.get('fsal', exts.fsal)
         self.keys = ContentTypes.keys(self.name)
+        if self.metadata_class:
+            self.metadata_extractor = self.metadata_class(self.path, self.fsal)
+        else:
+            self.metadata_extractor = None
 
     def _merge(self, source, destination):
         """
@@ -100,60 +104,98 @@ class Processor(object):
             # updated with ``src_section`` into ``desctination``
             destination[language] = dest_section
 
-    def process_file(self, path, data=None, partial=False):
+    def get_path(self):
+        """
+        Return the path with which the extracted metadata should be associated.
+        Overriding this method allows the implementor to redirect the found
+        metadata to another path.
+        """
+        return self.path
+
+    def process(self, data=None, partial=False):
         """
         Returns either the passed in ``data`` dict if specified, or a new one
         if not, with the extracted meta information from the given ``path``
         merged into it. If the ``partial`` flag is set, only a brief,
-        efficiently attainable subset of the information is returned.
+        efficiently attainable subset of the information is returned. The
+        generated metadata structure is something like:
+
+        {
+            '/path/1': {
+                'path': '/path/1',
+                'type': FILE OR FOLDER,
+                'content_types': CONTENT TYPE BITMASK,
+                'metadata': {
+                    'en': {...},
+                    'de': {...},
+                }
+            },
+            '/path/2': {
+                'path': '/path/2',
+                'type': FILE OR FOLDER,
+                'content_types': CONTENT TYPE BITMASK,
+                'metadata': {
+                    'en': {...},
+                    'de': {...},
+                }
+            }
+        }
         """
         # check must go against ``None`` to maintain the contract of using the
         # passed in dict
         data = dict() if data is None else data
-        new_metadata = self.get_metadata(path, partial)
+        new_metadata = self.get_metadata(partial)
         # if metadata is not multilang, wrap it in a dict under ``NO_LANGUAGE``
         # key, otherwise leave it as-is
         if not self.metadata_class or not self.metadata_class.multilang:
             new_metadata = {NO_LANGUAGE: new_metadata}
-        # merge with existing metadata, not overwrite it
-        existing_metadata = data.get('metadata', {})
+        # get path with which the metadata should be associated
+        path = self.get_path()
+        # get existing metadata tree for the current path
+        current_data = data.get(path, {})
+        # merge extracted metadata with existing metadata, not overwrite it
+        existing_metadata = current_data.get('metadata', {})
         self._merge(new_metadata, existing_metadata)
+        # update content types
         bitmask = ContentTypes.to_bitmask(self.name)
-        data.update(path=path,
-                    content_types=data.get('content_types', 0) | bitmask,
-                    metadata=existing_metadata)
+        content_types = current_data.get('content_types', 0) | bitmask
+        # put back updated / merged data
+        current_data.update(path=path,
+                            content_types=content_types,
+                            metadata=existing_metadata)
         if not partial:
-            fs_type = DIRECTORY_TYPE if self.fsal.isdir(path) else FILE_TYPE
-            data.update(type=fs_type)
+            fs_type = (FILE_TYPE, DIRECTORY_TYPE)[self.fsal.isdir(self.path)]
+            current_data.update(type=fs_type)
+        data[path] = current_data
         return data
 
-    def deprocess_file(self, path):
+    def deprocess(self):
         """
         Called when a facet entry is deleted from the database. Subclasses may
         implement this method if special cleanup is needed.
         """
         pass
 
-    def get_metadata(self, path, partial):
+    def get_metadata(self, partial):
         """
-        It is expected to return a dict object containing the attained metadata
-        from ``path``. The ``partial`` flag indicates whether only rudimentary,
-        very quickly attainable information is expected to be returned, or to
-        perform a full processing of the target.
+        It is expected to return a dict object containing the extracted
+        metadata from py:attr:`~Processor.path`. The ``partial`` flag indicates
+        whether only rudimentary, very quickly attainable information is
+        expected to be returned, or to perform a full processing of the target.
         Subclasses may override this method if the default implementation needs
         to be refined for more advanced cases.
         """
-        if partial or not self.metadata_class:
+        if partial or not self.metadata_extractor:
             # no additional meta information will be available (besides the
             # common data)
             return {}
         # perform full (possibly expensive) processing of metadata
         try:
-            meta = self.metadata_class(self.fsal, path)
-        except IOError:
+            meta = self.metadata_extractor.extract()
+        except self.metadata_class.MetadataError:
             return {}
         else:
-            return dict((k, getattr(meta, k)) for k in self.keys)
+            return dict((k, v) for (k, v) in meta.items() if k in self.keys)
 
     @classmethod
     def is_entry_point(cls, new, old=None):
@@ -172,7 +214,9 @@ class Processor(object):
         """
         Return whether the processor can handle a given ``path``.
         """
-        return get_extension(path) in cls.EXTENSIONS
+        (_, ext) = os.path.splitext(path)
+        ext = ext[1:].lower()
+        return ext in cls.EXTENSIONS
 
     @classmethod
     def for_path(cls, path):
@@ -207,7 +251,7 @@ class Processor(object):
         return result
 
 
-class GenericFacetProcessor(Processor):
+class GenericProcessor(Processor):
     name = ContentTypes.GENERIC
 
     @classmethod
@@ -215,7 +259,7 @@ class GenericFacetProcessor(Processor):
         return True
 
 
-class HtmlFacetProcessor(Processor):
+class HtmlProcessor(Processor):
     name = ContentTypes.HTML
     metadata_class = HtmlMetadata
 
@@ -248,35 +292,20 @@ class HtmlFacetProcessor(Processor):
         new_name = os.path.basename(new) if new else None
         return cls._score(old_name) < cls._score(new_name)
 
-    def process_file(self, path, data=None, partial=False):
-        data = super(HtmlFacetProcessor, self).process_file(path,
-                                                            data=data,
-                                                            partial=partial)
+    def process(self, data=None, partial=False):
+        data = super(HtmlProcessor, self).process(data=data, partial=partial)
         if not partial:
             # assets won't be available for partial processing anyway, and
             # update involves a lot of queries anyway, so skip it
-            assets = data.pop('assets', None)
-            links.update_links(path, assets or (), clear=True)
+            assets = self.metadata_extractor.assets
+            links.update_links(self.path, assets or (), clear=True)
         return data
 
-    def deprocess_file(self, path):
-        links.remove_links(path)
-
-    def get_metadata(self, path, partial):
-        if partial:
-            return {}
-        try:
-            meta = self.metadata_class(self.fsal, path)
-        except IOError:
-            return {}
-        else:
-            data = dict((k, getattr(meta, k)) for k in self.keys)
-            # `assets` will be popped out before passing it back to the caller
-            data['assets'] = meta.assets
-            return data
+    def deprocess(self):
+        links.remove_links(self.path)
 
 
-class ImageFacetProcessor(Processor, ThumbProcessorMixin):
+class ImageProcessor(Processor, ThumbProcessorMixin):
     name = ContentTypes.IMAGE
     metadata_class = ImageMetadata
 
@@ -297,7 +326,7 @@ class ImageFacetProcessor(Processor, ThumbProcessorMixin):
         ]
 
 
-class AudioFacetProcessor(Processor, ThumbProcessorMixin):
+class AudioProcessor(Processor, ThumbProcessorMixin):
     name = ContentTypes.AUDIO
     metadata_class = AudioMetadata
 
@@ -317,7 +346,7 @@ class AudioFacetProcessor(Processor, ThumbProcessorMixin):
         ]
 
 
-class VideoFacetProcessor(Processor, ThumbProcessorMixin):
+class VideoProcessor(Processor, ThumbProcessorMixin):
     name = ContentTypes.VIDEO
     metadata_class = VideoMetadata
 
@@ -352,20 +381,7 @@ class DirectoryProcessor(Processor):
     def can_process(cls, path):
         return os.path.basename(path) == cls.DIRINFO_FILENAME
 
-    def process_file(self, *args, **kwargs):
-        data = super(DirectoryProcessor, self).process_file(*args, **kwargs)
+    def get_path(self):
         # for each passed in dirinfo file, the data should be associated with
         # the path of the directory itself, not the dirinfo file
-        dirpath = os.path.dirname(data['path'])
-        data.update(path=dirpath)
-        return data
-
-    def get_metadata(self, path, partial):
-        if partial:
-            return {}
-        try:
-            meta = self.metadata_class(self.fsal, path)
-        except IOError:
-            return {}
-        else:
-            return meta.data
+        return os.path.dirname(self.path)
