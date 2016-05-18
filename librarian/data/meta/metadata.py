@@ -1,3 +1,12 @@
+"""
+Tools for extracting metadata from file system objects.
+
+Copyright 2014-2015, Outernet Inc.
+Some rights reserved.
+
+This software is free software licensed under the terms of GPLv3. See COPYING
+file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
+"""
 from __future__ import unicode_literals
 
 import itertools
@@ -13,67 +22,122 @@ from bs4 import BeautifulSoup
 from .utils import run_command
 
 
-FFPROBE_CMD = 'ffprobe -v quiet -i HOLDER1 -show_entries HOLDER2 -print_format json'
 NO_LANGUAGE = ''
 
 
-def build_ffprobe_command(path, entries=('format', 'streams')):
-    show_entries = ':'.join(entries)
-    command = FFPROBE_CMD.split(' ')
-    command[4] = path
-    command[6] = show_entries
-    return command
-
-
-def find_in_dicts(dicts, tags):
-    for d in dicts:
-        for tag in tags:
-            if tag in d:
-                return d[tag]
+class MetadataError(Exception):
+    """
+    Exception raised when metadata cannot be extracted for some reason.
+    """
+    pass
 
 
 class BaseMetadata(object):
+    """
+    Metadata extractors should inherit from this base class.
+    """
     #: Determines whether the returned metadata is available in multiple
     #: languages or not
     multilang = False
+    #: Exception classes
+    MetadataError = MetadataError
 
-    def __init__(self, fsal, path):
-        self.fsal = fsal
+    def __init__(self, path, fsal):
         self.path = to_unicode(path)
+        self.fsal = fsal
+
+    def extract(self):
+        raise NotImplementedError()
 
 
-class FFmpegMetadataWrapper(BaseMetadata):
-
+class FFmpegMetadata(BaseMetadata):
     ENTRIES = ('format', 'streams')
+    FFPROBE_CMD = 'ffprobe -v quiet -i {} -show_entries {} -print_format json'
 
-    def __init__(self, *args, **kwargs):
-        entries = kwargs.pop('entries', self.ENTRIES)
-        super(FFmpegMetadataWrapper, self).__init__(*args, **kwargs)
+    @classmethod
+    def build_ffprobe_command(cls, path, entries):
+        show_entries = ':'.join(entries)
+        command = cls.FFPROBE_CMD.split(' ')
+        command[4] = path
+        command[6] = show_entries
+        return command
 
-        success, fso = self.fsal.get_fso(self.path)
+    def probe(self):
+        (success, fso) = self.fsal.get_fso(self.path)
         if not success:
-            msg = u'Error while extracting metadata: No such file: {}'.format(
-                self.path)
+            msg = (u'Metadata extraction failed, file not found: '
+                   u'{}'.format(self.path))
             logging.error(msg)
-            raise IOError(msg)
-        command = build_ffprobe_command(fso.path, entries=entries)
-        (ret, output) = run_command(command, timeout=5)
+            raise self.MetadataError(msg)
+        command = self.build_ffprobe_command(fso.path, entries=self.ENTRIES)
+        (_, output) = run_command(command, timeout=5)
         if not output:
-            msg = u'Error extracting metadata: Extraction timedout or failed'
-            raise IOError(msg)
+            msg = u'Metadata extraction timed out or failed.'
+            raise self.MetadataError(msg)
         try:
-            self.data = json.loads(output)
-        except ValueError:
-            msg = u'Error extracting metadata: JSON expected, got {}'.format(
-                type(output))
-            raise IOError(msg)
+            return json.loads(output)
+        except ValueError as exc:
+            msg = u'Metadata parsing failed: {}'.format(exc)
+            raise self.MetadataError(msg)
 
-    def get_duration(self):
-        fmt = self.data.get('format', dict())
+
+class FFmpegImageMetadata(FFmpegMetadata):
+    ENTRIES = ('frames',)
+
+    def extract(self):
+        raw_data = self.probe()
+        title = self.get_frames_tag(raw_data, ('title', 'ImageDescription'))
+        width = self.get_frames_tag(raw_data, ('width',), 0)
+        height = self.get_frames_tag(raw_data, ('height',), 0)
+        return dict(title=title, width=width, height=height)
+
+    @staticmethod
+    def get_frames_tag(data, tags, default=''):
+        frames = data.get('frames', [])
+        for frame in frames:
+            frame_tags = frame.get('tags', dict())
+            for tag in tags:
+                if tag in frame:
+                    return frame[tag]
+                if tag in frame_tags:
+                    return frame_tags[tag]
+        return default
+
+
+class FFmpegAudioVideoMetadata(FFmpegMetadata):
+    tags = (
+        ('title', ['title']),
+        ('author', ['author', 'artist']),
+        ('description', ['description', 'comment']),
+    )
+
+    def extract(self):
+        raw_data = self.probe()
+        duration = self.get_duration(raw_data)
+        (width, height) = self.get_dimensions(raw_data)
+        data = dict((key, self.get_format_tag(raw_data, tags))
+                    for (key, tags) in self.tags)
+        data.update(duration=duration,
+                    width=width,
+                    height=height)
+        return data
+
+    @staticmethod
+    def get_format_tag(data, tags, default=''):
+        fmt = data.get('format', dict())
+        format_tags = fmt.get('tags', dict())
+        for tag in tags:
+            if tag in format_tags:
+                return format_tags[tag]
+        return default
+
+    @staticmethod
+    def get_duration(data):
+        fmt = data.get('format', dict())
         if 'duration' in fmt:
             return float(fmt['duration'])
-        streams = self.data.get('streams', list())
-        duration = 0
+        streams = data.get('streams', list())
+        duration = 0.0
         for stream in streams:
             if 'duration' in stream:
                 s_duration = float(stream['duration'])
@@ -81,140 +145,94 @@ class FFmpegMetadataWrapper(BaseMetadata):
                     duration = s_duration
         return duration
 
-    def get_format_tag(self, tags, default=''):
-        fmt = self.data.get('format', dict())
-        format_tags = fmt.get('tags', dict())
-        for tag in tags:
-            if tag in format_tags:
-                return format_tags[tag]
-        return default
-
-
-class FFmpegImageMetadata(FFmpegMetadataWrapper):
-
-    ENTRIES = ('frames',)
-
-    def __init__(self, *args, **kwargs):
-        kwargs['entries'] = self.ENTRIES
-        super(FFmpegImageMetadata, self).__init__(*args, **kwargs)
-
-        self.width, self.height = self.get_dimensions()
-        self.title = self.get_frames_tag(('title', 'ImageDescription'))
-
-    def get_dimensions(self):
-        width = self.get_frames_tag(('width',), 0)
-        height = self.get_frames_tag(('height',), 0)
-        return width, height
-
-    def get_frames_tag(self, tags, default=''):
-        frames = self.data.get('frames', [])
-        for frame in frames:
-            frame_tags = frame.get('tags', dict())
-            search_space = (frame, frame_tags)
-            ret = find_in_dicts(search_space, tags)
-            if ret is not None:
-                return ret
-        return default
-
-
-class FFmpegAudioVideoMetadata(FFmpegMetadataWrapper):
-
-    def __init__(self, *args, **kwargs):
-        super(FFmpegAudioVideoMetadata, self).__init__(*args, **kwargs)
-        self.width, self.height = self.get_dimensions()
-        self.duration = self.get_duration()
-        self.title = self.get_format_tag(('title',))
-        self.author = self.get_format_tag(('author', 'artist'))
-        self.description = self.get_format_tag(('description', 'comment'))
-
-    def get_dimensions(self):
-        streams = self.data.get('streams', list())
-        width, height = (0, 0)
+    @staticmethod
+    def get_dimensions(data):
+        streams = data.get('streams', list())
+        (width, height) = (0, 0)
         for stream in streams:
             width = stream.get('width', width)
             height = stream.get('height', height)
-        return width, height
+        return (width, height)
 
 
 class AudioMetadata(FFmpegAudioVideoMetadata):
-
-    def __init__(self, *args, **kwargs):
-        super(AudioMetadata, self).__init__(*args, **kwargs)
-        self.genre = self.get_format_tag(('genre',))
-        self.album = self.get_format_tag(('album',))
-
-
-def get_tag_attr(tags, attr):
-    return (tag[attr] for tag in tags if attr in tag.attrs)
+    tags = FFmpegAudioVideoMetadata.tags + (
+        ('genre', ['genre']),
+        ('album', ['album']),
+    )
 
 
-def get_local_path(dirpath, url):
-    result = urlparse.urlparse(url)
-    is_local = result.scheme == ''
-    if is_local:
-        path = os.path.normpath(os.path.join(dirpath, url))
-    else:
-        path = None
-    return is_local, path
+VideoMetadata = FFmpegAudioVideoMetadata
+ImageMetadata = FFmpegImageMetadata
 
 
 class HtmlMetadata(BaseMetadata):
     PARSER = 'html.parser'
 
-    def __init__(self, *args, **kwargs):
-        super(HtmlMetadata, self).__init__(*args, **kwargs)
-        success, fso = self.fsal.get_fso(self.path)
-        if not success:
-            msg = u'Error while extracting metadata: No such file: {}'.format(
-                self.path)
-            logging.error(msg)
-            raise IOError(msg)
-
-        self.data = {}
-        with open(fso.path, 'r') as f:
-            dom = BeautifulSoup(f, self.PARSER)
+    def extract(self):
+        self.assets = None
+        try:
+            with self.fsal.open(self.path, 'r') as html_file:
+                dom = BeautifulSoup(html_file, self.PARSER)
+        except Exception:
+            msg = (u"Metadata extraction failed, error opening: "
+                   u"{}".format(self.path))
+            logging.exception(msg)
+            raise self.MetadataError(msg)
+        else:
+            data = {}
             for meta in dom.find_all('meta'):
                 if 'name' in meta.attrs:
                     key = meta.attrs['name']
                     value = meta.attrs['content']
-                    self.data[key] = value
+                    data[key] = value
                 # Old style html files may have the language set via
                 # <meta http-equiv="content-language">
                 pragma = meta.get('http-equiv', '').lower()
                 if pragma == 'content-language':
-                    self.data['language'] = meta.get('content')
+                    data['language'] = meta.get('content')
             if dom.html:
-                lang = dom.html.get('lang') or self.data.get('language', '')
-                self.data['language'] = lang
+                lang = dom.html.get('lang') or data.get('language', '')
+                data['language'] = lang
             if dom.title:
-                self.data['title'] = dom.title.string
-            is_formatting_on = self.data.get('outernet_formatting') == 'true'
-            self.data['outernet_formatting'] = is_formatting_on
-            self.data['assets'] = self.extract_asset_paths(dom)
+                data['title'] = dom.title.string
+            is_formatting_on = data.get('outernet_formatting') == 'true'
+            data['outernet_formatting'] = is_formatting_on
+            # assets are not directly part of the metadata, but are needed
+            # to be accessed from within the processor, so it's kept as an
+            # instance attribute only
+            self.assets = self.extract_asset_paths(dom)
             dom.decompose()
+            return data
 
-    def __getattr__(self, name):
-        return self.data.get(name, '')
+    @staticmethod
+    def get_tag_attr(tags, attr):
+        return (tag[attr] for tag in tags if attr in tag.attrs)
+
+    @staticmethod
+    def get_local_path(dirpath, url):
+        result = urlparse.urlparse(url)
+        is_local = result.scheme == ''
+        if is_local:
+            path = os.path.normpath(os.path.join(dirpath, url))
+        else:
+            path = None
+        return is_local, path
 
     def extract_asset_paths(self, dom):
         assets = []
         links = (
-            get_tag_attr(dom.find_all('link'), 'href'),
-            get_tag_attr(dom.find_all('script'), 'src'),
-            get_tag_attr(dom.find_all('img'), 'src'),
-            get_tag_attr(dom.find_all('a'), 'href'),
+            self.get_tag_attr(dom.find_all('link'), 'href'),
+            self.get_tag_attr(dom.find_all('script'), 'src'),
+            self.get_tag_attr(dom.find_all('img'), 'src'),
+            self.get_tag_attr(dom.find_all('a'), 'href'),
         )
         dirpath = os.path.dirname(self.path)
         for url in itertools.chain(*links):
-            is_local, path = get_local_path(dirpath, url)
+            is_local, path = self.get_local_path(dirpath, url)
             if is_local:
                 assets.append(path)
         return assets
-
-ImageMetadata = FFmpegImageMetadata
-
-
-VideoMetadata = FFmpegAudioVideoMetadata
 
 
 class DirectoryMetadata(BaseMetadata):
@@ -223,9 +241,8 @@ class DirectoryMetadata(BaseMetadata):
     SPLITTER = '='
     ENTRY_REGEX = re.compile(r'(\w+)\[(\w+)\]')
 
-    def __init__(self, *args, **kwargs):
-        super(DirectoryMetadata, self).__init__(*args, **kwargs)
-        self.data = dict()
+    def extract(self):
+        data = dict()
         # read and convert to unicode all lines
         with self.fsal.open(self.path, 'r') as dirinfo_file:
             raw = [to_unicode(line) for line in dirinfo_file.readlines()]
@@ -237,5 +254,6 @@ class DirectoryMetadata(BaseMetadata):
                 (key, language) = match.groups()
             else:
                 language = NO_LANGUAGE
-            self.data.setdefault(language, {})
-            self.data[language][key] = value.strip()
+            data.setdefault(language, {})
+            data[language][key] = value.strip()
+        return data
