@@ -267,7 +267,7 @@ class Archive(object):
         return wrapped
 
     @as_iterable(params=[1])
-    @batched(arg=1, batch_size=10, aggregator=batched.updater)
+    @batched(arg=1, batch_size=100, aggregator=batched.updater)
     def analyze(self, paths, partial=False, callback=None):
         """
         Analyze ``paths`` to determine their content type and metadata.
