@@ -1,63 +1,114 @@
 import mock
 import pytest
 
-import librarian.data.facets.processors as mod
+import librarian.data.meta.processors as mod
+
+from librarian.data.meta.metadata import MetadataError
 
 
-@mock.patch.object(mod.Processor, 'get_metadata')
-def test_process_file(get_metadata):
-    get_metadata.return_value = {'key1': 1, 'key2': 2}
-    proc = mod.GenericFacetProcessor()
-    expected = {'facet_types': 1, 'key1': 1, 'key2': 2, 'path': '/path/file'}
-    assert proc.process_file('/path/file') == expected
-    get_metadata.assert_called_once_with('/path/file', False)
+def test__merge():
+    dest = {'en': {'title': 'Tests'},
+            'rs': {'title': 'Testovi'}}
+    source = {'en': {'description': 'Invention'},
+              'rs': {'description': 'Izum'}}
+    mod.Processor._merge(source, dest)
+    assert dest == {'en': {'title': 'Tests', 'description': 'Invention'},
+                    'rs': {'title': 'Testovi', 'description': 'Izum'}}
 
 
-@mock.patch.object(mod.Processor, 'get_metadata')
-def test_process_file_update(get_metadata):
-    get_metadata.return_value = {'key1': 1, 'key2': 2}
-    proc = mod.GenericFacetProcessor()
-    data = {}
-    expected = {'facet_types': 1, 'key1': 1, 'key2': 2, 'path': '/path/file'}
-    ret = proc.process_file('/path/file', data=data)
-    assert ret is data  # make sure passed in data object is reused
-    assert ret == expected  # make sure it's value is what we expect
-    get_metadata.assert_called_once_with('/path/file', False)
+def test_get_path():
+    proc = mod.GenericProcessor('/path/')
+    assert proc.get_path() == '/path/'
 
 
-@mock.patch.object(mod.Processor, 'get_metadata')
-def test_process_file_partial(get_metadata):
-    proc = mod.GenericFacetProcessor()
-    proc.process_file('/path/file', partial=True)
-    get_metadata.assert_called_once_with('/path/file', True)
+def test_get_metadata_partial():
+    class TestProc(mod.Processor):
+        metadata_class = mock.Mock()
+        name = 'generic'
 
-
-@mock.patch.object(mod.Processor, 'metadata_class')
-def test_get_metadata_partial(metadata_class):
-    proc = mod.GenericFacetProcessor()
-    assert proc.get_metadata('/path/file', partial=True) == {}
-    assert not metadata_class.called
+    proc = TestProc('/path/file', partial=True)
+    assert proc.get_metadata() == {}
+    assert not proc.metadata_extractor.called
 
 
 def test_get_metadata_no_metadata_class():
-    proc = mod.GenericFacetProcessor()
-    assert proc.get_metadata('/path/file', partial=False) == {}
+    proc = mod.GenericProcessor('/path/file', partial=False)
+    assert proc.get_metadata() == {}
 
 
 @mock.patch.object(mod.Processor, 'metadata_class')
-def test_get_metadata_ioerror(metadata_class):
-    metadata_class.side_effect = IOError()
-    proc = mod.GenericFacetProcessor()
-    assert proc.get_metadata('/path/file', partial=False) == {}
-    metadata_class.assert_called_once_with(proc.fsal, '/path/file')
+def test_get_metadata_error(metadata_class):
+    class TestProc(mod.Processor):
+        metadata_class = mock.Mock()
+        name = 'generic'
+
+    proc = TestProc('/path/file', partial=False)
+    proc.metadata_extractor.extract.side_effect = MetadataError()
+    assert proc.get_metadata() == {}
+    proc.metadata_extractor.extract.assert_called_once_with()
 
 
-@mock.patch.object(mod.ImageFacetProcessor, 'metadata_class')
+@mock.patch.object(mod.ImageProcessor, 'metadata_class')
 def test_get_metadata(metadata_class):
-    mocked_meta = mock.Mock(width=1, height=2, insignificant=3)
-    metadata_class.return_value = mocked_meta
-    proc = mod.ImageFacetProcessor()
-    proc.get_metadata('/path/file', partial=False) == {'width': 1, 'height': 2}
+    mocked_meta = dict(width=1, height=2, insignificant=3)
+    metadata_class.return_value.extract.return_value = mocked_meta
+    proc = mod.ImageProcessor('/path/file', partial=False)
+    assert proc.get_metadata() == {'width': 1, 'height': 2}
+
+
+@mock.patch.object(mod.Processor, 'get_metadata')
+def test__add_metadata(get_metadata):
+    get_metadata.return_value = {'width': 1, 'height': 2}
+    dest = {'content_types': 1, 'metadata': {'': {'title': 'Fascinating'}}}
+    proc = mod.GenericProcessor('/path/')
+    proc._add_metadata(dest)
+    expected = {'content_types': 1,
+                'metadata': {'': {'title': 'Fascinating',
+                                  'width': 1,
+                                  'height': 2}}}
+    assert dest == expected
+
+
+@pytest.mark.parametrize('partial,expected', [
+    (True, {'content_types': 5, 'metadata': 'kept', 'path': '/path/to'}),
+    (False, {'content_types': 5,
+             'metadata': 'kept',
+             'path': '/path/to',
+             'type': 0}),
+])
+@mock.patch.object(mod, 'exts')
+def test__add_fs_data(exts, partial, expected):
+    exts.fsal.isdir.return_value = False
+    proc = mod.GenericProcessor('/path/to', partial=partial)
+    dest = {'content_types': 4, 'metadata': 'kept'}
+    proc._add_fs_data(dest)
+    assert dest == expected
+
+
+@mock.patch.object(mod.Processor, '_add_metadata')
+@mock.patch.object(mod.Processor, '_add_fs_data')
+def test_process(_add_fs_data, _add_metadata):
+    _add_fs_data.side_effect = lambda x: x.update(test=3)
+    path_meta = {'metadata': 'existing'}
+    data = {'/path/to': path_meta}
+    proc = mod.GenericProcessor('/path/to', data=data)
+    proc.process()
+    _add_fs_data.assert_called_once_with(path_meta)
+    _add_metadata.assert_called_once_with(path_meta)
+    assert proc.data == {'/path/to': {'metadata': 'existing', 'test': 3}}
+
+
+@mock.patch.object(mod.Processor, 'get_path')
+@mock.patch.object(mod.Processor, '_add_metadata')
+@mock.patch.object(mod.Processor, '_add_fs_data')
+def test_process_redirect(_add_fs_data, _add_metadata, get_path):
+    get_path.return_value = '/another/'
+    _add_fs_data.side_effect = lambda x: x.update(test=3)
+    data = {'/path/to': {'metadata': 'existing'}}
+    proc = mod.GenericProcessor('/path/to', data=data)
+    proc.process()
+    assert proc.data == {'/path/to': {'metadata': 'existing'},
+                         '/another/': {'test': 3}}
 
 
 @pytest.mark.parametrize('path,processable', [
@@ -84,20 +135,13 @@ def test_can_process_missing_extensions():
 
 
 @mock.patch.object(mod.Processor, 'subclasses')
-def test_for_path_fail(subclasses):
-    subclasses.return_value = []
-    with pytest.raises(RuntimeError):
-        mod.Processor.for_path('/path/file')
-
-
-@mock.patch.object(mod.Processor, 'subclasses')
-def test_for_path_success(subclasses):
+def test_for_path(subclasses):
     proc1 = mock.Mock()
     proc2 = mock.Mock()
     proc2.can_process.return_value = False
     proc3 = mock.Mock()
     subclasses.return_value = [proc1, proc2, proc3]
-    assert mod.Processor.for_path('/path/file') == [proc1, proc3]
+    assert list(mod.Processor.for_path('/path/file')) == [proc1, proc3]
     proc1.can_process.assert_called_once_with('/path/file')
     proc2.can_process.assert_called_once_with('/path/file')
     proc3.can_process.assert_called_once_with('/path/file')
@@ -127,4 +171,4 @@ def test_for_type_success():
     ('index.htm', 'main.html', False),
 ])
 def test_is_entry_point(old, new, use):
-    assert mod.HtmlFacetProcessor.is_entry_point(new, old) is use
+    assert mod.HtmlProcessor.is_entry_point(new, old) is use
