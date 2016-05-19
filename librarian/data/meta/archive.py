@@ -391,6 +391,9 @@ class Archive(object):
                 language = row['language']
                 data.setdefault(language, {})
                 data[language][key] = row['value']
+        # yield last item
+        if data:
+            yield self.MetaWrapper(data)
 
     def for_parent(self, path, content_type=None):
         """
