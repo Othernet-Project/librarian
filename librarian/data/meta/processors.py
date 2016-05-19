@@ -15,6 +15,7 @@ from ...core.exts import ext_container as exts
 from . import links
 from .contenttypes import ContentTypes
 from .metadata import (NO_LANGUAGE,
+                       MetadataError,
                        ImageMetadata,
                        AudioMetadata,
                        VideoMetadata,
@@ -131,7 +132,7 @@ class Processor(object):
         # perform full (possibly expensive) processing of metadata
         try:
             meta = self.metadata_extractor.extract()
-        except self.metadata_class.MetadataError:
+        except MetadataError:
             return {}
         else:
             return dict((k, v) for (k, v) in meta.items() if k in self.keys)
