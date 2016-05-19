@@ -4,35 +4,37 @@ import types
 import mock
 import pytest
 
-import librarian.data.facets.archive as mod
+import librarian.data.meta.archive as mod
 
 
 # UNIT TESTS
 
 
 @mock.patch.object(mod, 'exts')
-@mock.patch.object(mod.Archive, 'save')
-@mock.patch.object(mod.Processor, 'for_path')
-def test__analyze(for_path, save, exts, processors):
-    processors[0].is_entry_point.return_value = False
-    for_path.return_value = processors
+@mock.patch.object(mod.Archive, 'MetaWrapper')
+@mock.patch.object(mod.Archive.Processor, 'is_entry_point')
+def test__analyze(is_entry_point, MetaWrapper, exts):
+    is_entry_point.return_value = True
     callback = mock.Mock()
+    expected = {'/path/to/file': MetaWrapper.return_value}
     # trigger processor updates
     archive = mod.Archive()
-    archive._analyze('/path/to/file', False, callback)
+    assert archive._analyze('/path/to/file', True, callback) == expected
+    callback.assert_called_once_with(expected)
     # the dict passed to save should contain the data from all processors
-    expected = {0: '/path/to/file', 1: '/path/to/file'}
     exts.events.publish.assert_called_once_with(mod.Archive.ENTRY_POINT_FOUND,
                                                 path='/path/to/file',
-                                                facet_type=2)
-    callback.assert_called_once_with(expected)
+                                                content_type=1)
+    data = {'content_types': 1, 'path': '/path/to/file', 'metadata': {u'': {}}}
+    MetaWrapper.assert_called_once_with(data)
 
 
+@mock.patch.object(mod, 'exts')
 @mock.patch.object(mod.Archive, '_analyze')
-def test_analyze_blocking(_analyze):
+def test_analyze_blocking(_analyze, exts):
     archive = mod.Archive()
-    expected = {'path': _analyze.return_value}
-    assert archive.analyze('path') == expected
+    _analyze.return_value = {'path': 'metadata'}
+    assert archive.analyze('path') == _analyze.return_value
     _analyze.assert_called_once_with('path', False, None)
 
 
@@ -115,8 +117,9 @@ def test_scan_return_value(analyze, exts, callback, ret_type):
     assert isinstance(ret, ret_type)
 
 
+@mock.patch.object(mod, 'exts')
 @mock.patch.object(mod.Processor, 'for_type')
-def test__keep_supported(for_type):
+def test__keep_supported(for_type, exts):
     # set up mocked processors that just write something in the dict
     proc = mock.Mock()
     proc.return_value.can_process.side_effect = lambda x: x.endswith('txt')
@@ -127,19 +130,14 @@ def test__keep_supported(for_type):
     assert ret == ['f1.txt', 'f3.jpg', 'file4.txt']
 
 
-@pytest.mark.parametrize('src,expected,facet_type', [
-    (
-        {'facet_types': 1, 'invalid': 2, 'path': 'test'},
-        {'facet_types': 1, 'path': 'test'},
-        'generic',
-    ), (
-        {'width': 1, 'test': 2, 'height': 3},
-        {'width': 1, 'height': 3},
-        'image',
-    )
+@pytest.mark.parametrize('src,expected,content_type', [
+    ({'invalid': 2}, {}, 'generic',),
+    ({'width': 1, 'test': 2, 'height': 3}, {'width': 1, 'height': 3}, 'image'),
 ])
-def test_strip(src, expected, facet_type):
-    assert mod.Archive.strip(src, facet_type) == expected
+@mock.patch.object(mod, 'exts')
+def test__strip(exts, src, expected, content_type):
+    archive = mod.Archive()
+    assert archive._strip(src, content_type) == expected
 
 
 # INTEGRATION TESTS FOR DATABASE QUERIES

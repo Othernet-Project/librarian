@@ -102,17 +102,8 @@ def populated_database(random_dataset, databases):
 
 @pytest.fixture
 def processors():
-    def process_file(path, data=None, partial=False):
-        data = {} if data is None else data
-        data[process_file.counter] = path
-        process_file.counter += 1
-        return data
-    process_file.counter = 0
-    # set up mocked processors that just write something in the dict
     proc1 = mock.Mock()
     proc1.name = 'generic'
-    proc1.return_value.process_file.side_effect = process_file
     proc2 = mock.Mock()
     proc2.name = 'html'
-    proc2.return_value.process_file.side_effect = process_file
     return (proc1, proc2)
