@@ -470,15 +470,18 @@ class Archive(object):
                 data.update(metas)
         return data
 
-    def parent(self, path, force_refresh=False):
+    def parent(self, path, refresh=False):
         """
         For a given ``path`` to a directory, return the stored folder entry.
         The folder entry can be used to obtain all the detected content types
         among it's file entries, and to optionally get a ``main``(filename)
-        that represents the entry point for more complex content.
+        that represents the entry point for more complex content. ``refresh``
+        can either be a flag, indicating a need for a fresh scan, or a dict
+        of earlier scan results, which will be used instead of performing the
+        scan in-place.
         """
-        if force_refresh:
-            return self._refresh_parent(path)
+        if refresh:
+            return self._refresh_parent(path, refresh)
         # attempt getting existing data
         metadata = self.get(path, ignore_missing=True)
         if metadata:
@@ -487,12 +490,17 @@ class Archive(object):
         # no existing data found, perform blocking scan now
         return self._refresh_parent(path)
 
-    def _refresh_parent(self, path):
+    def _refresh_parent(self, path, source=None):
         """
         Perform a blocking partial scan of only the folder being queried
-        without going any deeper.
+        without going any deeper. If ``source`` is a dict, it will be assumed
+        that it has the same format as regular scan results, and will be used
+        to update the directory entry.
         """
-        (metas,) = self.scan(path, partial=True, maxdepth=0)
+        if isinstance(source, dict):
+            metas = source
+        else:
+            (metas,) = self.scan(path, partial=True, maxdepth=0)
         # prepare iterator over facet_type values only
         itypes = (m.content_types for m in metas.values())
         default = self.ContentTypes.to_bitmask(self.ContentTypes.GENERIC)

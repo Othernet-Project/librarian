@@ -127,8 +127,8 @@ class Manager(object):
         # path is guaranteed to be valid at this point
         # get parent folder information (pointed at by ``path``)
         (_, current) = self._fsal.get_fso(path or '.')
-        force_refresh = extra.pop('force_refresh', False)
-        current.meta = self._archive.parent(path, force_refresh)
+        refresh = metas if extra.pop('force_refresh', False) else False
+        current.meta = self._archive.parent(path, refresh)
         show_hidden = extra.pop('show_hidden', False)
         selected = extra.pop('selected', None)
         dirs = self._prepare_dirs(dirs, metas, show_hidden)
