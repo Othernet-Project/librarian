@@ -8,7 +8,6 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 import functools
-import itertools
 import logging
 import os
 
@@ -372,24 +371,26 @@ class Archive(object):
 
         ``rows`` is expected to be ordered by the ``path`` column.
         """
-        for (path, row_iter) in itertools.groupby(rows, lambda r: r['path']):
-            data = dict()
-            for row in row_iter:
-                key = row['key']
-                if key:
-                    language = row['language']
-                    data.setdefault(language, {})
-                    data[language][key] = row['value']
-            # hack: to avoid updating ``data`` in each iteration of the second
-            # loop with the same values, we depend on ``row``'s value to leak
-            # out of the for loop's scope after the iteration over ``row_iter``
-            # is finished
-            data.update(path=path,
-                        id=row['id'],
-                        parent_id=row['parent_id'],
-                        type=row['type'],
-                        content_types=row['content_types'])
-            yield self.MetaWrapper(data)
+        path = data = None
+        for row in rows:
+            # path changed, so row belongs to a different fs entry
+            if row['path'] != path:
+                # yield previous data element before creating the new one
+                if data:
+                    yield self.MetaWrapper(data)
+                # create next fs object
+                path = row['path']
+                data = dict(path=path,
+                            id=row['id'],
+                            parent_id=row['parent_id'],
+                            type=row['type'],
+                            content_types=row['content_types'])
+            # put meta key/value pairs into fs data element
+            key = row['key']
+            if key:
+                language = row['language']
+                data.setdefault(language, {})
+                data[language][key] = row['value']
 
     def for_parent(self, path, content_type=None):
         """
