@@ -15,28 +15,8 @@ from ...core.exts import ext_container as exts
 from ...core.utils import batched, as_iterable
 from .contenttypes import ContentTypes
 from .processors import Processor, NO_LANGUAGE, DIRECTORY_TYPE, FILE_TYPE
+from .utils import ancestors_of
 from .wrapper import MetaWrapper
-
-
-def ancestors_of(path):
-    """
-    Return all of ``path``'s ancestors, including ``path`` itself.
-    """
-    normalized = os.path.normpath(path)
-    if normalized == os.path.sep:
-        # if path is "/" yield only that
-        yield normalized
-    elif normalized == '.':
-        # if path is relative root, yield empty
-        yield ''
-    else:
-        parts = normalized.split(os.path.sep)
-        if parts[0]:
-            # for relative paths, relative root would be excluded without this
-            yield ''
-        # yield paths, in each iteration joined up to ``i``-th component
-        for i in range(len(parts)):
-            yield os.path.sep.join(parts[0:i + 1]) or os.path.sep
 
 
 class FSWriter(object):
