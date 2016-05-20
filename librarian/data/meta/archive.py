@@ -623,7 +623,7 @@ class Archive(object):
         # perform optional cleanup by processor(s)
         for path in paths:
             for proc_cls in self.Processor.for_path(path):
-                proc_cls().deprocess_file(path)
+                proc_cls(path, fsal=self._fsal).deprocess()
         # first delete metadata by joining on fs table
         query = self._db.Delete('{} USING {}'.format(self.META_TABLE,
                                                      self.FS_TABLE),

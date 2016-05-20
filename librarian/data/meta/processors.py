@@ -73,7 +73,7 @@ class Processor(object):
     Methods (optional):
 
     - py:meth:`get_metadata`: returns a dict with obtained meta information
-    - py:class:`deprocess_file`: perform additional cleanup when the metadata
+    - py:class:`deprocess`: perform additional cleanup when the metadata
     entry is being deleted
     """
     _subclasses = ()
