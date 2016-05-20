@@ -157,9 +157,12 @@ class FSWriter(object):
             if (missing == self._path or (missing == self._parent_path and
                                           self._type == FILE_TYPE)):
                 content_types |= self._content_types
+            # type of object is a directory for all ancestors except the path
+            # being created which was specified already explicitly
+            fs_type = self._type if missing == self._path else DIRECTORY_TYPE
             # in each next iteration the now created fs object will be
             # referenced as the parent object
-            last = self._create(missing, last['id'], self._type, content_types)
+            last = self._create(missing, last['id'], fs_type, content_types)
         # update content types on parent if it was not created now and only if
         # the fs entry being created is a file, since ``content_types`` on a
         # directory entry should reflect only the content types of the files
