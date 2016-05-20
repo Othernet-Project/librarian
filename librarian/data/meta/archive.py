@@ -502,7 +502,7 @@ class Archive(object):
             metas = source
         else:
             (metas,) = self.scan(path, partial=True, maxdepth=0)
-        # prepare iterator over facet_type values only
+        # prepare iterator over content_type values only
         itypes = (m.content_types for m in metas.values())
         default = self.ContentTypes.to_bitmask(self.ContentTypes.GENERIC)
         # calculate bitmask for the whole folder
@@ -639,7 +639,7 @@ class Archive(object):
 
     def clear(self):
         """
-        Empty facets database. It deletes all data. Really everything.
+        Empty meta database. It deletes all data. Really everything.
         """
         query = self._db.Delete(self.META_TABLE)
         self._db.execute(query)
