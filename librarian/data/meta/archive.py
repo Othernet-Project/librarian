@@ -196,6 +196,7 @@ class Archive(object):
     ContentTypes = ContentTypes
     Processor = Processor
     MetaWrapper = MetaWrapper
+    FSWriter = FSWriter
     #: Database name
     DATABASE_NAME = 'meta'
     #: Database tables
@@ -587,10 +588,10 @@ class Archive(object):
         specification.
         """
         # unwrap ``data`` if needed
-        if isinstance(data, MetaWrapper):
+        if isinstance(data, self.MetaWrapper):
             data = data.unwrap()
         # save file system data
-        fs_writer = FSWriter(data, db=self._db, cache=self._cache)
+        fs_writer = self.FSWriter(data, db=self._db, cache=self._cache)
         saved = fs_writer.write()
         # replace metadata associated with fs object with cleaned version
         saved['metadata'] = self._save_metadata(saved['id'],
