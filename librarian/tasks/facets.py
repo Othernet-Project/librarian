@@ -57,7 +57,7 @@ class CheckNewContentTask(Task):
         if removable:
             archive.remove(removable)
         if analyzable:
-            archive.analyze(analyzable)
+            archive.analyze(analyzable, callback=archive.save_many)
         return changes_found
 
     @classmethod
