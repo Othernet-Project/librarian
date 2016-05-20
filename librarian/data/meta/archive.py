@@ -216,6 +216,9 @@ class Archive(object):
         self._tasks = kwargs.get('tasks', exts.tasks)
         self._events = kwargs.get('events', exts.events)
         self._events.subscribe(self.ENTRY_POINT_FOUND, self._entry_point_found)
+        # Select what from meta table
+        self._meta_what = ','.join('{}.{}'.format(self.META_TABLE, c)
+                                   for c in self.META_COLUMNS)
 
     def _analyze(self, path, partial, callback):
         """
@@ -380,7 +383,7 @@ class Archive(object):
         Return a dict of {path: metadata} mapping for all direct children of
         ``path``, optionally filtered for a specific ``content_type``.
         """
-        query = self._db.Select('fsr.*, meta.*',
+        query = self._db.Select('fsr.*, {}'.format(self._meta_what),
                                 sets=self.FS_TABLE,
                                 where='fs.path = %(path)s',
                                 order='fsr.path')
@@ -415,7 +418,8 @@ class Archive(object):
             if not paths:
                 return {}
         # prepare query
-        query = self._db.Select(sets=self.META_TABLE,
+        query = self._db.Select('fs.*, {}'.format(self._meta_what),
+                                sets=self.META_TABLE,
                                 where=self._db.sqlin('fs.path', paths),
                                 order='fs.path')
         query.sets.join(self.FS_TABLE,
@@ -506,7 +510,8 @@ class Archive(object):
         # a local source, not user provided data
         filters = ' OR '.join("key = '{}' AND value ILIKE %(terms)s".format(k)
                               for k in keys)
-        query = self._db.Select(sets=self.META_TABLE,
+        query = self._db.Select('fs.*, {}'.format(self._meta_what),
+                                sets=self.META_TABLE,
                                 where='({})'.format(filters),
                                 order='fs.path')
         join_on = "meta.fs_id = fs.id"
