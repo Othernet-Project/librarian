@@ -518,20 +518,26 @@ class Archive(object):
         Result may be optionally filtered for a specific ``content_type``
         (which also limits the scope of search to fields only relevant to the
         chosen ``content_type`` and / or for a specific ``language``.
+        Due to the nature of the search query, not all metadata belonging to
+        the found fs entries will be present on the combined meta object, only
+        those that were search actually searched for (``search_keys``).
         """
-        keys = self.ContentTypes.search_keys(content_type)
-        # safe string interpolation, as only column names are being added from
-        # a local source, not user provided data
-        filters = ' OR '.join("key = '{}' AND value ILIKE %(terms)s".format(k)
-                              for k in keys)
         query = self._db.Select('fs.*, {}'.format(self._meta_what),
                                 sets=self.META_TABLE,
-                                where='({})'.format(filters),
                                 order='fs.path')
+        keys = self.ContentTypes.search_keys(content_type)
+        if keys:
+            # safe string interpolation, as only column names are being added
+            # from a local source, not user provided data
+            filters = ' OR '.join("key = '{}' AND value ILIKE %(terms)s".format(k)
+                                  for k in keys)
+            query.where += '({})'.format(filters)
+        # join condition may be extended below
         join_on = "meta.fs_id = fs.id"
         params = dict(terms='%' + terms.lower() + '%')
-        # add language filter if specified
-        if language:
+        # add language filter if specified (must be checked against ``None``
+        # because ``NO_LANGUAGE`` value is an empty string
+        if language is not None:
             query.where += 'meta.language = %(language)s'
             params.update(language=language)
         # add content type filter if specified
