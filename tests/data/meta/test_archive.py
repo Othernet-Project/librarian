@@ -1,4 +1,3 @@
-import os
 import types
 
 import mock
@@ -140,140 +139,305 @@ def test__strip(exts, src, expected, content_type):
     assert archive._strip(src, content_type) == expected
 
 
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, '_refresh_parent')
+@mock.patch.object(mod.Archive, 'get')
+def test_parent_found(get, _refresh_parent, exts):
+    get.return_value = {'path': 'meta'}
+    archive = mod.Archive()
+    assert archive.parent('path') == 'meta'
+    get.assert_called_once_with('path', ignore_missing=True)
+    assert not _refresh_parent.called
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, '_refresh_parent')
+@mock.patch.object(mod.Archive, 'get')
+def test_parent_not_found(get, _refresh_parent, exts):
+    get.return_value = {}
+    archive = mod.Archive()
+    assert archive.parent('path') == _refresh_parent.return_value
+    get.assert_called_once_with('path', ignore_missing=True)
+    _refresh_parent.assert_called_once_with('path')
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, '_refresh_parent')
+@mock.patch.object(mod.Archive, 'get')
+def test_parent_force_refresh(get, _refresh_parent, exts):
+    archive = mod.Archive()
+    archive.parent('path', refresh='from source')
+    assert not get.called
+    _refresh_parent.assert_called_once_with('path', 'from source')
+
+
 # INTEGRATION TESTS FOR DATABASE QUERIES
 
 
-@mock.patch.object(mod.Archive, 'scan')
-def test_parent_found(scan, populated_database):
-    (folders, facets, databases) = populated_database
-    archive = mod.Archive(db=databases.facets)
-    for folder in folders:
-        bitmask = folder['facet_types']
-        expected = dict(facet_types=mod.FacetTypes.from_bitmask(bitmask),
-                        main=folder['main'],
-                        path=folder['path'])
-        assert archive.parent(folder['path']) == expected
+def merge_fs_with_meta(fs_data, metadata, content_type=None):
+    for fs_entry in fs_data:
+        # filter for specific content type, if specified
+        if (content_type is not None and
+                fs_entry['content_types'] & content_type != content_type):
+            continue
+        # merge all meta entries into their respective fs structure
+        fs_entry = dict(fs_entry)
+        for meta in metadata:
+            if meta['fs_id'] == fs_entry['id']:
+                lang = meta['language']
+                fs_entry.setdefault(lang, {})
+                fs_entry[lang][meta['key']] = unicode(meta['value'])
+        yield fs_entry
 
 
-@mock.patch.object(mod.Archive, '_save_parent')
-@mock.patch.object(mod.Archive, 'scan')
-def test_parent_not_found(scan, _save_parent, databases):
-    scan.return_value = [{'/1': {'facet_types': 2},
-                          '/2': {'facet_types': 8},
-                          '/3': {'facet_types': 2}}]
-    _save_parent.return_value = {'main': None, 'facet_types': 11}
-    archive = mod.Archive(db=databases.facets)
-    expected = {'path': '/does/not/exist',
-                'main': None,
-                'facet_types': ['generic', 'html', 'audio']}
-    assert archive.parent('/does/not/exist') == expected
-    scan.assert_called_once_with('/does/not/exist', partial=True, maxdepth=0)
-    _save_parent.assert_called_once_with('/does/not/exist', facet_types=11)
-
-
-def compare_facet_sets(result, expected):
+def compare_result_sets(result, expected):
     assert len(expected) == len(result)
     for (path, data) in expected.items():
-        item = result[path]
-        for (k, v) in data.items():
-            assert item[k] == v
+        item = result[path].unwrap()
+        for (key, value) in data.items():
+            assert item[key] == value
 
 
-def test_for_parent(populated_database):
-    (folders, facets, databases) = populated_database
-    archive = mod.Archive(db=databases.facets)
+@mock.patch.object(mod, 'exts')
+def test_for_parent(exts, populated_database):
+    (fs_data, metadata, databases) = populated_database
+    archive = mod.Archive(db=databases.meta)
     # test for path only
-    expected = dict((row['path'], row) for row in facets
-                    if row['folder'] == folders[0]['id'])
-    result = archive.for_parent(folders[0]['path'])
+    iter_merged = merge_fs_with_meta(fs_data, metadata)
+    expected = dict((item['path'], item) for item in iter_merged
+                    if item['parent_id'] == fs_data[0]['id'])
+    result = archive.for_parent(fs_data[0]['path'])
     # compare results against expected data
-    compare_facet_sets(result, expected)
-    # test for path with specific facet type filtering involved
-    for facet_type in mod.FacetTypes.from_bitmask(folders[0]['facet_types']):
+    compare_result_sets(result, expected)
+
+
+@mock.patch.object(mod, 'exts')
+def test_for_parent_content_type(exts, populated_database):
+    (fs_data, metadata, databases) = populated_database
+    archive = mod.Archive(db=databases.meta)
+    # test for path with specific content type filtering involved
+    content_types = mod.ContentTypes.from_bitmask(fs_data[0]['content_types'])
+    for ctype in content_types:
         # filter expected data as the query should perform too
-        bitmask = mod.FacetTypes.to_bitmask(facet_type)
-        expected = dict((row['path'], row) for row in facets
-                        if row['folder'] == folders[0]['id'] and
-                        row['facet_types'] & bitmask == bitmask)
-        result = archive.for_parent(folders[0]['path'], facet_type=facet_type)
+        bitmask = mod.ContentTypes.to_bitmask(ctype)
+        iter_merged = merge_fs_with_meta(fs_data, metadata, bitmask)
+        expected = dict((item['path'], item) for item in iter_merged
+                        if item['parent_id'] == fs_data[0]['id'])
+        result = archive.for_parent(fs_data[0]['path'], content_type=ctype)
         # compare results against expected filtered data
-        compare_facet_sets(result, expected)
+        compare_result_sets(result, expected)
 
 
-@mock.patch.object(mod.Archive, '_keep_supported')
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, 'save_many')
 @mock.patch.object(mod.Archive, 'analyze')
-def test_get(analyze, _keep_supported, populated_database):
+def test__attach_missing_none(analyze, save_many, exts):
+    archive = mod.Archive()
+    data = {'path': 'exists'}
+    ret = archive._attach_missing(['path'], data, False)
+    assert ret == data
+    assert not analyze.called
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, 'analyze')
+def test__attach_missing_partial(analyze, exts):
+    archive = mod.Archive()
+    # only one path will be requested in this test, so it's safe to return
+    # only one entry
+    analyze.side_effect = lambda paths, **kw: {list(paths)[0]: 'found'}
+    data = {'path': 'exists'}
+    ret = archive._attach_missing(['path', 'missing'], data, True)
+    assert ret == {'path': 'exists', 'missing': 'found'}
+    paths = set(['missing'])
+    analyze.assert_has_calls([
+        mock.call(paths, callback=archive.save_many),
+        mock.call(paths, partial=True),
+    ])
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, 'save_many')
+@mock.patch.object(mod.Archive, 'analyze')
+def test__attach_missing_impartial(analyze, save_many, exts):
+    archive = mod.Archive()
+    # only one path will be requested in this test, so it's safe to return
+    # only one entry
+    analyze.side_effect = lambda paths, **kw: {list(paths)[0]: 'found'}
+    data = {'path': 'exists'}
+    ret = archive._attach_missing(['path', 'missing'], data, False)
+    assert ret == {'path': 'exists', 'missing': 'found'}
+    analyze.assert_called_once_with(set(['missing']))
+    save_many.assert_called_once_with({'missing': 'found'})
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, '_keep_supported')
+def test_get_none_supported(_keep_supported, exts):
+    db = exts.databases[mod.Archive.DATABASE_NAME]
+    _keep_supported.return_value = []
+    archive = mod.Archive()
+    assert archive.get(['path1', 'path2'], content_type='some') == {}
+    # make sure no db operations were executed at all
+    assert not db.Select.called
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, '_attach_missing')
+@mock.patch.object(mod.Archive, '_keep_supported')
+def test_get_ignore_missing(_keep_supported, _attach_missing, exts):
+    db = exts.databases[mod.Archive.DATABASE_NAME]
+    db.fetchiter.return_value = ()
+    paths = ['/path/invalid', '/another/invalid']
+    archive = mod.Archive()
+    assert archive.get(paths, ignore_missing=True) == {}
+    assert not _attach_missing.called
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, '_attach_missing')
+@mock.patch.object(mod.Archive, '_keep_supported')
+def test_get_attach_missing(_keep_supported, _attach_missing, exts,
+                            strip_wrappers):
+    db = exts.databases[mod.Archive.DATABASE_NAME]
+    db.fetchiter.return_value = ()
+    paths = ['/path/invalid', '/another/invalid']
+    archive = mod.Archive()
+    # use unwrapped version because ``batched`` would turn the result
+    # into a dict
+    unwrapped = strip_wrappers(archive.get)
+    ret = unwrapped(archive, paths, ignore_missing=False)
+    _attach_missing.assert_called_once_with(paths, {}, True)
+    assert ret == _attach_missing.return_value
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, '_keep_supported')
+def test_get(_keep_supported, exts, populated_database):
+    # keep supported just returns what it gets
     _keep_supported.side_effect = lambda x, y: x
-    (folders, facets, databases) = populated_database
-    archive = mod.Archive(db=databases.facets)
-    # pick the last existing facet type from the entries in db
-    existing_types = mod.FacetTypes.from_bitmask(facets[-1]['facet_types'])
-    bitmask = mod.FacetTypes.to_bitmask(existing_types[-1])
+    (fs_data, metadata, databases) = populated_database
+    archive = mod.Archive(db=databases.meta)
+    # pick the last existing content type from the entries in db
+    found_types = mod.ContentTypes.from_bitmask(fs_data[-1]['content_types'])
+    bitmask = mod.ContentTypes.to_bitmask(found_types[-1])
     # filter expected data as the query should perform too
-    expected = dict((row['path'], row) for row in facets
-                    if row['facet_types'] & bitmask == bitmask)
-    non_existent = ['/path/invalid', '/another/invalid']
-    paths = expected.keys() + non_existent
-    result = archive.get(paths, facet_type=existing_types[-1])
+    expected = dict((item['path'], item)
+                    for item in merge_fs_with_meta(fs_data, metadata, bitmask))
+    paths = expected.keys()
+    result = archive.get(paths,
+                         content_type=found_types[-1],
+                         ignore_missing=True)
     # compare results against expected filtered data
-    compare_facet_sets(result, expected)
-    calls = [mock.call(set(non_existent), callback=archive.save),
-             mock.call(set(non_existent), partial=True)]
-    analyze.assert_has_calls(calls)
+    compare_result_sets(result, expected)
 
 
-def first_facet_type(facets):
-    # return the first encountered non-GENERIC facet type and bitmask
-    for facet in facets:
-        existing_types = mod.FacetTypes.from_bitmask(facet['facet_types'])
-        for facet_type in existing_types:
-            if facet_type != mod.FacetTypes.GENERIC:
-                bitmask = mod.FacetTypes.to_bitmask(facet_type)
-                return (facet_type, bitmask)
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, 'get')
+@mock.patch.object(mod.Archive, 'save')
+@mock.patch.object(mod.Archive, 'scan')
+def test__refresh_parent_no_source(scan, save, get, exts):
+    path = '/path/parent'
+    scan.return_value = [{'/path/parent/child': mock.Mock(content_types=4)}]
+    get.return_value = {path: 'metadata'}
+    archive = mod.Archive()
+    assert archive._refresh_parent(path) == 'metadata'
+    scan.assert_called_once_with(path, partial=True, maxdepth=0)
+    save.assert_called_once_with({'path': path,
+                                  'type': mod.DIRECTORY_TYPE,
+                                  'content_types': 5})
+    get.assert_called_once_with(path)
 
 
-def test_search(populated_database):
-    (folders, facets, databases) = populated_database
-    archive = mod.Archive(db=databases.facets)
-    # pick an existing facet type
-    (facet_type, bitmask) = first_facet_type(facets)
-    # pick first word in last entry's description
-    term = facets[-1]['title'].split()[0]
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, 'get')
+@mock.patch.object(mod.Archive, 'save')
+@mock.patch.object(mod.Archive, 'scan')
+def test__refresh_parent_from_source(scan, save, get, exts):
+    path = '/path/parent'
+    source = {'/path/parent/child': mock.Mock(content_types=4)}
+    get.return_value = {path: 'metadata'}
+    archive = mod.Archive()
+    assert archive._refresh_parent(path, source) == 'metadata'
+    assert not scan.called
+    save.assert_called_once_with({'path': path,
+                                  'type': mod.DIRECTORY_TYPE,
+                                  'content_types': 5})
+    get.assert_called_once_with(path)
+
+
+def pick_search_data(entries):
+    titleless = (mod.ContentTypes.GENERIC, mod.ContentTypes.DIRECTORY)
+    for entry in entries:
+        found_types = mod.ContentTypes.from_bitmask(entry['content_types'])
+        content_types = [ct for ct in found_types if ct not in titleless]
+        if not content_types:
+            # none of the found content types have a title key
+            continue
+        for (lang, meta) in entry.items():
+            if isinstance(meta, dict) and 'title' in meta:
+                return (content_types[0], lang, meta['title'].split()[0])
+
+
+@mock.patch.object(mod, 'exts')
+def test_search(exts, populated_database):
+    (fs_data, metadata, databases) = populated_database
+    archive = mod.Archive(db=databases.meta)
+    # pick an existing content type
+    entries = list(merge_fs_with_meta(fs_data, metadata))
+    # find data suitable for search
+    (content_type, lang, term) = pick_search_data(entries)
+    bitmask = mod.ContentTypes.to_bitmask(content_type)
     # filter expected data as the query should perform too
-    expected = dict((row['path'], row) for row in facets
-                    if row['facet_types'] & bitmask == bitmask and
-                    term in row['title'])
-    result = archive.search(term, facet_type=facet_type)
+    expected = dict((item['path'], item) for item in entries
+                    if item['content_types'] & bitmask == bitmask and
+                    term in item.get(lang, {}).get('title', ''))
+    result = archive.search(term, content_type=content_type, language=lang)
     # compare results against expected filtered data
-    compare_facet_sets(result, expected)
+    assert len(result) == len(expected)
+    assert sorted(result.keys()) == sorted(expected.keys())
 
 
-@mock.patch.object(mod.Archive, '_save_parent')
-def test_save(_save_parent, populated_database):
-    (folders, facets, databases) = populated_database
-    _save_parent.return_value = folders[0]
-    data = {'path': '/path/to/file',
-            'facet_types': mod.FacetTypes.to_bitmask(mod.FacetTypes.VIDEO)}
-    archive = mod.Archive(db=databases.facets)
-    saved = archive.save(data)
-    parent = os.path.dirname(data['path'])
-    _save_parent.assert_called_once_with(parent,
-                                         facet_types=data['facet_types'])
+@mock.patch.object(mod, 'exts')
+def test_save(exts, databases):
+    mocked_cache = mock.Mock()
+    mocked_cache.get.return_value = None
+    exts.cache = mocked_cache
+    data = {
+        'type': mod.FILE_TYPE,
+        'path': '/path/to/file',
+        'content_types': mod.ContentTypes.to_bitmask(mod.ContentTypes.VIDEO),
+        'metadata': {
+            'en': {
+                'title': 'test',
+                'description': 'another',
+            }
+        }
+    }
+    archive = mod.Archive(db=databases.meta)
+    wrapper = archive.save(data)
+    saved = wrapper.unwrap()
     assert saved['path'] == data['path']
-    assert saved['facet_types'] == data['facet_types']
+    assert saved['content_types'] == data['content_types'] | 1
+    assert saved['type'] == data['type']
+    assert saved['metadata'] == data['metadata']
 
 
+@mock.patch.object(mod, 'exts')
 @mock.patch.object(mod.Processor, 'for_path')
-def test_remove(for_path, populated_database, processors):
+def test_remove(for_path, exts, populated_database, processors):
     for_path.return_value = processors
-    (folders, facets, databases) = populated_database
-    archive = mod.Archive(db=databases.facets)
-    paths = [facets[0]['path'], facets[-1]['path']]
+    (fs_data, metadata, databases) = populated_database
+    archive = mod.Archive(db=databases.meta)
+    paths = [fs_data[0]['path'], fs_data[-1]['path']]
     archive.remove(paths)
-    q = databases.facets.Select(sets=mod.Archive.DATABASE_NAME,
-                                where=databases.facets.sqlin('path', paths))
-    assert databases.facets.fetchall(q, paths) == []
+    q = databases.meta.Select(sets='fs',
+                              where=databases.meta.sqlin('path', paths))
+    assert databases.meta.fetchall(q, paths) == []
     # make sure cleanup function was called
-    calls = map(mock.call, paths)
+    calls = [mock.call(paths[0], fsal=archive._fsal),
+             mock.call().deprocess(),
+             mock.call(paths[1], fsal=archive._fsal),
+             mock.call().deprocess()]
     for proc in processors:
-        proc.return_value.deprocess_file.assert_has_calls(calls)
+        proc.assert_has_calls(calls)
