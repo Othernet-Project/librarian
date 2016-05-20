@@ -141,7 +141,8 @@ def test_for_path(subclasses):
     proc2.can_process.return_value = False
     proc3 = mock.Mock()
     subclasses.return_value = [proc1, proc2, proc3]
-    assert list(mod.Processor.for_path('/path/file')) == [proc1, proc3]
+    with mock.patch.object(mod.Processor, '_subclasses', new=()):
+        assert list(mod.Processor.for_path('/path/file')) == [proc1, proc3]
     proc1.can_process.assert_called_once_with('/path/file')
     proc2.can_process.assert_called_once_with('/path/file')
     proc3.can_process.assert_called_once_with('/path/file')
