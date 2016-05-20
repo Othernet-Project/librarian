@@ -402,6 +402,36 @@ class Archive(object):
         return dict((meta.path, meta)
                     for meta in self._reconstruct_meta(row_iter))
 
+    def _attach_missing(self, paths, data, partial):
+        """
+        Find the difference between the passed in ``paths`` and the found
+        entries ``data``. Paths that are not present in ``data`` should be
+        analyzed in-place in either blocking or partial mode, depending on
+        the state of the ``partial`` flag.
+        """
+        # get set of paths not found in query results
+        missing = set(paths).difference(data.keys())
+        # return early because there are no missing entries
+        if not missing:
+            return data
+        # there are missing entries, find them before returning
+        if not partial:
+            # perform deep scan in blocking mode and wait while the results
+            # are obtained and stored
+            metas = self.analyze(missing)
+            self.save_many(metas)
+            data.update(metas)
+            return data
+        # schedule missing entries to be analyzed asynchronously and their
+        # meta information stored in database, but while that information
+        # becomes available, return quickly attainable basic information for
+        # them as placeholders
+        self.analyze(missing, callback=self.save_many)
+        # fetch partials quickly
+        partials = self.analyze(missing, partial=True)
+        data.update(partials)
+        return data
+
     @as_iterable(params=[1])
     @batched(arg=1, batch_size=999, aggregator=batched.updater)
     def get(self, paths, content_type=None, partial=True, ignore_missing=False):
@@ -438,24 +468,8 @@ class Archive(object):
         # return early in case only the really existing entries are needed
         if ignore_missing:
             return data
-        # get set of paths not found in query results
-        missing = set(paths).difference(data.keys())
-        # schedule missing entries to be analyzed and their meta information
-        # stored in database, but while that information becomes available,
-        # return quickly attainable basic information for them as placeholders
-        if missing:
-            if partial:
-                # schedule background deep scan of missing paths
-                self.analyze(missing, callback=self.save_many)
-                # fetch partials quickly
-                partials = self.analyze(missing, partial=True)
-                data.update(partials)
-            else:
-                # perform deep scan in blocking mode
-                metas = self.analyze(missing)
-                self.save_many(metas)
-                data.update(metas)
-        return data
+        # add missing entries to ``data`` and return with complete information
+        return self._attach_missing(paths, data, partial)
 
     def parent(self, path, refresh=False):
         """
