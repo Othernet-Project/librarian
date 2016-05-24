@@ -105,7 +105,7 @@
         <a
             href="${fpath}"
             data-relpath="${f.rel_path | h.urlquote}"
-            data-mimetype="${(f.mimetype or '') | h}"
+            data-mimetype="${(f.meta.mime_type or '') | h}"
             data-type="file"
             class="file-list-link"
             >

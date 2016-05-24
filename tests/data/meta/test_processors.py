@@ -70,8 +70,12 @@ def test__add_metadata(get_metadata):
 
 
 @pytest.mark.parametrize('partial,expected', [
-    (True, {'content_types': 5, 'metadata': 'kept', 'path': '/path/to'}),
+    (True, {'content_types': 5,
+            'mime_type': None,
+            'metadata': 'kept',
+            'path': '/path/to'}),
     (False, {'content_types': 5,
+             'mime_type': None,
              'metadata': 'kept',
              'path': '/path/to',
              'type': 0}),

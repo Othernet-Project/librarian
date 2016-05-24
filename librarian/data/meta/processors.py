@@ -9,6 +9,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 import itertools
+import mimetypes
 import os
 
 from ...core.exts import ext_container as exts
@@ -160,7 +161,11 @@ class Processor(object):
         bitmask = ContentTypes.to_bitmask(self.name)
         content_types = dest.get('content_types', 0) | bitmask
         # put back updated / merged data
-        dest.update(path=self.get_path(), content_types=content_types)
+
+        (mime_type, _) = mimetypes.guess_type(self.path)
+        dest.update(path=self.get_path(),
+                    mime_type=mime_type,
+                    content_types=content_types)
         # because it is an expensive operation, it is performed only in for
         # non-partial requests.
         if not self.partial:

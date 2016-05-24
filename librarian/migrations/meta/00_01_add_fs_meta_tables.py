@@ -5,6 +5,7 @@ create table fs
     parent_id integer not null default 0,
     path varchar unique not null,
     type smallint not null,
+    mime_type varchar,
     content_types smallint not null default 1 -- generic
 );
 create unique index on fs (path);

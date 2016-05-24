@@ -27,7 +27,7 @@ class FSWriter(object):
     #: Database table name
     FS_TABLE = 'fs'
     #: Columns belonging to ``FS_TABLE``
-    FS_COLUMNS = ('parent_id', 'path', 'type', 'content_types')
+    FS_COLUMNS = ('parent_id', 'path', 'type', 'mime_type', 'content_types')
     #: Default content type (applies for all fs entries)
     DEFAULT_CONTENT_TYPE = ContentTypes.to_bitmask(ContentTypes.GENERIC)
     #: Prefix to be used when the whole range needs to be invalidated
@@ -44,6 +44,7 @@ class FSWriter(object):
         self._path = data['path']
         self._parent_path = os.path.dirname(self._path)
         self._type = data['type']
+        self._mime_type = data['mime_type']
         self._content_types = data['content_types']
 
     @classmethod
@@ -97,7 +98,7 @@ class FSWriter(object):
         query = self._db.Select(sets=self.FS_TABLE, where='path=%s')
         return dict(self._db.fetchone(query, (path,)))
 
-    def _create(self, path, parent_id, fs_type, content_types):
+    def _create(self, path, parent_id, fs_type, mime_type, content_types):
         """
         Create a new file system object based on the passed in parameters,
         cache it and return the freshly created object.
@@ -108,6 +109,7 @@ class FSWriter(object):
         self._db.execute(query, dict(path=path,
                                      parent_id=parent_id,
                                      type=fs_type,
+                                     mime_type=mime_type,
                                      content_types=content_types))
         # fetch newly created entry, store it in cache and return it
         entry = self._fetch(path)
@@ -159,10 +161,19 @@ class FSWriter(object):
                 content_types |= self._content_types
             # type of object is a directory for all ancestors except the path
             # being created which was specified already explicitly
-            fs_type = self._type if missing == self._path else DIRECTORY_TYPE
+            if missing == self._path:
+                fs_type = self._type
+                mime_type = self._mime_type
+            else:
+                fs_type = DIRECTORY_TYPE
+                mime_type = None
             # in each next iteration the now created fs object will be
             # referenced as the parent object
-            last = self._create(missing, last['id'], fs_type, content_types)
+            last = self._create(missing,
+                                last['id'],
+                                fs_type,
+                                mime_type,
+                                content_types)
         # update content types on parent if it was not created now and only if
         # the fs entry being created is a file, since ``content_types`` on a
         # directory entry should reflect only the content types of the files
@@ -371,6 +382,7 @@ class Archive(object):
                             id=row['id'],
                             parent_id=row['parent_id'],
                             type=row['type'],
+                            mime_type=row['mime_type'],
                             content_types=row['content_types'])
             # put meta key/value pairs into fs data element
             key = row['key']
@@ -511,7 +523,10 @@ class Archive(object):
         default = self.ContentTypes.to_bitmask(self.ContentTypes.GENERIC)
         # calculate bitmask for the whole folder
         bitmask = functools.reduce(lambda acc, x: acc | x, itypes, default)
-        raw_data = dict(path=path, type=DIRECTORY_TYPE, content_types=bitmask)
+        raw_data = dict(path=path,
+                        type=DIRECTORY_TYPE,
+                        mime_type=None,
+                        content_types=bitmask)
         self.save(raw_data)
         return self.get(path)[path]
 
@@ -563,6 +578,7 @@ class Archive(object):
         data = dict(path=os.path.dirname(path),
                     metadata=metadata,
                     type=DIRECTORY_TYPE,
+                    mime_type=None,
                     content_types=content_type)
         self.save(data)
 

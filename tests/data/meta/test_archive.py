@@ -24,7 +24,10 @@ def test__analyze(is_entry_point, MetaWrapper, exts):
     exts.events.publish.assert_called_once_with(mod.Archive.ENTRY_POINT_FOUND,
                                                 path='/path/to/file',
                                                 content_type=1)
-    data = {'content_types': 1, 'path': '/path/to/file', 'metadata': {u'': {}}}
+    data = {'content_types': 1,
+            'path': '/path/to/file',
+            'mime_type': None,
+            'metadata': {u'': {}}}
     MetaWrapper.assert_called_once_with(data)
 
 
@@ -345,6 +348,7 @@ def test__refresh_parent_no_source(scan, save, get, exts):
     scan.assert_called_once_with(path, partial=True, maxdepth=0)
     save.assert_called_once_with({'path': path,
                                   'type': mod.DIRECTORY_TYPE,
+                                  'mime_type': None,
                                   'content_types': 5})
     get.assert_called_once_with(path)
 
@@ -362,6 +366,7 @@ def test__refresh_parent_from_source(scan, save, get, exts):
     assert not scan.called
     save.assert_called_once_with({'path': path,
                                   'type': mod.DIRECTORY_TYPE,
+                                  'mime_type': None,
                                   'content_types': 5})
     get.assert_called_once_with(path)
 
@@ -406,6 +411,7 @@ def test_save(exts, databases):
     data = {
         'type': mod.FILE_TYPE,
         'path': '/path/to/file',
+        'mime_type': 'image/jpeg',
         'content_types': mod.ContentTypes.to_bitmask(mod.ContentTypes.VIDEO),
         'metadata': {
             'en': {
@@ -421,6 +427,7 @@ def test_save(exts, databases):
     assert saved['content_types'] == data['content_types'] | 1
     assert saved['type'] == data['type']
     assert saved['metadata'] == data['metadata']
+    assert saved['mime_type'] == data['mime_type']
 
 
 @mock.patch.object(mod, 'exts')

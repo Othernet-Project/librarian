@@ -1,5 +1,4 @@
 import itertools
-import mimetypes
 import os
 import re
 
@@ -101,11 +100,10 @@ class Manager(object):
                 # ignore entries that have no found facet since they probably
                 # do not belong to the requested content type
                 continue
-            (mimetype, _) = mimetypes.guess_type(fso.rel_path)
-            fso.mimetype = mimetype
-            filtered.append(fso)
-            if selected and fso.name == selected:
-                found_selected = fso
+            else:
+                filtered.append(fso)
+                if selected and fso.name == selected:
+                    found_selected = fso
         found_selected = found_selected or (filtered[0] if filtered else None)
         return (filtered, found_selected)
 

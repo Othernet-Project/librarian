@@ -59,6 +59,21 @@ class MetaWrapper(object):
         return os.path.basename(self.path)
 
     @property
+    def type(self):
+        """
+        Return the type of the file system object (whether it's a file or
+        directory).
+        """
+        return self._data['type']
+
+    @property
+    def mime_type(self):
+        """
+        Return the detected mime type for the file system object.
+        """
+        return self._data['mime_type']
+
+    @property
     def content_types(self):
         """
         Return bitmask of detected content types for the file system object.

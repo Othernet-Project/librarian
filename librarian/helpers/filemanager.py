@@ -179,7 +179,7 @@ def get_folder_name(fsobj):
 
 @template_helper(namespace='facets')
 def get_file_icon(fsobj):
-    return ICON_MAPPINGS.get(fsobj.mimetype, 'file')
+    return ICON_MAPPINGS.get(fsobj.meta.mime_type, 'file')
 
 
 @template_helper(namespace='facets')
