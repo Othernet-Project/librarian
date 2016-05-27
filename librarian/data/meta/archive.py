@@ -237,14 +237,12 @@ class Archive(object):
         self._meta_what = ','.join('{}.{}'.format(self.META_TABLE, c)
                                    for c in self.META_COLUMNS)
 
-    def _analyze(self, path, partial, callback):
+    def _analyze(self, path, partial):
         """
-        Return(and optionally ``callback``) with found metadata on ``path``.
+        Return found metadata for ``path``.
 
         Called by the public py:meth:`~Archive.analyze` method and performs
-        the heavy lifting to obtain and return metadata, with optionally
-        invoking a ``callback`` function with obtained metadata, if it was
-        specified.
+        the heavy lifting to obtain and return metadata.
         """
         logging.debug(u"Analyze[%s] %s", ('FULL', 'PARTIAL')[partial], path)
         data = dict()
@@ -258,12 +256,8 @@ class Archive(object):
                                      content_type=content_type)
             # gather metadata from current processor into ``data``
             proc.process()
-        # invoke specified ``callback`` if available with gathered metadata
-        # and then return the same
-        wrapped = dict((k, self.MetaWrapper(v)) for (k, v) in data.items())
-        if callback:
-            callback(wrapped)
-        return wrapped
+        # return gathered metadata wrapped in py:class:`MetaWrapper`
+        return dict((k, self.MetaWrapper(v)) for (k, v) in data.items())
 
     @as_iterable(params=[1])
     @batched(arg=1, batch_size=100, aggregator=batched.updater)
@@ -282,13 +276,10 @@ class Archive(object):
         if not callback:
             ret_val = dict()
             for path in paths:
-                ret_val.update(self._analyze(path, partial, callback))
+                ret_val.update(self._analyze(path, partial))
             return ret_val
         # schedule background task to perform analysis of ``paths``
-        func = functools.partial(self._analyze,
-                                 partial=partial,
-                                 callback=callback)
-        self._tasks.schedule(lambda paths: map(func, paths), args=(paths,))
+        self._tasks.schedule(lambda: callback(self.analyze(paths, partial)))
         return {}
 
     def _scan(self, path, partial, callback, maxdepth, depth, delay):

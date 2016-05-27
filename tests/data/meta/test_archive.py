@@ -14,12 +14,10 @@ import librarian.data.meta.archive as mod
 @mock.patch.object(mod.Archive.Processor, 'is_entry_point')
 def test__analyze(is_entry_point, MetaWrapper, exts):
     is_entry_point.return_value = True
-    callback = mock.Mock()
     expected = {'/path/to/file': MetaWrapper.return_value}
     # trigger processor updates
     archive = mod.Archive()
-    assert archive._analyze('/path/to/file', True, callback) == expected
-    callback.assert_called_once_with(expected)
+    assert archive._analyze('/path/to/file', True) == expected
     # the dict passed to save should contain the data from all processors
     exts.events.publish.assert_called_once_with(mod.Archive.ENTRY_POINT_FOUND,
                                                 path='/path/to/file',
@@ -37,17 +35,28 @@ def test_analyze_blocking(_analyze, exts):
     archive = mod.Archive()
     _analyze.return_value = {'path': 'metadata'}
     assert archive.analyze('path') == _analyze.return_value
-    _analyze.assert_called_once_with('path', False, None)
+    _analyze.assert_called_once_with('path', False)
 
 
 @mock.patch.object(mod, 'exts')
 @mock.patch.object(mod.Archive, '_analyze')
-def test_analyze_nonblocking(_analyze, exts):
+def test_analyze_nonblocking_call(_analyze, exts):
     archive = mod.Archive()
     callback = mock.Mock()
-    assert archive.analyze('path', callback=callback) == {}
+    assert archive.analyze(['path1', 'path2'], callback=callback) == {}
     assert not _analyze.called
     assert exts.tasks.schedule.called
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, '_analyze')
+def test_analyze_nonblocking_result(_analyze, exts):
+    _analyze.side_effect = lambda x, p: {x: 'meta'}
+    exts.tasks.schedule.side_effect = lambda x: x()
+    archive = mod.Archive()
+    callback = mock.Mock()
+    assert archive.analyze(['path1', 'path2'], callback=callback) == {}
+    callback.assert_called_once_with({'path1': 'meta', 'path2': 'meta'})
 
 
 @mock.patch.object(mod, 'exts')
