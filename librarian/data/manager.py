@@ -24,7 +24,7 @@ class InvalidQuery(Error):
 class Manager(object):
     """
     Provides a facade over various lower level APIs, such as the file system
-    abstraction layer, py:class:`Facet` and py:class:`DirInfo` facilities. The
+    abstraction layer and the Meta py:class:`Archive` facilities. The
     objects returned through it's API provide convenient access to all the
     queried data appropriately connected together.
     """
