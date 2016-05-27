@@ -22,7 +22,9 @@ from .wrapper import MetaWrapper
 class FSWriter(object):
     """
     Create or update a file system object while guaranteeing that all
-    non-existent ancestors of it will be created as well.
+    non-existent ancestors of it will be created as well. These operation are
+    performed on the database level only, no actual file system objects would
+    be created.
     """
     #: Database table name
     FS_TABLE = 'fs'
