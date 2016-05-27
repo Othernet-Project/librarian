@@ -7,15 +7,7 @@ Some rights reserved.
 This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
-
-
-class AttrDict(dict):
-
-    def __getattr__(self, name):
-        try:
-            return self[name]
-        except KeyError:
-            raise AttributeError(name)
+from ...utils.containers import AttrDict
 
 
 class LookupHelper(type):
