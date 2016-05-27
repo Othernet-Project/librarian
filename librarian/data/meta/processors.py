@@ -73,9 +73,9 @@ class Processor(object):
 
     Methods (optional):
 
-    - py:meth:`get_metadata`: returns a dict with obtained meta information
-    - py:class:`deprocess`: perform additional cleanup when the metadata
-    entry is being deleted
+    - py:meth:`~Processor.get_metadata`: returns a dict with obtained metadata
+    - py:meth:`~Processor.deprocess`: perform additional cleanup when metadata
+    is being deleted
     """
     _subclasses = ()
     name = None
@@ -181,6 +181,8 @@ class Processor(object):
         obtainable information will be put into py:attr:`~Processor.data`.
         In case py:attr:`~Processor.partial` is not set, metadata extraction
         will take place and will be put into py:attr:`~Processor.data`.
+        By overriding py:meth:`~Processor.get_path`, it is possible for a
+        processor to point the extracted metadata at a different path.
         A possible structure of py:attr:`~Processor.data` after full metadata
         extraction would look like:
 
