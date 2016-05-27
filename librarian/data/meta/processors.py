@@ -264,7 +264,8 @@ class Processor(object):
         for proc_cls in cls.subclasses():
             if proc_cls.name == content_type:
                 return proc_cls
-        raise RuntimeError("No processor found for the given content type.")
+        raise RuntimeError("No processor found for the given content "
+                           "type: {}".format(content_type))
 
     @classmethod
     def subclasses(cls, source=None):
