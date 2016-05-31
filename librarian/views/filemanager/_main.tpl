@@ -50,18 +50,20 @@ def get_views(facet_types):
         ## - Link to complete file list if there is search query
         ## - Link to complete file list if invalid path is requested
         ## - Link to parent directory if no search query and not at top-level
-        <a href="${i18n_url('filemanager:list', path=current.parent)}" class="views-tabs-strip-tab views-tabs-special">
         % if is_search:
-            <span class="file-list-icon icon icon-arrow-left"></span>
-            ## Translators, label for a link that takes the user to
-            ## main file/folder list from search results.
-            <span class="label">${_('Go to complete file list')}</span>
-        % else:
-            <span class="file-list-icon icon icon-folder-up"></span>
-            ## Translators, label for a link that takes the user up
-            ## one level in folder hierarchy.
-            <span class="label">${_('Go up one level')}</span>
-        </a>
+            <a href="${i18n_url('filemanager:list', path=current.parent)}" class="views-tabs-strip-tab views-tabs-special">
+                <span class="file-list-icon icon icon-arrow-left"></span>
+                ## Translators, label for a link that takes the user to
+                ## main file/folder list from search results.
+                <span class="label">${_('Go to complete file list')}</span>
+            </a>
+        % elif path != current.parent:
+            <a href="${i18n_url('filemanager:list', path=current.parent)}" class="views-tabs-strip-tab views-tabs-special">
+                <span class="file-list-icon icon icon-folder-up"></span>
+                ## Translators, label for a link that takes the user up
+                ## one level in folder hierarchy.
+                <span class="label">${_('Go up one level')}</span>
+            </a>
         % endif
         <% views = get_default_views() if is_search else get_views(current.meta.content_type_names) %>
         % for name, label in views:
