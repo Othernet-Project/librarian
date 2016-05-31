@@ -1,5 +1,5 @@
 <%inherit file="/narrow_base.tpl"/>
-<%namespace name='reset_password_form' file='_reset_password.tpl'/>
+<%namespace name='password_reset_form' file='_password_reset.tpl'/>
 
 <%block name="title">
 ## Translators, used as page title
@@ -12,5 +12,5 @@ ${_('Reset your password')}
 </div>
 
 <div class="full-page-form">
-    ${reset_password_form.body()}
+    ${password_reset_form.body()}
 </div>

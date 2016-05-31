@@ -2,6 +2,12 @@ from bottle import request
 
 from ..core.contrib.auth.options import Options
 from ..core.contrib.i18n.utils import set_current_locale
+from ..core.contrib.templates.decorators import template_helper
+
+
+@template_helper()
+def is_authenticated():
+    return not request.no_auth and request.user.is_authenticated
 
 
 @Options.collector('language')

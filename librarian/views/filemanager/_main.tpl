@@ -5,6 +5,10 @@
 
 _ = lambda x: x
 
+UNCONDITIONAL_VIEWS = (
+    'updates',
+)
+
 FACET_VIEW_MAPPINGS = (
     ('generic', _('Browse')),
     ('image', _('Gallery')),
@@ -30,7 +34,7 @@ def get_default_views():
 
 def get_views(facet_types):
     for name, label in FACET_VIEW_MAPPINGS:
-        if name in facet_types:
+        if name in facet_types or name in UNCONDITIONAL_VIEWS:
             yield (name, label)
 %>
 
@@ -46,30 +50,27 @@ def get_views(facet_types):
         ## - Link to complete file list if there is search query
         ## - Link to complete file list if invalid path is requested
         ## - Link to parent directory if no search query and not at top-level
-        % if is_search or not is_successful:
-            <a href="${i18n_url('files:path', path='')}" class="views-tabs-strip-tab views-tabs-special">
-                <span class="file-list-icon icon icon-arrow-left"></span>
-                ## Translators, label for a link that takes the user to
-                ## main file/folder list from search results.
-                <span class="label">${_('Go to complete file list')}</span>
-            </a>
-        % elif path != '.':
-            <% uppath = '' if up == '.' else up + '/'%>
-            <a href="${i18n_url('files:path', path=up)}" class="views-tabs-strip-tab views-tabs-special">
-                <span class="file-list-icon icon icon-folder-up"></span>
-                ## Translators, label for a link that takes the user up
-                ## one level in folder hierarchy.
-                <span class="label">${_('Go up one level')}</span>
-            </a>
+        <a href="${i18n_url('filemanager:list', path=current.parent)}" class="views-tabs-strip-tab views-tabs-special">
+        % if is_search:
+            <span class="file-list-icon icon icon-arrow-left"></span>
+            ## Translators, label for a link that takes the user to
+            ## main file/folder list from search results.
+            <span class="label">${_('Go to complete file list')}</span>
+        % else:
+            <span class="file-list-icon icon icon-folder-up"></span>
+            ## Translators, label for a link that takes the user up
+            ## one level in folder hierarchy.
+            <span class="label">${_('Go up one level')}</span>
+        </a>
         % endif
-        <% views = get_default_views() if is_search else get_views(facet_types) %>
+        <% views = get_default_views() if is_search else get_views(current.meta.content_type_names) %>
         % for name, label in views:
             <%
-            view_url = i18n_url('files:path', path=path, view=name)
-            current = name == view
+            view_url = i18n_url('filemanager:list', path=path, view=name)
+            is_current = name == view
             icon = FACET_ICON_MAPPING[name]
             %>
-            <a class="views-tabs-strip-tab ${'views-tabs-tab-current' if current else ''}" href="${view_url}" role="tab" data-view="${name}">
+            <a class="views-tabs-strip-tab ${'views-tabs-tab-current' if is_current else ''}" href="${view_url}" role="tab" data-view="${name}">
                 <span class="icon icon-${icon}"></span>
                 <span class="views-tabs-tab-label label">${_(label)}</span>
             </a>

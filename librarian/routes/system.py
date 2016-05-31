@@ -19,13 +19,15 @@ from ..core.contrib.templates.renderer import view
 
 def root_handler():
     route = request.app.config['app.default_route']
+    route_args = request.app.config.get('app.default_route_args', [])
+    route_args = dict(arg.split(':') for arg in route_args)
     if hasattr(request, 'default_route'):
         route = request.default_route
 
     if is_i18n_enabled():
-        url = i18n_url(route)
+        url = i18n_url(route, **route_args)
     else:
-        url = request.app.get_url(route)
+        url = request.app.get_url(route, *route_args)
 
     redirect(url)
 

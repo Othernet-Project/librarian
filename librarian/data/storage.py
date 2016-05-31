@@ -81,7 +81,7 @@ def mark_consolidate_done():
     exts.cache.delete(CONSOLIDATE_KEY)
 
 
-def get_consoildate_status():
+def get_consolidate_status():
     return exts.cache.get(CONSOLIDATE_KEY)
 
 

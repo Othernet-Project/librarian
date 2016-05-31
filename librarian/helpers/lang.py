@@ -26,7 +26,7 @@ def lang_name(code):
     return LOCALES[code]
 
 
-@template_helper
+@template_helper()
 def lang_name_safe(code):
     """ Return native language name for locale code """
     try:
@@ -35,17 +35,17 @@ def lang_name_safe(code):
         return _('unknown')
 
 
-@template_helper
+@template_helper()
 def is_rtl(code):
     return code in RTL_LANGS
 
 
-@template_helper
+@template_helper()
 def dir(code):
     return 'rtl' if code in RTL_LANGS else 'auto'
 
 
-@template_helper
+@template_helper()
 def i18n_attrs(lang):
     s = ''
     if lang:

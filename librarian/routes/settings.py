@@ -1,32 +1,26 @@
-from bottle import request
-from bottle_utils.ajax import roca_view
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
+from streamline import XHRPartialFormRoute
 
 from ..core.contrib.templates.renderer import template
+from ..core.exts import ext_container as exts
 
 
-@roca_view('settings/settings', 'settings/_settings_form',
-           template_func=template)
-def show_settings_form():
-    settings = request.app.supervisor.exts.settings
-    form_cls = settings.get_form()
-    return dict(form=form_cls(),
-                groups=settings.groups)
+class Settings(XHRPartialFormRoute):
+    path = '/settings/'
+    template_func = template
+    template_name = 'settings/settings'
+    partial_template_name = 'settings/_settings_form'
 
+    def get_form_factory(self):
+        return exts.settings.get_form()
 
-@roca_view('settings/settings', 'settings/_settings_form',
-           template_func=template)
-def save_settings():
-    settings = request.app.supervisor.exts.settings
-    form_cls = settings.get_form()
-    form = form_cls(request.forms)
-    if not form.is_valid():
-        return dict(form=form, groups=settings.groups)
+    def get_context(self):
+        context = super(Settings, self).get_context()
+        context.update(groups=exts.settings.groups)
+        return context
 
-    request.app.supervisor.exts.setup.append(form.processed_data)
-    request.app.supervisor.exts.events.publish('SETTINGS_SAVED',
-                                               form.processed_data)
-    return dict(form=form,
-                groups=settings.groups,
-                message=_('Settings saved.'),
-                redirect_url=i18n_url('dashboard:main'))
+    def form_valid(self):
+        exts.setup.append(self.form.processed_data)
+        exts.events.publish('SETTINGS_SAVED', self.form.processed_data)
+        return dict(message=_('Settings saved.'),
+                    redirect_url=i18n_url('dashboard:main'))

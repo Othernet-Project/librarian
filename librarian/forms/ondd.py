@@ -13,6 +13,17 @@ class ONDDForm(form.Form):
         'tuning_error': _("Tuner configuration could not be saved. "
                           "Please make sure that the tuner is connected.")
     }
+    preset = form.IntegerField(
+        _("Satellite"),
+        validators=[
+            form.Required(messages={
+                # Translators, message shown when user does not select a
+                # satellite preset nor 'Custom' option to enter custom data.
+                'required': _("Please select a satellite or select 'Custom'")
+            }),
+            form.InRangeValidator(min_value=0, max_value=len(PRESETS))
+        ]
+    )
     # TODO: Add support for DiSEqC azimuth value
     lnb = form.SelectField(
         _("LNB Type"),
@@ -74,6 +85,32 @@ class ONDDForm(form.Form):
             })
         ]
     )
+
+    @property
+    def preset_data(self):
+        index = self.processed_data.get('preset', 0)
+        try:
+            preset = self.PRESETS[index - 1]
+        except IndexError:
+            return {}
+        else:
+            (_, _, data) = preset
+            return data
+
+    def preprocess_frequency(self, value):
+        return self.preset_data.get('frequency', value)
+
+    def preprocess_symbolrate(self, value):
+        return self.preset_data.get('symbolrate', value)
+
+    def preprocess_delivery(self, value):
+        return self.preset_data.get('delivery', value)
+
+    def preprocess_modulation(self, value):
+        return self.preset_data.get('modulation', value)
+
+    def preprocess_polarization(self, value):
+        return self.preset_data.get('polarization', value)
 
     def validate(self):
         if not ondd.has_tuner():

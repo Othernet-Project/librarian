@@ -23,6 +23,9 @@ class MenuItem(object):
     #: Named route which menu item targets
     route = None
 
+    #: Optional route arguments
+    route_args = {}
+
     #: Menu item identifier
     name = None
 
@@ -63,7 +66,7 @@ class MenuItem(object):
         If you need to conditionally construct the path, or pass it additional
         parameters, overload this method in your subclass.
         """
-        return i18n_url(self.route)
+        return i18n_url(self.route, **self.route_args)
 
     @property
     def active_icon_class(self):

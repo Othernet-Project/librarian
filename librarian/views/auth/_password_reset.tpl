@@ -1,6 +1,6 @@
 <%namespace name="forms" file="/ui/forms.tpl"/>
 
-${h.form('post', action=i18n_url('auth:reset'))}
+${h.form('post', action=i18n_url('auth:password_reset'))}
     ${forms.form_errors([form.error]) if form.error else ''}
 
     ${csrf_tag()}

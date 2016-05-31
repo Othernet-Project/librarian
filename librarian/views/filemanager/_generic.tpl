@@ -2,10 +2,9 @@
 
 <% 
     is_super = request.user.is_superuser 
-    name = current.dirinfo.get(request.locale, 'name', 
-                               titlify(current.name))
-    cover = current.dirinfo.get(request.locale, 'cover', None)
-    desc = current.dirinfo.get(request.locale, 'description', None)
+    name = current.meta.get('name', request.locale, th.facets.titlify(current.name))
+    cover = current.meta.get('cover', request.locale)
+    desc = current.meta.get('description', request.locale)
     needs_intro = cover or desc
 %>
 
@@ -13,7 +12,7 @@
     <div class="file-list-current${' with-cover' if cover else ''}">
         % if cover:
             <div class="file-list-current-cover file-list-current-block">
-                <img src="${h.quoted_url('files:direct', path=current.other_path(cover))}">
+                <img src="${h.quoted_url('filemanager:direct', path=current.other_path(cover))}">
             </div>
         % endif
         <div class="file-list-current-info file-list-current-block">

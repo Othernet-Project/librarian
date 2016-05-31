@@ -47,7 +47,7 @@ def get_version(config):
         return '{0} / {1} {2}'.format(version, platform_name, platform_version)
 
 
-@template_helper
+@template_helper()
 @cached()
 def app_version():
     return get_version(request.app.config)

@@ -67,6 +67,7 @@ class Supervisor:
         self.app.supervisor = self
         self.exts = ext_container
         self.exts.events = PubSub()
+        self.exts.bottle_app = self.app
 
         # Load core configuration
         self._configure(root_dir)

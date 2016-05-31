@@ -4,9 +4,10 @@ links.py: Module to maintain linked content files
 
 from sqlize_pg.builder import Replace, Delete, Select
 
-from ..core.exts import ext_container as exts
+from ...core.exts import ext_container as exts
 
 
+DATABASE_NAME = 'meta'
 TABLE_NAME = 'links'
 
 REPLACE_QUERY = Replace(TABLE_NAME,
@@ -27,7 +28,7 @@ SELECT_SOURCE_QUERY = Select(sets=TABLE_NAME,
 
 
 def _get_db():
-    return exts.databases.facets
+    return exts.databases[DATABASE_NAME]
 
 
 def add_links(source, targets):
