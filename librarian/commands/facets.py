@@ -11,7 +11,7 @@ class RefillFacetsCommand(object):
         print('Begin facets refill.')
         config = supervisor.config
         archive = Archive(fsal=supervisor.exts.fsal,
-                          db=supervisor.exts.databases.facets,
+                          db=supervisor.exts.databases.meta,
                           tasks=supervisor.exts.tasks,
                           config=config)
         archive.clear_and_reload()

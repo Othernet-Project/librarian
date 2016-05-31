@@ -60,36 +60,15 @@ class Manager(object):
         """
         return self.RE_PATH_WITH_HIDDEN.match(fso.rel_path)
 
-    def _prepare_dirs(self, dirs, metas, show_hidden):
+    def _filter_fso_list(self, fso_list, metas, show_hidden, selected=None):
         """
-        Add meta entries to each file system object and filter those out
-        that should not be visible.
+        Iterate over the passed in fso objects, collect and return only those
+        that should be visible, while attaching the found metadata to each
+        object.
         """
-        # iterate over fso objects, collect and return only those that should
-        # be visible
-        filtered = []
-        for fso in dirs:
-            # ignore hidden entries if requested
-            if not show_hidden and self._is_hidden(fso):
-                continue
-            # assign extra data to fso objects
-            fso.meta = metas[fso.rel_path]
-            filtered.append(fso)
-        return filtered
-
-    def _prepare_files(self, files, metas, show_hidden, selected=None):
-        """
-        Add meta entries to each file system object and filter those out
-        which shouldn't be visible. If ``metas`` was not passed in,  or there
-        are paths missing from it, fetch the data in place. If ``content_type``
-        is specified, entries that do not belong to a specific content type
-        will be ignored.
-        """
-        # iterate over fso objects, collect and return only those that should
-        # be visible
         filtered = []
         found_selected = None
-        for fso in files:
+        for fso in fso_list:
             # ignore hidden entries if requested
             if not show_hidden and self._is_hidden(fso):
                 continue
@@ -102,17 +81,18 @@ class Manager(object):
                 continue
             else:
                 filtered.append(fso)
+                # if selected fso was requested and is matched, remember it
                 if selected and fso.name == selected:
                     found_selected = fso
-        found_selected = found_selected or (filtered[0] if filtered else None)
         return (filtered, found_selected)
 
     def _prepare_listing(self, path, dirs, files, **extra):
         """
-        Wrap the passed in ``dirs`` and ``files`` in their respective iterators
-        returning them in a dictionary with all the ``extra`` data included as
-        optional keyword arguments and the fetched facet types for the given
-        parent `path`.
+        Add meta entries to each file system object and filter those out
+        which shouldn't be visible. If ``metas`` was not passed in,  or there
+        are paths missing from it, fetch the data in place. If ``content_type``
+        is specified, entries that do not belong to a specific content type
+        will be ignored.
         """
         metas = extra.pop('metas', {})
         content_type = extra.pop('content_type', {})
@@ -129,11 +109,21 @@ class Manager(object):
         current.meta = self._archive.parent(path, refresh)
         show_hidden = extra.pop('show_hidden', False)
         selected = extra.pop('selected', None)
-        dirs = self._prepare_dirs(dirs, metas, show_hidden)
-        (files, selected) = self._prepare_files(files,
-                                                metas,
-                                                show_hidden,
-                                                selected)
+        (dirs, selected_dir) = self._filter_fso_list(dirs,
+                                                     metas,
+                                                     show_hidden,
+                                                     selected)
+        (files, selected_file) = self._filter_fso_list(files,
+                                                       metas,
+                                                       show_hidden,
+                                                       selected)
+        # pick a selection by giving precedence to files over dirs, and falling
+        # back to the first file or first directory if no selection was found
+        selected = selected_file or selected_dir
+        if not selected and files:
+            selected = files[0]
+        elif not selected and dirs:
+            selected = dirs[0]
         return dict(path=path,
                     dirs=dirs,
                     files=files,
@@ -150,12 +140,8 @@ class Manager(object):
             raise self.InvalidQuery(path)
         # post-process single entries the same way as with list or search
         metas = self._archive.get(path, content_type, partial=False)
-        if fso.is_dir():
-            (fso,) = self._prepare_dirs([fso], metas, True)
-        else:
-            (files, _) = self._prepare_files([fso], metas, True)
-            (fso,) = files
-        return fso
+        (filtered, _) = self._filter_fso_list([fso], metas, True)
+        return filtered[0]
 
     def list(self, path, content_type, show_hidden=False, selected=None):
         """
