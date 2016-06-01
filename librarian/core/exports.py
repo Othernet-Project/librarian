@@ -131,7 +131,7 @@ class ComponentError(Exception):
         super(ComponentError, self).__init__(msg)
 
     def __str__(self):
-        return 'Error in {}: {}'.format(self.component, self.msg)
+        return 'Error in {}: {}'.format(self.component, self.args[0])
 
 
 class Component(object):
