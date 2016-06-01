@@ -2,9 +2,11 @@
 
 class ReplCommand(object):
     name = 'repl'
-    option = '--repl'
-    action = 'store_true'
-    help = "Start interactive shell after servers start"
+    flags = '--repl'
+    kwargs = {
+        'action': 'store_true',
+        'help': "Start interactive shell after servers start"
+    }
 
     def repl_start(self, supervisor):
         from ..utils.repl import start_repl

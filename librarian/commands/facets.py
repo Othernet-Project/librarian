@@ -3,10 +3,12 @@ from ..data.facets.archive import FacetsArchive
 
 class RefillFacetsCommand(object):
     name = 'refill_facets'
-    option = '--refill-facets'
-    action = 'store_true'
-    help = "Empty facets archive and reconstruct it."
-    
+    flags = '--refill-facets'
+    kwargs = {
+        'action': 'store_true',
+        'help': "Empty facets archive and reconstruct it."
+    }
+
     def __call__(self, arg, supervisor):
         print('Begin facets refill.')
         config = supervisor.config
