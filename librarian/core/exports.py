@@ -172,7 +172,7 @@ class Component(object):
         Return a fully qualified name of an object whose name is specified as
         relative name in dotted notation.
         """
-        return fully_qualified_name(self.name, name)
+        return fully_qualified_name(self.pkg, name)
 
     def get_object(self, name):
         """
