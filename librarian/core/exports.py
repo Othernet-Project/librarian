@@ -17,7 +17,7 @@ from os.path import join
 from confloader import ConfDict
 from disentangler import Disentangler
 
-from .utils import (
+from .utils.collectors import (
     muter,
     to_list,
     hasmethod,
