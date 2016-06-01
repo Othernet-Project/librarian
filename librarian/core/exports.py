@@ -232,7 +232,7 @@ class Collector(object):
 
     def __init__(self, supervisor):
         self.supervisor = supervisor
-        self.events = self.supervisor.ext.events
+        self.events = self.supervisor.exts.events
 
     @property
     def type(self):
@@ -454,7 +454,7 @@ class Collectors(ListCollector):
             self.register(collector)
 
     def install_member(self, collector):
-        self.supervisor.exports.add_collector(collector)
+        self.supervisor.exts.exports.add_collector(collector)
 
 
 class Exports(object):
@@ -472,7 +472,6 @@ class Exports(object):
     def __init__(self, supervisor):
         self.member_groups = []
         self.supervisor = supervisor
-        self.supervisor.exports = self
         self.components = self.get_components()
         self.initialized = []
         self.collectors = muter(self.DEFAULT_COLLECTORS)
@@ -530,4 +529,4 @@ class Exports(object):
             # something wrong with the Collector implementation.
             collector.collectall(self.initialized)
             collector.install()
-        self.supervisor.ext.events.publish(EXPORTS_FINISHED)
+        self.supervisor.exts.events.publish(EXPORTS_FINISHED)
