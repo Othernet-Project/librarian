@@ -6,18 +6,12 @@ from bottle import Bottle
 from gevent import pywsgi, sleep
 from confloader import get_config_path, ConfDict
 
+from .exceptions import EarlyExit
 from .exports import Exports
 from .exts import ext_container
 from .logs import configure_logger
 from .pubsub import PubSub
 from .signal_handlers import on_interrupt
-
-
-class EarlyExit(Exception):
-
-    def __init__(self, message='', exit_code=0):
-        super(EarlyExit, self).__init__(message)
-        self.exit_code = exit_code
 
 
 class Supervisor:
