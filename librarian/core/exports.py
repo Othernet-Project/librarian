@@ -445,7 +445,7 @@ class Collectors(ListCollector):
             try:
                 collector = component.get_object(collector)
             except ImportError:
-                logging.exception('Could not import collector')
+                logging.exception('Could not import collector: %s', collector)
                 continue
             hasmeth = functools.partial(hasmethod, collector)
             if not all([hasmeth('install'), hasmeth('collectall')]):
