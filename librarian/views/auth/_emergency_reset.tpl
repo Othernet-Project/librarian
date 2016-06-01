@@ -2,7 +2,7 @@
 
 <%namespace name="note" file="_reset_token.tpl"/>
 
-${h.form('post', action=i18n_url('emergency:reset'))}
+${h.form('post', action=i18n_url('auth:emergency_reset'))}
     ${forms.form_errors([form.error]) if form.error else ''}
     ${csrf_tag()}
     ${forms.field(form.emergency_reset, 

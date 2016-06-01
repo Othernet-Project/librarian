@@ -20,7 +20,7 @@
         <div id="ondd-cache-status" class="ondd-cache-status" data-url="${i18n_url('ondd:cache_status')}">
             ${cache_status.body()}
         </div>
-        <div id="ondd-file-list" class="ondd-file-list" data-url="${i18n_url('ondd:files')}">
+        <div id="ondd-file-list" class="ondd-file-list" data-url="${i18n_url('ondd:file_list')}">
             ${file_list.body()}
         </div>
     </div>

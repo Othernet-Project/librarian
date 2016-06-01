@@ -8,103 +8,129 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-import urlparse
+import os
 
-from bottle import request, response
-from bottle_utils.ajax import roca_view
-from bottle_utils.html import set_qparam
-from bottle_utils.form import ValidationError
-from bottle_utils.csrf import csrf_protect, csrf_token
-from bottle_utils.i18n import i18n_path, i18n_url, lazy_gettext as _
+from bottle_utils.i18n import i18n_url, lazy_gettext as _
+from streamline import RouteBase, XHRPartialFormRoute
 
 from ..core.contrib.auth.users import User
-from ..core.contrib.templates.decorators import template_helper
 from ..core.contrib.templates.renderer import template
-from ..forms.auth import LoginForm, PasswordResetForm
+from ..core.exts import ext_container as exts
+from ..forms.auth import LoginForm, PasswordResetForm, EmergencyResetForm
 from ..helpers import auth  # NOQA
+from ..utils.route_mixins import CSRFRouteMixin, RedirectRouteMixin
 
 
-def http_redirect(path, code=303):
-    """Redirect to the specified path. Replacement for bottle's builtin
-    redirect function, because it loses newly set cookies.
+class Login(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
+    template_func = template
+    template_name = 'auth/login'
+    partial_template_name = 'auth/_login'
+    form_factory = LoginForm
 
-    :param path:  Redirect to specified path
-    """
-    response.set_header('Location', urlparse.urljoin(request.url, path))
-    response.status = code
-    response.body = ""
-    return response
-
-
-@template_helper
-def is_authenticated():
-    return not request.no_auth and request.user.is_authenticated
+    def form_valid(self):
+        self.request.user.options.process('language')
+        self.perform_redirect()
 
 
-@roca_view('auth/login', 'auth/_login', template_func=template)
-@csrf_token
-def show_login_form():
-    return dict(form=LoginForm(), next_path=request.params.get('next', '/'))
+class Logout(RedirectRouteMixin, RouteBase):
+
+    def get(self):
+        self.request.user.logout()
+        self.perform_redirect()
+        return ''
 
 
-@roca_view('auth/login', 'auth/_login', template_func=template)
-@csrf_protect
-def login():
-    next_path = request.params.get('next', '/')
+class PasswordReset(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
+    template_func = template
+    template_name = 'auth/password_reset'
+    partial_template_name = 'auth/_password_reset'
+    form_factory = PasswordResetForm
 
-    form = LoginForm(request.params)
-    if form.is_valid():
-        request.user.options.process('language')
-        return http_redirect(i18n_path(next_path))
+    def form_valid(self):
+        username = self.form.processed_data['username']
+        User.set_password(username, self.form.processed_data['password1'])
+        if self.request.user.is_authenticated:
+            self.request.user.logout()
+        login_url = self.add_next_parameter(i18n_url('auth:login'))
+        body = template('ui/feedback.tpl',
+                        # Translators, used as page title on feedback page
+                        page_title=_('New password was set'),
+                        # Translators, used as link label on feedback page in
+                        # "You will be taken to log-in page..."
+                        redirect_target=_('log-in page'),
+                        # Translators, shown after password has been changed
+                        message=_("Password for username '{username}' has "
+                                  "been set.").format(username=username),
+                        status='success',
+                        redirect_url=login_url)
+        return self.HTTPResponse(body=body)
 
-    return dict(next_path=next_path, form=form)
 
+class EmergencyReset(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
+    template_func = template
+    template_name = 'auth/emergency_reset'
+    partial_template_name = 'auth/_emergency_reset'
+    form_factory = EmergencyResetForm
+    exclude_plugins = ['sessions']
 
-def logout():
-    next_path = request.params.get('next', '/')
-    request.user.logout()
-    http_redirect(i18n_path(next_path))
+    def read_token_file(self):
+        token_path = self.config.get('emergency.file', '')
+        if not os.path.isfile(token_path):
+            # Not configured or missing emergency reset token file
+            return self.abort(404)
 
+        with open(token_path, 'r') as f:
+            token = f.read()
+            if not token.strip():
+                # Token file is empty, so treat it as missing token file
+                return self.abort(404)
 
-@roca_view('auth/reset_password', 'auth/_reset_password', template_func=template)
-@csrf_token
-def show_reset_form():
-    next_path = request.params.get('next', '/')
-    return dict(next_path=next_path, form=PasswordResetForm())
+        return token
 
+    def get_reset_token(self):
+        if self.request.method.lower() == 'get':
+            return User.generate_reset_token()
+        return self.request.params.get('reset_token')
 
-@roca_view('auth/reset_password', 'auth/_reset_password', template_func=template)
-@csrf_token
-def reset():
-    next_path = request.params.get('next', '/')
-    form = PasswordResetForm(request.params)
-    if request.user.is_authenticated:
-        # Set arbitrary non-empty value to prevent form error. We don't really
-        # care about this field otherwise.
-        form.reset_token.bind_value('not needed')
-    if not form.is_valid():
-        return dict(next_path=next_path, form=form)
-    if request.user.is_authenticated:
-        username = request.user.username
-    else:
-        user = User.from_reset_token(form.processed_data['reset_token'])
-        if not user:
-            form._error = ValidationError('invalid_token', {'value': ''})
-            return dict(next_path=next_path, form=form)
-        username = user.username
-    User.set_password(username, form.processed_data['password1'])
-    if request.user.is_authenticated:
-        request.user.logout()
-    login_url = i18n_url('auth:login_form') + set_qparam(
-        next=next_path).to_qs()
-    return template('ui/feedback.tpl',
-                    # Translators, used as page title on feedback page
-                    page_title=_('New password was set'),
-                    # Translators, used as link label on feedback page in "You
-                    # will be taken to log-in page..."
-                    redirect_target=_('log-in page'),
-                    # Translators, shown after password has been changed
-                    message=_("Password for username '{username}' has been "
-                              "set.").format(username=username),
-                    status='success',
-                    redirect_url=login_url)
+    def clear_auth_databases(self):
+        dbs = exts.databases
+        dbs.auth.execute(dbs.auth.Delete('users'))
+        dbs.sessions.execute(dbs.sessions.Delete('sessions'))
+
+    def recreate_user(self, username, password):
+        return User.create(username,
+                           password,
+                           is_superuser=True,
+                           db=exts.databases.auth,
+                           reset_token=self.get_reset_token())
+
+    def get_context(self):
+        ctx = super(EmergencyReset, self).get_context()
+        ctx.update(reset_token=self.get_reset_token())
+        return ctx
+
+    def get(self):
+        self.read_token_file()
+        # If user is already logged in, redirect to password reset page
+        # There's no need to do anything heavy-handed in this case.
+        if self.request.user.is_authenticated:
+            return self.redirect(i18n_url('auth:password_reset'))
+        return super(EmergencyReset, self).get()
+
+    def form_valid(self):
+        self.clear_auth_databases()
+        username = self.form.processed_data['username']
+        password = self.form.processed_data['password1']
+        self.recreate_user(username, password)
+        body = template('ui/feedback.tpl',
+                        # Translators, used as page title on feedback page
+                        page_title=_('Emergency reset successful'),
+                        # Translators, used as link label on feedback page in
+                        # "You will be taken to log-in page..."
+                        redirect_target=_('log-in page'),
+                        # Translators, shown after emergency reset
+                        message=_("You may now log in as "
+                                  "'{username}'.").format(username=username),
+                        status='success',
+                        redirect_url=i18n_url('auth:login'))
+        return self.HTTPResponse(body=body)

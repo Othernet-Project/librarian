@@ -9,302 +9,240 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 import os
-import functools
 
-from bottle import request, abort, static_file, redirect
-from bottle_utils.ajax import roca_view
-from bottle_utils.csrf import csrf_protect, csrf_token
-from bottle_utils.html import urlunquote, quoted_url
-from bottle_utils.i18n import lazy_gettext as _, i18n_url
+from bottle import static_file
+from bottle_utils.html import urlunquote
+from bottle_utils.i18n import lazy_gettext as _
+from streamline import RouteBase, XHRPartialRoute, TemplateFormRoute
 
-from ..core.contrib.cache.decorators import cached
-from ..core.contrib.templates.decorators import template_helper
-from ..core.contrib.templates.renderer import template, view
-from ..data.facets.utils import (get_facets,
-                                 get_facet_types,
-                                 is_facet_valid,
-                                 find_html_index)
+from ..core.contrib.templates.renderer import template
 from ..data.manager import Manager
-from ..helpers.filemanager import (title_name,
-                                   durify,
-                                   get_selected,
-                                   get_adjacent,
-                                   get_thumb_path,
-                                   find_root,
-                                   aspectify)
+from ..data.meta.contenttypes import ContentTypes
+from ..forms.filemanager import DeleteForm
+from ..helpers.filemanager import get_parent_url, find_root, get_thumb_path
 from ..presentation.paginator import Paginator
+from ..utils.route_mixins import CSRFRouteMixin
 
 
-FACET_MAPPING = {
-    'video': 'clips',
-    'image': 'gallery',
-    'audio': 'playlist',
-}
+class FileRouteMixin(object):
+    #: Key under which to look for the requested view in query parameters
+    VIEW_KEY = 'view'
+    #: Special purpose views
+    UPDATES_VIEW = 'updates'
+    #: List of allowed view names
+    VALID_VIEWS = ContentTypes.names() + [UPDATES_VIEW]
+    #: In case an invalid view is specified, or none, fallback to this view
+    DEFAULT_VIEW = ContentTypes.GENERIC
+
+    def __init__(self, *args, **kwargs):
+        super(FileRouteMixin, self).__init__(*args, **kwargs)
+        self.manager = Manager()
+
+    def has_requested_view(self):
+        return self.VIEW_KEY in self.request.params
+
+    def get_view(self):
+        view = self.request.params.get(self.VIEW_KEY, None)
+        # use default view if it wasn't specfied explicitly or it's not valid
+        if view not in self.VALID_VIEWS:
+            return self.DEFAULT_VIEW
+        return view
+
+    def unquoted(self, key):
+        try:
+            value = self.request.params[key]
+        except KeyError:
+            return None
+        else:
+            return urlunquote(value).strip()
 
 
-def get_parent_path(path):
-    return os.path.normpath(os.path.join(path, '..'))
+class List(FileRouteMixin, XHRPartialRoute):
+    template_name = 'filemanager/main'
+    partial_template_name = 'filemanager/_main'
+    template_func = template
+
+    QUERY_KEY = 'q'
+    HIDDEN_KEY = 'hidden'
+    SELECTED_KEY = 'selected'
+
+    def paginate(self, count):
+        # parse pagination params
+        page = Paginator.parse_page(self.request.params)
+        per_page = Paginator.parse_per_page(self.request.params)
+        return Paginator(count, page, per_page)
+
+    def search(self, path, show_hidden):
+        default_lang = self.request.user.options.get('content_language')
+        language = self.request.params.get('language', default_lang)
+        return self.manager.search(path,
+                                   show_hidden=show_hidden,
+                                   language=language)
+
+    def updates(self, path, show_hidden):
+        count = self.manager.descendants(path,
+                                         count=True,
+                                         show_hidden=show_hidden)
+        pager = self.paginate(count)
+        result = self.manager.descendants(path,
+                                          offset=pager.offset,
+                                          limit=pager.limit,
+                                          show_hidden=show_hidden)
+        result.update(pager=pager)
+        return result
+
+    def list(self, path, show_hidden, content_type, selected):
+        try:
+            return self.manager.list(path,
+                                     content_type=content_type,
+                                     selected=selected,
+                                     show_hidden=show_hidden)
+        except self.manager.InvalidQuery:
+            self.abort(404)
+
+    def promote_view(self, view, available_views):
+        # for explicitly chosen views, no auto-promition will be applied
+        if self.has_requested_view():
+            return view
+        # when no view was chosen, auto-promition is allowed
+        if ContentTypes.HTML in available_views:
+            return ContentTypes.HTML
+        # no better match, stick with original plan
+        return view
+
+    def get(self, path):
+        view = self.get_view()
+        path = self.unquoted(self.QUERY_KEY) or path or self.manager.get_root()
+        show_hidden = self.request.params.get(self.HIDDEN_KEY, 'no') == 'yes'
+        is_search = self.QUERY_KEY in self.request.params
+        selected = self.unquoted(self.SELECTED_KEY)
+        if is_search:
+            result = self.search(path, show_hidden)
+        elif view == self.UPDATES_VIEW:
+            result = self.updates(path, show_hidden)
+        else:
+            result = self.list(path, show_hidden, view, selected)
+        # perform view promotion, if available
+        available_views = result['current'].meta.content_type_names
+        view = self.promote_view(view, available_views)
+        result.update(is_search=is_search,
+                      view=view,
+                      selected_name=selected)
+        return result
 
 
-@template_helper
-def get_parent_url(path, view=None):
-    parent_path = get_parent_path(path)
-    vargs = {'view': view} if view else {}
-    return i18n_url('files:path', path=parent_path, **vargs)
+class Details(FileRouteMixin, XHRPartialRoute):
+    template_name = 'filemanager/info'
+    partial_template_name = 'filemanager/_info'
+    template_func = template
+
+    META_KEY = 'info'
+
+    def get(self, path):
+        path = path or self.manager.get_root()
+        view = self.get_view()
+        file_path = os.path.join(path, self.unquoted(self.META_KEY))
+        try:
+            fso = self.manager.get(file_path, content_type=view)
+        except self.manager.InvalidQuery:
+            # There is no such file
+            self.abort(404)
+        else:
+            return dict(entry=fso, view=view)
 
 
-def go_to_parent(path):
-    redirect(get_parent_url(path))
+class Direct(RouteBase):
+
+    def get(self, path):
+        try:
+            root = find_root(path)
+        except RuntimeError:
+            self.abort(404, _("File not found."))
+        else:
+            download = self.request.params.get('filename', False)
+            return static_file(path, root=root, download=download)
 
 
-def get_file_list(path=None, defaults=None):
-    defaults = defaults or {}
-    try:
-        query = urlunquote(request.params['q']).strip()
-    except KeyError:
-        query = path or '.'
-        is_search = False
-    else:
-        is_search = True
+class Delete(CSRFRouteMixin, TemplateFormRoute):
+    template_func = template
+    template_name = 'filemanager/remove_confirm'
+    form_factory = DeleteForm
 
-    show_hidden = request.params.get('hidden', 'no') == 'yes'
+    def __init__(self, *args, **kwargs):
+        super(Delete, self).__init__(*args, **kwargs)
+        self.manager = Manager()
 
-    manager = Manager(request.app.supervisor)
-    if is_search:
-        (dirs, files, meta, is_match) = manager.search(query, show_hidden)
-        relpath = '.' if not is_match else query
-        is_search = not is_match
-        success = True  # search is always successful
-    else:
-        (success, dirs, files, meta) = manager.list(query, show_hidden)
-        if not success:
-            abort(404)
-        relpath = query
-    current = manager.get(relpath)
-    up = get_parent_path(relpath)
-    data = defaults.copy()
-    data.update(dict(path=relpath,
-                     current=current,
-                     dirs=dirs,
-                     files=files,
-                     up=up,
-                     is_search=is_search,
-                     is_successful=success))
-    return data
+    def get_unbound_form(self):
+        form_factory = self.get_form_factory()
+        initial = dict(path=self.request.url_args['path'])
+        return form_factory(initial)
 
+    def get_context(self):
+        context = super(Delete, self).get_context()
+        path = self.request.url_args['path']
+        cancel_url = self.request.headers.get('Referer', get_parent_url(path))
+        context.update(path=path,
+                       item_name=os.path.basename(path),
+                       cancel_url=cancel_url)
+        return context
 
-@cached(prefix='descendants', timeout=300)
-def get_descendant_count(path, span):
-    manager = Manager(request.app.supervisor)
-    (_, count, _, _, _) = manager.list_descendants(path,
-                                                   count=True,
-                                                   span=span,
-                                                   entry_type=0)
-    return count
+    def already_removed(self, path):
+        # Translators, used as page title when a file's removal is
+        # retried, but it was already deleted before
+        page_title = _("File already removed")
+        # Translators, used as message when a file's removal is
+        # retried, but it was already deleted before
+        message = _("The specified file has already been removed.")
+        body = self.template_func('ui/feedback.tpl',
+                                  status='success',
+                                  page_title=page_title,
+                                  message=message,
+                                  redirect_url=get_parent_url(path),
+                                  redirect_target=_("Files"))
+        return self.HTTPResponse(body)
 
-
-def get_descendants(path):
-    span = request.app.config['changelog.span']
-    count = get_descendant_count(path, span)
-    manager = Manager(request.app.supervisor)
-    # parse pagination params
-    page = Paginator.parse_page(request.params)
-    per_page = Paginator.parse_per_page(request.params)
-    pager = Paginator(count, page, per_page)
-    (offset, limit) = pager.items
-    (_, _, _, files, _) = manager.list_descendants(path,
-                                                   offset=offset,
-                                                   limit=limit,
-                                                   order='-create_time',
-                                                   span=span,
-                                                   entry_type=0,
-                                                   show_hidden=False)
-    return dict(pager=pager, files=files)
-
-
-@roca_view('filemanager/main', 'filemanager/_main', template_func=template)
-def show_list_view(path, view, defaults):
-    selected = request.query.get('selected', None)
-    if selected:
-        selected = urlunquote(selected)
-    data = defaults.copy()
-    paths = [f.rel_path for f in data['files']]
-    data['facet_types'] = get_facet_types(paths)
-    is_search = data.get('is_search', False)
-    is_successful = data.get('is_successful', True)
-    original_view = data.get('original_view')
-    if not is_search and is_successful:
-        # If no view was specified and we have an index file, then
-        # we switch to the reader tab
-        if view == 'html' or not original_view:
-            data['index_file'] = find_html_index(paths, any_html=False)
-            view = 'html' if data['index_file'] else view
-            data['view'] = view
-
-        if view == 'updates':
-            data.update(get_descendants(path))
-        elif view != 'generic':
-            data['files'] = filter(
-                lambda f: is_facet_valid(f.rel_path, view), data['files'])
-    data['selected'] = selected
-    return data
-
-
-@roca_view('filemanager/info', 'filemanager/_info', template_func=template)
-def show_info_view(path, view, meta, defaults):
-    file_path = os.path.join(path, meta)
-    success, fso = request.app.supervisor.exts.fsal.get_fso(file_path)
-    if not success:
-        # There is no such file
-        abort(404)
-    try:
-        facets = list(get_facets((file_path,), facet_type=view))[0]
-    except IndexError:
-        abort(404)
-    fso.facets = facets
-    defaults['entry'] = fso
-    return defaults
-
-
-def show_view(path, view, defaults):
-    # Add all helpers
-    defaults.update(dict(titlify=title_name, durify=durify,
-                         get_selected=get_selected, get_adjacent=get_adjacent,
-                         aspectify=aspectify))
-
-    defaults.update(get_file_list(path))
-    meta = request.query.get('info')
-    if meta:
-        return show_info_view(path, view, urlunquote(meta), defaults)
-    return show_list_view(path, view, defaults)
-
-
-def direct_file(path):
-    path = urlunquote(path)
-    try:
-        root = find_root(path)
-    except RuntimeError:
-        abort(404, _("File not found."))
-
-    download = request.params.get('filename', False)
-    return static_file(path, root=root, download=download)
-
-
-def guard_already_removed(func):
-    @functools.wraps(func)
-    def wrapper(path, **kwargs):
-        manager = Manager(request.app.supervisor)
-        if not manager.exists(path):
-            # Translators, used as page title when a file's removal is
-            # retried, but it was already deleted before
-            title = _("File already removed")
-            # Translators, used as message when a file's removal is
-            # retried, but it was already deleted before
-            message = _("The specified file has already been removed.")
-            return template('feedback',
-                            status='success',
-                            page_title=title,
-                            message=message,
-                            redirect_url=get_parent_url(path),
-                            redirect_target=_("Files"))
-        return func(path=path, **kwargs)
-    return wrapper
-
-
-@csrf_token
-@guard_already_removed
-@view('filemanager/remove_confirm')
-def delete_path_confirm(path):
-    cancel_url = request.headers.get('Referer', get_parent_url(path))
-    return dict(item_name=os.path.basename(path), cancel_url=cancel_url)
-
-
-@csrf_protect
-@guard_already_removed
-@view('ui/feedback')
-def delete_path(path):
-    manager = Manager(request.app.supervisor)
-    (success, error) = manager.remove(path)
-    if success:
+    def removal_succeeded(self, path):
         # Translators, used as page title of successful file removal feedback
         page_title = _("File removed")
         # Translators, used as message of successful file removal feedback
         message = _("File successfully removed.")
-        return dict(status='success',
-                    page_title=page_title,
-                    message=message,
-                    redirect_url=get_parent_url(path),
-                    redirect_target=_("file list"))
+        body = self.template_func('ui/feedback.tpl',
+                                  status='success',
+                                  page_title=page_title,
+                                  message=message,
+                                  redirect_url=get_parent_url(path),
+                                  redirect_target=_("file list"))
+        return self.HTTPResponse(body)
 
-    # Translators, used as page title of unsuccessful file removal feedback
-    page_title = _("File not removed")
-    # Translators, used as message of unsuccessful file removal feedback
-    message = _("File could not be removed.")
-    return dict(status='error',
-                page_title=page_title,
-                message=message,
-                redirect_url=get_parent_url(path),
-                redirect_target=_("file list"))
+    def removal_failed(self, path):
+        # Translators, used as page title of unsuccessful file removal feedback
+        page_title = _("File not removed")
+        # Translators, used as message of unsuccessful file removal feedback
+        message = _("File could not be removed.")
+        body = self.template_func('ui/feedback.tpl',
+                                  status='error',
+                                  page_title=page_title,
+                                  message=message,
+                                  redirect_url=get_parent_url(path),
+                                  redirect_target=_("file list"))
+        return self.HTTPResponse(body)
 
+    def form_invalid(self, path):
+        return self.already_removed(path)
 
-def rename_path(path):
-    new_name = request.forms.get('name')
-    if not new_name:
-        go_to_parent(path)
-
-    manager = Manager(request.app.supervisor)
-    new_name = os.path.normpath(new_name)
-    new_path = os.path.join(os.path.dirname(path), new_name)
-    manager.move(path, new_path)
-    go_to_parent(path)
-
-
-def retrieve_thumb_url(path, defaults):
-    thumb_url = None
-    thumb_path = get_thumb_path(urlunquote(request.query.get('target')))
-    if thumb_path:
-        thumb_url = quoted_url('files:direct', path=thumb_path)
-    else:
-        facet_type = request.query.get('facet', 'generic')
-        try:
-            facet = defaults['facets'][facet_type]
-        except KeyError:
-            pass
-        else:
-            cover = facet.get('cover')
-            if cover:
-                cover_path = os.path.join(facet['path'], cover)
-                thumb_url = quoted_url('files:direct',
-                                       path=cover_path)
-
-    return dict(url=thumb_url)
+    def form_valid(self, path):
+        path = self.form.processed_data['path']
+        (success, error) = self.manager.remove(path)
+        if success:
+            return self.removal_succeeded(path)
+        return self.removal_failed(path)
 
 
-def init_file_action(path=None):
-    if path:
-        path = urlunquote(path)
-    else:
-        path = '.'
-    # Use 'generic' as default view
-    original_view = request.query.get('view')
-    view = original_view or 'generic'
-    defaults = dict(path=path,
-                    view=view,
-                    original_view=original_view)
-    action = request.query.get('action')
-    if action == 'delete':
-        return delete_path_confirm(path)
-    elif action == 'thumb':
-        return retrieve_thumb_url(path, defaults)
-    return show_view(path, view, defaults)
+class Thumb(RouteBase):
 
-
-def handle_file_action(path):
-    path = urlunquote(path)
-    action = request.forms.get('action')
-    if action == 'rename':
-        return rename_path(path)
-    elif action == 'delete':
-        return delete_path(path)
-    else:
-        abort(400)
+    def get(self, path):
+        url = None
+        thumb_path = get_thumb_path(path)
+        if thumb_path:
+            url = self.app.get_url('filemanager:direct', path=thumb_path)
+        return dict(url=url)

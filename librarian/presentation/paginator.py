@@ -55,6 +55,14 @@ class Paginator(object):
         return self.page > 1
 
     @property
+    def offset(self):
+        return (self.page - 1) * self.per_page
+
+    @property
+    def limit(self):
+        return self.per_page
+
+    @property
     def items(self):
         first = (self.page - 1) * self.per_page
         last = first + self.per_page

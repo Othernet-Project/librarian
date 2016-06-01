@@ -1,15 +1,15 @@
 <%inherit file="_playlist.tpl" />
 
 <div class='gallery-container' id="gallery-container">
-    % if 'image' not in facet_types:
+    % if 'image' not in current.meta.content_type_names:
         <span class="note">${_('No images to be shown.')}</span>
     % else:
         <%
-            selected_entry = get_selected(files, selected)
-            previous, next = get_adjacent(files, selected_entry)
-            previous_url = i18n_url('files:path', view=view, path=path, selected=previous.name)
-            next_url = i18n_url('files:path', view=view, path=path, selected=next.name)
-            direct_url = h.quoted_url('files:direct', path=selected_entry.rel_path)
+            selected_entry = selected
+            previous, next = th.facets.get_adjacent(files, selected_entry)
+            previous_url = i18n_url('filemanager:list', view=view, path=path, selected=previous.name)
+            next_url = i18n_url('filemanager:list', view=view, path=path, selected=next.name)
+            direct_url = h.quoted_url('filemanager:direct', path=selected_entry.rel_path)
         %>
         <div class="gallery-current-image" id="gallery-current-image">
             <img class="gallery-current-image-img" src='${direct_url}'/>
@@ -36,16 +36,13 @@
 </div>
 
 <%def name="sidebar()">
-    % if 'image' in facet_types:
-        <%
-            selected_entry = get_selected(files, selected)
-        %>
-        ${self.sidebar_playlist(files, selected_entry)}
+    % if 'image' in current.meta.content_type_names:
+        ${self.sidebar_playlist(files, selected)}
     % endif
 </%def>
 
 <%def name="sidebar_playlist_item_metadata(entry)">
-    <% metadata = entry.facets %>
+    <% metadata = entry.meta %>
     ${self.sidebar_playlist_item_metadata_desc(metadata)}
     ${self.sidebar_playlist_item_metadata_author(metadata)}
     ${self.sidebar_playlist_image_dimensions(metadata)}
@@ -58,14 +55,14 @@
         file = entry.name
         current = entry == selected_entry
         file_path = entry.rel_path
-        url = i18n_url('files:path', view=view, path=path, selected=file)
-        meta_url = i18n_url('files:path', view=view, path=path, info=file)
-        direct_url = h.quoted_url('files:direct', path=file_path)
-        thumb_url = h.quoted_url('files:direct', path=th.get_thumb_path(file_path))
-        metadata = entry.facets
-        title = metadata.get('title') or titlify(file)
-        img_width = metadata.get('width', 0)
-        img_height = metadata.get('height', 0)
+        url = i18n_url('filemanager:list', view=view, path=path, selected=file)
+        meta_url = i18n_url('filemanager:details', view=view, path=path, info=file)
+        direct_url = h.quoted_url('filemanager:direct', path=file_path)
+        thumb_url = h.quoted_url('filemanager:direct', path=th.facets.get_thumb_path(file_path))
+        metadata = entry.meta
+        title = metadata.get('title') or th.facets.titlify(file)
+        img_width = metadata.get('width', default=0)
+        img_height = metadata.get('height', default=0)
     %>
     <li
     class="gallery-list-item ${'gallery-list-item-current' if current else ''}"

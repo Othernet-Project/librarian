@@ -1,4 +1,5 @@
 <%inherit file="/narrow_base.tpl"/>
+<%namespace name="forms" file="/ui/forms.tpl"/>
 
 <%block name="title">
 ## Translators, used as page title of content removal confirmation page
@@ -23,6 +24,7 @@ ${_("Confirm removal")}
             </strong>
         </p>
         ${csrf_tag()}
+        ${forms.field(form.path)}
         <p class="buttons">
             ## Translators, used as title of content removal confirmation button
             <button name="action" value="delete" type="submit" class="primary delete">${_('Delete')}</button>

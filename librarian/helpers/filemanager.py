@@ -12,7 +12,7 @@ from bottle_utils.i18n import lazy_gettext as _, lazy_ngettext as ngettext
 
 from ..core.utils import utcnow
 from ..core.contrib.templates.decorators import template_helper
-from ..data.facets.processors import FacetProcessorBase
+from ..data.meta.processors import Processor
 
 
 ICON_MAPPINGS = {
@@ -45,16 +45,28 @@ EXTENSION_VIEW_MAPPING = {
 }
 
 
+@template_helper()
+def basename(path):
+    return os.path.basename(path)
+
+
+def get_parent_url(path):
+    parent_path = os.path.dirname(path)
+    return i18n_url('filemanager:list', path=parent_path)
+
+
 def get_file(files, path):
     return next(ifilter(lambda f: f.rel_path == path, files), None)
 
 
-def title_name(path):
+@template_helper(namespace='facets')
+def titlify(path):
     """ Return best-effort-titlified file path """
     name, _ = os.path.splitext(path)
     return name.replace('_', ' ').replace('-', ' ')
 
 
+@template_helper(namespace='facets')
 def durify(seconds):
     hours, seconds = divmod(seconds, 3600.0)
     if hours:
@@ -64,6 +76,7 @@ def durify(seconds):
     return '{}:{:02d}'.format(int(minutes), int(seconds))
 
 
+@template_helper(namespace='facets')
 def aspectify(w, h):
     if min(w, h) == 0:
         return '0'
@@ -71,12 +84,7 @@ def aspectify(w, h):
     return '{}:{}'.format(aspect.numerator, aspect.denominator)
 
 
-def get_selected(collection, selected=None):
-    selected_entries = list(filter(lambda f: f.name == selected,
-                                   collection))
-    return selected_entries[0] if selected_entries else collection[0]
-
-
+@template_helper(namespace='facets')
 def get_adjacent(collection, current, loop=True):
     current_idx = collection.index(current)
     if loop:
@@ -112,69 +120,69 @@ def thumb_created(cache, srcpath, thumbpath):
         cache.set(thumbpath, True)
 
 
-@template_helper
+@template_helper()
 def join(*args):
     return '/'.join(args)
 
 
-@template_helper
+@template_helper(namespace='facets')
 def get_folder_cover(fsobj):
-    cover = fsobj.dirinfo.get(request.locale, 'cover', None)
+    cover = fsobj.meta.get('cover', request.locale)
     if cover:
         # There is a cover image
         cover_path = fsobj.other_path(cover)
-        return quoted_url('files:direct', path=cover_path)
+        return quoted_url('filemanager:direct', path=cover_path)
     # Look for default cover
     default_cover = fsobj.other_path('cover.jpg')
     if not request.app.supervisor.exts.fsal.exists(default_cover):
         return
     fsobj.dirinfo.set('cover', 'cover.jpg')
     fsobj.dirinfo.store()
-    return quoted_url('files:direct', path=default_cover)
+    return quoted_url('filemanager:direct', path=default_cover)
 
 
-@template_helper
+@template_helper(namespace='facets')
 def get_folder_icon(fsobj):
     """
     Return folder icon or icon URL and a flag that tells us whether icon is a
     URL or not
     """
-    icon = fsobj.dirinfo.get(request.locale, 'icon', None)
+    icon = fsobj.meta.get('icon', request.locale)
     if icon:
         # Dirinfo has an icon, so let's use that
-        return quoted_url('files:direct', path=fsobj.other_path(icon)), True
-    # Since dirinfo does not have an icon for us, we'll see if there's an icon
-    # for a view
-    view = fsobj.dirinfo.get(request.locale, 'view', 'generic')
+        return quoted_url('filemanager:direct', path=fsobj.other_path(icon)), True
+    # Since metadata does not have an icon for us, we'll see if there's an
+    # icon for a view
+    view = fsobj.meta.get('view', request.locale, 'generic')
     return 'folder' if view == 'generic' else view, False
 
 
-@template_helper
+@template_helper(namespace='facets')
 def get_folder_view_url(fsobj):
     """
     Returns the url of the default view for specified folder.
     """
-    default_view = fsobj.dirinfo.get(request.locale, 'view', None)
+    default_view = fsobj.meta.get('view', request.locale)
     varg = {'view': default_view} if default_view else {}
-    return i18n_url('files:path', path=fsobj.rel_path, **varg)
+    return i18n_url('filemanager:list', path=fsobj.rel_path, **varg)
 
 
-@template_helper
+@template_helper(namespace='facets')
 def get_folder_name(fsobj):
     """
     Return folder title, name, or filesystem name, whichever is present in the
-    dirinfo.
+    metadata.
     """
-    name = fsobj.dirinfo.get(request.locale, 'name', None)
+    name = fsobj.meta.get('name', request.locale)
     return name or fsobj.name
 
 
-@template_helper
+@template_helper(namespace='facets')
 def get_file_icon(fsobj):
-    return ICON_MAPPINGS.get(fsobj.mimetype, 'file')
+    return ICON_MAPPINGS.get(fsobj.meta.mime_type, 'file')
 
 
-@template_helper
+@template_helper(namespace='facets')
 def get_view_path(fsobj):
     """
     Return a view URL with specified file preselected.
@@ -182,12 +190,15 @@ def get_view_path(fsobj):
     ext = fsobj.rel_path.rsplit('.', 1)[-1]
     view = EXTENSION_VIEW_MAPPING.get(ext)
     if not view:
-        return quoted_url('files:direct', path=fsobj.rel_path)
+        return quoted_url('filemanager:direct', path=fsobj.rel_path)
     parent = os.path.dirname(fsobj.rel_path) or '.'
-    return i18n_url('files:path', path=parent, view=view, selected=fsobj.name)
+    return i18n_url('filemanager:list',
+                    path=parent,
+                    view=view,
+                    selected=fsobj.name)
 
 
-@template_helper
+@template_helper(namespace='facets')
 def get_file_thumb(fsobj):
     """
     Return icon name or thumbnail URL and flag that tells us if returned value
@@ -206,10 +217,10 @@ def get_file_thumb(fsobj):
         # No thumb for this file, so let's try an icon
         return get_file_icon(fsobj), False
     else:
-        return quoted_url('files:direct', path=thumb), True
+        return quoted_url('filemanager:direct', path=thumb), True
 
 
-@template_helper
+@template_helper(namespace='facets')
 def get_thumb_path(srcpath, default=None):
     try:
         root = find_root(srcpath)
@@ -217,7 +228,7 @@ def get_thumb_path(srcpath, default=None):
         return srcpath
     else:
         config = request.app.config
-        processors = FacetProcessorBase.get_processors(srcpath)
+        processors = Processor.for_path(srcpath)
         try:
             proc_cls = filter(lambda p: p.name != 'generic', processors)[0]
         except IndexError:
@@ -249,7 +260,7 @@ def divround(a, b):
     return int(round(a / b))
 
 
-@template_helper
+@template_helper()
 def ago(dt, days_only=False):
     # It may appear as if there's quite a bit of redundancy here, but it all
     # boils down to the need to mark translations using ngettext. We can't be

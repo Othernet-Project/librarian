@@ -164,6 +164,7 @@ class User(BaseUser):
         user = cls.from_username(username, db=db)
         if user and cls.is_valid_password(password, user.password):
             request.user = user
+            request.session['user'] = user.to_json()
             request.session.rotate()
             return user
 

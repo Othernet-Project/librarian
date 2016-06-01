@@ -13,28 +13,28 @@
 </%def>
 
 <%def name="view_main()">
-    % if 'audio' not in facet_types:
+    % if 'audio' not in current.meta.content_type_names:
         <span class="note">${_('No music files to be played.')}</span>
     % else:
         <%
-        selected_entry = get_selected(files, selected)
-        thumb_path = th.get_thumb_path(selected_entry.rel_path, default=None)
+        selected_entry = selected
+        thumb_path = th.facets.get_thumb_path(selected_entry.rel_path, default=None)
         if thumb_path:
-            cover_url = h.quoted_url('files:direct', path=thumb_path)
+            cover_url = h.quoted_url('filemanager:direct', path=thumb_path)
             custom_cover = True
         else:
             cover_url = assets.url + 'img/albumart-placeholder.png'
             custom_cover = False
 
-        audio_url = h.quoted_url('files:direct', path=selected_entry.rel_path)
-        metadata = selected_entry.facets
+        audio_url = h.quoted_url('filemanager:direct', path=selected_entry.rel_path)
+        metadata = selected_entry.meta
         %>
         <div class="audio-controls" id="audio-controls">
             <div class="audio-controls-albumart" id="audio-controls-albumart">
                 <img src="${cover_url}" class="audio-controls-cover${' audio-controls-custom-cover' if custom_cover else ''}">
                 <div class="audio-controls-title" id="audio-controls-title">
-                    <h2>${metadata.get('title') or titlify(metadata.get('file'))}</h2>
-                    <p>${metadata.get('author', _('Unknown author'))}</p>
+                    <h2>${metadata.get('title') or th.facets.titlify(selected_entry.name)}</h2>
+                    <p>${metadata.get('author', default=_('Unknown author'))}</p>
                 </div>
             </div>
             ${audio_control(audio_url)}
@@ -48,16 +48,13 @@
 </%def>
 
 <%def name="sidebar()">
-    % if 'audio' in facet_types:
-        <%
-        selected_entry = get_selected(files, selected)
-        %>
-        ${self.sidebar_playlist(files, selected_entry)}
+    % if 'audio' in current.meta.content_type_names:
+        ${self.sidebar_playlist(files, selected)}
     % endif
 </%def>
 
 <%def name="sidebar_playlist_item_metadata(entry)">
-    <% metadata = entry.facets %>
+    <% metadata = entry.meta %>
     ${self.sidebar_playlist_item_metadata_desc(metadata)}
     ${self.sidebar_playlist_item_metadata_author(metadata)}
     ${self.sidebar_playlist_item_metadata_album(metadata)}
@@ -70,16 +67,16 @@
     file = entry.name
     current = entry.name == selected_entry.name
     file_path = entry.rel_path
-    url = i18n_url('files:path', view=view, path=path, selected=file)
-    meta_url = i18n_url('files:path', view=view, path=path, info=file)
-    direct_url = h.quoted_url('files:direct', path=file_path)
-    get_thumb_url = i18n_url('files:path', path=path, target=file_path, action='thumb', facet='audio')
-    metadata = entry.facets
-    title = metadata.get('title') or titlify(file)
+    url = i18n_url('filemanager:list', view=view, path=path, selected=file)
+    meta_url = i18n_url('filemanager:details', view=view, path=path, info=file)
+    direct_url = h.quoted_url('filemanager:direct', path=file_path)
+    get_thumb_url = i18n_url('filemanager:thumb', path=file_path, facet='audio')
+    metadata = entry.meta
+    title = metadata.get('title') or th.facets.titlify(file)
     author = metadata.get('author') or _('Unknown Artist')
-    duration = metadata.get('duration', 0)
-    hduration = durify(duration)
-    size = metadata.get('size', 0)
+    duration = metadata.get('duration', default=0)
+    hduration = th.facets.durify(duration)
+    size = metadata.get('size', default=0)
     %>
     <li
         class="playlist-list-item ${'playlist-list-item-current' if current else ''}"

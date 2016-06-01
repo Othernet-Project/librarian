@@ -1,4 +1,4 @@
-from ..data.facets.archive import FacetsArchive
+from ..data.meta.archive import Archive
 
 
 class RefillFacetsCommand(object):
@@ -12,9 +12,10 @@ class RefillFacetsCommand(object):
     def __call__(self, arg, supervisor):
         print('Begin facets refill.')
         config = supervisor.config
-        archive = FacetsArchive(supervisor.exts.fsal,
-                                supervisor.exts.databases.facets,
-                                config=config)
+        archive = Archive(fsal=supervisor.exts.fsal,
+                          db=supervisor.exts.databases.meta,
+                          tasks=supervisor.exts.tasks,
+                          config=config)
         archive.clear_and_reload()
         print('Facet refill finished.')
         raise supervisor.EarlyExit()

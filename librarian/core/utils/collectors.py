@@ -5,9 +5,6 @@ import importlib
 
 from collections import deque
 
-# FIXME: remove these imports
-from .contrib.databases.utils import *  # NOQA
-
 
 # Replacement patterns for path cleanup
 DOUBLEDOT = (

@@ -80,6 +80,7 @@ class Supervisor:
     def __init__(self, root_dir):
         self.server = None
         self.app = self.wsgi = Bottle()
+        self.exts.bottle_app = self.app
         self.app.supervisor = self
         self.exts = ext_container
         self.configure(root_dir)

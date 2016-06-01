@@ -23,7 +23,7 @@ COMPARE_KEYS = ('frequency', 'symbolrate', 'polarization', 'delivery',
                 'modulation')
 
 
-@template_helper
+@template_helper()
 def get_bitrate(status):
     for stream in status.get('streams', []):
         return stream['bitrate']

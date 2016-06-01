@@ -5,7 +5,7 @@ try:
 except ImportError:
     import mock
 
-from librarian.core import utils as mod
+from librarian.core.utils import collectors as mod
 
 
 MOD = mod.__name__
