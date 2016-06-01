@@ -528,6 +528,6 @@ class Exports(object):
             # It is assumed here that any exceptions will not bubble up to this
             # level. If an exception somehow manages to bubble up here, there's
             # something wrong with the Collector implementation.
-            collector.collectall(self.components)
+            collector.collectall(self.initialized)
             collector.install()
         self.supervisor.ext.events.publish(EXPORTS_FINISHED)
