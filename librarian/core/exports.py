@@ -523,7 +523,8 @@ class Exports(object):
         been processed.
         """
         self.collectors.reset()
-        for collector in self.collectors():
+        for collector_cls in self.collectors:
+            collector = collector_cls(self.supervisor)
             # It is assumed here that any exceptions will not bubble up to this
             # level. If an exception somehow manages to bubble up here, there's
             # something wrong with the Collector implementation.
