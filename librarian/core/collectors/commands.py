@@ -25,12 +25,12 @@ class Commands(ObjectCollectorMixin, ListCollector):
             return
         self.handlers[name] = handler
         # Build add_argument() args.
-        kwargs = handler.kwargs.copy()
+        kwargs = getattr(handler, 'kwargs', {}).copy()
         kwargs['dest'] = name
         # Ensure flags are positional arguments and are a list
         args = to_list(handler.flags)
         self.parser.add_argument(*args, **kwargs),
-        for arg in handler.extra_args:
+        for arg in getattr(handler, 'extra_arguments', []):
             arg = arg.copy()
             # Flags should be positional args, so we have to remove from the
             # kwargs and process them a bit.
