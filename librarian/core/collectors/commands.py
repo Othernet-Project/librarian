@@ -1,7 +1,8 @@
+import inspect
 import logging
 import argparse
 
-from ..utils import hasmethod
+from ..utils.collectors import hasmethod
 from ..exports import ObjectCollectorMixin, ListCollector, to_list
 
 
@@ -41,12 +42,18 @@ class Commands(ObjectCollectorMixin, ListCollector):
     def post_install(self):
         args = self.parser.parse_args()
         arglist = list(vars(args).keys())
-        for name, handler in self.handlers:
-            if name not in arglist:
+        for name, handler in self.handlers.items():
+            # Some command handlers have no actual function to run, but may
+            # serve only for collecting some parameters
+            if name not in arglist or not handler:
                 continue
-            if hasmethod(handler, 'run'):
+            is_class = inspect.isclass(handler)
+            if is_class and hasmethod(handler, 'run'):
                 # This is probably a class-based handler
                 handler = handler()
                 handler.run(args)
+            elif is_class:
+                # This is a class based handler without a `run` method
+                continue
             else:
                 handler(args)
