@@ -108,7 +108,9 @@ class Supervisor:
         default_path = os.path.join(root_dir, self.DEFAULT_CONFIG_FILENAME)
         self.config_path = get_config_path(default=default_path)
         self.config = self.app.config = self.load_config(self.config_path)
-        self.config['root'] = root_dir
+        self.config.update(config_path=self.config_path,
+                           root=root_dir,
+                           root_pkg=self.ROOT_PKG)
         self.exts.config = self.config
 
     def configure_logger(self):
