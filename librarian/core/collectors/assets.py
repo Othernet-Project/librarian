@@ -1,7 +1,6 @@
 from os.path import join
 
-from .contrib.assets import Assets as AssetsMgr
-
+from ..contrib.assets import Assets as AssetsMgr
 from ..exports import ListCollector, to_list
 
 
