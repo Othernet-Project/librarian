@@ -9,7 +9,7 @@ class RefillFacetsCommand(object):
         'help': "Empty facets archive and reconstruct it."
     }
 
-    def __call__(self, arg, supervisor):
+    def run(self, arg, supervisor):
         print('Begin facets refill.')
         config = supervisor.config
         archive = Archive(fsal=supervisor.exts.fsal,

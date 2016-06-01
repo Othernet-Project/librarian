@@ -17,6 +17,6 @@ class ReplCommand(object):
     def repl_shutdown(self, supervisor):
         self.repl_thread.join()
 
-    def __call__(self, arg, supervisor):
+    def run(self, arg, supervisor):
         supervisor.events.subscribe(supervisor.POST_START, self.repl_start)
         supervisor.events.subscribe(supervisor.SHUTDOWN, self.repl_shutdown)
