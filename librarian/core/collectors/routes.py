@@ -8,4 +8,5 @@ class Routes(ObjectCollectorMixin, DependencyCollector):
     export_key = 'routes'
 
     def install_member(self, route):
-        route.route(app=self.supervisor.app)
+        kwargs = getattr(route, 'kwargs', {})
+        route.route(app=self.supervisor.app, **kwargs)
