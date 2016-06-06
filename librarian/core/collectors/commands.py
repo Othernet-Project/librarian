@@ -45,7 +45,7 @@ class Commands(ObjectCollectorMixin, ListCollector):
         for name, handler in self.handlers.items():
             # Some command handlers have no actual function to run, but may
             # serve only for collecting some parameters
-            if name not in arglist or not handler:
+            if not getattr(arglist, name, None) or not handler:
                 continue
             is_class = inspect.isclass(handler)
             if is_class and hasmethod(handler, 'run'):
