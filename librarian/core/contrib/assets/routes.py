@@ -2,6 +2,7 @@ import os
 
 from bottle import request, static_file, HTTPError
 from bottle_utils.lazy import caching_lazy
+from streamline import RouteBase
 
 
 @caching_lazy
@@ -18,6 +19,11 @@ def static_sources():
     return [static_root()] + list(paths)
 
 
+@caching_lazy
+def favicon_path():
+    return request.app.config.get('favicon.path', 'favicon.ico')
+
+
 def send_static(path):
     for static_root in static_sources():
         res = static_file(path, static_root)
@@ -27,22 +33,21 @@ def send_static(path):
     return res
 
 
-@caching_lazy
-def favicon_path():
-    return request.app.config.get('favicon.path', 'favicon.ico')
+class StaticRoute(RouteBase):
+    name = 'sys:static'
+    path = '/static/<path:path>'
+    exclude_plugins = ['session_plugin', 'user_plugin', 'setup_plugin']
+    kwargs = dict(no_i18n=True, unlocked=True)
+
+    def get(self, path):
+        return send_static(path)
 
 
-def send_favicon():
-    return send_static(favicon_path())
+class FaviconRoute(RouteBase):
+    name = 'sys:favicon'
+    path = '/favicon.ico'
+    exclude_plugins = ['session_plugin', 'user_plugin', 'setup_plugin']
+    kwargs = dict(no_i18n=True, unlocked=True)
 
-
-def routes(config):
-    skip_plugins = config['app.skip_plugins']
-    return (
-        ('sys:static', send_static,
-         'GET', '/static/<path:path>',
-         dict(no_i18n=True, unlocked=True, skip=skip_plugins)),
-        ('sys:favicon', send_favicon,
-         'GET', '/favicon.ico',
-         dict(no_i18n=True, unlocked=True, skip=skip_plugins)),
-    )
+    def get(self, path):
+        return send_static(favicon_path())
