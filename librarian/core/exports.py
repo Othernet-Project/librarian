@@ -114,10 +114,8 @@ def get_object_name(obj):
     (e.g., if object 'foo' is found in 'bar.baz' module, then the name would be
     'baz.bar.foo').
     """
-    if hasattr(obj, 'name'):
-        return obj.name
-    else:
-        return '{}.{}'.format(obj.__module__, obj.__name__)
+    return getattr(obj, 'name', None) or '{}.{}'.format(obj.__module__,
+                                                        obj.__name__)
 
 
 class ComponentError(Exception):
