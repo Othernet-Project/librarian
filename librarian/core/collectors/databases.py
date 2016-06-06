@@ -3,6 +3,7 @@ import logging
 from squery_pg.squery_pg import DatabaseContainer, Database, migrate
 
 from ..exports import ListCollector, to_list
+from ..exts import ext_container as exts
 
 
 class Databases(ListCollector):
@@ -14,7 +15,6 @@ class Databases(ListCollector):
 
     def __init__(self, supervisor):
         super(Databases, self).__init__(supervisor)
-        exts = supervisor.exts
         self.databases = exts.databases = DatabaseContainer({})
         self.host = exts.config['database.host']
         self.port = exts.config['database.port']
@@ -46,6 +46,6 @@ class Databases(ListCollector):
         dbconn.package_name = component_name
         self.databases[dbname] = dbconn
         migrate(dbconn, migrations_pkg, self.supervisor.config)
-        self.event.publish(self.DATABASE_READY, name=dbname, db=dbconn)
+        exts.events.publish(self.DATABASE_READY, name=dbname, db=dbconn)
         logging.info('Database {} installed for {}'.format(
             dbname, component_name))
