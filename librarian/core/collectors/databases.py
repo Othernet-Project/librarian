@@ -26,7 +26,7 @@ class Databases(ListCollector):
         """
         Get a connection object for a given database.
         """
-        return Database.connect(dataase=dbname, host=self.host, port=self.port,
+        return Database.connect(database=dbname, host=self.host, port=self.port,
                                 user=self.user, password=self.password,
                                 debug=self.debug)
 
