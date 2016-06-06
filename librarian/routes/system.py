@@ -10,26 +10,40 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 
 import logging
 
-from bottle import request, redirect, abort
+from bottle import request
 from bottle_utils.i18n import i18n_url
+from streamline import RouteBase
 
 from ..core.contrib.i18n.utils import is_i18n_enabled
 from ..core.contrib.templates.renderer import view
 
 
-def root_handler():
-    route = request.app.config['app.default_route']
-    route_args = request.app.config.get('app.default_route_args', [])
-    route_args = dict(arg.split(':') for arg in route_args)
-    if hasattr(request, 'default_route'):
-        route = request.default_route
+class RootRoute(RouteBase):
+    path = '/'
 
-    if is_i18n_enabled():
-        url = i18n_url(route, **route_args)
-    else:
-        url = request.app.get_url(route, *route_args)
+    def get(self):
+        route = self.config['app.default_route']
+        route_args = self.config.get('app.default_route_args', [])
+        route_args = dict(arg.split(':') for arg in route_args)
+        if hasattr(self.request, 'default_route'):
+            route = self.request.default_route
 
-    redirect(url)
+        if is_i18n_enabled():
+            url = i18n_url(route, **route_args)
+        else:
+            url = self.request.app.get_url(route, *route_args)
+
+        self.redirect(url)
+
+
+class All404Route(RouteBase):
+    path = '/<path:path>'
+
+    def get(self, path):
+        self.abort(404)
+
+    def post(self, path):
+        self.abort(404)
 
 
 @view('errors/403')
@@ -56,7 +70,3 @@ def error_500(exc):
 @view('errors/503')
 def error_503(exc):
     return dict()
-
-
-def all_404(path):
-    abort(404)
