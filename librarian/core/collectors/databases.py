@@ -26,8 +26,11 @@ class Databases(ListCollector):
         """
         Get a connection object for a given database.
         """
-        return Database.connect(database=dbname, host=self.host, port=self.port,
-                                user=self.user, password=self.password,
+        return Database.connect(database=dbname,
+                                host=self.host,
+                                port=self.port,
+                                user=self.user,
+                                password=self.password,
                                 debug=self.debug)
 
     def collect(self, component):
