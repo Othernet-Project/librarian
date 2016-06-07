@@ -15,15 +15,15 @@ import os
 from bottle import request
 
 from ..core.contrib.templates.renderer import template
+from ..core.exts import ext_container as exts
 from ..decorators.setup import AUTO_CONFIGURATORS
 from ..presentation.wizard import Wizard
 
 
 class Setup(object):
 
-    def __init__(self, supervisor):
-        self._supervisor = supervisor
-        self._setup_file = os.path.abspath(supervisor.config['setup.file'])
+    def __init__(self):
+        self._setup_file = os.path.abspath(exts.config['setup.file'])
         self._data = dict()
 
         self._load()
@@ -53,7 +53,7 @@ class Setup(object):
         self._update_config()
 
     def _update_config(self):
-        self._supervisor.config.update(self._data)
+        exts.config.update(self._data)
 
     def _load(self):
         """Attempt loading the setup data file."""
@@ -91,10 +91,8 @@ class SetupWizard(Wizard):
         for step, step_result in data.items():
             setup_data.update(step_result)
 
-        setup = request.app.supervisor.exts.setup
-        setup.append(setup_data)
-        result = template(self.finished_template, setup=setup)
-        return result
+        exts.setup.append(setup_data)
+        return template(self.finished_template, setup=exts.setup)
 
     def exit(self):
         # called to clear the state object which stores the steps that were
