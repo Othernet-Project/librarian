@@ -38,6 +38,7 @@ class RootRoute(RouteBase):
 
 class All404Route(RouteBase):
     path = '/<path:path>'
+    depends_on = 'sys:static'
 
     def get(self, path):
         self.abort(404)
