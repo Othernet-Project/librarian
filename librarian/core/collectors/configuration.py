@@ -1,4 +1,5 @@
 from ..exports import ListCollector
+from ..exts import ext_container as exts
 
 
 class Configuration(ListCollector):
@@ -13,4 +14,4 @@ class Configuration(ListCollector):
             if k.startswith('exports.'):
                 # Omit exports from master configuration
                 continue
-            self.supervisor.config[k] = v
+            exts.config.setdefault(k, v)
