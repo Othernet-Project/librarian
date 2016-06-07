@@ -13,7 +13,6 @@ from ...exts import ext_container as exts
 
 BLACKLIST = ['ht']
 CHARSET_RE = re.compile(r'("Content-Type: text/plain; charset=).+(\\n")')
-SOURCE_DIRS = set()
 
 
 def construct_args(localedir, domain, address=None, comment=None):
@@ -119,10 +118,6 @@ def process_dir(path, extension, args, template_path):
         print('\n'.join(["Processed '%s'" % p for p in processed]))
 
 
-def add_message_source_path(path):
-    SOURCE_DIRS.add(path)
-
-
 def collect_messages():
     path = exts.config['root']
     project_package_name = exts.config['i18n.project_package_name']
@@ -157,7 +152,8 @@ def collect_messages():
     if os.path.exists(template_path):
         os.unlink(template_path)
 
-    for pkg_root in [path] + list(SOURCE_DIRS):
+    source_dirs = [c.pkgdir for c in exts.exports.initialized]
+    for pkg_root in [path] + source_dirs:
         for file_ext in file_extensions:
             process_dir(pkg_root, file_ext, list(xgettext_args), template_path)
 
