@@ -19,7 +19,7 @@
 </%def>
 
 <%def name="file_download(path)">
-    <a href="${url('filemanager:direct', path=h.urlquote(path))}" class="file-list-control">
+    <a href="${h.quoted_url('filemanager:direct', path=path, dl=1)}" class="file-list-control">
         <span class="icon icon-download-outline"></span>
         <span class="label">${_('Download')}</span>
     </a>

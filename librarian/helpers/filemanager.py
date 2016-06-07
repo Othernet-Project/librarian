@@ -187,7 +187,7 @@ def get_view_path(fsobj):
     """
     Return a view URL with specified file preselected.
     """
-    ext = fsobj.rel_path.rsplit('.', 1)[-1]
+    ext = fsobj.rel_path.rsplit('.', 1)[-1].lower()
     view = EXTENSION_VIEW_MAPPING.get(ext)
     if not view:
         return quoted_url('filemanager:direct', path=fsobj.rel_path)
@@ -204,7 +204,7 @@ def get_file_thumb(fsobj):
     Return icon name or thumbnail URL and flag that tells us if returned value
     is an URL.
     """
-    ext = fsobj.rel_path.rsplit('.', 1)[-1]
+    ext = fsobj.rel_path.rsplit('.', 1)[-1].lower()
     thumb = None
     if EXTENSION_VIEW_MAPPING.get(ext) == 'image':
         try:

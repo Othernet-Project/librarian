@@ -1,9 +1,7 @@
 <%namespace name="current_view" file="_${context['view']}.tpl"/>
 
-<%!
+<%
 # Mappings between facets and view urls
-
-_ = lambda x: x
 
 UNCONDITIONAL_VIEWS = (
     'updates',
