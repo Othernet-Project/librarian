@@ -2,6 +2,7 @@ from os.path import join
 
 from ..contrib.assets import Assets as AssetsMgr
 from ..exports import ListCollector, to_list
+from ..exts import ext_container as exts
 
 
 class Assets(ListCollector):
@@ -15,8 +16,9 @@ class Assets(ListCollector):
         self.url = self.supervisor.config['assets.url']
         assets_dir = self.supervisor.config['assets.directory']
         self.output = join(self.root, assets_dir)
-        self.assets = AssetsMgr(directory=self.output, url=self.url,
-                                debug=self.debug)
+        exts.assets = self.assets = AssetsMgr(directory=self.output,
+                                              url=self.url,
+                                              debug=self.debug)
         self.bundles = {'js': {}, 'css': {}}
         self.sources = []
 
