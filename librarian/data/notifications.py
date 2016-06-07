@@ -76,7 +76,7 @@ class Notification(object):
         self.groupable = groupable
         self._read_at = read_at
         self.username = username
-        self.db = db or request.db.notifications
+        self.db = db or exts.databases.notifications
 
     @property
     def verbose_priority(self):
@@ -257,7 +257,7 @@ class NotificationTarget(object):
         self.target = target
         self.target_type = target_type
         self.notification_id = notification_id
-        self.db = db or request.db.notifications
+        self.db = db or exts.databases.notifications
 
     @classmethod
     def create(cls, notification_id, target, target_type='group', db=None):
