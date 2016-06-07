@@ -43,7 +43,7 @@ class Assets(ListCollector):
         self.sources.append(dir)
         bundle_dict = self.bundles[bundle_type]
         for target, sources in (self.parse_bundle(b) for b in bundles):
-            bundle_dict.set_default(target, [])
+            bundle_dict.setdefault(target, [])
             bundle_dict[target].extend(sources)
 
     def install_member(self, assets):
