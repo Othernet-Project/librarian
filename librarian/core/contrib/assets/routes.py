@@ -4,6 +4,8 @@ from bottle import request, static_file, HTTPError
 from bottle_utils.lazy import caching_lazy
 from streamline import RouteBase
 
+from ...exts import ext_container as exts
+
 
 @caching_lazy
 def static_root():
@@ -14,9 +16,7 @@ def static_root():
 
 @caching_lazy
 def static_sources():
-    asset_sources = request.app.config.get('assets.sources', {})
-    paths, _ = zip(*asset_sources.values())
-    return [static_root()] + list(paths)
+    return [static_root()]
 
 
 @caching_lazy
@@ -49,5 +49,5 @@ class FaviconRoute(RouteBase):
     exclude_plugins = ['session_plugin', 'user_plugin', 'setup_plugin']
     kwargs = dict(no_i18n=True, unlocked=True)
 
-    def get(self, path):
+    def get(self):
         return send_static(favicon_path())
