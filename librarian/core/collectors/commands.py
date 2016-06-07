@@ -3,6 +3,7 @@ import logging
 import argparse
 
 from ..utils.collectors import hasmethod
+from ..exts import ext_container as exts
 from ..exports import ObjectCollectorMixin, ListCollector, to_list
 
 
@@ -41,6 +42,7 @@ class Commands(ObjectCollectorMixin, ListCollector):
 
     def post_install(self):
         args = self.parser.parse_args()
+        exts.config['args'] = args
         arglist = list(vars(args).keys())
         for name, handler in self.handlers.items():
             # Some command handlers have no actual function to run, but may
