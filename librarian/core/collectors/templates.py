@@ -2,7 +2,7 @@ import os
 
 import bottle
 
-from ..exports import ListCollector, to_list
+from ..exports import ListCollector
 
 
 class Templates(ListCollector):
