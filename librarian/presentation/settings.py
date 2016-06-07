@@ -86,3 +86,8 @@ class SettingsManager(object):
                 attrs[name] = field_cls(**kwargs)
 
         return type('SettingsForm', (form.Form,), attrs)
+
+    def register(self, field_cls):
+        field = field_cls()
+        self.add_group(field.group, field.verbose_group)
+        self.add_field(**field.rules)
