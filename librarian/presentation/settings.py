@@ -1,5 +1,7 @@
 from bottle_utils import form
 
+from ..core.exts import ext_container as exts
+
 
 class Group(dict):
 
@@ -24,8 +26,7 @@ class SettingsManager(object):
         _date_type: form.DateField,
     }
 
-    def __init__(self, supervisor):
-        self._supervisor = supervisor
+    def __init__(self):
         self._groups = dict()
         self._settings = dict()
 
@@ -69,7 +70,7 @@ class SettingsManager(object):
                 field_cls = self._field_types[options['value_type']]
                 validators = ([], [form.Required()])[options['required']]
                 # actual value from config overrides default value
-                value = self._supervisor.config.get(name, options['default'])
+                value = exts.config.get(name, options['default'])
                 kwargs = dict(label=options['label'],
                               help_text=options['help_text'],
                               validators=validators)
