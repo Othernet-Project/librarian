@@ -16,6 +16,7 @@ import uuid
 from bottle import request
 from bottle_utils.common import basestring, unicode
 
+from ..core.exts import ext_container as exts
 from ..core.utils import utcnow
 
 
