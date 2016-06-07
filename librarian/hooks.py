@@ -9,7 +9,6 @@ from ondd_ipc.ipc import ONDDClient
 from .core.exports import hook
 from .core.exts import ext_container as exts
 from .data.notifications import Notification
-from .data.setup import Setup, SetupWizard
 from .helpers.notifications import invalidate_notification_cache
 
 from .routes import system
@@ -34,14 +33,6 @@ def install_extensions(supervisor):
     exts.notifications = Notification
     exts.notifications.on_send(invalidate_notification_cache)
     exts.ondd = ONDDClient(exts.config['ondd.socket'])
-    exts.setup = Setup(supervisor)
-    exts.setup_wizard = SetupWizard(name='setup')
-
-
-def register_wizard_steps():
-    for step_path in exts.config['setup.steps']:
-        step_cls = import_attr(step_path)
-        exts.setup_wizard.register_class(step_cls)
 
 
 def install_tasks():
@@ -53,7 +44,6 @@ def install_tasks():
 @hook('initialize')
 def initialize(supervisor):
     install_extensions(supervisor)
-    register_wizard_steps()
     supervisor.app.router.add_filter('safepath', safepath_filter)
     error(403)(system.error_403)
     error(404)(system.error_404)
