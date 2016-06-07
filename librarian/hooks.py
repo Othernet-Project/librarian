@@ -71,9 +71,10 @@ def initialize(supervisor):
     error(503)(system.error_503)
 
 
+@hook('init_complete')
 def init_complete(supervisor):
     exts.dashboard.sort()
-    exts.menuitems.sort(supervisor.config)
+    exts.menu.sort(supervisor.config)
 
 
 def post_start(supervisor):
