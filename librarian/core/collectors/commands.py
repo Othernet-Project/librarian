@@ -41,13 +41,11 @@ class Commands(ObjectCollectorMixin, ListCollector):
             self.parser.add_argument(*flags, **arg)
 
     def post_install(self):
-        args = self.parser.parse_args()
-        exts.config['args'] = args
-        arglist = list(vars(args).keys())
+        args = exts.config['args'] = self.parser.parse_args()
         for name, handler in self.handlers.items():
             # Some command handlers have no actual function to run, but may
             # serve only for collecting some parameters
-            if not getattr(arglist, name, None) or not handler:
+            if not getattr(args, name, None) or not handler:
                 continue
             is_class = inspect.isclass(handler)
             if is_class and hasmethod(handler, 'run'):
