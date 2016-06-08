@@ -37,4 +37,4 @@ class DiskspaceDashboardPlugin(DashboardPlugin):
     def get_context(self):
         CheckDiskspaceTask().run()
         return dict(storages=storage.get_content_storages(),
-                    active_storage_id=storage.get_consoildate_status())
+                    active_storage_id=storage.get_consolidate_status())
