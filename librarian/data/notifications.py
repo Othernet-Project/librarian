@@ -222,8 +222,9 @@ class Notification(object):
         target_query = self.db.Delete('notification_targets',
                                       where='notification_id = %s')
         query = self.db.Delete('notifications', where='notification_id = %s')
-        self.db.execute(target_query, (self.notification_id,))
-        self.db.execute(query, (self.notification_id,))
+        with self.db.transaction() as cursor:
+            cursor.execute(target_query.serialize(), (self.notification_id,))
+            cursor.execute(query.serialize(), (self.notification_id,))
         return self
 
     @staticmethod
@@ -246,8 +247,9 @@ class Notification(object):
                  'notifications.notification_id')
         target_query = db.Delete('notification_targets USING notifications',
                                  where=where)
-        db.execute(target_query, [category])
-        db.execute(query, [category])
+        with db.transaction() as cursor:
+            cursor.execute(target_query.serialize(), [category])
+            cursor.execute(query.serialize(), [category])
 
 
 class NotificationTarget(object):
