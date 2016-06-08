@@ -8,16 +8,16 @@ import librarian.data.notifications as mod
 
 class TestNotification(object):
 
-    @mock.patch.object(mod, 'datetime')
+    @mock.patch.object(mod, 'utcnow')
     @mock.patch.object(mod.Notification, 'save')
     @mock.patch.object(mod.Notification, 'calc_expiry')
     @mock.patch.object(mod.Notification, 'generate_unique_id')
     @mock.patch.object(mod.Notification, '__init__')
     def test_send(self, init_func, generate_unique_id, calc_expiry, save,
-                  datetime):
+                  utcnow):
         generate_unique_id.return_value = 'unique id'
         calc_expiry.return_value = 'tomorrow'
-        datetime.datetime.now.return_value = 'now'
+        utcnow.return_value = 'now'
         init_func.return_value = None
         db = mock.Mock()
         mod.Notification.send('content added',
@@ -27,7 +27,7 @@ class TestNotification(object):
                               expiration=15,
                               dismissable=False,
                               groupable=False,
-                              user='username',
+                              username='username',
                               group='groupname',
                               db=db)
 
@@ -39,7 +39,7 @@ class TestNotification(object):
                                           dismissable=False,
                                           groupable=False,
                                           priority=1,
-                                          user='username',
+                                          username='username',
                                           message='content added',
                                           icon='notify-class',
                                           db=db)
@@ -67,7 +67,7 @@ class TestNotification(object):
                                      priority=mod.Notification.URGENT,
                                      expiration=15,
                                      dismissable=False,
-                                     user='username',
+                                     username='username',
                                      group='groupname',
                                      db=db)
         callback.assert_called_once_with(inst)
@@ -79,7 +79,7 @@ class TestNotification(object):
                                         db=mock.Mock())
         assert not notification.has_expired
 
-        expires_at = datetime.datetime.now() + datetime.timedelta(days=1)
+        expires_at = mod.utcnow() + datetime.timedelta(days=1)
         notification = mod.Notification('id',
                                         'msg',
                                         'created_at',
@@ -87,7 +87,7 @@ class TestNotification(object):
                                         db=mock.Mock())
         assert not notification.has_expired
 
-        expires_at = datetime.datetime.now() - datetime.timedelta(days=1)
+        expires_at = mod.utcnow() - datetime.timedelta(days=1)
         notification = mod.Notification('id',
                                         'msg',
                                         'created_at',
@@ -105,7 +105,7 @@ class TestNotification(object):
         notification = mod.Notification('id',
                                         'msg',
                                         'created_at',
-                                        user='ted',
+                                        username='ted',
                                         db=mock.Mock())
         assert not notification.is_shared
 
@@ -175,9 +175,8 @@ class TestNotification(object):
         db = mock.Mock()
         notification = mod.Notification('unique_id', 'msg', 'today', db=db)
         notification._mark_private_read('now')
-        db.query.assert_called_once_with(db.Update.return_value,
-                                         notification_id='unique_id',
-                                         read_at='now')
+        data = dict(notification_id='unique_id', read_at='now')
+        db.execute.assert_called_once_with(db.Update.return_value, data)
 
     @mock.patch.object(mod.Notification, '_mark_private_read')
     @mock.patch.object(mod.Notification, '_mark_shared_read')
@@ -193,12 +192,12 @@ class TestNotification(object):
         assert not _mark_private_read.called
         assert not _mark_shared_read.called
 
-    @mock.patch.object(mod, 'datetime')
+    @mock.patch.object(mod, 'utcnow')
     @mock.patch.object(mod.Notification, '_mark_shared_read')
     @mock.patch.object(mod.Notification, 'is_shared')
     @mock.patch.object(mod.Notification, 'is_read')
     def test_mark_read_shared(self, is_read, is_shared, _mark_shared_read,
-                              datetime):
+                              utcnow):
         is_read.__get__ = mock.Mock(return_value=False)
         is_shared.__get__ = mock.Mock(return_value=True)
         notification = mod.Notification('unique_id',
@@ -210,16 +209,16 @@ class TestNotification(object):
 
         _mark_shared_read.reset_mock()
 
-        datetime.datetime.now.return_value = 'proper date'
+        utcnow.return_value = 'proper date'
         notification.mark_read()
         _mark_shared_read.assert_called_once_with('proper date')
 
-    @mock.patch.object(mod, 'datetime')
+    @mock.patch.object(mod, 'utcnow')
     @mock.patch.object(mod.Notification, '_mark_private_read')
     @mock.patch.object(mod.Notification, 'is_shared')
     @mock.patch.object(mod.Notification, 'is_read')
     def test_mark_read_private(self, is_read, is_shared, _mark_private_read,
-                               datetime):
+                               utcnow):
         is_read.__get__ = mock.Mock(return_value=False)
         is_shared.__get__ = mock.Mock(return_value=False)
         notification = mod.Notification('unique_id',
@@ -231,7 +230,7 @@ class TestNotification(object):
 
         _mark_private_read.reset_mock()
 
-        datetime.datetime.now.return_value = 'proper date'
+        utcnow.return_value = 'proper date'
         notification.mark_read()
         _mark_private_read.assert_called_once_with('proper date')
 
@@ -239,26 +238,33 @@ class TestNotification(object):
         db = mock.Mock()
         notification = mod.Notification('unique_id', 'msg', 'today', db=db)
         notification.save()
-        db.query.assert_called_once_with(
-            db.Replace.return_value,
-            category=None,
-            notification_id='unique_id',
-            read_at=None,
-            created_at='today',
-            expires_at=None,
-            dismissable=True,
-            groupable=True,
-            priority=mod.Notification.NORMAL,
-            user=None,
-            message='msg',
-            icon=None
-        )
+        data = dict(category=None,
+                    notification_id='unique_id',
+                    read_at=None,
+                    created_at='today',
+                    expires_at=None,
+                    dismissable=True,
+                    groupable=True,
+                    priority=mod.Notification.NORMAL,
+                    username=None,
+                    message='msg',
+                    icon=None)
+        db.execute.assert_called_once_with(db.Replace.return_value, data)
 
     def test_delete(self):
         db = mock.Mock()
+        transaction = mock.Mock()
+        ctx_manager = mock.MagicMock()
+        ctx_manager.__enter__.return_value = transaction
+        db.transaction.return_value = ctx_manager
         notification = mod.Notification('unique_id', 'msg', 'today', db=db)
         notification.delete()
-        db.query.assert_called_once_with(db.Delete.return_value, 'unique_id')
+        transaction.execute.assert_has_calls([
+            mock.call(db.Delete.return_value.serialize.return_value,
+                      ('unique_id',)),
+            mock.call(db.Delete.return_value.serialize.return_value,
+                      ('unique_id',))
+        ])
 
     def test_generate_unique_id(self):
         uid = mod.Notification.generate_unique_id()
@@ -302,7 +308,7 @@ class TestNotificationGroup(object):
                                         'now',
                                         category='content',
                                         read_at='now',
-                                        user='joe',
+                                        username='joe',
                                         db=mock.Mock())
         group = mod.NotificationGroup([notification])
         similar = mod.Notification('uid',
@@ -310,21 +316,21 @@ class TestNotificationGroup(object):
                                    'now',
                                    category='content',
                                    read_at='now',
-                                   user='joe',
+                                   username='joe',
                                    db=mock.Mock())
         different1 = mod.Notification('uid',
                                       'msg',
                                       'now',
                                       category='other',
                                       read_at='now',
-                                      user='joe',
+                                      username='joe',
                                       db=mock.Mock())
         different2 = mod.Notification('uid',
                                       'msg',
                                       'now',
                                       category='content',
                                       read_at='yesterday',
-                                      user='joe',
+                                      username='joe',
                                       db=mock.Mock())
         assert group.is_similar(similar, attrs=('category', 'read_at'))
         assert not group.is_similar(different1, attrs=('category', 'read_at'))
@@ -343,7 +349,7 @@ class TestNotificationGroup(object):
             notifications.append(mod.Notification('uid' + str(idx),
                                                   'msg',
                                                   'now',
-                                                  user='joe',
+                                                  username='joe',
                                                   db=mock.Mock(),
                                                   **options))
         groups = mod.NotificationGroup.group_by(iter(notifications),
