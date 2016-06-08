@@ -26,7 +26,7 @@ from .utils.collectors import (
     import_object,
     fully_qualified_name,
 )
-
+from .exts import ext_container as exts
 
 try:
     unicode = unicode
@@ -452,7 +452,7 @@ class Collectors(ListCollector):
             self.register(collector)
 
     def install_member(self, collector):
-        self.supervisor.exts.exports.add_collector(collector)
+        exts.exports.add_collector(collector)
 
 
 class Exports(object):

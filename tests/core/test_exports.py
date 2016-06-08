@@ -138,7 +138,7 @@ def test_registry():
     r.register(foo)
     r.register(bar)
     r.register(baz)
-    assert list(r.get_ordered_members()) == [baz, bar, foo]
+    assert list(r.get_ordered_members()) == [bar, baz, foo]
 
 
 def test_missing_dependency():
@@ -282,7 +282,8 @@ def test_collector_with_invalid_methods():
     assert c.registry == []
 
 
-def test_collector_install_member():
+@mock.patch.object(mod, 'exts')
+def test_collector_install_member(exts):
     supervisor = mock.Mock()
     component = mock.Mock()
     component.get_export.return_value = ['foo.bar.baz']
@@ -290,7 +291,7 @@ def test_collector_install_member():
     c = mod.Collectors(supervisor)
     c.collect(component)
     c.install()
-    supervisor.exports.add_collector.assert_called_once_with(collector)
+    exts.exports.add_collector.assert_called_once_with(collector)
 
 
 # EXPORTS CLASS
@@ -310,14 +311,6 @@ def test_exports_init_with_default_collectors():
     supervisor.config = {'app.components': ['foo', 'bar', 'baz']}
     e = mod.Exports(supervisor)
     assert list(e.collectors) == [mod.Collectors]
-
-
-def test_exports_init_adds_supervisor_exports_attr():
-    supervisor = mock.Mock()
-    supervisor.ROOT_PKG = 'root'
-    supervisor.config = {'app.components': ['foo', 'bar', 'baz']}
-    e = mod.Exports(supervisor)
-    assert supervisor.exports is e
 
 
 @mock.patch(MOD + '.Component')
