@@ -236,7 +236,8 @@ def test_object_collect_with_exception():
 # REGISTRY INSTALLER MIXIN
 
 
-def test_registry_installer():
+@mock.patch.object(mod, 'exts')
+def test_registry_installer(exts):
     class MyCollector(mod.RegistryInstallerMixin, mod.ListCollector):
         registry_class = mock.Mock()
         ext_name = 'foo'
@@ -244,7 +245,7 @@ def test_registry_installer():
     supervisor = mock.Mock()
     m = MyCollector(supervisor)
     m.install_member('foo')
-    assert supervisor.exts.foo == regobj
+    assert exts.foo == regobj
     regobj.register.assert_called_once_with('foo')
 
 
@@ -297,28 +298,25 @@ def test_collector_install_member(exts):
 # EXPORTS CLASS
 
 
-def test_get_components():
-    supervisor = mock.Mock()
-    supervisor.ROOT_PKG = 'root'
-    supervisor.config = {'app.components': ['foo', 'bar', 'baz']}
-    e = mod.Exports(supervisor)
+@mock.patch.object(mod, 'exts')
+def test_get_components(exts):
+    exts.config = {'app.components': ['foo', 'bar', 'baz'], 'root_pkg': 'root'}
+    e = mod.Exports(mock.Mock())
     assert e.get_components() == ['root', 'foo', 'bar', 'baz']
 
 
-def test_exports_init_with_default_collectors():
-    supervisor = mock.Mock()
-    supervisor.ROOT_PKG = 'root'
-    supervisor.config = {'app.components': ['foo', 'bar', 'baz']}
-    e = mod.Exports(supervisor)
+@mock.patch.object(mod, 'exts')
+def test_exports_init_with_default_collectors(exts):
+    exts.config = {'app.components': ['foo', 'bar', 'baz'], 'root_pkg': 'root'}
+    e = mod.Exports(mock.Mock())
     assert list(e.collectors) == [mod.Collectors]
 
 
-@mock.patch(MOD + '.Component')
-def test_exports_component_load(Component):
-    supervisor = mock.Mock()
-    supervisor.ROOT_PKG = 'root'
-    supervisor.config = {'app.components': ['foo', 'bar', 'baz']}
-    e = mod.Exports(supervisor)
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod, 'Component')
+def test_exports_component_load(Component, exts):
+    exts.config = {'app.components': ['foo', 'bar', 'baz'], 'root_pkg': 'root'}
+    e = mod.Exports(mock.Mock())
     e.load_components()
     assert len(e.initialized) == 4
     Component.assert_has_calls([
@@ -329,12 +327,11 @@ def test_exports_component_load(Component):
     ])
 
 
-@mock.patch(MOD + '.Component')
-def test_exports_component_load_fail(Component):
-    supervisor = mock.Mock()
-    supervisor.ROOT_PKG = 'root'
-    supervisor.config = {'app.components': ['foo', 'bar', 'baz']}
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod, 'Component')
+def test_exports_component_load_fail(Component, exts):
+    exts.config = {'app.components': ['foo', 'bar', 'baz'], 'root_pkg': 'root'}
     Component.side_effect = ImportError
-    e = mod.Exports(supervisor)
+    e = mod.Exports(mock.Mock())
     e.load_components()
     assert len(e.initialized) == 0

@@ -230,7 +230,7 @@ class Collector(object):
 
     def __init__(self, supervisor):
         self.supervisor = supervisor
-        self.events = self.supervisor.exts.events
+        self.events = exts.events
 
     @property
     def type(self):
@@ -347,7 +347,7 @@ class RegistryInstallerMixin(object):
     def __init__(self, *args, **kwargs):
         super(RegistryInstallerMixin, self).__init__(*args, **kwargs)
         self.regobj = self.registry_class()
-        setattr(self.supervisor.exts, self.ext_name, self.regobj)
+        setattr(exts, self.ext_name, self.regobj)
 
     def install_member(self, member):
         self.regobj.register(member)
@@ -502,9 +502,9 @@ class Exports(object):
         """
         # When getting the component list, we make a copy, so we don't mutate
         # the original found in the configuration.
-        comps = self.supervisor.config.get(self.COMPONENTS_CONF, [])[:]
+        comps = exts.config.get(self.COMPONENTS_CONF, [])[:]
         # Add the package in which supervisor is found as first component
-        comps.insert(0, self.supervisor.ROOT_PKG)
+        comps.insert(0, exts.config['root_pkg'])
         return comps
 
     def add_collector(self, collector):
@@ -527,4 +527,4 @@ class Exports(object):
             # something wrong with the Collector implementation.
             collector.collectall(self.initialized)
             collector.install()
-        self.supervisor.exts.events.publish(EXPORTS_FINISHED)
+        exts.events.publish(EXPORTS_FINISHED)
