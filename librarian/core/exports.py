@@ -17,6 +17,7 @@ from os.path import join
 from confloader import ConfDict
 from disentangler import Disentangler
 
+from .exceptions import EarlyExit
 from .utils.collectors import (
     muter,
     to_list,
@@ -301,6 +302,8 @@ class Collector(object):
         for member in self.get_ordered_members():
             try:
                 self.install_member(member)
+            except EarlyExit:
+                raise
             except Exception:
                 logging.exception(
                     'Error while installing {} member: {}'.format(

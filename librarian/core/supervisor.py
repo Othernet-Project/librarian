@@ -80,11 +80,7 @@ class Supervisor:
         self.configure_logger()
         self.exts.events = PubSub()
         self.exts.exports = Exports(self)
-        self.exts.exports.load_components()
-        self.exts.exports.process_components()
-        self.handle_interrupt()
-        self.running = True
-        self.finalize()
+        self.boot()
 
     def load_config(self, path, strict=True):
         path = os.path.abspath(path)
@@ -127,10 +123,10 @@ class Supervisor:
             # Fire background event
             self.exts.events.publish(self.BACKGROUND, self)
 
-    def finalize(self):
+    def boot(self):
         """
-        Finalize supervisor's initialization and announce the
-        :py:attr:`~Supervisor.INIT_COMPLETE` event.
+        Perform the complete startup initialization of the app stack and
+        announce when it's done with :py:attr:`~Supervisor.INIT_COMPLETE` event.
 
         If any of the components raise an :py:exc:`EarlyExit` exception during
         this stage, the system will exit. This exception is a normal
@@ -139,6 +135,9 @@ class Supervisor:
         Exceptions other than :py:exc:`EarlyExit` are logged and reraised.
         """
         try:
+            self.handle_interrupt()
+            self.exts.exports.load_components()
+            self.exts.exports.process_components()
             # Fire init-complete event. Command line handlers should be
             # executed at this point.
             self.exts.events.publish(self.INIT_COMPLETE, self)
@@ -157,6 +156,8 @@ class Supervisor:
         self.server = pywsgi.WSGIServer((host, port), self.wsgi, log=None)
         self.server.start()  # non-blocking
         assert self.server.started, 'Expected server to be running'
+        # Set flag determining whether server is running or not
+        self.running = True
         logging.debug("Started server on http://%s:%s/", host, port)
         print('Started server on http://%s:%s/' % (host, port))
         # Fire post-start event after WSGI server is started.
