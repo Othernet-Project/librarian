@@ -28,7 +28,7 @@ def get_user_groups(user):
 
 
 def get_notifications(db=None):
-    db = db or request.db.notifications
+    db = db or exts.databases.notifications
     user = request.user.username if request.user.is_authenticated else None
     user, groups = get_user_groups(user)
     where_cond = ('((t.target_type = \'group\' AND t.target IN %s) OR '

@@ -16,6 +16,7 @@ import functools
 from bottle import request, response
 from bottle_utils.common import basestring
 
+from ...exts import ext_container as exts
 from ..databases.utils import utcnow
 
 
@@ -73,7 +74,7 @@ class Session(object):
     # Session management
 
     def save(self):
-        db = request.db.sessions
+        db = exts.databases.sessions
         query = db.Replace('sessions',
                            constraints=['session_id'],
                            cols=['session_id', 'data', 'expires'])
@@ -84,7 +85,7 @@ class Session(object):
         return self
 
     def delete(self):
-        db = request.db.sessions
+        db = exts.databases.sessions
         q = db.Delete('sessions', where='session_id = %s')
         db.execute(q, (self.id,))
         return self
@@ -219,7 +220,7 @@ class Session(object):
         :param session_id:  unique session ID
         :returns:           valid `Session` instance.
         """
-        db = request.db.sessions
+        db = exts.databases.sessions
         q = db.Select(sets='sessions', where='session_id = %s')
         session_data = db.fetchone(q, (session_id,))
         if not session_data:

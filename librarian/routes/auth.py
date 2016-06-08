@@ -22,6 +22,7 @@ from ..utils.route_mixins import CSRFRouteMixin, RedirectRouteMixin
 
 
 class Login(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
+    path = '/login/'
     template_func = template
     template_name = 'auth/login'
     partial_template_name = 'auth/_login'
@@ -33,6 +34,7 @@ class Login(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
 
 
 class Logout(RedirectRouteMixin, RouteBase):
+    path = '/logout/'
 
     def get(self):
         self.request.user.logout()
@@ -41,6 +43,7 @@ class Logout(RedirectRouteMixin, RouteBase):
 
 
 class PasswordReset(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
+    path = '/reset-password/'
     template_func = template
     template_name = 'auth/password_reset'
     partial_template_name = 'auth/_password_reset'
@@ -67,6 +70,7 @@ class PasswordReset(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
 
 
 class EmergencyReset(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
+    path = '/emergency/'
     template_func = template
     template_name = 'auth/emergency_reset'
     partial_template_name = 'auth/_emergency_reset'

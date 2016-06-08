@@ -11,3 +11,6 @@ documentation scope, but which you may still find useful.
     make_targets
     git_repository_layout
     editable_install
+    command_line_options
+    list_of_system_events
+    list_of_librarian_plugins

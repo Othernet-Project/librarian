@@ -58,6 +58,7 @@ class FileRouteMixin(object):
 
 
 class List(FileRouteMixin, XHRPartialRoute):
+    path = '/files/<path:safepath>'
     template_name = 'filemanager/main'
     partial_template_name = 'filemanager/_main'
     template_func = template
@@ -132,6 +133,7 @@ class List(FileRouteMixin, XHRPartialRoute):
 
 
 class Details(FileRouteMixin, XHRPartialRoute):
+    path = '/details/<path:safepath>'
     template_name = 'filemanager/info'
     partial_template_name = 'filemanager/_info'
     template_func = template
@@ -152,6 +154,7 @@ class Details(FileRouteMixin, XHRPartialRoute):
 
 
 class Direct(RouteBase):
+    path = '/direct/<path:safepath>'
 
     def get(self, path):
         try:
@@ -164,6 +167,7 @@ class Direct(RouteBase):
 
 
 class Delete(CSRFRouteMixin, TemplateFormRoute):
+    path = '/delete/<path:safepath>'
     template_func = template
     template_name = 'filemanager/remove_confirm'
     form_factory = DeleteForm
@@ -239,6 +243,7 @@ class Delete(CSRFRouteMixin, TemplateFormRoute):
 
 
 class Thumb(RouteBase):
+    path = '/thumb/<path:safepath>'
 
     def get(self, path):
         url = None

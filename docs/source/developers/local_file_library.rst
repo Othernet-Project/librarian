@@ -3,7 +3,7 @@ Local file library
 
 While developing Libarian features or external Librarian components, you
 probably want to have some files to work with. If you've folled the
-instructions in :doc:`downoad_and_setup`, you probably have a directory called
+instructions in :doc:`download_and_setup`, you probably have a directory called
 ``tmp/library``, which is where the files should be stored.
 
 .. note::

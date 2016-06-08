@@ -4,6 +4,9 @@ import fnmatch
 import os
 import subprocess
 
+from ...exceptions import EarlyExit
+from ...exts import ext_container as exts
+
 
 def convert(po_path):
     base, ext = os.path.splitext(po_path)
@@ -11,9 +14,8 @@ def convert(po_path):
     subprocess.call(['msgfmt', '-o', mo_path, po_path])
 
 
-def compile_messages(arg, supervisor):
-    path = os.path.join(supervisor.config['root'],
-                        supervisor.config['i18n.localedir'])
+def compile_messages():
+    path = os.path.join(exts.config['root'], exts.config['i18n.localedir'])
     for root, dirs, files in os.walk(path):
         for f in fnmatch.filter(files, '*.po'):
             if 'LC_MESSAGES' not in root:
@@ -22,4 +24,4 @@ def compile_messages(arg, supervisor):
             print("Processing '%s'" % path)
             convert(path)
     print('Done')
-    raise supervisor.EarlyExit()
+    raise EarlyExit()

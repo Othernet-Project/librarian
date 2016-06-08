@@ -7,10 +7,12 @@ import re
 import subprocess
 import sys
 
+from ...exceptions import EarlyExit
+from ...exts import ext_container as exts
+
 
 BLACKLIST = ['ht']
 CHARSET_RE = re.compile(r'("Content-Type: text/plain; charset=).+(\\n")')
-SOURCE_DIRS = set()
 
 
 def construct_args(localedir, domain, address=None, comment=None):
@@ -116,20 +118,15 @@ def process_dir(path, extension, args, template_path):
         print('\n'.join(["Processed '%s'" % p for p in processed]))
 
 
-def add_message_source_path(path):
-    SOURCE_DIRS.add(path)
-
-
-def collect_messages(arg, supervisor):
-    path = supervisor.config['root']
-    project_package_name = supervisor.config['i18n.project_package_name']
-    exts = supervisor.config.get('i18n.extensions', ['py'])
-    localedir = supervisor.config.get('i18n.localedir', 'locales')
+def collect_messages():
+    path = exts.config['root']
+    project_package_name = exts.config['i18n.project_package_name']
+    file_extensions = exts.config.get('i18n.extensions', ['py'])
+    localedir = exts.config.get('i18n.localedir', 'locales')
     localedir = os.path.join(path, localedir)
-    domain = supervisor.config.get('i18n.domain', 'messages')
-    comment_string = supervisor.config.get('i18n.comment_string',
-                                           'Translators,')
-    address = supervisor.config.get('i18n.bug_report_email', '')
+    domain = exts.config.get('i18n.domain', 'messages')
+    comment_string = exts.config.get('i18n.comment_string', 'Translators,')
+    address = exts.config.get('i18n.bug_report_email', '')
     print("Using project root: %s" % path)
     print("Using domain: %s" % domain)
     print("Using localedir: %s" % localedir)
@@ -138,8 +135,9 @@ def collect_messages(arg, supervisor):
                if not code.endswith('.pot')]
     print("Using locales: %s" % ', '.join(locales))
     # Get list of extensions
-    exts = exts if 'py' in exts else ['py'] + exts
-    print("Using extensions: %s" % ', '.join(exts))
+    if 'py' not in file_extensions:
+        file_extensions = ['py'] + file_extensions
+    print("Using extensions: %s" % ', '.join(file_extensions))
     print("Using comment string: %s" % comment_string)
     if address:
         print("Using contact address: %s" % address)
@@ -154,9 +152,10 @@ def collect_messages(arg, supervisor):
     if os.path.exists(template_path):
         os.unlink(template_path)
 
-    for pkg_root in [path] + list(SOURCE_DIRS):
-        for ext in exts:
-            process_dir(pkg_root, ext, list(xgettext_args), template_path)
+    source_dirs = [c.pkgdir for c in exts.exports.initialized]
+    for pkg_root in [path] + source_dirs:
+        for file_ext in file_extensions:
+            process_dir(pkg_root, file_ext, list(xgettext_args), template_path)
 
     os.chdir(path)
     # Fix the template
@@ -178,4 +177,4 @@ def collect_messages(arg, supervisor):
             po_file.write(po_data.replace('PACKAGE', project_package_name))
 
     print("Done")
-    raise supervisor.EarlyExit()
+    raise EarlyExit()

@@ -1,6 +1,5 @@
 import datetime
 import json
-import os
 
 import bottle
 
@@ -22,11 +21,6 @@ class DateTimeCapableEncoder(json.JSONEncoder):
 
 def json_dumps(s):
     return json.dumps(s, cls=DateTimeCapableEncoder)
-
-
-def install_view_root(pkg_path, view_path):
-    template_root = os.path.join(pkg_path, view_path)
-    bottle.TEMPLATE_PATH.insert(0, template_root)
 
 
 def configure_bottle(supervisor):

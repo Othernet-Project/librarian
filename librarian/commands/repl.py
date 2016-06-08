@@ -1,10 +1,13 @@
+from ..core.exts import ext_container as exts
 
 
 class ReplCommand(object):
     name = 'repl'
-    option = '--repl'
-    action = 'store_true'
-    help = "Start interactive shell after servers start"
+    flags = '--repl'
+    kwargs = {
+        'action': 'store_true',
+        'help': "Start interactive shell after servers start"
+    }
 
     def repl_start(self, supervisor):
         from ..utils.repl import start_repl
@@ -15,6 +18,9 @@ class ReplCommand(object):
     def repl_shutdown(self, supervisor):
         self.repl_thread.join()
 
-    def __call__(self, arg, supervisor):
-        supervisor.events.subscribe(supervisor.POST_START, self.repl_start)
-        supervisor.events.subscribe(supervisor.SHUTDOWN, self.repl_shutdown)
+    def run(self, args):
+        if not args.repl:
+            return
+
+        exts.events.subscribe('post_start', self.repl_start)
+        exts.events.subscribe('shutdown', self.repl_shutdown)

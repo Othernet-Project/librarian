@@ -6,36 +6,55 @@ from bottle import Bottle
 from gevent import pywsgi, sleep
 from confloader import get_config_path, ConfDict
 
-from .dependencies import DependencyLoader
+from .exceptions import EarlyExit
+from .exports import Exports
 from .exts import ext_container
 from .logs import configure_logger
 from .pubsub import PubSub
 from .signal_handlers import on_interrupt
 
 
-class EarlyExit(Exception):
-
-    def __init__(self, message='', exit_code=0):
-        super(EarlyExit, self).__init__(message)
-        self.exit_code = exit_code
-
-
 class Supervisor:
-    LOOP_INTERVAL = 5  # in seconds
+    #: Interval of the background loop in seconds. This is the possible
+    #: shortest time in between consecutive execution of background tasks.
+    LOOP_INTERVAL = 5
+
+    #: Default name of the application configuration file.
     DEFAULT_CONFIG_FILENAME = 'config.ini'
+
+    #: Default configuration.
     CONFIG_DEFAULTS = {
         'autojson': True,
         'catchall': True
     }
 
+    # Aliases for system events
+
+    #: Component is initializing
     INITIALIZE = 'initialize'
+
+    #: Component finished loading
     COMPONENT_MEMBER_LOADED = 'component_member_loaded'
+
+    #: All components finished loading
     INIT_COMPLETE = 'init_complete'
+
+    #: Server is about to start
     PRE_START = 'pre_start'
+
+    #: Server has started
     POST_START = 'post_start'
+
+    #: New background loop cycle
     BACKGROUND = 'background'
+
+    #: Server is about to go down
     SHUTDOWN = 'shutdown'
+
+    #: Server is about to go down in an emergency
     IMMEDIATE_SHUTDOWN = 'immediate_shutdown'
+
+    #: List of all events
     APP_HOOKS = (
         INITIALIZE,
         COMPONENT_MEMBER_LOADED,
@@ -46,18 +65,9 @@ class Supervisor:
         SHUTDOWN,
         IMMEDIATE_SHUTDOWN,
     )
-    CORE_COMPONENTS = (
-        'assets',
-        'system',
-        'commands',
-        'databases',
-        'sessions',
-        'auth',
-        'i18n',
-        'cache',
-        'tasks',
-        'templates',
-    )
+
+    #: Name of the root package that contains the supervisor
+    ROOT_PKG = __name__.split('.')[0]
 
     EarlyExit = EarlyExit
 
@@ -66,23 +76,68 @@ class Supervisor:
         self.app = self.wsgi = Bottle()
         self.app.supervisor = self
         self.exts = ext_container
+        self.configure(root_dir)
+        self.configure_logger()
         self.exts.events = PubSub()
-        self.exts.bottle_app = self.app
+        self.exts.exports = Exports(self)
+        self.boot()
 
-        # Load core configuration
-        self._configure(root_dir)
+    def load_config(self, path, strict=True):
+        path = os.path.abspath(path)
+        if not strict and not os.path.exists(path):
+            return ConfDict()
+        return ConfDict.from_file(path, defaults=self.CONFIG_DEFAULTS)
+
+    def merge_config(self, config):
+        # merge component config into global config, but without overwriting
+        # existing data
+        self.config.setdefaults(config)
+
+    def configure(self, root_dir):
+        default_path = os.path.join(root_dir, self.DEFAULT_CONFIG_FILENAME)
+        self.config_path = get_config_path(default=default_path)
+        self.config = self.app.config = self.load_config(self.config_path)
+        self.config.update(config_path=self.config_path,
+                           root=root_dir,
+                           root_pkg=self.ROOT_PKG)
+        self.exts.config = self.config
+
+    def configure_logger(self):
         configure_logger(self.config)
 
-        # Load components
-        self._load_components()
-
-        # Register interrupt handler
+    def handle_interrupt(self):
+        """
+        Register INT signal handler.
+        """
         on_interrupt(self.halt)
 
-        # Set flag indicating that supervisor is running
-        self._running = True
+    def enter_background_loop(self):
+        """
+        Keep emitting the :py:attr:`~Supervisor.BACKGROUND` event as long as
+        :py:attr:`~Supervisor.running` flag is ``True``. The interval in which
+        the events are emitted is roughly :py:attr:`~Supervisor.LOOP_INTERVAL`
+        seconds.
+        """
+        while self.running:
+            sleep(self.LOOP_INTERVAL)
+            # Fire background event
+            self.exts.events.publish(self.BACKGROUND, self)
 
+    def boot(self):
+        """
+        Perform the complete startup initialization of the app stack and
+        announce when it's done with :py:attr:`~Supervisor.INIT_COMPLETE` event.
+
+        If any of the components raise an :py:exc:`EarlyExit` exception during
+        this stage, the system will exit. This exception is a normal
+        flow-control mechanism, not an error condition.
+
+        Exceptions other than :py:exc:`EarlyExit` are logged and reraised.
+        """
         try:
+            self.handle_interrupt()
+            self.exts.exports.load_components()
+            self.exts.exports.process_components()
             # Fire init-complete event. Command line handlers should be
             # executed at this point.
             self.exts.events.publish(self.INIT_COMPLETE, self)
@@ -93,107 +148,6 @@ class Supervisor:
             logging.exception("An error occurred during `init_complete`.")
             raise
 
-    def _load_config(self, path, strict=True):
-        path = os.path.abspath(path)
-        if not strict and not os.path.exists(path):
-            return ConfDict()
-        return ConfDict.from_file(path, defaults=self.CONFIG_DEFAULTS)
-
-    def _merge_config(self, config):
-        # merge component config into global config, but without overwriting
-        # existing data
-        self.config.setdefaults(config)
-
-    def _configure(self, root_dir):
-        default_path = os.path.join(root_dir, self.DEFAULT_CONFIG_FILENAME)
-        self.config_path = get_config_path(default=default_path)
-        self.config = self.app.config = self._load_config(self.config_path)
-        self.config['root'] = root_dir
-        self.exts.config = self.config
-
-    def _install_hook(self, name, fn, **kwargs):
-        self.exts.events.subscribe(name, fn)
-        # the initialize hook must be fired immediately in the scope to
-        # which it belongs only
-        if name == self.INITIALIZE:
-            self.exts.events.publish(name, self, scope=kwargs['mod_name'])
-
-    def _install_routes(self, fn, **kwargs):
-        route_config = fn(self.config)
-        for route in route_config:
-            (name, handler, method, path, kwargs) = route
-            self.app.route(path, method, handler, name=name, **kwargs)
-
-    def _install_plugin(self, fn, **kwargs):
-        plugin = fn(self)
-        self.app.install(plugin)
-
-    COMPONENT_META = {
-        'hooks': {
-            'exports': dict(zip(APP_HOOKS, [{}] * len(APP_HOOKS))),
-            'is_strict': False,
-            'handler': _install_hook
-        },
-        'plugins': {
-            'exports': {
-                'plugin': {}
-            },
-            'is_strict': True,
-            'handler': _install_plugin
-        },
-        'routes': {
-            'exports': {
-                'routes': {}
-            },
-            'is_strict': True,
-            'handler': _install_routes
-        }
-    }
-
-    def _get_core_components(self):
-        """Return list of import paths for all found core components."""
-        return ['.'.join([__package__, 'contrib', name])
-                for name in self.CORE_COMPONENTS]
-
-    def _install_component_member(self, member):
-        handler = self.COMPONENT_META[member['type']]['handler']
-        config_path = os.path.join(member['pkg_path'],
-                                   self.DEFAULT_CONFIG_FILENAME)
-        config = self.config.import_from_file(config_path, as_defaults=True,
-                                              ignore_missing=True)
-        handler(self, **member)
-        # notify possibly other components that a new component has been
-        # installed successfully
-        self.exts.events.publish(self.COMPONENT_MEMBER_LOADED,
-                                 self,
-                                 member=member,
-                                 config=config)
-        logging.debug("LOADED: {0}".format('::'.join([member['pkg_path'],
-                                                      member['name']])))
-
-    def _load_components(self):
-        components = self.config['app.components'] or []
-        # add root package to the beginning of the list
-        pkg_name = __name__.split('.')[0]
-        components = [pkg_name] + components
-        # load default core components if core override flag was not set
-        if not self.config.get('app.core_override'):
-            core_components = self._get_core_components()
-            components = core_components + components
-
-        loader = DependencyLoader(components, self.COMPONENT_META)
-        for member in loader.load():
-            try:
-                self._install_component_member(member)
-            except Exception:
-                logging.exception('Component member installation failed.')
-
-    def _enter_background_loop(self):
-        while self._running:
-            sleep(self.LOOP_INTERVAL)
-            # Fire background event
-            self.exts.events.publish(self.BACKGROUND, self)
-
     def start(self):
         # Fire pre-start event right before starting the WSGI server.
         self.exts.events.publish(self.PRE_START, self)
@@ -202,18 +156,18 @@ class Supervisor:
         self.server = pywsgi.WSGIServer((host, port), self.wsgi, log=None)
         self.server.start()  # non-blocking
         assert self.server.started, 'Expected server to be running'
+        # Set flag determining whether server is running or not
+        self.running = True
         logging.debug("Started server on http://%s:%s/", host, port)
-        if self.config['app.debug']:
-            print('Started server on http://%s:%s/' % (host, port))
-
+        print('Started server on http://%s:%s/' % (host, port))
         # Fire post-start event after WSGI server is started.
         self.exts.events.publish(self.POST_START, self)
         # Start background loop
-        self._enter_background_loop()
+        self.enter_background_loop()
 
     def halt(self):
         logging.info('Stopping the application.')
-        self._running = False
+        self.running = False
         self.server.stop(5)
         logging.info('Running shutdown hooks.')
         self.exts.events.publish(self.SHUTDOWN, self)

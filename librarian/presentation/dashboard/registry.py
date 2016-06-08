@@ -1,5 +1,3 @@
-
-
 class DashboardPluginRegistry(object):
 
     def __init__(self):

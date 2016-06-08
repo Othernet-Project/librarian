@@ -34,3 +34,4 @@ webassets==0.11.1
 git+https://github.com/integricho/zippie.git@f041f8de0428e230471762f39dedaa0b199c3fcb#egg=zippie==0.1.1
 git+https://github.com/Outernet-Project/fsal.git@85dd3f07cfcf93ebfcf18c6a35bbf9fcc1e9791a#egg=fsal==1.0.dev1
 git+https://github.com/Outernet-Project/ondd-ipc.git@5f809eadcaa7fa9aeb304ed9ae9caea699176751#egg=ondd_ipc==1.0
+git+https://github.com/Outernet-Project/disentangler@f805777e7b05d6e65fd61b7453ed121b7291b967#egg=disentangler==1.0.dev1

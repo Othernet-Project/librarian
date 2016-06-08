@@ -1,19 +1,25 @@
+from ..core.exceptions import EarlyExit
+from ..core.exts import ext_container as exts
 from ..data.meta.archive import Archive
 
 
 class RefillFacetsCommand(object):
     name = 'refill_facets'
-    option = '--refill-facets'
-    action = 'store_true'
-    help = "Empty facets archive and reconstruct it."
+    flags = '--refill-facets'
+    kwargs = {
+        'action': 'store_true',
+        'help': "Empty facets archive and reconstruct it."
+    }
 
-    def __call__(self, arg, supervisor):
+    def run(self, args):
+        if not args.refill_facets:
+            return
+
         print('Begin facets refill.')
-        config = supervisor.config
-        archive = Archive(fsal=supervisor.exts.fsal,
-                          db=supervisor.exts.databases.meta,
-                          tasks=supervisor.exts.tasks,
-                          config=config)
+        archive = Archive(fsal=exts.fsal,
+                          db=exts.databases.meta,
+                          tasks=exts.tasks,
+                          config=exts.config)
         archive.clear_and_reload()
         print('Facet refill finished.')
-        raise supervisor.EarlyExit()
+        raise EarlyExit()
