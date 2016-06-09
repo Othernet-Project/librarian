@@ -48,6 +48,9 @@ class Enter(RouteBase):
     def get(self):
         return exts.setup_wizard()
 
+    def post(self):
+        return exts.setup_wizard()
+
 
 class Exit(RedirectRouteMixin, RouteBase):
     path = '/setup/exit/'
