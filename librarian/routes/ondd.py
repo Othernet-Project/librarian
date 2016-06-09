@@ -13,7 +13,7 @@ class Status(XHRPartialRoute):
     template_func = template
     template_name = 'ondd/_status'
     partial_template_name = 'ondd/_status'
-    exclude_plugins = ['session', 'user', 'setup']
+    exclude_plugins = ['session_plugin', 'user_plugin', 'setup_plugin']
 
     def get(self):
         snr_min = self.config.get('ondd.snr_min', 0.2)
@@ -28,7 +28,7 @@ class FileList(XHRPartialRoute):
     template_func = template
     template_name = 'ondd/_file_list'
     partial_template_name = 'ondd/_file_list'
-    exclude_plugins = ['session', 'user', 'setup']
+    exclude_plugins = ['session_plugin', 'user_plugin', 'setup_plugin']
 
     def get(self):
         return dict(files=exts.ondd.get_transfers())
@@ -39,7 +39,7 @@ class CacheStatus(XHRPartialRoute):
     template_func = template
     template_name = 'ondd/_cache_status'
     partial_template_name = 'ondd/_cache_status'
-    exclude_plugins = ['session', 'user', 'setup']
+    exclude_plugins = ['session_plugin', 'user_plugin', 'setup_plugin']
 
     def get(self):
         cache_max = self.config['ondd.cache_quota']
