@@ -3,12 +3,17 @@ from bottle import request
 from ..core.contrib.auth.helpers import identify_database
 from ..core.contrib.auth.users import User
 from ..core.contrib.auth.utils import generate_random_key
-from ..decorators.setup import autoconfigure
 from ..forms.auth import RegistrationForm
 
 
-autoconfigure('session.secret')(generate_random_key)
-autoconfigure('csrf.secret')(generate_random_key)
+class SessionSecretGenerator:
+    key = 'session.secret'
+    fn = staticmethod(generate_random_key)
+
+
+class CSRFSecretGenerator:
+    key = 'csrf.secret'
+    fn = staticmethod(generate_random_key)
 
 
 class SuperuserStep:
