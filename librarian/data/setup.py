@@ -8,6 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import collections
 import json
 import logging
 import os
@@ -28,6 +29,7 @@ class Setup(object):
     empty. Functions registered for auto configuration will be applied in the
     same order they were registered.
     """
+    _auto_configurators = collections.OrderedDict()
 
     def __init__(self):
         self._setup_file = os.path.abspath(exts.config['setup.file'])
@@ -85,8 +87,16 @@ class Setup(object):
         """
         Execute configuration options which can be applied automatically.
         """
-        for (name, configurator) in AUTO_CONFIGURATORS.items():
-            self._data[name] = configurator()
+        for (key, configurator) in self._auto_configurators.items():
+            self._data[key] = configurator()
+
+    @classmethod
+    def autoconfigure(cls, key, fn):
+        """
+        Register a function that performs automatic configuration (returning a
+        value), that will be added to the setup data under ``key``.
+        """
+        cls._auto_configurators[key] = fn
 
 
 class SetupWizard(Wizard):
