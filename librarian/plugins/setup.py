@@ -25,9 +25,10 @@ def setup_plugin(fn):
 
     @functools.wraps(fn)
     def wrapper(*args, **kwargs):
-        if not exts.setup_wizard.is_completed and not is_excluded():
-            return (template(NO_XHR_TEMPLATE)
-                    if request.is_xhr else redirect(setup_path))
-        return fn(*args, **kwargs)
+        if exts.setup_wizard.is_completed or is_excluded():
+            return fn(*args, **kwargs)
+        if request.is_xhr:
+            return template(NO_XHR_TEMPLATE)
+        redirect(setup_path)
     return wrapper
 setup_plugin.name = 'setup_plugin'
