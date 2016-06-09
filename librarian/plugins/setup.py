@@ -30,4 +30,4 @@ def setup_plugin(fn):
                     if request.is_xhr else redirect(setup_path))
         return fn(*args, **kwargs)
     return wrapper
-setup_plugin.name = 'setup'
+setup_plugin.name = 'setup_plugin'
