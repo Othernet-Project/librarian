@@ -33,11 +33,11 @@
         </h2>
         <%block name="step_desc"/>
         <div class="setup-wizard full-page-form">
-            ${h.form('POST', action=i18n_url('setup:main') + h.set_qparam(**{step_param: step_index}).to_qs())}
+            ${h.form('POST', action=i18n_url('setup:enter') + h.set_qparam(**{step_param: step_index}).to_qs())}
                 <%block name="step"/>
                 <p class="buttons">
                     % if step_index - 1 >= start_index:
-                        <a class="button" href="${i18n_url('setup:main', step_param=step_index - 1)}">${_('Back')}</a>
+                        <a class="button" href="${i18n_url('setup:enter', step_param=step_index - 1)}">${_('Back')}</a>
                     % endif
                     <button type="submit" name="action" value="next">${_('Finish') if step_index == step_count else _('Next')}</button>
                 </p>
