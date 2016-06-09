@@ -31,8 +31,8 @@ class Setup(object):
     """
     _auto_configurators = collections.OrderedDict()
 
-    def __init__(self):
-        self._setup_file = os.path.abspath(exts.config['setup.file'])
+    def __init__(self, path):
+        self._setup_file = os.path.abspath(path)
         self._data = dict()
 
         self._load()
