@@ -35,12 +35,6 @@ class Setup(object):
         self._setup_file = os.path.abspath(path)
         self._data = dict()
 
-        self._load()
-        if not self._data:
-            self._auto_configure()
-
-        self._update_config()
-
     def __getitem__(self, key):
         return self._data[key]
 
@@ -71,7 +65,7 @@ class Setup(object):
         """
         exts.config.update(self._data)
 
-    def _load(self):
+    def _read(self):
         """
         Attempt loading the setup data file.
         """
@@ -89,6 +83,17 @@ class Setup(object):
         """
         for (key, configurator) in self._auto_configurators.items():
             self._data[key] = configurator()
+
+    def load(self):
+        """
+        Read setup data from file and update the global configuration with the
+        data obtained from it. In case the setup file returned no data, run the
+        registered auto configurators.
+        """
+        self._read()
+        if not self._data:
+            self._auto_configure()
+        self._update_config()
 
     @classmethod
     def autoconfigure(cls, key, fn):
