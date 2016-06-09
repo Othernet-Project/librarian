@@ -31,9 +31,9 @@ class Setup(object):
     """
     _auto_configurators = collections.OrderedDict()
 
-    def __init__(self, path):
+    def __init__(self, path, initial=None):
         self._setup_file = os.path.abspath(path)
-        self._data = dict()
+        self._data = initial or dict()
 
     def __getitem__(self, key):
         return self._data[key]
