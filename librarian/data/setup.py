@@ -81,8 +81,9 @@ class Setup(object):
         """
         Execute configuration options which can be applied automatically.
         """
-        for (key, configurator) in self._auto_configurators.items():
-            self._data[key] = configurator()
+        data = dict((key, config_fn())
+                    for (key, config_fn) in self._auto_configurators.items())
+        self.append(data)
 
     def load(self):
         """
