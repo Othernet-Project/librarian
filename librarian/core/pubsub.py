@@ -9,6 +9,9 @@ file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
 
+DEFAULT_CONDITION = lambda *args, **kwargs: True
+
+
 class PubSub(object):
 
     def __init__(self):
@@ -35,19 +38,21 @@ class PubSub(object):
         """
         scope = kwargs.pop('scope', None)
         listeners = self._subscribers.get(event, [])
-        for listener in listeners:
-            if not scope or self._is_within_scope(listener, scope):
+        for listener, condition in listeners:
+            within_scope = not scope or self._is_within_scope(listener, scope)
+            if within_scope and condition(event, *args, **kwargs):
                 listener(*args, **kwargs)
 
-    def subscribe(self, event, listener):
+    def subscribe(self, event, listener, condition=DEFAULT_CONDITION):
         """Register a callback function for a specific event.
 
         :param event:     unique string identifier of the event
         :param listener:  a callable object
+        :param condition: a callable object which is used to filter events
         """
         subscribers = self._subscribers.setdefault(event, [])
         if listener not in subscribers:
-            subscribers.append(listener)
+            subscribers.append((listener, condition))
             self._scopes[id(listener)] = self._get_scope(listener)
 
     def unsubscribe(self, event, listener):
@@ -57,9 +62,9 @@ class PubSub(object):
         :param listener:  a callable object
         """
         subscribers = self._subscribers.get(event, [])
-        if listener in subscribers:
-            subscribers.remove(listener)
-            self._scopes.pop(id(listener), None)
+        subscribers[:] = [subscriber for subscriber in subscribers
+                          if subscriber[0] != listener]
+        self._scopes.pop(id(listener), None)
 
     def get_subscribers(self, event):
         """Returns a copy of the list of subscribers to a specific event type.

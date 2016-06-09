@@ -24,6 +24,10 @@ def copytree(src, dst, symlinks=False, ignore=None, root='.'):
                     shutil.copy2(s, d)
 
 
+def check_collector_group(event, group_type):
+    return group_type == 'assets'
+
+
 class RebuildAssetsCommand(object):
     name = 'assets'
     flags = '--assets'
@@ -33,6 +37,10 @@ class RebuildAssetsCommand(object):
     }
 
     def run(self, args):
+        exts.events.subscribe('exp.installed', self.rebuild,
+                              condition=check_collector_group)
+
+    def rebuild(self, *args, **kwargs):
         print("Rebuilding assets")
         config = exts.config.copy()
         config['assets.debug'] = True
@@ -57,6 +65,10 @@ class CollectAssetsCommand(object):
     }
 
     def run(self, args):
+        exts.events.subscribe('exp.installed', self.collect,
+                              condition=check_collector_group)
+
+    def collect(self, *args, **kwargs):
         print("Collecting assets")
         bundles = exts.assets.env._named_bundles.values()
         bundled_assets = [name for bundle in bundles
