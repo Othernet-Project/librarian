@@ -19,7 +19,7 @@ class CSRFSecretGenerator:
 class SuperuserStep:
     name = 'superuser'
     index = 2
-    template = 'setup/step_superuser.tpl',
+    template = 'setup/step_superuser.tpl'
 
     @staticmethod
     @identify_database
