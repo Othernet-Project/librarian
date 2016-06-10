@@ -19,6 +19,7 @@ from ..core.contrib.templates.renderer import view
 
 
 class RootRoute(RouteBase):
+    name = 'sys:root'
     path = '/'
 
     def get(self):

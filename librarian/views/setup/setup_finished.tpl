@@ -10,7 +10,9 @@ ${_('Setup Completed')}
 </%block>
 
 <%
-    exit_url = i18n_url('setup:exit', next=i18n_url('sys:root'))
+    # note: do not use i18n_url for the next parameter as the redirect mixin
+    # performs i18nification of the next path
+    exit_url = i18n_url('setup:exit', next=url('sys:root'))
 %>
 
 <h2><span class="icon icon-checkbox-marked-circle"></span> ${_('Settings are saved')}</h2>
