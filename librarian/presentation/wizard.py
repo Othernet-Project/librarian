@@ -8,9 +8,11 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from bottle import request, redirect, template
-
+from bottle import request, redirect
 from bottle_utils.common import basestring
+from bottle_utils.i18n import i18n_path
+
+from ..core.contrib.templates.renderer import template
 
 
 class MissingStepHandler(ValueError):
@@ -124,9 +126,8 @@ class Wizard(object):
 
     def redirect_to_step(self):
         query = '?{0}={1}'.format(self.step_param, self.current_step_index)
-        if request.is_xhr:
-            return request.fullpath + query
-        return redirect(request.fullpath + query)
+        next_path = i18n_path(request.fullpath + query)
+        return next_path if request.is_xhr else redirect(next_path)
 
     def start_next_step(self):
         # in case the step param is missing, redirect to same url to include it
