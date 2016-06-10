@@ -3,6 +3,7 @@ from bottle import request
 from ..core.contrib.auth.helpers import identify_database
 from ..core.contrib.auth.users import User
 from ..core.contrib.auth.utils import generate_random_key
+from ..core.exts import ext_container as exts
 from ..forms.auth import RegistrationForm
 
 
@@ -19,7 +20,7 @@ class CSRFSecretGenerator:
 class SuperuserStep:
     name = 'superuser'
     index = 2
-    template = 'setup/step_superuser.tpl',
+    template = 'setup/step_superuser.tpl'
 
     @staticmethod
     @identify_database
@@ -45,6 +46,6 @@ class SuperuserStep:
         User.create(form.processed_data['username'],
                     form.processed_data['password1'],
                     is_superuser=True,
-                    db=request.db.auth,
+                    db=exts.databases.auth,
                     reset_token=reset_token)
         return dict(successful=True)
