@@ -105,7 +105,7 @@ class EmergencyReset(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
         return User.create(username,
                            password,
                            is_superuser=True,
-                           db=exts.databases.auth,
+                           db=exts.databases.librarian,
                            reset_token=self.get_reset_token())
 
     def get_context(self):
