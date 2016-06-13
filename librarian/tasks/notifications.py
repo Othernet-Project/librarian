@@ -1,14 +1,25 @@
 import datetime
 import logging
 
+from greentasks import Task
+
 from ..core.exts import ext_container as exts
 from ..core.utils import utcnow
-from . import Task
 
 
 class NotificationCleanupTask(Task):
+    name = 'notifications'
+    periodic = True
 
-    def run(self, db, default_expiry):
+    def get_start_delay(self):
+        return exts.config['notifications.default_expiry']
+
+    def get_delay(self, previous_delay):
+        return exts.config['notifications.default_expiry']
+
+    def run(self):
+        db = exts.databases.notifications
+        default_expiry = exts.config['notifications.default_expiry']
         logging.debug("Notification cleanup started.")
         now = utcnow()
         auto_expires_at = now - datetime.timedelta(seconds=default_expiry)
@@ -25,12 +36,3 @@ class NotificationCleanupTask(Task):
         db.execute(target_query, params)
         rows = db.execute(query, params)
         logging.debug("{} expired notifications deleted.".format(rows))
-
-    @classmethod
-    def install(cls):
-        db = exts.databases.notifications
-        default_expiry = exts.config['notifications.default_expiry']
-        exts.tasks.schedule(cls(),
-                            args=(db, default_expiry),
-                            periodic=True,
-                            delay=default_expiry)
