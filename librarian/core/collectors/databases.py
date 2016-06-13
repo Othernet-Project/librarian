@@ -54,8 +54,3 @@ class Databases(ListCollector):
         exts.events.publish(self.DATABASE_READY, name=dbset, db=dbconn)
         logging.info('Database set {} installed for {}'.format(
             dbset, component_name))
-
-    @staticmethod
-    def get_migrations_name(package_name):
-        package_components = package_name.split('.')
-        return package_components[-1]
