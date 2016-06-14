@@ -17,7 +17,7 @@ class RefillFacetsCommand(object):
 
         print('Begin facets refill.')
         archive = Archive(fsal=exts.fsal,
-                          db=exts.databases.meta,
+                          db=exts.databases.librarian,
                           tasks=exts.tasks,
                           config=exts.config)
         archive.clear_and_reload()

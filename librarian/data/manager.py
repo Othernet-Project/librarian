@@ -41,7 +41,7 @@ class Manager(object):
         self._fsal = kwargs.get('fsal', exts.fsal)
         self._config = kwargs.get('config', exts.config)
         self._databases = kwargs.get('databases', exts.databases)
-        self._archive = Archive(db=self._databases.meta,
+        self._archive = Archive(db=self._databases.librarian,
                                 config=self._config,
                                 fsal=self._fsal,
                                 cache=kwargs.get('cache', exts.cache),

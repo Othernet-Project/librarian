@@ -214,7 +214,7 @@ class Archive(object):
     MetaWrapper = MetaWrapper
     FSWriter = FSWriter
     #: Database name
-    DATABASE_NAME = 'meta'
+    DATABASE_NAME = 'librarian'
     #: Database tables
     FS_TABLE = 'fs'
     META_TABLE = 'meta'

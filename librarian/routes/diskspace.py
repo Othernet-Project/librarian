@@ -34,7 +34,7 @@ class Notifier(object):
 
     def clear(self):
         exts.notifications.delete_by_category('consolidate_storage',
-                                              exts.databases.notifications)
+                                              exts.databases.librarian)
 
     def notify(self, message, priority):
         exts.notifications.send(message,
@@ -42,7 +42,7 @@ class Notifier(object):
                                 dismissable=True,
                                 group='superuser',
                                 priority=priority,
-                                db=exts.databases.notifications)
+                                db=exts.databases.librarian)
 
     def success(self, dest):
         logging.info('Consolidation to %s finished', dest.id)
