@@ -26,7 +26,7 @@ class CreateSuperuserCommand(object):
         'action': 'store_true'
     }
     #: Name of the database used for authentication data
-    DATABASE_NAME = 'auth'
+    DATABASE_NAME = 'librarian'
 
     def run(self, args):
         exts.events.subscribe('exp.dbready', self.db_ready)
@@ -56,3 +56,4 @@ class CreateSuperuserCommand(object):
             self.create_user()
         else:
             raise EarlyExit()
+

@@ -21,11 +21,11 @@ class CheckDiskspaceTask(Task):
         return exts.config['diskspace.refresh_rate']
 
     def clear_storage_notifications(self):
-        db = exts.databases.notifications
+        db = exts.databases.librarian
         exts.notifications.delete_by_category('diskspace', db)
 
     def send_storage_notification(self):
-        db = exts.databases.notifications
+        db = exts.databases.librarian
         exts.notifications.send(
             _('Storage space is getting low. Please ask the administrator to '
               'take action.'),

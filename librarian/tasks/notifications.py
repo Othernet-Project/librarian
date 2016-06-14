@@ -18,7 +18,7 @@ class NotificationCleanupTask(Task):
         return exts.config['notifications.default_expiry']
 
     def run(self):
-        db = exts.databases.notifications
+        db = exts.databases.librarian
         default_expiry = exts.config['notifications.default_expiry']
         logging.debug("Notification cleanup started.")
         now = utcnow()

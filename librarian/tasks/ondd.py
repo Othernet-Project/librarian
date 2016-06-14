@@ -54,7 +54,7 @@ class ONDDQueryCacheStorageStatusTask(Task):
         exts.cache.set('ondd.cache', cache_status)
 
         # First clean any notifications
-        db = exts.databases.notifications
+        db = exts.databases.librarian
         exts.notifications.delete_by_category('ondd_cache', db)
 
         if not cache_critical:

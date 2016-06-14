@@ -74,7 +74,7 @@ class Session(object):
     # Session management
 
     def save(self):
-        db = exts.databases.sessions
+        db = exts.databases.librarian
         query = db.Replace('sessions',
                            constraints=['session_id'],
                            cols=['session_id', 'data', 'expires'])
@@ -85,7 +85,7 @@ class Session(object):
         return self
 
     def delete(self):
-        db = exts.databases.sessions
+        db = exts.databases.librarian
         q = db.Delete('sessions', where='session_id = %s')
         db.execute(q, (self.id,))
         return self
@@ -220,7 +220,7 @@ class Session(object):
         :param session_id:  unique session ID
         :returns:           valid `Session` instance.
         """
-        db = exts.databases.sessions
+        db = exts.databases.librarian
         q = db.Select(sets='sessions', where='session_id = %s')
         session_data = db.fetchone(q, (session_id,))
         if not session_data:

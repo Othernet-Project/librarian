@@ -35,20 +35,22 @@ class Databases(ListCollector):
 
     def collect(self, component):
         migrations = component.get_export('migrations', default='migrations')
-        databases = to_list(component.get_export('databases', default=[]))
-        for dbname in databases:
+        dbname = component.get_export('database', default=None)
+        database_sets = to_list(component.get_export('database_sets',
+                                                     default=[]))
+        for dbset in database_sets:
             migration_pkg = '{}.{}.{}'.format(component.name, migrations,
-                                              dbname)
-            self.register((dbname, migration_pkg, component.name))
-            logging.debug('Registered database {} for {}'.format(
-                dbname, component.name))
+                                              dbset)
+            self.register((dbname, dbset, migration_pkg, component.name))
+            logging.debug('Registered database set {} in {} for {}'.format(
+                dbset, dbname, component.name))
 
     def install_member(self, database):
-        dbname, migrations_pkg, component_name = database
+        dbname, dbset, migrations_pkg, component_name = database
         dbconn = self.get_connection(dbname)
         dbconn.package_name = component_name
         self.databases[dbname] = dbconn
-        migrate(dbconn, migrations_pkg, self.supervisor.config)
-        exts.events.publish(self.DATABASE_READY, name=dbname, db=dbconn)
-        logging.info('Database {} installed for {}'.format(
-            dbname, component_name))
+        migrate(dbconn, dbset, migrations_pkg, self.supervisor.config)
+        exts.events.publish(self.DATABASE_READY, name=dbset, db=dbconn)
+        logging.info('Database set {} installed for {}'.format(
+            dbset, component_name))
