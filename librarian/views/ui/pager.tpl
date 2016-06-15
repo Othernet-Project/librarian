@@ -50,7 +50,7 @@
 </%def>
 
 <%def name="page_link(page, link_class, label=None)">
-    <% page_url = i18n_path(request.path + h.set_qparam(p=page).to_qs()) %>
+    <% page_url = i18n_path(h.urlquote(request.path) + h.set_qparam(p=page).to_qs()) %>
     <a href="${page_url}" class="o-pager-control o-pager-${link_class}">
         <span class="o-pager-label">${label or page}</span>
     </a>
