@@ -96,17 +96,19 @@ class Processor(object):
         else:
             self.metadata_extractor = None
 
-    @staticmethod
-    def _merge(source, destination):
+    def _merge(self, source, destination):
         """
         Copy dict of lang:metadata pairs from ``source`` into ``destination``.
         """
         # iterate over ``source``'s lang:meta pairs
         for (language, src_section) in source.items():
+            # drop any unknown keys from the newly extracted metadata
+            filtered_section = dict((k, v) for (k, v) in src_section.items()
+                                    if k in self.keys)
             # existing metadata might not have the current language
             dest_section = destination.get(language, {})
             # merge ``language``'s ``src_section`` into ``dest_section``
-            dest_section.update(src_section)
+            dest_section.update(filtered_section)
             # put back (or insert) merged ``dest_section`` that was just
             # updated with ``src_section`` into ``desctination``
             destination[language] = dest_section
@@ -132,11 +134,9 @@ class Processor(object):
             return {}
         # perform full (possibly expensive) processing of metadata
         try:
-            meta = self.metadata_extractor.extract()
+            return self.metadata_extractor.extract()
         except MetadataError:
             return {}
-        else:
-            return dict((k, v) for (k, v) in meta.items() if k in self.keys)
 
     def _add_metadata(self, dest):
         """
