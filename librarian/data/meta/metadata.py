@@ -240,6 +240,16 @@ class DirectoryMetadata(BaseMetadata):
 
     SPLITTER = '='
     ENTRY_REGEX = re.compile(r'(\w+)\[(\w+)\]')
+    DEFAULT_COVER = 'cover.jpg'
+
+    def _add_default_cover(self, data):
+        # add default cover image filename under ``cover`` key if it exists
+        folder_path = os.path.dirname(self.path)
+        cover_path = os.path.join(folder_path, self.DEFAULT_COVER)
+        if self.fsal.exists(cover_path):
+            # the path of the cover should be relative to the folder where it's
+            # contained
+            data[NO_LANGUAGE]['cover'] = self.DEFAULT_COVER
 
     def extract(self):
         data = dict()
@@ -256,4 +266,9 @@ class DirectoryMetadata(BaseMetadata):
                 language = NO_LANGUAGE
             data.setdefault(language, {})
             data[language][key] = value.strip()
+        # if there is no folder cover image under the language-less version of
+        # the metadata, check for the default cover and add if available
+        if not data[NO_LANGUAGE].get('cover'):
+            self._add_default_cover(data)
+
         return data

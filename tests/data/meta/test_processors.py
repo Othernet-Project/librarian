@@ -6,12 +6,12 @@ import librarian.data.meta.processors as mod
 from librarian.data.meta.metadata import MetadataError
 
 
-def test__merge():
+def test_merge():
     dest = {'en': {'title': 'Tests'},
             'rs': {'title': 'Testovi'}}
-    source = {'en': {'description': 'Invention'},
-              'rs': {'description': 'Izum'}}
-    mod.Processor._merge(source, dest)
+    source = {'en': {'description': 'Invention', 'junk': 'gibberish'},
+              'rs': {'description': 'Izum', 'invalid': 'trashcan'}}
+    mod.HtmlProcessor('path')._merge(source, dest)
     assert dest == {'en': {'title': 'Tests', 'description': 'Invention'},
                     'rs': {'title': 'Testovi', 'description': 'Izum'}}
 
@@ -50,7 +50,7 @@ def test_get_metadata_error(metadata_class):
 
 @mock.patch.object(mod.ImageProcessor, 'metadata_class')
 def test_get_metadata(metadata_class):
-    mocked_meta = dict(width=1, height=2, insignificant=3)
+    mocked_meta = dict(width=1, height=2)
     metadata_class.return_value.extract.return_value = mocked_meta
     proc = mod.ImageProcessor('/path/file', partial=False)
     assert proc.get_metadata() == {'width': 1, 'height': 2}
@@ -60,7 +60,7 @@ def test_get_metadata(metadata_class):
 def test__add_metadata(get_metadata):
     get_metadata.return_value = {'width': 1, 'height': 2}
     dest = {'content_types': 1, 'metadata': {'': {'title': 'Fascinating'}}}
-    proc = mod.GenericProcessor('/path/')
+    proc = mod.ImageProcessor('/path/')
     proc._add_metadata(dest)
     expected = {'content_types': 1,
                 'metadata': {'': {'title': 'Fascinating',

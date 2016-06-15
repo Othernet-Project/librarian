@@ -127,18 +127,17 @@ def join(*args):
 
 @template_helper(namespace='facets')
 def get_folder_cover(fsobj):
-    cover = fsobj.meta.get('cover', request.locale)
-    if cover:
-        # There is a cover image
-        cover_path = fsobj.other_path(cover)
-        return quoted_url('filemanager:direct', path=cover_path)
-    # Look for default cover
-    default_cover = fsobj.other_path('cover.jpg')
-    if not request.app.supervisor.exts.fsal.exists(default_cover):
+    """
+    Return the URL of the cover image belonging to the passed in folder
+    ``fsobj`` under the current locale.
+    """
+    cover = fsobj.meta.get('cover', language=request.locale)
+    if not cover:
+        # No cover image found (default is checked for in the meta extractor)
         return
-    fsobj.dirinfo.set('cover', 'cover.jpg')
-    fsobj.dirinfo.store()
-    return quoted_url('filemanager:direct', path=default_cover)
+    # There is a cover image
+    cover_path = fsobj.other_path(cover)
+    return quoted_url('filemanager:direct', path=cover_path)
 
 
 @template_helper(namespace='facets')
