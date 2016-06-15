@@ -20,7 +20,7 @@ def test_consolidate_state_get(request, get_consolidate_status):
 def test_notifier_clear(exts):
     notifier = mod.Notifier()
     notifier.clear()
-    args = ('consolidate_storage', exts.databases.notifications)
+    args = ('consolidate_storage', exts.databases.librarian)
     exts.notifications.delete_by_category.assert_called_once_with(*args)
 
 
@@ -34,7 +34,7 @@ def test_notifier_notify(exts):
         dismissable=True,
         group='superuser',
         priority='some priority',
-        db=exts.databases.notifications
+        db=exts.databases.librarian
     )
 
 

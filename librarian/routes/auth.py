@@ -97,9 +97,9 @@ class EmergencyReset(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
         return self.request.params.get('reset_token')
 
     def clear_auth_databases(self):
-        dbs = exts.databases
-        dbs.auth.execute(dbs.auth.Delete('users'))
-        dbs.sessions.execute(dbs.sessions.Delete('sessions'))
+        db = exts.databases.librarian
+        db.execute(db.Delete('users'))
+        db.execute(db.Delete('sessions'))
 
     def recreate_user(self, username, password):
         return User.create(username,

@@ -135,12 +135,11 @@ def test_emergency_reset_get_reset_token(request, generate_reset_token):
 def test_emergency_reset_clear_auth_databases(exts, request):
     route = mod.EmergencyReset()
     route.clear_auth_databases()
-    auth_db = exts.databases.auth
-    auth_db.Delete.assert_called_once_with('users')
-    auth_db.execute.assert_called_once_with(auth_db.Delete.return_value)
-    session_db = exts.databases.sessions
-    session_db.Delete.assert_called_once_with('sessions')
-    session_db.execute.assert_called_once_with(session_db.Delete.return_value)
+    db = exts.databases.librarian
+    db.Delete.assert_any_call('users')
+    db.execute.assert_any_call(db.Delete.return_value)
+    db.Delete.assert_any_call('sessions')
+    db.execute.assert_any_call(db.Delete.return_value)
 
 
 @mock.patch.object(mod, 'exts')
@@ -153,7 +152,7 @@ def test_emergency_reset_recreate_user(request, get_reset_token, create, exts):
     create.assert_called_once_with('usr',
                                    'pwd',
                                    is_superuser=True,
-                                   db=exts.databases.auth,
+                                   db=exts.databases.librarian,
                                    reset_token=get_reset_token.return_value)
 
 
