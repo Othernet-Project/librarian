@@ -1,11 +1,20 @@
+from greentasks import Task
+
 from ..core.exts import ext_container as exts
-from . import Task
 
 
 _ = lambda x: x
 
 
 class ONDDQueryCacheStorageStatusTask(Task):
+    name = 'ondd'
+    periodic = True
+
+    def get_start_delay(self):
+        return exts.config['ondd.cache_refresh_rate']
+
+    def get_delay(self, previous_delay):
+        return exts.config['ondd.cache_refresh_rate']
 
     def run(self):
         cache_min = exts.config['ondd.cache_min']
@@ -74,10 +83,3 @@ class ONDDQueryCacheStorageStatusTask(Task):
             priority=exts.notifications.CRITICAL,
             group='superuser',
             db=db)
-
-    @classmethod
-    def install(cls):
-        refresh_rate = exts.config['ondd.cache_refresh_rate']
-        exts.tasks.schedule(cls(),
-                            delay=refresh_rate,
-                            periodic=True)

@@ -1,14 +1,24 @@
+from greentasks import Task
 
 from ..core.exts import ext_container as exts
 from ..data import storage
-from . import Task
+
 
 # FIXME: The notifications messages need to be translatable
-
 _ = lambda x: x
 
 
 class CheckDiskspaceTask(Task):
+    name = 'diskspace'
+    periodic = True
+
+    def get_start_delay(self):
+        # schedule to run a check as soon as possible, and then subsequent runs
+        # by the specified refresh rate from config
+        return 0
+
+    def get_delay(self, previous_delay):
+        return exts.config['diskspace.refresh_rate']
 
     def clear_storage_notifications(self):
         db = exts.databases.librarian
@@ -46,13 +56,3 @@ class CheckDiskspaceTask(Task):
         # in the list.
         if int(storage_devices[-1].dev.stat.free) < threshold:
             self.send_storage_notification()
-
-    @classmethod
-    def install(cls):
-        instance = cls()
-        instance.run()
-        refresh_rate = exts.config['diskspace.refresh_rate']
-        if refresh_rate:
-            exts.tasks.schedule(instance,
-                                delay=refresh_rate,
-                                periodic=True)
