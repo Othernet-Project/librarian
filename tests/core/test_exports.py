@@ -113,7 +113,7 @@ def test_config_parsing(config_path):
 def test_config_exports(config_path):
     config_path.return_value = os.path.join(TESTDIR, 'samples/config.ini')
     c = mod.Component('librarian')
-    assert c.get_export('databases') == ['facets', 'files', 'notifications']
+    assert c.get_export('routes') == ['librarian.routes.auth.LoginForm', 'librarian.routes.files.FileList']
 
 
 # BASE COLLECTOR CLASSES

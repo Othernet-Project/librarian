@@ -213,7 +213,7 @@ def compare_result_sets(result, expected):
 @mock.patch.object(mod, 'exts')
 def test_for_parent(exts, populated_database):
     (fs_data, metadata, databases) = populated_database
-    archive = mod.Archive(db=databases.meta)
+    archive = mod.Archive(db=databases.librarian)
     # test for path only
     iter_merged = merge_fs_with_meta(fs_data, metadata)
     expected = dict((item['path'], item) for item in iter_merged
@@ -226,7 +226,7 @@ def test_for_parent(exts, populated_database):
 @mock.patch.object(mod, 'exts')
 def test_for_parent_content_type(exts, populated_database):
     (fs_data, metadata, databases) = populated_database
-    archive = mod.Archive(db=databases.meta)
+    archive = mod.Archive(db=databases.librarian)
     # test for path with specific content type filtering involved
     content_types = mod.ContentTypes.from_bitmask(fs_data[0]['content_types'])
     for ctype in content_types:
@@ -329,7 +329,7 @@ def test_get(_keep_supported, exts, populated_database):
     # keep supported just returns what it gets
     _keep_supported.side_effect = lambda x, y: x
     (fs_data, metadata, databases) = populated_database
-    archive = mod.Archive(db=databases.meta)
+    archive = mod.Archive(db=databases.librarian)
     # pick the last existing content type from the entries in db
     found_types = mod.ContentTypes.from_bitmask(fs_data[-1]['content_types'])
     bitmask = mod.ContentTypes.to_bitmask(found_types[-1])
@@ -396,7 +396,7 @@ def pick_search_data(entries):
 @mock.patch.object(mod, 'exts')
 def test_search(exts, populated_database):
     (fs_data, metadata, databases) = populated_database
-    archive = mod.Archive(db=databases.meta)
+    archive = mod.Archive(db=databases.librarian)
     # pick an existing content type
     entries = list(merge_fs_with_meta(fs_data, metadata))
     # find data suitable for search
@@ -429,7 +429,7 @@ def test_save(exts, databases):
             }
         }
     }
-    archive = mod.Archive(db=databases.meta)
+    archive = mod.Archive(db=databases.librarian)
     wrapper = archive.save(data)
     saved = wrapper.unwrap()
     assert saved['path'] == data['path']
@@ -444,12 +444,12 @@ def test_save(exts, databases):
 def test_remove(for_path, exts, populated_database, processors):
     for_path.return_value = processors
     (fs_data, metadata, databases) = populated_database
-    archive = mod.Archive(db=databases.meta)
+    archive = mod.Archive(db=databases.librarian)
     paths = [fs_data[0]['path'], fs_data[-1]['path']]
     archive.remove(paths)
-    q = databases.meta.Select(sets='fs',
-                              where=databases.meta.sqlin('path', paths))
-    assert databases.meta.fetchall(q, paths) == []
+    q = databases.librarian.Select(sets='fs',
+                              where=databases.librarian.sqlin('path', paths))
+    assert databases.librarian.fetchall(q, paths) == []
     # make sure cleanup function was called
     calls = [mock.call(paths[0], fsal=archive._fsal),
              mock.call().deprocess(),

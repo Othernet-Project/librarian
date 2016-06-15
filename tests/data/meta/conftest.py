@@ -59,8 +59,15 @@ def database_config():
     """
     return {
         'databases': [
-            {'name': 'meta',
-             'migrations': 'librarian.migrations.meta'}
+            {
+                'name': 'librarian',
+                'database_sets': [
+                    {
+                        'name': 'meta',
+                        'migrations': 'librarian.migrations.meta'
+                    }
+                ]
+            }
         ],
         'conf': {},
     }
@@ -113,8 +120,8 @@ def random_dataset():
 @pytest.fixture
 def populated_database(random_dataset, databases):
     (fs_data, metadata) = list(random_dataset())
-    databases.load_fixtures('meta', 'fs', fs_data)
-    databases.load_fixtures('meta', 'meta', metadata)
+    databases.load_fixtures('librarian', 'fs', fs_data)
+    databases.load_fixtures('librarian', 'meta', metadata)
     return (fs_data, metadata, databases)
 
 

@@ -11,10 +11,7 @@ def test_plugin_context_error(get_context, mako_template):
 
     dashboard.render()
 
-    default_ctx = {'plugin': dashboard,
-                   'name': dashboard.get_name(),
-                   'heading': dashboard.get_heading(),
-                   'classes': dashboard.get_formatted_classes()}
+    default_ctx = {'plugin': dashboard}
     mako_template.assert_called_once_with(
         mod.DashboardPlugin.plugin_error_template,
         **default_ctx
@@ -32,10 +29,7 @@ def test_plugin_render_error(mako_template):
 
     dashboard.render()
 
-    default_ctx = {'plugin': dashboard,
-                   'name': dashboard.get_name(),
-                   'heading': dashboard.get_heading(),
-                   'classes': dashboard.get_formatted_classes()}
+    default_ctx = {'plugin': dashboard}
 
     calls = [
         mock.call(dashboard.get_template(), **default_ctx),
