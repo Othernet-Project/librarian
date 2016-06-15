@@ -1,15 +1,8 @@
 from ..utils.timer import request_timer
 
 
-EXPORTS = {
-    'total_timer_plugin': {},
-    'handler_timer_plugin': {}
-}
+total_timer_plugin = request_timer('Total')
+total_timer_plugin.name = 'total_timer_plugin'
 
-
-def total_timer_plugin(supervisor):
-    return request_timer('Total')
-
-
-def handler_timer_plugin(supervisor):
-    return request_timer('Handler')
+handler_timer_plugin = request_timer('Handler')
+handler_timer_plugin.name = 'handler_timer_plugin'
