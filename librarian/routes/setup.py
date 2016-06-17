@@ -8,6 +8,8 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
+import os
+
 from streamline import NonIterableRouteBase, TemplateRoute
 
 from ..core.contrib.templates.renderer import template
@@ -28,10 +30,13 @@ def iter_log(file_obj, last_n_lines):
 class Diag(TemplateRoute):
     path = '/diag/'
     template_func = template
-    template_name = 'diag/diag'
+    template_name = 'diag'
 
     def get_log_iterator(self):
         logpath = self.config['logging.syslog']
+        if not os.path.exists(logpath):
+            return []
+
         with open(logpath, 'rt') as log:
             return iter_log(log, 100)
 
