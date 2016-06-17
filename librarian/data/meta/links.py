@@ -7,7 +7,7 @@ from sqlize_pg.builder import Replace, Delete, Select
 from ...core.exts import ext_container as exts
 
 
-DATABASE_NAME = 'meta'
+DATABASE_NAME = 'librarian'
 TABLE_NAME = 'links'
 
 REPLACE_QUERY = Replace(TABLE_NAME,
