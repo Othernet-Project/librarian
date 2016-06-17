@@ -8,7 +8,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from streamline import RouteBase, TemplateRoute
+from streamline import NonIterableRouteBase, TemplateRoute
 
 from ..core.contrib.templates.renderer import template
 from ..core.exts import ext_container as exts
@@ -33,7 +33,7 @@ class Diag(TemplateRoute):
     def get_log_iterator(self):
         logpath = self.config['logging.syslog']
         with open(logpath, 'rt') as log:
-            return iter_log(log)
+            return iter_log(log, 100)
 
     def get(self):
         if exts.setup_wizard.is_completed:
@@ -42,7 +42,7 @@ class Diag(TemplateRoute):
                     has_tuner=has_tuner())
 
 
-class Enter(RouteBase):
+class Enter(NonIterableRouteBase):
     path = '/setup/'
 
     def get(self):
@@ -52,7 +52,7 @@ class Enter(RouteBase):
         return exts.setup_wizard()
 
 
-class Exit(RedirectRouteMixin, RouteBase):
+class Exit(RedirectRouteMixin, NonIterableRouteBase):
     path = '/setup/exit/'
 
     def get(self):
