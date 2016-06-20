@@ -4,13 +4,13 @@ from StringIO import StringIO
 
 from bottle import static_file
 from fdsend import send_file
-from streamline import RouteBase
+from streamline import NonIterableRouteBase
 
 from ..core.contrib.system.version import get_base_version
 from ..data.diagnostics import generate_report
 
 
-class SendAppLog(RouteBase):
+class SendAppLog(NonIterableRouteBase):
     path = '/applog'
 
     def get(self):
@@ -25,7 +25,7 @@ class SendAppLog(RouteBase):
         return static_file(filename, root=log_dir, download=new_filename)
 
 
-class SendDiag(RouteBase):
+class SendDiag(NonIterableRouteBase):
     path = '/syslog'
 
     def get(self):

@@ -2,7 +2,7 @@ import os
 
 from bottle import request, static_file, HTTPError
 from bottle_utils.lazy import caching_lazy
-from streamline import RouteBase
+from streamline import NonIterableRouteBase
 
 from ...exts import ext_container as exts
 
@@ -33,7 +33,7 @@ def send_static(path):
     return res
 
 
-class StaticRoute(RouteBase):
+class StaticRoute(NonIterableRouteBase):
     name = 'sys:static'
     path = '/static/<path:path>'
     exclude_plugins = ['session_plugin', 'user_plugin', 'setup_plugin']
@@ -43,7 +43,7 @@ class StaticRoute(RouteBase):
         return send_static(path)
 
 
-class FaviconRoute(RouteBase):
+class FaviconRoute(NonIterableRouteBase):
     name = 'sys:favicon'
     path = '/favicon.ico'
     exclude_plugins = ['session_plugin', 'user_plugin', 'setup_plugin']

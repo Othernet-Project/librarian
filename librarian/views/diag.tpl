@@ -1,4 +1,4 @@
-<%inherit file='base.tpl'/>
+<%inherit file='narrow_base.tpl'/>
 
 <%block name="title">
 ${_("Diagnostics")}
@@ -9,11 +9,12 @@ ${_("Diagnostics")}
     <h2>${_('Diagnostics')}</h2>
 </div>
 
+<%block name="narrow_main">
 <div class="diag">
     <table>
         <tr>
             <td>${_("Version")}</td>
-            <td>${app_version}</td>
+            <td>${th.app_version()}</td>
         </tr>
         <tr>
             <td>${_("Has tuner?")}</td>
@@ -22,3 +23,4 @@ ${_("Diagnostics")}
     </table>
     <textarea>${''.join(logs)}</textarea>
 </div>
+</%block>

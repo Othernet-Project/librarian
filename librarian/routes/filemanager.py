@@ -13,7 +13,7 @@ import os
 from bottle import static_file
 from bottle_utils.html import urlunquote
 from bottle_utils.i18n import lazy_gettext as _
-from streamline import RouteBase, XHRPartialRoute, TemplateFormRoute
+from streamline import NonIterableRouteBase, XHRPartialRoute, TemplateFormRoute
 
 from ..core.contrib.templates.renderer import template
 from ..data.manager import Manager
@@ -153,7 +153,7 @@ class Details(FileRouteMixin, XHRPartialRoute):
             return dict(entry=fso, view=view)
 
 
-class Direct(RouteBase):
+class Direct(NonIterableRouteBase):
     path = '/direct/<path:safepath>'
 
     def get(self, path):
@@ -242,7 +242,7 @@ class Delete(CSRFRouteMixin, TemplateFormRoute):
         return self.removal_failed(path)
 
 
-class Thumb(RouteBase):
+class Thumb(NonIterableRouteBase):
     path = '/thumb/<path:safepath>'
 
     def get(self, path):
