@@ -29,7 +29,7 @@ def test_add_js_bundle(env_fac, Bundle):
     a = mod.Assets()
     a.add_js_bundle('foo', ['bar', 'baz'])
     Bundle.assert_called_once_with('bar.js', 'baz.js', filters='rjsmin',
-                                   output='js/foo-%(version)s.js')
+                                   output='js/foo-bundle-%(version)s.js')
     a.env.register.assert_called_once_with('js/foo', Bundle.return_value)
 
 
@@ -39,7 +39,7 @@ def test_add_js_bundle_with_dupes(env_fac, Bundle):
     a = mod.Assets()
     a.add_js_bundle('foo', ['bar', 'baz', 'bar', 'baz'])
     Bundle.assert_called_once_with('bar.js', 'baz.js', filters='rjsmin',
-                                   output='js/foo-%(version)s.js')
+                                   output='js/foo-bundle-%(version)s.js')
     a.env.register.assert_called_once_with('js/foo', Bundle.return_value)
 
 
@@ -49,7 +49,7 @@ def test_add_css_bundle(env_fac, Bundle):
     a = mod.Assets()
     a.add_css_bundle('foo', ['bar', 'baz'])
     Bundle.assert_called_once_with('bar.css', 'baz.css', filters='cssmin',
-                                   output='css/foo-%(version)s.css')
+                                   output='css/foo-bundle-%(version)s.css')
     a.env.register.assert_called_once_with('css/foo', Bundle.return_value)
 
 
@@ -59,7 +59,7 @@ def test_add_css_bundle_with_dupes(env_fac, Bundle):
     a = mod.Assets()
     a.add_css_bundle('foo', ['bar', 'baz', 'bar', 'baz'])
     Bundle.assert_called_once_with('bar.css', 'baz.css', filters='cssmin',
-                                   output='css/foo-%(version)s.css')
+                                   output='css/foo-bundle-%(version)s.css')
     a.env.register.assert_called_once_with('css/foo', Bundle.return_value)
 
 
