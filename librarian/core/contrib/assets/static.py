@@ -7,6 +7,8 @@ class Assets:
     """
     Wrapper class for webassets.Environment
     """
+    out_pattern = '{filetype}/{filename}-bundle-%(version)s.{filetype}'
+
     def __init__(self, directory='static', url='/static/', debug='merge'):
         self.directory = os.path.abspath(directory)
         self.url = url
@@ -62,7 +64,7 @@ class Assets:
         for nesting within other bundles.
         """
         assets = [self._js_path(a) for a in self._unique(assets)]
-        out_path = 'js/' + out + '-%(version)s.js'
+        out_path = self.out_pattern.format(filetype='js', filename=out)
         bundle = webassets.Bundle(*assets, filters='rjsmin', output=out_path)
         self.env.register('js/' + out, bundle)
         return bundle
@@ -88,7 +90,7 @@ class Assets:
         within other bundles.
         """
         assets = [self._css_path(a) for a in self._unique(assets)]
-        out_path = 'css/' + out + '-%(version)s.css'
+        out_path = self.out_pattern.format(filetype='css', filename=out)
         bundle = webassets.Bundle(*assets, filters='cssmin', output=out_path)
         self.env.register('css/' + out, bundle)
         return bundle
