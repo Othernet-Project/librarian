@@ -32,13 +32,23 @@ class Diag(TemplateRoute):
     template_func = template
     template_name = 'diag'
 
+    #: Default number of lines to be returned from the tail of a logfile
+    DEFAULT_LINES = 100
+
+    def get_lines(self):
+        try:
+            return int(self.request.params.get('lines', self.DEFAULT_LINES))
+        except (ValueError, TypeError):
+            return self.DEFAULT_LINES
+
     def get_log_iterator(self):
         logpath = self.config['logging.syslog']
         if not os.path.exists(logpath):
             return []
 
+        lines = self.get_lines()
         with open(logpath, 'rt') as log:
-            return iter_log(log, 100)
+            return iter_log(log, lines)
 
     def get(self):
         if exts.setup_wizard.is_completed:

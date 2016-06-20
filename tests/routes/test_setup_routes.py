@@ -6,6 +6,7 @@ except ImportError:
 import StringIO
 
 import mock
+import pytest
 
 import librarian.routes.setup as mod
 
@@ -15,11 +16,26 @@ def test_iter_log():
     assert list(mod.iter_log(file_obj, 2)) == ['data', 'next\n']
 
 
+@pytest.mark.parametrize('source,expected', [
+    ('test', 100),
+    (0, 0),
+    (50, 50),
+    ('70', 70),
+    (None, 100),
+])
+@mock.patch.object(mod.Diag, 'request')
+def test_diag_get_lines(request, source, expected):
+    request.params = {'lines': source}
+    route = mod.Diag()
+    assert route.get_lines() == expected
+
+
 @mock.patch.object(mod, 'iter_log')
 @mock.patch.object(builtins, 'open')
 @mock.patch.object(mod.os.path, 'exists')
+@mock.patch.object(mod.Diag, 'get_lines')
 @mock.patch.object(mod.Diag, 'request')
-def test_diag_get_log_iterator(request, exists, open_fn, iter_log):
+def test_diag_get_log_iterator(request, get_lines, exists, open_fn, iter_log):
     exists.return_value = True
     mocked_file = mock.Mock()
     mocked_file.read.return_value = ''
@@ -30,7 +46,7 @@ def test_diag_get_log_iterator(request, exists, open_fn, iter_log):
     route.config = {'logging.syslog': '/var/log/messages'}
     assert route.get_log_iterator() == iter_log.return_value
     open_fn.assert_called_once_with('/var/log/messages', 'rt')
-    iter_log.assert_called_once_with(mocked_file, 100)
+    iter_log.assert_called_once_with(mocked_file, get_lines.return_value)
 
 
 @mock.patch.object(mod, 'exts')
