@@ -17,8 +17,10 @@ def test_iter_log():
 
 @mock.patch.object(mod, 'iter_log')
 @mock.patch.object(builtins, 'open')
+@mock.patch.object(mod.os.path, 'exists')
 @mock.patch.object(mod.Diag, 'request')
-def test_diag_get_log_iterator(request, open_fn, iter_log):
+def test_diag_get_log_iterator(request, exists, open_fn, iter_log):
+    exists.return_value = True
     mocked_file = mock.Mock()
     mocked_file.read.return_value = ''
     ctx_manager = mock.MagicMock()
@@ -28,7 +30,7 @@ def test_diag_get_log_iterator(request, open_fn, iter_log):
     route.config = {'logging.syslog': '/var/log/messages'}
     assert route.get_log_iterator() == iter_log.return_value
     open_fn.assert_called_once_with('/var/log/messages', 'rt')
-    iter_log.assert_called_once_with(mocked_file)
+    iter_log.assert_called_once_with(mocked_file, 100)
 
 
 @mock.patch.object(mod, 'exts')
