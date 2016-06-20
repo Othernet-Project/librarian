@@ -1,0 +1,22 @@
+/**
+ * This module contains base variables that are used to re-skin (customize) the 
+ * Librarian UI toolkit.
+ *
+ * Recommended way to customize the variables is to load a separate module 
+ * containing customized values _before_ this module.
+ */
+/* line 4, ../../../ui_assets_src/scss/dashboard_settings.scss */
+.settings .group {
+  border-top: 1px solid #ddd;
+  padding-top: 1rem;
+  margin-bottom: 1em;
+}
+/* line 9, ../../../ui_assets_src/scss/dashboard_settings.scss */
+.settings .group:last-child {
+  border-bottom: 1px solid #ddd;
+}
+/* line 13, ../../../ui_assets_src/scss/dashboard_settings.scss */
+.settings .group .group-title {
+  text-transform: uppercase;
+  padding-right: 1rem;
+}

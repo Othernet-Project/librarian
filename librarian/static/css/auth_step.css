@@ -1,0 +1,27 @@
+/**
+ * This module contains base variables that are used to re-skin (customize) the 
+ * Librarian UI toolkit.
+ *
+ * Recommended way to customize the variables is to load a separate module 
+ * containing customized values _before_ this module.
+ */
+/* line 4, ../../../ui_assets_src/scss/auth_step.scss */
+.token-note {
+  padding: 0.5rem;
+  border: 1px solid #5d7b0a;
+  background: rgba(93, 123, 10, 0.1);
+  color: #5d7b0a;
+}
+/* line 13, ../../../ui_assets_src/scss/auth_step.scss */
+.token-note .label {
+  font-weight: bold;
+  display: block;
+}
+/* line 21, ../../../ui_assets_src/scss/auth_step.scss */
+.token-note .large {
+  font-size: 200%;
+  letter-spacing: 0.3rem;
+  text-align: center;
+  display: block;
+  margin: 2rem 0;
+}

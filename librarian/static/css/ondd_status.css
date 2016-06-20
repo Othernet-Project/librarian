@@ -1,0 +1,103 @@
+/**
+ * This module contains base variables that are used to re-skin (customize) the 
+ * Librarian UI toolkit.
+ *
+ * Recommended way to customize the variables is to load a separate module 
+ * containing customized values _before_ this module.
+ */
+@-moz-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* line 16, ../../../ui_assets_src/scss/ondd_status.scss */
+.ondd-status-panel {
+  position: relative;
+  border: 1px solid #ddd;
+  background: #eee;
+  padding-bottom: 1rem;
+}
+/* line 22, ../../../ui_assets_src/scss/ondd_status.scss */
+.ondd-status-panel:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+/* line 28, ../../../ui_assets_src/scss/ondd_status.scss */
+.ondd-status-panel .ondd-main-status {
+  margin-bottom: 1rem;
+}
+/* line 33, ../../../ui_assets_src/scss/ondd_status.scss */
+.ondd-status-panel .ondd-quick-status {
+  font-size: 140%;
+  text-transform: uppercase;
+  padding: 0.3rem 1rem;
+  display: inline-block;
+  margin-right: 0.5rem;
+  -moz-border-radius-bottomright: 0.3rem;
+  -webkit-border-bottom-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  color: #fff;
+  background: #cc3737;
+}
+/* line 48, ../../../ui_assets_src/scss/ondd_status.scss */
+.ondd-status-panel .ondd-quick-status.ondd-all-ok {
+  background: #089bd2;
+}
+/* line 54, ../../../ui_assets_src/scss/ondd_status.scss */
+.ondd-status-panel .ondd-status-icons {
+  line-height: 100%;
+  font-size: 140%;
+  margin-bottom: 0;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.2rem;
+}
+/* line 65, ../../../ui_assets_src/scss/ondd_status.scss */
+.ondd-status-panel .ondd-status-icons .ondd-status-ng {
+  color: #cc3737;
+  -moz-animation: blink linear 0.5s infinite;
+  -webkit-animation: blink linear 0.5s infinite;
+  animation: blink linear 0.5s infinite;
+}
+/* line 74, ../../../ui_assets_src/scss/ondd_status.scss */
+.ondd-status-panel .ondd-status-indicators {
+  white-space: nowrap;
+  display: block;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+}
+/* line 80, ../../../ui_assets_src/scss/ondd_status.scss */
+.ondd-status-panel .ondd-status-indicators .o-progress {
+  margin: 0 0.5rem;
+}

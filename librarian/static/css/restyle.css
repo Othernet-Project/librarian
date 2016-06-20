@@ -1,0 +1,181 @@
+/**
+ * This module contains base variables that are used to re-skin (customize) the 
+ * Librarian UI toolkit.
+ *
+ * Recommended way to customize the variables is to load a separate module 
+ * containing customized values _before_ this module.
+ */
+/* line 5, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/**
+ * HTML content styling overrides
+ */
+/* line 8, ../../../ui_assets_src/scss/restyle.scss */
+html {
+  background: #eee;
+  color: #333;
+}
+
+/* line 13, ../../../ui_assets_src/scss/restyle.scss */
+body {
+  margin: 2rem auto;
+  max-width: 600px;
+  padding: 1rem;
+  font-family: Georgia, "Times New Roman", Bookman, serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 140%;
+  background: #fff;
+  color: #555;
+}
+
+/* line 26, ../../../ui_assets_src/scss/restyle.scss */
+h1, h2, h3, h4, h5 {
+  line-height: 120%;
+  margin: 3rem 0 2rem;
+  font-weight: bold;
+}
+
+/* line 32, ../../../ui_assets_src/scss/restyle.scss */
+h1 {
+  font-size: 200%;
+}
+
+/* line 36, ../../../ui_assets_src/scss/restyle.scss */
+h2 {
+  font-size: 170%;
+}
+
+/* line 40, ../../../ui_assets_src/scss/restyle.scss */
+h3 {
+  font-size: 140%;
+}
+
+/* line 44, ../../../ui_assets_src/scss/restyle.scss */
+h4 {
+  font-size: 120%;
+}
+
+/* line 48, ../../../ui_assets_src/scss/restyle.scss */
+h5 {
+  font-size: 100%;
+}
+
+/* line 52, ../../../ui_assets_src/scss/restyle.scss */
+img {
+  display: inline-block;
+  max-width: 100%;
+  max-height: none;
+  width: auto !important;
+  height: auto !important;
+  border: 1px solid #aaa;
+}
+
+/* line 61, ../../../ui_assets_src/scss/restyle.scss */
+strong, b {
+  font-weight: bold;
+}
+
+/* line 65, ../../../ui_assets_src/scss/restyle.scss */
+em, i {
+  font-style: italic;
+}
+
+/* line 69, ../../../ui_assets_src/scss/restyle.scss */
+blockquote {
+  border-left: 0.5rem solid #aaa;
+  padding-left: 1rem;
+  margin: 1rem 0 2rem;
+}
+
+/* line 76, ../../../ui_assets_src/scss/restyle.scss */
+ul li, ol li {
+  margin-left: 2rem;
+  padding-left: 1rem;
+}
+
+/* line 82, ../../../ui_assets_src/scss/restyle.scss */
+ul li {
+  list-style: disc;
+}
+
+/* line 86, ../../../ui_assets_src/scss/restyle.scss */
+ol li {
+  list-style: decimal;
+}
+
+/* line 90, ../../../ui_assets_src/scss/restyle.scss */
+p {
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+/* line 95, ../../../ui_assets_src/scss/restyle.scss */
+code, pre {
+  font-family: monospace;
+  font-size: 110%;
+}

@@ -1,0 +1,24 @@
+/**
+ * This module contains base variables that are used to re-skin (customize) the 
+ * Librarian UI toolkit.
+ *
+ * Recommended way to customize the variables is to load a separate module 
+ * containing customized values _before_ this module.
+ */
+/* line 5, ../../../ui_assets_src/scss/logs.scss */
+#dashboard-logs textarea {
+  font-family: monospace;
+  font-size: 12px;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1em;
+  min-height: 300px;
+  max-height: 600px;
+  padding: 1rem;
+  border: 1px solid #aaa;
+  background: #333;
+  color: #fff;
+  -moz-border-radius: 0.3rem;
+  -webkit-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+}

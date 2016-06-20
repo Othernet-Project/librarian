@@ -1,0 +1,114 @@
+/**
+ * _media_query.scss: media query support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * This module contains base variables that are used to re-skin (customize) the 
+ * Librarian UI toolkit.
+ *
+ * Recommended way to customize the variables is to load a separate module 
+ * containing customized values _before_ this module.
+ */
+/* line 8, ../../../ui_assets_src/scss/ondd.scss */
+.ondd-cache-bar {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 0.3rem;
+  background: white;
+  margin-bottom: 0.5rem;
+}
+
+/* line 17, ../../../ui_assets_src/scss/ondd.scss */
+.ondd-cache-bar-indicator {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: #089bd2;
+}
+
+/* line 26, ../../../ui_assets_src/scss/ondd.scss */
+.ondd-cache-bar-percentage-lcd {
+  margin-bottom: 1rem;
+}
+
+/* line 30, ../../../ui_assets_src/scss/ondd.scss */
+.ondd-cache-alert {
+  background: #cc3737;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+/* line 38, ../../../ui_assets_src/scss/ondd.scss */
+.ondd-status .left {
+  float: left;
+  width: 40%;
+}
+@media only screen and (min-width: 1000px) {
+  /* line 38, ../../../ui_assets_src/scss/ondd.scss */
+  .ondd-status .left {
+    width: 400px;
+  }
+}
+@media only screen and (max-width: 786px) {
+  /* line 38, ../../../ui_assets_src/scss/ondd.scss */
+  .ondd-status .left {
+    float: none;
+    width: auto;
+  }
+}
+
+/* line 53, ../../../ui_assets_src/scss/ondd.scss */
+.ondd-status .right {
+  margin-left: 40%;
+  padding-left: 2rem;
+  max-width: 400px;
+}
+@media only screen and (min-width: 1000px) {
+  /* line 53, ../../../ui_assets_src/scss/ondd.scss */
+  .ondd-status .right {
+    margin-left: 400px;
+  }
+}
+@media only screen and (max-width: 786px) {
+  /* line 53, ../../../ui_assets_src/scss/ondd.scss */
+  .ondd-status .right {
+    margin-left: 0;
+    padding-left: 0;
+    max-width: 100%;
+  }
+}
+
+/* line 70, ../../../ui_assets_src/scss/ondd.scss */
+.ondd-status-panel {
+  margin-bottom: 1rem;
+}
+
+/* line 74, ../../../ui_assets_src/scss/ondd.scss */
+.ondd-file-list {
+  margin-bottom: 1rem;
+}
+/* line 78, ../../../ui_assets_src/scss/ondd.scss */
+.ondd-file-list li {
+  white-space: nowrap;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+/* line 88, ../../../ui_assets_src/scss/ondd.scss */
+.ondd-file-list li:first-child {
+  border-top: 1px solid #ddd;
+}
+/* line 92, ../../../ui_assets_src/scss/ondd.scss */
+.ondd-file-list li .o-progress-mini {
+  margin-right: 1rem;
+}

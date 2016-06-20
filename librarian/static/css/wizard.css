@@ -1,0 +1,28 @@
+/**
+ * This module contains base variables that are used to re-skin (customize) the 
+ * Librarian UI toolkit.
+ *
+ * Recommended way to customize the variables is to load a separate module 
+ * containing customized values _before_ this module.
+ */
+/* line 5, ../../../ui_assets_src/scss/wizard.scss */
+.o-pulldown-menubar {
+  top: 0;
+  height: 3.9rem;
+}
+
+/* line 11, ../../../ui_assets_src/scss/wizard.scss */
+.wizard-steps {
+  text-align: center;
+  padding-top: 1rem;
+}
+/* line 18, ../../../ui_assets_src/scss/wizard.scss */
+.wizard-steps .step {
+  font-size: 160%;
+}
+
+/* line 23, ../../../ui_assets_src/scss/wizard.scss */
+.step-logo > .icon {
+  position: relative;
+  top: -3px;
+}
