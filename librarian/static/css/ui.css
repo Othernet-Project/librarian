@@ -1,0 +1,3389 @@
+@charset "UTF-8";
+/* line 5, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../../.gem/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/**
+ * This module contains base variables that are used to re-skin (customize) the 
+ * Librarian UI toolkit.
+ *
+ * Recommended way to customize the variables is to load a separate module 
+ * containing customized values _before_ this module.
+ */
+/**
+ * This module contains fixes for various browsers. When adding a fix for a
+ * particular browser, please add it here, with description of the solution and
+ * any platforms it affects.
+ */
+/* line 5, ../../../ui_assets_src/scss/_base.scss */
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 11, ../../../ui_assets_src/scss/_base.scss */
+:focus {
+  outline: none;
+}
+
+/* line 12, ../../../ui_assets_src/scss/_base.scss */
+::-moz-focus-inner {
+  border: 0;
+}
+
+/* line 15, ../../../ui_assets_src/scss/_base.scss */
+select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #333;
+}
+
+/* line 20, ../../../ui_assets_src/scss/_base.scss */
+html {
+  font-family: Arial, Helvetica, "Liberation Sans", "Open Sans", sans-serif;
+  font-size: 14px;
+  line-height: 140%;
+  background: #ddd;
+  color: #333;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* line 29, ../../../ui_assets_src/scss/_base.scss */
+body {
+  overflow-x: hidden;
+}
+
+/* line 3, ../../../ui_assets_src/scss/_typography.scss */
+img {
+  max-width: 100%;
+}
+
+/* line 7, ../../../ui_assets_src/scss/_typography.scss */
+p {
+  margin-bottom: 1em;
+}
+
+/* line 11, ../../../ui_assets_src/scss/_typography.scss */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1em;
+}
+
+/* line 15, ../../../ui_assets_src/scss/_typography.scss */
+h1 {
+  font-size: 200%;
+  line-height: 110%;
+}
+
+/* line 20, ../../../ui_assets_src/scss/_typography.scss */
+h2 {
+  font-size: 180%;
+  margin-top: 1rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem;
+}
+
+/* line 27, ../../../ui_assets_src/scss/_typography.scss */
+.subtitle-buttons {
+  display: block;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1rem;
+  text-align: right;
+  margin: 0 0 1rem;
+}
+
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+/* line 4, ../../../ui_assets_src/scss/widgets/_button.scss */
+button,
+.button {
+  padding: 0 1rem;
+  height: 2.1rem;
+  font-size: 1rem;
+  font-family: Arial, Helvetica, "Liberation Sans", "Open Sans", sans-serif;
+  line-height: 120%;
+  text-decoration: none;
+  background: #089bd2;
+  color: #fff;
+  border: 1px solid #089bd2;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  -moz-transition: background 0.5s, border-color 0.5s, color 0.5s;
+  -o-transition: background 0.5s, border-color 0.5s, color 0.5s;
+  -webkit-transition: background 0.5s, border-color 0.5s, color 0.5s;
+  transition: background 0.5s, border-color 0.5s, color 0.5s;
+}
+/* line 32, ../../../ui_assets_src/scss/widgets/_button.scss */
+button:hover, button:focus,
+.button:hover,
+.button:focus {
+  border-color: #444;
+  background: #444;
+  color: #fff;
+}
+/* line 39, ../../../ui_assets_src/scss/widgets/_button.scss */
+button.clean,
+.button.clean {
+  padding: 0;
+  height: auto;
+  background: transparent;
+  border: 0;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  color: #333;
+}
+/* line 47, ../../../ui_assets_src/scss/widgets/_button.scss */
+button.clean:hover, button.clean:focus,
+.button.clean:hover,
+.button.clean:focus {
+  background: transparent;
+  color: #089bd2;
+  background-image: none;
+}
+/* line 55, ../../../ui_assets_src/scss/widgets/_button.scss */
+button .icon,
+.button .icon {
+  font-size: 120%;
+}
+
+/* line 60, ../../../ui_assets_src/scss/widgets/_button.scss */
+button.nobutton {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #089bd2;
+}
+/* line 67, ../../../ui_assets_src/scss/widgets/_button.scss */
+button.nobutton:focus, button.nobutton:hover {
+  color: #333;
+}
+
+/* line 73, ../../../ui_assets_src/scss/widgets/_button.scss */
+.buttons {
+  text-align: right;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  margin-bottom: 1rem;
+  border-top: 1px solid #089bd2;
+}
+
+/* line 86, ../../../ui_assets_src/scss/widgets/_button.scss */
+a.button {
+  padding: 0.36rem 1rem;
+}
+
+/* line 4, ../../../ui_assets_src/scss/widgets/_input.scss */
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=date],
+input[type=search],
+input[type=url],
+input[type=tel],
+input[type=number],
+select {
+  padding: 0.4rem 1rem;
+  height: 2.1rem;
+  width: 100%;
+  font-size: 1rem;
+  font-family: Arial, Helvetica, "Liberation Sans", "Open Sans", sans-serif;
+  background: #ddd;
+  color: #333;
+  border: 1px solid #ddd;
+  -moz-transition: background 0.5s;
+  -o-transition: background 0.5s;
+  -webkit-transition: background 0.5s;
+  transition: background 0.5s;
+}
+/* line 30, ../../../ui_assets_src/scss/widgets/_input.scss */
+input[type=text]:hover, input[type=text]:focus,
+input[type=email]:hover,
+input[type=email]:focus,
+input[type=password]:hover,
+input[type=password]:focus,
+input[type=date]:hover,
+input[type=date]:focus,
+input[type=search]:hover,
+input[type=search]:focus,
+input[type=url]:hover,
+input[type=url]:focus,
+input[type=tel]:hover,
+input[type=tel]:focus,
+input[type=number]:hover,
+input[type=number]:focus,
+select:hover,
+select:focus {
+  background: #fff;
+}
+
+/* line 36, ../../../ui_assets_src/scss/widgets/_input.scss */
+input[type=checkbox] {
+  vertical-align: middle;
+}
+
+/* line 3, ../../../ui_assets_src/scss/widgets/_labels.scss */
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+}
+
+/* line 15, ../../../ui_assets_src/scss/widgets/_labels.scss */
+input[type=checkbox] + label {
+  display: inline;
+  vertical-align: middle;
+}
+
+@-moz-keyframes slide-up {
+  from {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    max-height: 100px;
+  }
+  to {
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: 0px;
+  }
+}
+@-webkit-keyframes slide-up {
+  from {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    max-height: 100px;
+  }
+  to {
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: 0px;
+  }
+}
+@keyframes slide-up {
+  from {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    max-height: 100px;
+  }
+  to {
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: 0px;
+  }
+}
+/* line 38, ../../../ui_assets_src/scss/widgets/_forms.scss */
+form .o-field-help-message {
+  font-style: italic;
+  position: relative;
+  display: block;
+  padding-left: 2rem;
+  margin-top: 0.2rem;
+  color: #5d7b0a;
+}
+/* line 28, ../../../ui_assets_src/scss/widgets/_forms.scss */
+form .o-field-help-message:before {
+  font-family: "OIcons";
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  text-transform: none;
+  display: inline-block;
+  speak: none;
+  vertical-align: middle;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute;
+  font-size: 120%;
+  left: 0.7rem;
+  top: 0;
+}
+/* line 187, ../../../ui_assets_src/scss/elements/_icons.scss */
+form .o-field-help-message:before ~ * {
+  vertical-align: middle;
+}
+/* line 191, ../../../ui_assets_src/scss/elements/_icons.scss */
+form .o-field-help-message:before:before {
+  display: inline-block;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+form .o-field-help-message:before {
+  content: "";
+}
+/* line 48, ../../../ui_assets_src/scss/widgets/_forms.scss */
+form .o-field-error-message {
+  font-style: italic;
+  position: relative;
+  display: block;
+  padding-left: 2rem;
+  margin-top: 0.2rem;
+  color: #cc3737;
+}
+/* line 28, ../../../ui_assets_src/scss/widgets/_forms.scss */
+form .o-field-error-message:before {
+  font-family: "OIcons";
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  text-transform: none;
+  display: inline-block;
+  speak: none;
+  vertical-align: middle;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute;
+  font-size: 120%;
+  left: 0.7rem;
+  top: 0;
+}
+/* line 187, ../../../ui_assets_src/scss/elements/_icons.scss */
+form .o-field-error-message:before ~ * {
+  vertical-align: middle;
+}
+/* line 191, ../../../ui_assets_src/scss/elements/_icons.scss */
+form .o-field-error-message:before:before {
+  display: inline-block;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+form .o-field-error-message:before {
+  content: "";
+}
+
+/* line 59, ../../../ui_assets_src/scss/widgets/_forms.scss */
+.o-form-messages {
+  background: rgba(93, 123, 10, 0.1);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* line 65, ../../../ui_assets_src/scss/widgets/_forms.scss */
+.o-form-error {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  background: rgba(204, 55, 55, 0.1);
+  color: #cc3737;
+  -moz-animation-name: slide-up;
+  -webkit-animation-name: slide-up;
+  animation-name: slide-up;
+  -moz-animation-delay: 5s;
+  -webkit-animation-delay: 5s;
+  animation-delay: 5s;
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-form-error:before {
+  content: "";
+}
+/* line 76, ../../../ui_assets_src/scss/widgets/_forms.scss */
+.o-form-error:before {
+  font-family: "OIcons";
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  text-transform: none;
+  display: inline-block;
+  speak: none;
+  vertical-align: middle;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-right: 0.2rem;
+}
+/* line 187, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-form-error:before ~ * {
+  vertical-align: middle;
+}
+/* line 191, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-form-error:before:before {
+  display: inline-block;
+}
+
+/* line 87, ../../../ui_assets_src/scss/widgets/_forms.scss */
+.o-form-message {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  background: rgba(93, 123, 10, 0.1);
+  color: #5d7b0a;
+  -moz-animation-name: slide-up;
+  -webkit-animation-name: slide-up;
+  animation-name: slide-up;
+  -moz-animation-delay: 5s;
+  -webkit-animation-delay: 5s;
+  animation-delay: 5s;
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-form-message:before {
+  content: "";
+}
+/* line 98, ../../../ui_assets_src/scss/widgets/_forms.scss */
+.o-form-message:before {
+  font-family: "OIcons";
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  text-transform: none;
+  display: inline-block;
+  speak: none;
+  vertical-align: middle;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-right: 0.2rem;
+}
+/* line 187, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-form-message:before ~ * {
+  vertical-align: middle;
+}
+/* line 191, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-form-message:before:before {
+  display: inline-block;
+}
+
+/* line 110, ../../../ui_assets_src/scss/widgets/_forms.scss */
+.o-field-error label {
+  color: #cc3737;
+}
+/* line 114, ../../../ui_assets_src/scss/widgets/_forms.scss */
+.o-field-error input, .o-field-error select, .o-field-error textarea {
+  border-color: #cc3737;
+}
+
+/* line 1, ../../../ui_assets_src/scss/widgets/_links.scss */
+a {
+  text-decoration: none;
+  color: #089bd2;
+}
+/* line 8, ../../../ui_assets_src/scss/widgets/_links.scss */
+a:hover {
+  color: #022e3f;
+}
+
+/**
+ * _sprites.scss: sprite images with high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/**
+ * _hdpi_images.scss: helpers for high-dpi display support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 10, ../../../ui_assets_src/scss/widgets/_pulldown_menubar.scss */
+.o-pulldown-menubar {
+  display: block;
+  background: #444;
+  color: #aaa;
+  -moz-box-shadow: 0 0 2px rgba(51, 51, 51, 0.5);
+  -webkit-box-shadow: 0 0 2px rgba(51, 51, 51, 0.5);
+  box-shadow: 0 0 2px rgba(51, 51, 51, 0.5);
+  position: fixed;
+  top: -9rem;
+  left: 0;
+  right: 0;
+  height: 12.9rem;
+  z-index: 10;
+  -moz-transition: top 0.3s;
+  -o-transition: top 0.3s;
+  -webkit-transition: top 0.3s;
+  transition: top 0.3s;
+}
+/* line 32, ../../../ui_assets_src/scss/widgets/_pulldown_menubar.scss */
+.o-pulldown-menubar.open {
+  top: 0;
+}
+/* line 35, ../../../ui_assets_src/scss/widgets/_pulldown_menubar.scss */
+.o-pulldown-menubar.open .o-pulldown-menubar-hbar-activator {
+  background-color: #089bd2;
+  color: #fff;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-pulldown-menubar.open .o-pulldown-menubar-hbar-activator-icon:before {
+  content: "";
+}
+/* line 49, ../../../ui_assets_src/scss/widgets/_pulldown_menubar.scss */
+.o-pulldown-menubar .o-pulldown-menubar-menu {
+  position: relative;
+  width: 100%;
+  height: 9rem;
+  background-color: #089bd2;
+  color: #fff;
+}
+/* line 60, ../../../ui_assets_src/scss/widgets/_pulldown_menubar.scss */
+.o-pulldown-menubar .o-pulldown-menubar-hbar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3.9rem;
+}
+/* line 69, ../../../ui_assets_src/scss/widgets/_pulldown_menubar.scss */
+.o-pulldown-menubar .o-pulldown-menubar-hbar-activator {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16rem;
+  height: 100%;
+  text-align: center;
+  text-decoration: none;
+  line-height: 3.9rem;
+  background-color: #444;
+  color: #aaa;
+  -moz-border-radius-bottomright: 0.4rem;
+  -webkit-border-bottom-right-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
+  -moz-transition: background-color 0.3s;
+  -o-transition: background-color 0.3s;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+/* line 90, ../../../ui_assets_src/scss/widgets/_pulldown_menubar.scss */
+.o-pulldown-menubar .o-pulldown-menubar-hbar-activator:hover, .o-pulldown-menubar .o-pulldown-menubar-hbar-activator:focus {
+  background: #089bd2;
+  color: #fff;
+}
+/* line 96, ../../../ui_assets_src/scss/widgets/_pulldown_menubar.scss */
+.o-pulldown-menubar .o-pulldown-menubar-hbar-bar {
+  position: absolute;
+  left: 16rem;
+  right: 0;
+  top: 0;
+  height: 100%;
+}
+/* line 105, ../../../ui_assets_src/scss/widgets/_pulldown_menubar.scss */
+.o-pulldown-menubar .o-pulldown-menubar-hbar-activator-label {
+  position: relative;
+  top: -1px;
+}
+/* line 110, ../../../ui_assets_src/scss/widgets/_pulldown_menubar.scss */
+.o-pulldown-menubar .o-pulldown-menubar-hbar-activator-label .o-pulldown-menubar-hbar-activator-label-icon {
+  font-size: 1200%;
+  -moz-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+  overflow: hidden;
+  color: #fff;
+}
+/* line 117, ../../../ui_assets_src/scss/widgets/_pulldown_menubar.scss */
+.o-pulldown-menubar .o-pulldown-menubar-hbar-activator-label .o-pulldown-menubar-hbar-activator-label-text {
+  display: none;
+}
+/* line 122, ../../../ui_assets_src/scss/widgets/_pulldown_menubar.scss */
+.o-pulldown-menubar .o-pulldown-menubar-hbar-activator-icon {
+  vertical-align: middle;
+  position: relative;
+  font-size: 180%;
+  -moz-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-pulldown-menubar .o-pulldown-menubar-hbar-activator-icon:before {
+  content: "";
+}
+
+/* line 3, ../../../ui_assets_src/scss/widgets/_main_panel.scss */
+.o-main-panel {
+  position: fixed;
+  top: 3.9rem;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+/* line 16, ../../../ui_assets_src/scss/widgets/_main_panel.scss */
+.o-main-panel .o-main-inner {
+  padding: 1rem;
+}
+
+/**
+ * _media_query.scss: media query support
+ *
+ * Copyright 2014-2015, Outernet Inc.
+ * Some rights reserved.
+ *
+ * This software is free software licensed under the terms of GPLv3. See
+ * COPYING file that comes with the source code, or
+ * http://www.gnu.org/licenses/gpl.txt.
+ */
+/* line 5, ../../../ui_assets_src/scss/widgets/_narrow_panel.scss */
+.o-narrow-panel {
+  max-width: 36rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  position: relative;
+  background: rgba(255, 255, 255, 0.75);
+  -moz-border-radius: 0.3rem;
+  -webkit-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+@media only screen and (max-width: 640px) {
+  /* line 5, ../../../ui_assets_src/scss/widgets/_narrow_panel.scss */
+  .o-narrow-panel {
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    margin: 0;
+  }
+}
+
+/* line 8, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+/* line 19, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar.open .o-statusbar-status {
+  max-height: 40rem;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-statusbar.open .o-statusbar-hbar-activator-icon:before {
+  content: "";
+}
+/* line 30, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar .o-statusbar-hbar {
+  position: relative;
+  height: 2.2rem;
+  width: 100%;
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  background: #444;
+  color: #fff;
+}
+/* line 41, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar .o-statusbar-hbar.clickable {
+  cursor: pointer;
+}
+/* line 46, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar .o-statusbar-status {
+  max-height: 0;
+  overflow: hidden;
+  margin: 0;
+  -moz-transition: max-height 0.3s;
+  -o-transition: max-height 0.3s;
+  -webkit-transition: max-height 0.3s;
+  transition: max-height 0.3s;
+}
+/* line 56, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar .o-statusbar-hbar-activator {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 3rem;
+  color: #fff;
+  height: 100%;
+  line-height: 2.2rem;
+}
+/* line 66, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar .o-statusbar-hbar-activator .o-statusbar-hbar-activator-label {
+  display: none;
+}
+/* line 70, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar .o-statusbar-hbar-activator:hover, .o-statusbar .o-statusbar-hbar-activator:focus {
+  color: #089bd2;
+}
+/* line 76, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar .o-statusbar-hbar-activator-icon {
+  width: 100%;
+  height: 100%;
+  font-size: 180%;
+  text-align: center;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-statusbar .o-statusbar-hbar-activator-icon:before {
+  content: "";
+}
+/* line 89, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar .o-statusbar-hbar-quick-status {
+  padding: 0.3rem 1rem;
+}
+/* line 92, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar .o-statusbar-hbar-quick-status .separator {
+  with: 0;
+  height: 100%;
+  position: relative;
+  margin: 0 0.3rem;
+  border-right: 1px solid #aaa;
+}
+/* line 104, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar .o-statusbar-hbar-quick-status .icon {
+  font-size: 150%;
+}
+/* line 107, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar .o-statusbar-hbar-quick-status .icon.alert {
+  color: #efa417;
+}
+/* line 113, ../../../ui_assets_src/scss/widgets/_statusbar.scss */
+.o-statusbar .o-statusbar-panel-content {
+  background: #eee;
+}
+
+/**
+ * PANELS
+ *
+ * Panels are generic containers. They can be nested within each other, and 
+ * they don't have any inherent styling. Styling for panel groups is applied
+ * using the mixins in this module. Each mixin defines the layout of a fixed
+ * set of panels (e.g., split-panel deals with a single parent, and two 
+ * children).
+ *
+ * All panels should have a class specified by global $o-container-class 
+ * variable in the params module.
+ */
+/**
+ * split-panel($split)
+ *
+ * Panel that has two child containers that split the width at certain 
+ * coordinate given by $split argument.
+ *
+ * Children span the entire height of the parent container, and parent has a 
+ * specific height given by the $height argument.
+ *
+ * The $split-from-right argument can either be yes or no. If splitting is done
+ * from right, then the right side panel would be that wide, otherwise the 
+ * $split width is given to the left panel.
+ *
+ */
+/**
+ * double-split-panel($split-left, $split-right, $height)
+ *
+ * Panel that contains three children, of which the first is left-aligned, with
+ * fixed width specified by $split-left argument, last is right-aligned with
+ * a width given by $split-right argument, and second child takes up the 
+ * remaining space between them. Note that $split-right argument is counted 
+ * from the right edge, not from left.
+ *
+ * The containing panel height is given by the $height argument, and the child 
+ * panels span the full height.
+ */
+/* line 8, ../../../ui_assets_src/scss/widgets/_contextbar.scss */
+.o-contextbar {
+  display: block;
+  position: relative;
+  height: 100%;
+}
+/* line 35, ../../../ui_assets_src/scss/base/_panels.scss */
+.o-contextbar > .o-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+/* line 42, ../../../ui_assets_src/scss/base/_panels.scss */
+.o-contextbar > .o-panel:first-child {
+  left: 0;
+  right: 4.5rem;
+}
+/* line 47, ../../../ui_assets_src/scss/base/_panels.scss */
+.o-contextbar > .o-panel:last-child {
+  width: 4.5rem;
+  right: 0;
+}
+/* line 12, ../../../ui_assets_src/scss/widgets/_contextbar.scss */
+.o-contextbar .o-contextbar-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: #aaa;
+}
+/* line 25, ../../../ui_assets_src/scss/widgets/_contextbar.scss */
+.o-contextbar .o-contextbar-menu:hover, .o-contextbar .o-contextbar-menu:focus {
+  background: #089bd2;
+  color: #fff;
+  -moz-transition: background-color 0.3s;
+  -o-transition: background-color 0.3s;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+/* line 36, ../../../ui_assets_src/scss/widgets/_contextbar.scss */
+.o-contextbar .o-contextbar-menu-label {
+  display: none;
+}
+/* line 43, ../../../ui_assets_src/scss/widgets/_contextbar.scss */
+.o-contextbar .o-contextbar-menu-icon {
+  position: relative;
+  top: 1.1rem;
+  width: 100%;
+  text-align: center;
+  text-align: center;
+  font-size: 220%;
+  -moz-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-contextbar .o-contextbar-menu-icon:before {
+  content: "";
+}
+
+/* line 6, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch {
+  width: 100%;
+  display: block;
+  position: relative;
+  height: 100%;
+}
+/* line 85, ../../../ui_assets_src/scss/base/_panels.scss */
+.o-multisearch > .o-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+/* line 91, ../../../ui_assets_src/scss/base/_panels.scss */
+.o-multisearch > .o-panel:first-child {
+  left: 0;
+  width: 14rem;
+}
+/* line 96, ../../../ui_assets_src/scss/base/_panels.scss */
+.o-multisearch > .o-panel:last-child {
+  right: 0;
+  width: 6rem;
+}
+/* line 101, ../../../ui_assets_src/scss/base/_panels.scss */
+.o-multisearch > .o-panel:nth-child(2) {
+  left: 14rem;
+  right: 6rem;
+}
+@media only screen and (max-width: 520px) {
+  /* line 6, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+  .o-multisearch {
+    display: none;
+  }
+}
+/* line 15, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch > .o-panel {
+  padding: 0.8rem 0;
+}
+/* line 18, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch > .o-panel:first-child {
+  padding-left: 2rem;
+}
+@media only screen and (max-width: 740px) {
+  /* line 18, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+  .o-multisearch > .o-panel:first-child {
+    display: none;
+  }
+}
+/* line 26, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch > .o-panel:last-child {
+  padding-right: 2rem;
+}
+@media only screen and (max-width: 740px) {
+  /* line 30, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+  .o-multisearch > .o-panel:nth-child(2) {
+    left: 0;
+  }
+  /* line 34, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+  .o-multisearch > .o-panel:nth-child(2) input {
+    border-left: 1px solid #aaa;
+    -moz-border-radius-topleft: 0.3rem;
+    -webkit-border-top-left-radius: 0.3rem;
+    border-top-left-radius: 0.3rem;
+    -moz-border-radius-bottomleft: 0.3rem;
+    -webkit-border-bottom-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+  }
+}
+/* line 44, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch select, .o-multisearch input[type=text], .o-multisearch button, .o-multisearch label {
+  display: inline-block;
+  width: 100%;
+  vertical-align: middle;
+  margin: 0;
+}
+/* line 51, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch input[type=text] {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+  background: #ddd;
+  -moz-transition: background 0.5s;
+  -o-transition: background 0.5s;
+  -webkit-transition: background 0.5s;
+  transition: background 0.5s;
+}
+/* line 59, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch input[type=text]:focus, .o-multisearch input[type=text]:hover {
+  background: white;
+}
+/* line 65, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch select {
+  -moz-border-radius-topright: 0;
+  -webkit-border-top-right-radius: 0;
+  border-top-right-radius: 0;
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+/* line 70, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch button {
+  -moz-border-radius-topleft: 0;
+  -webkit-border-top-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-border-radius-bottomleft: 0;
+  -webkit-border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border: 1px solid #666;
+  background: #666;
+  color: #aaa;
+}
+/* line 77, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch button:hover, .o-multisearch button:focus {
+  background: #089bd2;
+  color: #fff;
+  border-color: #089bd2;
+}
+/* line 85, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch label {
+  font-family: Arial, Helvetica, "Liberation Sans", "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  text-align: center;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  padding: 0.3rem 0.2rem;
+  border: 1px solid #666;
+  background: #666;
+  color: #aaa;
+}
+/* line 104, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch .o-multisearch-button-icon {
+  font-size: 180%;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-multisearch .o-multisearch-button-icon:before {
+  content: "";
+}
+/* line 111, ../../../ui_assets_src/scss/widgets/_multisearch.scss */
+.o-multisearch .o-multisearch-button-label {
+  display: none;
+}
+
+/* line 4, ../../../ui_assets_src/scss/widgets/_context_menu.scss */
+.o-context-menu {
+  position: fixed;
+  right: -19rem;
+  z-index: 20;
+  top: 4.9rem;
+  width: 18rem;
+  padding: 1rem;
+  padding-right: 2rem;
+  background: white;
+  -moz-border-radius-topleft: 0.3rem;
+  -webkit-border-top-left-radius: 0.3rem;
+  border-top-left-radius: 0.3rem;
+  -moz-border-radius-bottomleft: 0.3rem;
+  -webkit-border-bottom-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+  -moz-box-shadow: 0 0 10px rgba(51, 51, 51, 0.4);
+  -webkit-box-shadow: 0 0 10px rgba(51, 51, 51, 0.4);
+  box-shadow: 0 0 10px rgba(51, 51, 51, 0.4);
+  -moz-transition: right 0.6s cubic-bezier(0.5, 0, 0.2, 1.2);
+  -o-transition: right 0.6s cubic-bezier(0.5, 0, 0.2, 1.2);
+  -webkit-transition: right 0.6s cubic-bezier(0.5, 0, 0.2, 1.2);
+  transition: right 0.6s cubic-bezier(0.5, 0, 0.2, 1.2);
+}
+/* line 25, ../../../ui_assets_src/scss/widgets/_context_menu.scss */
+.o-context-menu.open {
+  right: -1rem;
+}
+/* line 31, ../../../ui_assets_src/scss/widgets/_context_menu.scss */
+.o-context-menu .o-context-menu-menuitem {
+  font-size: 120%;
+  text-decoration: none;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  display: block;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+}
+/* line 47, ../../../ui_assets_src/scss/widgets/_context_menu.scss */
+.o-context-menu .o-context-menu-menuitem:last-child {
+  border-bottom: 0;
+}
+/* line 51, ../../../ui_assets_src/scss/widgets/_context_menu.scss */
+.o-context-menu .o-context-menu-menuitem:hover, .o-context-menu .o-context-menu-menuitem:focus {
+  color: #089bd2;
+}
+/* line 56, ../../../ui_assets_src/scss/widgets/_context_menu.scss */
+.o-context-menu .o-context-menu-menuitem.disabled, .o-context-menu .o-context-menu-menuitem:hover.disabled, .o-context-menu .o-context-menu-menuitem:focus.disabled {
+  color: #aaa;
+  cursor: default;
+}
+/* line 64, ../../../ui_assets_src/scss/widgets/_context_menu.scss */
+.o-context-menu .o-context-menu-menuitem-icon {
+  font-size: 144%;
+  vertical-align: middle;
+}
+/* line 69, ../../../ui_assets_src/scss/widgets/_context_menu.scss */
+.o-context-menu .o-context-menu-menuitem-label {
+  vertical-align: middle;
+}
+/* line 73, ../../../ui_assets_src/scss/widgets/_context_menu.scss */
+.o-context-menu .o-context-menu-separator {
+  display: block;
+  height: 4px;
+  background: #ddd;
+}
+
+@-moz-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein {
+  0% {
+    background-color: rgba(51, 51, 51, 0);
+  }
+  100% {
+    background-color: rgba(51, 51, 51, 0.6);
+  }
+}
+@-webkit-keyframes fadein {
+  0% {
+    background-color: rgba(51, 51, 51, 0);
+  }
+  100% {
+    background-color: rgba(51, 51, 51, 0.6);
+  }
+}
+@keyframes fadein {
+  0% {
+    background-color: rgba(51, 51, 51, 0);
+  }
+  100% {
+    background-color: rgba(51, 51, 51, 0.6);
+  }
+}
+@-moz-keyframes popin {
+  0% {
+    top: -2000px;
+  }
+  100% {
+    top: 0;
+  }
+}
+@-webkit-keyframes popin {
+  0% {
+    top: -2000px;
+  }
+  100% {
+    top: 0;
+  }
+}
+@keyframes popin {
+  0% {
+    top: -2000px;
+  }
+  100% {
+    top: 0;
+  }
+}
+/* line 36, ../../../ui_assets_src/scss/widgets/_modal.scss */
+.o-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  background-color: rgba(51, 51, 51, 0.6);
+  cursor: pointer;
+  -moz-animation: fadein 2s;
+  -webkit-animation: fadein 2s;
+  animation: fadein 2s;
+}
+/* line 56, ../../../ui_assets_src/scss/widgets/_modal.scss */
+.o-modal-overlay .o-modal-window {
+  position: relative;
+  margin: 0 auto;
+  max-width: 35rem;
+  width: 90%;
+  overflow-y: auto;
+  max-height: 90%;
+  min-height: 20%;
+  padding: 3rem 1rem 1rem;
+  -moz-animation: popin 0.5s;
+  -webkit-animation: popin 0.5s;
+  animation: popin 0.5s;
+  background: #444;
+  color: #aaa;
+  -moz-box-shadow: 0 0 10px rgba(51, 51, 51, 0.8);
+  -webkit-box-shadow: 0 0 10px rgba(51, 51, 51, 0.8);
+  box-shadow: 0 0 10px rgba(51, 51, 51, 0.8);
+}
+/* line 75, ../../../ui_assets_src/scss/widgets/_modal.scss */
+.o-modal-overlay .o-modal-window.o-full-screen {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: auto;
+  left: 0.5rem;
+  right: 0.5rem;
+  overflow-y: hidden;
+}
+/* line 86, ../../../ui_assets_src/scss/widgets/_modal.scss */
+.o-modal-overlay .o-modal-window.o-full-screen .o-modal-content {
+  position: absolute;
+  top: 3rem;
+  right: 1rem;
+  left: 1rem;
+  bottom: 1rem;
+}
+/* line 96, ../../../ui_assets_src/scss/widgets/_modal.scss */
+.o-modal-overlay .o-modal-spinner {
+  display: block;
+  font-size: 180%;
+  text-align: center;
+  margin: 4rem 0;
+}
+/* line 104, ../../../ui_assets_src/scss/widgets/_modal.scss */
+.o-modal-overlay .o-modal-spinner-loading-indicator {
+  animation: blink 1s infinite;
+}
+/* line 108, ../../../ui_assets_src/scss/widgets/_modal.scss */
+.o-modal-overlay .o-modal-close {
+  font-size: 180%;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  -moz-border-radius-topleft: 0;
+  -webkit-border-top-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-border-radius-topright: 0;
+  -webkit-border-top-right-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 0;
+}
+/* line 124, ../../../ui_assets_src/scss/widgets/_modal.scss */
+.o-modal-overlay .o-modal-close-label {
+  display: none;
+}
+/* line 130, ../../../ui_assets_src/scss/widgets/_modal.scss */
+.o-modal-overlay .o-modal-close-icon {
+  position: relative;
+  top: -3px;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-modal-overlay .o-modal-close-icon:before {
+  content: "";
+}
+
+/* line 5, ../../../ui_assets_src/scss/widgets/_collapsible.scss */
+.o-collapsible {
+  margin-top: 1px;
+}
+/* line 10, ../../../ui_assets_src/scss/widgets/_collapsible.scss */
+.o-collapsible .o-collapsible-section {
+  position: relative;
+  overflow: hidden;
+  max-height: 80rem;
+  -moz-transition: max-height 0.3s;
+  -o-transition: max-height 0.3s;
+  -webkit-transition: max-height 0.3s;
+  transition: max-height 0.3s;
+}
+/* line 20, ../../../ui_assets_src/scss/widgets/_collapsible.scss */
+.o-collapsible .o-collapsible-section > :nth-child(1) {
+  line-height: 3rem;
+  font-size: 120%;
+  position: relative;
+  margin: 0;
+  padding-left: 1rem;
+  z-index: 1;
+  height: 3rem;
+  cursor: pointer;
+  background: #444;
+}
+/* line 36, ../../../ui_assets_src/scss/widgets/_collapsible.scss */
+.o-collapsible .o-collapsible-section > :nth-child(1) a {
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  color: #aaa;
+}
+/* line 45, ../../../ui_assets_src/scss/widgets/_collapsible.scss */
+.o-collapsible .o-collapsible-section > :nth-child(1) .icon {
+  font-size: 180%;
+  vertical-align: middle;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-collapsible .o-collapsible-section > :nth-child(1) .icon:before {
+  content: "";
+}
+/* line 56, ../../../ui_assets_src/scss/widgets/_collapsible.scss */
+.o-collapsible .o-collapsible-section > :nth-child(1):hover, .o-collapsible .o-collapsible-section > :nth-child(1):focus {
+  background: #089bd2;
+}
+/* line 60, ../../../ui_assets_src/scss/widgets/_collapsible.scss */
+.o-collapsible .o-collapsible-section > :nth-child(1):hover a, .o-collapsible .o-collapsible-section > :nth-child(1):focus a {
+  color: #333;
+}
+/* line 67, ../../../ui_assets_src/scss/widgets/_collapsible.scss */
+.o-collapsible .o-collapsible-section > :nth-child(2) {
+  padding: 20px;
+  overflow: hidden;
+  margin: 0;
+  background: #eee;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-collapsible .o-collapsible-section.o-collapsed > :nth-child(1) .icon:before {
+  content: "";
+}
+/* line 81, ../../../ui_assets_src/scss/widgets/_collapsible.scss */
+.o-collapsible .o-collapsible-section.o-collapsed {
+  max-height: 3rem !important;
+}
+
+/* line 4, ../../../ui_assets_src/scss/widgets/_tabbable.scss */
+.o-tabbable {
+  position: relative;
+}
+/* line 7, ../../../ui_assets_src/scss/widgets/_tabbable.scss */
+.o-tabbable .o-tab-handles {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3rem;
+  border-right: 1px solid #ddd;
+}
+/* line 19, ../../../ui_assets_src/scss/widgets/_tabbable.scss */
+.o-tabbable .o-tab-panels {
+  margin-left: 3rem;
+  padding: 1rem 1rem 3rem;
+  height: 100%;
+  overflow-y: auto;
+}
+/* line 27, ../../../ui_assets_src/scss/widgets/_tabbable.scss */
+.o-tabbable .o-tab-handle-activator {
+  font-size: 180%;
+  text-align: center;
+  line-height: 3rem;
+  display: inline-block;
+  width: 100%;
+  color: #333;
+  border-right: 2px solid transparent;
+  border-bottom: 1px solid #ddd;
+  -moz-transition: border-right-color 0.3s;
+  -o-transition: border-right-color 0.3s;
+  -webkit-transition: border-right-color 0.3s;
+  transition: border-right-color 0.3s;
+}
+/* line 46, ../../../ui_assets_src/scss/widgets/_tabbable.scss */
+.o-tabbable .o-tab-handle-activator:hover, .o-tabbable .o-tab-handle-activator:focus {
+  color: #089bd2;
+}
+/* line 51, ../../../ui_assets_src/scss/widgets/_tabbable.scss */
+.o-tabbable .o-tab-handle-activator.active {
+  border-right-color: #089bd2;
+}
+/* line 56, ../../../ui_assets_src/scss/widgets/_tabbable.scss */
+.o-tabbable .o-tab-handle-activator-icon {
+  width: 100%;
+  height: 100%;
+}
+/* line 61, ../../../ui_assets_src/scss/widgets/_tabbable.scss */
+.o-tabbable .o-tab-handle-activator-label {
+  display: none;
+}
+/* line 65, ../../../ui_assets_src/scss/widgets/_tabbable.scss */
+.o-tabbable .o-tab-panel {
+  display: none;
+  position: relative;
+}
+/* line 69, ../../../ui_assets_src/scss/widgets/_tabbable.scss */
+.o-tabbable .o-tab-panel.active {
+  display: block;
+}
+
+/* line 4, ../../../ui_assets_src/scss/widgets/_error_pages.scss */
+.error-name {
+  text-transform: uppercase;
+  margin-bottom: 0;
+  color: #cc3737;
+}
+/* line 14, ../../../ui_assets_src/scss/widgets/_error_pages.scss */
+.error-name .icon {
+  position: relative;
+  top: -0.1em;
+}
+
+/* line 21, ../../../ui_assets_src/scss/widgets/_error_pages.scss */
+.error-code {
+  font-size: 80%;
+  text-transform: uppercase;
+  text-align: right;
+  margin: 0 0 2rem;
+}
+
+/* line 31, ../../../ui_assets_src/scss/widgets/_error_pages.scss */
+.error-trace {
+  padding: 1rem;
+  max-height: 20rem;
+  overflow-x: auto;
+  overflow-y: auto;
+  background: #333;
+  color: white;
+  -moz-border-radius: 0.3rem;
+  -webkit-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+}
+
+/* line 3, ../../../ui_assets_src/scss/widgets/_lang_list.scss */
+.language-list-back {
+  text-align: right;
+}
+
+/* line 8, ../../../ui_assets_src/scss/widgets/_lang_list.scss */
+.language-list li {
+  border-bottom: 1px solid #ddd;
+}
+/* line 11, ../../../ui_assets_src/scss/widgets/_lang_list.scss */
+.language-list li:last-child {
+  border-bottom: 0;
+}
+/* line 16, ../../../ui_assets_src/scss/widgets/_lang_list.scss */
+.language-list a {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0;
+}
+/* line 22, ../../../ui_assets_src/scss/widgets/_lang_list.scss */
+.language-list .icon {
+  position: absolute;
+  top: 0.5rem;
+  right: 0;
+}
+
+/* line 7, ../../../ui_assets_src/scss/widgets/_apps_menu.scss */
+.o-apps-menu {
+  white-space: nowrap;
+  padding: 1rem;
+  min-width: 100%;
+  height: 100%;
+  overflow-x: auto;
+}
+/* line 17, ../../../ui_assets_src/scss/widgets/_apps_menu.scss */
+.o-apps-menu a {
+  color: #fff;
+}
+/* line 22, ../../../ui_assets_src/scss/widgets/_apps_menu.scss */
+.o-apps-menu a:hover .o-apps-menu-icon, .o-apps-menu a:focus .o-apps-menu-icon {
+  border: 1px solid #fff;
+}
+/* line 28, ../../../ui_assets_src/scss/widgets/_apps_menu.scss */
+.o-apps-menu .o-apps-menu-item {
+  text-align: center;
+  width: 7.5rem;
+  display: inline-block;
+  vertical-align: top;
+  marign-right: 1rem;
+}
+/* line 38, ../../../ui_assets_src/scss/widgets/_apps_menu.scss */
+.o-apps-menu .o-apps-menu-item:last-child {
+  margin-right: 0;
+}
+/* line 43, ../../../ui_assets_src/scss/widgets/_apps_menu.scss */
+.o-apps-menu .o-apps-menu-icon {
+  width: 5rem;
+  height: 5rem;
+  -moz-border-radius: 200px;
+  -webkit-border-radius: 200px;
+  border-radius: 200px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  border: 1px solid transparent;
+  margin: 0 auto 0.4rem;
+}
+/* line 52, ../../../ui_assets_src/scss/widgets/_apps_menu.scss */
+.o-apps-menu .o-apps-menu-icon .icon {
+  margin: 0 auto;
+  font-size: 4rem;
+}
+/* line 59, ../../../ui_assets_src/scss/widgets/_apps_menu.scss */
+.o-apps-menu .o-apps-menu-current .o-apps-menu-icon {
+  background: #0677a1;
+}
+
+/* line 77, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress {
+  text-align: center;
+  display: inline-block;
+}
+/* line 80, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-indicator {
+  position: relative;
+  display: inline-block;
+  -moz-border-radius: 2000rem;
+  -webkit-border-radius: 2000rem;
+  border-radius: 2000rem;
+  width: 48px;
+  height: 48px;
+}
+/* line 84, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-value {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  line-height: 38px;
+  display: inline-block;
+  -moz-border-radius: 2000rem;
+  -webkit-border-radius: 2000rem;
+  border-radius: 2000rem;
+  background: white;
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-0 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background: #ddd;
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-5 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9Ii0wLjA5OTIwMSIgeTE9IjAuMzA1MzA4IiB4Mj0iMS4wOTkyMDEiIHkyPSIwLjY5NDY5MiI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(342deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(342deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(108deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-10 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9Ii0wLjA2NTAxOCIgeTE9IjAuMDg5NDkiIHgyPSIxLjA2NTAxOCIgeTI9IjAuOTEwNTEiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(324deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(324deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(126deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-15 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMDg5NDkiIHkxPSItMC4wNjUwMTgiIHgyPSIwLjkxMDUxIiB5Mj0iMS4wNjUwMTgiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(306deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(306deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(144deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-20 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMzA1MzA4IiB5MT0iLTAuMDk5MjAxIiB4Mj0iMC42OTQ2OTIiIHkyPSIxLjA5OTIwMSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(288deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(288deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(162deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-25 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-30 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNjk0NjkyIiB5MT0iLTAuMDk5MjAxIiB4Mj0iMC4zMDUzMDgiIHkyPSIxLjA5OTIwMSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(252deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(252deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(198deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-35 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuOTEwNTEiIHkxPSItMC4wNjUwMTgiIHgyPSIwLjA4OTQ5IiB5Mj0iMS4wNjUwMTgiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(234deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(234deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(216deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-40 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMDY1MDE4IiB5MT0iMC4wODk0OSIgeDI9Ii0wLjA2NTAxOCIgeTI9IjAuOTEwNTEiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(216deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(216deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(234deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-45 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMDk5MjAxIiB5MT0iMC4zMDUzMDgiIHgyPSItMC4wOTkyMDEiIHkyPSIwLjY5NDY5MiI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(198deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(198deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(252deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-50 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(180deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(180deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(270deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-55 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMDk5MjAxIiB5MT0iMC42OTQ2OTIiIHgyPSItMC4wOTkyMDEiIHkyPSIwLjMwNTMwOCI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(162deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(162deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(288deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-60 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMDY1MDE4IiB5MT0iMC45MTA1MSIgeDI9Ii0wLjA2NTAxOCIgeTI9IjAuMDg5NDkiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDAwMDAwIiBzdG9wLW9wYWNpdHk9IjAuMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(144deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(144deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(306deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-65 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuOTEwNTEiIHkxPSIxLjA2NTAxOCIgeDI9IjAuMDg5NDkiIHkyPSItMC4wNjUwMTgiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDAwMDAwIiBzdG9wLW9wYWNpdHk9IjAuMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(126deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(126deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(324deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-70 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNjk0NjkyIiB5MT0iMS4wOTkyMDEiIHgyPSIwLjMwNTMwOCIgeTI9Ii0wLjA5OTIwMSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(108deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(108deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(342deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-75 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjEuMCIgeDI9IjAuNSIgeTI9IjAuMCI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(90deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(90deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(360deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-80 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMzA1MzA4IiB5MT0iMS4wOTkyMDEiIHgyPSIwLjY5NDY5MiIgeTI9Ii0wLjA5OTIwMSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(72deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(72deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(378deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-85 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMDg5NDkiIHkxPSIxLjA2NTAxOCIgeDI9IjAuOTEwNTEiIHkyPSItMC4wNjUwMTgiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDAwMDAwIiBzdG9wLW9wYWNpdHk9IjAuMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(54deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(54deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(396deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-90 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9Ii0wLjA2NTAxOCIgeTE9IjAuOTEwNTEiIHgyPSIxLjA2NTAxOCIgeTI9IjAuMDg5NDkiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDAwMDAwIiBzdG9wLW9wYWNpdHk9IjAuMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(36deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(36deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(414deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-95 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9Ii0wLjA5OTIwMSIgeTE9IjAuNjk0NjkyIiB4Mj0iMS4wOTkyMDEiIHkyPSIwLjMwNTMwOCI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(18deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(18deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(432deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 95, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-percentage-100 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(450deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 100, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress .o-progress-label {
+  font-size: 90%;
+  text-transform: uppercase;
+  display: block;
+}
+
+/* line 110, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini {
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+}
+/* line 114, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-indicator {
+  position: relative;
+  display: inline-block;
+  -moz-border-radius: 2000rem;
+  -webkit-border-radius: 2000rem;
+  border-radius: 2000rem;
+  width: 28px;
+  height: 28px;
+}
+/* line 118, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-icon {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  line-height: 18px;
+  display: inline-block;
+  -moz-border-radius: 2000rem;
+  -webkit-border-radius: 2000rem;
+  border-radius: 2000rem;
+  background: white;
+}
+/* line 124, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-icon .icon {
+  vertical-align: baseline;
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-0 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background: #ddd;
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-5 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9Ii0wLjA5OTIwMSIgeTE9IjAuMzA1MzA4IiB4Mj0iMS4wOTkyMDEiIHkyPSIwLjY5NDY5MiI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(342deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(342deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(108deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-10 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9Ii0wLjA2NTAxOCIgeTE9IjAuMDg5NDkiIHgyPSIxLjA2NTAxOCIgeTI9IjAuOTEwNTEiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(324deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(324deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(126deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-15 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMDg5NDkiIHkxPSItMC4wNjUwMTgiIHgyPSIwLjkxMDUxIiB5Mj0iMS4wNjUwMTgiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(306deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(306deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(144deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-20 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMzA1MzA4IiB5MT0iLTAuMDk5MjAxIiB4Mj0iMC42OTQ2OTIiIHkyPSIxLjA5OTIwMSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(288deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(288deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(162deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-25 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-30 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNjk0NjkyIiB5MT0iLTAuMDk5MjAxIiB4Mj0iMC4zMDUzMDgiIHkyPSIxLjA5OTIwMSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(252deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(252deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(198deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-35 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuOTEwNTEiIHkxPSItMC4wNjUwMTgiIHgyPSIwLjA4OTQ5IiB5Mj0iMS4wNjUwMTgiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(234deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(234deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(216deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-40 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMDY1MDE4IiB5MT0iMC4wODk0OSIgeDI9Ii0wLjA2NTAxOCIgeTI9IjAuOTEwNTEiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(216deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(216deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(234deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-45 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMDk5MjAxIiB5MT0iMC4zMDUzMDgiIHgyPSItMC4wOTkyMDEiIHkyPSIwLjY5NDY5MiI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(198deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(198deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(252deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-50 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(180deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(180deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(270deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-55 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMDk5MjAxIiB5MT0iMC42OTQ2OTIiIHgyPSItMC4wOTkyMDEiIHkyPSIwLjMwNTMwOCI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(162deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(162deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(288deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-60 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMDY1MDE4IiB5MT0iMC45MTA1MSIgeDI9Ii0wLjA2NTAxOCIgeTI9IjAuMDg5NDkiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDAwMDAwIiBzdG9wLW9wYWNpdHk9IjAuMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(144deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(144deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(306deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-65 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuOTEwNTEiIHkxPSIxLjA2NTAxOCIgeDI9IjAuMDg5NDkiIHkyPSItMC4wNjUwMTgiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDAwMDAwIiBzdG9wLW9wYWNpdHk9IjAuMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(126deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(126deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(324deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-70 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNjk0NjkyIiB5MT0iMS4wOTkyMDEiIHgyPSIwLjMwNTMwOCIgeTI9Ii0wLjA5OTIwMSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(108deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(108deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(342deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-75 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjEuMCIgeDI9IjAuNSIgeTI9IjAuMCI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(90deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(90deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(360deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-80 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMzA1MzA4IiB5MT0iMS4wOTkyMDEiIHgyPSIwLjY5NDY5MiIgeTI9Ii0wLjA5OTIwMSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(72deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(72deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(378deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-85 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMDg5NDkiIHkxPSIxLjA2NTAxOCIgeDI9IjAuOTEwNTEiIHkyPSItMC4wNjUwMTgiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDAwMDAwIiBzdG9wLW9wYWNpdHk9IjAuMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(54deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(54deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(396deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-90 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9Ii0wLjA2NTAxOCIgeTE9IjAuOTEwNTEiIHgyPSIxLjA2NTAxOCIgeTI9IjAuMDg5NDkiPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMDg5YmQyIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDAwMDAwIiBzdG9wLW9wYWNpdHk9IjAuMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(36deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(36deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(414deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-95 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9Ii0wLjA5OTIwMSIgeTE9IjAuNjk0NjkyIiB4Mj0iMS4wOTkyMDEiIHkyPSIwLjMwNTMwOCI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(18deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(18deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(432deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+/* line 135, ../../../ui_assets_src/scss/widgets/_progress.scss */
+.o-progress-mini .o-progress-percentage-100 {
+  /**
+   * The circular progress bar has 2 gradients. One gradient masks one half of 
+   * the circle, while the other sets the angle of the indicator. 
+   *
+   * When desired number of angle of the indicator is less than 180deg, the
+   * left portion of the circle is masked by background color, while the the
+   * right portion is masked at an angle. When desired angle is more than
+   * 180deg, then the right portion of the circle is masked by foreground color
+   * and the left portion is masked at an angle.
+   *
+   * This mixin only sets the gradients, and nothing else.
+   */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiMwODliZDIiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -moz-linear-gradient(0deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -moz-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: -webkit-linear-gradient(0deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), -webkit-linear-gradient(180deg, #089bd2 50%, #dddddd 50%, #dddddd);
+  background-image: linear-gradient(450deg, #089bd2 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #089bd2 50%, #dddddd 50%, #dddddd);
+}
+
+/* line 7, ../../../ui_assets_src/scss/widgets/_pager.scss */
+.o-pager-control {
+  display: inline-block;
+  text-align: center;
+  height: 3rem;
+  line-height: 3rem;
+  width: 3rem;
+  vertical-align: middle;
+  background: #089bd2;
+  color: #fff;
+  -moz-border-radius: 0.3rem;
+  -webkit-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+}
+
+/* line 22, ../../../ui_assets_src/scss/widgets/_pager.scss */
+.o-pager-current {
+  background: #444;
+}
+
+@media only screen and (max-width: 640px) {
+  /* line 26, ../../../ui_assets_src/scss/widgets/_pager.scss */
+  .o-pager-page {
+    display: none;
+  }
+}
+
+/* line 32, ../../../ui_assets_src/scss/widgets/_pager.scss */
+.o-pager-ellipsis {
+  display: inline-block;
+  text-align: center;
+  color: #aaa;
+  font-size: 150%;
+  width: 3rem;
+}
+
+@media only screen and (max-width: 360px) {
+  /* line 40, ../../../ui_assets_src/scss/widgets/_pager.scss */
+  .o-pager-last,
+  .o-pager-first,
+  .o-pager-ellipsis {
+    display: none;
+  }
+}
+
+/* line 48, ../../../ui_assets_src/scss/widgets/_pager.scss */
+.o-pager-prev,
+.o-pager-next {
+  font-family: "OIcons";
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  text-transform: none;
+  display: inline-block;
+  speak: none;
+  vertical-align: middle;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 200%;
+}
+/* line 187, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-pager-prev ~ *,
+.o-pager-next ~ * {
+  vertical-align: middle;
+}
+/* line 191, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-pager-prev:before,
+.o-pager-next:before {
+  display: inline-block;
+}
+/* line 53, ../../../ui_assets_src/scss/widgets/_pager.scss */
+.o-pager-prev .o-pager-label,
+.o-pager-next .o-pager-label {
+  display: none;
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-pager-next:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.o-pager-prev:before {
+  content: "";
+}
+
+/* line 3, ../../../ui_assets_src/scss/page_templates/_feedback.scss */
+.feedback-icon {
+  text-align: center;
+  font-size: 400%;
+  margin: 3rem 0;
+}
+
+/* line 9, ../../../ui_assets_src/scss/page_templates/_feedback.scss */
+.feedback-success .feedback-icon {
+  color: #5d7b0a;
+}
+
+/* line 13, ../../../ui_assets_src/scss/page_templates/_feedback.scss */
+.feedback-error .feedbac-icon {
+  color: #cc3737;
+}
+
+/* line 17, ../../../ui_assets_src/scss/page_templates/_feedback.scss */
+.feedback-main {
+  font-size: 120%;
+  text-align: center;
+}
+
+/* line 22, ../../../ui_assets_src/scss/page_templates/_feedback.scss */
+.feedback-sub {
+  text-align: center;
+}
+
+@font-face {
+  font-family: "OIcons";
+  src: url('../font/oicons-86a310c3827ee9d576cc361da9221d3d.eot?1461330982') format('embedded-opentype'), url('../font/oicons-86a310c3827ee9d576cc361da9221d3d.ttf?1461330982') format('truetype'), url('../font/oicons-86a310c3827ee9d576cc361da9221d3d.woff?1461330982') format('woff');
+}
+/* line 214, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon {
+  font-family: "OIcons";
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  text-transform: none;
+  display: inline-block;
+  speak: none;
+  vertical-align: middle;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* line 187, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon ~ * {
+  vertical-align: middle;
+}
+/* line 191, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon:before {
+  display: inline-block;
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-alert-key:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-alert-outline:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-alert-question:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-alert-stop:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-alert:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-app-files:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-app-library:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-app-twitter:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-arrow-down:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-arrow-left:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-arrow-right:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-arrow-up:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-atmark:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-audio:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-box-minus:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-box-plus:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-circle-arrow-down:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-circle-arrow-in-down:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-circle-arrow-in-left:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-circle-arrow-in-right:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-circle-arrow-in-up:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-circle-arrow-left:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-circle-arrow-right:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-circle-arrow-up:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-circle-dot:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-circle-ok:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-circle-power:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-circle:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-clock:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-close:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-discard:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-download-bar:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-download-outline:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-download:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-edit-outline:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-edit:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-enter:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-ethernet:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-exit:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-expand-down:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-expand-left:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-expand-right:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-expand-up:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-favorite:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-file-audio:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-file-binary:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-file-globe:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-file-image:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-file-music:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-file-text-image:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-file-text:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-file-vector:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-file-video:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-file:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-audio:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-circle:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-down:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-generic:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-html:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-image:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-left:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-locked:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-multi:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-no:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-ok:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-plus:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-right:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-up:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder-video:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-folder:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-fullscreen:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-gallery:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-generic:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-globe:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-help-outline:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-help:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-html:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-image:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-import:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-info-outline:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-info:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-key:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-list:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-listen:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-lock:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-menu:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-message-alert:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-message:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-minus-outline:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-minus:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-multi-type:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-muted:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-network-bridge:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-no-outline:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-no:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-ok-outline:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-ok:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-other-outline:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-other:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-outernet:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-pause:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-play:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-playlist-fast-forward:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-playlist-next:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-playlist-previous:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-playlist-rewind:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-plus-outline:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-plus:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-read:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-satellite:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-search:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-settings:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-signal:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-sound:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-spinner:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-stop:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-storage-internal:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-storage-usbdrive:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-storage-usbstick:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-test-circle:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-test-cross:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-test-square-full:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-test-square-hhalf:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-test-square-hmid:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-test-square-htop:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-test-square-vhalf:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-tuner:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-tweet:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-unlock:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-user-exclamation:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-user-key:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-user-minus:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-user-multiple:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-user-no:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-user-ok:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-user-plus:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-user-shield:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-user-star:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-user-unknown:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-user-up:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-user:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-video-hd:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-video-sd:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-video:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-watch:before {
+  content: "";
+}
+
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-wifi:before {
+  content: "";
+}
+
+/* line 224, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-spinning-loader {
+  font-size: 100%;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-spinning-loader:before {
+  content: "";
+}
+/* line 207, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-spinning-loader:before {
+  -moz-animation: spin 2s linear infinite;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+/* line 228, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-spinning-loader-xxl {
+  font-size: 300%;
+}
+/* line 198, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-spinning-loader-xxl:before {
+  content: "";
+}
+/* line 207, ../../../ui_assets_src/scss/elements/_icons.scss */
+.icon-spinning-loader-xxl:before {
+  -moz-animation: spin 2s linear infinite;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}

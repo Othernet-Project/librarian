@@ -1,0 +1,23 @@
+/* line 2, ../../../ui_assets_src/scss/diag.scss */
+.diag table {
+  margin: 1em 0;
+}
+/* line 6, ../../../ui_assets_src/scss/diag.scss */
+.diag textarea {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1em;
+  font-family: monospace;
+  font-size: 12px;
+  min-height: 300px;
+  max-height: 600px;
+}
+/* line 16, ../../../ui_assets_src/scss/diag.scss */
+.diag .no-tuner {
+  color: red;
+  font-weight: bold;
+}
+/* line 21, ../../../ui_assets_src/scss/diag.scss */
+.diag .has-tuner {
+  color: green;
+}

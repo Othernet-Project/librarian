@@ -1,0 +1,72 @@
+/**
+ * This module contains base variables that are used to re-skin (customize) the 
+ * Librarian UI toolkit.
+ *
+ * Recommended way to customize the variables is to load a separate module 
+ * containing customized values _before_ this module.
+ */
+/* line 4, ../../../ui_assets_src/scss/notifications.scss */
+.notification-default, .notification {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  border: 1px solid #ddd;
+  background: white;
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+/* line 15, ../../../ui_assets_src/scss/notifications.scss */
+.notification-default .notification-delete, .notification .notification-delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 3rem;
+  height: 100%;
+  background: #eee;
+  font-size: 180%;
+}
+/* line 25, ../../../ui_assets_src/scss/notifications.scss */
+.notification-default .notification-delete:hover, .notification .notification-delete:hover, .notification-default .notification-delete:focus, .notification .notification-delete:focus {
+  background: #cc3737;
+  color: #fff;
+}
+/* line 32, ../../../ui_assets_src/scss/notifications.scss */
+.notification-default .notification-body, .notification .notification-body {
+  margin-right: 3rem;
+}
+/* line 36, ../../../ui_assets_src/scss/notifications.scss */
+.notification-default .notification-delete-label, .notification .notification-delete-label {
+  display: none;
+}
+/* line 40, ../../../ui_assets_src/scss/notifications.scss */
+.notification-default .notification-meta, .notification .notification-meta {
+  font-size: 90%;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+}
+
+/* line 52, ../../../ui_assets_src/scss/notifications.scss */
+.notification.critical {
+  background: #cc3737;
+  color: #fff;
+}
+/* line 56, ../../../ui_assets_src/scss/notifications.scss */
+.notification.urgent {
+  background: #efa417;
+  color: #fff;
+}
+/* line 60, ../../../ui_assets_src/scss/notifications.scss */
+.notification.normal {
+  background: #fff;
+}
+
+/* line 65, ../../../ui_assets_src/scss/notifications.scss */
+#notifications-tab {
+  padding-top: 2.6rem;
+}
+/* line 69, ../../../ui_assets_src/scss/notifications.scss */
+#notifications-tab .subtitle-buttons {
+  top: 0;
+  right: 0;
+}

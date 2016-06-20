@@ -11,10 +11,8 @@ __pycache__/
 /.coverage
 /node_modules
 *.log
-/librarian/static/css/*
-!/librarian/static/css/vendor/
-/librarian/static/js/*
-!/librarian/static/js/vendor/
+/librarian/static/css/*-bundle-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].css
+/librarian/static/js/*-bundle-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].js
 .webassets-cache
 .webassets-manifest
 dev.ini
