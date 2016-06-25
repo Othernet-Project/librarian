@@ -18,8 +18,13 @@
     </form>
 </%def>
 
-<%def name="file_download(path)">
-    <a href="${h.quoted_url('filemanager:direct', path=path, dl=1)}" class="file-list-control">
+<%def name="file_download(fso)">
+    <a
+        href="${h.quoted_url('filemanager:direct', path=fso.rel_path, dl=1)}"
+        data-relpath="${fso.rel_path | h.urlquote}"
+        data-type="download"
+        class="file-list-control"
+        >
         <span class="icon icon-download-outline"></span>
         <span class="label">${_('Download')}</span>
     </a>
@@ -51,9 +56,10 @@
     dpath = i18n_url('filemanager:list', path=d.rel_path, **varg)
     cover_url = th.facets.get_folder_cover(d)
     icon, icon_is_url = th.facets.get_folder_icon(d)
+    h.urlquote  # likely a Mako bug, if not accessed here, h.urlquote will be unavailable in context below
     %>
     <li class="file-list-item file-list-directory${' with-controls' if with_controls else ''}" role="row" aria-selected="false" tabindex>
-        <a href="${dpath}" data-type="directory" class="file-list-link">
+        <a href="${dpath}" data-type="directory" data-relpath="${d.rel_path | h.urlquote}" class="file-list-link">
             ## COVER/ICON
             % if cover_url:
                 ${self.thumb_block(cover_url, 'cover')}
@@ -135,7 +141,7 @@
             % if is_search:
                 ${self.file_parent_folder(parent_url)}
             % endif
-            ${self.file_download(f.rel_path)}
+            ${self.file_download(f)}
             % if with_controls:
                 % if request.user.is_superuser:
                     ${self.file_delete(f.rel_path)}
