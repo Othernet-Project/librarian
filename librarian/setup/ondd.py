@@ -9,7 +9,7 @@ from ..helpers.ondd import read_ondd_setup
 
 class ONDDStep:
     name = 'ondd'
-    index = 3
+    index = 30
     template = 'setup/step_ondd.tpl'
 
     @staticmethod

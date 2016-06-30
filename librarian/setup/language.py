@@ -8,7 +8,7 @@ from ..forms.setup import get_language_form
 
 class LanguageStep:
     name = 'language'
-    index = 1
+    index = 10
     template = 'setup/step_language.tpl'
 
     @staticmethod
