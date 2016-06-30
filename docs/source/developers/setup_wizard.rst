@@ -16,5 +16,5 @@ unused one
 Language Selection     10
 Superuser Credentials  20
 SDR100 Installation    25
-ONDD Settings           30
+ONDD Settings          30
 =====================  =====
