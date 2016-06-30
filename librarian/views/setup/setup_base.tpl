@@ -33,7 +33,8 @@
         </h2>
         <%block name="step_desc"/>
         <div class="setup-wizard full-page-form">
-            ${h.form('POST', action=i18n_url('setup:enter') + h.set_qparam(**{step_param: step_index}).to_qs())}
+            <% multipart = True if step_multipart else False  %>
+            ${h.form('POST', action=i18n_url('setup:enter') + h.set_qparam(**{step_param: step_index}).to_qs(), multipart=multipart)}
                 <%block name="step"/>
                 <p class="buttons">
                     % if step_index - 1 >= start_index:

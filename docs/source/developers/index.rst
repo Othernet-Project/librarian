@@ -47,3 +47,4 @@ Topics covered:
     working_with_events
     command_line_arguments
     writing_component_member_collectors
+    setup_wizard
