@@ -10,7 +10,8 @@
     clicked = $ e.target
     section = clicked.parents selectors.collapsibleSection
     panel = section.find selectors.collapsibleArea
-    if panel.ariaProperty('hidden') == 'true'
+    # already populated, don't fetch again
+    if $.trim(panel.html())
       return
 
     url = clicked.attr 'href'
