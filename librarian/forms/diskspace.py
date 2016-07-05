@@ -31,7 +31,7 @@ class ConsolidateForm(form.Form):
     storage_id = form.StringField(validators=[form.Required()])
 
     def validate(self):
-        active_storage_id = storage.get_consoildate_status()
+        active_storage_id = storage.get_consolidate_status()
         if active_storage_id:
             raise form.ValidationError('already_running', {})
         # Perform preflight check
