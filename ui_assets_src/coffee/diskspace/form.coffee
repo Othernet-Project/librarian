@@ -2,12 +2,12 @@
 
   diskFormContainer = $ '#dashboard-diskspace-panel'
   section = diskFormContainer.parents '.o-collapsible-section'
-  diskForm = diskFormContainer.find 'form'
-  url = diskForm.attr 'action'
-  stateUrl = diskForm.data 'state-url'
-  currentId = diskForm.data 'started'
   errorMessage = templates.diskspaceConsolidateSubmitError
+  diskForm = null
   diskField = null
+  url = null
+  stateUrl = null
+  currentId = null
 
 
   addDiskField = () ->
@@ -82,13 +82,20 @@
     diskField.val diskId
     return
 
-  diskField = addDiskField()
-  diskFormContainer.on 'click', 'button', handleButton
-  diskFormContainer.on 'submit', 'form', submitData
 
-  if currentId
-    # Kick off the spinner immediately
-    pollState currentId
+  initPlugin = (e) ->
+    diskForm = diskFormContainer.find 'form'
+    url = diskForm.attr 'action'
+    stateUrl = diskForm.data 'state-url'
+    currentId = diskForm.data 'started'
+    diskField = addDiskField()
+    diskFormContainer.on 'click', 'button', handleButton
+    diskFormContainer.on 'submit', 'form', submitData
+    if currentId
+      # Kick off the spinner immediately
+      pollState currentId
 
+
+  section.on 'dashboard-plugin-loaded', initPlugin
 
 ) this, this.jQuery, this.templates

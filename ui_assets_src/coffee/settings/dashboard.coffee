@@ -1,7 +1,8 @@
 ((window, $, templates) ->
 
-  form = $ '#settings-form'
-  url = form.attr 'action'
+  section = $ '#dashboard-settings'
+  form = null
+  url = null
   errorMessage = templates.settingsSaveError
   successMessage = templates.settingsSaveOK
   win = $ window
@@ -24,9 +25,14 @@
       form.prepend errorMessage
 
 
-  form.on 'submit', (e) ->
-    e.preventDefault()
-    data = form.serialize()
-    submitData data
+  initPlugin = (e) ->
+    form = section.find '#settings-form'
+    url = form.attr 'action'
+    form.on 'submit', (e) ->
+      e.preventDefault()
+      data = form.serialize()
+      submitData data
+
+  section.on 'dashboard-plugin-loaded', initPlugin
 
 ) this, this.jQuery, this.templates

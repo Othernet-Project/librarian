@@ -19,6 +19,7 @@
     res = $.get(url);
     res.done(function(data) {
       panel.html(data);
+      section.trigger('dashboard-plugin-loaded');
       return section.trigger('remax');
     });
     res.fail(function() {

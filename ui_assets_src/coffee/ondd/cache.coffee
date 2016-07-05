@@ -2,17 +2,23 @@
 
   CHECK_INTERVAL = 3000
 
-  cacheContainer = $ '#ondd-cache-status'
-  section = cacheContainer.parents '.o-collapsible-section'
-  cacheUrl = cacheContainer.data 'url'
+  section = $ '#dashboard-ondd'
+  cacheContainer = null
+  cacheUrl = null
+
 
   updateCache = () ->
     cacheContainer.load cacheUrl
     section.trigger 'remax'
 
-  setInterval updateCache, CHECK_INTERVAL
 
-  return
+  initPlugin = (e) ->
+    cacheContainer = section.find '#ondd-cache-status'
+    cacheUrl = cacheContainer.data 'url'
+    setInterval updateCache, CHECK_INTERVAL
+
+
+  section.on 'dashboard-plugin-loaded', initPlugin
 
 ) this, this.jQuery
 
