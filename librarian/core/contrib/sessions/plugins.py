@@ -1,13 +1,12 @@
 import functools
 
-from bottle import request, hook
+from bottle import request
 
 from ...exts import ext_container as exts
 from .sessions import SessionExpired, SessionInvalid, Session
 
 
 # Set up a hook, so handlers that raise cannot escape session-saving
-@hook('after_request')
 def save_session():
     if hasattr(request, 'session'):
         if request.session.modified:
