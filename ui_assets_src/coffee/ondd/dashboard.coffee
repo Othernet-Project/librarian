@@ -1,7 +1,8 @@
 ((window, $, templates) ->
 
-  onddForm = $ '#ondd-form'
-  url = onddForm.attr 'action'
+  section = $ '#dashboard-ondd'
+  onddForm = null
+  url = null
   errorMessage = templates.onddSettingsError
 
 
@@ -14,10 +15,15 @@
       onddForm.prepend errorMessage
 
 
-  onddForm.on 'submit', (e) ->
-    e.preventDefault()
-    data = onddForm.serialize()
-    submitData data
+  initPlugin = (e) ->
+    onddForm = $ '#ondd-form'
+    url = onddForm.attr 'action'
+    onddForm.on 'submit', (e) ->
+      e.preventDefault()
+      data = onddForm.serialize()
+      submitData data
 
+
+  section.on 'dashboard-plugin-loaded', initPlugin
 
 ) this, this.jQuery, this.templates

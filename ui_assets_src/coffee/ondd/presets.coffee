@@ -8,27 +8,26 @@
     'modulation'
   ]
 
-  onddForm = $ '#ondd-form'
-  collapsible = onddForm.parents '.o-collapsible-section'
+  section = $ '#dashboard-ondd'
+  onddForm = null
+  fields = {}
+  options = {}
 
-  # Ignore if required elements are not present
-  if not onddForm.length
-    return
 
   # Cache selectors for the form field
-  fields = {}
   cacheSelectors = () ->
     for f in FIELDS
       fields[f] = $ "##{f}"
 
+
   # Cache selectors for all options
-  options = {}
   index = () ->
     transponders = onddForm.find '#transponders'
     (transponders.find 'option').each () ->
       opt = $ this
       options[opt.val()] = opt
       return
+
 
   onTransponderSwitch = () ->
     customSettingsFields = onddForm.find '.settings-fields'
@@ -58,22 +57,31 @@
       for f in FIELDS
         fields[f].val data[f]
 
-    collapsible.trigger 'resize'
+    section.trigger 'resize'
 
     return
 
-  # Handle transponder select list change event
-  onddForm.on 'change', '#transponders', onTransponderSwitch
-  ($ window).on 'transponder-updated', () ->
+
+  initPlugin = (e) ->
+    onddForm = $ '#ondd-form'
+    # Ignore if required elements are not present
+    if not onddForm.length
+      return
+
+    # Handle transponder select list change event
+    onddForm.on 'change', '#transponders', onTransponderSwitch
+    ($ window).on 'transponder-updated', () ->
+      index()
+      cacheSelectors()
+      onTransponderSwitch()
+
+    # Reset inital state
     index()
     cacheSelectors()
     onTransponderSwitch()
 
-  # Reset inital state
-  index()
-  cacheSelectors()
-  onTransponderSwitch()
-
-  return
+  # in case of wizard-step, this must be invoked on page-load
+  initPlugin()
+  section.on 'dashboard-plugin-loaded', initPlugin
 
 ) this, this.jQuery, this.templates

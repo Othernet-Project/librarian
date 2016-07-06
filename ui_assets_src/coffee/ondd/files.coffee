@@ -2,16 +2,22 @@
 
   CHECK_INTERVAL = 3000
 
-  filesContainer = $ '#ondd-file-list'
-  section = filesContainer.parents '.o-collapsible-section'
-  filesUrl = filesContainer.data 'url'
+  section = $ '#dashboard-ondd'
+  filesContainer = null
+  filesUrl = null
+
 
   updateFileList = () ->
     filesContainer.load filesUrl
     section.trigger 'remax'
 
-  setInterval updateFileList, CHECK_INTERVAL
 
-  return
+  initPlugin = (e) ->
+    setInterval updateFileList, CHECK_INTERVAL
+    filesContainer = section.find '#ondd-file-list'
+    filesUrl = filesContainer.data 'url'
+
+
+  section.on 'dashboard-plugin-loaded', initPlugin
 
 ) this, this.jQuery
