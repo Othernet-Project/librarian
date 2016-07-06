@@ -11,7 +11,7 @@
 
 
   initPlugin = (e) ->
-    statusContainer = section.find '#signal-status'
+    statusContainer = $ '#signal-status'
     # Ignore if no container is found
     if not statusContainer.length
       return

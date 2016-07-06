@@ -9,7 +9,7 @@
     return statusContainer.load(statusUrl);
   };
   initPlugin = function(e) {
-    statusContainer = section.find('#signal-status');
+    statusContainer = $('#signal-status');
     if (!statusContainer.length) {
       return;
     }

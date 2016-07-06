@@ -63,7 +63,7 @@
 
 
   initPlugin = (e) ->
-    onddForm = section.find '#ondd-form'
+    onddForm = $ '#ondd-form'
     # Ignore if required elements are not present
     if not onddForm.length
       return

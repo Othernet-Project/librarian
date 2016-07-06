@@ -53,7 +53,7 @@
     section.trigger('resize');
   };
   initPlugin = function(e) {
-    onddForm = section.find('#ondd-form');
+    onddForm = $('#ondd-form');
     if (!onddForm.length) {
       return;
     }
