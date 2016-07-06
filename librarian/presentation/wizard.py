@@ -54,7 +54,6 @@ class Wizard(object):
             needed_steps = self.state['needed_steps']
             needed_steps += [idx for idx in currently_needed_steps
                              if idx not in needed_steps]
-
         self.skip_needless_steps(needed_steps)
         self.remove_gaps()
         self.override_next_step()
@@ -85,12 +84,12 @@ class Wizard(object):
         if not state:
             state = dict(step=self.start_index, data={})
             created = True
-
         self.state = state
         return created
 
     def save_state(self):
         request.session[self.id] = self.state
+        request.session.save()
 
     def clear_needed_steps(self):
         if self.state is None:

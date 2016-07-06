@@ -1,13 +1,12 @@
 import functools
 
-from bottle import request, hook
+from bottle import request
 
 from ...exports import depends_on
 from .users import User
 
 
 # Set up a hook, so handlers that raise cannot escape session-saving
-@hook('after_request')
 def store_user_in_session():
     if hasattr(request, 'session') and hasattr(request, 'user'):
         request.user.options.collect()

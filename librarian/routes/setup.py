@@ -31,6 +31,7 @@ class Diag(TemplateRoute):
     path = '/diag/'
     template_func = template
     template_name = 'diag'
+    exclude_plugins = ['setup_plugin']
 
     #: Default number of lines to be returned from the tail of a logfile
     DEFAULT_LINES = 100
@@ -59,6 +60,7 @@ class Diag(TemplateRoute):
 
 class Enter(NonIterableRouteBase):
     path = '/setup/'
+    exclude_plugins = ['setup_plugin']
 
     def get(self):
         return exts.setup_wizard()
@@ -69,6 +71,7 @@ class Enter(NonIterableRouteBase):
 
 class Exit(RedirectRouteMixin, NonIterableRouteBase):
     path = '/setup/exit/'
+    exclude_plugins = ['setup_plugin']
 
     def get(self):
         exts.setup_wizard.exit()
