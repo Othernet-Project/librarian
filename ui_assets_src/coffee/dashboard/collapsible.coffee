@@ -5,6 +5,7 @@
     collapsibleSection: '.o-collapsible-section',
     collapsibleArea: '.o-collapsible-section-panel',
   }
+  spinnerIcon = window.templates.spinnerIcon
 
 
   onclick = (e) ->
@@ -15,6 +16,8 @@
     if $.trim(panel.html())
       return
 
+    panel.html spinnerIcon
+    section.trigger 'remax'
     url = clicked.attr 'href'
     res = $.get url
     res.done (data) ->

@@ -22,6 +22,9 @@ ${_('Settings')}
 <script id="collapseIcon" type="text/template">
     <a href="javascript:void(0)" class="dash-expand-icon"></a>
 </script>
+<script type="text/template" id="spinnerIcon">
+    <span class="icon icon-spinning-loader"></span>
+</script>
 <script type="text/template" id="dashboardLoadError">
     <% 
     errors = [_("Dashboard plugin could not be loaded due to application error.")] 
