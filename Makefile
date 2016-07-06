@@ -53,7 +53,8 @@ FSAL_PID = $(TMPDIR)/.fsal_pid
 	clean-doc
 
 prepare: local-mirror $(FSAL_CONF) $(LIBRARIAN_CONF)
-	pip install -e . --upgrade --extra-index-url file://$(LOCAL_MIRROR)/simple
+	pip install -e . --upgrade --pre \
+		--extra-index-url file://$(LOCAL_MIRROR)/simple
 
 local-mirror:
 	pip install --upgrade pip
