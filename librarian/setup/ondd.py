@@ -3,8 +3,15 @@ import logging
 from bottle import request
 from bottle_utils.i18n import lazy_gettext as _
 
-from ..forms.ondd import ONDDForm
-from ..helpers.ondd import read_ondd_setup
+from ..forms import ondd as ondd_forms
+from ..helpers import ondd as ondd_helpers
+
+
+def get_form():
+    """
+    Return appropriate form class for configured frequency band
+    """
+    return ondd_forms.FORMS[ondd_helpers.get_band()]
 
 
 class ONDDStep:
@@ -19,7 +26,7 @@ class ONDDStep:
         if not ondd_alive:
             # If ondd is not running, skip the step
             return False
-        settings = read_ondd_setup()
+        settings = ondd_helpers.read_ondd_setup()
         if settings is None:
             # Settings is None if ONDD configuration has never been performed
             return True
@@ -28,6 +35,7 @@ class ONDDStep:
             # is present. This is allowed, as user is allowed to skip through
             # the setup step without setting the tuner settings.
             return False
+        ONDDForm = get_form()
         form = ONDDForm(read_ondd_setup())
         return not form.is_valid()
 
@@ -43,7 +51,7 @@ class ONDDStep:
     def post():
         ondd_client = request.app.supervisor.exts.ondd
         is_test_mode = request.forms.get('mode', 'submit') == 'test'
-
+        ONDDForm = get_form()
         form = ONDDForm(request.forms)
         form_valid = form.is_valid()
         snr_min = request.app.config.get('ondd.snr_min', 0.2)

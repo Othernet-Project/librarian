@@ -1,12 +1,23 @@
 import os
+import logging
+import subprocess
+from collections import namedtuple
 
 from bottle_utils.i18n import lazy_gettext as _
 
 import ondd_ipc.consts as ondd_consts
 
-from ..core.contrib.templates.decorators import template_helper
 from ..core.exts import ext_container as exts
+from ..core.contrib.templates.decorators import template_helper
 
+LBAND = 'l'
+KUBAND = 'ku'
+
+#: The key in the application settings JSON file that contains the tuner params
+SETTINGS_KEYS = {
+    'l': 'ondd_l',
+    'ku': 'ondd'
+}
 
 DELIVERY = (
     ('DVB-S', 'DVB-S'),
@@ -44,8 +55,41 @@ LNB_TYPES = (
     (ondd_consts.C_BAND, _('C band')),
 )
 
-PRESETS = [
-    ('Galaxy 19 (97.0W)', 1, {
+RF_FILTERS = (  # EBW%
+    ('0.1', '10%'),
+    ('0.2', '20%'),
+    ('0.4', '40%')
+)
+
+Preset = namedtuple('Preset', ('label', 'index', 'values'))
+
+L_PRESETS = [
+    # Translators, name of the L-band tuner preset covering most of the world
+    Preset(_('Global'), 1, {
+        'frequency': '1539.8725',
+        'uncertainty': '4000',
+        'symbolrate': '8400',
+        'sample_rate': '1',
+        'rf_filter': '0.2',
+        'descrambler': True,
+        # Translators, used as coverage area of a transponder
+        'coverage': _('Europe, Africa, Asia'),
+    }),
+    # Translators, name of the L-band tuner preset covering the Americas
+    Preset(_('Americas'), 2, {
+        'frequency': '1539.8725',
+        'uncertainty': '4000',
+        'symbolrate': '4200',
+        'sample_rate': '1',
+        'rf_filter': '0.2',
+        'descrambler': True,
+        # Translators, used as coverage area of a transponder
+        'coverage': _('North and South America'),
+    }),
+]
+
+KU_PRESETS = [
+    Preset('Galaxy 19 (97.0W)', 1, {
         'frequency': '11929',
         'symbolrate': '22000',
         'polarization': 'v',
@@ -54,7 +98,7 @@ PRESETS = [
         # Translators, used as coverage area of a transponder
         'coverage': _('North America'),
     }),
-    ('Hotbird 13 (13.0E)', 2, {
+    Preset('Hotbird 13 (13.0E)', 2, {
         'frequency': '11471',
         'symbolrate': '27500',
         'polarization': 'v',
@@ -63,7 +107,7 @@ PRESETS = [
         # Translators, used as coverage area of a transponder
         'coverage': _('Europe, North Africa'),
     }),
-    ('Intelsat 20 (68.5E)', 3, {
+    Preset('Intelsat 20 (68.5E)', 3, {
         'frequency': '12522',
         'symbolrate': '27500',
         'polarization': 'v',
@@ -72,7 +116,7 @@ PRESETS = [
         # Translators, used as coverage area of a transponder
         'coverage': _('North and West Europe, Subsaharan Africa'),
     }),
-    ('AsiaSat 5 C-band (100.5E)', 4, {
+    Preset('AsiaSat 5 C-band (100.5E)', 4, {
         'frequency': '3960',
         'symbolrate': '30000',
         'polarization': 'h',
@@ -81,7 +125,7 @@ PRESETS = [
         # Translators, used as coverage area of a transponder
         'coverage': _('Middle East, Asia, Australia'),
     }),
-    ('Eutelsat (113.0W)', 5, {
+    Preset('Eutelsat (113.0W)', 5, {
         'frequency': '12089',
         'symbolrate': '11719',
         'polarization': 'h',
@@ -90,7 +134,7 @@ PRESETS = [
         # Translators, used as coverage area of a transponder
         'coverage': _('North, Middle, and South America'),
     }),
-    ('ABS-2 (74.9E)', 6, {
+    Preset('ABS-2 (74.9E)', 6, {
         'frequency': '11734',
         'symbolrate': '44000',
         'polarization': 'h',
@@ -101,10 +145,42 @@ PRESETS = [
     }),
 ]
 
+PRESETS = {
+    LBAND: L_PRESETS,
+    KUBAND: KU_PRESETS,
+}
+
+
+class DemodRestartError(Exception):
+    """ Raised when demodulator cannot be restarted """
+    pass
+
+
+def get_band():
+    """
+    Return the tuner band for which the application is configured
+    """
+    return exts.config.get('ondd.band', KUBAND)
+
 
 def read_ondd_setup():
-    initial_data = exts.setup.get('ondd')
+    settings_key = SETTINGS_KEYS[get_band()]
+    initial_data = exts.setup.get(settings_key)
     return {} if isinstance(initial_data, bool) else initial_data
+
+
+def write_ondd_setup(data):
+    settings_key = SETTINGS_KEYS[get_band()]
+    exts.setup.append(data)
+
+
+def restart_demod():
+    restart_demod_command = exts.config.get('ondd.demod_restart_command')
+    try:
+        subprocess.check_call(restart_demod_command, shell=True)
+    except subprocess.CalledProcessError:
+        logging.exception('Failed to restart the demodulator')
+        raise DemodRestartError('Could not restart the demod service')
 
 
 @template_helper()
