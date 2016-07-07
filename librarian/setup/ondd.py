@@ -36,7 +36,7 @@ class ONDDStep:
             # the setup step without setting the tuner settings.
             return False
         ONDDForm = get_form()
-        form = ONDDForm(read_ondd_setup())
+        form = ONDDForm(ondd_helpers.read_ondd_setup())
         return not form.is_valid()
 
     @staticmethod
