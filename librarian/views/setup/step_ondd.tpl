@@ -27,6 +27,11 @@
                     ## setup wizard
                     ${_('Test settings')}
                 </button>
+                % if is_l:
+                    <span class="o-field-help-message">
+                        ${_('After saving the tuner settings, it may take up to 15 minutes for a lock to be acquired.')}
+                    </span>
+                % endif
             </p>
         </div>
 
