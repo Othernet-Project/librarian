@@ -1,14 +1,7 @@
 ((window, $, templates) ->
 
-  FIELDS = [
-    'frequency',
-    'symbolrate',
-    'polarization',
-    'delivery',
-    'modulation'
-  ]
-
   section = $ '#dashboard-ondd'
+  fields = null
   onddForm = null
   fields = {}
   options = {}
@@ -16,7 +9,7 @@
 
   # Cache selectors for the form field
   cacheSelectors = () ->
-    for f in FIELDS
+    for f in fields
       fields[f] = $ "##{f}"
 
 
@@ -54,7 +47,7 @@
       $('.o-field-error').removeClass("o-field-error")
       $(".o-field-error-message").remove()
 
-      for f in FIELDS
+      for f in fields
         fields[f].val data[f]
 
     section.trigger 'resize'
@@ -67,6 +60,8 @@
     # Ignore if required elements are not present
     if not onddForm.length
       return
+
+    fields = (($ '#transponders').data 'fields').split ' '
 
     # Handle transponder select list change event
     onddForm.on 'change', '#transponders', onTransponderSwitch
