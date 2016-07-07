@@ -171,7 +171,7 @@ def read_ondd_setup():
 
 def write_ondd_setup(data):
     settings_key = SETTINGS_KEYS[get_band()]
-    exts.setup.append(data)
+    exts.setup.append({settings_key: data})
 
 
 def restart_demod():
