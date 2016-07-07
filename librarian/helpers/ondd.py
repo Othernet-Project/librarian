@@ -66,7 +66,7 @@ Preset = namedtuple('Preset', ('label', 'index', 'values'))
 L_PRESETS = [
     # Translators, name of the L-band tuner preset covering most of the world
     Preset(_('Global'), 1, {
-        'frequency': '1539.8725',
+        'frequency': '1545.525',
         'uncertainty': '4000',
         'symbolrate': '8400',
         'sample_rate': '1',
