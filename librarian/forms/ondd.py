@@ -93,6 +93,7 @@ class LForm(ONDDFormBase):
     )
     descrambler = form.BooleanField(
         _("Descrambler"),
+        value='descrambler',
         default=False,
     )
 
