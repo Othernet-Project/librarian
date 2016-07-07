@@ -185,5 +185,7 @@ def restart_demod():
 
 @template_helper()
 def has_tuner():
+    if get_band() == LBAND:
+        return True
     TUNER_DEV_PATH = '/dev/dvb/adapter0/frontend0'
     return os.path.exists(TUNER_DEV_PATH)
