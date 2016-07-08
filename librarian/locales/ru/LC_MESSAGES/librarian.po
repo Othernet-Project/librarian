@@ -1,991 +1,40 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Librarian\n"
-"Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2016-03-24 19:12+0100\n"
-"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: Librarian\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#. Translators, used as page title
-#. Translators, used as dashboard section title
-#. Translators, link to settings dashboard in the context menu
-#: librarian_dashboard/menuitems.py:18
-#: librarian_dashboard/views/dashboard/dashboard.tpl:6
-#: librarian_settings/dashboard_plugin.py:21 librarian_ui/views/base.tpl:113
-msgid "Settings"
-msgstr "Settings"
+#: librarian_library/menuitems.py:8
+#: librarian_library/views/library/content_list.tpl:8
+msgid "Library"
+msgstr "Библиотека"
 
-#. Translators, displayed when an unforeseen error happens in one of the dashboard plugins
-#: librarian_dashboard/views/dashboard/plugin_error.tpl:2
-msgid "An error occurred during the rendering of this plugin."
-msgstr "An error occurred during the rendering of this plugin."
+#: librarian_library/views/library/_content_list.tpl:11
+msgid "Content library is currently empty"
+msgstr "Библиотека публикаций пуста"
 
-#: librarian_settings/routes.py:31
-msgid "Settings saved."
-msgstr ""
-
-#. Translators, used as page title
-#: librarian_settings/views/settings/settings.tpl:6
-msgid "Librarian settings"
-msgstr ""
-
-#: librarian_settings/views/settings/_settings_form.tpl:16
-msgid "Save"
-msgstr "Save"
-
-#: librarian_settings/views/settings/dashboard.tpl:12
-msgid "Settings could not be set due to application error."
-msgstr ""
-
-#. Translators, used as dashboard section title
 #: librarian_logs/dashboard_plugin.py:26
 msgid "Application logs"
 msgstr "Журналы программы"
 
-#. Translators, used as note in Application logs section
 #: librarian_logs/views/logs/dashboard.tpl:2
 msgid "Logs are shown in reverse chronological order"
 msgstr "Журналы показаны в обратном хронологическом порядке"
 
-#. Translators, used as label for a button that allows download of system logs
-#: librarian_logs/views/logs/dashboard.tpl:6
-msgid "Download system logs"
-msgstr ""
-
-#. Translators, used as page title
-#: librarian_twitter/menuitems.py:8
-#: librarian_twitter/views/twitter/twitter.tpl:7
-msgid "Twitter"
-msgstr ""
-
-#: librarian_twitter/views/twitter/twitter.tpl:19
-msgid "Tweets"
-msgstr ""
-
-#: librarian_twitter/views/twitter/twitter.tpl:22
-msgid "Handles"
-msgstr ""
-
-#. Translators, message used when no tweets are found for a given handle
-#: librarian_twitter/views/twitter/twitter.tpl:36
-#, python-brace-format
-msgid "Sorry! No tweets could be found with the user name \"{handle}\""
-msgstr ""
-
-#: librarian_twitter/views/twitter/twitter.tpl:41
-#, python-brace-format
-msgid "Showing tweets from @{handle}."
-msgstr ""
-
-#: librarian_twitter/views/twitter/twitter.tpl:44
-msgid "Go back to all teweets"
-msgstr ""
-
-#: librarian_twitter/views/twitter/twitter.tpl:75
-msgid "previous"
-msgstr "предыдущий"
-
-#: librarian_twitter/views/twitter/twitter.tpl:75
-msgid "next"
-msgstr "Следующий"
-
-#. Translators, message used when no twitter handles are present
-#: librarian_twitter/views/twitter/twitter.tpl:86
-msgid ""
-"Sorry, no twitter handles could be found. Please wait for some tweets to be "
-"downloaded and imported"
-msgstr ""
-
-#. Translators, used as dashboard section title
+#. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
-#. Translators, used during setup wizard in tuner settings step, as step
-#. title
-#: librarian_ondd/dashboard_plugin.py:49
-#: librarian_ondd/views/ondd/settings.tpl:6
-#: librarian_ondd/views/ondd/settings.tpl:12
-#: librarian_ondd/views/setup/step_ondd.tpl:12
-msgid "Tuner settings"
-msgstr "Настройки тюнера"
-
-#. Translators, shown when tuner settings are updated
-#. during setup wizard step.
-#: librarian_ondd/setup.py:60
-msgid "Tuner settings have been updated"
-msgstr ""
-
-#. Translators, notification displayed when internal cache storage
-#. is running out of disk space
-#: librarian_ondd/tasks.py:51
-msgid ""
-"Download capacity is getting low. Please ask the administrator to take "
-"action."
-msgstr ""
-
-#. Translators, notification displayed when internal cache storage
-#. is running out of disk space
-#: librarian_ondd/tasks.py:61
-msgid ""
-"Download cache capacity is getting low. You will stop receiving new content "
-"if you run out of storage space. Please move some content from the internal "
-"storage to an external one."
-msgstr ""
-
-#: librarian_ondd/forms.py:15
-msgid ""
-"Tuner configuration could not be saved. Please make sure that the tuner is "
-"connected."
-msgstr ""
-"Tuner configuration could not be saved. Please make sure that the tuner is "
-"connected."
-
-#: librarian_ondd/forms.py:20
-msgid "LNB Type"
-msgstr "LNB Type"
-
-#: librarian_ondd/forms.py:23
-msgid "Invalid choice for LNB type"
-msgstr "Неверный выбор для LNB типа."
-
-#: librarian_ondd/forms.py:28
-msgid "Frequency"
-msgstr "Frequency"
-
-#. Translators, error message when frequency value is wrong
-#: librarian_ondd/forms.py:34
-msgid "Frequency must be a positive number"
-msgstr "Значение частоты должно быть положительным."
-
-#: librarian_ondd/forms.py:39
-msgid "Symbol rate"
-msgstr "Symbol rate"
-
-#. Translators, error message when symbolrate value is wrong
-#: librarian_ondd/forms.py:45
-msgid "Symbolrate must be a positive number"
-msgstr "Значение скорости передачи должно быть положительным."
-
-#: librarian_ondd/forms.py:50
-msgid "Delivery system"
-msgstr "Delivery system"
-
-#: librarian_ondd/forms.py:55
-msgid "Invalid choice for delivery system"
-msgstr "Invalid choice for delivery system"
-
-#: librarian_ondd/forms.py:60
-msgid "Modulation"
-msgstr "Modulation"
-
-#: librarian_ondd/forms.py:65
-msgid "Invalid choice for modulation mode"
-msgstr "Неверный выбор режима модуляции."
-
-#: librarian_ondd/forms.py:70
-msgid "Polarization"
-msgstr "Polarization"
-
-#: librarian_ondd/forms.py:75
-msgid "Invalid choice for polarization"
-msgstr "Invalid choice for polarization"
-
-#. Translators, message shown when user does not select a satellite
-#. preset nor 'Custom' option to enter custom data.
-#: librarian_ondd/routes.py:35
-msgid "Please select a satellite or select 'Custom'"
-msgstr ""
-
-#: librarian_ondd/routes.py:50
-msgid "Transponder configuration saved."
-msgstr "Transponder configuration saved."
-
-#. Translators, refers to transponder polarization
-#: librarian_ondd/consts.py:20
-msgid "None"
-msgstr "None"
-
-#. Translators, refers to transponder polarization
-#: librarian_ondd/consts.py:22
-msgid "Vertical"
-msgstr "Вертикальный"
-
-#. Translators, refers to transponder polarization
-#: librarian_ondd/consts.py:24
-msgid "Horizontal"
-msgstr "Горизонтальный"
-
-#. Translators, this is a type of LNB
-#: librarian_ondd/consts.py:35
-msgid "Universal"
-msgstr "Универсальный"
-
-#. Translators, this is a type of LNB
-#: librarian_ondd/consts.py:37
-msgid "North America Ku band"
-msgstr "Северная Америка Ку-диапазон"
-
-#. Translators, this is a type of LNB
-#: librarian_ondd/consts.py:39
-msgid "C band"
-msgstr "C band"
-
-#. Translators, used as coverage area of a transponder
-#: librarian_ondd/consts.py:50
-msgid "North America"
-msgstr ""
-
-#. Translators, used as coverage area of a transponder
-#: librarian_ondd/consts.py:59
-msgid "Europe, North Africa"
-msgstr ""
-
-#. Translators, used as coverage area of a transponder
-#: librarian_ondd/consts.py:68
-msgid "North and West Europe, Subsaharan Africa"
-msgstr ""
-
-#. Translators, used as coverage area of a transponder
-#: librarian_ondd/consts.py:77
-msgid "Middle East, Asia, Australia"
-msgstr ""
-
-#. Translators, used as coverage area of a transponder
-#: librarian_ondd/consts.py:86
-msgid "North, Middle, and South America"
-msgstr ""
-
-#. Translators, used as coverage area of a transponder
-#: librarian_ondd/consts.py:95
-msgid "India"
-msgstr ""
-
-#: librarian_ondd/views/ondd/_cache_status.tpl:6
-msgid ""
-"Download capacity is low and files may stop downloading soon. Free some disk "
-"space by moving files to an external storage device."
-msgstr ""
-
-#. Translators, shows the disk space status of the storage where ondd download cache is stored
-#: librarian_ondd/views/ondd/_cache_status.tpl:10
-msgid "Allocated download capacity"
-msgstr ""
-
-#: librarian_ondd/views/ondd/_cache_status.tpl:15
-#, python-format, python-brace-format
-msgid "{percentage}% used ({amount} available)"
-msgstr ""
-
-#. Translators, used as main status text when there is no tuner
-#: librarian_ondd/views/ondd/_status.tpl:18
-msgid "no tuner"
-msgstr ""
-
-#. Translators, used as main status text when there is no signal lock
-#: librarian_ondd/views/ondd/_status.tpl:21
-msgid "no lock"
-msgstr "разблокирован"
-
-#. Translators, used as main status text when there is no service
-#: librarian_ondd/views/ondd/_status.tpl:24
-msgid "no service"
-msgstr ""
-
-#. Translators, used as main status text when everything is ok
-#: librarian_ondd/views/ondd/_status.tpl:27
-msgid "receiving"
-msgstr ""
-
-#. Translators, label is located next to the satellite signal strength
-#. indicator
-#: librarian_ondd/views/ondd/_status.tpl:54
-msgid "Signal"
-msgstr "Signal"
-
-#. Translators, label is located next to the satellite signal quality
-#. indicator
-#: librarian_ondd/views/ondd/_status.tpl:57
-msgid "Quality"
-msgstr "Quality"
-
-#. Translators, labe is located next to the bitrate indicator
-#: librarian_ondd/views/ondd/_status.tpl:59
-msgid "Bitrate"
-msgstr ""
-
-#. Translators, label for select list that allows user to pick a satellite to tune into
-#: librarian_ondd/views/ondd/_presets.tpl:10
-msgid "Satellite"
-msgstr ""
-
-#. Translators, placeholder for satellite selection select list
-#: librarian_ondd/views/ondd/_presets.tpl:13
-msgid "Select a satellite"
-msgstr "Выберите спутник"
-
-#. Translators, label for option that allows user to set custom
-#. transponder parameters
-#: librarian_ondd/views/ondd/_presets.tpl:25
-msgid "Custom..."
-msgstr "Custom..."
-
-#. Translators, instruction for the user on how to use the presets select
-#. list
-#: librarian_ondd/views/ondd/_presets.tpl:29
-msgid "Select a preset or use 'Custom' and enter data manually"
-msgstr ""
-
-#. Translators, shown on dashboard when no files are currently being
-#. downloaded
-#: librarian_ondd/views/ondd/_file_list.tpl:30
-msgid "No files are being downloaded"
-msgstr "No files are being downloaded"
-
-#. Translators, shown in downloads list when no file data is
-#. incoming.
-#: librarian_ondd/views/ondd/_file_list.tpl:46
-msgid "waiting for data..."
-msgstr ""
-
-#. Translators, button label that confirms tuner settings
-#: librarian_ondd/views/ondd/_settings_form.tpl:7
-msgid "Update settings"
-msgstr ""
-
-#: librarian_ondd/views/ondd/dashboard.tpl:31
-msgid "Tuner settings could not be set due to application error."
-msgstr ""
-
-#. Translators, used during setup wizard in tuner settings step
-#: librarian_ondd/views/setup/step_ondd.tpl:17
-msgid "Please select the satellite you'd like to receive data from."
-msgstr "Пожалуйста, выберите спутник, с которого вы хотите получать данные."
-
-#. Translators, used as button label for tuner test during
-#. setup wizard
-#: librarian_ondd/views/setup/step_ondd.tpl:28
-msgid "Test settings"
-msgstr ""
-
-#. Translators, used as dashboard section title
-#: librarian_netinterfaces/dashboard_plugin.py:22
-msgid "Network interfaces"
-msgstr "Сетевые интерфейсы"
-
-#. Translators, network interface type shown in network interface list
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:7
-msgid "wireless"
-msgstr ""
-
-#. Translators, network interface type shown in network interaface list
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:11
-msgid "bridge"
-msgstr ""
-
-#. Translators, network interface type shown in network interface list
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:15
-msgid "wired"
-msgstr ""
-
-#. Translators, human-friendly label for bridge interface with
-#. administrator-specified name (e.g., br0) replacing the
-#. {name} placeholder.
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:31
-#, python-brace-format
-msgid "Ethernet bridge ({name})"
-msgstr ""
-
-#. Translators, network interface IP address
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:41
-msgid "IP address:"
-msgstr ""
-
-#. Translators, network interface default gateway
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:48
-msgid "Default gateway:"
-msgstr ""
-
-#. Translators, network interface IP address (IPv6)
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:55
-msgid "IPv6 address:"
-msgstr ""
-
-#. Translators, network interface IP address
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:61
-msgid "Interface name:"
-msgstr ""
-
+#. Translators, used main navigation menu
 #. Translators, used as page title
-#: librarian_notifications/views/notification_list.tpl:6
-#: librarian_notifications/views/notification_list.tpl:11
-msgid "Messages"
-msgstr ""
-
-#: librarian_notifications/views/_notification_list.tpl:8
-#, python-brace-format
-msgid "A content item has been added to the Library with the following title:"
-msgid_plural ""
-"{count} content items have been added to the Library with the following "
-"titles:"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#. Translators, used as label for discarding all unread notifications
-#: librarian_notifications/views/_notification_list.tpl:29
-msgid "Mark all as read"
-msgstr ""
-
-#: librarian_notifications/views/_notification_list.tpl:51
-msgid "Dismiss"
-msgstr ""
-
-#. Translators, note that appears on notifications page when there are no new notifications
-#: librarian_notifications/views/_notification_list.tpl:61
-msgid "There are no new notifications"
-msgstr "There are no new notifications"
-
-#. Translators, used as dashboard section title
-#: librarian_diskspace/dashboard_plugin.py:32
-msgid "Storage devices"
-msgstr ""
-
-#. Translators, used as description of storage device
-#: librarian_diskspace/views/dashboard/diskspace.tpl:13
-msgid "internal storage"
-msgstr ""
-
-#. Translators, used as description of storage device
-#: librarian_diskspace/views/dashboard/diskspace.tpl:18
-#: librarian_diskspace/views/dashboard/diskspace.tpl:23
-msgid "removable storage"
-msgstr ""
-
-#. Translators, this is used next to disk space usage indicator in settings
-#. panel. The {used}, {total}, and {free} are placeholders.
-#: librarian_diskspace/views/dashboard/diskspace.tpl:43
-#, python-brace-format
-msgid "{used} of {total} ({free} free)"
-msgstr ""
-
-#. Translators, used as page title
-#: librarian_football/menuitems.py:8
-#: librarian_football/views/football/football.tpl:5
-msgid "Football"
-msgstr ""
-
-#: librarian_ui/lang.py:20
-msgid "any language"
-msgstr "другой язык"
-
-#. Translators, shown on error page as error code when error code
-#. is unknown.
-#: librarian_ui/lang.py:35 librarian_ui/views/errors/_error_page.tpl:13
-msgid "unknown"
-msgstr "неизвестный"
-
-#: librarian_ui/views/base.tpl:74
-msgid "Toggle apps menu"
-msgstr ""
-
-#: librarian_ui/views/base.tpl:85
-msgid "Toggle context menu"
-msgstr ""
-
-#. Translators, label for context menu language switcher
-#. Translators, used as label for language
-#: librarian_ui/views/base.tpl:97 librarian_setup/forms.py:23
-msgid "Language"
-msgstr "Language"
-
-#. Translators, link shown in context menu when user is logged in.
-#: librarian_ui/views/base.tpl:115 librarian_auth/menuitems.py:9
-msgid "Log out"
-msgstr "Выйти"
-
-#. Translators, link shown in context menu when user is not logged in.
-#: librarian_ui/views/base.tpl:118
-msgid "Log in"
-msgstr ""
-
-#. Translators, label on back button that appears at the top of
-#. context menu's submenu
-#: librarian_ui/views/base.tpl:125
-msgid "Back to menu"
-msgstr ""
-
-#. Translators, used as a label for guest account (unauthenticated user)
-#: librarian_ui/views/base.tpl:153
-msgid "guest"
-msgstr ""
-
-#: librarian_ui/views/base.tpl:175
-msgid "Info"
-msgstr ""
-
-#: librarian_ui/views/base.tpl:178
-msgid "Notifications"
-msgstr "Notifications"
-
-#: librarian_ui/views/base.tpl:199
-#: librarian_filemanager/views/filemanager/main.tpl:47
-msgid "Loading"
-msgstr ""
-
-#: librarian_ui/views/base.tpl:205 librarian_ui/views/base.tpl:210
-msgid "Content could not be loaded"
-msgstr ""
-
-#. Translators, message shown next to a spinning load icon
-#: librarian_ui/views/base.tpl:216
-msgid "Loading..."
-msgstr "Загружается..."
-
-#: librarian_ui/views/base.tpl:221
-msgid "Toggle status"
-msgstr ""
-
-#. Translators, used as link label for link that takes user back to
-#. a page from which they came (usually used when they temporarily
-#. visit the current page to change some option such as language)
-#: librarian_ui/views/ui/lang_list.tpl:10
-msgid "Back to previous page"
-msgstr ""
-
-#: librarian_ui/views/ui/feedback.tpl:19
-#, python-brace-format
-msgid "You'll be taken to {target} in {seconds} seconds."
-msgstr "You'll be taken to {target} in {seconds} seconds."
-
-#. Translators, used as page title
-#. Translators, used as access denied page heading
-#: librarian_ui/views/errors/403.tpl:5 librarian_ui/views/errors/403.tpl:10
-msgid "Forbidden"
-msgstr "Запрещено"
-
-#. Translators, shown when user is denied access to a page
-#: librarian_ui/views/errors/403.tpl:20
-msgid "You are not authorized to access this page or the page has expired."
-msgstr ""
-
-#. Translators, used as page title
-#. Translators, used as error page heading
-#: librarian_ui/views/errors/404.tpl:5 librarian_ui/views/errors/404.tpl:10
-msgid "Page not found"
-msgstr "страница не найдена"
-
-#: librarian_ui/views/errors/404.tpl:18
-msgid "The page you were looking for could not be found"
-msgstr "Страница, которую вы ищете, не может быть найден"
-
-#: librarian_ui/views/errors/404.tpl:19
-msgid "main page"
-msgstr ""
-
-#: librarian_ui/views/errors/404.tpl:20
-#, python-brace-format
-msgid "You will be redirected to {target} in {seconds} seconds."
-msgstr ""
-
-#. Translators, used as page title
-#. Translators, used as maintenance page heading
-#: librarian_ui/views/errors/503.tpl:5 librarian_ui/views/errors/503.tpl:10
-msgid "Under maintenance"
-msgstr "Under maintenance"
-
-#: librarian_ui/views/errors/503.tpl:19
-msgid ""
-"Librarian is currently in maintenance mode. Please wait a few minutes and "
-"try again."
-msgstr ""
-"Библиотекарь находится в режиме обслуживания. Пожалуйста, подождите "
-"несколько минут и попробуйте снова."
-
-#. Translators, used as page title
-#. Translators, used as error page heading
-#: librarian_ui/views/errors/500.tpl:5 librarian_ui/views/errors/500.tpl:10
-msgid "Error"
-msgstr "Ошибка"
-
-#: librarian_ui/views/errors/500.tpl:19
-msgid ""
-"Librarian has failed to fulfill your request due to unexpected error in the "
-"program."
-msgstr ""
-
-#: librarian_ui/views/errors/500.tpl:21
-msgid "Details are provided below."
-msgstr ""
-
-#: librarian_ui/views/errors/500.tpl:23
-msgid "Error details are not available."
-msgstr ""
-
-#: librarian_ui/views/errors/500.tpl:32
-msgid "Return to main page"
-msgstr ""
-
-#: librarian_ui/views/errors/500.tpl:33
-msgid "Download application log"
-msgstr "Download application log"
-
-#. Translators, shown on error page below the error title
-#: librarian_ui/views/errors/_error_page.tpl:10
-msgid "Error code:"
-msgstr ""
-
-#. Translators, used as page title
-#: librarian_setup/views/diag.tpl:4 librarian_setup/views/diag.tpl:9
-msgid "Diagnostics"
-msgstr ""
-
-#: librarian_setup/views/diag.tpl:15
-msgid "Version"
-msgstr ""
-
-#: librarian_setup/views/diag.tpl:19
-msgid "Has tuner?"
-msgstr ""
-
-#: librarian_setup/views/diag.tpl:20
-msgid "Yes"
-msgstr "Yes"
-
-#: librarian_setup/views/diag.tpl:20
-msgid "No"
-msgstr "No"
-
-#. Translators, used during setup wizard in language settings step, as step
-#. title
-#: librarian_setup/views/setup/step_language.tpl:8
-msgid "Default interface language"
-msgstr ""
-
-#. Translators, used during setup wizard in language settings step
-#: librarian_setup/views/setup/step_language.tpl:13
-msgid ""
-"Please select the default interface language. Users can change their "
-"language preference later."
-msgstr ""
-
-#: librarian_setup/views/setup/no_xhr.tpl:1
-msgid "Setup wizard requires your attention. Please reload this page."
-msgstr ""
-
-#. Translators, used as page title
-#: librarian_setup/views/setup/setup_finished.tpl:9
-msgid "Setup Completed"
-msgstr "Настройка завершина"
-
-#: librarian_setup/views/setup/setup_finished.tpl:16
-msgid "Settings are saved"
-msgstr ""
-
-#: librarian_setup/views/setup/setup_finished.tpl:23
-msgid "Welcome to Outernet"
-msgstr ""
-
-#: librarian_setup/views/setup/setup_finished.tpl:26
-msgid "Start using Outernet"
-msgstr "Start using Outernet"
-
-#: librarian_setup/views/setup/setup_base.tpl:4
-msgid "Setup wizard"
-msgstr ""
-
-#: librarian_setup/views/setup/setup_base.tpl:40
-msgid "Back"
-msgstr "Back"
-
-#: librarian_setup/views/setup/setup_base.tpl:42
-msgid "Finish"
-msgstr ""
-
-#: librarian_setup/views/setup/setup_base.tpl:42
-#: librarian_filemanager/views/filemanager/_image.tpl:32
-msgid "Next"
-msgstr "Следующий"
-
-#. Translators, errorm essage shown when emergency reset token is
-#. invalid
-#: librarian_auth/forms.py:26
-msgid "This emergency reset token is invalid"
-msgstr ""
-
-#: librarian_auth/forms.py:53
-msgid "Please enter the correct username and password."
-msgstr "Пожалуйста, введите действующее имя пользователя и пароль"
-
-#. Translators, used as label for a login field
-#. Translators, used as label in create user form
-#: librarian_auth/forms.py:56 librarian_auth/forms.py:77
-msgid "Username"
-msgstr "Username"
-
-#: librarian_auth/forms.py:57 librarian_auth/forms.py:79
-msgid "username"
-msgstr "пользователь"
-
-#. Translators, used as label for a password field
-#. Translators, used as label in create user form
-#. Translators, used as label in password reset form
-#: librarian_auth/forms.py:60 librarian_auth/forms.py:81
-#: librarian_auth/forms.py:106
-msgid "Password"
-msgstr "Password"
-
-#: librarian_auth/forms.py:61 librarian_auth/forms.py:83
-#: librarian_auth/forms.py:108
-msgid "password"
-msgstr "пароль"
-
-#: librarian_auth/forms.py:74 librarian_auth/forms.py:98
-#: librarian_auth/forms.py:123
-msgid "The entered passwords do not match."
-msgstr "Введенные пароли не совпадают."
-
-#. Translators, used as label in create user form
-#. Translators, used as label in password reset form
-#: librarian_auth/forms.py:85 librarian_auth/forms.py:110
-msgid "Confirm Password"
-msgstr "Confirm Password"
-
-#: librarian_auth/forms.py:87 librarian_auth/forms.py:112
-msgid "confirm password"
-msgstr "подтвердите пароль"
-
-#: librarian_auth/forms.py:99
-msgid "Password reset token does not match any user"
-msgstr ""
-
-#. Translators, used as label in create user form
-#: librarian_auth/forms.py:102 librarian_auth/views/auth/_reset_token.tpl:3
-msgid "Password reset token"
-msgstr ""
-
-#. Translators, used as error message for emergency reset token form
-#. field
-#: librarian_auth/forms.py:126
-msgid "Invalid emergency reset token"
-msgstr ""
-
-#. Translators, used as label for emergency reset token field
-#: librarian_auth/forms.py:130
-msgid "Emergency reset token"
-msgstr ""
-
-#. Translators, used as page title on feedback page
-#: librarian_auth/routes/emergency_reset.py:68
-msgid "Emergency reset successful"
-msgstr ""
-
-#. Translators, used as link label on feedback page in "You
-#. will be taken to log-in page..."
-#: librarian_auth/routes/emergency_reset.py:71 librarian_auth/routes/auth.py:92
-msgid "log-in page"
-msgstr ""
-
-#. Translators, shown after emergency reset
-#: librarian_auth/routes/emergency_reset.py:73
-#, python-brace-format
-msgid "You may now log in as '{username}'."
-msgstr ""
-
-#. Translators, used as page title on feedback page
-#: librarian_auth/routes/auth.py:89
-msgid "New password was set"
-msgstr ""
-
-#. Translators, shown after password has been changed
-#: librarian_auth/routes/auth.py:94
-#, python-brace-format
-msgid "Password for username '{username}' has been set."
-msgstr ""
-
-#: librarian_auth/views/setup/step_superuser.tpl:8
-msgid "Superuser account"
-msgstr ""
-
-#: librarian_auth/views/setup/step_superuser.tpl:13
-msgid ""
-"The superuser account is used to maintain the library and configure the "
-"receiver."
-msgstr ""
-
-#. Translators, help text displayed below emergency reset token field
-#: librarian_auth/views/auth/_emergency_reset.tpl:10
-msgid "Please contact Outernet to obtain your emergency reset token."
-msgstr ""
-
-#. Translators, used as label for button that performs emergency reset
-#: librarian_auth/views/auth/_emergency_reset.tpl:17
-msgid "Reset"
-msgstr ""
-
-#: librarian_auth/views/auth/_reset_password.tpl:14
-msgid ""
-"This is the 6-digit number you were asked to write down when you created "
-"your user account."
-msgstr ""
-
-#: librarian_auth/views/auth/_reset_password.tpl:27
-msgid "Change password"
-msgstr ""
-
-#. Translators, used as page title
-#: librarian_auth/views/auth/login.tpl:6
-#: librarian_auth/views/auth/_login.tpl:11
-msgid "Login"
-msgstr "Войти"
-
-#. Translators, used as page title
-#: librarian_auth/views/auth/login.tpl:11
-msgid "Log into Librarian"
-msgstr "Log into Librarian"
-
-#. Translators, shown as a message under the password reset token.
-#. Password reset token is a 6-digit number that is used to reset
-#. the user password.
-#: librarian_auth/views/auth/_reset_token.tpl:9
-msgid ""
-"Please write this password reset token down and store it securely. You will "
-"need it if you ever need to reset your password."
-msgstr ""
-
-#. Translators, used as page title
-#: librarian_auth/views/auth/emergency_reset.tpl:5
-msgid "Emergency reset"
-msgstr ""
-
 #. Translators, used as page heading
-#: librarian_auth/views/auth/emergency_reset.tpl:9
-msgid "Perform emergency reset"
-msgstr ""
-
-#. Translators, used as page title
-#: librarian_auth/views/auth/reset_password.tpl:6
-#: librarian_auth/views/auth/reset_password.tpl:11
-#: librarian_auth/views/auth/_login.tpl:14
-msgid "Reset your password"
-msgstr ""
-
-#: librarian_filemanager/helpers.py:258
-#, python-brace-format
-msgid "{number} year ago"
-msgid_plural "{number} years ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:263
-#, python-brace-format
-msgid "{number} mont ago"
-msgid_plural "{number} months ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:268
-#, python-brace-format
-msgid "{number} week ago"
-msgid_plural "{number} weeks ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:272
-#, python-brace-format
-msgid "{number} day ago"
-msgid_plural "{number} days ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:276
-msgid "yesterday"
-msgstr ""
-
-#: librarian_filemanager/helpers.py:278
-msgid "Today"
-msgstr ""
-
-#: librarian_filemanager/helpers.py:283
-#, python-brace-format
-msgid "{number} hour ago"
-msgid_plural "{number} hours ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:288
-#, python-brace-format
-msgid "{number} minute ago"
-msgid_plural "{number} minutes ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:292
-#, python-brace-format
-msgid "{number} second ago"
-msgid_plural "{number} seconds ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:295
-msgid "just now"
-msgstr ""
-
-#. Translators, used as page title
 #: librarian_filemanager/menuitems.py:8 librarian_filemanager/routes.py:209
 #: librarian_filemanager/views/filemanager/main.tpl:8
 msgid "Files"
 msgstr "Файлы"
-
-#: librarian_filemanager/routes.py:187
-msgid "File not found."
-msgstr ""
-
-#. Translators, used as page title when a file's removal is
-#. retried, but it was already deleted before
-#: librarian_filemanager/routes.py:200
-msgid "File already removed"
-msgstr ""
-
-#. Translators, used as message when a file's removal is
-#. retried, but it was already deleted before
-#: librarian_filemanager/routes.py:203
-msgid "The specified file has already been removed."
-msgstr ""
-
-#. Translators, used as page title of successful file removal feedback
-#: librarian_filemanager/routes.py:230
-msgid "File removed"
-msgstr ""
-
-#. Translators, used as message of successful file removal feedback
-#: librarian_filemanager/routes.py:232
-msgid "File successfully removed."
-msgstr ""
-
-#: librarian_filemanager/routes.py:237 librarian_filemanager/routes.py:247
-msgid "file list"
-msgstr ""
-
-#. Translators, used as page title of unsuccessful file removal feedback
-#: librarian_filemanager/routes.py:240
-msgid "File not removed"
-msgstr ""
-
-#. Translators, used as message of unsuccessful file removal feedback
-#: librarian_filemanager/routes.py:242
-msgid "File could not be removed."
-msgstr ""
 
 #. Translators, used as page title for page that shows result of running a script
 #. Translators, used as page header for page that shows result of running a script
@@ -993,11 +42,6 @@ msgstr ""
 #: librarian_filemanager/views/exec_result.tpl:10
 msgid "Script output"
 msgstr "Вывод скрипта"
-
-#. Translators, return (result) code of the script executed via file browser
-#: librarian_filemanager/views/exec_result.tpl:15
-msgid "Return code:"
-msgstr ""
 
 #. Translators, shown when result code is good (0).
 #: librarian_filemanager/views/exec_result.tpl:18
@@ -1009,11 +53,6 @@ msgstr "OK"
 msgid "error"
 msgstr "ошибка"
 
-#. Translators, refers to standard output of script run from file browser (STDOUT)
-#: librarian_filemanager/views/exec_result.tpl:25
-msgid "Output:"
-msgstr ""
-
 #. Translators, shown if script returned no output
 #: librarian_filemanager/views/exec_result.tpl:30
 msgid "no output"
@@ -1024,872 +63,2583 @@ msgstr "Нет выходных данных"
 msgid "Errors"
 msgstr "Oшибки"
 
-#. Translators, used as page title of content removal confirmation page
-#: librarian_filemanager/views/filemanager/remove_confirm.tpl:5
-msgid "Confirm removal"
-msgstr ""
+#: librarian_library/consts.py:5
+msgid "Unknown license"
+msgstr "Неизвестная лицензия"
 
-#. Translators, used title at top of the removal confirmation page,
-#. asking user to confirm file/folder deletion.
-#: librarian_filemanager/views/filemanager/remove_confirm.tpl:13
-msgid "Delete permanently?"
-msgstr ""
+#: librarian_library/consts.py:6
+msgid "Creative Commons Attribution"
+msgstr "Creative Commons Attribution "
 
-#. Translators, used as confirmation message before content removal
-#: librarian_filemanager/views/filemanager/remove_confirm.tpl:18
-#, python-brace-format
-msgid "You are about to delete '{item_name}'."
-msgstr ""
+#: librarian_library/consts.py:7
+msgid "Creative Commons Attribution-NoDerivs"
+msgstr "Creative Commons Attribution-NoDerivs "
 
-#. Translators, message warning users about deleted files and
-#. folders.
-#: librarian_filemanager/views/filemanager/remove_confirm.tpl:22
-msgid "Deleted files and folders cannot be recovered."
-msgstr ""
+#: librarian_library/consts.py:8
+msgid "Creative Commons Attribution-NonCommercial"
+msgstr "Creative Commons Attribution-NonCommercial "
 
-#. Translators, used as title of content removal confirmation button
-#. Translators, used as label for folder/file delete button
-#: librarian_filemanager/views/filemanager/remove_confirm.tpl:28
-#: librarian_filemanager/views/filemanager/_folder.tpl:17
-msgid "Delete"
-msgstr "Удалить"
+#: librarian_library/consts.py:9
+msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
+msgstr "Creative Commons Attribution-NonCommercial-NoDerivs "
 
-#. Translators, used as title of content removal cancellation button
-#: librarian_filemanager/views/filemanager/remove_confirm.tpl:30
-msgid "Cancel"
-msgstr "Cancel"
+#: librarian_library/consts.py:10
+msgid "Creative Commons Attribution-ShareAlike"
+msgstr "Creative Commons Attribution-ShareAlike "
+
+#: librarian_library/consts.py:11
+msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
+msgstr "Creative Commons Attribution-NonCommercial-ShareAlike "
+
+#: librarian_library/consts.py:12
+msgid "GNU Free Documentation License"
+msgstr "GNU Лицензии свободной документации"
+
+#: librarian_library/consts.py:13
+msgid "Open Publication License"
+msgstr "Открытая лицензия публикации"
+
+#: librarian_library/consts.py:14
+msgid "Open Content License"
+msgstr "Откройте содержимое лицензии"
+
+#: librarian_library/consts.py:15
+msgid "Against DRM License"
+msgstr "Против Лицензия DRM"
+
+#: librarian_library/consts.py:16
+msgid "Free Art License"
+msgstr "Лицензия Свободного Искусства (Free Art License)"
+
+#: librarian_library/consts.py:17
+msgid "Public Domain"
+msgstr "Публичный домен"
+
+#: librarian_library/consts.py:18
+#, fuzzy
+msgid "Other free license"
+msgstr "Другие свободные лицензии"
+
+#: librarian_library/consts.py:19
+#: librarian_library/views/library/_content_list.tpl:70
+msgid "All rights reserved"
+msgstr "Все права защищены"
+
+#: librarian_library/consts.py:20
+msgid "Other non-free license"
+msgstr "Другие не свободные лицензии"
+
+#. Translators, used as placeholder while infinite scrolling content is being loaded
+#: librarian_ui/views/base.tpl:216
+msgid "Loading..."
+msgstr "Загружается..."
+
+#. Translators, used as section heading on dashboard
+#: librarian_ondd/dashboard_plugin.py:49
+#: librarian_ondd/views/ondd/settings.tpl:6
+#: librarian_ondd/views/ondd/settings.tpl:12
+#: librarian_ondd/views/setup/step_ondd.tpl:12
+msgid "Tuner settings"
+msgstr "Настройки тюнера"
+
+#: librarian_filemanager/views/filemanager/_generic.tpl:46
+msgid "There are currently no files or folders here."
+msgstr "Здесь пока еще нет файлов или папок."
+
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian_ondd/consts.py:20
+msgid "None"
+msgstr "ни один"
+
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian_ondd/consts.py:22
+msgid "Vertical"
+msgstr "Вертикальный"
+
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian_ondd/consts.py:24
+msgid "Horizontal"
+msgstr "Горизонтальный"
+
+#. Translators, this is a type of LNB
+#. Translators, this is a type of LNB
+#: librarian_ondd/consts.py:35
+msgid "Universal"
+msgstr "Универсальный"
+
+#. Translators, this is a type of LNB
+#. Translators, this is a type of LNB
+#: librarian_ondd/consts.py:37
+msgid "North America Ku band"
+msgstr "Северная Америка Ку-диапазон"
+
+#. Translators, error message when LNB type is incorrect
+#. Translators, error message when LNB type is incorrect
+#: librarian_ondd/forms.py:23
+msgid "Invalid choice for LNB type"
+msgstr "Неверный выбор для LNB типа."
+
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when frequency value is
+#. wrong
+#: librarian_ondd/forms.py:34
+msgid "Frequency must be a positive number"
+msgstr "Значение частоты должно быть положительным."
+
+#. Translators, error message when symbolrate value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#: librarian_ondd/forms.py:45
+msgid "Symbolrate must be a positive number"
+msgstr "Значение скорости передачи должно быть положительным."
+
+#. Translators, error message shown when wrong delivery
+#. system is selected
+#. Translators, error message shown when wrong delivery
+#. system is selected
+#: librarian_ondd/forms.py:55
+msgid "Invalid choice for delivery system"
+msgstr "Недействительный выбор для системы доставки"
+
+#. Translators, error message shown when wrong modulation
+#. mode is selected
+#. Translators, error message shown when wrong modulation
+#. mode is selected
+#: librarian_ondd/forms.py:65
+msgid "Invalid choice for modulation mode"
+msgstr "Неверный выбор режима модуляции."
+
+#. Translators, error message shown when wrong
+#. polarization is selected
+#. Translators, error message shown when wrong
+#. polarization is selected
+#: librarian_ondd/forms.py:75
+msgid "Invalid choice for polarization"
+msgstr "Недействительный выбор для поляризации"
+
+#: librarian_ui/views/errors/500.tpl:33
+msgid "Download application log"
+msgstr "Прикладной журнал загрузки"
+
+#. Translators, placeholder for satellite selection select list
+#: librarian_ondd/views/ondd/_presets.tpl:13
+msgid "Select a satellite"
+msgstr "Выберите спутник"
+
+#. Translators, label for option that allows user to set custom transponder parameters
+#: librarian_ondd/views/ondd/_presets.tpl:25
+msgid "Custom..."
+msgstr "Выборочно..."
+
+#: librarian_ondd/views/ondd/_status.tpl:21
+msgid "no lock"
+msgstr "разблокирован"
+
+#. Translators, used as page title
+#. Translators, used as error page heading
+#: librarian_ui/views/errors/500.tpl:5 librarian_ui/views/errors/500.tpl:10
+msgid "Error"
+msgstr "Ошибка"
+
+#. Translators, used as page title
+#. Translators, used as maintenance page heading
+#: librarian_ui/views/errors/503.tpl:5 librarian_ui/views/errors/503.tpl:10
+msgid "Under maintenance"
+msgstr "На техобслуживании"
+
+#: librarian_ui/views/errors/503.tpl:19
+msgid "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
+msgstr "Библиотекарь находится в режиме обслуживания. Пожалуйста, подождите несколько минут и попробуйте снова."
+
+#: librarian_auth/forms.py:53
+msgid "Please enter the correct username and password."
+msgstr "Пожалуйста, введите действующее имя пользователя и пароль"
+
+#: librarian_ui/lang.py:20
+msgid "any language"
+msgstr "другой язык"
+
+#: librarian_ondd/views/ondd/_file_list.tpl:30
+msgid "No files are being downloaded"
+msgstr "Никакие файлы не загружаются"
+
+#: librarian_ui/views/errors/403.tpl:5 librarian_ui/views/errors/403.tpl:10
+msgid "Forbidden"
+msgstr "Запрещено"
+
+#: librarian_ui/views/base.tpl:115 librarian_auth/menuitems.py:9
+msgid "Log out"
+msgstr "Выйти"
+
+#: librarian_auth/views/auth/login.tpl:6
+#: librarian_auth/views/auth/_login.tpl:11
+msgid "Login"
+msgstr "Войти"
+
+#: librarian_auth/forms.py:57 librarian_auth/forms.py:79
+msgid "username"
+msgstr "пользователь"
+
+#: librarian_auth/forms.py:61 librarian_auth/forms.py:83
+#: librarian_auth/forms.py:108
+msgid "password"
+msgstr "пароль"
 
 #: librarian_filemanager/views/filemanager/_folder.tpl:25
 #: librarian_filemanager/views/filemanager/_playlist.tpl:98
 msgid "Download"
 msgstr "Скачать"
 
-#. Translators, link to containing folder of a file in search results
-#: librarian_filemanager/views/filemanager/_folder.tpl:34
-msgid "Open containing folder"
-msgstr ""
+#: librarian_ui/lang.py:35 librarian_ui/views/errors/_error_page.tpl:13
+msgid "unknown"
+msgstr "неизвестный"
 
-#: librarian_filemanager/views/filemanager/_folder.tpl:117
-msgid "in {}"
-msgstr ""
+#. Translators, used as dashboard section title
+#: librarian_netinterfaces/dashboard_plugin.py:22
+msgid "Network interfaces"
+msgstr "Сетевые интерфейсы"
 
-#: librarian_filemanager/views/filemanager/_main.tpl:9
-msgid "Browse"
-msgstr ""
+#. Translators, used as page title
+#. Translators, used as error page heading
+#: librarian_ui/views/errors/404.tpl:5 librarian_ui/views/errors/404.tpl:10
+msgid "Page not found"
+msgstr "страница не найдена"
 
-#: librarian_filemanager/views/filemanager/_main.tpl:10
-msgid "Gallery"
-msgstr ""
+#: librarian_ui/views/errors/404.tpl:18
+msgid "The page you were looking for could not be found"
+msgstr "Страница, которую вы ищете, не может быть найден"
 
-#: librarian_filemanager/views/filemanager/_main.tpl:11
-msgid "Listen"
-msgstr ""
+#: librarian_auth/forms.py:74 librarian_auth/forms.py:98
+#: librarian_auth/forms.py:123
+msgid "The entered passwords do not match."
+msgstr "Введенные пароли не совпадают."
 
-#: librarian_filemanager/views/filemanager/_main.tpl:12
-msgid "Watch"
-msgstr ""
+#: librarian_library/views/library/_content_list.tpl:27
+msgid "here"
+msgstr "здесь"
 
-#: librarian_filemanager/views/filemanager/_main.tpl:13
-msgid "Read"
-msgstr ""
+#. Translators, used as placeholder in the password field
+#: librarian_auth/forms.py:87 librarian_auth/forms.py:112
+msgid "confirm password"
+msgstr "подтвердите пароль"
 
-#: librarian_filemanager/views/filemanager/_main.tpl:14
-msgid "Updates"
-msgstr "Обновления"
+#: librarian_setup/views/setup/setup_base.tpl:42
+#: librarian_filemanager/views/filemanager/_image.tpl:32
+msgid "Next"
+msgstr "Следующий"
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian_setup/views/setup/setup_finished.tpl:9
+msgid "Setup Completed"
+msgstr "Настройка завершина"
+
+#: librarian_ondd/views/setup/step_ondd.tpl:17
+msgid "Please select the satellite you'd like to receive data from."
+msgstr "Пожалуйста, выберите спутник, с которого вы хотите получать данные."
+
+#: librarian_dashboard/menuitems.py:18
+#: librarian_dashboard/views/dashboard/dashboard.tpl:6
+#: librarian_settings/dashboard_plugin.py:21 librarian_ui/views/base.tpl:113
+msgid "Settings"
+msgstr "Настройки"
+
+#: librarian_ui/views/base.tpl:178
+msgid "Notifications"
+msgstr "Уведомления"
+
+#. Translators, used as label for language
+#: librarian_ui/views/base.tpl:97 librarian_setup/forms.py:23
+msgid "Language"
+msgstr "язык"
+
+#. Translators, used as label for date and time setup
+#: librarian_library/forms.py:37
+#: librarian_library/views/setup/step_datetime.tpl:6
+msgid "Timezone"
+msgstr "Часовой пояс"
+
+#. Translators, used as label for a login field
+#. Translators, used as label in create user form
+#. Translators, used as label for a login field
+#. Translators, used as label in create user form
+#: librarian_auth/forms.py:56 librarian_auth/forms.py:77
+msgid "Username"
+msgstr "имя пользователя "
+
+#. Translators, used as label for a password field
+#. Translators, used as label in create user form
+#. Translators, used as label for a password field
+#. Translators, used as label in create user form
+#: librarian_auth/forms.py:60 librarian_auth/forms.py:81
+#: librarian_auth/forms.py:106
+msgid "Password"
+msgstr "пароль"
+
+#. Translators, used as label in create user form
+#: librarian_auth/forms.py:85 librarian_auth/forms.py:110
+msgid "Confirm Password"
+msgstr "Подтвердите пароль"
+
+#. Translators, this is a type of LNB
+#: librarian_ondd/consts.py:39
+msgid "C band"
+msgstr "C группа"
+
+#: librarian_ondd/forms.py:15
+msgid "Tuner configuration could not be saved. Please make sure that the tuner is connected."
+msgstr "Конфигурация тюнера не могла быть спасена. Пожалуйста, удостоверьтесь, что тюнер связан."
+
+#: librarian_ondd/forms.py:20
+msgid "LNB Type"
+msgstr "Тип LNB"
+
+#: librarian_ondd/forms.py:28
+msgid "Frequency"
+msgstr "Частота"
+
+#: librarian_ondd/forms.py:39
+msgid "Symbol rate"
+msgstr "скорость передачи символов "
+
+#: librarian_ondd/forms.py:50
+msgid "Delivery system"
+msgstr "система доставки"
+
+#: librarian_ondd/forms.py:60
+msgid "Modulation"
+msgstr "модуляция"
+
+#: librarian_ondd/forms.py:70
+msgid "Polarization"
+msgstr "поляризация"
+
+#: librarian_ondd/routes.py:50
+msgid "Transponder configuration saved."
+msgstr "Конфигурация приемоответчика спасена"
+
+#: librarian_filemanager/views/filemanager/remove_confirm.tpl:30
+msgid "Cancel"
+msgstr "отменять"
+
+#: librarian_notifications/views/_notification_list.tpl:61
+msgid "There are no new notifications"
+msgstr "There are no new notifications "
+
+#: librarian_setup/views/setup/setup_base.tpl:40
+msgid "Back"
+msgstr "Назад"
+
+#: librarian_library/forms.py:51
+#: librarian_library/views/setup/step_import_content.tpl:46
+msgid "Discard"
+msgstr "избавляться"
+
+#: librarian_auth/views/auth/login.tpl:11
+msgid "Log into Librarian"
+msgstr "Регистрация в библиотекаря"
+
+#: librarian_library/views/library/_content_list.tpl:17
+#: librarian_library/views/library/_content_list.tpl:41
+msgid "Clear"
+msgstr "убирать"
+
+#: librarian_ui/views/ui/feedback.tpl:19
+msgid "You'll be taken to {target} in {seconds} seconds."
+msgstr "Вы перейдете к {target} через {seconds} секунд."
+
+#: librarian_dashboard/views/dashboard/plugin_error.tpl:2
+msgid "An error occurred during the rendering of this plugin."
+msgstr "Ошибка произошла во время предоставления этого плагина"
+
+#: librarian_notifications/views/_notification_list.tpl:8
+msgid "A content item has been added to the Library with the following title:"
+msgid_plural "{count} content items have been added to the Library with the following titles:"
+msgstr[0] "Пункт содержания был добавлен к Библиотеке со следующим названием:"
+msgstr[1] "{count} пункты содержания было добавлено к Библиотеке со следующими названиями:"
+msgstr[2] "{count} пункты содержания было добавлено к Библиотеке со следующими названиями:"
+
+#: librarian_filemanager/views/filemanager/_main.tpl:62
+msgid "Go up one level"
+msgstr "Поднимитесь один уровень"
+
+#: librarian_setup/views/setup/setup_finished.tpl:26
+msgid "Start using Outernet"
+msgstr "Начать пользоваться Аутернетом"
+
+#: librarian_setup/views/diag.tpl:20
+msgid "Yes"
+msgstr "Да"
+
+#: librarian_setup/views/diag.tpl:20
+msgid "No"
+msgstr "Нет"
+
+#: librarian_ondd/views/ondd/_status.tpl:54
+msgid "Signal"
+msgstr "Сигнал"
+
+#: librarian_ondd/views/ondd/_status.tpl:57
+msgid "Quality"
+msgstr "Качество"
+
+#. Translators, errorm essage shown when emergency reset token is
+#. invalid
+#: librarian_auth/forms.py:26
+msgid "This emergency reset token is invalid"
+msgstr "Этот чрезвычайный символ сброса недействителен"
+
+#: librarian_auth/forms.py:99
+msgid "Password reset token does not match any user"
+msgstr "Маркер сброса пароля не соответствует какому-либо пользователю"
+
+#. Translators, used as label in create user form
+#: librarian_auth/forms.py:102 librarian_auth/views/auth/_reset_token.tpl:3
+msgid "Password reset token"
+msgstr "Маркер сброса пароля"
+
+#. Translators, used as error message for emergency reset token form
+#. field
+#: librarian_auth/forms.py:126
+msgid "Invalid emergency reset token"
+msgstr "Недействительный маркер аварийного сброса"
+
+#. Translators, used as label for emergency reset token field
+#: librarian_auth/forms.py:130
+msgid "Emergency reset token"
+msgstr "Маркер аварийного сброса"
+
+#. Translators, used as page title on feedback page
+#: librarian_auth/routes/emergency_reset.py:68
+msgid "Emergency reset successful"
+msgstr "Аварийный сброс прошел успешно"
+
+#. Translators, used as link label on feedback page in "You
+#. will be taken to log-in page..."
+#: librarian_auth/routes/emergency_reset.py:71 librarian_auth/routes/auth.py:92
+msgid "log-in page"
+msgstr "страница логина"
+
+#. Translators, used as page title on feedback page
+#: librarian_auth/routes/auth.py:89
+msgid "New password was set"
+msgstr "Новый пароль был установлен"
+
+#: librarian_ui/views/errors/403.tpl:20
+msgid "You are not authorized to access this page or the page has expired."
+msgstr "Вы не уполномочены получить доступ к этой странице, или страница истекла."
+
+#: librarian_auth/views/auth/reset_password.tpl:6
+#: librarian_auth/views/auth/reset_password.tpl:11
+#: librarian_auth/views/auth/_login.tpl:14
+msgid "Reset your password"
+msgstr "Измените свой пароль"
+
+#: librarian_auth/views/auth/emergency_reset.tpl:5
+msgid "Emergency reset"
+msgstr "Аварийный сброс"
+
+#: librarian_auth/views/auth/emergency_reset.tpl:9
+msgid "Perform emergency reset"
+msgstr "Выполнить аварийный сброс"
+
+#: librarian_auth/views/auth/_emergency_reset.tpl:10
+msgid "Please contact Outernet to obtain your emergency reset token."
+msgstr "Пожалуйста, свяжитесь с Outernet для получения маркера аварийного сброса."
+
+#: librarian_auth/views/auth/_emergency_reset.tpl:17
+msgid "Reset"
+msgstr "Сброс"
+
+#: librarian_auth/views/auth/_reset_password.tpl:14
+msgid "This is the 6-digit number you were asked to write down when you created your user account."
+msgstr "Это - число с 6 цифрами, которое Вас попросили записать, когда Вы создали свою учетную запись пользователя."
+
+#: librarian_auth/views/auth/_reset_password.tpl:27
+msgid "Change password"
+msgstr "изменять пароль"
+
+#: librarian_notifications/views/_notification_list.tpl:51
+msgid "Dismiss"
+msgstr "отклонять"
+
+#: librarian_ui/views/base.tpl:74
+msgid "Toggle apps menu"
+msgstr "Переключить меню приложений"
+
+#: librarian_ui/views/base.tpl:85
+msgid "Toggle context menu"
+msgstr "Переключить меню содержания"
+
+#. Translators, link shown in context menu when user is not logged in.
+#: librarian_ui/views/base.tpl:118
+msgid "Log in"
+msgstr "регистрироваться"
+
+#. Translators, label on back button that appears at the top of
+#. context menu's submenu
+#: librarian_ui/views/base.tpl:125
+msgid "Back to menu"
+msgstr "Назад к меню"
+
+#. Translators, used as a label for guest account (unauthenticated user)
+#: librarian_ui/views/base.tpl:153
+msgid "guest"
+msgstr "гость"
+
+#: librarian_ui/views/base.tpl:221
+msgid "Toggle status"
+msgstr "Переключить статус"
+
+#: librarian_ui/views/base.tpl:175
+msgid "Info"
+msgstr "информация"
+
+#: librarian_ui/views/base.tpl:199
+#: librarian_filemanager/views/filemanager/main.tpl:47
+msgid "Loading"
+msgstr "загружаться"
+
+#: librarian_ui/views/base.tpl:205 librarian_ui/views/base.tpl:210
+msgid "Content could not be loaded"
+msgstr "Содержание не могло быть загружено"
+
+#: librarian_ui/views/errors/404.tpl:19
+msgid "main page"
+msgstr "главная страница"
+
+#: librarian_ui/views/errors/404.tpl:20
+msgid "You will be redirected to {target} in {seconds} seconds."
+msgstr "Вы будете перенаправлены к {target} через {seconds} секунд."
+
+#: librarian_ui/views/errors/500.tpl:19
+msgid "Librarian has failed to fulfill your request due to unexpected error in the program."
+msgstr "Библиотекарь не выполнил Ваш запрос из-за неожиданной ошибки в программе."
+
+#: librarian_ui/views/errors/500.tpl:21
+msgid "Details are provided below."
+msgstr "Подробная информация предоставлена ниже"
+
+#: librarian_ui/views/errors/500.tpl:23
+msgid "Error details are not available."
+msgstr "Ошибочные детали не доступны."
+
+#: librarian_ui/views/errors/500.tpl:32
+msgid "Return to main page"
+msgstr "Возвратитесь к главной странице"
+
+#. Translators, shown on error page below the error title
+#: librarian_ui/views/errors/_error_page.tpl:10
+msgid "Error code:"
+msgstr "Код ошибки:"
+
+#. Translators, network interface type shown in network interface list
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:7
+msgid "wireless"
+msgstr "беспроводная связь"
+
+#. Translators, network interface type shown in network interface list
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:15
+msgid "wired"
+msgstr "соединенный проводом"
+
+#. Translators, network interface IP address
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:41
+msgid "IP address:"
+msgstr "IP-адрес:"
+
+#. Translators, network interface default gateway
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:48
+msgid "Default gateway:"
+msgstr "Основной шлюз:"
+
+#. Translators, network interface IP address (IPv6)
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:55
+msgid "IPv6 address:"
+msgstr "Адрес IPv6:"
+
+#. Translators, network interface IP address
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:61
+msgid "Interface name:"
+msgstr "Интерфейсное имя:"
+
+#. Translators, used as page title when a file's removal is
+#. retried, but it was already deleted before
+#: librarian_filemanager/routes.py:200
+msgid "File already removed"
+msgstr "Файл уже удален"
+
+#. Translators, used as message when a file's removal is
+#. retried, but it was already deleted before
+#: librarian_filemanager/routes.py:203
+msgid "The specified file has already been removed."
+msgstr "Указанный файл был уже удален."
+
+#. Translators, used as page title of successful file removal feedback
+#: librarian_filemanager/routes.py:230
+msgid "File removed"
+msgstr "Файл удален"
+
+#. Translators, used as message of successful file removal feedback
+#: librarian_filemanager/routes.py:232
+msgid "File successfully removed."
+msgstr "Файл успешно удален."
+
+#. Translators, used as page title of unsuccessful file removal feedback
+#: librarian_filemanager/routes.py:240
+msgid "File not removed"
+msgstr "Файл, не удаленный"
+
+#. Translators, used as message of unsuccessful file removal feedback
+#: librarian_filemanager/routes.py:242
+msgid "File could not be removed."
+msgstr "Файл не мог быть удален."
+
+#. Translators, return (result) code of the script executed via file browser
+#: librarian_filemanager/views/exec_result.tpl:15
+msgid "Return code:"
+msgstr "Кодекс возвращения:"
+
+#. Translators, refers to standard output of script run from file browser (STDOUT)
+#: librarian_filemanager/views/exec_result.tpl:25
+msgid "Output:"
+msgstr "Продукция:"
+
+#. Translators, used as label for search field, appears before the text box
+#: librarian_filemanager/views/filemanager/main.tpl:20
+msgid "Search in folders:"
+msgstr "Поиск в папках:"
+
+#. Translators, used in file search box
+#: librarian_filemanager/views/filemanager/main.tpl:25
+msgid "Folder path or search keywords"
+msgstr "Путь папки или ключевые слова поиска"
+
+#. Translators, used as button in file view address bar
+#. Translators, used as button in content list
+#: librarian_filemanager/views/filemanager/main.tpl:30
+msgid "Start search"
+msgstr "Начните поиск"
+
+#: librarian_filemanager/views/filemanager/main.tpl:57
+msgid "Folder listing could not be loaded. Please try again in a few seconds."
+msgstr "Список папок не мог быть загружен. Пожалуйста, попробуйте еще раз за несколько секунд."
 
 #. Translators, label for a link that takes the user to
 #. main file/folder list from search results.
 #: librarian_filemanager/views/filemanager/_main.tpl:54
 msgid "Go to complete file list"
-msgstr ""
+msgstr "Перейти к полному списку файлов"
 
-#. Translators, label for a link that takes the user up
-#. one level in folder hierarchy.
-#: librarian_filemanager/views/filemanager/_main.tpl:62
-msgid "Go up one level"
-msgstr "Go up one level"
+#: librarian_filemanager/views/filemanager/_generic.tpl:44
+msgid "No files or folders match your search keywords."
+msgstr "Никакие файлы или папки не соответствуют Вашим ключевым словам поиска"
+
+#: librarian_filemanager/views/opener/opener_detail.tpl:27
+msgid "{date} by {publisher}."
+msgstr "{date} {publisher}."
+
+#. Translators, shown after emergency reset
+#: librarian_auth/routes/emergency_reset.py:73
+msgid "You may now log in as '{username}'."
+msgstr "Вы можете теперь авторизоваться как '{username}'."
+
+#. Translators, shown after password has been changed
+#: librarian_auth/routes/auth.py:94
+msgid "Password for username '{username}' has been set."
+msgstr "Пароль для имени пользователя '{username}' был установлен"
+
+#: librarian_auth/views/setup/step_superuser.tpl:8
+msgid "Superuser account"
+msgstr "Учетная запись привилегированного пользователя"
+
+#. Translators, shown as a message under the password reset token.
+#. Password reset token is a 6-digit number that is used to reset
+#. the user password.
+#: librarian_auth/views/auth/_reset_token.tpl:9
+msgid "Please write this password reset token down and store it securely. You will need it if you ever need to reset your password."
+msgstr "Пожалуйста, запишите этот символ сброса пароля и сохраните его надежно. Вам будет нужен он, если Вы когда-нибудь должны изменять свой пароль."
+
+#: librarian_filemanager/views/filemanager/_main.tpl:12
+msgid "Watch"
+msgstr "смотреть"
+
+#. Translators, used as page title
+#: librarian_notifications/views/notification_list.tpl:6
+#: librarian_notifications/views/notification_list.tpl:11
+msgid "Messages"
+msgstr "Сообщения"
+
+#. Translators, used as label for discarding all unread notifications
+#: librarian_notifications/views/_notification_list.tpl:29
+msgid "Mark all as read"
+msgstr "Отметьте все, как прочитано"
+
+#. Translators, used for setup wizard action of importing legacy content
+#: librarian_library/forms.py:48
+#: librarian_library/views/setup/step_import_content.tpl:36
+msgid "Import"
+msgstr "импорт"
+
+#: librarian_library/forms.py:53
+msgid "Action"
+msgstr "действие"
+
+#: librarian_library/views/setup/step_import_content.tpl:7
+msgid "Existing content"
+msgstr "Существующее содержание"
+
+#: librarian_library/views/setup/step_import_content.tpl:12
+msgid "\n"
+"        We have found content from a previous version of this software. You may\n"
+"        choose to import or discard it.\n"
+"        "
+msgstr "\n"
+"        Мы нашли содержание от предыдущей версии этого программного обеспечения. Вы можете\n"
+"        импортируйте или откажитесь от него.\n"
+"        "
+
+#: librarian_library/views/setup/step_import_content.tpl:39
+msgid "Adds existing content to the library"
+msgstr "Добавляет существующее содержание к библиотеке"
+
+#: librarian_library/views/setup/step_import_content.tpl:49
+msgid "Removes existing content"
+msgstr "Удаляет существующее содержание"
+
+#. Translators, used during setup wizard in language settings step, as step
+#. title
+#: librarian_setup/views/setup/step_language.tpl:8
+msgid "Default interface language"
+msgstr "Язык интерфейса по умолчанию"
+
+#. Translators, used during setup wizard in language settings step
+#: librarian_setup/views/setup/step_language.tpl:13
+msgid "Please select the default interface language. Users can change their language preference later."
+msgstr "Пожалуйста, выберите язык интерфейса по умолчанию. Пользователи могут изменить свое языковое предпочтение позже."
+
+#: librarian_library/views/setup/step_datetime.tpl:10
+msgid "Please select your local timezone."
+msgstr "Пожалуйста, выберите свой местный часовой пояс."
+
+#. Translators, used as note on library page when search does not
+#. return anything {terms} is a placeholder, do not translate
+#: librarian_library/views/library/_content_list.tpl:15
+msgid "There are no search results for '{terms}'"
+msgstr "Поиск не дал никаких результатов для \"{terms}\""
+
+#. Translators, used on library page when there is no content for
+#. given content type, {type} is a placeholder, do not translate
+#: librarian_library/views/library/_content_list.tpl:21
+msgid "There is currently no content of {type} type"
+msgstr "В настоящее время нет содержания типа {type}"
+
+#. Translators, used as button label for going back to all content
+#. types when there is no content for a chosen type.
+#: librarian_library/views/library/_content_list.tpl:24
+msgid "Show all types"
+msgstr "Показать все типы"
+
+#: librarian_library/views/library/_content_list.tpl:28
+msgid "Language filter for '{lang}' is active. Click {link} to see all content"
+msgstr "Языковой фильтр для \"{lang}\" активный. Нажмите {link}, чтобы увидеть все содержание"
+
+#. Translators, used as note on library page when showing search
+#. results, {term} represents the text typed in by user
+#: librarian_library/views/library/_content_list.tpl:39
+msgid "Showing search results for '{term}'"
+msgstr "Отображение результатов поиска для '{term}'"
+
+#. Translators, appears as label for the list of content keywords
+#: librarian_library/views/library/_content_list.tpl:77
+msgid "Topics:"
+msgstr "Темы:"
+
+#: librarian_filemanager/views/filemanager/_image.tpl:23
+msgid "Previous"
+msgstr "предыдущий"
+
+#. Translators, used as label for search field, appears before the text box
+#: librarian_library/views/library/content_list.tpl:19
+msgid "Search:"
+msgstr "Поиск:"
+
+#: librarian_library/views/library/content_list.tpl:22
+msgid "search keywords"
+msgstr "ключевые слова поиска"
+
+#: librarian_library/views/library/content_list.tpl:64
+msgid "Content language"
+msgstr "Язык содержания"
+
+#: librarian_library/views/library/content_list.tpl:72
+msgid "Types of content"
+msgstr "Типы содержания"
+
+#: librarian_library/views/library/content_list.tpl:78
+msgid "All"
+msgstr "весь"
+
+#: librarian_library/views/library/content_list.tpl:82
+msgid "Pages"
+msgstr "страница"
+
+#: librarian_library/views/library/content_list.tpl:83
+msgid "Images"
+msgstr "изображение"
+
+#: librarian_library/views/library/content_list.tpl:84
+msgid "Audio"
+msgstr "аудио"
+
+#: librarian_library/views/library/content_list.tpl:85
+msgid "Video"
+msgstr "видео"
+
+#. Translators, used as dashboard section title
+#: librarian_diskspace/dashboard_plugin.py:32
+msgid "Storage devices"
+msgstr "Устройства хранения данных"
+
+#. Translators, used as description of storage device
+#: librarian_diskspace/views/dashboard/diskspace.tpl:18
+#: librarian_diskspace/views/dashboard/diskspace.tpl:23
+msgid "removable storage"
+msgstr "сменное хранение"
+
+#. Translators, this is used next to disk space usage indicator in settings
+#. panel. The {used}, {total}, and {free} are placeholders.
+#: librarian_diskspace/views/dashboard/diskspace.tpl:43
+msgid "{used} of {total} ({free} free)"
+msgstr "{used} {total} ({free} свободный)"
+
+#: librarian_filemanager/views/filemanager/_main.tpl:13
+msgid "Read"
+msgstr "читать"
+
+#. Translators, used as page title
+#: librarian_setup/views/diag.tpl:4 librarian_setup/views/diag.tpl:9
+msgid "Diagnostics"
+msgstr "диагностика"
+
+#: librarian_setup/views/diag.tpl:15
+msgid "Version"
+msgstr "версия"
+
+#: librarian_setup/views/diag.tpl:19
+msgid "Has tuner?"
+msgstr "Имеет тюнер?"
+
+#: librarian_setup/views/setup/setup_finished.tpl:16
+msgid "Settings are saved"
+msgstr "Настройки сохранены"
+
+#: librarian_setup/views/setup/setup_finished.tpl:23
+msgid "Welcome to Outernet"
+msgstr "Добро пожаловать в Outernet"
+
+#: librarian_setup/views/setup/setup_base.tpl:4
+msgid "Setup wizard"
+msgstr "мастер установки"
+
+#: librarian_setup/views/setup/setup_base.tpl:42
+msgid "Finish"
+msgstr "конец"
+
+#. Translators, shown when tuner settings are updated
+#. during setup wizard step.
+#: librarian_ondd/setup.py:60
+msgid "Tuner settings have been updated"
+msgstr "Настройки тюнера были обновлены"
+
+#. Translators, used as coverage area of a transponder
+#: librarian_ondd/consts.py:50
+msgid "North America"
+msgstr "Северная Америка"
+
+#. Translators, used as coverage area of a transponder
+#: librarian_ondd/consts.py:59
+msgid "Europe, North Africa"
+msgstr "Европа, северная Африка"
+
+#. Translators, used as coverage area of a transponder
+#: librarian_ondd/consts.py:68
+msgid "North and West Europe, Subsaharan Africa"
+msgstr "Северная и западная Европа, Африка Района Сахары"
+
+#. Translators, used as coverage area of a transponder
+#: librarian_ondd/consts.py:77
+msgid "Middle East, Asia, Australia"
+msgstr "Ближний Восток, Азия, Австралия"
+
+#. Translators, used as coverage area of a transponder
+#: librarian_ondd/consts.py:86
+msgid "North, Middle, and South America"
+msgstr "Север, середина и Южная Америка"
+
+#. Translators, used as coverage area of a transponder
+#: librarian_ondd/consts.py:95
+msgid "India"
+msgstr "Индия"
+
+#. Translators, used as main status text when there is no tuner
+#: librarian_ondd/views/ondd/_status.tpl:18
+msgid "no tuner"
+msgstr "нет тюнера"
+
+#. Translators, used as main status text when there is no service
+#: librarian_ondd/views/ondd/_status.tpl:24
+msgid "no service"
+msgstr "не работает"
+
+#. Translators, used as main status text when everything is ok
+#: librarian_ondd/views/ondd/_status.tpl:27
+msgid "receiving"
+msgstr "принимать"
+
+#. Translators, labe is located next to the bitrate indicator
+#: librarian_ondd/views/ondd/_status.tpl:59
+msgid "Bitrate"
+msgstr "Скорость передачи"
+
+#. Translators, label for select list that allows user to pick a satellite to tune into
+#: librarian_ondd/views/ondd/_presets.tpl:10
+msgid "Satellite"
+msgstr "спутник"
+
+#. Translators, shown in downloads list when no file data is
+#. incoming.
+#: librarian_ondd/views/ondd/_file_list.tpl:46
+msgid "waiting for data..."
+msgstr "ожидание данных..."
+
+#. Translators, button label that confirms tuner settings
+#: librarian_ondd/views/ondd/_settings_form.tpl:7
+msgid "Update settings"
+msgstr "Настройка обновления"
+
+#: librarian_ondd/views/ondd/dashboard.tpl:31
+msgid "Tuner settings could not be set due to application error."
+msgstr "Параметры тюнера не удалось установить из-за ошибки программы."
+
+#. Translators, used as button label for tuner test during
+#. setup wizard
+#: librarian_ondd/views/setup/step_ondd.tpl:28
+msgid "Test settings"
+msgstr "Параметры тестирования"
+
+#. Translators, used as description of storage device
+#: librarian_diskspace/views/dashboard/diskspace.tpl:13
+msgid "internal storage"
+msgstr "внутренняя память"
+
+#: librarian_auth/views/setup/step_superuser.tpl:13
+msgid "The superuser account is used to maintain the library and configure the receiver."
+msgstr "Учетная запись привилегированного пользователя используется для поддержки библиотеки и настройки приемника."
+
+#: librarian_filemanager/routes.py:237 librarian_filemanager/routes.py:247
+msgid "file list"
+msgstr "список файлов"
+
+#. Translators, used as page title of content removal confirmation page
+#: librarian_filemanager/views/filemanager/remove_confirm.tpl:5
+msgid "Confirm removal"
+msgstr "Подтвердите удаление"
+
+#. Translators, used title at top of the removal confirmation page,
+#. asking user to confirm file/folder deletion.
+#: librarian_filemanager/views/filemanager/remove_confirm.tpl:13
+msgid "Delete permanently?"
+msgstr "Удалить постоянно?"
+
+#. Translators, used as confirmation message before content removal
+#: librarian_filemanager/views/filemanager/remove_confirm.tpl:18
+msgid "You are about to delete '{item_name}'."
+msgstr "Вы собираетесь удалить '{item_name}'."
+
+#. Translators, message warning users about deleted files and
+#. folders.
+#: librarian_filemanager/views/filemanager/remove_confirm.tpl:22
+msgid "Deleted files and folders cannot be recovered."
+msgstr "Удаленные файлы и папки не могут быть восстановлены."
+
+#. Translators, used as label for folder/file delete button
+#: librarian_filemanager/views/filemanager/remove_confirm.tpl:28
+#: librarian_filemanager/views/filemanager/_folder.tpl:17
+msgid "Delete"
+msgstr "удалить?"
+
+#. Translators, link to containing folder of a file
+#. in the search results. {} is a placeholder for
+#. the folder name.
+#: librarian_filemanager/views/filemanager/_folder.tpl:117
+msgid "in {}"
+msgstr "в {}"
+
+#. Translators, label for an icon view folder contents
+#: librarian_filemanager/views/opener/_opener_list.tpl:19
+msgid "List files"
+msgstr "Файлы списка"
+
+#. Translators, used as link label for link that takes user back to
+#. a page from which they came (usually used when they temporarily
+#. visit the current page to change some option such as language)
+#: librarian_ui/views/ui/lang_list.tpl:10
+msgid "Back to previous page"
+msgstr "Назад к предыдущей странице"
+
+#. Translators, used in place of actual domain name when domain name is not
+#. known. This is used on a page which user sees when they try to reach an
+#. Internet domain while connected to Outernet. It appears in a sentence
+#. {domain} does not exist on Outernet"
+#: librarian_library/routes/misc.py:22
+msgid "Unknown domain"
+msgstr "Неизвестная область"
+
+#. Translators, note shown during import step
+#: librarian_library/views/setup/step_import_content.tpl:25
+msgid "Both import and discard may take a long time to complete. Please do not close this tab or unplug the receiver."
+msgstr "Оба импорта и брак могут занять много времени, чтобы закончить. Пожалуйста, не закрывайте этот счет или отключайте приемник."
+
+#. Translators, message shown to users when they try to access a domain
+#. (e.g., google.com) while connected to Outernet receiver through WiFi.
+#: librarian_library/views/library/domain_mismatch.tpl:7
+msgid "You are on Outernet"
+msgstr "Вы находитесь на Outernet"
+
+#. Translators, message shown to users when they try to access a domain
+#. (e.g., google.com) while connected to Outernet receiver through WiFi.
+#. {domain} is a placeholder.
+#: librarian_library/views/library/domain_mismatch.tpl:14
+msgid "{domain} does not exist on Outernet."
+msgstr "{domain} не существует на Outernet."
+
+#. Translators, message shown to users when they try to access a domain
+#. (e.g., google.com) while connected to Outernet receiver through WiFi.
+#. {url} is a placeholder. Please mind the HTML fragments.
+#: librarian_library/views/library/domain_mismatch.tpl:20
+msgid "You will be taken to the <a href=\"{url}\">main page</a> shortly."
+msgstr "Вы будете взяты к <href \"{url}\"=\"\" ==\"\"> главная страница  вскоре.</href>"
+
+#: librarian_setup/views/setup/no_xhr.tpl:1
+msgid "Setup wizard requires your attention. Please reload this page."
+msgstr "Мастер установки требует Вашего внимания. Пожалуйста, перезагрузите эту страницу."
+
+#. Translators, message shown when user does not select a satellite
+#. preset nor 'Custom' option to enter custom data.
+#: librarian_ondd/routes.py:35
+msgid "Please select a satellite or select 'Custom'"
+msgstr "Пожалуйста, выберите спутник или выберите 'обычай'"
+
+#. Translators, instruction for the user on how to use the presets select
+#. list
+#: librarian_ondd/views/ondd/_presets.tpl:29
+msgid "Select a preset or use 'Custom' and enter data manually"
+msgstr "Выберите заданный или используйте 'обычай' и войдите в данные вручную"
+
+#. Translators, used as page title
+#: librarian_twitter/menuitems.py:8
+#: librarian_twitter/views/twitter/twitter.tpl:7
+msgid "Twitter"
+msgstr "Твиттер"
+
+#: librarian_twitter/views/twitter/twitter.tpl:19
+msgid "Tweets"
+msgstr "Твиты"
+
+#: librarian_twitter/views/twitter/twitter.tpl:22
+msgid "Handles"
+msgstr "Никнеймы"
+
+#: librarian_twitter/views/twitter/twitter.tpl:41
+msgid "Showing tweets from @{handle}."
+msgstr "Показаны твиты от @{handle}."
+
+#: librarian_twitter/views/twitter/twitter.tpl:44
+msgid "Go back to all teweets"
+msgstr "Вернуться ко всем твитам"
+
+#: librarian_twitter/views/twitter/twitter.tpl:75
+msgid "previous"
+msgstr "предыдущий"
+
+#: librarian_twitter/views/twitter/twitter.tpl:75
+msgid "next"
+msgstr "следующий"
+
+#. Translators, message used when no twitter handles are present
+#: librarian_twitter/views/twitter/twitter.tpl:86
+msgid "Sorry, no twitter handles could be found. Please wait for some tweets to be downloaded and imported"
+msgstr "Извините, никакие ручки Твиттера не могли быть найдены. Пожалуйста, ждите некоторых твитов, которые будут загружены и импортированы"
+
+#. Translators, message used when no tweets are found for a given handle
+#: librarian_twitter/views/twitter/twitter.tpl:36
+msgid "Sorry! No tweets could be found with the user name \"{handle}\""
+msgstr "К сожалению! Не удалось найти никаких твитов с именем пользователя \"{handle}\""
+
+#. Translators, network interface type shown in network interaface list
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:11
+msgid "bridge"
+msgstr "мост"
+
+#. Translators, human-friendly label for bridge interface with
+#. administrator-specified name (e.g., br0) replacing the
+#. {name} placeholder.
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:31
+msgid "Ethernet bridge ({name})"
+msgstr "Этэрнет-Бридж ({name})"
+
+#: librarian_filemanager/views/filemanager/_main.tpl:11
+msgid "Listen"
+msgstr "слушать"
+
+#: librarian_opener_image/hooks.py:8
+msgid "View"
+msgstr "просматривать"
+
+#: librarian_opener_image/views/openers/album.tpl:17
+msgid "Image {} of {}"
+msgstr "Изображение {} {}"
+
+#. Translators, used as label for a button that allows download of system logs
+#: librarian_logs/views/logs/dashboard.tpl:6
+msgid "Download system logs"
+msgstr "Системные регистрации загрузки"
+
+#: librarian_library/hooks.py:44
+msgid "Interface language that is initially selected for all users. Users can change it independently later."
+msgstr "Язык интерфейса, который устанавливается изначально для всех пользователей. Впоследствии пользователи смогут его изменить самостоятельно."
+
+#: librarian_library/hooks.py:46
+msgid "General settings"
+msgstr "Общие параметры"
+
+#: librarian_library/hooks.py:49
+msgid "Default language"
+msgstr "Язык по умолчанию"
+
+#: librarian_settings/routes.py:31
+msgid "Settings saved."
+msgstr "Параметры сохранены"
+
+#. Translators, used as page title
+#: librarian_settings/views/settings/settings.tpl:6
+msgid "Librarian settings"
+msgstr "Параметры Библиотекаря"
+
+#. Translators, error message when settings cannot be saved
+#: librarian_settings/views/settings/dashboard.tpl:12
+msgid "Settings could not be set due to application error."
+msgstr "Параметры  не удалось установить из-за ошибки приложения."
+
+#: librarian_settings/views/settings/dashboard.tpl:18
+msgid "Settings were saved."
+msgstr "Параметры  были сохранены."
+
+#: librarian_settings/views/settings/_settings_form.tpl:16
+msgid "Save"
+msgstr "Сохранить"
+
+#. Translators, notification displayed if files were moved to
+#. external storage successfully
+#: librarian_diskspace/routes.py:20
+msgid "Files were successfully moved to {storage_name}"
+msgstr "Файлы были успешно перемещены в {storage_name}."
+
+#. Translators, notification displayed if moving files to
+#. external storage failed
+#: librarian_diskspace/routes.py:25
+msgid "Files could not be moved to {storage_name}"
+msgstr "Файлы не удалось переместить в {storage_name}."
+
+#. Translators, error message shown when moving of files is
+#. attempted while another move task is already running.
+#: librarian_diskspace/routes.py:111
+msgid "A scheduled move is already running. You will be notified when it finishes. Please try again once the current operation is finished."
+msgstr "Планируемое движение уже запущено. Вам будет сообщено после его завершения. Попробуйте еще раз после завершения текущей операции."
+
+#. Translators, error message shown when destination drive is removed or
+#. otherwise becomes inaccessible before files are moved to it.
+#: librarian_diskspace/routes.py:130
+msgid "Destination drive disappeared. Please reattach the drive and retry."
+msgstr "Конечный диск исчез. Вставьте диск повторно и попробуйте еще раз."
+
+#. Translators, error message shown when moving files to a storage
+#. device where no other storage devices are present other than the
+#. target device.
+#: librarian_diskspace/routes.py:138
+msgid "There are no other drives to move files from."
+msgstr "Нет дисков, с которых можно было бы переместить файлы."
+
+#: librarian_diskspace/routes.py:152
+msgid "Could not calculate file sizes due to disk error. Please check your storage device and try again."
+msgstr "Не удалось вычислить размер файла из-за ошибки диска. Проверьте устройство хранения данных и попробуйте еще раз."
+
+#. Translators, error message shown when moving files to a storage
+#. device, where no movable files are present.
+#: librarian_diskspace/routes.py:161
+msgid "There are no files to be moved."
+msgstr "Нет файлов для перемещения."
+
+#: librarian_diskspace/routes.py:167
+msgid "Not enough free space. {size} needed."
+msgstr "Недостаточно свободного места. {size} необходимо."
+
+#: librarian_diskspace/routes.py:176
+msgid "Files are now being moved to {destination}. You will be notified when the operation is finished."
+msgstr "В настоящее время файлы перемещаются в {destination}. Вам будет сообщено после завершения операции."
+
+#: librarian_diskspace/routes.py:189
+msgid "settings"
+msgstr "параметры"
+
+#. Translators, this is used as a button to move all data to
+#. that drive, while files are being moved
+#: librarian_diskspace/views/diskspace/_consolidate_form.tpl:17
+msgid "Moving files here"
+msgstr "Перемещение файлов сюда"
+
+#. Translators, this is used as a button to move all data to
+#. that drive
+#: librarian_diskspace/views/diskspace/_consolidate_form.tpl:22
+msgid "Move files here"
+msgstr "Переместить файлы сюда"
+
+#. Translators, appears as device name under storage devices
+#: librarian_diskspace/views/diskspace/_consolidate_form.tpl:56
+msgid "Virtual disk"
+msgstr "Виртуальный диск"
+
+#: librarian_diskspace/views/diskspace/_consolidate_form.tpl:102
+msgid "Operation could not be started due to server error."
+msgstr "Операция не может быть запущена из-за ошибки сервера."
+
+#: librarian_diskspace/views/diskspace/consolidate.tpl:5
+#: librarian_diskspace/views/diskspace/consolidate.tpl:8
+msgid "Move all files"
+msgstr "Переместить все файлы "
+
+#: librarian_diskspace/views/diskspace/consolidate.tpl:11
+msgid "Choose a storage device to which you want to move all downloaded files. You cannot move files to a storage that does not have enough space to hold all files."
+msgstr "Выберите устройство хранения данных, на которое вы хотите переместить все загруженные файлы. Вы не можете перемещать файлы в хранилище, в котором нет достаточно места"
+
+#. Translators, notification displayed when internal cache storage
+#. is running out of disk space
+#: librarian_ondd/tasks.py:51
+msgid "Download capacity is getting low. Please ask the administrator to take action."
+msgstr "Мало места для загрузки. Обратитесь к администратору для принятия соответствующих мер."
+
+#. Translators, notification displayed when internal cache storage
+#. is running out of disk space
+#: librarian_ondd/tasks.py:61
+msgid "Download cache capacity is getting low. You will stop receiving new content if you run out of storage space. Please move some content from the internal storage to an external one."
+msgstr "В кэше загрузки мало места. Если на диске не останется больше места, вы не будете получать новый контент. Переместите некоторый контент с внутреннего запоминающего устройства на внешнее."
+
+#: librarian_ondd/views/ondd/_cache_status.tpl:6
+msgid "Download capacity is low and files may stop downloading soon. Free some disk space by moving files to an external storage device."
+msgstr "Мало места для загрузки и скачивание файлов может прекратиться в ближайшее время. Освободите место на диске путем перемещения файлов на внешнее устройство запоминания."
+
+#. Translators, shows the disk space status of the storage where ondd download cache is stored
+#: librarian_ondd/views/ondd/_cache_status.tpl:10
+msgid "Allocated download capacity"
+msgstr "Выделенная емкость для загрузки"
+
+#: librarian_ondd/views/ondd/_cache_status.tpl:15
+msgid "{percentage}% used ({amount} available)"
+msgstr "{percentage}% использовано ({amount} доступно)"
+
+#: librarian_netinterfaces/forms.py:20
+msgid "The selected channel is not legal in the chosen country."
+msgstr "Выбранный канал не является законным в выбранной стране."
+
+#: librarian_netinterfaces/forms.py:22
+msgid "Wireless settings could not be applied"
+msgstr "Параметры беспроводной сети не могут быть применены"
+
+#: librarian_netinterfaces/forms.py:37
+msgid "Password must be at least {len} characters long."
+msgstr "Пароль должен состоять минимум из {len} символов."
+
+#: librarian_netinterfaces/forms.py:38
+msgid "Password cannot be longer than {len} characters."
+msgstr "Пароль не может состоять более чем из {len} символов."
+
+#: librarian_netinterfaces/forms.py:39
+msgid "Password must be specified when security is enabled"
+msgstr "При активированной защите, нужно указывать пароль"
+
+#: librarian_netinterfaces/routes.py:37
+msgid "Access point settings have been saved. Please reconnect your devices."
+msgstr "Параметры точки доступа были сохранены. Подключите ваши устройства еще раз."
+
+#: librarian_netinterfaces/consts.py:6
+msgid "No country"
+msgstr "Нет страны"
+
+#: librarian_netinterfaces/consts.py:7
+msgid "Afghanistan, Islamic Republic of"
+msgstr "Афганистан, Исламская Республика"
+
+#: librarian_netinterfaces/consts.py:8
+msgid "Albania, Republic of"
+msgstr "Албания, Республика"
+
+#: librarian_netinterfaces/consts.py:9
+msgid "Algeria, People's Democratic Republic of"
+msgstr "Алжир, Народно-Демократическая Республика"
+
+#: librarian_netinterfaces/consts.py:10
+msgid "American Samoa"
+msgstr "Американское Самоа"
+
+#: librarian_netinterfaces/consts.py:11
+msgid "Andorra, Principality of"
+msgstr "Андорра, Княжество"
+
+#: librarian_netinterfaces/consts.py:12
+msgid "Angola, Republic of"
+msgstr "Ангола, Республика"
+
+#: librarian_netinterfaces/consts.py:13
+msgid "Antigua and Barbuda"
+msgstr "Антигуа и Барбуда"
+
+#: librarian_netinterfaces/consts.py:14
+msgid "Azerbaijan, Republic of"
+msgstr "Азербайджан, Республика"
+
+#: librarian_netinterfaces/consts.py:15
+msgid "Argentina, Argentine Republic"
+msgstr "Аргентина, Аргентинская Республика"
+
+#: librarian_netinterfaces/consts.py:16
+msgid "Australia, Commonwealth of"
+msgstr "Австралия, Союз"
+
+#: librarian_netinterfaces/consts.py:17
+msgid "Austria, Republic of"
+msgstr "Австрия, Республика"
+
+#: librarian_netinterfaces/consts.py:18
+msgid "Bahamas, Commonwealth of the"
+msgstr "Багамские о-ва, Содружество"
+
+#: librarian_netinterfaces/consts.py:19
+msgid "Bahrain, Kingdom of"
+msgstr "Бахрейн, Королевство"
+
+#: librarian_netinterfaces/consts.py:20
+msgid "Bangladesh, People's Republic of"
+msgstr "Бангладеш, Народная Республика"
+
+#: librarian_netinterfaces/consts.py:21
+msgid "Armenia, Republic of"
+msgstr "Армения, Республика"
+
+#: librarian_netinterfaces/consts.py:22
+msgid "Barbados"
+msgstr "Барбадос"
+
+#: librarian_netinterfaces/consts.py:23
+msgid "Belgium, Kingdom of"
+msgstr "Бельгия, Королевство"
+
+#: librarian_netinterfaces/consts.py:24
+msgid "Bermuda"
+msgstr "Бермудские острова"
+
+#: librarian_netinterfaces/consts.py:25
+msgid "Bhutan, Kingdom of"
+msgstr "Бутан, Королевство"
+
+#: librarian_netinterfaces/consts.py:26
+msgid "Bolivia, Republic of"
+msgstr "Боливия, Республика"
+
+#: librarian_netinterfaces/consts.py:27
+msgid "Bosnia and Herzegovina"
+msgstr "Босния и Герцеговина"
+
+#: librarian_netinterfaces/consts.py:28
+msgid "Botswana, Republic of"
+msgstr "Ботсвана, Республика"
+
+#: librarian_netinterfaces/consts.py:29
+msgid "Bouvet Island (Bouvetoya)"
+msgstr "Остров Буве"
+
+#: librarian_netinterfaces/consts.py:30
+msgid "Brazil, Federative Republic of"
+msgstr "Бразилия, Федеративная Республика"
+
+#: librarian_netinterfaces/consts.py:31
+msgid "Belize"
+msgstr "Белиз"
+
+#: librarian_netinterfaces/consts.py:32
+msgid "British Indian Ocean Territory (Chagos Archipelago)"
+msgstr "Британская территория в Индийском океане (архипелаг Чагос)"
+
+#: librarian_netinterfaces/consts.py:33
+msgid "Solomon Islands"
+msgstr "Соломоновы острова"
+
+#: librarian_netinterfaces/consts.py:34
+msgid "British Virgin Islands"
+msgstr "Британские Виргинские острова"
+
+#: librarian_netinterfaces/consts.py:35
+msgid "Brunei Darussalam"
+msgstr "Бруней-Даруссалам"
+
+#: librarian_netinterfaces/consts.py:36
+msgid "Bulgaria, Republic of"
+msgstr "Болгария, Республика"
+
+#: librarian_netinterfaces/consts.py:37
+msgid "Myanmar, Union of"
+msgstr "Мьянма, Союз"
+
+#: librarian_netinterfaces/consts.py:38
+msgid "Burundi, Republic of"
+msgstr "Бурунди, Республика"
+
+#: librarian_netinterfaces/consts.py:39
+msgid "Belarus, Republic of"
+msgstr "Беларусь, Республика"
+
+#: librarian_netinterfaces/consts.py:40
+msgid "Cambodia, Kingdom of"
+msgstr "Камбоджа, Королевство"
+
+#: librarian_netinterfaces/consts.py:41
+msgid "Cameroon, Republic of"
+msgstr "Камерун, Республика"
+
+#: librarian_netinterfaces/consts.py:42
+msgid "Canada"
+msgstr "Канада"
+
+#: librarian_netinterfaces/consts.py:43
+msgid "Cape Verde, Republic of"
+msgstr "Кабо-Верде, Республика"
+
+#: librarian_netinterfaces/consts.py:44
+msgid "Cayman Islands"
+msgstr "Каймановы острова"
+
+#: librarian_netinterfaces/consts.py:45
+msgid "Central African Republic"
+msgstr "Центрально-Африканская Республика"
+
+#: librarian_netinterfaces/consts.py:46
+msgid "Sri Lanka, Democratic Socialist Republic of"
+msgstr "Шри-Ланка, Демократическая Социалистическая Республика"
+
+#: librarian_netinterfaces/consts.py:47
+msgid "Chad, Republic of"
+msgstr "Чад, Республика"
+
+#: librarian_netinterfaces/consts.py:48
+msgid "Chile, Republic of"
+msgstr "Республика Чили,"
+
+#: librarian_netinterfaces/consts.py:49
+msgid "China, People's Republic of"
+msgstr "Китайская Народная Республика"
+
+#: librarian_netinterfaces/consts.py:50
+msgid "Taiwan"
+msgstr "Тайвань"
+
+#: librarian_netinterfaces/consts.py:51
+msgid "Christmas Island"
+msgstr "Остров Рождества"
+
+#: librarian_netinterfaces/consts.py:52
+msgid "Cocos (Keeling) Islands"
+msgstr "Кокосовые (Килинг) острова"
+
+#: librarian_netinterfaces/consts.py:53
+msgid "Colombia, Republic of"
+msgstr "Колумбия, Республика"
+
+#: librarian_netinterfaces/consts.py:54
+msgid "Comoros, Union of the"
+msgstr "Коморские острова, Союз"
+
+#: librarian_netinterfaces/consts.py:55
+msgid "Mayotte"
+msgstr "Майотта"
+
+#: librarian_netinterfaces/consts.py:56
+msgid "Congo, Republic of the"
+msgstr "Конго, Республика"
+
+#: librarian_netinterfaces/consts.py:57
+msgid "Congo, Democratic Republic of the"
+msgstr "Конго, Демократическая Республика"
+
+#: librarian_netinterfaces/consts.py:58
+msgid "Cook Islands"
+msgstr "Острова Кука"
+
+#: librarian_netinterfaces/consts.py:59
+msgid "Costa Rica, Republic of"
+msgstr "Коста-Рика, Республика"
+
+#: librarian_netinterfaces/consts.py:60
+msgid "Croatia, Republic of"
+msgstr "Хорватия, Республика"
+
+#: librarian_netinterfaces/consts.py:61
+msgid "Cuba, Republic of"
+msgstr "Куба, Республика"
+
+#: librarian_netinterfaces/consts.py:62
+msgid "Cyprus, Republic of"
+msgstr "Кипр, Республика"
+
+#: librarian_netinterfaces/consts.py:63
+msgid "Czech Republic"
+msgstr "Чешская Республика"
+
+#: librarian_netinterfaces/consts.py:64
+msgid "Benin, Republic of"
+msgstr "Бенин, Республика"
+
+#: librarian_netinterfaces/consts.py:65
+msgid "Denmark, Kingdom of"
+msgstr "Дания, Королевство"
+
+#: librarian_netinterfaces/consts.py:66
+msgid "Dominica, Commonwealth of"
+msgstr "Доминика, Содружество"
+
+#: librarian_netinterfaces/consts.py:67
+msgid "Dominican Republic"
+msgstr "Доминиканская Республика"
+
+#: librarian_netinterfaces/consts.py:68
+msgid "Ecuador, Republic of"
+msgstr "Эквадор, Республика"
+
+#: librarian_netinterfaces/consts.py:69
+msgid "El Salvador, Republic of"
+msgstr "Эль-Сальвадор, Республика"
+
+#: librarian_netinterfaces/consts.py:70
+msgid "Equatorial Guinea, Republic of"
+msgstr "Экваториальная Гвинея, Республика"
+
+#: librarian_netinterfaces/consts.py:71
+msgid "Ethiopia, Federal Democratic Republic of"
+msgstr "Эфиопия, Федеративная Демократическая Республика"
+
+#: librarian_netinterfaces/consts.py:72
+msgid "Eritrea, State of"
+msgstr "Эритрея, Государство"
+
+#: librarian_netinterfaces/consts.py:73
+msgid "Estonia, Republic of"
+msgstr "Эстония, Республика"
+
+#: librarian_netinterfaces/consts.py:74
+msgid "Faroe Islands"
+msgstr "Фарерские острова"
+
+#: librarian_netinterfaces/consts.py:75
+msgid "Falkland Islands (Malvinas)"
+msgstr "Фолклендские (Мальвинские) острова"
+
+#: librarian_netinterfaces/consts.py:76
+msgid "South Georgia and the South Sandwich Islands"
+msgstr "Южная Джорджия и Южные Сандвичевы острова"
+
+#: librarian_netinterfaces/consts.py:77
+msgid "Fiji, Republic of the Fiji Islands"
+msgstr "Фиджи, Республика Фиджи"
+
+#: librarian_netinterfaces/consts.py:78
+msgid "Finland, Republic of"
+msgstr "Финляндия, Республика"
+
+#: librarian_netinterfaces/consts.py:79
+msgid "Åland Islands"
+msgstr "Аландские острова"
+
+#: librarian_netinterfaces/consts.py:80
+msgid "France, French Republic"
+msgstr "Франция, Французская Республика"
+
+#: librarian_netinterfaces/consts.py:81
+msgid "French Guiana"
+msgstr "Французская Гвиана"
+
+#: librarian_netinterfaces/consts.py:82
+msgid "French Polynesia"
+msgstr "Французская Полинезия"
+
+#: librarian_netinterfaces/consts.py:83
+msgid "French Southern Territories"
+msgstr "Южные Французские Территории"
+
+#: librarian_netinterfaces/consts.py:84
+msgid "Djibouti, Republic of"
+msgstr "Джибути, Республика"
+
+#: librarian_netinterfaces/consts.py:85
+msgid "Gabon, Gabonese Republic"
+msgstr "Габон, Габонская Республика"
+
+#: librarian_netinterfaces/consts.py:86
+msgid "Georgia"
+msgstr "Грузия"
+
+#: librarian_netinterfaces/consts.py:87
+msgid "Gambia, Republic of the"
+msgstr "Гамбия, Республика"
+
+#: librarian_netinterfaces/consts.py:88
+msgid "Palestinian Territory, Occupied"
+msgstr "Палестинская территория, оккупированная"
+
+#: librarian_netinterfaces/consts.py:89
+msgid "Germany, Federal Republic of"
+msgstr "Германия, Федеративная Республика"
+
+#: librarian_netinterfaces/consts.py:90
+msgid "Ghana, Republic of"
+msgstr "Гана, Республика"
+
+#: librarian_netinterfaces/consts.py:91
+msgid "Gibraltar"
+msgstr "Гибралтар"
+
+#: librarian_netinterfaces/consts.py:92
+msgid "Kiribati, Republic of"
+msgstr "Кирибати, Республика"
+
+#: librarian_netinterfaces/consts.py:93
+msgid "Greece, Hellenic Republic"
+msgstr "Греция, Греческая Республика"
+
+#: librarian_netinterfaces/consts.py:94
+msgid "Greenland"
+msgstr "Гренландия"
+
+#: librarian_netinterfaces/consts.py:95
+msgid "Grenada"
+msgstr "Гренада"
+
+#: librarian_netinterfaces/consts.py:96
+msgid "Guadeloupe"
+msgstr "Гваделупа"
+
+#: librarian_netinterfaces/consts.py:97
+msgid "Guam"
+msgstr "Гуам"
+
+#: librarian_netinterfaces/consts.py:98
+msgid "Guatemala, Republic of"
+msgstr "Гватемала, Республика"
+
+#: librarian_netinterfaces/consts.py:99
+msgid "Guinea, Republic of"
+msgstr "Гвинея, Республика"
+
+#: librarian_netinterfaces/consts.py:100
+msgid "Guyana, Co-operative Republic of"
+msgstr "Гайана, Кооперативная Республика"
+
+#: librarian_netinterfaces/consts.py:101
+msgid "Haiti, Republic of"
+msgstr "Гаити, Республика"
+
+#: librarian_netinterfaces/consts.py:102
+msgid "Heard Island and McDonald Islands"
+msgstr "Остров Херд и острова Макдональд"
+
+#: librarian_netinterfaces/consts.py:103
+msgid "Holy See (Vatican City State)"
+msgstr "Святейший Престол (Государство-город Ватикан)"
+
+#: librarian_netinterfaces/consts.py:104
+msgid "Honduras, Republic of"
+msgstr "Гондурас, Республика"
+
+#: librarian_netinterfaces/consts.py:105
+msgid "Hong Kong, Special Administrative Region of China"
+msgstr "Гонконг, специальный административный район Китая"
+
+#: librarian_netinterfaces/consts.py:106
+msgid "Hungary, Republic of"
+msgstr "Венгрия, Республика"
+
+#: librarian_netinterfaces/consts.py:107
+msgid "Iceland, Republic of"
+msgstr "Исландия, Республика"
+
+#: librarian_netinterfaces/consts.py:108
+msgid "India, Republic of"
+msgstr "Индия, Республика"
+
+#: librarian_netinterfaces/consts.py:109
+msgid "Indonesia, Republic of"
+msgstr "Индонезия, Республика"
+
+#: librarian_netinterfaces/consts.py:110
+msgid "Iran, Islamic Republic of"
+msgstr "Иран, Исламская Республика"
+
+#: librarian_netinterfaces/consts.py:111
+msgid "Iraq, Republic of"
+msgstr "Ирак, Республика"
+
+#: librarian_netinterfaces/consts.py:112
+msgid "Ireland"
+msgstr "Ирландия"
+
+#: librarian_netinterfaces/consts.py:113
+msgid "Israel, State of"
+msgstr "Израиль, Государство"
+
+#: librarian_netinterfaces/consts.py:114
+msgid "Italy, Italian Republic"
+msgstr "Италия, Итальянская Республика"
+
+#: librarian_netinterfaces/consts.py:115
+msgid "Cote d'Ivoire, Republic of"
+msgstr "Кот-д'Ивуар, Республика"
+
+#: librarian_netinterfaces/consts.py:116
+msgid "Jamaica"
+msgstr "Ямайка"
+
+#: librarian_netinterfaces/consts.py:117
+msgid "Japan"
+msgstr "Япония"
+
+#: librarian_netinterfaces/consts.py:118
+msgid "Kazakhstan, Republic of"
+msgstr "Казахстан, Республика"
+
+#: librarian_netinterfaces/consts.py:119
+msgid "Jordan, Hashemite Kingdom of"
+msgstr "Иордания, Хашимитское Королевство"
+
+#: librarian_netinterfaces/consts.py:120
+msgid "Kenya, Republic of"
+msgstr "Кения, Республика"
+
+#: librarian_netinterfaces/consts.py:121
+msgid "Korea, Democratic People's Republic of"
+msgstr "Корея, Народно-Демократическая Республика"
+
+#: librarian_netinterfaces/consts.py:122
+msgid "Korea, Republic of"
+msgstr "Корея, Республика"
+
+#: librarian_netinterfaces/consts.py:123
+msgid "Kuwait, State of"
+msgstr "Кувейт, Государство"
+
+#: librarian_netinterfaces/consts.py:124
+msgid "Kyrgyz Republic"
+msgstr "Кыргызская Республика"
+
+#: librarian_netinterfaces/consts.py:125
+msgid "Lao People's Democratic Republic"
+msgstr "Лаосская Народно-Демократическая Республика"
+
+#: librarian_netinterfaces/consts.py:126
+msgid "Lebanon, Lebanese Republic"
+msgstr "Ливан, Ливанская Республика"
+
+#: librarian_netinterfaces/consts.py:127
+msgid "Lesotho, Kingdom of"
+msgstr "Лесото, Королевство"
+
+#: librarian_netinterfaces/consts.py:128
+msgid "Latvia, Republic of"
+msgstr "Латвия, Республика"
+
+#: librarian_netinterfaces/consts.py:129
+msgid "Liberia, Republic of"
+msgstr "Либерия, Республика"
+
+#: librarian_netinterfaces/consts.py:130
+msgid "Libyan Arab Jamahiriya"
+msgstr "Ливийская Арабская Джамахирия"
+
+#: librarian_netinterfaces/consts.py:131
+msgid "Liechtenstein, Principality of"
+msgstr "Лихтенштейн, княжество"
+
+#: librarian_netinterfaces/consts.py:132
+msgid "Lithuania, Republic of"
+msgstr "Литва, Республика"
+
+#: librarian_netinterfaces/consts.py:133
+msgid "Luxembourg, Grand Duchy of"
+msgstr "Люксембург, Великое Герцогство"
+
+#: librarian_netinterfaces/consts.py:134
+msgid "Macao, Special Administrative Region of China"
+msgstr "Макао, специальный административный район Китая"
+
+#: librarian_netinterfaces/consts.py:135
+msgid "Madagascar, Republic of"
+msgstr "Мадагаскар, Республика"
+
+#: librarian_netinterfaces/consts.py:136
+msgid "Malawi, Republic of"
+msgstr "Малави, Республика"
+
+#: librarian_netinterfaces/consts.py:137
+msgid "Malaysia"
+msgstr "Малайзия"
+
+#: librarian_netinterfaces/consts.py:138
+msgid "Maldives, Republic of"
+msgstr "Мальдивские о-ва, Республика"
+
+#: librarian_netinterfaces/consts.py:139
+msgid "Mali, Republic of"
+msgstr "Мали, Республика"
+
+#: librarian_netinterfaces/consts.py:140
+msgid "Malta, Republic of"
+msgstr "Мальта, Республика"
+
+#: librarian_netinterfaces/consts.py:141
+msgid "Martinique"
+msgstr "Мартиника"
+
+#: librarian_netinterfaces/consts.py:142
+msgid "Mauritania, Islamic Republic of"
+msgstr "Мавритания, Исламская Республика"
+
+#: librarian_netinterfaces/consts.py:143
+msgid "Mauritius, Republic of"
+msgstr "Маврикий, Республика"
+
+#: librarian_netinterfaces/consts.py:144
+msgid "Mexico, United Mexican States"
+msgstr "Мексика, Мексиканские Соединенные Штаты"
+
+#: librarian_netinterfaces/consts.py:145
+msgid "Monaco, Principality of"
+msgstr "Монако, Княжество"
+
+#: librarian_netinterfaces/consts.py:146
+msgid "Mongolia"
+msgstr "Монголия"
+
+#: librarian_netinterfaces/consts.py:147
+msgid "Moldova, Republic of"
+msgstr "Молдова, Республика"
+
+#: librarian_netinterfaces/consts.py:148
+msgid "Montenegro, Republic of"
+msgstr "Черногория, Республика"
+
+#: librarian_netinterfaces/consts.py:149
+msgid "Montserrat"
+msgstr "Монтсеррат"
+
+#: librarian_netinterfaces/consts.py:150
+msgid "Morocco, Kingdom of"
+msgstr "Марокко, Королевство"
+
+#: librarian_netinterfaces/consts.py:151
+msgid "Mozambique, Republic of"
+msgstr "Мозамбик, Республика"
+
+#: librarian_netinterfaces/consts.py:152
+msgid "Oman, Sultanate of"
+msgstr "Оман, Султанат"
+
+#: librarian_netinterfaces/consts.py:153
+msgid "Namibia, Republic of"
+msgstr "Намибия, Республика"
+
+#: librarian_netinterfaces/consts.py:154
+msgid "Nauru, Republic of"
+msgstr "Науру, Республика"
+
+#: librarian_netinterfaces/consts.py:155
+msgid "Nepal, State of"
+msgstr "Непал, Государство"
+
+#: librarian_netinterfaces/consts.py:156
+msgid "Netherlands, Kingdom of the"
+msgstr "Нидерланды, Королевство"
+
+#: librarian_netinterfaces/consts.py:157
+msgid "Netherlands Antilles"
+msgstr "Нидерландские Антильские острова"
+
+#: librarian_netinterfaces/consts.py:158
+msgid "Curaçao"
+msgstr "Кюрасао"
+
+#: librarian_netinterfaces/consts.py:159
+msgid "Aruba"
+msgstr "Аруба"
+
+#: librarian_netinterfaces/consts.py:160
+msgid "Sint Maarten (Netherlands)"
+msgstr "Синт-Маартен (Нидерланды)"
+
+#: librarian_netinterfaces/consts.py:161
+msgid "Bonaire, Sint Eustatius and Saba"
+msgstr "Бонайре, Синт-Эстатиус и Саба"
+
+#: librarian_netinterfaces/consts.py:162
+msgid "New Caledonia"
+msgstr "Новая Каледония"
+
+#: librarian_netinterfaces/consts.py:163
+msgid "Vanuatu, Republic of"
+msgstr "Вануату, Республика"
+
+#: librarian_netinterfaces/consts.py:164
+msgid "New Zealand"
+msgstr "Новая Зеландия"
+
+#: librarian_netinterfaces/consts.py:165
+msgid "Nicaragua, Republic of"
+msgstr "Никарагуа, Республика"
+
+#: librarian_netinterfaces/consts.py:166
+msgid "Niger, Republic of"
+msgstr "Нигер, Республика"
+
+#: librarian_netinterfaces/consts.py:167
+msgid "Nigeria, Federal Republic of"
+msgstr "Нигерия, Федеративная Республика"
+
+#: librarian_netinterfaces/consts.py:168
+msgid "Niue"
+msgstr "Ниуэ"
+
+#: librarian_netinterfaces/consts.py:169
+msgid "Norfolk Island"
+msgstr "Остров Норфолк"
+
+#: librarian_netinterfaces/consts.py:170
+msgid "Norway, Kingdom of"
+msgstr "Норвегия, Королевство"
+
+#: librarian_netinterfaces/consts.py:171
+msgid "Northern Mariana Islands, Commonwealth of the"
+msgstr "Северные Марианские острова, Содружество"
+
+#: librarian_netinterfaces/consts.py:172
+msgid "United States Minor Outlying Islands"
+msgstr "Внешние малые острова США"
+
+#: librarian_netinterfaces/consts.py:173
+msgid "Micronesia, Federated States of"
+msgstr "Микронезия, Федеративные Штаты"
+
+#: librarian_netinterfaces/consts.py:174
+msgid "Marshall Islands, Republic of the"
+msgstr "Маршалловы Острова, Республика"
+
+#: librarian_netinterfaces/consts.py:175
+msgid "Palau, Republic of"
+msgstr "Палау, Республика"
+
+#: librarian_netinterfaces/consts.py:176
+msgid "Pakistan, Islamic Republic of"
+msgstr "Пакистан, Исламская Республика"
+
+#: librarian_netinterfaces/consts.py:177
+msgid "Panama, Republic of"
+msgstr "Панама, Республика"
+
+#: librarian_netinterfaces/consts.py:178
+msgid "Papua New Guinea, Independent State of"
+msgstr "Папуа-Новая Гвинея, Независимое государство"
+
+#: librarian_netinterfaces/consts.py:179
+msgid "Paraguay, Republic of"
+msgstr "Парагвай, Республика"
+
+#: librarian_netinterfaces/consts.py:180
+msgid "Peru, Republic of"
+msgstr "Перу, Республика"
+
+#: librarian_netinterfaces/consts.py:181
+msgid "Philippines, Republic of the"
+msgstr "Филиппины, Республика"
+
+#: librarian_netinterfaces/consts.py:182
+msgid "Pitcairn Islands"
+msgstr "Питкэрн"
+
+#: librarian_netinterfaces/consts.py:183
+msgid "Poland, Republic of"
+msgstr "Польша, Республика"
+
+#: librarian_netinterfaces/consts.py:184
+msgid "Portugal, Portuguese Republic"
+msgstr "Португалия, Португальская Республика"
+
+#: librarian_netinterfaces/consts.py:185
+msgid "Guinea-Bissau, Republic of"
+msgstr "Гвинея-Бисау, Республика"
+
+#: librarian_netinterfaces/consts.py:186
+msgid "Timor-Leste, Democratic Republic of"
+msgstr "Восточный Тимор, Демократическая Республика"
+
+#: librarian_netinterfaces/consts.py:187
+msgid "Puerto Rico, Commonwealth of"
+msgstr "Пуэрто-Рико, Содружество"
+
+#: librarian_netinterfaces/consts.py:188
+msgid "Qatar, State of"
+msgstr "Катар, Государство"
+
+#: librarian_netinterfaces/consts.py:189
+msgid "Reunion"
+msgstr "Реюньон"
+
+#: librarian_netinterfaces/consts.py:190
+msgid "Romania"
+msgstr "Румыния"
+
+#: librarian_netinterfaces/consts.py:191
+msgid "Russian Federation"
+msgstr "Российская Федерация"
+
+#: librarian_netinterfaces/consts.py:192
+msgid "Rwanda, Republic of"
+msgstr "Руанда, Республика"
+
+#: librarian_netinterfaces/consts.py:193
+msgid "Saint Barthelemy"
+msgstr "Сен-Бартельми"
+
+#: librarian_netinterfaces/consts.py:194
+msgid "Saint Helena"
+msgstr "Остров Святой Елены"
+
+#: librarian_netinterfaces/consts.py:195
+msgid "Saint Kitts and Nevis, Federation of"
+msgstr "Сент-Китс и Невис, Федерация"
+
+#: librarian_netinterfaces/consts.py:196
+msgid "Anguilla"
+msgstr "Ангилья"
+
+#: librarian_netinterfaces/consts.py:197
+msgid "Saint Lucia"
+msgstr "Сент-Люсия"
+
+#: librarian_netinterfaces/consts.py:198
+msgid "Saint Martin"
+msgstr "Сен-Мартен"
+
+#: librarian_netinterfaces/consts.py:199
+msgid "Saint Pierre and Miquelon"
+msgstr "Сен-Пьер и Микелон"
+
+#: librarian_netinterfaces/consts.py:200
+msgid "Saint Vincent and the Grenadines"
+msgstr "Святой Винсент и Гренадины"
+
+#: librarian_netinterfaces/consts.py:201
+msgid "San Marino, Republic of"
+msgstr "Сан-Марино, Республика"
+
+#: librarian_netinterfaces/consts.py:202
+msgid "Sao Tome and Principe, Democratic Republic of"
+msgstr "Сан-Томе и Принсипи, Демократическая Республика"
+
+#: librarian_netinterfaces/consts.py:203
+msgid "Saudi Arabia, Kingdom of"
+msgstr "Саудовская Аравия, Королевство"
+
+#: librarian_netinterfaces/consts.py:204
+msgid "Senegal, Republic of"
+msgstr "Сенегал, Республика"
+
+#: librarian_netinterfaces/consts.py:205
+msgid "Serbia, Republic of"
+msgstr "Сербия, Республика"
+
+#: librarian_netinterfaces/consts.py:206
+msgid "Seychelles, Republic of"
+msgstr "Сейшельские острова, Республика"
+
+#: librarian_netinterfaces/consts.py:207
+msgid "Sierra Leone, Republic of"
+msgstr "Сьерра-Леоне, Республика"
+
+#: librarian_netinterfaces/consts.py:208
+msgid "Singapore, Republic of"
+msgstr "Сингапур, Республика"
+
+#: librarian_netinterfaces/consts.py:209
+msgid "Slovakia (Slovak Republic)"
+msgstr "Словакия (Республика Словакия)"
+
+#: librarian_netinterfaces/consts.py:210
+msgid "Vietnam, Socialist Republic of"
+msgstr "Вьетнам, Социалистическая Республика"
+
+#: librarian_netinterfaces/consts.py:211
+msgid "Slovenia, Republic of"
+msgstr "Словения, Республика"
+
+#: librarian_netinterfaces/consts.py:212
+msgid "Somalia, Somali Republic"
+msgstr "Сомали, Сомалийский Республика"
+
+#: librarian_netinterfaces/consts.py:213
+msgid "South Africa, Republic of"
+msgstr "Южная Африка, Республика"
+
+#: librarian_netinterfaces/consts.py:214
+msgid "Zimbabwe, Republic of"
+msgstr "Зимбабве, Республика"
+
+#: librarian_netinterfaces/consts.py:215
+msgid "Spain, Kingdom of"
+msgstr "Испания, Королевство"
+
+#: librarian_netinterfaces/consts.py:216
+msgid "South Sudan"
+msgstr "Южный Судан"
+
+#: librarian_netinterfaces/consts.py:217
+msgid "Western Sahara"
+msgstr "Западная Сахара"
+
+#: librarian_netinterfaces/consts.py:218
+msgid "Sudan, Republic of"
+msgstr "Судан, Республика"
+
+#: librarian_netinterfaces/consts.py:219
+msgid "Suriname, Republic of"
+msgstr "Суринам, Республика"
+
+#: librarian_netinterfaces/consts.py:220
+msgid "Svalbard & Jan Mayen Islands"
+msgstr "Шпицберген и Ян-Майен"
+
+#: librarian_netinterfaces/consts.py:221
+msgid "Swaziland, Kingdom of"
+msgstr "Свазиленд, Королевство"
+
+#: librarian_netinterfaces/consts.py:222
+msgid "Sweden, Kingdom of"
+msgstr "Швеция, Королевство"
+
+#: librarian_netinterfaces/consts.py:223
+msgid "Switzerland, Swiss Confederation"
+msgstr "Швейцария, Швейцарская Конфедерация"
+
+#: librarian_netinterfaces/consts.py:224
+msgid "Syrian Arab Republic"
+msgstr "Сирийская Арабская Республика"
+
+#: librarian_netinterfaces/consts.py:225
+msgid "Tajikistan, Republic of"
+msgstr "Таджикистан, Республика"
+
+#: librarian_netinterfaces/consts.py:226
+msgid "Thailand, Kingdom of"
+msgstr "Таиланд, Королевство"
+
+#: librarian_netinterfaces/consts.py:227
+msgid "Togo, Togolese Republic"
+msgstr "Того, Республика Того"
+
+#: librarian_netinterfaces/consts.py:228
+msgid "Tokelau"
+msgstr "Токелау"
+
+#: librarian_netinterfaces/consts.py:229
+msgid "Tonga, Kingdom of"
+msgstr "Тонга, Королевство"
+
+#: librarian_netinterfaces/consts.py:230
+msgid "Trinidad and Tobago, Republic of"
+msgstr "Тринидад и Тобаго, Республика"
+
+#: librarian_netinterfaces/consts.py:231
+msgid "United Arab Emirates"
+msgstr "Объединенные Арабские Эмираты"
+
+#: librarian_netinterfaces/consts.py:232
+msgid "Tunisia, Tunisian Republic"
+msgstr "Тунис, Тунисская Республика"
+
+#: librarian_netinterfaces/consts.py:233
+msgid "Turkey, Republic of"
+msgstr "Турция, Республика"
+
+#: librarian_netinterfaces/consts.py:234
+msgid "Turkmenistan"
+msgstr "Туркменистан"
+
+#: librarian_netinterfaces/consts.py:235
+msgid "Turks and Caicos Islands"
+msgstr "Острова Теркс и Кайкос"
+
+#: librarian_netinterfaces/consts.py:236
+msgid "Tuvalu"
+msgstr "Тувалу"
+
+#: librarian_netinterfaces/consts.py:237
+msgid "Uganda, Republic of"
+msgstr "Уганда, Республика"
+
+#: librarian_netinterfaces/consts.py:238
+msgid "Ukraine"
+msgstr "Украина"
+
+#: librarian_netinterfaces/consts.py:239
+msgid "Macedonia, The Former Yugoslav Republic of"
+msgstr "Македония, Бывшая Югославская Республика"
+
+#: librarian_netinterfaces/consts.py:240
+msgid "Egypt, Arab Republic of"
+msgstr "Египет, Арабская Республика"
+
+#: librarian_netinterfaces/consts.py:241
+msgid "United Kingdom"
+msgstr "Соединённое Королевство"
+
+#: librarian_netinterfaces/consts.py:242
+msgid "Guernsey, Bailiwick of"
+msgstr "Гернси, Бейливик"
+
+#: librarian_netinterfaces/consts.py:243
+msgid "Jersey, Bailiwick of"
+msgstr "Джерси, Бейливик"
+
+#: librarian_netinterfaces/consts.py:244
+msgid "Isle of Man"
+msgstr "Остров Мэн"
+
+#: librarian_netinterfaces/consts.py:245
+msgid "Tanzania, United Republic of"
+msgstr "Танзания, Объединенная Республика"
+
+#: librarian_netinterfaces/consts.py:246
+msgid "United States"
+msgstr "Соединенные Штаты"
+
+#: librarian_netinterfaces/consts.py:247
+msgid "United States Virgin Islands"
+msgstr "Американские Виргинские острова"
+
+#: librarian_netinterfaces/consts.py:248
+msgid "Burkina Faso"
+msgstr "Буркина-Фасо"
+
+#: librarian_netinterfaces/consts.py:249
+msgid "Uruguay, Eastern Republic of"
+msgstr "Уругвай, Восточная Республика"
+
+#: librarian_netinterfaces/consts.py:250
+msgid "Uzbekistan, Republic of"
+msgstr "Узбекистан, Республика"
+
+#: librarian_netinterfaces/consts.py:251
+msgid "Venezuela, Bolivarian Republic of"
+msgstr "Венесуэла, Боливарианская Республика"
+
+#: librarian_netinterfaces/consts.py:252
+msgid "Wallis and Futuna"
+msgstr "Уоллис и Футуна"
+
+#: librarian_netinterfaces/consts.py:253
+msgid "Samoa, Independent State of"
+msgstr "Самоа, Независимое государство"
+
+#: librarian_netinterfaces/consts.py:254
+msgid "Yemen"
+msgstr "Йемен"
+
+#: librarian_netinterfaces/consts.py:255
+msgid "Zambia, Republic of"
+msgstr "Замбия, Республика"
+
+#: librarian_netinterfaces/consts.py:256
+msgid "Disputed Territory"
+msgstr "Оспариваемая территория"
+
+#: librarian_netinterfaces/consts.py:257
+msgid "Iraq-Saudi Arabia Neutral Zone"
+msgstr "Саудовско-иракская нейтральная зона"
+
+#: librarian_netinterfaces/consts.py:258
+msgid "United Nations Neutral Zone"
+msgstr "Нейтральная зона Организации Объединенных Наций"
+
+#: librarian_netinterfaces/consts.py:259
+msgid "Spratly Islands"
+msgstr "Спратли"
+
+#: librarian_netinterfaces/consts.py:272
+msgid "Disabled"
+msgstr "Разрешено"
+
+#: librarian_netinterfaces/consts.py:273
+msgid "Enabled"
+msgstr "Не разрешено"
+
+#: librarian_netinterfaces/consts.py:287
+msgid "Standard (most devices)"
+msgstr "Стандартный (большинство устройств)"
+
+#: librarian_netinterfaces/consts.py:288
+msgid "Alternative (Realtek-based devices)"
+msgstr "Альтернативный вариант (на базе устройств Realtek)"
+
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:6
+msgid "Access point name"
+msgstr "Имя точки доступа"
+
+#. Translators, label for a checkbox that enables hidden access point
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:8
+msgid "Do not show in scan lists"
+msgstr "Не показывать в списках сканирования"
+
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:9
+msgid "Country"
+msgstr "Страна"
+
+#. Translators, WiFi has country-specific frequency regulations
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:11
+msgid "Meet regional Wi-Fi frequency requirements"
+msgstr "Соответствует региональным требованиям частот Wi-Fi"
+
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:12
+msgid "Channel"
+msgstr "Канал"
+
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:13
+msgid "Security"
+msgstr "Безопасность"
+
+#. Translators, wireless device type, shown next to access point driver
+#. selection drop-down
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:18
+msgid "Device type"
+msgstr "Тип устройства"
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian_netinterfaces/views/netinterfaces/wireless_settings.tpl:6
+#: librarian_netinterfaces/views/netinterfaces/wireless_settings.tpl:12
+msgid "Access point settings"
+msgstr "Параметры точки доступа"
+
+#: librarian_filemanager/routes.py:187
+msgid "File not found."
+msgstr "Файл не найден."
+
+#. Translators, used as page title on a page that shows file details
+#: librarian_filemanager/views/filemanager/info.tpl:7
+msgid "{title} details"
+msgstr "{title} подробнее"
+
+#: librarian_filemanager/views/filemanager/_html.tpl:2
+msgid "No documents to be shown."
+msgstr "Нет документов для показа."
+
+#: librarian_filemanager/views/filemanager/_video.tpl:16
+msgid "No video files to be played."
+msgstr "Нет видеофайлов для воспроизведения."
+
+#: librarian_filemanager/views/filemanager/_playlist.tpl:6
+#: librarian_filemanager/views/filemanager/_video.tpl:55
+msgid "No description"
+msgstr "Нет описания"
+
+#: librarian_filemanager/views/filemanager/_image.tpl:5
+msgid "No images to be shown."
+msgstr "Нет изображений для показа."
+
+#: librarian_filemanager/views/filemanager/_main.tpl:9
+msgid "Browse"
+msgstr "Обзор"
+
+#: librarian_filemanager/views/filemanager/_main.tpl:10
+msgid "Gallery"
+msgstr "Галерея"
 
 #: librarian_filemanager/views/filemanager/_main.tpl:96
 msgid "Hide"
-msgstr ""
+msgstr "Спрятать"
 
 #: librarian_filemanager/views/filemanager/_main.tpl:102
 #: librarian_filemanager/views/filemanager/_playlist.tpl:13
 #: librarian_filemanager/views/filemanager/_audio.tpl:37
 msgid "Unknown author"
-msgstr ""
-
-#: librarian_filemanager/views/filemanager/info.tpl:7
-#, python-brace-format
-msgid "{title} details"
-msgstr ""
-
-#: librarian_filemanager/views/filemanager/_playlist.tpl:6
-#: librarian_filemanager/views/filemanager/_video.tpl:55
-msgid "No description"
-msgstr ""
+msgstr "Неизвестный автор"
 
 #. Translators, shown for audio files
 #: librarian_filemanager/views/filemanager/_playlist.tpl:26
 msgid "Genre:"
-msgstr ""
+msgstr "Жанр:"
 
 #: librarian_filemanager/views/filemanager/_playlist.tpl:26
 msgid "Unknown genre"
-msgstr ""
+msgstr "Неизвестный жанр"
 
 #. Translators, shown for audio files
 #: librarian_filemanager/views/filemanager/_playlist.tpl:31
 msgid "Album:"
-msgstr ""
+msgstr "Альбом:"
 
 #: librarian_filemanager/views/filemanager/_playlist.tpl:31
 msgid "Unknown album"
-msgstr ""
+msgstr "Неизвестный альбом"
 
 #. Translators, used as label for audio/video duration in playlist's info
 #. panel.
 #: librarian_filemanager/views/filemanager/_playlist.tpl:37
 msgid "Duration:"
-msgstr ""
+msgstr "Продолжительность:"
 
 #. Translators, used as label for image dimensions in playlist's info
 #. panel.
 #: librarian_filemanager/views/filemanager/_playlist.tpl:52
 #: librarian_filemanager/views/filemanager/_playlist.tpl:69
 msgid "Dimensions:"
-msgstr ""
+msgstr "Размеры:"
 
 #. Translators, used as label for image/video aspect ratio (e.g., 4:3,
 #. 16:9) in playlist's info panel.
 #: librarian_filemanager/views/filemanager/_playlist.tpl:79
 msgid "Aspect ratio:"
-msgstr ""
+msgstr "Соотношение сторон:"
 
 #: librarian_filemanager/views/filemanager/_playlist.tpl:118
 msgid "Playlist"
-msgstr ""
+msgstr "Список воспроизведения"
 
 #: librarian_filemanager/views/filemanager/_playlist.tpl:124
 msgid "Details"
-msgstr ""
-
-#: librarian_filemanager/views/filemanager/_image.tpl:5
-msgid "No images to be shown."
-msgstr ""
-
-#: librarian_filemanager/views/filemanager/_image.tpl:23
-msgid "Previous"
-msgstr ""
+msgstr "Детали"
 
 #: librarian_filemanager/views/filemanager/_audio.tpl:17
 msgid "No music files to be played."
-msgstr ""
+msgstr "Нет музыкальных файлов для воспроизведения."
+
+#: librarian_filemanager/views/filemanager/_audio.tpl:39
+msgid "Unknown title"
+msgstr "Неизвестное название"
 
 #: librarian_filemanager/views/filemanager/_audio.tpl:79
 msgid "Unknown Artist"
-msgstr ""
+msgstr "Неизвестный исполнитель"
 
-#: librarian_filemanager/views/filemanager/_html.tpl:2
-msgid "No documents to be shown."
-msgstr ""
+#. Translators, used as page title
+#: librarian_football/menuitems.py:8
+#: librarian_football/views/football/football.tpl:5
+msgid "Football"
+msgstr "Футбол"
 
-#: librarian_filemanager/views/filemanager/_video.tpl:16
-msgid "No video files to be played."
-msgstr ""
+#: librarian_filemanager/helpers.py:258
+msgid "{number} year ago"
+msgid_plural "{number} years ago"
+msgstr[0] "{number} год назад"
+msgstr[1] "{number} лет назад"
+msgstr[2] "{number} лет назад"
 
-#. Translators, used as label for search field, appears before the text box
-#: librarian_filemanager/views/filemanager/main.tpl:20
-msgid "Search in folders:"
-msgstr ""
+#: librarian_filemanager/helpers.py:263
+msgid "{number} mont ago"
+msgid_plural "{number} months ago"
+msgstr[0] "{number} месяц назад"
+msgstr[1] "{number} месяцев назад"
+msgstr[2] "{number} месяцев назад"
 
-#. Translators, used in file search box
-#: librarian_filemanager/views/filemanager/main.tpl:25
-msgid "Folder path or search keywords"
-msgstr ""
+#: librarian_filemanager/helpers.py:268
+msgid "{number} week ago"
+msgid_plural "{number} weeks ago"
+msgstr[0] "{number} неделю назад"
+msgstr[1] "{number} недель назад"
+msgstr[2] "{number} недель назад"
 
-#. Translators, used as button in file view address bar
-#: librarian_filemanager/views/filemanager/main.tpl:30
-msgid "Start search"
-msgstr ""
+#: librarian_filemanager/helpers.py:272
+msgid "{number} day ago"
+msgid_plural "{number} days ago"
+msgstr[0] "{number} день назад"
+msgstr[1] "{number} дней назад"
+msgstr[2] "{number} дней назад"
 
-#: librarian_filemanager/views/filemanager/main.tpl:57
-msgid "Folder listing could not be loaded. Please try again in a few seconds."
-msgstr ""
+#: librarian_filemanager/helpers.py:276
+msgid "yesterday"
+msgstr "вчера"
+
+#: librarian_filemanager/helpers.py:278
+msgid "Today"
+msgstr "Сегодня"
+
+#: librarian_filemanager/helpers.py:283
+msgid "{number} hour ago"
+msgid_plural "{number} hours ago"
+msgstr[0] "{number} час назад"
+msgstr[1] "{number} часа назад"
+msgstr[2] "{number} часов назад"
+
+#: librarian_filemanager/helpers.py:288
+msgid "{number} minute ago"
+msgid_plural "{number} minutes ago"
+msgstr[0] "{number} минуту назад"
+msgstr[1] "{number} минут назад"
+msgstr[2] "{number} минут назад"
+
+#: librarian_filemanager/helpers.py:292
+msgid "{number} second ago"
+msgid_plural "{number} seconds ago"
+msgstr[0] "{number} секунду назад"
+msgstr[1] "{number} секунд назад"
+msgstr[2] "{number} секунд назад"
+
+#: librarian_filemanager/helpers.py:295
+msgid "just now"
+msgstr "прямо сейчас"
+
+#. Translators, link to containing folder of a file in search results
+#: librarian_filemanager/views/filemanager/_folder.tpl:34
+msgid "Open containing folder"
+msgstr "Открыть папку, содержащую"
+
+#: librarian_filemanager/views/filemanager/_main.tpl:14
+msgid "Updates"
+msgstr "Обновления"
 
 #: librarian_filemanager/views/filemanager/_generic.tpl:27
 msgid "{} file"
 msgid_plural "{} files"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "{} файл"
+msgstr[1] "{} файлов"
+msgstr[2] "{} файлов"
 
 #: librarian_filemanager/views/filemanager/_generic.tpl:28
 msgid "{} folder"
 msgid_plural "{} folders"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/views/filemanager/_generic.tpl:44
-msgid "No files or folders match your search keywords."
-msgstr ""
-
-#: librarian_filemanager/views/filemanager/_generic.tpl:46
-msgid "There are currently no files or folders here."
-msgstr "Здесь пока еще нет файлов или папок."
+msgstr[0] "{} папка"
+msgstr[1] "{} папок"
+msgstr[2] "{} папок"
 
 #: librarian_filemanager/views/filemanager/_updates.tpl:14
 msgid "There are no recent files"
-msgstr ""
+msgstr "Последних файлов нет"
 
-#~ msgid "Timezone"
-#~ msgstr "Timezone"
-
-#~ msgid "Discard"
-#~ msgstr "Discard"
-
-#~ msgid "Library"
-#~ msgstr "Библиотека"
-
-#~ msgid "Unknown license"
-#~ msgstr "Неизвестная лицензия"
-
-#~ msgid "Creative Commons Attribution"
-#~ msgstr "Creative Commons Attribution "
-
-#~ msgid "Creative Commons Attribution-NoDerivs"
-#~ msgstr "Creative Commons Attribution-NoDerivs "
-
-#~ msgid "Creative Commons Attribution-NonCommercial"
-#~ msgstr "Creative Commons Attribution-NonCommercial "
-
-#~ msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
-#~ msgstr "Creative Commons Attribution-NonCommercial-NoDerivs "
-
-#~ msgid "Creative Commons Attribution-ShareAlike"
-#~ msgstr "Creative Commons Attribution-ShareAlike "
-
-#~ msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
-#~ msgstr "Creative Commons Attribution-NonCommercial-ShareAlike "
-
-#~ msgid "GNU Free Documentation License"
-#~ msgstr "GNU Free Documentation License "
-
-#~ msgid "Open Publication License"
-#~ msgstr "Open Publication License "
-
-#~ msgid "Open Content License"
-#~ msgstr "Open Content License "
-
-#~ msgid "Against DRM License"
-#~ msgstr "Against DRM License "
-
-#~ msgid "Free Art License"
-#~ msgstr "Лицензия Свободного Искусства (Free Art License)"
-
-#~ msgid "Public Domain"
-#~ msgstr "Публичный домен"
-
-#~ msgid "Other free license"
-#~ msgstr "Другие свободные лицензии"
-
-#~ msgid "All rights reserved"
-#~ msgstr "Все права защищены"
-
-#~ msgid "Other non-free license"
-#~ msgstr "Другие не свободные лицензии"
-
-#~ msgid "Content library is currently empty"
-#~ msgstr "Библиотека публикаций пуста"
-
-#~ msgid "Clear"
-#~ msgstr "Clear"
-
-#~ msgid "here"
-#~ msgstr "здесь"
-
-#~ msgid "Remove"
-#~ msgstr "Remove"
-
-#~ msgid "Download system log"
-#~ msgstr "Download system log"
-
-#~ msgid "Confirm Removal"
-#~ msgstr "Confirm Removal"
-
-#~ msgid "Dashboard"
-#~ msgstr "Панель"
-
-#~ msgid "Specified tag was not found"
-#~ msgstr "Указанная метка не найдена"
-
-#~ msgid "Content database"
-#~ msgstr "База данных содержимого"
-
-#~ msgid ""
-#~ "Database backup could not be completed. The following error occurred:"
-#~ msgstr ""
-#~ "Резервное копирование базы данных не может быть завершена.Произошла "
-#~ "следующая ошибка:"
-
-#~ msgid "Database backup has been completed successfully."
-#~ msgstr "Database backup has been completed successfully."
-
-#~ msgid "the backup folder"
-#~ msgstr "the backup folder"
-
-#~ msgid "Database backup"
-#~ msgstr "Резервная копия базы данных."
-
-#~ msgid "Database could not be rebuilt. The following error occurred:"
-#~ msgstr ""
-#~ "База данных не может быть восстановлена. произошла следующая ошибка:"
-
-#~ msgid ""
-#~ "Librarian could not enter maintenance mode and database rebuild was "
-#~ "cancelled. Please make sure noone else is using Librarian and try again."
-#~ msgstr ""
-#~ "Librarian could not enter maintenance mode and database rebuild was "
-#~ "cancelled. Please make sure noone else is using Librarian and try again."
-
-#~ msgid ""
-#~ "Content database has been rebuilt from scratch. A backup copy of the "
-#~ "original database has been created. You will find it in the files section."
-#~ msgstr ""
-#~ "Content database has been rebuilt from scratch. A backup copy of the "
-#~ "original database has been created. You will find it in the files section."
-
-#~ msgid "Database rebuild"
-#~ msgstr "Востановление базы данных"
-
-#~ msgid "Database size"
-#~ msgstr "Размер быза данных."
-
-#~ msgid "Backup"
-#~ msgstr "Резервная копия."
-
-#~ msgid "Rebuild"
-#~ msgstr "Восстановление"
-
-#~ msgid ""
-#~ "Database rebuild will cause all tags to be lost. It will also put "
-#~ "Librarian into maintenance mode and prevent users from accessing content."
-#~ msgstr ""
-#~ "Востановление базы данных приведет к потере всех тегов. Это так же "
-#~ "поставит библиотекаря в режим обслуживания и запретит доступ пользвателя "
-#~ "к контенту."
-
-#~ msgid "Invalid request"
-#~ msgstr "Неверный запрос"
-
-#~ msgid "No content selected"
-#~ msgstr "Контент не выбран"
-
-#~ msgid "%s can be freed by removing selected content"
-#~ msgstr "%s может быть освобождени путем удаления выбранного Контента"
-
-#~ msgid "Nothing to delete"
-#~ msgstr "Ничего не удалять"
-
-#~ msgid "Library clean-up"
-#~ msgstr "Чистка библиотеки"
-
-#, fuzzy
-#~ msgid "%s more space should be freed."
-#~ msgstr "Должно быть освобождено больше места"
-
-#~ msgid "There is enough free space on storage"
-#~ msgstr "Существует достаточно свободного места на хранение"
-
-#~ msgid "delete?"
-#~ msgstr "удалить?"
-
-#~ msgid "date"
-#~ msgstr "дата"
-
-#~ msgid "title"
-#~ msgstr "название"
-
-#~ msgid "size"
-#~ msgstr "размер"
-
-#~ msgid "There is enough free space. No clean-up needed."
-#~ msgstr "Свободного места достаточно. Очистка не требуется."
-
-#~ msgid "How much space does this free up?"
-#~ msgstr "Сколько места освободится?"
-
-#~ msgid "Delete selected now"
-#~ msgstr "Удалить выбранное сейчас"
-
-#~ msgid "You are running low on disk space."
-#~ msgstr "Вы испытываете нехватку дискового пространства."
-
-#~ msgid "Free some space now"
-#~ msgstr "Освободите место сейчас"
-
-#~ msgid "item in the library"
-#~ msgid_plural "items in the library"
-#~ msgstr[0] "Элемент в библиотеке"
-#~ msgstr[1] "Элементы в библиотеке"
-#~ msgstr[2] "элементы в библиотеке"
-
-#~ msgid "used space"
-#~ msgstr "использовать место"
-
-#~ msgid "Librarian"
-#~ msgstr "Библиотекарь"
-
-#~ msgid "last update"
-#~ msgstr "последнее обновление"
-
-#~ msgid "select"
-#~ msgstr "выберите"
-
-#~ msgid "There is no new content"
-#~ msgstr "Это не новый контент"
-
-#~ msgid "Delete selected"
-#~ msgstr "Удалить выбранное"
-
-#~ msgid "search titles"
-#~ msgstr "Найти названия"
-
-#~ msgid "go"
-#~ msgstr "перейти"
-
-#~ msgid "clear"
-#~ msgstr "ясно"
-
-#~ msgid "update available"
-#~ msgid_plural "updates available"
-#~ msgstr[0] "доступно обновление"
-#~ msgstr[1] "доступны обновления"
-#~ msgstr[2] "доступны обновления"
-
-#~ msgid "Content library stats"
-#~ msgstr "Содержание Статистики библиотеки"
-
-#~ msgid "Select all"
-#~ msgstr "Выбрать все"
-
-#~ msgid "Select none"
-#~ msgstr "Ничего не выбрать"
-
-#~ msgid "broadcast"
-#~ msgstr "трансляции"
-
-#~ msgid "downloaded"
-#~ msgstr "скачано"
-
-#~ msgid "Showing search results for '%(terms)s'"
-#~ msgstr "Показаны результаты поиска для '%(terns)s'"
-
-#~ msgid "There are no search results for '%(terms)s'"
-#~ msgstr "Здесь нет результатов поиска по '%(terms)s'"
-
-#~ msgid "page"
-#~ msgstr "страница"
-
-#~ msgid "per page"
-#~ msgstr "на странице"
-
-#~ msgid "total space (%s free)"
-#~ msgstr "Всего места (%s свободного)"
-
-#~ msgid "Add selected to library"
-#~ msgstr "Добавить выбранное в библиотеку"
-
-#~ msgid "core"
-#~ msgstr "ядро"
-
-#~ msgid "sponsored"
-#~ msgstr "спонсируемый"
-
-#~ msgid "Apps"
-#~ msgstr "Программы"
-
-#~ msgid "author:"
-#~ msgstr "автор:"
-
-#~ msgid "version:"
-#~ msgstr "версия:"
-
-#~ msgid "No apps found."
-#~ msgstr "Программы не найдены."
-
-#~ msgid "Reload"
-#~ msgstr "Перезагружать"
-
-#~ msgid "replaces:"
-#~ msgstr "заменяет:"
-
-#~ msgid "(go up one level)"
-#~ msgstr "(перейти на один уровень вверх)"
-
-#~ msgid "Rename"
-#~ msgstr "Переименовать"
-
-#~ msgid "About this folder"
-#~ msgstr "Об этой папке"
-
-#~ msgid "return code:"
-#~ msgstr "код возврата:"
-
-#~ msgid "Output"
-#~ msgstr "Выходные данные"
-
-#~ msgid "Run"
-#~ msgstr "Исполнит"
-
-#~ msgid "No description provided"
-#~ msgstr "Нет описания"
-
-#~ msgid "Invalid action, please use one of the form buttons."
-#~ msgstr ""
-#~ "Неправильное действие, пожалуйста, используйте одну из кнопок в форме."
-
-#~ msgid "You have reached the end of the library."
-#~ msgstr "Вы достигли конца библиотеки."
-
-#~ msgid "Go to top"
-#~ msgstr "В верх"
-
-#~ msgid "About"
-#~ msgstr "Описание"
-
-#~ msgid "Some rights reserved."
-#~ msgstr "Некоторые права защищены."
-
-#~ msgid "There are no results for '%(tag)s'"
-#~ msgstr "Нет результатов для '%(tag)s'"
-
-#~ msgid "Save tags"
-#~ msgstr "Сохранить метку"
-
-#~ msgid "Separate tags with commas"
-#~ msgstr "Отделить метки запятыми"
-
-#~ msgid "everything"
-#~ msgstr "все"
-
-#~ msgid "Edit tags"
-#~ msgstr "Редактировать метки"
-
-#~ msgid "Close"
-#~ msgstr "Закрыть"
-
-#~ msgid "Tags could not be updated."
-#~ msgstr "Mетки не могут быть обновлены."
-
-#~ msgid "Load more content"
-#~ msgstr "Загрузить больше контента"
-
-#~ msgid "Access TVHeadend"
-#~ msgstr "Доступ головной станции ТВ"
-
-#~ msgid "Tag cloud"
-#~ msgstr "Облако меток"
-
-#~ msgid "Please type in a number"
-#~ msgstr "Пожайлуста введите число"
-
-#~ msgid "Transponder configuration could not be set"
-#~ msgstr "Transponder configuration could not be set"
-
-#~ msgid "The files you were looking for could not be found"
-#~ msgstr "Файлы которые вы ищите, не найдены."
-
-#~ msgid "This list represents the search results"
-#~ msgstr "Это список результатов поиска."
-
-#~ msgid "This folder does not exist"
-#~ msgstr "Этой папки не существует."
-
-#~ msgid "download"
-#~ msgstr "Загрузить."
-
-#~ msgid ""
-#~ "Database backup has been completed successfully. You will be taken to the "
-#~ "backup folder in 10 seconds."
-#~ msgstr ""
-#~ "Резервное копирование базы данных успешно завершено. Вы вернетесь в папку "
-#~ "резервного копирования в течение 10 секунд."
-
-#~ msgid "The operation took %s second"
-#~ msgid_plural "The operation took %s seconds"
-#~ msgstr[0] "Операция заняла %s секунду"
-#~ msgstr[1] "Операция заняла %s секунды"
-#~ msgstr[2] "Операция заняла %s секунд"
-
-#~ msgid ""
-#~ "\n"
-#~ "This program is free software: you can redistribute it and/or modify it\n"
-#~ "under the terms of the GNU General Public License as published by the\n"
-#~ "Free Software Foundation, either version 3 of the License, or (at your\n"
-#~ "option) any later version.\n"
-#~ msgstr ""
-#~ "Эта программа является свободным программным обеспечением: вы можете "
-#~ "распространять и / или изменять ее в соответствии с условиями GNU General "
-#~ "Public License, опубликованной Free Software Foundation, версии 3 или "
-#~ "более поздней версии."
-
-#~ msgid "Downloads in progress"
-#~ msgstr "Downloads in progress"
-
-#~ msgid "Satellite:"
-#~ msgstr "Спутник:"
-
-#~ msgid "Frequency:"
-#~ msgstr "Частота:"
-
-#~ msgid "Symbol rate:"
-#~ msgstr "Скорость передачи:"
-
-#~ msgid "Delivery system:"
-#~ msgstr "Delivery system:"
-
-#~ msgid "Modulation:"
-#~ msgstr "Модуляции"
-
-#~ msgid "Polarization:"
-#~ msgstr "Polarization:"
-
-#~ msgid "Tune in"
-#~ msgstr "Tune in"
-
-#~ msgid "has lock"
-#~ msgstr "блокирован"
-
-#~ msgid "SNR"
-#~ msgstr "Соотношение сигнала к шуму"
-
-#~ msgid ""
-#~ "Librarian has failed to fulfill your request due to unexpected error in "
-#~ "the program. Details are provided below."
-#~ msgstr ""
-#~ "Библиотекарю не удалось выполнить ваш запрос из-за неожиданной ошибки в "
-#~ "программе. Подробности приведены ниже."
-
-#~ msgid "(go to file list)"
-#~ msgstr "(перейти к списку файлов)"
-
-#~ msgid "by %s"
-#~ msgstr "by %s"
-
-#~ msgid "Type in your username"
-#~ msgstr "Введите ваше имя пользователя"
-
-#~ msgid "Type in your password"
-#~ msgstr "Введите ваш пароль"
-
-#~ msgid "LNB type:"
-#~ msgstr "LNB type:"
-
-#~ msgid "You are not authorized to access this page."
-#~ msgstr "Для доступа к этой странице необходимо авторизоваться."
-
-#~ msgid "Username:"
-#~ msgstr "Имя пользователя:"
-
-#~ msgid "Password:"
-#~ msgstr "Пароль:"
-
-#~ msgid "Delete all"
-#~ msgstr "Удалить все"
-
-#~ msgid "filter"
-#~ msgstr "фильтр"
-
-#~ msgid "language"
-#~ msgstr "язык"
-
-#~ msgid "Content file missing"
-#~ msgstr "Content file missing"
-
-#~ msgid ""
-#~ "The content file was not found, but has been removed from the database. "
-#~ "You will be redirected to the content list shortly."
-#~ msgstr ""
-#~ "The content file was not found, but has been removed from the database. "
-#~ "You will be redirected to the content list shortly."
-
-#~ msgid "Sites"
-#~ msgstr "сайты"
-
-#~ msgid "List of available network interfaces"
-#~ msgstr "Список доступных сетевых интерфейсов"
-
-#~ msgid "Interface name"
-#~ msgstr "Имя интерфейса"
-
-#~ msgid "Please select a valid language."
-#~ msgstr "Пожалуйста, выберите правильный язык."
-
-#~ msgid "Please select a valid date and time."
-#~ msgstr "Пожалуйста, выберите правильную дату и время."
-
-#~ msgid "This username is already taken."
-#~ msgstr "Это имя пользователя уже занято"
-
-#~ msgid "Invalid user credentials, please try again."
-#~ msgstr "Неправильный логин или пароль, пожалуйста, попробуйте еще раз"
-
-#~ msgid "partner"
-#~ msgstr "партнер"
-
-#~ msgid ""
-#~ "Language filter for '%(lang)s' is active. Click %(link)s to see all "
-#~ "updates"
-#~ msgstr ""
-#~ "Языковой фильтр для '%(lang)s' активен. Нажмите %(link)s, чтобы увидеть "
-#~ "все обновления"
-
-#~ msgid "Please enter the desired credentials for the superuser account."
-#~ msgstr "Пожалуйста, введите данные суперпользователя"
-
-#~ msgid "Confirm Password:"
-#~ msgstr "Подтвердите пароль"
-
-#~ msgid "Setup Wizard"
-#~ msgstr "Мастер установки"
-
-#~ msgid "Setup Wizard: Step %s of %s"
-#~ msgstr "Мастер установки: шаг %s  из %s"
-
-#~ msgid "Please set the current date and time."
-#~ msgstr "Пожалуйста, установите текущую дату и время."
-
-#~ msgid "Please select the interface language."
-#~ msgstr "Пожалуйста, выберите язык интерфейса."
-
-#~ msgid "Language:"
-#~ msgstr "Язык:"
-
-#~ msgid "Libriran has been set up successfully."
-#~ msgstr "Библиотекарь был успешно установлен."
-
-#~ msgid "Start using Librarian"
-#~ msgstr "Начните использовать библиотекря"
-
-#~ msgid "Tags"
-#~ msgstr "Tags"
-
-#~ msgid "Home"
-#~ msgstr "Home"
-
-#~ msgid "Updates added"
-#~ msgstr "Updates added"
-
-#~ msgid "Updates deleted"
-#~ msgstr "Updates deleted"
-
-#~ msgid "Invalid action"
-#~ msgstr "Invalid action"
-
-#~ msgid "There are no sites in the library."
-#~ msgstr "There are no sites in the library."
-
-#~ msgid "Content already removed"
-#~ msgstr "Content already removed"
-
-#~ msgid "The specified content has already been removed."
-#~ msgstr "The specified content has already been removed."
-
-#~ msgid "Content removed"
-#~ msgstr "Content removed"
-
-#~ msgid "Content successfully removed."
-#~ msgstr "Content successfully removed."
-
-#~ msgid "Are you sure you want to remove the content entry named {title}"
-#~ msgstr "Are you sure you want to remove the content entry named {title}"
-
-#~ msgid "Discard all"
-#~ msgstr "Discard all"
-
-#~ msgid "unknown publisher"
-#~ msgstr "unknown publisher"
-
-#~ msgid "%(date)s by %(publisher)s."
-#~ msgstr "%(date)s by %(publisher)s."
-
-#~ msgid "Humanity's public library"
-#~ msgstr "Humanity's public library"
-
-#~ msgid "User tags"
-#~ msgstr "User tags"
-
-#~ msgid "Add all to Library"
-#~ msgstr "Add all to Library"
-
-#~ msgid "Filter"
-#~ msgstr "Filter"
-
-#~ msgid "received on:"
-#~ msgstr "received on:"
-
-#~ msgid "broadcast on:"
-#~ msgstr "broadcast on:"
-
-#~ msgid "language:"
-#~ msgstr "language:"
-
-#~ msgid "Add to library"
-#~ msgstr "Add to library"
-
-#~ msgid "Search"
-#~ msgstr "Search"
-
-#~ msgid "Search titles"
-#~ msgstr "Search titles"
-
-#~ msgid ""
-#~ "Language filter for '%(lang)s' is active. Click %(link)s to see all "
-#~ "content"
-#~ msgstr ""
-#~ "Language filter for '%(lang)s' is active. Click %(link)s to see all "
-#~ "content"
-
-#~ msgid "Edit"
-#~ msgstr "Edit"
-
-#~ msgid "Mark read"
-#~ msgstr "Mark read"
-
-#~ msgid "Page %(current)s of %(total)s"
-#~ msgstr "Page %(current)s of %(total)s"
-
-#~ msgid "Search files and folders"
-#~ msgstr "Search files and folders"
-
-#~ msgid "Name"
-#~ msgstr "Name"
-
-#~ msgid "Size"
-#~ msgstr "Size"
-
-#~ msgid "Actions"
-#~ msgstr "Actions"
-
-#~ msgid "Settings are saved."
-#~ msgstr "Settings are saved."
-
-#~ msgid "Welcome to outernet."
-#~ msgstr "Welcome to outernet."
-
-#~ msgid "Please set the current timezone."
-#~ msgstr "Please set the current timezone."
-
-#~ msgid "Signal lock:"
-#~ msgstr "Signal lock:"
-
-#~ msgid "Receiving data:"
-#~ msgstr "Receiving data:"
-
-#~ msgid "Bitrate:"
-#~ msgstr "Bitrate:"
-
-#~ msgid "Total space (%s free)"
-#~ msgstr "Total space (%s free)"

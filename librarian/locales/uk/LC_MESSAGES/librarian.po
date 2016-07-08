@@ -1,1003 +1,40 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Librarian\n"
-"Report-Msgid-Bugs-To: translations@outernet.is\n"
-"POT-Creation-Date: 2016-03-24 19:12+0100\n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: Librarian\n"
+"Language: uk\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#. Translators, used as page title
-#. Translators, used as dashboard section title
-#. Translators, link to settings dashboard in the context menu
-#: librarian_dashboard/menuitems.py:18
-#: librarian_dashboard/views/dashboard/dashboard.tpl:6
-#: librarian_settings/dashboard_plugin.py:21 librarian_ui/views/base.tpl:113
-msgid "Settings"
-msgstr "Settings"
+#: librarian_library/menuitems.py:8
+#: librarian_library/views/library/content_list.tpl:8
+msgid "Library"
+msgstr "Бібліотека"
 
-#. Translators, displayed when an unforeseen error happens in one of the dashboard plugins
-#: librarian_dashboard/views/dashboard/plugin_error.tpl:2
-msgid "An error occurred during the rendering of this plugin."
-msgstr "An error occurred during the rendering of this plugin."
+#: librarian_library/views/library/_content_list.tpl:11
+msgid "Content library is currently empty"
+msgstr "Бібліотека публікацій порожня"
 
-#: librarian_settings/routes.py:31
-msgid "Settings saved."
-msgstr ""
-
-#. Translators, used as page title
-#: librarian_settings/views/settings/settings.tpl:6
-msgid "Librarian settings"
-msgstr ""
-
-#: librarian_settings/views/settings/_settings_form.tpl:16
-msgid "Save"
-msgstr ""
-
-#: librarian_settings/views/settings/dashboard.tpl:12
-msgid "Settings could not be set due to application error."
-msgstr ""
-
-#. Translators, used as dashboard section title
 #: librarian_logs/dashboard_plugin.py:26
 msgid "Application logs"
 msgstr "Журнал додатків"
 
-#. Translators, used as note in Application logs section
 #: librarian_logs/views/logs/dashboard.tpl:2
 msgid "Logs are shown in reverse chronological order"
-msgstr "Журнали відображаються у зворотньому хронологічному порядку"
+msgstr "Журнали відображаються у зворотному хронологічному порядку"
 
-#. Translators, used as label for a button that allows download of system logs
-#: librarian_logs/views/logs/dashboard.tpl:6
-msgid "Download system logs"
-msgstr "Download system logs"
-
-#. Translators, used as page title
-#: librarian_twitter/menuitems.py:8
-#: librarian_twitter/views/twitter/twitter.tpl:7
-msgid "Twitter"
-msgstr "Twitter"
-
-#: librarian_twitter/views/twitter/twitter.tpl:19
-msgid "Tweets"
-msgstr "Tweets"
-
-#: librarian_twitter/views/twitter/twitter.tpl:22
-msgid "Handles"
-msgstr "Handles"
-
-#. Translators, message used when no tweets are found for a given handle
-#: librarian_twitter/views/twitter/twitter.tpl:36
-#, python-brace-format
-msgid "Sorry! No tweets could be found with the user name \"{handle}\""
-msgstr "Sorry! No tweets could be found with the user name \"{handle}\""
-
-#: librarian_twitter/views/twitter/twitter.tpl:41
-#, python-brace-format
-msgid "Showing tweets from @{handle}."
-msgstr "Showing tweets from @{handle}."
-
-#: librarian_twitter/views/twitter/twitter.tpl:44
-msgid "Go back to all teweets"
-msgstr "Go back to all teweets"
-
-#: librarian_twitter/views/twitter/twitter.tpl:75
-msgid "previous"
-msgstr "previous"
-
-#: librarian_twitter/views/twitter/twitter.tpl:75
-msgid "next"
-msgstr "next"
-
-#. Translators, message used when no twitter handles are present
-#: librarian_twitter/views/twitter/twitter.tpl:86
-msgid ""
-"Sorry, no twitter handles could be found. Please wait for some tweets to be "
-"downloaded and imported"
-msgstr ""
-"Sorry, no twitter handles could be found. Please wait for some tweets to be "
-"downloaded and imported"
-
-#. Translators, used as dashboard section title
+#. Translators, used main navigation menu
 #. Translators, used as page title
 #. Translators, used as page heading
-#. Translators, used during setup wizard in tuner settings step, as step
-#. title
-#: librarian_ondd/dashboard_plugin.py:49
-#: librarian_ondd/views/ondd/settings.tpl:6
-#: librarian_ondd/views/ondd/settings.tpl:12
-#: librarian_ondd/views/setup/step_ondd.tpl:12
-msgid "Tuner settings"
-msgstr "Tuner settings"
-
-#. Translators, shown when tuner settings are updated
-#. during setup wizard step.
-#: librarian_ondd/setup.py:60
-msgid "Tuner settings have been updated"
-msgstr "Tuner settings have been updated"
-
-#. Translators, notification displayed when internal cache storage
-#. is running out of disk space
-#: librarian_ondd/tasks.py:51
-msgid ""
-"Download capacity is getting low. Please ask the administrator to take "
-"action."
-msgstr ""
-
-#. Translators, notification displayed when internal cache storage
-#. is running out of disk space
-#: librarian_ondd/tasks.py:61
-msgid ""
-"Download cache capacity is getting low. You will stop receiving new content "
-"if you run out of storage space. Please move some content from the internal "
-"storage to an external one."
-msgstr ""
-
-#: librarian_ondd/forms.py:15
-msgid ""
-"Tuner configuration could not be saved. Please make sure that the tuner is "
-"connected."
-msgstr ""
-"Tuner configuration could not be saved. Please make sure that the tuner is "
-"connected."
-
-#: librarian_ondd/forms.py:20
-msgid "LNB Type"
-msgstr "LNB Type"
-
-#: librarian_ondd/forms.py:23
-msgid "Invalid choice for LNB type"
-msgstr "Invalid choice for LNB type"
-
-#: librarian_ondd/forms.py:28
-msgid "Frequency"
-msgstr "Frequency"
-
-#. Translators, error message when frequency value is wrong
-#: librarian_ondd/forms.py:34
-msgid "Frequency must be a positive number"
-msgstr "Frequency must be a positive number"
-
-#: librarian_ondd/forms.py:39
-msgid "Symbol rate"
-msgstr "Symbol rate"
-
-#. Translators, error message when symbolrate value is wrong
-#: librarian_ondd/forms.py:45
-msgid "Symbolrate must be a positive number"
-msgstr "Symbolrate must be a positive number"
-
-#: librarian_ondd/forms.py:50
-msgid "Delivery system"
-msgstr "Delivery system"
-
-#: librarian_ondd/forms.py:55
-msgid "Invalid choice for delivery system"
-msgstr "Invalid choice for delivery system"
-
-#: librarian_ondd/forms.py:60
-msgid "Modulation"
-msgstr "Modulation"
-
-#: librarian_ondd/forms.py:65
-msgid "Invalid choice for modulation mode"
-msgstr "Invalid choice for modulation mode"
-
-#: librarian_ondd/forms.py:70
-msgid "Polarization"
-msgstr "Polarization"
-
-#: librarian_ondd/forms.py:75
-msgid "Invalid choice for polarization"
-msgstr "Invalid choice for polarization"
-
-#. Translators, message shown when user does not select a satellite
-#. preset nor 'Custom' option to enter custom data.
-#: librarian_ondd/routes.py:35
-msgid "Please select a satellite or select 'Custom'"
-msgstr "Please select a satellite or select 'Custom'"
-
-#: librarian_ondd/routes.py:50
-msgid "Transponder configuration saved."
-msgstr "Transponder configuration saved."
-
-#. Translators, refers to transponder polarization
-#: librarian_ondd/consts.py:20
-msgid "None"
-msgstr "None"
-
-#. Translators, refers to transponder polarization
-#: librarian_ondd/consts.py:22
-msgid "Vertical"
-msgstr "Vertical"
-
-#. Translators, refers to transponder polarization
-#: librarian_ondd/consts.py:24
-msgid "Horizontal"
-msgstr "Horizontal"
-
-#. Translators, this is a type of LNB
-#: librarian_ondd/consts.py:35
-msgid "Universal"
-msgstr "Universal"
-
-#. Translators, this is a type of LNB
-#: librarian_ondd/consts.py:37
-msgid "North America Ku band"
-msgstr "North America Ku band"
-
-#. Translators, this is a type of LNB
-#: librarian_ondd/consts.py:39
-msgid "C band"
-msgstr "C band"
-
-#. Translators, used as coverage area of a transponder
-#: librarian_ondd/consts.py:50
-msgid "North America"
-msgstr "North America"
-
-#. Translators, used as coverage area of a transponder
-#: librarian_ondd/consts.py:59
-msgid "Europe, North Africa"
-msgstr "Europe, North Africa"
-
-#. Translators, used as coverage area of a transponder
-#: librarian_ondd/consts.py:68
-msgid "North and West Europe, Subsaharan Africa"
-msgstr "North and West Europe, Subsaharan Africa"
-
-#. Translators, used as coverage area of a transponder
-#: librarian_ondd/consts.py:77
-msgid "Middle East, Asia, Australia"
-msgstr "Middle East, Asia, Australia"
-
-#. Translators, used as coverage area of a transponder
-#: librarian_ondd/consts.py:86
-msgid "North, Middle, and South America"
-msgstr "North, Middle, and South America"
-
-#. Translators, used as coverage area of a transponder
-#: librarian_ondd/consts.py:95
-msgid "India"
-msgstr "India"
-
-#: librarian_ondd/views/ondd/_cache_status.tpl:6
-msgid ""
-"Download capacity is low and files may stop downloading soon. Free some disk "
-"space by moving files to an external storage device."
-msgstr ""
-
-#. Translators, shows the disk space status of the storage where ondd download cache is stored
-#: librarian_ondd/views/ondd/_cache_status.tpl:10
-msgid "Allocated download capacity"
-msgstr ""
-
-#: librarian_ondd/views/ondd/_cache_status.tpl:15
-#, python-format, python-brace-format
-msgid "{percentage}% used ({amount} available)"
-msgstr ""
-
-#. Translators, used as main status text when there is no tuner
-#: librarian_ondd/views/ondd/_status.tpl:18
-msgid "no tuner"
-msgstr "no tuner"
-
-#. Translators, used as main status text when there is no signal lock
-#: librarian_ondd/views/ondd/_status.tpl:21
-msgid "no lock"
-msgstr "no lock"
-
-#. Translators, used as main status text when there is no service
-#: librarian_ondd/views/ondd/_status.tpl:24
-msgid "no service"
-msgstr "no service"
-
-#. Translators, used as main status text when everything is ok
-#: librarian_ondd/views/ondd/_status.tpl:27
-msgid "receiving"
-msgstr "receiving"
-
-#. Translators, label is located next to the satellite signal strength
-#. indicator
-#: librarian_ondd/views/ondd/_status.tpl:54
-msgid "Signal"
-msgstr "Signal"
-
-#. Translators, label is located next to the satellite signal quality
-#. indicator
-#: librarian_ondd/views/ondd/_status.tpl:57
-msgid "Quality"
-msgstr "Quality"
-
-#. Translators, labe is located next to the bitrate indicator
-#: librarian_ondd/views/ondd/_status.tpl:59
-msgid "Bitrate"
-msgstr "Bitrate"
-
-#. Translators, label for select list that allows user to pick a satellite to tune into
-#: librarian_ondd/views/ondd/_presets.tpl:10
-msgid "Satellite"
-msgstr "Satellite"
-
-#. Translators, placeholder for satellite selection select list
-#: librarian_ondd/views/ondd/_presets.tpl:13
-msgid "Select a satellite"
-msgstr "Select a satellite"
-
-#. Translators, label for option that allows user to set custom
-#. transponder parameters
-#: librarian_ondd/views/ondd/_presets.tpl:25
-msgid "Custom..."
-msgstr "Custom..."
-
-#. Translators, instruction for the user on how to use the presets select
-#. list
-#: librarian_ondd/views/ondd/_presets.tpl:29
-msgid "Select a preset or use 'Custom' and enter data manually"
-msgstr "Select a preset or use 'Custom' and enter data manually"
-
-#. Translators, shown on dashboard when no files are currently being
-#. downloaded
-#: librarian_ondd/views/ondd/_file_list.tpl:30
-msgid "No files are being downloaded"
-msgstr "No files are being downloaded"
-
-#. Translators, shown in downloads list when no file data is
-#. incoming.
-#: librarian_ondd/views/ondd/_file_list.tpl:46
-msgid "waiting for data..."
-msgstr "waiting for data..."
-
-#. Translators, button label that confirms tuner settings
-#: librarian_ondd/views/ondd/_settings_form.tpl:7
-msgid "Update settings"
-msgstr "Update settings"
-
-#: librarian_ondd/views/ondd/dashboard.tpl:31
-msgid "Tuner settings could not be set due to application error."
-msgstr "Tuner settings could not be set due to application error."
-
-#. Translators, used during setup wizard in tuner settings step
-#: librarian_ondd/views/setup/step_ondd.tpl:17
-msgid "Please select the satellite you'd like to receive data from."
-msgstr "Please select the satellite you'd like to receive data from."
-
-#. Translators, used as button label for tuner test during
-#. setup wizard
-#: librarian_ondd/views/setup/step_ondd.tpl:28
-msgid "Test settings"
-msgstr "Test settings"
-
-#. Translators, used as dashboard section title
-#: librarian_netinterfaces/dashboard_plugin.py:22
-msgid "Network interfaces"
-msgstr "Network interfaces"
-
-#. Translators, network interface type shown in network interface list
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:7
-msgid "wireless"
-msgstr "wireless"
-
-#. Translators, network interface type shown in network interaface list
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:11
-msgid "bridge"
-msgstr "bridge"
-
-#. Translators, network interface type shown in network interface list
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:15
-msgid "wired"
-msgstr "wired"
-
-#. Translators, human-friendly label for bridge interface with
-#. administrator-specified name (e.g., br0) replacing the
-#. {name} placeholder.
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:31
-#, python-brace-format
-msgid "Ethernet bridge ({name})"
-msgstr "Ethernet bridge ({name})"
-
-#. Translators, network interface IP address
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:41
-msgid "IP address:"
-msgstr "IP address:"
-
-#. Translators, network interface default gateway
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:48
-msgid "Default gateway:"
-msgstr "Default gateway:"
-
-#. Translators, network interface IP address (IPv6)
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:55
-msgid "IPv6 address:"
-msgstr "IPv6 address:"
-
-#. Translators, network interface IP address
-#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:61
-msgid "Interface name:"
-msgstr "Interface name:"
-
+#. Translators, used main navigation menu
 #. Translators, used as page title
-#: librarian_notifications/views/notification_list.tpl:6
-#: librarian_notifications/views/notification_list.tpl:11
-msgid "Messages"
-msgstr "Messages"
-
-#: librarian_notifications/views/_notification_list.tpl:8
-#, python-brace-format
-msgid "A content item has been added to the Library with the following title:"
-msgid_plural ""
-"{count} content items have been added to the Library with the following "
-"titles:"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#. Translators, used as label for discarding all unread notifications
-#: librarian_notifications/views/_notification_list.tpl:29
-msgid "Mark all as read"
-msgstr "Mark all as read"
-
-#: librarian_notifications/views/_notification_list.tpl:51
-msgid "Dismiss"
-msgstr "Dismiss"
-
-#. Translators, note that appears on notifications page when there are no new notifications
-#: librarian_notifications/views/_notification_list.tpl:61
-msgid "There are no new notifications"
-msgstr "There are no new notifications"
-
-#. Translators, used as dashboard section title
-#: librarian_diskspace/dashboard_plugin.py:32
-msgid "Storage devices"
-msgstr "Storage devices"
-
-#. Translators, used as description of storage device
-#: librarian_diskspace/views/dashboard/diskspace.tpl:13
-msgid "internal storage"
-msgstr "internal storage"
-
-#. Translators, used as description of storage device
-#: librarian_diskspace/views/dashboard/diskspace.tpl:18
-#: librarian_diskspace/views/dashboard/diskspace.tpl:23
-msgid "removable storage"
-msgstr "removable storage"
-
-#. Translators, this is used next to disk space usage indicator in settings
-#. panel. The {used}, {total}, and {free} are placeholders.
-#: librarian_diskspace/views/dashboard/diskspace.tpl:43
-#, python-brace-format
-msgid "{used} of {total} ({free} free)"
-msgstr "{used} of {total} ({free} free)"
-
-#. Translators, used as page title
-#: librarian_football/menuitems.py:8
-#: librarian_football/views/football/football.tpl:5
-msgid "Football"
-msgstr ""
-
-#: librarian_ui/lang.py:20
-msgid "any language"
-msgstr "any language"
-
-#. Translators, shown on error page as error code when error code
-#. is unknown.
-#: librarian_ui/lang.py:35 librarian_ui/views/errors/_error_page.tpl:13
-msgid "unknown"
-msgstr "unknown"
-
-#: librarian_ui/views/base.tpl:74
-msgid "Toggle apps menu"
-msgstr "Toggle apps menu"
-
-#: librarian_ui/views/base.tpl:85
-msgid "Toggle context menu"
-msgstr "Toggle context menu"
-
-#. Translators, label for context menu language switcher
-#. Translators, used as label for language
-#: librarian_ui/views/base.tpl:97 librarian_setup/forms.py:23
-msgid "Language"
-msgstr "Language"
-
-#. Translators, link shown in context menu when user is logged in.
-#: librarian_ui/views/base.tpl:115 librarian_auth/menuitems.py:9
-msgid "Log out"
-msgstr "Log out"
-
-#. Translators, link shown in context menu when user is not logged in.
-#: librarian_ui/views/base.tpl:118
-msgid "Log in"
-msgstr "Log in"
-
-#. Translators, label on back button that appears at the top of
-#. context menu's submenu
-#: librarian_ui/views/base.tpl:125
-msgid "Back to menu"
-msgstr "Back to menu"
-
-#. Translators, used as a label for guest account (unauthenticated user)
-#: librarian_ui/views/base.tpl:153
-msgid "guest"
-msgstr "guest"
-
-#: librarian_ui/views/base.tpl:175
-msgid "Info"
-msgstr "Info"
-
-#: librarian_ui/views/base.tpl:178
-msgid "Notifications"
-msgstr "Notifications"
-
-#: librarian_ui/views/base.tpl:199
-#: librarian_filemanager/views/filemanager/main.tpl:47
-msgid "Loading"
-msgstr "Loading"
-
-#: librarian_ui/views/base.tpl:205 librarian_ui/views/base.tpl:210
-msgid "Content could not be loaded"
-msgstr "Content could not be loaded"
-
-#. Translators, message shown next to a spinning load icon
-#: librarian_ui/views/base.tpl:216
-msgid "Loading..."
-msgstr "Loading..."
-
-#: librarian_ui/views/base.tpl:221
-msgid "Toggle status"
-msgstr "Toggle status"
-
-#. Translators, used as link label for link that takes user back to
-#. a page from which they came (usually used when they temporarily
-#. visit the current page to change some option such as language)
-#: librarian_ui/views/ui/lang_list.tpl:10
-msgid "Back to previous page"
-msgstr "Back to previous page"
-
-#: librarian_ui/views/ui/feedback.tpl:19
-#, python-brace-format
-msgid "You'll be taken to {target} in {seconds} seconds."
-msgstr "You'll be taken to {target} in {seconds} seconds."
-
-#. Translators, used as page title
-#. Translators, used as access denied page heading
-#: librarian_ui/views/errors/403.tpl:5 librarian_ui/views/errors/403.tpl:10
-msgid "Forbidden"
-msgstr "Forbidden"
-
-#. Translators, shown when user is denied access to a page
-#: librarian_ui/views/errors/403.tpl:20
-msgid "You are not authorized to access this page or the page has expired."
-msgstr "You are not authorized to access this page or the page has expired."
-
-#. Translators, used as page title
-#. Translators, used as error page heading
-#: librarian_ui/views/errors/404.tpl:5 librarian_ui/views/errors/404.tpl:10
-msgid "Page not found"
-msgstr "Page not found"
-
-#: librarian_ui/views/errors/404.tpl:18
-msgid "The page you were looking for could not be found"
-msgstr "The page you were looking for could not be found"
-
-#: librarian_ui/views/errors/404.tpl:19
-msgid "main page"
-msgstr "main page"
-
-#: librarian_ui/views/errors/404.tpl:20
-#, python-brace-format
-msgid "You will be redirected to {target} in {seconds} seconds."
-msgstr "You will be redirected to {target} in {seconds} seconds."
-
-#. Translators, used as page title
-#. Translators, used as maintenance page heading
-#: librarian_ui/views/errors/503.tpl:5 librarian_ui/views/errors/503.tpl:10
-msgid "Under maintenance"
-msgstr "Under maintenance"
-
-#: librarian_ui/views/errors/503.tpl:19
-msgid ""
-"Librarian is currently in maintenance mode. Please wait a few minutes and "
-"try again."
-msgstr ""
-"Librarian is currently in maintenance mode. Please wait a few minutes and "
-"try again."
-
-#. Translators, used as page title
-#. Translators, used as error page heading
-#: librarian_ui/views/errors/500.tpl:5 librarian_ui/views/errors/500.tpl:10
-msgid "Error"
-msgstr "Error"
-
-#: librarian_ui/views/errors/500.tpl:19
-msgid ""
-"Librarian has failed to fulfill your request due to unexpected error in the "
-"program."
-msgstr ""
-"Librarian has failed to fulfill your request due to unexpected error in the "
-"program."
-
-#: librarian_ui/views/errors/500.tpl:21
-msgid "Details are provided below."
-msgstr "Details are provided below."
-
-#: librarian_ui/views/errors/500.tpl:23
-msgid "Error details are not available."
-msgstr "Error details are not available."
-
-#: librarian_ui/views/errors/500.tpl:32
-msgid "Return to main page"
-msgstr "Return to main page"
-
-#: librarian_ui/views/errors/500.tpl:33
-msgid "Download application log"
-msgstr "Download application log"
-
-#. Translators, shown on error page below the error title
-#: librarian_ui/views/errors/_error_page.tpl:10
-msgid "Error code:"
-msgstr "Error code:"
-
-#. Translators, used as page title
-#: librarian_setup/views/diag.tpl:4 librarian_setup/views/diag.tpl:9
-msgid "Diagnostics"
-msgstr "Diagnostics"
-
-#: librarian_setup/views/diag.tpl:15
-msgid "Version"
-msgstr "Version"
-
-#: librarian_setup/views/diag.tpl:19
-msgid "Has tuner?"
-msgstr "Has tuner?"
-
-#: librarian_setup/views/diag.tpl:20
-msgid "Yes"
-msgstr "Yes"
-
-#: librarian_setup/views/diag.tpl:20
-msgid "No"
-msgstr "No"
-
-#. Translators, used during setup wizard in language settings step, as step
-#. title
-#: librarian_setup/views/setup/step_language.tpl:8
-msgid "Default interface language"
-msgstr "Default interface language"
-
-#. Translators, used during setup wizard in language settings step
-#: librarian_setup/views/setup/step_language.tpl:13
-msgid ""
-"Please select the default interface language. Users can change their "
-"language preference later."
-msgstr ""
-"Please select the default interface language. Users can change their "
-"language preference later."
-
-#: librarian_setup/views/setup/no_xhr.tpl:1
-msgid "Setup wizard requires your attention. Please reload this page."
-msgstr "Setup wizard requires your attention. Please reload this page."
-
-#. Translators, used as page title
-#: librarian_setup/views/setup/setup_finished.tpl:9
-msgid "Setup Completed"
-msgstr "Setup Completed"
-
-#: librarian_setup/views/setup/setup_finished.tpl:16
-msgid "Settings are saved"
-msgstr "Settings are saved"
-
-#: librarian_setup/views/setup/setup_finished.tpl:23
-msgid "Welcome to Outernet"
-msgstr "Welcome to Outernet"
-
-#: librarian_setup/views/setup/setup_finished.tpl:26
-msgid "Start using Outernet"
-msgstr "Start using Outernet"
-
-#: librarian_setup/views/setup/setup_base.tpl:4
-msgid "Setup wizard"
-msgstr "Setup wizard"
-
-#: librarian_setup/views/setup/setup_base.tpl:40
-msgid "Back"
-msgstr "Back"
-
-#: librarian_setup/views/setup/setup_base.tpl:42
-msgid "Finish"
-msgstr "Finish"
-
-#: librarian_setup/views/setup/setup_base.tpl:42
-#: librarian_filemanager/views/filemanager/_image.tpl:32
-msgid "Next"
-msgstr "Next"
-
-#. Translators, errorm essage shown when emergency reset token is
-#. invalid
-#: librarian_auth/forms.py:26
-msgid "This emergency reset token is invalid"
-msgstr "This emergency reset token is invalid"
-
-#: librarian_auth/forms.py:53
-msgid "Please enter the correct username and password."
-msgstr "Please enter the correct username and password."
-
-#. Translators, used as label for a login field
-#. Translators, used as label in create user form
-#: librarian_auth/forms.py:56 librarian_auth/forms.py:77
-msgid "Username"
-msgstr "Username"
-
-#: librarian_auth/forms.py:57 librarian_auth/forms.py:79
-msgid "username"
-msgstr "username"
-
-#. Translators, used as label for a password field
-#. Translators, used as label in create user form
-#. Translators, used as label in password reset form
-#: librarian_auth/forms.py:60 librarian_auth/forms.py:81
-#: librarian_auth/forms.py:106
-msgid "Password"
-msgstr "Password"
-
-#: librarian_auth/forms.py:61 librarian_auth/forms.py:83
-#: librarian_auth/forms.py:108
-msgid "password"
-msgstr "password"
-
-#: librarian_auth/forms.py:74 librarian_auth/forms.py:98
-#: librarian_auth/forms.py:123
-msgid "The entered passwords do not match."
-msgstr "The entered passwords do not match."
-
-#. Translators, used as label in create user form
-#. Translators, used as label in password reset form
-#: librarian_auth/forms.py:85 librarian_auth/forms.py:110
-msgid "Confirm Password"
-msgstr "Confirm Password"
-
-#: librarian_auth/forms.py:87 librarian_auth/forms.py:112
-msgid "confirm password"
-msgstr "confirm password"
-
-#: librarian_auth/forms.py:99
-msgid "Password reset token does not match any user"
-msgstr "Password reset token does not match any user"
-
-#. Translators, used as label in create user form
-#: librarian_auth/forms.py:102 librarian_auth/views/auth/_reset_token.tpl:3
-msgid "Password reset token"
-msgstr "Password reset token"
-
-#. Translators, used as error message for emergency reset token form
-#. field
-#: librarian_auth/forms.py:126
-msgid "Invalid emergency reset token"
-msgstr "Invalid emergency reset token"
-
-#. Translators, used as label for emergency reset token field
-#: librarian_auth/forms.py:130
-msgid "Emergency reset token"
-msgstr "Emergency reset token"
-
-#. Translators, used as page title on feedback page
-#: librarian_auth/routes/emergency_reset.py:68
-msgid "Emergency reset successful"
-msgstr "Emergency reset successful"
-
-#. Translators, used as link label on feedback page in "You
-#. will be taken to log-in page..."
-#: librarian_auth/routes/emergency_reset.py:71 librarian_auth/routes/auth.py:92
-msgid "log-in page"
-msgstr "log-in page"
-
-#. Translators, shown after emergency reset
-#: librarian_auth/routes/emergency_reset.py:73
-#, python-brace-format
-msgid "You may now log in as '{username}'."
-msgstr "You may now log in as '{username}'."
-
-#. Translators, used as page title on feedback page
-#: librarian_auth/routes/auth.py:89
-msgid "New password was set"
-msgstr "New password was set"
-
-#. Translators, shown after password has been changed
-#: librarian_auth/routes/auth.py:94
-#, python-brace-format
-msgid "Password for username '{username}' has been set."
-msgstr "Password for username '{username}' has been set."
-
-#: librarian_auth/views/setup/step_superuser.tpl:8
-msgid "Superuser account"
-msgstr "Superuser account"
-
-#: librarian_auth/views/setup/step_superuser.tpl:13
-msgid ""
-"The superuser account is used to maintain the library and configure the "
-"receiver."
-msgstr ""
-"The superuser account is used to maintain the library and configure the "
-"receiver."
-
-#. Translators, help text displayed below emergency reset token field
-#: librarian_auth/views/auth/_emergency_reset.tpl:10
-msgid "Please contact Outernet to obtain your emergency reset token."
-msgstr "Please contact Outernet to obtain your emergency reset token."
-
-#. Translators, used as label for button that performs emergency reset
-#: librarian_auth/views/auth/_emergency_reset.tpl:17
-msgid "Reset"
-msgstr "Reset"
-
-#: librarian_auth/views/auth/_reset_password.tpl:14
-msgid ""
-"This is the 6-digit number you were asked to write down when you created "
-"your user account."
-msgstr ""
-"This is the 6-digit number you were asked to write down when you created "
-"your user account."
-
-#: librarian_auth/views/auth/_reset_password.tpl:27
-msgid "Change password"
-msgstr "Change password"
-
-#. Translators, used as page title
-#: librarian_auth/views/auth/login.tpl:6
-#: librarian_auth/views/auth/_login.tpl:11
-msgid "Login"
-msgstr "Login"
-
-#. Translators, used as page title
-#: librarian_auth/views/auth/login.tpl:11
-msgid "Log into Librarian"
-msgstr "Log into Librarian"
-
-#. Translators, shown as a message under the password reset token.
-#. Password reset token is a 6-digit number that is used to reset
-#. the user password.
-#: librarian_auth/views/auth/_reset_token.tpl:9
-msgid ""
-"Please write this password reset token down and store it securely. You will "
-"need it if you ever need to reset your password."
-msgstr ""
-"Please write this password reset token down and store it securely. You will "
-"need it if you ever need to reset your password."
-
-#. Translators, used as page title
-#: librarian_auth/views/auth/emergency_reset.tpl:5
-msgid "Emergency reset"
-msgstr "Emergency reset"
-
 #. Translators, used as page heading
-#: librarian_auth/views/auth/emergency_reset.tpl:9
-msgid "Perform emergency reset"
-msgstr "Perform emergency reset"
-
-#. Translators, used as page title
-#: librarian_auth/views/auth/reset_password.tpl:6
-#: librarian_auth/views/auth/reset_password.tpl:11
-#: librarian_auth/views/auth/_login.tpl:14
-msgid "Reset your password"
-msgstr "Reset your password"
-
-#: librarian_filemanager/helpers.py:258
-#, python-brace-format
-msgid "{number} year ago"
-msgid_plural "{number} years ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:263
-#, python-brace-format
-msgid "{number} mont ago"
-msgid_plural "{number} months ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:268
-#, python-brace-format
-msgid "{number} week ago"
-msgid_plural "{number} weeks ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:272
-#, python-brace-format
-msgid "{number} day ago"
-msgid_plural "{number} days ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:276
-msgid "yesterday"
-msgstr ""
-
-#: librarian_filemanager/helpers.py:278
-msgid "Today"
-msgstr ""
-
-#: librarian_filemanager/helpers.py:283
-#, python-brace-format
-msgid "{number} hour ago"
-msgid_plural "{number} hours ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:288
-#, python-brace-format
-msgid "{number} minute ago"
-msgid_plural "{number} minutes ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:292
-#, python-brace-format
-msgid "{number} second ago"
-msgid_plural "{number} seconds ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/helpers.py:295
-msgid "just now"
-msgstr ""
-
-#. Translators, used as page title
 #: librarian_filemanager/menuitems.py:8 librarian_filemanager/routes.py:209
 #: librarian_filemanager/views/filemanager/main.tpl:8
 msgid "Files"
 msgstr "Файли"
-
-#: librarian_filemanager/routes.py:187
-msgid "File not found."
-msgstr ""
-
-#. Translators, used as page title when a file's removal is
-#. retried, but it was already deleted before
-#: librarian_filemanager/routes.py:200
-msgid "File already removed"
-msgstr "File already removed"
-
-#. Translators, used as message when a file's removal is
-#. retried, but it was already deleted before
-#: librarian_filemanager/routes.py:203
-msgid "The specified file has already been removed."
-msgstr "The specified file has already been removed."
-
-#. Translators, used as page title of successful file removal feedback
-#: librarian_filemanager/routes.py:230
-msgid "File removed"
-msgstr "File removed"
-
-#. Translators, used as message of successful file removal feedback
-#: librarian_filemanager/routes.py:232
-msgid "File successfully removed."
-msgstr "File successfully removed."
-
-#: librarian_filemanager/routes.py:237 librarian_filemanager/routes.py:247
-msgid "file list"
-msgstr "file list"
-
-#. Translators, used as page title of unsuccessful file removal feedback
-#: librarian_filemanager/routes.py:240
-msgid "File not removed"
-msgstr "File not removed"
-
-#. Translators, used as message of unsuccessful file removal feedback
-#: librarian_filemanager/routes.py:242
-msgid "File could not be removed."
-msgstr "File could not be removed."
 
 #. Translators, used as page title for page that shows result of running a script
 #. Translators, used as page header for page that shows result of running a script
@@ -1005,11 +42,6 @@ msgstr "File could not be removed."
 #: librarian_filemanager/views/exec_result.tpl:10
 msgid "Script output"
 msgstr "Вихід сценарію"
-
-#. Translators, return (result) code of the script executed via file browser
-#: librarian_filemanager/views/exec_result.tpl:15
-msgid "Return code:"
-msgstr "Return code:"
 
 #. Translators, shown when result code is good (0).
 #: librarian_filemanager/views/exec_result.tpl:18
@@ -1021,11 +53,6 @@ msgstr "ОК"
 msgid "error"
 msgstr "помилка"
 
-#. Translators, refers to standard output of script run from file browser (STDOUT)
-#: librarian_filemanager/views/exec_result.tpl:25
-msgid "Output:"
-msgstr "Output:"
-
 #. Translators, shown if script returned no output
 #: librarian_filemanager/views/exec_result.tpl:30
 msgid "no output"
@@ -1036,500 +63,2582 @@ msgstr "немає виходу"
 msgid "Errors"
 msgstr "Помилки"
 
-#. Translators, used as page title of content removal confirmation page
-#: librarian_filemanager/views/filemanager/remove_confirm.tpl:5
-msgid "Confirm removal"
-msgstr "Confirm removal"
+#: librarian_library/consts.py:5
+msgid "Unknown license"
+msgstr "Невідома ліцензія"
 
-#. Translators, used title at top of the removal confirmation page,
-#. asking user to confirm file/folder deletion.
-#: librarian_filemanager/views/filemanager/remove_confirm.tpl:13
-msgid "Delete permanently?"
-msgstr "Delete permanently?"
+#: librarian_library/consts.py:6
+msgid "Creative Commons Attribution"
+msgstr "Ліцензія Creative Commons Attribution"
 
-#. Translators, used as confirmation message before content removal
-#: librarian_filemanager/views/filemanager/remove_confirm.tpl:18
-#, python-brace-format
-msgid "You are about to delete '{item_name}'."
-msgstr "You are about to delete '{item_name}'."
+#: librarian_library/consts.py:7
+msgid "Creative Commons Attribution-NoDerivs"
+msgstr "Ліцензія Creative Commons Attribution-без похідних"
 
-#. Translators, message warning users about deleted files and
-#. folders.
-#: librarian_filemanager/views/filemanager/remove_confirm.tpl:22
-msgid "Deleted files and folders cannot be recovered."
-msgstr "Deleted files and folders cannot be recovered."
+#: librarian_library/consts.py:8
+msgid "Creative Commons Attribution-NonCommercial"
+msgstr "Ліцензія Creative Commons Attribution-не для комерційного використання"
 
-#. Translators, used as title of content removal confirmation button
-#. Translators, used as label for folder/file delete button
-#: librarian_filemanager/views/filemanager/remove_confirm.tpl:28
-#: librarian_filemanager/views/filemanager/_folder.tpl:17
-msgid "Delete"
-msgstr "delete?"
+#: librarian_library/consts.py:9
+msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
+msgstr "Ліцензія Creative Commons Attribution-не для комерційного використання-без похідних"
 
-#. Translators, used as title of content removal cancellation button
-#: librarian_filemanager/views/filemanager/remove_confirm.tpl:30
-msgid "Cancel"
-msgstr "Cancel"
+#: librarian_library/consts.py:10
+msgid "Creative Commons Attribution-ShareAlike"
+msgstr "Ліцензія Creative Commons Attribution-ShareAlike"
+
+#: librarian_library/consts.py:11
+msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
+msgstr "Ліцензія Creative Commons-не для комерційного використання-ShareAlike"
+
+#: librarian_library/consts.py:12
+msgid "GNU Free Documentation License"
+msgstr "Ліцензія вільної документації GNU"
+
+#: librarian_library/consts.py:13
+msgid "Open Publication License"
+msgstr "Ліцензія відкритої публікації"
+
+#: librarian_library/consts.py:14
+msgid "Open Content License"
+msgstr "Ліцензія відкритого контенту"
+
+#: librarian_library/consts.py:15
+msgid "Against DRM License"
+msgstr "Ліцензія Against DRM"
+
+#: librarian_library/consts.py:16
+msgid "Free Art License"
+msgstr "Ліцензія вільного мистецтва"
+
+#: librarian_library/consts.py:17
+msgid "Public Domain"
+msgstr "Загальне надбання"
+
+#: librarian_library/consts.py:18
+msgid "Other free license"
+msgstr "Інша вільна ліцензія"
+
+#: librarian_library/consts.py:19
+#: librarian_library/views/library/_content_list.tpl:70
+msgid "All rights reserved"
+msgstr "Всі права збережено"
+
+#: librarian_library/consts.py:20
+msgid "Other non-free license"
+msgstr "Інша невільна ліцензія"
+
+#. Translators, used as placeholder while infinite scrolling content is being loaded
+#: librarian_ui/views/base.tpl:216
+msgid "Loading..."
+msgstr "Завантажується"
+
+#. Translators, used as section heading on dashboard
+#: librarian_ondd/dashboard_plugin.py:49
+#: librarian_ondd/views/ondd/settings.tpl:6
+#: librarian_ondd/views/ondd/settings.tpl:12
+#: librarian_ondd/views/setup/step_ondd.tpl:12
+msgid "Tuner settings"
+msgstr "Налаштування тюнера"
+
+#: librarian_filemanager/views/filemanager/_generic.tpl:46
+msgid "There are currently no files or folders here."
+msgstr "Наданий час тут немає жодних файлів чи папок"
+
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian_ondd/consts.py:20
+msgid "None"
+msgstr "Жоден"
+
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian_ondd/consts.py:22
+msgid "Vertical"
+msgstr "Вертикальний"
+
+#. Translators, refers to transponder polarization
+#. Translators, refers to transponder polarization
+#: librarian_ondd/consts.py:24
+msgid "Horizontal"
+msgstr "Горизонтальний"
+
+#. Translators, this is a type of LNB
+#. Translators, this is a type of LNB
+#: librarian_ondd/consts.py:35
+msgid "Universal"
+msgstr "Універсальний"
+
+#. Translators, this is a type of LNB
+#. Translators, this is a type of LNB
+#: librarian_ondd/consts.py:37
+msgid "North America Ku band"
+msgstr "Північноамериканський Ku-діапазон"
+
+#. Translators, error message when LNB type is incorrect
+#. Translators, error message when LNB type is incorrect
+#: librarian_ondd/forms.py:23
+msgid "Invalid choice for LNB type"
+msgstr "Неправильний вибір для типу LNB"
+
+#. Translators, error message when frequency value is
+#. wrong
+#. Translators, error message when frequency value is
+#. wrong
+#: librarian_ondd/forms.py:34
+msgid "Frequency must be a positive number"
+msgstr "Частота повинна бути позитивним числом"
+
+#. Translators, error message when symbolrate value is
+#. wrong
+#. Translators, error message when symbolrate value is
+#. wrong
+#: librarian_ondd/forms.py:45
+msgid "Symbolrate must be a positive number"
+msgstr "Швидкість передачі повинна бути позитивним числом"
+
+#. Translators, error message shown when wrong delivery
+#. system is selected
+#. Translators, error message shown when wrong delivery
+#. system is selected
+#: librarian_ondd/forms.py:55
+msgid "Invalid choice for delivery system"
+msgstr "Неправильний вибір для системи доставки"
+
+#. Translators, error message shown when wrong modulation
+#. mode is selected
+#. Translators, error message shown when wrong modulation
+#. mode is selected
+#: librarian_ondd/forms.py:65
+msgid "Invalid choice for modulation mode"
+msgstr "Неправильний вибір для режиму модуляції"
+
+#. Translators, error message shown when wrong
+#. polarization is selected
+#. Translators, error message shown when wrong
+#. polarization is selected
+#: librarian_ondd/forms.py:75
+msgid "Invalid choice for polarization"
+msgstr "Неправильний вибір для поляризації"
+
+#: librarian_ui/views/errors/500.tpl:33
+msgid "Download application log"
+msgstr "Завантажити журнал додатків"
+
+#. Translators, placeholder for satellite selection select list
+#: librarian_ondd/views/ondd/_presets.tpl:13
+msgid "Select a satellite"
+msgstr "Виберіть супутник"
+
+#. Translators, label for option that allows user to set custom transponder parameters
+#: librarian_ondd/views/ondd/_presets.tpl:25
+msgid "Custom..."
+msgstr "Вибірково..."
+
+#: librarian_ondd/views/ondd/_status.tpl:21
+msgid "no lock"
+msgstr "блокування немає"
+
+#. Translators, used as page title
+#. Translators, used as error page heading
+#: librarian_ui/views/errors/500.tpl:5 librarian_ui/views/errors/500.tpl:10
+msgid "Error"
+msgstr "Помилка"
+
+#. Translators, used as page title
+#. Translators, used as maintenance page heading
+#: librarian_ui/views/errors/503.tpl:5 librarian_ui/views/errors/503.tpl:10
+msgid "Under maintenance"
+msgstr "На технічному обслуговуванні"
+
+#: librarian_ui/views/errors/503.tpl:19
+msgid "Librarian is currently in maintenance mode. Please wait a few minutes and try again."
+msgstr "Бібліотекар в даний час в режимі техобслуговування. Будь ласка, зачекайте кілька хвилин і спробуйте ще раз."
+
+#: librarian_auth/forms.py:53
+msgid "Please enter the correct username and password."
+msgstr "Будь ласка, введіть правильне ім'я користувача і пароль."
+
+#: librarian_ui/lang.py:20
+msgid "any language"
+msgstr "будь-яка мова"
+
+#: librarian_ondd/views/ondd/_file_list.tpl:30
+msgid "No files are being downloaded"
+msgstr "Наразі не завантажуються ніякі файли"
+
+#: librarian_ui/views/errors/403.tpl:5 librarian_ui/views/errors/403.tpl:10
+msgid "Forbidden"
+msgstr "Заборонено"
+
+#: librarian_ui/views/base.tpl:115 librarian_auth/menuitems.py:9
+msgid "Log out"
+msgstr "Вийти"
+
+#: librarian_auth/views/auth/login.tpl:6
+#: librarian_auth/views/auth/_login.tpl:11
+msgid "Login"
+msgstr "Увійти"
+
+#: librarian_auth/forms.py:57 librarian_auth/forms.py:79
+msgid "username"
+msgstr "ім'я користувача"
+
+#: librarian_auth/forms.py:61 librarian_auth/forms.py:83
+#: librarian_auth/forms.py:108
+msgid "password"
+msgstr "пароль"
 
 #: librarian_filemanager/views/filemanager/_folder.tpl:25
 #: librarian_filemanager/views/filemanager/_playlist.tpl:98
 msgid "Download"
-msgstr "Download"
+msgstr "Завантажити"
 
-#. Translators, link to containing folder of a file in search results
-#: librarian_filemanager/views/filemanager/_folder.tpl:34
-msgid "Open containing folder"
-msgstr ""
+#: librarian_ui/lang.py:35 librarian_ui/views/errors/_error_page.tpl:13
+msgid "unknown"
+msgstr "невідомо"
 
-#: librarian_filemanager/views/filemanager/_folder.tpl:117
-msgid "in {}"
-msgstr "in {}"
+#. Translators, used as dashboard section title
+#: librarian_netinterfaces/dashboard_plugin.py:22
+msgid "Network interfaces"
+msgstr "Мережеві інтерфейси"
 
-#: librarian_filemanager/views/filemanager/_main.tpl:9
-msgid "Browse"
-msgstr ""
+#. Translators, used as page title
+#. Translators, used as error page heading
+#: librarian_ui/views/errors/404.tpl:5 librarian_ui/views/errors/404.tpl:10
+msgid "Page not found"
+msgstr "Сторінку не знайдено"
 
-#: librarian_filemanager/views/filemanager/_main.tpl:10
-msgid "Gallery"
-msgstr ""
+#: librarian_ui/views/errors/404.tpl:18
+msgid "The page you were looking for could not be found"
+msgstr "Сторінка, яку ви шукали, не вдалося знайти"
 
-#: librarian_filemanager/views/filemanager/_main.tpl:11
-msgid "Listen"
-msgstr "Listen"
+#: librarian_auth/forms.py:74 librarian_auth/forms.py:98
+#: librarian_auth/forms.py:123
+msgid "The entered passwords do not match."
+msgstr "Введені паролі не співпадають."
 
-#: librarian_filemanager/views/filemanager/_main.tpl:12
-msgid "Watch"
-msgstr "Watch"
+#: librarian_library/views/library/_content_list.tpl:27
+msgid "here"
+msgstr "тут"
 
-#: librarian_filemanager/views/filemanager/_main.tpl:13
-msgid "Read"
-msgstr "Read"
+#. Translators, used as placeholder in the password field
+#: librarian_auth/forms.py:87 librarian_auth/forms.py:112
+msgid "confirm password"
+msgstr "підтвердьте пароль"
 
-#: librarian_filemanager/views/filemanager/_main.tpl:14
-msgid "Updates"
-msgstr ""
+#: librarian_setup/views/setup/setup_base.tpl:42
+#: librarian_filemanager/views/filemanager/_image.tpl:32
+msgid "Next"
+msgstr "Далі"
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian_setup/views/setup/setup_finished.tpl:9
+msgid "Setup Completed"
+msgstr "Установку завершено"
+
+#: librarian_ondd/views/setup/step_ondd.tpl:17
+msgid "Please select the satellite you'd like to receive data from."
+msgstr "Будь ласка, виберіть супутник, з якого ви хочете отримувати дані."
+
+#: librarian_dashboard/menuitems.py:18
+#: librarian_dashboard/views/dashboard/dashboard.tpl:6
+#: librarian_settings/dashboard_plugin.py:21 librarian_ui/views/base.tpl:113
+msgid "Settings"
+msgstr "Налаштування"
+
+#: librarian_ui/views/base.tpl:178
+msgid "Notifications"
+msgstr "Повідомлення"
+
+#. Translators, used as label for language
+#: librarian_ui/views/base.tpl:97 librarian_setup/forms.py:23
+msgid "Language"
+msgstr "Мова"
+
+#. Translators, used as label for date and time setup
+#: librarian_library/forms.py:37
+#: librarian_library/views/setup/step_datetime.tpl:6
+msgid "Timezone"
+msgstr "Часовий пояс"
+
+#. Translators, used as label for a login field
+#. Translators, used as label in create user form
+#. Translators, used as label for a login field
+#. Translators, used as label in create user form
+#: librarian_auth/forms.py:56 librarian_auth/forms.py:77
+msgid "Username"
+msgstr "Ім'я користувача"
+
+#. Translators, used as label for a password field
+#. Translators, used as label in create user form
+#. Translators, used as label for a password field
+#. Translators, used as label in create user form
+#: librarian_auth/forms.py:60 librarian_auth/forms.py:81
+#: librarian_auth/forms.py:106
+msgid "Password"
+msgstr "Пароль"
+
+#. Translators, used as label in create user form
+#: librarian_auth/forms.py:85 librarian_auth/forms.py:110
+msgid "Confirm Password"
+msgstr "Підтвердьте пароль"
+
+#. Translators, this is a type of LNB
+#: librarian_ondd/consts.py:39
+msgid "C band"
+msgstr "Діапазон частот С"
+
+#: librarian_ondd/forms.py:15
+msgid "Tuner configuration could not be saved. Please make sure that the tuner is connected."
+msgstr "Конфігурацію тюнера не вдалося зберегти. Будь ласка, переконайтеся, що тюнер підключений."
+
+#: librarian_ondd/forms.py:20
+msgid "LNB Type"
+msgstr "Тип LNB"
+
+#: librarian_ondd/forms.py:28
+msgid "Frequency"
+msgstr "Частота"
+
+#: librarian_ondd/forms.py:39
+msgid "Symbol rate"
+msgstr "Швидкість передачі сигналів"
+
+#: librarian_ondd/forms.py:50
+msgid "Delivery system"
+msgstr "Система доставки"
+
+#: librarian_ondd/forms.py:60
+msgid "Modulation"
+msgstr "Модуляція"
+
+#: librarian_ondd/forms.py:70
+msgid "Polarization"
+msgstr "Поляризація"
+
+#: librarian_ondd/routes.py:50
+msgid "Transponder configuration saved."
+msgstr "Конфігурацію транспондерів збережено."
+
+#: librarian_filemanager/views/filemanager/remove_confirm.tpl:30
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: librarian_notifications/views/_notification_list.tpl:61
+msgid "There are no new notifications"
+msgstr "Нових повідомлень немає"
+
+#: librarian_setup/views/setup/setup_base.tpl:40
+msgid "Back"
+msgstr "Назад"
+
+#: librarian_library/forms.py:51
+#: librarian_library/views/setup/step_import_content.tpl:46
+msgid "Discard"
+msgstr "Скинути"
+
+#: librarian_auth/views/auth/login.tpl:11
+msgid "Log into Librarian"
+msgstr "Увійти до Бібліотекаря"
+
+#: librarian_library/views/library/_content_list.tpl:17
+#: librarian_library/views/library/_content_list.tpl:41
+msgid "Clear"
+msgstr "Очистити"
+
+#: librarian_ui/views/ui/feedback.tpl:19
+msgid "You'll be taken to {target} in {seconds} seconds."
+msgstr "Ви перейдете до {target} через {seconds} секунд."
+
+#: librarian_dashboard/views/dashboard/plugin_error.tpl:2
+msgid "An error occurred during the rendering of this plugin."
+msgstr "Під час відображення цього плагіна сталася помилка."
+
+#: librarian_notifications/views/_notification_list.tpl:8
+msgid "A content item has been added to the Library with the following title:"
+msgid_plural "{count} content items have been added to the Library with the following titles:"
+msgstr[0] "До Бібліотеки було додано елемент контенту з таким заголовком:"
+msgstr[1] "До Бібліотеки було додано елемент контенту з таким заголовком:"
+msgstr[2] "Множина: {count} елементів контенту, які було додано до Бібліотеки, які мають такі назви:"
+
+#: librarian_filemanager/views/filemanager/_main.tpl:62
+msgid "Go up one level"
+msgstr "Перейти на один рівень вгору"
+
+#: librarian_setup/views/setup/setup_finished.tpl:26
+msgid "Start using Outernet"
+msgstr "Почати роботу з Outernet"
+
+#: librarian_setup/views/diag.tpl:20
+msgid "Yes"
+msgstr "Так"
+
+#: librarian_setup/views/diag.tpl:20
+msgid "No"
+msgstr "Ні"
+
+#: librarian_ondd/views/ondd/_status.tpl:54
+msgid "Signal"
+msgstr "Сигнал"
+
+#: librarian_ondd/views/ondd/_status.tpl:57
+msgid "Quality"
+msgstr "Якість"
+
+#. Translators, errorm essage shown when emergency reset token is
+#. invalid
+#: librarian_auth/forms.py:26
+msgid "This emergency reset token is invalid"
+msgstr "Цей маркер аварійного скидання є недійсним"
+
+#: librarian_auth/forms.py:99
+msgid "Password reset token does not match any user"
+msgstr "Маркер скидання пароля не відповідає жодному користувачеві"
+
+#. Translators, used as label in create user form
+#: librarian_auth/forms.py:102 librarian_auth/views/auth/_reset_token.tpl:3
+msgid "Password reset token"
+msgstr "Маркер скидання пароля"
+
+#. Translators, used as error message for emergency reset token form
+#. field
+#: librarian_auth/forms.py:126
+msgid "Invalid emergency reset token"
+msgstr "Недійсний маркер аварійного скидання"
+
+#. Translators, used as label for emergency reset token field
+#: librarian_auth/forms.py:130
+msgid "Emergency reset token"
+msgstr "Маркер аварійного скидання"
+
+#. Translators, used as page title on feedback page
+#: librarian_auth/routes/emergency_reset.py:68
+msgid "Emergency reset successful"
+msgstr "Аварійне скидання відбулося успішно"
+
+#. Translators, used as link label on feedback page in "You
+#. will be taken to log-in page..."
+#: librarian_auth/routes/emergency_reset.py:71 librarian_auth/routes/auth.py:92
+msgid "log-in page"
+msgstr "сторінка входу"
+
+#. Translators, used as page title on feedback page
+#: librarian_auth/routes/auth.py:89
+msgid "New password was set"
+msgstr "Новий пароль було встановлено"
+
+#: librarian_ui/views/errors/403.tpl:20
+msgid "You are not authorized to access this page or the page has expired."
+msgstr "У Вас немає прав доступу до цієї сторінки або термін її дії закінчився."
+
+#: librarian_auth/views/auth/reset_password.tpl:6
+#: librarian_auth/views/auth/reset_password.tpl:11
+#: librarian_auth/views/auth/_login.tpl:14
+msgid "Reset your password"
+msgstr "Скинути Ваш пароль"
+
+#: librarian_auth/views/auth/emergency_reset.tpl:5
+msgid "Emergency reset"
+msgstr "Аварійне скидання"
+
+#: librarian_auth/views/auth/emergency_reset.tpl:9
+msgid "Perform emergency reset"
+msgstr "Виконати аварійне скидання"
+
+#: librarian_auth/views/auth/_emergency_reset.tpl:10
+msgid "Please contact Outernet to obtain your emergency reset token."
+msgstr "Будь ласка, зв'яжіться з Outernet для отримання маркера аварійного скидання."
+
+#: librarian_auth/views/auth/_emergency_reset.tpl:17
+msgid "Reset"
+msgstr "Скинути"
+
+#: librarian_auth/views/auth/_reset_password.tpl:14
+msgid "This is the 6-digit number you were asked to write down when you created your user account."
+msgstr "Це 6-значний номер, який Вас просили записати під час створення свого облікового запису користувача."
+
+#: librarian_auth/views/auth/_reset_password.tpl:27
+msgid "Change password"
+msgstr "Змінити пароль"
+
+#: librarian_notifications/views/_notification_list.tpl:51
+msgid "Dismiss"
+msgstr "Звільнити"
+
+#: librarian_ui/views/base.tpl:74
+msgid "Toggle apps menu"
+msgstr "Переключити меню додатків"
+
+#: librarian_ui/views/base.tpl:85
+msgid "Toggle context menu"
+msgstr "Переключити контекстне меню"
+
+#. Translators, link shown in context menu when user is not logged in.
+#: librarian_ui/views/base.tpl:118
+msgid "Log in"
+msgstr "Увійти"
+
+#. Translators, label on back button that appears at the top of
+#. context menu's submenu
+#: librarian_ui/views/base.tpl:125
+msgid "Back to menu"
+msgstr "Повернутися до меню"
+
+#. Translators, used as a label for guest account (unauthenticated user)
+#: librarian_ui/views/base.tpl:153
+msgid "guest"
+msgstr "гість"
+
+#: librarian_ui/views/base.tpl:221
+msgid "Toggle status"
+msgstr "Переключити статус"
+
+#: librarian_ui/views/base.tpl:175
+msgid "Info"
+msgstr "Інформація"
+
+#: librarian_ui/views/base.tpl:199
+#: librarian_filemanager/views/filemanager/main.tpl:47
+msgid "Loading"
+msgstr "Завантаження"
+
+#: librarian_ui/views/base.tpl:205 librarian_ui/views/base.tpl:210
+msgid "Content could not be loaded"
+msgstr "Контент не вдалося завантажити"
+
+#: librarian_ui/views/errors/404.tpl:19
+msgid "main page"
+msgstr "головна сторінка"
+
+#: librarian_ui/views/errors/404.tpl:20
+msgid "You will be redirected to {target} in {seconds} seconds."
+msgstr "Вас буде перенаправлено до {target} через {seconds} секунд."
+
+#: librarian_ui/views/errors/500.tpl:19
+msgid "Librarian has failed to fulfill your request due to unexpected error in the program."
+msgstr "Бібліотекарю не вдалося виконати ваш запит через несподівану помилку в програмі."
+
+#: librarian_ui/views/errors/500.tpl:21
+msgid "Details are provided below."
+msgstr "Детальніша інформація наведена нижче."
+
+#: librarian_ui/views/errors/500.tpl:23
+msgid "Error details are not available."
+msgstr "Детальнішої інформації про помилки немає."
+
+#: librarian_ui/views/errors/500.tpl:32
+msgid "Return to main page"
+msgstr "Повернутися на головну сторінку"
+
+#. Translators, shown on error page below the error title
+#: librarian_ui/views/errors/_error_page.tpl:10
+msgid "Error code:"
+msgstr "Код помилки:"
+
+#. Translators, network interface type shown in network interface list
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:7
+msgid "wireless"
+msgstr "бездротовий"
+
+#. Translators, network interface type shown in network interface list
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:15
+msgid "wired"
+msgstr "дротовий"
+
+#. Translators, network interface IP address
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:41
+msgid "IP address:"
+msgstr "IP-адреса:"
+
+#. Translators, network interface default gateway
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:48
+msgid "Default gateway:"
+msgstr "Основний шлюз:"
+
+#. Translators, network interface IP address (IPv6)
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:55
+msgid "IPv6 address:"
+msgstr "IPv6-адреса:"
+
+#. Translators, network interface IP address
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:61
+msgid "Interface name:"
+msgstr "Ім'я інтерфейсу:"
+
+#. Translators, used as page title when a file's removal is
+#. retried, but it was already deleted before
+#: librarian_filemanager/routes.py:200
+msgid "File already removed"
+msgstr "Файл вже видалений"
+
+#. Translators, used as message when a file's removal is
+#. retried, but it was already deleted before
+#: librarian_filemanager/routes.py:203
+msgid "The specified file has already been removed."
+msgstr "Зазначений файл вже видалений."
+
+#. Translators, used as page title of successful file removal feedback
+#: librarian_filemanager/routes.py:230
+msgid "File removed"
+msgstr "Файл видалений."
+
+#. Translators, used as message of successful file removal feedback
+#: librarian_filemanager/routes.py:232
+msgid "File successfully removed."
+msgstr "Файл успішно видалений."
+
+#. Translators, used as page title of unsuccessful file removal feedback
+#: librarian_filemanager/routes.py:240
+msgid "File not removed"
+msgstr "Файл не видалений."
+
+#. Translators, used as message of unsuccessful file removal feedback
+#: librarian_filemanager/routes.py:242
+msgid "File could not be removed."
+msgstr "Файл не вдалося видалити."
+
+#. Translators, return (result) code of the script executed via file browser
+#: librarian_filemanager/views/exec_result.tpl:15
+msgid "Return code:"
+msgstr "Код завершення:"
+
+#. Translators, refers to standard output of script run from file browser (STDOUT)
+#: librarian_filemanager/views/exec_result.tpl:25
+msgid "Output:"
+msgstr "Вихід:"
+
+#. Translators, used as label for search field, appears before the text box
+#: librarian_filemanager/views/filemanager/main.tpl:20
+msgid "Search in folders:"
+msgstr "Пошук по папках:"
+
+#. Translators, used in file search box
+#: librarian_filemanager/views/filemanager/main.tpl:25
+msgid "Folder path or search keywords"
+msgstr "Шлях до папки або ключові слова для пошуку"
+
+#. Translators, used as button in file view address bar
+#. Translators, used as button in content list
+#: librarian_filemanager/views/filemanager/main.tpl:30
+msgid "Start search"
+msgstr "Розпочати пошук"
+
+#: librarian_filemanager/views/filemanager/main.tpl:57
+msgid "Folder listing could not be loaded. Please try again in a few seconds."
+msgstr "Перелік папок не може бути завантажений. Будь ласка, спробуйте ще раз через кілька секунд."
 
 #. Translators, label for a link that takes the user to
 #. main file/folder list from search results.
 #: librarian_filemanager/views/filemanager/_main.tpl:54
 msgid "Go to complete file list"
-msgstr "Go to complete file list"
+msgstr "Перейти до повного переліку файлів"
 
-#. Translators, label for a link that takes the user up
-#. one level in folder hierarchy.
-#: librarian_filemanager/views/filemanager/_main.tpl:62
-msgid "Go up one level"
-msgstr "Go up one level"
+#: librarian_filemanager/views/filemanager/_generic.tpl:44
+msgid "No files or folders match your search keywords."
+msgstr "Немає файлів або папок, які б підходили за ключовими словами пошуку."
+
+#: librarian_filemanager/views/opener/opener_detail.tpl:27
+msgid "{date} by {publisher}."
+msgstr "{date} ким {publisher}. "
+
+#. Translators, shown after emergency reset
+#: librarian_auth/routes/emergency_reset.py:73
+msgid "You may now log in as '{username}'."
+msgstr "Тепер ви можете увійти в систему як \"{username}\"."
+
+#. Translators, shown after password has been changed
+#: librarian_auth/routes/auth.py:94
+msgid "Password for username '{username}' has been set."
+msgstr "Пароль для користувача \"{username}\" встановлено."
+
+#: librarian_auth/views/setup/step_superuser.tpl:8
+msgid "Superuser account"
+msgstr "Обліковий запис привілейованого користувача"
+
+#. Translators, shown as a message under the password reset token.
+#. Password reset token is a 6-digit number that is used to reset
+#. the user password.
+#: librarian_auth/views/auth/_reset_token.tpl:9
+msgid "Please write this password reset token down and store it securely. You will need it if you ever need to reset your password."
+msgstr "Будь ласка, запишіть цей маркер скидання пароля і надійно його зберігайте. Він знадобиться Вам, якщо коли-небудь у Вас виникне потреба скинути пароль."
+
+#: librarian_filemanager/views/filemanager/_main.tpl:12
+msgid "Watch"
+msgstr "Дивіться"
+
+#. Translators, used as page title
+#: librarian_notifications/views/notification_list.tpl:6
+#: librarian_notifications/views/notification_list.tpl:11
+msgid "Messages"
+msgstr "Повідомлення"
+
+#. Translators, used as label for discarding all unread notifications
+#: librarian_notifications/views/_notification_list.tpl:29
+msgid "Mark all as read"
+msgstr "Відзначити все прочитаним"
+
+#. Translators, used for setup wizard action of importing legacy content
+#: librarian_library/forms.py:48
+#: librarian_library/views/setup/step_import_content.tpl:36
+msgid "Import"
+msgstr "Імпортувати"
+
+#: librarian_library/forms.py:53
+msgid "Action"
+msgstr "Дія"
+
+#: librarian_library/views/setup/step_import_content.tpl:7
+msgid "Existing content"
+msgstr "Існуючий контент"
+
+#: librarian_library/views/setup/step_import_content.tpl:12
+msgid "\n"
+"        We have found content from a previous version of this software. You may\n"
+"        choose to import or discard it.\n"
+"        "
+msgstr "\n"
+"        Ми знайшли контент з попередньої версії цього програмного забезпечення. Ви\n"
+"        можете імпортувати його або відмовитися від нього.\n"
+"        "
+
+#: librarian_library/views/setup/step_import_content.tpl:39
+msgid "Adds existing content to the library"
+msgstr "Додає існуючий контент в бібліотеку"
+
+#: librarian_library/views/setup/step_import_content.tpl:49
+msgid "Removes existing content"
+msgstr "Видаляє існуючий контент"
+
+#. Translators, used during setup wizard in language settings step, as step
+#. title
+#: librarian_setup/views/setup/step_language.tpl:8
+msgid "Default interface language"
+msgstr "Усталена мова інтерфейсу"
+
+#. Translators, used during setup wizard in language settings step
+#: librarian_setup/views/setup/step_language.tpl:13
+msgid "Please select the default interface language. Users can change their language preference later."
+msgstr "Виберіть усталену мову інтерфейсу. Користувачі можуть згодом змінювати свої мовні уподобання."
+
+#: librarian_library/views/setup/step_datetime.tpl:10
+msgid "Please select your local timezone."
+msgstr "Будь ласка, виберіть місцевий часовий пояс."
+
+#. Translators, used as note on library page when search does not
+#. return anything {terms} is a placeholder, do not translate
+#: librarian_library/views/library/_content_list.tpl:15
+msgid "There are no search results for '{terms}'"
+msgstr "Пошук не дав жодних результатів для \"{terms}\""
+
+#. Translators, used on library page when there is no content for
+#. given content type, {type} is a placeholder, do not translate
+#: librarian_library/views/library/_content_list.tpl:21
+msgid "There is currently no content of {type} type"
+msgstr "Наразі немає контенту типу {type}"
+
+#. Translators, used as button label for going back to all content
+#. types when there is no content for a chosen type.
+#: librarian_library/views/library/_content_list.tpl:24
+msgid "Show all types"
+msgstr "Показати всі типи"
+
+#: librarian_library/views/library/_content_list.tpl:28
+msgid "Language filter for '{lang}' is active. Click {link} to see all content"
+msgstr "Мовний фільтр для \"{lang}\" активний. Натисніть {link}, щоб побачити весь контент"
+
+#. Translators, used as note on library page when showing search
+#. results, {term} represents the text typed in by user
+#: librarian_library/views/library/_content_list.tpl:39
+msgid "Showing search results for '{term}'"
+msgstr "Відображення результатів пошуку для \"{term}\""
+
+#. Translators, appears as label for the list of content keywords
+#: librarian_library/views/library/_content_list.tpl:77
+msgid "Topics:"
+msgstr "Теми:"
+
+#: librarian_filemanager/views/filemanager/_image.tpl:23
+msgid "Previous"
+msgstr "Попереднє"
+
+#. Translators, used as label for search field, appears before the text box
+#: librarian_library/views/library/content_list.tpl:19
+msgid "Search:"
+msgstr "Пошук:"
+
+#: librarian_library/views/library/content_list.tpl:22
+msgid "search keywords"
+msgstr "шукати ключові слова"
+
+#: librarian_library/views/library/content_list.tpl:64
+msgid "Content language"
+msgstr "Мова контенту"
+
+#: librarian_library/views/library/content_list.tpl:72
+msgid "Types of content"
+msgstr "Типи контенту"
+
+#: librarian_library/views/library/content_list.tpl:78
+msgid "All"
+msgstr "Все"
+
+#: librarian_library/views/library/content_list.tpl:82
+msgid "Pages"
+msgstr "Сторінки"
+
+#: librarian_library/views/library/content_list.tpl:83
+msgid "Images"
+msgstr "Зображення"
+
+#: librarian_library/views/library/content_list.tpl:84
+msgid "Audio"
+msgstr "Аудіо"
+
+#: librarian_library/views/library/content_list.tpl:85
+msgid "Video"
+msgstr "Відео"
+
+#. Translators, used as dashboard section title
+#: librarian_diskspace/dashboard_plugin.py:32
+msgid "Storage devices"
+msgstr "Пристрої зберігання"
+
+#. Translators, used as description of storage device
+#: librarian_diskspace/views/dashboard/diskspace.tpl:18
+#: librarian_diskspace/views/dashboard/diskspace.tpl:23
+msgid "removable storage"
+msgstr "Змінні пристрої запам'ятовування"
+
+#. Translators, this is used next to disk space usage indicator in settings
+#. panel. The {used}, {total}, and {free} are placeholders.
+#: librarian_diskspace/views/dashboard/diskspace.tpl:43
+msgid "{used} of {total} ({free} free)"
+msgstr "{used} з {total} ({free} вільного)"
+
+#: librarian_filemanager/views/filemanager/_main.tpl:13
+msgid "Read"
+msgstr "Читати"
+
+#. Translators, used as page title
+#: librarian_setup/views/diag.tpl:4 librarian_setup/views/diag.tpl:9
+msgid "Diagnostics"
+msgstr "Діагностика"
+
+#: librarian_setup/views/diag.tpl:15
+msgid "Version"
+msgstr "Версія"
+
+#: librarian_setup/views/diag.tpl:19
+msgid "Has tuner?"
+msgstr "Має тюнер?"
+
+#: librarian_setup/views/setup/setup_finished.tpl:16
+msgid "Settings are saved"
+msgstr "Налаштування збережено"
+
+#: librarian_setup/views/setup/setup_finished.tpl:23
+msgid "Welcome to Outernet"
+msgstr "Ласкаво просимо до Outernet"
+
+#: librarian_setup/views/setup/setup_base.tpl:4
+msgid "Setup wizard"
+msgstr "Майстер установки"
+
+#: librarian_setup/views/setup/setup_base.tpl:42
+msgid "Finish"
+msgstr "Завершити"
+
+#. Translators, shown when tuner settings are updated
+#. during setup wizard step.
+#: librarian_ondd/setup.py:60
+msgid "Tuner settings have been updated"
+msgstr "Налаштування тюнера було оновлено"
+
+#. Translators, used as coverage area of a transponder
+#: librarian_ondd/consts.py:50
+msgid "North America"
+msgstr "Північна Америка"
+
+#. Translators, used as coverage area of a transponder
+#: librarian_ondd/consts.py:59
+msgid "Europe, North Africa"
+msgstr "Європа, Північна Африка"
+
+#. Translators, used as coverage area of a transponder
+#: librarian_ondd/consts.py:68
+msgid "North and West Europe, Subsaharan Africa"
+msgstr "Північна та Західна Європа, Центральна Африка"
+
+#. Translators, used as coverage area of a transponder
+#: librarian_ondd/consts.py:77
+msgid "Middle East, Asia, Australia"
+msgstr "Близький Схід, Азія, Австралія"
+
+#. Translators, used as coverage area of a transponder
+#: librarian_ondd/consts.py:86
+msgid "North, Middle, and South America"
+msgstr "Північна, Центральна та Південна Америка"
+
+#. Translators, used as coverage area of a transponder
+#: librarian_ondd/consts.py:95
+msgid "India"
+msgstr "Індія"
+
+#. Translators, used as main status text when there is no tuner
+#: librarian_ondd/views/ondd/_status.tpl:18
+msgid "no tuner"
+msgstr "немає тюнера"
+
+#. Translators, used as main status text when there is no service
+#: librarian_ondd/views/ondd/_status.tpl:24
+msgid "no service"
+msgstr "не працює"
+
+#. Translators, used as main status text when everything is ok
+#: librarian_ondd/views/ondd/_status.tpl:27
+msgid "receiving"
+msgstr "приймається"
+
+#. Translators, labe is located next to the bitrate indicator
+#: librarian_ondd/views/ondd/_status.tpl:59
+msgid "Bitrate"
+msgstr "Швидкість передачі"
+
+#. Translators, label for select list that allows user to pick a satellite to tune into
+#: librarian_ondd/views/ondd/_presets.tpl:10
+msgid "Satellite"
+msgstr "Супутник"
+
+#. Translators, shown in downloads list when no file data is
+#. incoming.
+#: librarian_ondd/views/ondd/_file_list.tpl:46
+msgid "waiting for data..."
+msgstr "очікування даних..."
+
+#. Translators, button label that confirms tuner settings
+#: librarian_ondd/views/ondd/_settings_form.tpl:7
+msgid "Update settings"
+msgstr "Налаштування оновлення"
+
+#: librarian_ondd/views/ondd/dashboard.tpl:31
+msgid "Tuner settings could not be set due to application error."
+msgstr "Налаштування тюнера не вдалося встановити через помилку програми."
+
+#. Translators, used as button label for tuner test during
+#. setup wizard
+#: librarian_ondd/views/setup/step_ondd.tpl:28
+msgid "Test settings"
+msgstr "Налаштування тестування"
+
+#. Translators, used as description of storage device
+#: librarian_diskspace/views/dashboard/diskspace.tpl:13
+msgid "internal storage"
+msgstr "внутрішня пам'ять"
+
+#: librarian_auth/views/setup/step_superuser.tpl:13
+msgid "The superuser account is used to maintain the library and configure the receiver."
+msgstr "Обліковий запис привілейованого користувача використовується для підтримки бібліотеки і налаштування приймача."
+
+#: librarian_filemanager/routes.py:237 librarian_filemanager/routes.py:247
+msgid "file list"
+msgstr "перелік файлів"
+
+#. Translators, used as page title of content removal confirmation page
+#: librarian_filemanager/views/filemanager/remove_confirm.tpl:5
+msgid "Confirm removal"
+msgstr "Підтвердьте видалення"
+
+#. Translators, used title at top of the removal confirmation page,
+#. asking user to confirm file/folder deletion.
+#: librarian_filemanager/views/filemanager/remove_confirm.tpl:13
+msgid "Delete permanently?"
+msgstr "Видалити назавжди?"
+
+#. Translators, used as confirmation message before content removal
+#: librarian_filemanager/views/filemanager/remove_confirm.tpl:18
+msgid "You are about to delete '{item_name}'."
+msgstr "Ви збираєтеся видалити \"{item_name}\"."
+
+#. Translators, message warning users about deleted files and
+#. folders.
+#: librarian_filemanager/views/filemanager/remove_confirm.tpl:22
+msgid "Deleted files and folders cannot be recovered."
+msgstr "Видалені файли і папки не можуть бути відновлені."
+
+#. Translators, used as label for folder/file delete button
+#: librarian_filemanager/views/filemanager/remove_confirm.tpl:28
+#: librarian_filemanager/views/filemanager/_folder.tpl:17
+msgid "Delete"
+msgstr "видалити?"
+
+#. Translators, link to containing folder of a file
+#. in the search results. {} is a placeholder for
+#. the folder name.
+#: librarian_filemanager/views/filemanager/_folder.tpl:117
+msgid "in {}"
+msgstr "в {} "
+
+#. Translators, label for an icon view folder contents
+#: librarian_filemanager/views/opener/_opener_list.tpl:19
+msgid "List files"
+msgstr "Перелічити файли"
+
+#. Translators, used as link label for link that takes user back to
+#. a page from which they came (usually used when they temporarily
+#. visit the current page to change some option such as language)
+#: librarian_ui/views/ui/lang_list.tpl:10
+msgid "Back to previous page"
+msgstr "Повернутися на попередню сторінку"
+
+#. Translators, used in place of actual domain name when domain name is not
+#. known. This is used on a page which user sees when they try to reach an
+#. Internet domain while connected to Outernet. It appears in a sentence
+#. {domain} does not exist on Outernet"
+#: librarian_library/routes/misc.py:22
+msgid "Unknown domain"
+msgstr "Невідомий домен"
+
+#. Translators, note shown during import step
+#: librarian_library/views/setup/step_import_content.tpl:25
+msgid "Both import and discard may take a long time to complete. Please do not close this tab or unplug the receiver."
+msgstr "Як імпорт, так і відмова можуть зайняти багато часу. Будь ласка, не закривайте цю вкладку або вимкніть приймач."
+
+#. Translators, message shown to users when they try to access a domain
+#. (e.g., google.com) while connected to Outernet receiver through WiFi.
+#: librarian_library/views/library/domain_mismatch.tpl:7
+msgid "You are on Outernet"
+msgstr "Ви в Outernet"
+
+#. Translators, message shown to users when they try to access a domain
+#. (e.g., google.com) while connected to Outernet receiver through WiFi.
+#. {domain} is a placeholder.
+#: librarian_library/views/library/domain_mismatch.tpl:14
+msgid "{domain} does not exist on Outernet."
+msgstr "{domain} не існує в Outernet."
+
+#. Translators, message shown to users when they try to access a domain
+#. (e.g., google.com) while connected to Outernet receiver through WiFi.
+#. {url} is a placeholder. Please mind the HTML fragments.
+#: librarian_library/views/library/domain_mismatch.tpl:20
+msgid "You will be taken to the <a href=\"{url}\">main page</a> shortly."
+msgstr "Незабаром Ви перейдете на <a href=\"{url}\">main page</a>. "
+
+#: librarian_setup/views/setup/no_xhr.tpl:1
+msgid "Setup wizard requires your attention. Please reload this page."
+msgstr "Майстер установки вимагає Вашої уваги. Будь ласка, перезавантажте цю сторінку."
+
+#. Translators, message shown when user does not select a satellite
+#. preset nor 'Custom' option to enter custom data.
+#: librarian_ondd/routes.py:35
+msgid "Please select a satellite or select 'Custom'"
+msgstr "Будь ласка, виберіть супутник або виберіть \"Вибірково\""
+
+#. Translators, instruction for the user on how to use the presets select
+#. list
+#: librarian_ondd/views/ondd/_presets.tpl:29
+msgid "Select a preset or use 'Custom' and enter data manually"
+msgstr "Виберіть попереднє налаштування або скористайтесь функцією \"Вибірково\" і введіть дані вручну"
+
+#. Translators, used as page title
+#: librarian_twitter/menuitems.py:8
+#: librarian_twitter/views/twitter/twitter.tpl:7
+msgid "Twitter"
+msgstr "Twitter"
+
+#: librarian_twitter/views/twitter/twitter.tpl:19
+msgid "Tweets"
+msgstr "Твіти"
+
+#: librarian_twitter/views/twitter/twitter.tpl:22
+msgid "Handles"
+msgstr "Нікнейми"
+
+#: librarian_twitter/views/twitter/twitter.tpl:41
+msgid "Showing tweets from @{handle}."
+msgstr "Показані твіти від @{handle}."
+
+#: librarian_twitter/views/twitter/twitter.tpl:44
+msgid "Go back to all teweets"
+msgstr "Повернутися до усіх твітів"
+
+#: librarian_twitter/views/twitter/twitter.tpl:75
+msgid "previous"
+msgstr "попереднє"
+
+#: librarian_twitter/views/twitter/twitter.tpl:75
+msgid "next"
+msgstr "далі"
+
+#. Translators, message used when no twitter handles are present
+#: librarian_twitter/views/twitter/twitter.tpl:86
+msgid "Sorry, no twitter handles could be found. Please wait for some tweets to be downloaded and imported"
+msgstr "На жаль, не вдалося знайти жодних нікнеймів у twitter. Будь ласка, зачекайте завантаження і імпорту кількох твітів."
+
+#. Translators, message used when no tweets are found for a given handle
+#: librarian_twitter/views/twitter/twitter.tpl:36
+msgid "Sorry! No tweets could be found with the user name \"{handle}\""
+msgstr "На жаль! Не вдалося знайти жодних твітів з ім'ям користувача \"{handle}\""
+
+#. Translators, network interface type shown in network interaface list
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:11
+msgid "bridge"
+msgstr "міст"
+
+#. Translators, human-friendly label for bridge interface with
+#. administrator-specified name (e.g., br0) replacing the
+#. {name} placeholder.
+#: librarian_netinterfaces/views/dashboard/netinterfaces.tpl:31
+msgid "Ethernet bridge ({name})"
+msgstr "Міст Ethernet ({name})"
+
+#: librarian_filemanager/views/filemanager/_main.tpl:11
+msgid "Listen"
+msgstr "Слухати"
+
+#: librarian_opener_image/hooks.py:8
+msgid "View"
+msgstr "Переглянути"
+
+#: librarian_opener_image/views/openers/album.tpl:17
+msgid "Image {} of {}"
+msgstr "Зображення {} з {} "
+
+#. Translators, used as label for a button that allows download of system logs
+#: librarian_logs/views/logs/dashboard.tpl:6
+msgid "Download system logs"
+msgstr "Завантажити журнали системи"
+
+#: librarian_library/hooks.py:44
+msgid "Interface language that is initially selected for all users. Users can change it independently later."
+msgstr "Мова інтерфейсу, яка встановлюється початково для всіх користувачів. Згодом користувачі зможуть її змінити самостійно."
+
+#: librarian_library/hooks.py:46
+msgid "General settings"
+msgstr "Загальні параметри"
+
+#: librarian_library/hooks.py:49
+msgid "Default language"
+msgstr "Усталена мова"
+
+#: librarian_settings/routes.py:31
+msgid "Settings saved."
+msgstr "Параметри збережено."
+
+#. Translators, used as page title
+#: librarian_settings/views/settings/settings.tpl:6
+msgid "Librarian settings"
+msgstr "Параметри Бібліотекаря"
+
+#. Translators, error message when settings cannot be saved
+#: librarian_settings/views/settings/dashboard.tpl:12
+msgid "Settings could not be set due to application error."
+msgstr "Параметри не можуть бути встановлені через помилку програми."
+
+#: librarian_settings/views/settings/dashboard.tpl:18
+msgid "Settings were saved."
+msgstr "Параметри були збережені."
+
+#: librarian_settings/views/settings/_settings_form.tpl:16
+msgid "Save"
+msgstr "Зберегти"
+
+#. Translators, notification displayed if files were moved to
+#. external storage successfully
+#: librarian_diskspace/routes.py:20
+msgid "Files were successfully moved to {storage_name}"
+msgstr "Файли були успішно переміщені в {storage_name}"
+
+#. Translators, notification displayed if moving files to
+#. external storage failed
+#: librarian_diskspace/routes.py:25
+msgid "Files could not be moved to {storage_name}"
+msgstr "Файли не вдалося перемістити в {storage_name}"
+
+#. Translators, error message shown when moving of files is
+#. attempted while another move task is already running.
+#: librarian_diskspace/routes.py:111
+msgid "A scheduled move is already running. You will be notified when it finishes. Please try again once the current operation is finished."
+msgstr "Запланований рух вже запущений. Вас буде повідомлено після його завершення. Спробуйте ще раз після завершення поточної операції."
+
+#. Translators, error message shown when destination drive is removed or
+#. otherwise becomes inaccessible before files are moved to it.
+#: librarian_diskspace/routes.py:130
+msgid "Destination drive disappeared. Please reattach the drive and retry."
+msgstr "Кінцевий диск зник. Вставте диск повторно і спробуйте ще раз."
+
+#. Translators, error message shown when moving files to a storage
+#. device where no other storage devices are present other than the
+#. target device.
+#: librarian_diskspace/routes.py:138
+msgid "There are no other drives to move files from."
+msgstr "Дисків, з яких можна було б перемістити файли, немає."
+
+#: librarian_diskspace/routes.py:152
+msgid "Could not calculate file sizes due to disk error. Please check your storage device and try again."
+msgstr "Не вдалося обчислити розмір файлу через помилку диска. Перевірте пристрій зберігання даних і спробуйте ще раз."
+
+#. Translators, error message shown when moving files to a storage
+#. device, where no movable files are present.
+#: librarian_diskspace/routes.py:161
+msgid "There are no files to be moved."
+msgstr "Файлів для переміщення немає."
+
+#: librarian_diskspace/routes.py:167
+msgid "Not enough free space. {size} needed."
+msgstr "Недостатньо вільного місця. {size} необхідно."
+
+#: librarian_diskspace/routes.py:176
+msgid "Files are now being moved to {destination}. You will be notified when the operation is finished."
+msgstr "На даний час файли переміщаються в {destination}. Вас буде повідомлено після завершення операції."
+
+#: librarian_diskspace/routes.py:189
+msgid "settings"
+msgstr "налаштування"
+
+#. Translators, this is used as a button to move all data to
+#. that drive, while files are being moved
+#: librarian_diskspace/views/diskspace/_consolidate_form.tpl:17
+msgid "Moving files here"
+msgstr "Переміщення файлів сюди"
+
+#. Translators, this is used as a button to move all data to
+#. that drive
+#: librarian_diskspace/views/diskspace/_consolidate_form.tpl:22
+msgid "Move files here"
+msgstr "Перемістити файли сюди "
+
+#. Translators, appears as device name under storage devices
+#: librarian_diskspace/views/diskspace/_consolidate_form.tpl:56
+msgid "Virtual disk"
+msgstr "Віртуальний диск"
+
+#: librarian_diskspace/views/diskspace/_consolidate_form.tpl:102
+msgid "Operation could not be started due to server error."
+msgstr "Операцію не може бути запущено через помилку сервера."
+
+#: librarian_diskspace/views/diskspace/consolidate.tpl:5
+#: librarian_diskspace/views/diskspace/consolidate.tpl:8
+msgid "Move all files"
+msgstr "Перемістити всі файли"
+
+#: librarian_diskspace/views/diskspace/consolidate.tpl:11
+msgid "Choose a storage device to which you want to move all downloaded files. You cannot move files to a storage that does not have enough space to hold all files."
+msgstr "Виберіть пристрій зберігання даних, до якого ви хочете перемістити всі завантажені файли. Ви не можете переміщати файли в сховище, в якому немає достатньо місця для зберігання всіх файлів."
+
+#. Translators, notification displayed when internal cache storage
+#. is running out of disk space
+#: librarian_ondd/tasks.py:51
+msgid "Download capacity is getting low. Please ask the administrator to take action."
+msgstr "Мало місця для завантаження. Зверніться до адміністратора, щоб вжити відповідних заходів."
+
+#. Translators, notification displayed when internal cache storage
+#. is running out of disk space
+#: librarian_ondd/tasks.py:61
+msgid "Download cache capacity is getting low. You will stop receiving new content if you run out of storage space. Please move some content from the internal storage to an external one."
+msgstr "У кеші завантаження мало місця. Якщо на диску не залишиться більше місця, Ви не отримуватимете новий контент. Перемістіть деякий контент із внутрішнього пристрою запам'ятовування на зовнішній."
+
+#: librarian_ondd/views/ondd/_cache_status.tpl:6
+msgid "Download capacity is low and files may stop downloading soon. Free some disk space by moving files to an external storage device."
+msgstr "Мало місця для завантаження і завантаження файлів може припинитися найближчим часом. Звільніть місце на диску шляхом переміщення файлів на зовнішній пристрій запам'ятовування ."
+
+#. Translators, shows the disk space status of the storage where ondd download cache is stored
+#: librarian_ondd/views/ondd/_cache_status.tpl:10
+msgid "Allocated download capacity"
+msgstr "Виділена ємність для завантаження"
+
+#: librarian_ondd/views/ondd/_cache_status.tpl:15
+msgid "{percentage}% used ({amount} available)"
+msgstr "{percentage}% використано ({amount} доступно)"
+
+#: librarian_netinterfaces/forms.py:20
+msgid "The selected channel is not legal in the chosen country."
+msgstr "Обраний канал не є законним в обраній країні."
+
+#: librarian_netinterfaces/forms.py:22
+msgid "Wireless settings could not be applied"
+msgstr "Параметри бездротової мережі не можуть бути застосованими"
+
+#: librarian_netinterfaces/forms.py:37
+msgid "Password must be at least {len} characters long."
+msgstr "Пароль повинен складатися щонайменше з {len} символів."
+
+#: librarian_netinterfaces/forms.py:38
+msgid "Password cannot be longer than {len} characters."
+msgstr "Пароль не може складатися більше, ніж з {len} символів."
+
+#: librarian_netinterfaces/forms.py:39
+msgid "Password must be specified when security is enabled"
+msgstr "Коли активовано захист, потрібно вказувати пароль"
+
+#: librarian_netinterfaces/routes.py:37
+msgid "Access point settings have been saved. Please reconnect your devices."
+msgstr "Параметри точки доступу були збережені. Підключіть ваші пристрої ще раз."
+
+#: librarian_netinterfaces/consts.py:6
+msgid "No country"
+msgstr "Немає країни"
+
+#: librarian_netinterfaces/consts.py:7
+msgid "Afghanistan, Islamic Republic of"
+msgstr "Афганістан, Ісламська Республіка"
+
+#: librarian_netinterfaces/consts.py:8
+msgid "Albania, Republic of"
+msgstr "Албанія, Республіка"
+
+#: librarian_netinterfaces/consts.py:9
+msgid "Algeria, People's Democratic Republic of"
+msgstr "Алжир, Народно-Демократична Республіка"
+
+#: librarian_netinterfaces/consts.py:10
+msgid "American Samoa"
+msgstr "Американське Самоа"
+
+#: librarian_netinterfaces/consts.py:11
+msgid "Andorra, Principality of"
+msgstr "Андорра, Князівство"
+
+#: librarian_netinterfaces/consts.py:12
+msgid "Angola, Republic of"
+msgstr "Ангола, Республіка"
+
+#: librarian_netinterfaces/consts.py:13
+msgid "Antigua and Barbuda"
+msgstr "Антигуа і Барбуда"
+
+#: librarian_netinterfaces/consts.py:14
+msgid "Azerbaijan, Republic of"
+msgstr "Азербайджан, Республіка"
+
+#: librarian_netinterfaces/consts.py:15
+msgid "Argentina, Argentine Republic"
+msgstr "Аргентина, Аргентинська Республіка"
+
+#: librarian_netinterfaces/consts.py:16
+msgid "Australia, Commonwealth of"
+msgstr "Австралія, Союз"
+
+#: librarian_netinterfaces/consts.py:17
+msgid "Austria, Republic of"
+msgstr "Австрія, Республіка"
+
+#: librarian_netinterfaces/consts.py:18
+msgid "Bahamas, Commonwealth of the"
+msgstr "Багамські о-ви, Співдружність"
+
+#: librarian_netinterfaces/consts.py:19
+msgid "Bahrain, Kingdom of"
+msgstr "Бахрейн, Королівство"
+
+#: librarian_netinterfaces/consts.py:20
+msgid "Bangladesh, People's Republic of"
+msgstr "Бангладеш, Народна Республіка"
+
+#: librarian_netinterfaces/consts.py:21
+msgid "Armenia, Republic of"
+msgstr "Вірменія, Республіка"
+
+#: librarian_netinterfaces/consts.py:22
+msgid "Barbados"
+msgstr "Барбадос"
+
+#: librarian_netinterfaces/consts.py:23
+msgid "Belgium, Kingdom of"
+msgstr "Бельгія, Королівство"
+
+#: librarian_netinterfaces/consts.py:24
+msgid "Bermuda"
+msgstr "Бермудські острови"
+
+#: librarian_netinterfaces/consts.py:25
+msgid "Bhutan, Kingdom of"
+msgstr "Бутан, Королівство"
+
+#: librarian_netinterfaces/consts.py:26
+msgid "Bolivia, Republic of"
+msgstr "Болівія, Республіка"
+
+#: librarian_netinterfaces/consts.py:27
+msgid "Bosnia and Herzegovina"
+msgstr "Боснія і Герцеговина"
+
+#: librarian_netinterfaces/consts.py:28
+msgid "Botswana, Republic of"
+msgstr "Ботсвана, Республіка"
+
+#: librarian_netinterfaces/consts.py:29
+msgid "Bouvet Island (Bouvetoya)"
+msgstr "Острів Буве (Bouvetoya)"
+
+#: librarian_netinterfaces/consts.py:30
+msgid "Brazil, Federative Republic of"
+msgstr "Бразилія, Федеративна Республіка"
+
+#: librarian_netinterfaces/consts.py:31
+msgid "Belize"
+msgstr "Беліз"
+
+#: librarian_netinterfaces/consts.py:32
+msgid "British Indian Ocean Territory (Chagos Archipelago)"
+msgstr "Британська територія в Індійському океані (архіпелаг Чагос)"
+
+#: librarian_netinterfaces/consts.py:33
+msgid "Solomon Islands"
+msgstr "Соломонові острови"
+
+#: librarian_netinterfaces/consts.py:34
+msgid "British Virgin Islands"
+msgstr "Британські Віргінські острови"
+
+#: librarian_netinterfaces/consts.py:35
+msgid "Brunei Darussalam"
+msgstr "Бруней Даруссалам"
+
+#: librarian_netinterfaces/consts.py:36
+msgid "Bulgaria, Republic of"
+msgstr "Болгарія, Республіка"
+
+#: librarian_netinterfaces/consts.py:37
+msgid "Myanmar, Union of"
+msgstr "М'янма, Союз"
+
+#: librarian_netinterfaces/consts.py:38
+msgid "Burundi, Republic of"
+msgstr "Бурунді, Республіка"
+
+#: librarian_netinterfaces/consts.py:39
+msgid "Belarus, Republic of"
+msgstr "Білорусь, Республіка"
+
+#: librarian_netinterfaces/consts.py:40
+msgid "Cambodia, Kingdom of"
+msgstr "Камбоджа, Королівство"
+
+#: librarian_netinterfaces/consts.py:41
+msgid "Cameroon, Republic of"
+msgstr "Камерун, Республіка"
+
+#: librarian_netinterfaces/consts.py:42
+msgid "Canada"
+msgstr "Канада"
+
+#: librarian_netinterfaces/consts.py:43
+msgid "Cape Verde, Republic of"
+msgstr "Кабо-Верде, Республіка"
+
+#: librarian_netinterfaces/consts.py:44
+msgid "Cayman Islands"
+msgstr "Кайманові острови"
+
+#: librarian_netinterfaces/consts.py:45
+msgid "Central African Republic"
+msgstr "Центрально-Африканська Республіка"
+
+#: librarian_netinterfaces/consts.py:46
+msgid "Sri Lanka, Democratic Socialist Republic of"
+msgstr "Шрі-Ланка, Демократична Соціалістична Республіка"
+
+#: librarian_netinterfaces/consts.py:47
+msgid "Chad, Republic of"
+msgstr "Чад, Республіка"
+
+#: librarian_netinterfaces/consts.py:48
+msgid "Chile, Republic of"
+msgstr "Чилі, Республіка"
+
+#: librarian_netinterfaces/consts.py:49
+msgid "China, People's Republic of"
+msgstr "Китай, Народна Республіка"
+
+#: librarian_netinterfaces/consts.py:50
+msgid "Taiwan"
+msgstr "Тайвань"
+
+#: librarian_netinterfaces/consts.py:51
+msgid "Christmas Island"
+msgstr "Острів Різдва"
+
+#: librarian_netinterfaces/consts.py:52
+msgid "Cocos (Keeling) Islands"
+msgstr "Кокосові (Кілінгові) острови"
+
+#: librarian_netinterfaces/consts.py:53
+msgid "Colombia, Republic of"
+msgstr "Колумбія, Республіка"
+
+#: librarian_netinterfaces/consts.py:54
+msgid "Comoros, Union of the"
+msgstr "Коморські острови, Союз"
+
+#: librarian_netinterfaces/consts.py:55
+msgid "Mayotte"
+msgstr "Майотта"
+
+#: librarian_netinterfaces/consts.py:56
+msgid "Congo, Republic of the"
+msgstr "Конго, Республіка"
+
+#: librarian_netinterfaces/consts.py:57
+msgid "Congo, Democratic Republic of the"
+msgstr "Конго, Демократична Республіка"
+
+#: librarian_netinterfaces/consts.py:58
+msgid "Cook Islands"
+msgstr "Острови Кука"
+
+#: librarian_netinterfaces/consts.py:59
+msgid "Costa Rica, Republic of"
+msgstr "Коста-Рика, Республіка"
+
+#: librarian_netinterfaces/consts.py:60
+msgid "Croatia, Republic of"
+msgstr "Республіка Хорватія,"
+
+#: librarian_netinterfaces/consts.py:61
+msgid "Cuba, Republic of"
+msgstr "Куба, Республіка"
+
+#: librarian_netinterfaces/consts.py:62
+msgid "Cyprus, Republic of"
+msgstr "Кіпр, Республіка"
+
+#: librarian_netinterfaces/consts.py:63
+msgid "Czech Republic"
+msgstr "Чеська Республіка"
+
+#: librarian_netinterfaces/consts.py:64
+msgid "Benin, Republic of"
+msgstr "Бенін, Республіка"
+
+#: librarian_netinterfaces/consts.py:65
+msgid "Denmark, Kingdom of"
+msgstr "Данія, Королівство"
+
+#: librarian_netinterfaces/consts.py:66
+msgid "Dominica, Commonwealth of"
+msgstr "Домініка, Співдружність"
+
+#: librarian_netinterfaces/consts.py:67
+msgid "Dominican Republic"
+msgstr "Домініканська республіка"
+
+#: librarian_netinterfaces/consts.py:68
+msgid "Ecuador, Republic of"
+msgstr "Еквадор, Республіка"
+
+#: librarian_netinterfaces/consts.py:69
+msgid "El Salvador, Republic of"
+msgstr "Ель-Сальвадор, Республіка"
+
+#: librarian_netinterfaces/consts.py:70
+msgid "Equatorial Guinea, Republic of"
+msgstr "Екваторіальна Гвінея, Республіка"
+
+#: librarian_netinterfaces/consts.py:71
+msgid "Ethiopia, Federal Democratic Republic of"
+msgstr "Ефіопія, Федеративна Демократична Республіка"
+
+#: librarian_netinterfaces/consts.py:72
+msgid "Eritrea, State of"
+msgstr "Еритрея, Держава"
+
+#: librarian_netinterfaces/consts.py:73
+msgid "Estonia, Republic of"
+msgstr "Естонія, Республіка"
+
+#: librarian_netinterfaces/consts.py:74
+msgid "Faroe Islands"
+msgstr "Фарерські острови"
+
+#: librarian_netinterfaces/consts.py:75
+msgid "Falkland Islands (Malvinas)"
+msgstr "Фолклендські острови (Мальвінські)"
+
+#: librarian_netinterfaces/consts.py:76
+msgid "South Georgia and the South Sandwich Islands"
+msgstr "Південна Джорджія та Південні Сандвічеві острови"
+
+#: librarian_netinterfaces/consts.py:77
+msgid "Fiji, Republic of the Fiji Islands"
+msgstr "Фіджі, Республіка Фіджі"
+
+#: librarian_netinterfaces/consts.py:78
+msgid "Finland, Republic of"
+msgstr "Фінляндія, Республіка"
+
+#: librarian_netinterfaces/consts.py:79
+msgid "Åland Islands"
+msgstr "Аландські острови"
+
+#: librarian_netinterfaces/consts.py:80
+msgid "France, French Republic"
+msgstr "Франція, Французька Республіка"
+
+#: librarian_netinterfaces/consts.py:81
+msgid "French Guiana"
+msgstr "Французька Гвіана"
+
+#: librarian_netinterfaces/consts.py:82
+msgid "French Polynesia"
+msgstr "Французька Полінезія"
+
+#: librarian_netinterfaces/consts.py:83
+msgid "French Southern Territories"
+msgstr "Французькі Південні Території"
+
+#: librarian_netinterfaces/consts.py:84
+msgid "Djibouti, Republic of"
+msgstr "Джибуті, Республіка"
+
+#: librarian_netinterfaces/consts.py:85
+msgid "Gabon, Gabonese Republic"
+msgstr "Габон, Габонська Республіка"
+
+#: librarian_netinterfaces/consts.py:86
+msgid "Georgia"
+msgstr "Грузія"
+
+#: librarian_netinterfaces/consts.py:87
+msgid "Gambia, Republic of the"
+msgstr "Гамбія, Республіка"
+
+#: librarian_netinterfaces/consts.py:88
+msgid "Palestinian Territory, Occupied"
+msgstr "Палестинська територія, Окупована"
+
+#: librarian_netinterfaces/consts.py:89
+msgid "Germany, Federal Republic of"
+msgstr "Німеччина, Федеративна Республіка"
+
+#: librarian_netinterfaces/consts.py:90
+msgid "Ghana, Republic of"
+msgstr "Гана, Республіка"
+
+#: librarian_netinterfaces/consts.py:91
+msgid "Gibraltar"
+msgstr "Гібралтар"
+
+#: librarian_netinterfaces/consts.py:92
+msgid "Kiribati, Republic of"
+msgstr "Кірібаті, Республіка"
+
+#: librarian_netinterfaces/consts.py:93
+msgid "Greece, Hellenic Republic"
+msgstr "Греція, Грецька Республіка"
+
+#: librarian_netinterfaces/consts.py:94
+msgid "Greenland"
+msgstr "Гренландія"
+
+#: librarian_netinterfaces/consts.py:95
+msgid "Grenada"
+msgstr "Гренада"
+
+#: librarian_netinterfaces/consts.py:96
+msgid "Guadeloupe"
+msgstr "Гваделупа"
+
+#: librarian_netinterfaces/consts.py:97
+msgid "Guam"
+msgstr "Гуам"
+
+#: librarian_netinterfaces/consts.py:98
+msgid "Guatemala, Republic of"
+msgstr "Гватемала, Республіка"
+
+#: librarian_netinterfaces/consts.py:99
+msgid "Guinea, Republic of"
+msgstr "Гвінея, Республіка"
+
+#: librarian_netinterfaces/consts.py:100
+msgid "Guyana, Co-operative Republic of"
+msgstr "Гайана, Кооперативна Республіка"
+
+#: librarian_netinterfaces/consts.py:101
+msgid "Haiti, Republic of"
+msgstr "Гаїті, Республіка"
+
+#: librarian_netinterfaces/consts.py:102
+msgid "Heard Island and McDonald Islands"
+msgstr "Острів Херд і острови Макдональд"
+
+#: librarian_netinterfaces/consts.py:103
+msgid "Holy See (Vatican City State)"
+msgstr "Апостольська Столиця (Держава-Місто Ватикан)"
+
+#: librarian_netinterfaces/consts.py:104
+msgid "Honduras, Republic of"
+msgstr "Гондурас, Республіка"
+
+#: librarian_netinterfaces/consts.py:105
+msgid "Hong Kong, Special Administrative Region of China"
+msgstr "Гонконг, спеціальний адміністративний район Китаю"
+
+#: librarian_netinterfaces/consts.py:106
+msgid "Hungary, Republic of"
+msgstr "Угорщина, Республіка"
+
+#: librarian_netinterfaces/consts.py:107
+msgid "Iceland, Republic of"
+msgstr "Ісландія, Республіка"
+
+#: librarian_netinterfaces/consts.py:108
+msgid "India, Republic of"
+msgstr "Індія, Республіка"
+
+#: librarian_netinterfaces/consts.py:109
+msgid "Indonesia, Republic of"
+msgstr "Індонезія, Республіка"
+
+#: librarian_netinterfaces/consts.py:110
+msgid "Iran, Islamic Republic of"
+msgstr "Іран, Ісламська Республіка"
+
+#: librarian_netinterfaces/consts.py:111
+msgid "Iraq, Republic of"
+msgstr "Ірак, Республіка"
+
+#: librarian_netinterfaces/consts.py:112
+msgid "Ireland"
+msgstr "Ірландія"
+
+#: librarian_netinterfaces/consts.py:113
+msgid "Israel, State of"
+msgstr "Ізраїль, Держава"
+
+#: librarian_netinterfaces/consts.py:114
+msgid "Italy, Italian Republic"
+msgstr "Італія, Італійська Республіка"
+
+#: librarian_netinterfaces/consts.py:115
+msgid "Cote d'Ivoire, Republic of"
+msgstr "Кот-д'Івуар, Республіка"
+
+#: librarian_netinterfaces/consts.py:116
+msgid "Jamaica"
+msgstr "Ямайка"
+
+#: librarian_netinterfaces/consts.py:117
+msgid "Japan"
+msgstr "Японія"
+
+#: librarian_netinterfaces/consts.py:118
+msgid "Kazakhstan, Republic of"
+msgstr "Казахстан, Республіка"
+
+#: librarian_netinterfaces/consts.py:119
+msgid "Jordan, Hashemite Kingdom of"
+msgstr "Йорданія, Хашимітське Королівство"
+
+#: librarian_netinterfaces/consts.py:120
+msgid "Kenya, Republic of"
+msgstr "Кенія, Республіка"
+
+#: librarian_netinterfaces/consts.py:121
+msgid "Korea, Democratic People's Republic of"
+msgstr "Корея, Народно-Демократична Республіка"
+
+#: librarian_netinterfaces/consts.py:122
+msgid "Korea, Republic of"
+msgstr "Корея, Республіка"
+
+#: librarian_netinterfaces/consts.py:123
+msgid "Kuwait, State of"
+msgstr "Кувейт, Держава"
+
+#: librarian_netinterfaces/consts.py:124
+msgid "Kyrgyz Republic"
+msgstr "Киргизька Республіка"
+
+#: librarian_netinterfaces/consts.py:125
+msgid "Lao People's Democratic Republic"
+msgstr "Лаоська Народно-Демократична Республіка"
+
+#: librarian_netinterfaces/consts.py:126
+msgid "Lebanon, Lebanese Republic"
+msgstr "Ліван, Ліванська Республіка"
+
+#: librarian_netinterfaces/consts.py:127
+msgid "Lesotho, Kingdom of"
+msgstr "Лесото, Королівство"
+
+#: librarian_netinterfaces/consts.py:128
+msgid "Latvia, Republic of"
+msgstr "Латвія, Республіка"
+
+#: librarian_netinterfaces/consts.py:129
+msgid "Liberia, Republic of"
+msgstr "Ліберія, Республіка"
+
+#: librarian_netinterfaces/consts.py:130
+msgid "Libyan Arab Jamahiriya"
+msgstr "Лівійська Арабська Джамахірія"
+
+#: librarian_netinterfaces/consts.py:131
+msgid "Liechtenstein, Principality of"
+msgstr "Ліхтенштейн, Князівство"
+
+#: librarian_netinterfaces/consts.py:132
+msgid "Lithuania, Republic of"
+msgstr "Литва, Республіка"
+
+#: librarian_netinterfaces/consts.py:133
+msgid "Luxembourg, Grand Duchy of"
+msgstr "Люксембург, Велике Герцогство"
+
+#: librarian_netinterfaces/consts.py:134
+msgid "Macao, Special Administrative Region of China"
+msgstr "Макао, особливий адміністративний район Китаю"
+
+#: librarian_netinterfaces/consts.py:135
+msgid "Madagascar, Republic of"
+msgstr "Мадагаскар, Республіка"
+
+#: librarian_netinterfaces/consts.py:136
+msgid "Malawi, Republic of"
+msgstr "Малаві, Республіка"
+
+#: librarian_netinterfaces/consts.py:137
+msgid "Malaysia"
+msgstr "Малайзія"
+
+#: librarian_netinterfaces/consts.py:138
+msgid "Maldives, Republic of"
+msgstr "Мальдівські о-ва, Республіка"
+
+#: librarian_netinterfaces/consts.py:139
+msgid "Mali, Republic of"
+msgstr "Малі, Республіка"
+
+#: librarian_netinterfaces/consts.py:140
+msgid "Malta, Republic of"
+msgstr "Мальта, Республіка"
+
+#: librarian_netinterfaces/consts.py:141
+msgid "Martinique"
+msgstr "Мартиніка"
+
+#: librarian_netinterfaces/consts.py:142
+msgid "Mauritania, Islamic Republic of"
+msgstr "Мавританія, Ісламська Республіка"
+
+#: librarian_netinterfaces/consts.py:143
+msgid "Mauritius, Republic of"
+msgstr "Маврикій, Республіка"
+
+#: librarian_netinterfaces/consts.py:144
+msgid "Mexico, United Mexican States"
+msgstr "Мексика, Мексиканські Сполучені Штати"
+
+#: librarian_netinterfaces/consts.py:145
+msgid "Monaco, Principality of"
+msgstr "Монако, Князівство"
+
+#: librarian_netinterfaces/consts.py:146
+msgid "Mongolia"
+msgstr "Монголія"
+
+#: librarian_netinterfaces/consts.py:147
+msgid "Moldova, Republic of"
+msgstr "Молдова"
+
+#: librarian_netinterfaces/consts.py:148
+msgid "Montenegro, Republic of"
+msgstr "Чорногорія, Республіка"
+
+#: librarian_netinterfaces/consts.py:149
+msgid "Montserrat"
+msgstr "Монтсеррат"
+
+#: librarian_netinterfaces/consts.py:150
+msgid "Morocco, Kingdom of"
+msgstr "Марокко, Королівство"
+
+#: librarian_netinterfaces/consts.py:151
+msgid "Mozambique, Republic of"
+msgstr "Мозамбік, Республіка"
+
+#: librarian_netinterfaces/consts.py:152
+msgid "Oman, Sultanate of"
+msgstr "Оман, Султанат"
+
+#: librarian_netinterfaces/consts.py:153
+msgid "Namibia, Republic of"
+msgstr "Намібія, Республіка"
+
+#: librarian_netinterfaces/consts.py:154
+msgid "Nauru, Republic of"
+msgstr "Науру, Республіка"
+
+#: librarian_netinterfaces/consts.py:155
+msgid "Nepal, State of"
+msgstr "Непал, Держава"
+
+#: librarian_netinterfaces/consts.py:156
+msgid "Netherlands, Kingdom of the"
+msgstr "Нідерланди, Королівство"
+
+#: librarian_netinterfaces/consts.py:157
+msgid "Netherlands Antilles"
+msgstr "Нідерландські Антильські острови"
+
+#: librarian_netinterfaces/consts.py:158
+msgid "Curaçao"
+msgstr "Кюрасао"
+
+#: librarian_netinterfaces/consts.py:159
+msgid "Aruba"
+msgstr "Аруба"
+
+#: librarian_netinterfaces/consts.py:160
+msgid "Sint Maarten (Netherlands)"
+msgstr "Сінт-Мартен (Нідерланди)"
+
+#: librarian_netinterfaces/consts.py:161
+msgid "Bonaire, Sint Eustatius and Saba"
+msgstr "Бонайре, Сінт-Естатіус і Саба"
+
+#: librarian_netinterfaces/consts.py:162
+msgid "New Caledonia"
+msgstr "Нова Каледонія"
+
+#: librarian_netinterfaces/consts.py:163
+msgid "Vanuatu, Republic of"
+msgstr "Вануату, Республіка"
+
+#: librarian_netinterfaces/consts.py:164
+msgid "New Zealand"
+msgstr "Нова Зеландія"
+
+#: librarian_netinterfaces/consts.py:165
+msgid "Nicaragua, Republic of"
+msgstr "Нікарагуа, Республіка"
+
+#: librarian_netinterfaces/consts.py:166
+msgid "Niger, Republic of"
+msgstr "Нігер, Республіка"
+
+#: librarian_netinterfaces/consts.py:167
+msgid "Nigeria, Federal Republic of"
+msgstr "Нігерія, Федеративна Республіка"
+
+#: librarian_netinterfaces/consts.py:168
+msgid "Niue"
+msgstr "Ніуе"
+
+#: librarian_netinterfaces/consts.py:169
+msgid "Norfolk Island"
+msgstr "Острів Норфолк"
+
+#: librarian_netinterfaces/consts.py:170
+msgid "Norway, Kingdom of"
+msgstr "Норвегія, Королівство"
+
+#: librarian_netinterfaces/consts.py:171
+msgid "Northern Mariana Islands, Commonwealth of the"
+msgstr "Північні Маріанські острови, Співдружність"
+
+#: librarian_netinterfaces/consts.py:172
+msgid "United States Minor Outlying Islands"
+msgstr "Зовнішні малі острови США"
+
+#: librarian_netinterfaces/consts.py:173
+msgid "Micronesia, Federated States of"
+msgstr "Мікронезія, Федеративні Штати"
+
+#: librarian_netinterfaces/consts.py:174
+msgid "Marshall Islands, Republic of the"
+msgstr "Маршаллові Острови, Республіка"
+
+#: librarian_netinterfaces/consts.py:175
+msgid "Palau, Republic of"
+msgstr "Палау, Республіка"
+
+#: librarian_netinterfaces/consts.py:176
+msgid "Pakistan, Islamic Republic of"
+msgstr "Пакистан, Ісламська Республіка"
+
+#: librarian_netinterfaces/consts.py:177
+msgid "Panama, Republic of"
+msgstr "Панама, Республіка"
+
+#: librarian_netinterfaces/consts.py:178
+msgid "Papua New Guinea, Independent State of"
+msgstr "Папуа-Нова Гвінея, Незалежна держава"
+
+#: librarian_netinterfaces/consts.py:179
+msgid "Paraguay, Republic of"
+msgstr "Парагвай, Республіка"
+
+#: librarian_netinterfaces/consts.py:180
+msgid "Peru, Republic of"
+msgstr "Перу, Республіка"
+
+#: librarian_netinterfaces/consts.py:181
+msgid "Philippines, Republic of the"
+msgstr "Філіппіни, Республіка"
+
+#: librarian_netinterfaces/consts.py:182
+msgid "Pitcairn Islands"
+msgstr "Острови Піткерн"
+
+#: librarian_netinterfaces/consts.py:183
+msgid "Poland, Republic of"
+msgstr "Польща, Республіка"
+
+#: librarian_netinterfaces/consts.py:184
+msgid "Portugal, Portuguese Republic"
+msgstr "Португалія, Португальська Республіка"
+
+#: librarian_netinterfaces/consts.py:185
+msgid "Guinea-Bissau, Republic of"
+msgstr "Гвінея-Бісау, Республіка"
+
+#: librarian_netinterfaces/consts.py:186
+msgid "Timor-Leste, Democratic Republic of"
+msgstr "Східний Тимор, Демократична Республіка"
+
+#: librarian_netinterfaces/consts.py:187
+msgid "Puerto Rico, Commonwealth of"
+msgstr "Пуерто-Рико, Співдружність"
+
+#: librarian_netinterfaces/consts.py:188
+msgid "Qatar, State of"
+msgstr "Катар, Держава"
+
+#: librarian_netinterfaces/consts.py:189
+msgid "Reunion"
+msgstr "Реюньйон"
+
+#: librarian_netinterfaces/consts.py:190
+msgid "Romania"
+msgstr "Румунія"
+
+#: librarian_netinterfaces/consts.py:191
+msgid "Russian Federation"
+msgstr "Російська Федерація"
+
+#: librarian_netinterfaces/consts.py:192
+msgid "Rwanda, Republic of"
+msgstr "Руанда, Республіка"
+
+#: librarian_netinterfaces/consts.py:193
+msgid "Saint Barthelemy"
+msgstr "Сен-Бартельмі"
+
+#: librarian_netinterfaces/consts.py:194
+msgid "Saint Helena"
+msgstr "Острів Святої Єлени"
+
+#: librarian_netinterfaces/consts.py:195
+msgid "Saint Kitts and Nevis, Federation of"
+msgstr "Сент-Кітс і Невіс, Федерація"
+
+#: librarian_netinterfaces/consts.py:196
+msgid "Anguilla"
+msgstr "Ангілья"
+
+#: librarian_netinterfaces/consts.py:197
+msgid "Saint Lucia"
+msgstr "Сент-Люсія"
+
+#: librarian_netinterfaces/consts.py:198
+msgid "Saint Martin"
+msgstr "Сен-Мартен"
+
+#: librarian_netinterfaces/consts.py:199
+msgid "Saint Pierre and Miquelon"
+msgstr "Сен-П'єр і Мікелон"
+
+#: librarian_netinterfaces/consts.py:200
+msgid "Saint Vincent and the Grenadines"
+msgstr "Сент-Вінсент і Гренадини"
+
+#: librarian_netinterfaces/consts.py:201
+msgid "San Marino, Republic of"
+msgstr "Сан-Марино, Республіка"
+
+#: librarian_netinterfaces/consts.py:202
+msgid "Sao Tome and Principe, Democratic Republic of"
+msgstr "Сан-Томе і Прінсіпі, Демократична Республіка"
+
+#: librarian_netinterfaces/consts.py:203
+msgid "Saudi Arabia, Kingdom of"
+msgstr "Саудівська Аравія, Королівство"
+
+#: librarian_netinterfaces/consts.py:204
+msgid "Senegal, Republic of"
+msgstr "Сенегал, Республіка"
+
+#: librarian_netinterfaces/consts.py:205
+msgid "Serbia, Republic of"
+msgstr "Сербія, Республіка"
+
+#: librarian_netinterfaces/consts.py:206
+msgid "Seychelles, Republic of"
+msgstr "Сейшельські острови, Республіка"
+
+#: librarian_netinterfaces/consts.py:207
+msgid "Sierra Leone, Republic of"
+msgstr "Сьєрра-Леоне, Республіка"
+
+#: librarian_netinterfaces/consts.py:208
+msgid "Singapore, Republic of"
+msgstr "Сінгапур, Республіка"
+
+#: librarian_netinterfaces/consts.py:209
+msgid "Slovakia (Slovak Republic)"
+msgstr "Словаччина (Словацька Республіка)"
+
+#: librarian_netinterfaces/consts.py:210
+msgid "Vietnam, Socialist Republic of"
+msgstr "В'єтнам, Соціалістична Республіка"
+
+#: librarian_netinterfaces/consts.py:211
+msgid "Slovenia, Republic of"
+msgstr "Словенія, Республіка"
+
+#: librarian_netinterfaces/consts.py:212
+msgid "Somalia, Somali Republic"
+msgstr "Сомалі, Сомалійська Республіка"
+
+#: librarian_netinterfaces/consts.py:213
+msgid "South Africa, Republic of"
+msgstr "Південна Африка, Республіка"
+
+#: librarian_netinterfaces/consts.py:214
+msgid "Zimbabwe, Republic of"
+msgstr "Зімбабве, Республіка"
+
+#: librarian_netinterfaces/consts.py:215
+msgid "Spain, Kingdom of"
+msgstr "Іспанія, Королівство"
+
+#: librarian_netinterfaces/consts.py:216
+msgid "South Sudan"
+msgstr "Південний Судан"
+
+#: librarian_netinterfaces/consts.py:217
+msgid "Western Sahara"
+msgstr "Західна Сахара"
+
+#: librarian_netinterfaces/consts.py:218
+msgid "Sudan, Republic of"
+msgstr "Судан, Республіка"
+
+#: librarian_netinterfaces/consts.py:219
+msgid "Suriname, Republic of"
+msgstr "Суринам, Республіка"
+
+#: librarian_netinterfaces/consts.py:220
+msgid "Svalbard & Jan Mayen Islands"
+msgstr "Свальбард і Ян-Маєн"
+
+#: librarian_netinterfaces/consts.py:221
+msgid "Swaziland, Kingdom of"
+msgstr "Свазіленд, Королівство"
+
+#: librarian_netinterfaces/consts.py:222
+msgid "Sweden, Kingdom of"
+msgstr "Швеція, Королівство"
+
+#: librarian_netinterfaces/consts.py:223
+msgid "Switzerland, Swiss Confederation"
+msgstr "Швейцарія, Швейцарська Конфедерація"
+
+#: librarian_netinterfaces/consts.py:224
+msgid "Syrian Arab Republic"
+msgstr "Сирійська Арабська Республіка"
+
+#: librarian_netinterfaces/consts.py:225
+msgid "Tajikistan, Republic of"
+msgstr "Таджикистан, Республіка"
+
+#: librarian_netinterfaces/consts.py:226
+msgid "Thailand, Kingdom of"
+msgstr "Таїланд, Королівство"
+
+#: librarian_netinterfaces/consts.py:227
+msgid "Togo, Togolese Republic"
+msgstr "Того, Республіка Того"
+
+#: librarian_netinterfaces/consts.py:228
+msgid "Tokelau"
+msgstr "Токелау"
+
+#: librarian_netinterfaces/consts.py:229
+msgid "Tonga, Kingdom of"
+msgstr "Тонга, Королівство"
+
+#: librarian_netinterfaces/consts.py:230
+msgid "Trinidad and Tobago, Republic of"
+msgstr "Тринідад і Тобаго, Республіка"
+
+#: librarian_netinterfaces/consts.py:231
+msgid "United Arab Emirates"
+msgstr "Об'єднані Арабські Емірати"
+
+#: librarian_netinterfaces/consts.py:232
+msgid "Tunisia, Tunisian Republic"
+msgstr "Туніс, Туніська Республіка"
+
+#: librarian_netinterfaces/consts.py:233
+msgid "Turkey, Republic of"
+msgstr "Туреччина, Республіка"
+
+#: librarian_netinterfaces/consts.py:234
+msgid "Turkmenistan"
+msgstr "Туркменістан"
+
+#: librarian_netinterfaces/consts.py:235
+msgid "Turks and Caicos Islands"
+msgstr "Острови Теркс і Кайкос"
+
+#: librarian_netinterfaces/consts.py:236
+msgid "Tuvalu"
+msgstr "Тувалу"
+
+#: librarian_netinterfaces/consts.py:237
+msgid "Uganda, Republic of"
+msgstr "Уганда, Республіка"
+
+#: librarian_netinterfaces/consts.py:238
+msgid "Ukraine"
+msgstr "Україна"
+
+#: librarian_netinterfaces/consts.py:239
+msgid "Macedonia, The Former Yugoslav Republic of"
+msgstr "Македонія, Колишня Югославська Республіка"
+
+#: librarian_netinterfaces/consts.py:240
+msgid "Egypt, Arab Republic of"
+msgstr "Єгипет, Арабська Республіка"
+
+#: librarian_netinterfaces/consts.py:241
+msgid "United Kingdom"
+msgstr "Сполучене Королівство"
+
+#: librarian_netinterfaces/consts.py:242
+msgid "Guernsey, Bailiwick of"
+msgstr "Гернсі, Бейлівік"
+
+#: librarian_netinterfaces/consts.py:243
+msgid "Jersey, Bailiwick of"
+msgstr "Джерсі, Бейлівік"
+
+#: librarian_netinterfaces/consts.py:244
+msgid "Isle of Man"
+msgstr "Острів Мен"
+
+#: librarian_netinterfaces/consts.py:245
+msgid "Tanzania, United Republic of"
+msgstr "Танзанія, Об'єднана Республіка"
+
+#: librarian_netinterfaces/consts.py:246
+msgid "United States"
+msgstr "Сполучені Штати"
+
+#: librarian_netinterfaces/consts.py:247
+msgid "United States Virgin Islands"
+msgstr "Американські Віргінські Острови"
+
+#: librarian_netinterfaces/consts.py:248
+msgid "Burkina Faso"
+msgstr "Буркіна-Фасо"
+
+#: librarian_netinterfaces/consts.py:249
+msgid "Uruguay, Eastern Republic of"
+msgstr "Уругвай, Східна Республіка"
+
+#: librarian_netinterfaces/consts.py:250
+msgid "Uzbekistan, Republic of"
+msgstr "Узбекистан, Республіка"
+
+#: librarian_netinterfaces/consts.py:251
+msgid "Venezuela, Bolivarian Republic of"
+msgstr "Венесуела,  Боліварська Республіка"
+
+#: librarian_netinterfaces/consts.py:252
+msgid "Wallis and Futuna"
+msgstr "Волліс і Футуна"
+
+#: librarian_netinterfaces/consts.py:253
+msgid "Samoa, Independent State of"
+msgstr "Самоа, Незалежна держава"
+
+#: librarian_netinterfaces/consts.py:254
+msgid "Yemen"
+msgstr "Ємен"
+
+#: librarian_netinterfaces/consts.py:255
+msgid "Zambia, Republic of"
+msgstr "Замбія, Республіка"
+
+#: librarian_netinterfaces/consts.py:256
+msgid "Disputed Territory"
+msgstr "Спірна Територія"
+
+#: librarian_netinterfaces/consts.py:257
+msgid "Iraq-Saudi Arabia Neutral Zone"
+msgstr "Саудівсько-іракська нейтральна зона"
+
+#: librarian_netinterfaces/consts.py:258
+msgid "United Nations Neutral Zone"
+msgstr "Нейтральна зона Організації Об'єднаних Націй"
+
+#: librarian_netinterfaces/consts.py:259
+msgid "Spratly Islands"
+msgstr "Острови Спратлі"
+
+#: librarian_netinterfaces/consts.py:272
+msgid "Disabled"
+msgstr "Не дозволено"
+
+#: librarian_netinterfaces/consts.py:273
+msgid "Enabled"
+msgstr "Дозволено"
+
+#: librarian_netinterfaces/consts.py:287
+msgid "Standard (most devices)"
+msgstr "Стандартний (більшість пристроїв)"
+
+#: librarian_netinterfaces/consts.py:288
+msgid "Alternative (Realtek-based devices)"
+msgstr "Альтернативний варіант (на базі пристроїв Realtek)"
+
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:6
+msgid "Access point name"
+msgstr "Ім'я точки доступу"
+
+#. Translators, label for a checkbox that enables hidden access point
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:8
+msgid "Do not show in scan lists"
+msgstr "Не показувати в списках сканування"
+
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:9
+msgid "Country"
+msgstr "Країна"
+
+#. Translators, WiFi has country-specific frequency regulations
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:11
+msgid "Meet regional Wi-Fi frequency requirements"
+msgstr "Відповідає регіональним вимогам щодо частот Wi-Fi"
+
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:12
+msgid "Channel"
+msgstr "Канал"
+
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:13
+msgid "Security"
+msgstr "Безпека"
+
+#. Translators, wireless device type, shown next to access point driver
+#. selection drop-down
+#: librarian_netinterfaces/views/netinterfaces/_wireless_form.tpl:18
+msgid "Device type"
+msgstr "Тип пристрою"
+
+#. Translators, used as page title
+#. Translators, used as page heading
+#: librarian_netinterfaces/views/netinterfaces/wireless_settings.tpl:6
+#: librarian_netinterfaces/views/netinterfaces/wireless_settings.tpl:12
+msgid "Access point settings"
+msgstr "Параметри точки доступу"
+
+#: librarian_filemanager/routes.py:187
+msgid "File not found."
+msgstr "Файл не знайдено."
+
+#. Translators, used as page title on a page that shows file details
+#: librarian_filemanager/views/filemanager/info.tpl:7
+msgid "{title} details"
+msgstr "{title} докладніше"
+
+#: librarian_filemanager/views/filemanager/_html.tpl:2
+msgid "No documents to be shown."
+msgstr "Немає документів для показу."
+
+#: librarian_filemanager/views/filemanager/_video.tpl:16
+msgid "No video files to be played."
+msgstr "Немає відеофайлів для відтворення."
+
+#: librarian_filemanager/views/filemanager/_playlist.tpl:6
+#: librarian_filemanager/views/filemanager/_video.tpl:55
+msgid "No description"
+msgstr "Немає опису"
+
+#: librarian_filemanager/views/filemanager/_image.tpl:5
+msgid "No images to be shown."
+msgstr "Немає зображень для показу."
+
+#: librarian_filemanager/views/filemanager/_main.tpl:9
+msgid "Browse"
+msgstr "Огляд"
+
+#: librarian_filemanager/views/filemanager/_main.tpl:10
+msgid "Gallery"
+msgstr "Галерея"
 
 #: librarian_filemanager/views/filemanager/_main.tpl:96
 msgid "Hide"
-msgstr ""
+msgstr "Сховати"
 
 #: librarian_filemanager/views/filemanager/_main.tpl:102
 #: librarian_filemanager/views/filemanager/_playlist.tpl:13
 #: librarian_filemanager/views/filemanager/_audio.tpl:37
 msgid "Unknown author"
-msgstr ""
-
-#: librarian_filemanager/views/filemanager/info.tpl:7
-#, python-brace-format
-msgid "{title} details"
-msgstr ""
-
-#: librarian_filemanager/views/filemanager/_playlist.tpl:6
-#: librarian_filemanager/views/filemanager/_video.tpl:55
-msgid "No description"
-msgstr ""
+msgstr "Невідомий автор"
 
 #. Translators, shown for audio files
 #: librarian_filemanager/views/filemanager/_playlist.tpl:26
 msgid "Genre:"
-msgstr ""
+msgstr "Жанр:"
 
 #: librarian_filemanager/views/filemanager/_playlist.tpl:26
 msgid "Unknown genre"
-msgstr ""
+msgstr "Невідомий жанр"
 
 #. Translators, shown for audio files
 #: librarian_filemanager/views/filemanager/_playlist.tpl:31
 msgid "Album:"
-msgstr ""
+msgstr "Альбом:"
 
 #: librarian_filemanager/views/filemanager/_playlist.tpl:31
 msgid "Unknown album"
-msgstr ""
+msgstr "Невідомий альбом"
 
 #. Translators, used as label for audio/video duration in playlist's info
 #. panel.
 #: librarian_filemanager/views/filemanager/_playlist.tpl:37
 msgid "Duration:"
-msgstr ""
+msgstr "Тривалість:"
 
 #. Translators, used as label for image dimensions in playlist's info
 #. panel.
 #: librarian_filemanager/views/filemanager/_playlist.tpl:52
 #: librarian_filemanager/views/filemanager/_playlist.tpl:69
 msgid "Dimensions:"
-msgstr ""
+msgstr "Розміри:"
 
 #. Translators, used as label for image/video aspect ratio (e.g., 4:3,
 #. 16:9) in playlist's info panel.
 #: librarian_filemanager/views/filemanager/_playlist.tpl:79
 msgid "Aspect ratio:"
-msgstr ""
+msgstr "Співвідношення сторін:"
 
 #: librarian_filemanager/views/filemanager/_playlist.tpl:118
 msgid "Playlist"
-msgstr ""
+msgstr "Список відтворення"
 
 #: librarian_filemanager/views/filemanager/_playlist.tpl:124
 msgid "Details"
-msgstr ""
-
-#: librarian_filemanager/views/filemanager/_image.tpl:5
-msgid "No images to be shown."
-msgstr ""
-
-#: librarian_filemanager/views/filemanager/_image.tpl:23
-msgid "Previous"
-msgstr "Previous"
+msgstr "Деталі"
 
 #: librarian_filemanager/views/filemanager/_audio.tpl:17
 msgid "No music files to be played."
-msgstr ""
+msgstr "Немає музичних файлів для відтворення."
+
+#: librarian_filemanager/views/filemanager/_audio.tpl:39
+msgid "Unknown title"
+msgstr "Невідома назва"
 
 #: librarian_filemanager/views/filemanager/_audio.tpl:79
 msgid "Unknown Artist"
-msgstr ""
+msgstr "Невідомий виконавець"
 
-#: librarian_filemanager/views/filemanager/_html.tpl:2
-msgid "No documents to be shown."
-msgstr ""
+#. Translators, used as page title
+#: librarian_football/menuitems.py:8
+#: librarian_football/views/football/football.tpl:5
+msgid "Football"
+msgstr "Футбол"
 
-#: librarian_filemanager/views/filemanager/_video.tpl:16
-msgid "No video files to be played."
-msgstr ""
+#: librarian_filemanager/helpers.py:258
+msgid "{number} year ago"
+msgid_plural "{number} years ago"
+msgstr[0] "{number} рік тому"
+msgstr[1] "{number} років тому"
+msgstr[2] "{number} років тому"
 
-#. Translators, used as label for search field, appears before the text box
-#: librarian_filemanager/views/filemanager/main.tpl:20
-msgid "Search in folders:"
-msgstr "Search in folders:"
+#: librarian_filemanager/helpers.py:263
+msgid "{number} mont ago"
+msgid_plural "{number} months ago"
+msgstr[0] "{number} місяць тому"
+msgstr[1] "{number} місяців тому"
+msgstr[2] "{number} місяців тому"
 
-#. Translators, used in file search box
-#: librarian_filemanager/views/filemanager/main.tpl:25
-msgid "Folder path or search keywords"
-msgstr "Folder path or search keywords"
+#: librarian_filemanager/helpers.py:268
+msgid "{number} week ago"
+msgid_plural "{number} weeks ago"
+msgstr[0] "{number} тиждень тому"
+msgstr[1] "{number} тижнів тому"
+msgstr[2] "{number} тижнів тому"
 
-#. Translators, used as button in file view address bar
-#: librarian_filemanager/views/filemanager/main.tpl:30
-msgid "Start search"
-msgstr "Start search"
+#: librarian_filemanager/helpers.py:272
+msgid "{number} day ago"
+msgid_plural "{number} days ago"
+msgstr[0] "{number} день тому"
+msgstr[1] "{number} днів тому"
+msgstr[2] "{number} днів тому"
 
-#: librarian_filemanager/views/filemanager/main.tpl:57
-msgid "Folder listing could not be loaded. Please try again in a few seconds."
-msgstr "Folder listing could not be loaded. Please try again in a few seconds."
+#: librarian_filemanager/helpers.py:276
+msgid "yesterday"
+msgstr "вчора"
+
+#: librarian_filemanager/helpers.py:278
+msgid "Today"
+msgstr "Сьогодні"
+
+#: librarian_filemanager/helpers.py:283
+msgid "{number} hour ago"
+msgid_plural "{number} hours ago"
+msgstr[0] "{number} годину тому"
+msgstr[1] "{number} годин тому"
+msgstr[2] "{number} годин тому"
+
+#: librarian_filemanager/helpers.py:288
+msgid "{number} minute ago"
+msgid_plural "{number} minutes ago"
+msgstr[0] "{number} хвилину тому"
+msgstr[1] "{number} хвилин тому"
+msgstr[2] "{number} хвилин тому"
+
+#: librarian_filemanager/helpers.py:292
+msgid "{number} second ago"
+msgid_plural "{number} seconds ago"
+msgstr[0] "{number} секунду тому"
+msgstr[1] "{number} секунд тому"
+msgstr[2] "{number} секунд тому"
+
+#: librarian_filemanager/helpers.py:295
+msgid "just now"
+msgstr "просто зараз"
+
+#. Translators, link to containing folder of a file in search results
+#: librarian_filemanager/views/filemanager/_folder.tpl:34
+msgid "Open containing folder"
+msgstr "Відкрити папку, що містить"
+
+#: librarian_filemanager/views/filemanager/_main.tpl:14
+msgid "Updates"
+msgstr "Оновлення"
 
 #: librarian_filemanager/views/filemanager/_generic.tpl:27
 msgid "{} file"
 msgid_plural "{} files"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "{} файл"
+msgstr[1] "{} файлів"
+msgstr[2] "{} файлів"
 
 #: librarian_filemanager/views/filemanager/_generic.tpl:28
 msgid "{} folder"
 msgid_plural "{} folders"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: librarian_filemanager/views/filemanager/_generic.tpl:44
-msgid "No files or folders match your search keywords."
-msgstr "No files or folders match your search keywords."
-
-#: librarian_filemanager/views/filemanager/_generic.tpl:46
-msgid "There are currently no files or folders here."
-msgstr "There are currently no files or folders here."
+msgstr[0] "{} папка"
+msgstr[1] "{} папок"
+msgstr[2] "{} папок"
 
 #: librarian_filemanager/views/filemanager/_updates.tpl:14
 msgid "There are no recent files"
-msgstr ""
+msgstr "Останніх файлів немає"
 
-#~ msgid "Dashboard"
-#~ msgstr "Панель управління"
-
-#~ msgid "Library"
-#~ msgstr "Бібліотека"
-
-#~ msgid "Content library is currently empty"
-#~ msgstr "Бібліотека публікацій порожня"
-
-#~ msgid "Unknown license"
-#~ msgstr "Невідома ліцензія"
-
-#~ msgid "Creative Commons Attribution"
-#~ msgstr "Ліцензія Creative Commons"
-
-#~ msgid "Creative Commons Attribution-NoDerivs"
-#~ msgstr "Ліцензія Creative Commons-Без похідних витворів"
-
-#~ msgid "Creative Commons Attribution-NonCommercial"
-#~ msgstr "Ліцензія Creative Commons-Без комерційного використання"
-
-#~ msgid "Creative Commons Attribution-NonCommercial-NoDerivs"
-#~ msgstr ""
-#~ "Ліцензія Creative Commons-Без комерційного використання-Без похідних "
-#~ "витворів"
-
-#~ msgid "Creative Commons Attribution-ShareAlike"
-#~ msgstr "Ліцензія Creative Commons-Для вільного поширення"
-
-#~ msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
-#~ msgstr ""
-#~ "Ліцензія Creative Commons-Без комерційного використання-Для вільного "
-#~ "поширення"
-
-#~ msgid "GNU Free Documentation License"
-#~ msgstr "GNU Безкоштовна Документаційна Ліцензія"
-
-#~ msgid "Open Publication License"
-#~ msgstr "Ліцензія Відкрита для Публікації"
-
-#~ msgid "Open Content License"
-#~ msgstr "Ліцензія ВІльного контенту"
-
-#~ msgid "Against DRM License"
-#~ msgstr "Заборонна DRM Ліцензія"
-
-#~ msgid "Free Art License"
-#~ msgstr "Вільна Мистецька Ліцензія"
-
-#~ msgid "Public Domain"
-#~ msgstr "Загальне Надбання"
-
-#~ msgid "Other free license"
-#~ msgstr "Інша безкоштовна ліцензія"
-
-#~ msgid "All rights reserved"
-#~ msgstr "Всі права захищено"
-
-#~ msgid "Other non-free license"
-#~ msgstr "Інша не-безкоштовна ліцензія"
-
-#~ msgid "Specified tag was not found"
-#~ msgstr "Specified tag was not found"
-
-#~ msgid ""
-#~ "Librarian could not enter maintenance mode and database rebuild was "
-#~ "cancelled. Please make sure noone else is using Librarian and try again."
-#~ msgstr ""
-#~ "Librarian could not enter maintenance mode and database rebuild was "
-#~ "cancelled. Please make sure noone else is using Librarian and try again."
-
-#~ msgid "Content database"
-#~ msgstr "Content database"
-
-#~ msgid "Database size"
-#~ msgstr "Database size"
-
-#~ msgid "Backup"
-#~ msgstr "Backup"
-
-#~ msgid "Rebuild"
-#~ msgstr "Rebuild"
-
-#~ msgid ""
-#~ "Database rebuild will cause all tags to be lost. It will also put "
-#~ "Librarian into maintenance mode and prevent users from accessing content."
-#~ msgstr ""
-#~ "Database rebuild will cause all tags to be lost. It will also put "
-#~ "Librarian into maintenance mode and prevent users from accessing content."
-
-#~ msgid "Database backup"
-#~ msgstr "Database backup"
-
-#~ msgid ""
-#~ "Database backup could not be completed. The following error occurred:"
-#~ msgstr ""
-#~ "Database backup could not be completed. The following error occurred:"
-
-#~ msgid "Database rebuild"
-#~ msgstr "Database rebuild"
-
-#~ msgid ""
-#~ "Content database has been rebuilt from scratch. A backup copy of the "
-#~ "original database has been created. You will find it in the files section."
-#~ msgstr ""
-#~ "Content database has been rebuilt from scratch. A backup copy of the "
-#~ "original database has been created. You will find it in the files section."
-
-#~ msgid "Database could not be rebuilt. The following error occurred:"
-#~ msgstr "Database could not be rebuilt. The following error occurred:"
-
-#~ msgid "here"
-#~ msgstr "here"
-
-#~ msgid "Timezone"
-#~ msgstr "Timezone"
-
-#~ msgid "Database backup has been completed successfully."
-#~ msgstr "Database backup has been completed successfully."
-
-#~ msgid "the backup folder"
-#~ msgstr "the backup folder"
-
-#~ msgid "Confirm Removal"
-#~ msgstr "Confirm Removal"
-
-#~ msgid "Remove"
-#~ msgstr "Remove"
-
-#~ msgid "Discard"
-#~ msgstr "Discard"
-
-#~ msgid "Clear"
-#~ msgstr "Clear"
-
-#~ msgid "Download system log"
-#~ msgstr "Download system log"
-
-#~ msgid "Are you sure you want to remove the item named '{item_name}'?"
-#~ msgstr "Are you sure you want to remove the item named '{item_name}'?"
-
-#~ msgid "jump to parent folder"
-#~ msgstr "jump to parent folder"
-
-#~ msgid "{date} by {publisher}."
-#~ msgstr "{date} by {publisher}."
-
-#~ msgid "Explore"
-#~ msgstr "Explore"
-
-#~ msgid ""
-#~ "Superuser account is used to maintain the library and configure the "
-#~ "receiver."
-#~ msgstr ""
-#~ "Superuser account is used to maintain the library and configure the "
-#~ "receiver."
-
-#~ msgid ""
-#~ "Please write down this password reset token and store it securely. You "
-#~ "will need it if you ever need to reset your password."
-#~ msgstr ""
-#~ "Please write down this password reset token and store it securely. You "
-#~ "will need it if you ever need to reset your password."
-
-#~ msgid "Import"
-#~ msgstr "Import"
-
-#~ msgid "Action"
-#~ msgstr "Action"
-
-#~ msgid "Existing content"
-#~ msgstr "Existing content"
-
-#~ msgid ""
-#~ "\n"
-#~ "        We have found content from a previous version of this software. "
-#~ "You may\n"
-#~ "        choose to import or discard it.\n"
-#~ "        "
-#~ msgstr ""
-#~ "\n"
-#~ "        We have found content from a previous version of this software. "
-#~ "You may\n"
-#~ "        choose to import or discard it.\n"
-#~ "        "
-
-#~ msgid "Adds existing content to the library"
-#~ msgstr "Adds existing content to the library"
-
-#~ msgid "Removes existing content"
-#~ msgstr "Removes existing content"
-
-#~ msgid "Please select your local timezone."
-#~ msgstr "Please select your local timezone."
-
-#~ msgid "There are no search results for '{terms}'"
-#~ msgstr "There are no search results for '{terms}'"
-
-#~ msgid "There is currently no content of {type} type"
-#~ msgstr "There is currently no content of {type} type"
-
-#~ msgid "Show all types"
-#~ msgstr "Show all types"
-
-#~ msgid ""
-#~ "Language filter for '{lang}' is active. Click {link} to see all content"
-#~ msgstr ""
-#~ "Language filter for '{lang}' is active. Click {link} to see all content"
-
-#~ msgid "Showing search results for '{term}'"
-#~ msgstr "Showing search results for '{term}'"
-
-#~ msgid "Topics:"
-#~ msgstr "Topics:"
-
-#~ msgid "Search:"
-#~ msgstr "Search:"
-
-#~ msgid "search keywords"
-#~ msgstr "search keywords"
-
-#~ msgid "Content language"
-#~ msgstr "Content language"
-
-#~ msgid "Types of content"
-#~ msgstr "Types of content"
-
-#~ msgid "All"
-#~ msgstr "All"
-
-#~ msgid "Pages"
-#~ msgstr "Pages"
-
-#~ msgid "Images"
-#~ msgstr "Images"
-
-#~ msgid "Audio"
-#~ msgstr "Audio"
-
-#~ msgid "Video"
-#~ msgstr "Video"
-
-#~ msgid "Image {index} of {count}"
-#~ msgstr "Image {index} of {count}"
-
-#~ msgid "skipping"
-#~ msgstr "skipping"
-
-#~ msgid "List files"
-#~ msgstr "List files"
-
-#~ msgid "Unknown domain"
-#~ msgstr "Unknown domain"
-
-#~ msgid ""
-#~ "Both import and discard may take a long time to complete. Please do not "
-#~ "close this tab or unplug the receiver."
-#~ msgstr ""
-#~ "Both import and discard may take a long time to complete. Please do not "
-#~ "close this tab or unplug the receiver."
-
-#~ msgid "You are on Outernet"
-#~ msgstr "You are on Outernet"
-
-#~ msgid "{domain} does not exist on Outernet."
-#~ msgstr "{domain} does not exist on Outernet."
-
-#~ msgid "You will be taken to the <a href=\"{url}\">main page</a> shortly."
-#~ msgstr "You will be taken to the <a href=\"{url}\">main page</a> shortly."
-
-#~ msgid "Sorry! No tweets could be found with the user name \"{}\""
-#~ msgstr "Sorry! No tweets could be found with the user name \"{}\""
-
-#~ msgid "View"
-#~ msgstr "View"
-
-#~ msgid "Image {} of {}"
-#~ msgstr "Image {} of {}"
