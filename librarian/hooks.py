@@ -1,5 +1,3 @@
-from bottle import error
-
 from fsal.client import FSAL
 from ondd_ipc.ipc import ONDDClient
 
@@ -22,10 +20,10 @@ def initialize(supervisor):
     exts.notifications.on_send(invalidate_notification_cache)
     exts.ondd = ONDDClient(exts.config['ondd.socket'])
     # register error handler routes
-    error(403)(system.error_403)
-    error(404)(system.error_404)
-    error(500)(system.error_500)
-    error(503)(system.error_503)
+    supervisor.app.error(403)(system.error_403)
+    supervisor.app.error(404)(system.error_404)
+    supervisor.app.error(500)(system.error_500)
+    supervisor.app.error(503)(system.error_503)
 
 
 @hook('init_complete')
