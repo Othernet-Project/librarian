@@ -71,9 +71,7 @@ class ONDDStep:
         if form_valid:
             # Store full settings
             logging.info('ONDD: tuner settings updated')
-            settings_key = ondd_helpers.SETTINGS_KEYS[band]
-            data = {settings_key: form.processed_data}
-            request.app.supervisor.exts.setup.append(data)
+            ondd_helpers.write_ondd_setup(form.processed_data)
             if is_test_mode:
                 return dict(successful=False,
                             form=form,
