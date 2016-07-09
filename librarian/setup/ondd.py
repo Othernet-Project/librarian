@@ -30,14 +30,9 @@ class ONDDStep:
         if settings is None:
             # Settings is None if ONDD configuration has never been performed
             return True
-        if settings == {}:
-            # Settings is a dict if settings has been performed by no preset
-            # is present. This is allowed, as user is allowed to skip through
-            # the setup step without setting the tuner settings.
-            return False
-        ONDDForm = get_form()
-        form = ONDDForm(ondd_helpers.read_ondd_setup())
-        return not form.is_valid()
+        # If there is any ondd configuration stored, even if it's just empty
+        # which could mean the user skipped that step, don't invoke it again
+        return False
 
     @staticmethod
     def get():
@@ -71,9 +66,7 @@ class ONDDStep:
         if form_valid:
             # Store full settings
             logging.info('ONDD: tuner settings updated')
-            settings_key = ondd_helpers.SETTINGS_KEYS[band]
-            data = {settings_key: form.processed_data}
-            request.app.supervisor.exts.setup.append(data)
+            ondd_helpers.write_ondd_setup(form.processed_data)
             if is_test_mode:
                 return dict(successful=False,
                             form=form,
