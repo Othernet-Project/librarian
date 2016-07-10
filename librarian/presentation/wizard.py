@@ -8,7 +8,9 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from bottle import request, redirect
+import urlparse
+
+from bottle import request, response
 from bottle_utils.common import basestring
 from bottle_utils.i18n import i18n_path
 
@@ -126,7 +128,15 @@ class Wizard(object):
     def redirect_to_step(self):
         query = '?{0}={1}'.format(self.step_param, self.current_step_index)
         next_path = i18n_path(request.fullpath + query)
-        return next_path if request.is_xhr else redirect(next_path)
+        if request.is_xhr:
+            return next_path
+        # This is a workaround for a not yet clear issue where if the
+        # redirection contains an empty response body, it never reaches
+        # the client
+        next_url = urlparse.urljoin(request.url, next_path)
+        response.set_header('Location', next_url)
+        response.status = 302
+        return 'OK'
 
     def start_next_step(self):
         # in case the step param is missing, redirect to same url to include it
