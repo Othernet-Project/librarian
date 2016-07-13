@@ -75,7 +75,6 @@ class EmergencyReset(CSRFRouteMixin, RedirectRouteMixin, XHRPartialFormRoute):
     template_name = 'auth/emergency_reset'
     partial_template_name = 'auth/_emergency_reset'
     form_factory = EmergencyResetForm
-    exclude_plugins = ['session_plugin']
 
     def read_token_file(self):
         token_path = self.config.get('emergency.file', '')

@@ -44,6 +44,8 @@ class FSWriter(object):
         self._cache = cache
         # unpack data
         self._path = data['path']
+        if self._path:
+            self._path = os.path.normpath(self._path)
         self._parent_path = os.path.dirname(self._path)
         self._type = data['type']
         self._mime_type = data['mime_type']
