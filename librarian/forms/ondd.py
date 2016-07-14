@@ -36,7 +36,7 @@ class LForm(ONDDFormBase):
                 # satellite preset nor 'Custom' option to enter custom data.
                 'required': _("Please select a satellite or select 'Custom'")
             }),
-            form.InRangeValidator(min_value=0, max_value=len(PRESETS))
+            form.InRangeValidator(min_value=-1, max_value=len(PRESETS))
         ]
     )
     frequency = form.FloatField(
@@ -133,7 +133,7 @@ class KuForm(ONDDFormBase):
                 # satellite preset nor 'Custom' option to enter custom data.
                 'required': _("Please select a satellite or select 'Custom'")
             }),
-            form.InRangeValidator(min_value=0, max_value=len(PRESETS))
+            form.InRangeValidator(min_value=-1, max_value=len(PRESETS))
         ]
     )
     # TODO: Add support for DiSEqC azimuth value
