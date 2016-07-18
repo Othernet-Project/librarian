@@ -3,6 +3,8 @@
 
   mainContainer = $ '#main-container'
   window.mainContainer = mainContainer
+  searchInput = $ '#files-multisearch input'
+
 
   activateSidebar = () ->
     if not templates.sidebarRetract?
@@ -39,8 +41,18 @@
     ($ window).trigger 'views-sidebar-toggled'
     return
 
+
   updateState = () ->
     mainContainer.data 'view', ($ '.views-tabs-tab-current').data 'view'
+
+
+  window.setPath = (path) ->
+    if path is '.'
+      searchInput.val ''
+    else
+      searchInput.val path
+    return
+
 
   window.loadContent = (url) ->
     res = $.get url
@@ -56,7 +68,8 @@
       alert templates.alertLoadError
     return res
 
-  mainContainer.on 'click', '.views-tabs-tab-link', (e) ->
+
+  mainContainer.on 'click', '.views-tabs-tab-go-back', (e) ->
     e.preventDefault()
     e.stopPropagation()
 
@@ -65,6 +78,7 @@
     res = loadContent url
     res.done () ->
       window.history.pushState null, null, url
+      setPath elem.data 'relpath'
       window.triggerTabChange()
       return
 
@@ -87,6 +101,7 @@
   $(window).on 'popstate', (e) ->
     loadContent window.location
     return
+
 
   updateState()
   activateSidebar()

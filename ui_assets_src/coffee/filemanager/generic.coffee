@@ -3,18 +3,11 @@
 
   UP = 38
   DOWN = 40
-  searchInput = $ '#files-multisearch #p'
   body = $ document.body
   mainPanel = $ "##{window.o.pageVars.mainPanelId}"
   modalDialogTemplate = window.templates.modalDialogCancelOnly
   spinnerIcon = window.templates.spinnerIcon
 
-  setPath = (path) ->
-    if path is '.'
-      searchInput.val ''
-    else
-      searchInput.val path
-    return
 
   # Keyboard navigation
 
