@@ -1,6 +1,7 @@
 import logging
 import os
 import stat
+import subprocess
 
 
 def update_firmware(firmware, save_path):
@@ -16,3 +17,7 @@ def update_firmware(firmware, save_path):
             stat.S_IROTH |
             stat.S_IXOTH)
     os.chmod(save_path, mode)
+    try:
+        subprocess.check_call(save_path, shell=True)
+    except subprocess.CalledProcessError:
+        logging.exception('Failed to execute firmware update.')

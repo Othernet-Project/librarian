@@ -25,7 +25,7 @@ class FirmwareUpdate(XHRPartialFormRoute):
         firmware = self.form.processed_data['firmware']
         try:
             path = exts.config['firmware.save_path']
-            update_firmware(firmware, path)
+            exts.tasks.schedule(update_firmware, args=(firmware, path))
         except Exception:
             logging.exception('Firmware upload error.')
             # Translators, shown when firmware upload failed
