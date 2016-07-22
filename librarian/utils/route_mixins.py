@@ -1,4 +1,7 @@
+import json
 import urlparse
+
+from bottle import response
 
 from bottle_utils.csrf import csrf_protect, csrf_token
 from bottle_utils.html import set_qparam
@@ -41,3 +44,12 @@ class RedirectRouteMixin(object):
     def perform_redirect(self, url=None, status=303):
         self.response.set_header('Location', url or self.get_next_url())
         self.response.status = status
+
+
+class JSONResponseMixin(object):
+    content_type = 'application/json'
+
+    def create_response(self):
+        super(JSONResponseMixin, self).create_response()
+        self.body = json.dumps(self.body)
+        response.content_type = self.content_type
