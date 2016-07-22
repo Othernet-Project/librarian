@@ -125,7 +125,7 @@
 ## This def renders a bottle-utils Field instance.
 ##
 
-<%def name="field(fld, id=None, help=None, label=None, autocomplete=None)">
+<%def name="field(fld, id=None, help=None, label=None, autocomplete=None, **kw)">
     <%
         if help:
             fld.options['help_text'] = help
@@ -143,15 +143,15 @@
 
         ## Field
         % if fld.type in ['text', 'email', 'date', 'password', 'file']:
-            ${self.input(fld.name, type=fld.type, placeholder=fld.options.get('placeholder'), value=fld.value, id=id, autocomplete=autocomplete)}
+            ${self.input(fld.name, type=fld.type, placeholder=fld.options.get('placeholder'), value=fld.value, id=id, autocomplete=autocomplete, **kw)}
         % elif fld.type == 'hidden':
-            ${self.hidden(fld.name, value=fld.value, id=id)}
+            ${self.hidden(fld.name, value=fld.value, id=id, **kw)}
         % elif fld.type in ['checkbox', 'radio']:
-            ${self.checkbox(fld.name, value=fld.expected_value, is_checked=fld.default, label=label or fld.label, id=id)}
+            ${self.checkbox(fld.name, value=fld.expected_value, is_checked=fld.default, label=label or fld.label, id=id, **kw)}
         % elif fld.type == 'textarea':
-            ${self.textarea(fld.name, placeholder=fld.options.get('placeholder'), value=fld.value, id=id)}
+            ${self.textarea(fld.name, placeholder=fld.options.get('placeholder'), value=fld.value, id=id, **kw)}
         % elif fld.type == 'select':
-            ${self.select(fld.name, fld.choices, value=fld.value, id=id)}
+            ${self.select(fld.name, fld.choices, value=fld.value, id=id, **kw)}
         % endif
 
         ## Help text for non-textarea fields is rendered below the field
