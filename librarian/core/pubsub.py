@@ -27,7 +27,12 @@ class PubSub(object):
     def _is_within_scope(self, fn, scope):
         """Determine whether the passed in function is within the passed in
         scope."""
-        return self._get_scope(fn).startswith(scope)
+        try:
+            found_scope = self._scopes[id(fn)]
+        except KeyError:
+            return False
+        else:
+            return found_scope.startswith(scope)
 
     def publish(self, event, *args, **kwargs):
         """Publish an event with arbitary arguments. All the subscriberes of
@@ -38,7 +43,7 @@ class PubSub(object):
         """
         scope = kwargs.pop('scope', None)
         listeners = self._subscribers.get(event, [])
-        for listener, condition in listeners:
+        for (listener, condition) in listeners:
             within_scope = not scope or self._is_within_scope(listener, scope)
             if within_scope and condition(event, *args, **kwargs):
                 listener(*args, **kwargs)
