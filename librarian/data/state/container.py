@@ -39,7 +39,7 @@ class StateContainer(object):
         """
         return self._cache.get(key)
 
-    def __set(self, provider, key, data, timeout):
+    def __set(self, provider_name, key, data, timeout):
         """
         Callback function invoked by :py:class:`StorageProvider` instances when
         they store their data.
@@ -53,6 +53,7 @@ class StateContainer(object):
         # and setters, avoiding access violations (if left untreated) or the
         # need for additional checks in the subscriber code (if data was
         # passed directly)
+        provider = self._registry[provider_name]
         self._events.publish(self.STATE_CHANGED_EVENT, provider=provider)
 
     def __onchange(self, provider_name, callback):
