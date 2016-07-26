@@ -14,7 +14,7 @@ import os
 from ...core.exts import ext_container as exts
 from ...core.utils import batched, as_iterable
 from .contenttypes import ContentTypes
-from .processors import Processor, NO_LANGUAGE, DIRECTORY_TYPE, FILE_TYPE
+from .processors import Processor, DIRECTORY_TYPE, FILE_TYPE
 from .utils import ancestors_of
 from .wrapper import MetaWrapper
 
@@ -226,6 +226,8 @@ class Archive(object):
     ROOT_PATH = ''
     #: Events
     ENTRY_POINT_FOUND = 'entry_point_found'
+    #: Special metadata type that originates from automatic analysis
+    AUTO_DEDUCED = '__auto__'
 
     def __init__(self, **kwargs):
         self._db = kwargs.get('db', exts.databases[self.DATABASE_NAME])
@@ -255,7 +257,8 @@ class Archive(object):
                 content_type = self.ContentTypes.to_bitmask(proc_cls.name)
                 self._events.publish(self.ENTRY_POINT_FOUND,
                                      path=path,
-                                     content_type=content_type)
+                                     content_type=content_type,
+                                     processor=proc_cls)
             # gather metadata from current processor into ``data``
             proc.process()
         # return gathered metadata wrapped in py:class:`MetaWrapper`
@@ -378,13 +381,14 @@ class Archive(object):
                             parent_id=row['parent_id'],
                             type=row['type'],
                             mime_type=row['mime_type'],
-                            content_types=row['content_types'])
+                            content_types=row['content_types'],
+                            metadata={})
             # put meta key/value pairs into fs data element
             key = row['key']
             if key:
                 language = row['language']
-                data.setdefault(language, {})
-                data[language][key] = row['value']
+                data['metadata'].setdefault(language, {})
+                data['metadata'][language][key] = row['value']
         # yield last item
         if data:
             yield self.MetaWrapper(data)
@@ -564,18 +568,28 @@ class Archive(object):
         return dict((meta.path, meta)
                     for meta in self._reconstruct_meta(row_iter))
 
-    def _entry_point_found(self, path, content_type):
+    def _entry_point_found(self, path, content_type, processor):
         """
         Store on the parent directory of ``path`` the filename of the found
         entry point.
         """
-        metadata = {NO_LANGUAGE: {'main': os.path.basename(path)}}
-        data = dict(path=os.path.dirname(path),
-                    metadata=metadata,
-                    type=DIRECTORY_TYPE,
-                    mime_type=None,
-                    content_types=content_type)
-        self.save(data)
+        parent_path = os.path.dirname(path)
+        new = os.path.basename(path)
+        results = self.get(parent_path, ignore_missing=True)
+        data = results[parent_path].unwrap() if results else {}
+        metadata = data.get('metadata', {})
+        metadata.setdefault(self.AUTO_DEDUCED, {})
+        old = metadata[self.AUTO_DEDUCED].get('main')
+        # check if newly found path is a better candidate than the existing
+        if not processor.is_entry_point(old=old, new=path):
+            return
+        # new candidate is indeed better, store it
+        metadata[self.AUTO_DEDUCED].update(main=new)
+        self.save(dict(path=parent_path,
+                       metadata=metadata,
+                       type=DIRECTORY_TYPE,
+                       mime_type=None,
+                       content_types=content_type))
 
     def _save_metadata(self, fs_id, metadata):
         """
