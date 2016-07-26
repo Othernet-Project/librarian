@@ -56,7 +56,7 @@ class PubSub(object):
         :param condition: a callable object which is used to filter events
         """
         subscribers = self._subscribers.setdefault(event, [])
-        if listener not in subscribers:
+        if (listener, condition) not in subscribers:
             subscribers.append((listener, condition))
             self._scopes[id(listener)] = self._get_scope(listener)
 
@@ -67,8 +67,8 @@ class PubSub(object):
         :param listener:  a callable object
         """
         subscribers = self._subscribers.get(event, [])
-        subscribers[:] = [subscriber for subscriber in subscribers
-                          if subscriber[0] != listener]
+        subscribers[:] = [(l, cond) for (l, cond) in subscribers
+                          if l is not listener]
         self._scopes.pop(id(listener), None)
 
     def get_subscribers(self, event):
