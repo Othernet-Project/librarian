@@ -19,9 +19,11 @@ def test__analyze(is_entry_point, MetaWrapper, exts):
     archive = mod.Archive()
     assert archive._analyze('/path/to/file', True) == expected
     # the dict passed to save should contain the data from all processors
+    proc_cls = mod.Processor.for_type('generic')
     exts.events.publish.assert_called_once_with(mod.Archive.ENTRY_POINT_FOUND,
                                                 path='/path/to/file',
-                                                content_type=1)
+                                                content_type=1,
+                                                processor=proc_cls)
     data = {'content_types': 1,
             'path': '/path/to/file',
             'mime_type': None,
@@ -197,8 +199,9 @@ def merge_fs_with_meta(fs_data, metadata, content_type=None):
         for meta in metadata:
             if meta['fs_id'] == fs_entry['id']:
                 lang = meta['language']
-                fs_entry.setdefault(lang, {})
-                fs_entry[lang][meta['key']] = unicode(meta['value'])
+                fs_entry.setdefault('metadata', {})
+                fs_entry['metadata'].setdefault(lang, {})
+                fs_entry['metadata'][lang][meta['key']] = unicode(meta['value'])
         yield fs_entry
 
 
@@ -388,7 +391,7 @@ def pick_search_data(entries):
         if not content_types:
             # none of the found content types have a title key
             continue
-        for (lang, meta) in entry.items():
+        for (lang, meta) in entry['metadata'].items():
             if isinstance(meta, dict) and 'title' in meta:
                 return (content_types[0], lang, meta['title'].split()[0])
 
@@ -405,7 +408,7 @@ def test_search(exts, populated_database):
     # filter expected data as the query should perform too
     expected = dict((item['path'], item) for item in entries
                     if item['content_types'] & bitmask == bitmask and
-                    term in item.get(lang, {}).get('title', ''))
+                    term in item['metadata'].get(lang, {}).get('title', ''))
     result = archive.search(term, content_type=content_type, language=lang)
     # compare results against expected filtered data
     assert len(result) == len(expected)
@@ -457,3 +460,46 @@ def test_remove(for_path, exts, populated_database, processors):
              mock.call().deprocess()]
     for proc in processors:
         proc.assert_has_calls(calls)
+
+
+@pytest.mark.parametrize('get_meta,save_meta', [
+    (
+        {},
+        {'__auto__': {'main': 'index.html'}}
+    ), (
+        {'/path/parent': mod.MetaWrapper({
+            'metadata': {'__auto__': {'main': 'start.html'}}
+        })},
+        {'__auto__': {'main': 'index.html'}}
+    )
+])
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, 'save')
+@mock.patch.object(mod.Archive, 'get')
+def test__entry_point_found_better(get, save, exts, get_meta, save_meta):
+    archive = mod.Archive()
+    html_proc = mod.Processor.for_type('html')
+    get.return_value = get_meta
+    archive._entry_point_found('/path/parent/index.html', 'html', html_proc)
+    get.assert_called_once_with('/path/parent', ignore_missing=True)
+    expected = dict(metadata=save_meta,
+                    path='/path/parent',
+                    type=mod.DIRECTORY_TYPE,
+                    mime_type=None,
+                    content_types='html')
+    save.assert_called_once_with(expected)
+
+
+@mock.patch.object(mod, 'exts')
+@mock.patch.object(mod.Archive, 'save')
+@mock.patch.object(mod.Archive, 'get')
+def test__entry_point_found_worse(get, save, exts):
+    archive = mod.Archive()
+    html_proc = mod.Processor.for_type('html')
+    data = {'/path/parent': mod.MetaWrapper({
+        'metadata': {'__auto__': {'main': 'index.html'}}
+    })}
+    get.return_value = data
+    archive._entry_point_found('/path/parent/main.html', 'html', html_proc)
+    get.assert_called_once_with('/path/parent', ignore_missing=True)
+    assert not save.called
