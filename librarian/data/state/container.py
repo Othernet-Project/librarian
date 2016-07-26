@@ -46,7 +46,7 @@ class StateContainer(object):
         """
         self._cache.set(key, data, timeout=timeout)
         # add key to set of keys that were changed since last synchronization
-        self._changed.add(key)
+        self._changed.add(provider_name)
         # emit event notifying potential subscribers about a single change.
         # subscriber is passed only the provider object, not the data itself,
         # to enforce the same access methods and permissions as with getters
@@ -98,11 +98,10 @@ class StateContainer(object):
 
     def fetch_changes(self):
         """
-        Return a dict containing only data that changed changed since the last
-        call to it.
+        Return a dict containing references to the providers which data has
+        changed since the last call to it.
         """
-        # TODO: limit access to this API to allowed callers only
         changed = self._changed
         # ensure atomicity
         self._changed = set()
-        return dict((k, self.__get(k)) for k in changed)
+        return dict((k, self._registry[k]) for k in changed)
