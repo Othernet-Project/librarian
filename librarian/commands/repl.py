@@ -19,8 +19,5 @@ class ReplCommand(object):
         self.repl_thread.join()
 
     def run(self, args):
-        if not args.repl:
-            return
-
         exts.events.subscribe('post_start', self.repl_start)
         exts.events.subscribe('shutdown', self.repl_shutdown)

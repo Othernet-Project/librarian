@@ -3,23 +3,23 @@ from ..core.exts import ext_container as exts
 from ..data.meta.archive import Archive
 
 
-class RefillFacetsCommand(object):
-    name = 'refill_facets'
-    flags = '--refill-facets'
+class ReloadMetaCommand(object):
+    name = 'reload_meta'
+    flags = '--reload-meta'
     kwargs = {
         'action': 'store_true',
-        'help': "Empty facets archive and reconstruct it."
+        'help': "Empty meta archive and reconstruct it."
     }
 
     def run(self, args):
-        if not args.refill_facets:
-            return
+        exts.events.subscribe('init_complete', self.reload)
 
-        print('Begin facets refill.')
+    def reload(self, *args, **kwargs):
+        print('Begin meta reload.')
         archive = Archive(fsal=exts.fsal,
                           db=exts.databases.librarian,
                           tasks=exts.tasks,
                           config=exts.config)
         archive.clear_and_reload()
-        print('Facet refill finished.')
+        print('Meta reload finished.')
         raise EarlyExit()
