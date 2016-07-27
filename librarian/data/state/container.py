@@ -72,6 +72,12 @@ class StateContainer(object):
         """
         return self._registry[name]
 
+    def __getitem__(self, name):
+        """
+        Return a storage provider instance specified by ``name``.
+        """
+        return self._registry[name]
+
     def register(self, provider_cls):
         """
         Register a new storage provider instance.
