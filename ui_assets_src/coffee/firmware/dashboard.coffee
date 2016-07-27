@@ -13,6 +13,7 @@
   iframe = null
   statusUrl = null
 
+  TIMEOUT = 45000
   POLL_DELAY = 5000
   FAILED_STATUS = 'failed'
 
@@ -46,7 +47,7 @@
 
 
   pollProgress = () ->
-    res = $.get statusUrl
+    res = $.ajax { url: statusUrl, timeout: TIMEOUT }
     res.done (data) ->
       if data.status == FAILED_STATUS
         setMessage messages.firmwareUpdateFailed
