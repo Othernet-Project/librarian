@@ -53,7 +53,7 @@ class ContentTypes:
             'keywords': unicode,
             'language': unicode,
             'copyright': unicode,
-            'outernet_formatting': int,
+            'outernet-styling': int,
         },
         DIRECTORY: {
             'name': unicode,
