@@ -24,6 +24,7 @@
       panel.html data
       section.trigger 'dashboard-plugin-loaded'
       section.trigger 'remax'
+      $(document).trigger 'data-bind'
     res.fail () ->
       panel.html templates.dashboardLoadError
       section.trigger 'remax'

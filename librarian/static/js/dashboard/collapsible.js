@@ -23,7 +23,8 @@
     res.done(function(data) {
       panel.html(data);
       section.trigger('dashboard-plugin-loaded');
-      return section.trigger('remax');
+      section.trigger('remax');
+      return $(document).trigger('data-bind');
     });
     res.fail(function() {
       panel.html(templates.dashboardLoadError);
