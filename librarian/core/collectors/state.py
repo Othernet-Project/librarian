@@ -8,6 +8,6 @@ class StateProviders(ObjectCollectorMixin, RegistryInstallerMixin,
     """
     Collect state providers from components.
     """
-    export_key = 'states'
+    export_key = 'state'
     registry_class = StateContainer
-    ext_name = 'states'
+    ext_name = 'state'
