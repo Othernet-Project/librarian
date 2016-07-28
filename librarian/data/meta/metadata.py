@@ -182,7 +182,7 @@ class HtmlMetadata(BaseMetadata):
         else:
             data = {}
             for meta in dom.find_all('meta'):
-                if 'name' in meta.attrs:
+                if all(key in meta.attrs for key in ('name', 'content')):
                     key = meta.attrs['name']
                     value = meta.attrs['content']
                     data[key] = value
