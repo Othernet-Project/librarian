@@ -1,7 +1,6 @@
 import logging
 
 from bottle_utils.i18n import lazy_gettext as _, i18n_url
-from bottle_utils.lazy import Lazy
 from streamline import XHRPartialRoute, XHRPartialFormRoute
 
 from ..forms import ondd as ondd_forms
@@ -49,7 +48,7 @@ class CacheStatus(XHRPartialRoute):
                    'free': cache_max,
                    'used': 0,
                    'alert': False}
-        cache_status = exts.cache.get('ondd.cache') or default
+        cache_status = exts.state['ondd:cache'].get() or default
         return dict(cache_status=cache_status)
 
 
