@@ -182,7 +182,7 @@ class HtmlMetadata(BaseMetadata):
         else:
             data = {}
             for meta in dom.find_all('meta'):
-                if 'name' in meta.attrs:
+                if all(key in meta.attrs for key in ('name', 'content')):
                     key = meta.attrs['name']
                     value = meta.attrs['content']
                     data[key] = value
@@ -196,8 +196,6 @@ class HtmlMetadata(BaseMetadata):
                 data['language'] = lang
             if dom.title:
                 data['title'] = dom.title.string
-            is_formatting_on = data.get('outernet_formatting') == 'true'
-            data['outernet_formatting'] = is_formatting_on
             # assets are not directly part of the metadata, but are needed
             # to be accessed from within the processor, so it's kept as an
             # instance attribute only

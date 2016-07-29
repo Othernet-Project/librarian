@@ -20,17 +20,18 @@
     applyOverride doc, 'partial'
     return
 
-  needsOverride = (doc) ->
-    ((doc.find 'meta[name="outernet-styling"]').attr 'name') is 'yes'
+  getOverride = (doc) ->
+    ((doc.find 'meta[name="outernet-styling"]').attr 'content')
 
   onFrameLoad = () ->
-    override = readerFrame.data 'override-styling'
     doc = readerFrame.contents()
-    if needsOverride doc
+    override = getOverride doc
+    if override == 'yes'
       fullPatch doc
+    else if override == 'no'
+      return
     else
       partialPatch doc
-    return
 
   setup = () ->
     if (mainContainer.data 'view') isnt 'html'

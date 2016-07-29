@@ -55,7 +55,7 @@ def test_names():
             'language': unicode,
             'main': unicode,
             'name': unicode,
-            'outernet_formatting': int,
+            'outernet-styling': unicode,
             'publisher': unicode,
             'title': unicode,
             'view': unicode,

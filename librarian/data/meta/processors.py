@@ -9,6 +9,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 import itertools
+import logging
 import mimetypes
 import os
 
@@ -136,6 +137,9 @@ class Processor(object):
         try:
             return self.metadata_extractor.extract()
         except MetadataError:
+            return {}
+        except Exception:
+            logging.exception("Unhandled exception during etadata extraction.")
             return {}
 
     def _add_metadata(self, dest):
