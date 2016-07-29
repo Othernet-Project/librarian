@@ -101,11 +101,12 @@ class List(FileRouteMixin, XHRPartialRoute):
         except self.manager.InvalidQuery:
             self.abort(404)
 
-    def promote_view(self, view, available_views):
+    def promote_view(self, view, parent):
         # for explicitly chosen views, no auto-promition will be applied
         if self.has_requested_view():
             return view
         # when no view was chosen, auto-promition is allowed
+        available_views = parent.meta.content_type_names
         if ContentTypes.HTML in available_views:
             return ContentTypes.HTML
         # no better match, stick with original plan
@@ -124,8 +125,7 @@ class List(FileRouteMixin, XHRPartialRoute):
         else:
             result = self.list(path, show_hidden, view, selected)
         # perform view promotion, if available
-        available_views = result['current'].meta.content_type_names
-        view = self.promote_view(view, available_views)
+        view = self.promote_view(view, result['current'])
         result.update(is_search=is_search,
                       view=view,
                       selected_name=selected)
