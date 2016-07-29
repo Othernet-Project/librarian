@@ -196,8 +196,6 @@ class HtmlMetadata(BaseMetadata):
                 data['language'] = lang
             if dom.title:
                 data['title'] = dom.title.string
-            is_formatting_on = data.get('outernet-styling') == 'yes'
-            data['outernet-styling'] = is_formatting_on
             # assets are not directly part of the metadata, but are needed
             # to be accessed from within the processor, so it's kept as an
             # instance attribute only
