@@ -48,7 +48,7 @@ class CacheStatus(XHRPartialRoute):
                    'free': cache_max,
                    'used': 0,
                    'alert': False}
-        cache_status = exts.state['ondd:cache'].get() or default
+        cache_status = exts.state['ondd_cache'].get() or default
         return dict(cache_status=cache_status)
 
 

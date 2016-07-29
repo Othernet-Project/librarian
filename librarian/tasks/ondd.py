@@ -51,7 +51,7 @@ class ONDDQueryCacheStorageStatusTask(Task):
                             free=virt_free,
                             used=cache_used,
                             alert=cache_critical)
-        exts.state['ondd:cache'].set(cache_status)
+        exts.state['ondd_cache'].set(cache_status)
 
         # First clean any notifications
         db = exts.databases.librarian
