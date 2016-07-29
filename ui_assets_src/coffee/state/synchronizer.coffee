@@ -10,7 +10,10 @@
   window.state.get = (name) ->
     instance = window.state[name]
     if !instance?
-      instance = new provider()
+      unwrapped = new provider()
+      wrapper = () -> @get()
+      instance = wrapper.bind unwrapped
+      instance.__proto__ = unwrapped
       window.state[name] = instance
     instance
 
@@ -21,18 +24,18 @@
       @data = undefined
       @callbacks = []
 
-    invokeCallbacks: () ->
+    invokeCallbacks: () =>
       for fn in @callbacks
         fn @
 
-    set: (data) ->
+    set: (data) =>
       @data = data 
       @invokeCallbacks()
 
-    get: () ->
+    get: () =>
       @data
 
-    onchange: (callback) ->
+    onchange: (callback) =>
       if $.inArray(callback, @callbacks) == -1
         @callbacks.push callback
 
@@ -41,7 +44,6 @@
     for key, value of data
       instance = window.state.get key
       instance.set value
-
 
   fetch = () ->
     res = $.get stateUrl

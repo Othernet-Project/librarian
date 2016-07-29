@@ -7,21 +7,17 @@
 
   class binder
 
-    constructor: (element, elementAttribute, provider, dataPath) ->
+    constructor: (element, elementAttribute, provider, expression) ->
       @element = element
       @elementAttribute = elementAttribute
       @provider = provider
-      @dataPath = dataPath
+      @expression = expression
       @provider.onchange (@updateDom.bind @)
 
     updateDom: (provider) ->
-      data = provider.get()
-
-      if @dataPath.length > 0
-        extractor = (src, key) -> src[key]
-        value = @dataPath.reduce extractor, data
-      else
-        value = data
+      body = "with(state) { return #{@expression}; }"
+      fn = new Function 'state', body
+      value = fn window.state
 
       if @elementAttribute == 'text'
         @element.text value
@@ -33,16 +29,27 @@
 
   bindTo = (element, bindingId) ->
     target = element.data 'bind'
-    # split `text: data_source.nested.attr` on `:` into it's components
+
+    # split `text: provider_name().nested.attr` on `:` into it's components
     components = target.split /:(.+)/
-    # target attribute of element that needs updating when data changes
+
+    # target attribute of element that needs updating when data changes,
+    # e.g. text, html, id, data-something
     elementAttribute = components[0].trim()
-    # split `provider_name.nested.attr` on `.` into it's segments
-    segments = components[1].trim().split '.'
-    providerName = segments[0]
-    dataPath = segments.slice 1
+
+    # the right portion of the binding, everything after `:`
+    expression = components[1].trim()
+
+    # extract the provider name from an expression like `provider().nested.attr`
+    match = expression.match /(.+\(\)).+/
+    if match.length != 2
+      throw new Error "Invalid binding: " + target
+
+    # remove parens to get the actual provider name
+    providerName = match[1].replace "()", ""
+
     provider = window.state.get providerName
-    instance = new binder(element, elementAttribute, provider, dataPath)
+    instance = new binder(element, elementAttribute, provider, expression)
     bindings[bindingId] = instance
 
 

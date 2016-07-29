@@ -5,25 +5,19 @@
   bindings = {};
   bindingIds = 0;
   binder = (function() {
-    function binder(element, elementAttribute, provider, dataPath) {
+    function binder(element, elementAttribute, provider, expression) {
       this.element = element;
       this.elementAttribute = elementAttribute;
       this.provider = provider;
-      this.dataPath = dataPath;
+      this.expression = expression;
       this.provider.onchange(this.updateDom.bind(this));
     }
 
     binder.prototype.updateDom = function(provider) {
-      var data, extractor, value;
-      data = provider.get();
-      if (this.dataPath.length > 0) {
-        extractor = function(src, key) {
-          return src[key];
-        };
-        value = this.dataPath.reduce(extractor, data);
-      } else {
-        value = data;
-      }
+      var body, fn, value;
+      body = "with(state) { return " + this.expression + "; }";
+      fn = new Function('state', body);
+      value = fn(window.state);
       if (this.elementAttribute === 'text') {
         return this.element.text(value);
       } else if (this.elementAttribute === 'html') {
@@ -37,15 +31,18 @@
 
   })();
   bindTo = function(element, bindingId) {
-    var components, dataPath, elementAttribute, instance, provider, providerName, segments, target;
+    var components, elementAttribute, expression, instance, match, provider, providerName, target;
     target = element.data('bind');
     components = target.split(/:(.+)/);
     elementAttribute = components[0].trim();
-    segments = components[1].trim().split('.');
-    providerName = segments[0];
-    dataPath = segments.slice(1);
+    expression = components[1].trim();
+    match = expression.match(/(.+\(\)).+/);
+    if (match.length !== 2) {
+      throw new Error("Invalid binding: " + target);
+    }
+    providerName = match[1].replace("()", "");
     provider = window.state.get(providerName);
-    instance = new binder(element, elementAttribute, provider, dataPath);
+    instance = new binder(element, elementAttribute, provider, expression);
     return bindings[bindingId] = instance;
   };
   dataBind = function() {
