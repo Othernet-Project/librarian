@@ -30,9 +30,10 @@
       for fn in @callbacks
         fn @
 
-    set: (data) =>
+    set: (data, stealth=false) =>
       @data = data 
-      @invokeCallbacks()
+      if not stealth
+        @invokeCallbacks()
 
     get: () =>
       @data
@@ -41,12 +42,17 @@
       if $.inArray(callback, @callbacks) == -1
         @callbacks.push callback
 
-    extend: (properties) =>
-      for key, fn of properties
-        updater = (provider) ->
+    postprocess: (processors) =>
+      for key, fn of processors
+        processor = (provider) ->
           data = provider.get()
-          data[key] = fn data
-        @onchange updater
+          if typeof data is 'object'
+            data[key] = fn data
+          else
+            processed = fn data
+            provider.set processed, true
+        # add processor func to list of callbacks
+        @onchange processor
 
   update = (data) ->
     for key, value of data

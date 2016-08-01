@@ -23,7 +23,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   };
   provider = (function() {
     function provider() {
-      this.extend = bind(this.extend, this);
+      this.postprocess = bind(this.postprocess, this);
       this.onchange = bind(this.onchange, this);
       this.get = bind(this.get, this);
       this.set = bind(this.set, this);
@@ -43,9 +43,14 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       return results;
     };
 
-    provider.prototype.set = function(data) {
+    provider.prototype.set = function(data, stealth) {
+      if (stealth == null) {
+        stealth = false;
+      }
       this.data = data;
-      return this.invokeCallbacks();
+      if (!stealth) {
+        return this.invokeCallbacks();
+      }
     };
 
     provider.prototype.get = function() {
@@ -58,17 +63,22 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       }
     };
 
-    provider.prototype.extend = function(properties) {
-      var fn, key, results, updater;
+    provider.prototype.postprocess = function(processors) {
+      var fn, key, processor, results;
       results = [];
-      for (key in properties) {
-        fn = properties[key];
-        updater = function(provider) {
-          var data;
+      for (key in processors) {
+        fn = processors[key];
+        processor = function(provider) {
+          var data, processed;
           data = provider.get();
-          return data[key] = fn(data);
+          if (typeof data === 'object') {
+            return data[key] = fn(data);
+          } else {
+            processed = fn(data);
+            return provider.set(processed, true);
+          }
         };
-        results.push(this.onchange(updater));
+        results.push(this.onchange(processor));
       }
       return results;
     };
