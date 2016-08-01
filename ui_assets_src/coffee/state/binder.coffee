@@ -30,7 +30,7 @@
   bindTo = (element, bindingId) ->
     target = element.data 'bind'
 
-    # split `text: provider_name().nested.attr` on `:` into it's components
+    # split `text: provider_name.nested.attr` on `:` into it's components
     components = target.split /:(.+)/
 
     # target attribute of element that needs updating when data changes,
@@ -40,14 +40,13 @@
     # the right portion of the binding, everything after `:`
     expression = components[1].trim()
 
-    # extract the provider name from an expression like `provider().nested.attr`
-    match = expression.match /(.+\(\)).+/
-    if match.length != 2
+    # extract the provider name from an expression like `provider.nested.attr`
+    match = expression.match /[a-zA-Z_$][a-zA-Z_$0-9]*/
+    if match.length != 1
       throw new Error "Invalid binding: " + target
 
-    # remove parens to get the actual provider name
-    providerName = match[1].replace "()", ""
-
+    # get provider name from match
+    providerName = match[0]
     provider = window.state.get providerName
     instance = new binder(element, elementAttribute, provider, expression)
     bindings[bindingId] = instance
