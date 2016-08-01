@@ -42,17 +42,37 @@
       if $.inArray(callback, @callbacks) == -1
         @callbacks.push callback
 
-    postprocess: (processors) =>
-      for key, fn of processors
-        processor = (provider) ->
-          data = provider.get()
-          if typeof data is 'object'
-            data[key] = fn data
-          else
-            processed = fn data
-            provider.set processed, true
-        # add processor func to list of callbacks
-        @onchange processor
+    postprocessor: (fn, target=null) =>
+      processor = (provider) ->
+        data = provider.get()
+
+        # pass the whole data to the processor as it might calculate it's
+        # return value based on multiple values of the underlying structure
+        processed = fn data
+
+        if target == null
+          # not a partial update, the return value of the post-processor
+          # will overwrite the whole previous value in stealth mode, not
+          # triggering the onchanged callbacks
+          provider.set processed, true
+          return
+
+        # a partial update, the return value of the post-processor
+        # will only update the specified target
+        if typeof target is 'string'
+          data[target] = processed
+          return
+
+        # target is an array of keys and/or indexes targeting a leaf of
+        # the underlying structure
+        while target.length > 1
+          data = data[target.shift()]
+
+        data[target.shift()] = processed
+        return
+
+      # add processor func to list of callbacks
+      @onchange processor
 
   update = (data) ->
     for key, value of data

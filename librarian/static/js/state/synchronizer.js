@@ -23,7 +23,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   };
   provider = (function() {
     function provider() {
-      this.postprocess = bind(this.postprocess, this);
+      this.postprocessor = bind(this.postprocessor, this);
       this.onchange = bind(this.onchange, this);
       this.get = bind(this.get, this);
       this.set = bind(this.set, this);
@@ -63,24 +63,29 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       }
     };
 
-    provider.prototype.postprocess = function(processors) {
-      var fn, key, processor, results;
-      results = [];
-      for (key in processors) {
-        fn = processors[key];
-        processor = function(provider) {
-          var data, processed;
-          data = provider.get();
-          if (typeof data === 'object') {
-            return data[key] = fn(data);
-          } else {
-            processed = fn(data);
-            return provider.set(processed, true);
-          }
-        };
-        results.push(this.onchange(processor));
+    provider.prototype.postprocessor = function(fn, target) {
+      var processor;
+      if (target == null) {
+        target = null;
       }
-      return results;
+      processor = function(provider) {
+        var data, processed;
+        data = provider.get();
+        processed = fn(data);
+        if (target === null) {
+          provider.set(processed, true);
+          return;
+        }
+        if (typeof target === 'string') {
+          data[target] = processed;
+          return;
+        }
+        while (target.length > 1) {
+          data = data[target.shift()];
+        }
+        data[target.shift()] = processed;
+      };
+      return this.onchange(processor);
     };
 
     return provider;
