@@ -12,7 +12,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     var config, instance;
     instance = registry[name];
     if (instance == null) {
-      instance = new provider();
+      instance = new provider(name);
       registry[name] = instance;
       config = {
         get: instance.get
@@ -22,12 +22,13 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     return instance;
   };
   provider = (function() {
-    function provider() {
+    function provider(name) {
       this.postprocessor = bind(this.postprocessor, this);
       this.onchange = bind(this.onchange, this);
       this.get = bind(this.get, this);
       this.set = bind(this.set, this);
       this.invokeCallbacks = bind(this.invokeCallbacks, this);
+      this.name = name;
       this.data = void 0;
       this.callbacks = [];
     }
@@ -54,6 +55,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     provider.prototype.get = function() {
+      if (window.state.__trapper__ != null) {
+        window.state.__trapper__(this.name);
+      }
       return this.data;
     };
 

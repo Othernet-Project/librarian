@@ -11,10 +11,10 @@
   window.state.get = (name) ->
     instance = registry[name]
     if !instance?
-      instance = new provider()
+      instance = new provider name
       registry[name] = instance
-      # add provider as a new property to state object, so the parens can
-      # be omitted when accessing them
+      # add read-only property to state object instead of provider itself, so
+      # the parens can be omitted when accessing them
       config = { get: instance.get }
       Object.defineProperty window.state, name, config
     instance
@@ -22,7 +22,8 @@
 
   class provider
 
-    constructor: ->
+    constructor: (name) ->
+      @name = name
       @data = undefined
       @callbacks = []
 
@@ -36,6 +37,10 @@
         @invokeCallbacks()
 
     get: () =>
+      # if a trapper was defined, callback with the name of the provider
+      # being accessed
+      if window.state.__trapper__?
+        window.state.__trapper__ @name
       @data
 
     onchange: (callback) =>
@@ -45,7 +50,6 @@
     postprocessor: (fn, target=null) =>
       processor = (provider) ->
         data = provider.get()
-
         # pass the whole data to the processor as it might calculate it's
         # return value based on multiple values of the underlying structure
         processed = fn data
@@ -67,7 +71,6 @@
         # the underlying structure
         while target.length > 1
           data = data[target.shift()]
-
         data[target.shift()] = processed
         return
 
