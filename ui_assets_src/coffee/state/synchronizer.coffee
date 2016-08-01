@@ -5,16 +5,18 @@
   locale = (window.location.pathname.split '/')[1]
   stateUrl = "/#{locale}/state/"
   window.state = {}
+  registry = {}
 
 
   window.state.get = (name) ->
-    instance = window.state[name]
+    instance = registry[name]
     if !instance?
-      unwrapped = new provider()
-      wrapper = () -> @get()
-      instance = wrapper.bind unwrapped
-      instance.__proto__ = unwrapped
-      window.state[name] = instance
+      instance = new provider()
+      registry[name] = instance
+      # add provider as a new property to state object, so the parens can
+      # be omitted when accessing them
+      config = { get: instance.get }
+      Object.defineProperty window.state, name, config
     instance
 
 
