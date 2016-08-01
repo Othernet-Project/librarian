@@ -41,6 +41,12 @@
       if $.inArray(callback, @callbacks) == -1
         @callbacks.push callback
 
+    extend: (properties) =>
+      for key, fn of properties
+        updater = (provider) ->
+          data = provider.get()
+          data[key] = fn data
+        @onchange updater
 
   update = (data) ->
     for key, value of data
