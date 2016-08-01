@@ -36,11 +36,11 @@
     components = target.split(/:(.+)/);
     elementAttribute = components[0].trim();
     expression = components[1].trim();
-    match = expression.match(/(.+\(\)).+/);
-    if (match.length !== 2) {
+    match = expression.match(/[a-zA-Z_$][a-zA-Z_$0-9]*/);
+    if (match.length !== 1) {
       throw new Error("Invalid binding: " + target);
     }
-    providerName = match[1].replace("()", "");
+    providerName = match[0];
     provider = window.state.get(providerName);
     instance = new binder(element, elementAttribute, provider, expression);
     return bindings[bindingId] = instance;

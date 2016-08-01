@@ -2,27 +2,28 @@
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 (function(window, $, templates) {
-  var FETCH_INTERVAL, fetch, locale, provider, stateUrl, update;
+  var FETCH_INTERVAL, fetch, locale, provider, registry, stateUrl, update;
   FETCH_INTERVAL = 5000;
   locale = (window.location.pathname.split('/'))[1];
   stateUrl = "/" + locale + "/state/";
   window.state = {};
+  registry = {};
   window.state.get = function(name) {
-    var instance, unwrapped, wrapper;
-    instance = window.state[name];
+    var config, instance;
+    instance = registry[name];
     if (instance == null) {
-      unwrapped = new provider();
-      wrapper = function() {
-        return this.get();
+      instance = new provider();
+      registry[name] = instance;
+      config = {
+        get: instance.get
       };
-      instance = wrapper.bind(unwrapped);
-      instance.__proto__ = unwrapped;
-      window.state[name] = instance;
+      Object.defineProperty(window.state, name, config);
     }
     return instance;
   };
   provider = (function() {
     function provider() {
+      this.extend = bind(this.extend, this);
       this.onchange = bind(this.onchange, this);
       this.get = bind(this.get, this);
       this.set = bind(this.set, this);
@@ -55,6 +56,21 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       if ($.inArray(callback, this.callbacks) === -1) {
         return this.callbacks.push(callback);
       }
+    };
+
+    provider.prototype.extend = function(properties) {
+      var fn, key, results, updater;
+      results = [];
+      for (key in properties) {
+        fn = properties[key];
+        updater = function(provider) {
+          var data;
+          data = provider.get();
+          return data[key] = fn(data);
+        };
+        results.push(this.onchange(updater));
+      }
+      return results;
     };
 
     return provider;
