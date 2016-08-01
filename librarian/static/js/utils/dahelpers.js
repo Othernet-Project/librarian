@@ -1023,6 +1023,29 @@ define(function() {
     pounds: function(num, dec, si, suffix) {
       return h.currency(num, h.GBP, dec, null, null, si, suffix);
     },
+    SIZES: 'KMGTP',
+    hsize: function(size, unit, step, rounding, sep) {
+      var order, prefix;
+      if (unit == null) {
+        unit = 'B';
+      }
+      if (step == null) {
+        step = 1024;
+      }
+      if (rounding == null) {
+        rounding = 2;
+      }
+      if (sep == null) {
+        sep = ' ';
+      }
+      order = -1;
+      while (size > step) {
+        size /= step;
+        order += 1;
+      }
+      prefix = order < 0 ? '' : h.SIZES[order];
+      return (size.toFixed(rounding)) + sep + prefix + unit;
+    },
     wrap: function(s, len, sep) {
       var l, lines, rxp;
       if (len == null) {

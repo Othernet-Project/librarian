@@ -1718,6 +1718,43 @@ define () ->
     pounds: (num, dec, si, suffix) ->
       h.currency num, h.GBP, dec, null, null, si, suffix
 
+    # ### `#SIZES`
+    #
+    # Binary prefixes, attached before the unit symbol.
+    #
+    SIZES: 'KMGTP'
+
+    # ### `#hsize(size, [unit, step, rounding, sep])`
+    #
+    # Given size in unit produce size with human-friendly units. This is a
+    # simple formatting function that takes a value, a unit in which the value
+    # is expressed, and the size of multiple (kilo, mega, giga, etc).
+    # This function rounds values to 2 decimal places and does not handle
+    # fractions. It also uses metric prefixes (K, M, G, etc) and only goes up
+    # to Peta (P, quadrillion) prefix. The number of decimal places can be
+    # customized using the `rounding` argument.
+    # The size multiple (`step` parameter) is 1024 by default, suitable for
+    # expressing values related to size of data on disk.
+    # The `sep` argument represents a separator between values and units.
+    #
+    # Example:
+    #
+    #     dahelpers.hsize(12);                  // returns '12.00 B'
+    #     dahelpers.hsize(1030);                // returns '1.01 KB'
+    #     dahelpers.hsize(1536);                // returns '1.50 KB'
+    #     dahelpers.hsize(2097152);             // returns '2.00 MB'
+    #     dahelpers.hsize(12, null, null, '');  // returns '12.00B'
+    #
+    hsize: (size, unit='B', step=1024, rounding=2, sep=' ') ->
+      order = -1
+
+      while size > step
+        size /= step
+        order += 1
+
+      prefix = if order < 0 then '' else h.SIZES[order]
+      return (size.toFixed rounding) + sep + prefix + unit
+
     # ### `#wrap(s, [len, sep])`
     #
     # Wraps the text to make lines of `len` length separated by `sep`
