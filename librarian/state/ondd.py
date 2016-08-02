@@ -1,6 +1,6 @@
 from ..data.state.provider import StateProvider
 
 
-class ONDDCacheProvider(StateProvider):
-    name = 'ondd_cache'
+class ONDDProvider(StateProvider):
+    name = 'ondd'
     allowed_methods = 'rw'
