@@ -1,24 +1,35 @@
-((window, $) ->
-
-  CHECK_INTERVAL = 3000
+((window, $, template) ->
 
   section = $ '#dashboard-ondd'
   cacheContainer = null
-  cacheUrl = null
+  messageTemplateId = "onddCacheStatusMessage"
 
 
-  updateCache = () ->
-    cacheContainer.load cacheUrl
-    section.trigger 'remax'
+  usedPercentage = (data) ->
+    ( data.cache.used / data.cache.total * 100 ).toFixed 2
+
+
+  hFree = (data) ->
+    dahelpers.hsize data.cache.free
+
+
+  msgFree = (data) ->
+    templates[messageTemplateId]
+      .replace('{percentage}', data.cache.usedPercentage)
+      .replace('{amount}', data.cache.hFree)
 
 
   initPlugin = (e) ->
-    cacheContainer = section.find '#ondd-cache-status'
-    cacheUrl = cacheContainer.data 'url'
-    setInterval updateCache, CHECK_INTERVAL
+    $("##{messageTemplateId}").loadTemplate()
+
+    cache = window.state.get 'ondd'
+    cache.postprocessor usedPercentage, ['cache', 'usedPercentage']
+    cache.postprocessor hFree, ['cache', 'hFree']
+    cache.postprocessor msgFree, ['cache', 'msgFree']
 
 
   section.on 'dashboard-plugin-loaded', initPlugin
 
-) this, this.jQuery
+
+) this, this.jQuery, this.template
 
