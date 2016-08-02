@@ -35,23 +35,6 @@ class FileList(XHRPartialRoute):
         return dict(files=exts.ondd.get_transfers())
 
 
-class CacheStatus(XHRPartialRoute):
-    path = '/ondd/cache/'
-    template_func = template
-    template_name = 'ondd/_cache_status'
-    partial_template_name = 'ondd/_cache_status'
-    exclude_plugins = ['session_plugin', 'user_plugin', 'setup_plugin']
-
-    def get(self):
-        cache_max = self.config['ondd.cache_quota']
-        default = {'total': cache_max,
-                   'free': cache_max,
-                   'used': 0,
-                   'alert': False}
-        cache_status = exts.state['ondd_cache'].get() or default
-        return dict(cache_status=cache_status)
-
-
 class Settings(XHRPartialFormRoute):
     path = '/ondd/settings/'
     template_func = template
