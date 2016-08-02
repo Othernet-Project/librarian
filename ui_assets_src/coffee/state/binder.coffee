@@ -13,24 +13,26 @@
 
   class binder
 
-    constructor: (element, elementAttribute, provider, expression) ->
+    constructor: (element, provider, expression) ->
       @element = element
-      @elementAttribute = elementAttribute
       @provider = provider
       @expression = expression
       @provider.onchange @updateDom
 
-    updateDom: (provider) =>
-      value = safeEval @expression, window.state
-
-      if @elementAttribute == 'text'
+    setAttribute: (attribute, value) =>
+      if attribute == 'text'
         @element.text value
-      else if @elementAttribute == 'html'
+      else if attribute == 'html'
         @element.html value
-      else if @elementAttribute == 'style'
+      else if attribute == 'style'
         @element.css value
       else
-        @element.attr @elementAttribute, value 
+        @element.attr attribute, value
+
+    updateDom: (provider) =>
+      resolved = safeEval @expression, window.state
+      for attr, value of resolved
+        @setAttribute attr, value
 
 
   catchProvider = (expression) ->
@@ -65,21 +67,11 @@
 
   bindTo = (element, bindingId) ->
     target = element.data 'bind'
-
-    # split `text: provider_name.nested.attr` on `:` into it's components
-    components = target.split /:(.+)/
-
-    # target attribute of element that needs updating when data changes,
-    # e.g. text, html, id, data-something
-    elementAttribute = components[0].trim()
-
-    # the right portion of the binding, everything after `:`
-    expression = components[1].trim()
-
+    expression = "{#{target}}"
     # extract the provider name from an expression using the trapper mechanism
     providerName = catchProvider expression
     provider = window.state.get providerName
-    instance = new binder(element, elementAttribute, provider, expression)
+    instance = new binder(element, provider, expression)
     bindings[bindingId] = instance
 
 

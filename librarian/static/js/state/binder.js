@@ -13,27 +13,36 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     return fn(context);
   };
   binder = (function() {
-    function binder(element, elementAttribute, provider, expression) {
+    function binder(element, provider, expression) {
       this.updateDom = bind(this.updateDom, this);
+      this.setAttribute = bind(this.setAttribute, this);
       this.element = element;
-      this.elementAttribute = elementAttribute;
       this.provider = provider;
       this.expression = expression;
       this.provider.onchange(this.updateDom);
     }
 
-    binder.prototype.updateDom = function(provider) {
-      var value;
-      value = safeEval(this.expression, window.state);
-      if (this.elementAttribute === 'text') {
+    binder.prototype.setAttribute = function(attribute, value) {
+      if (attribute === 'text') {
         return this.element.text(value);
-      } else if (this.elementAttribute === 'html') {
+      } else if (attribute === 'html') {
         return this.element.html(value);
-      } else if (this.elementAttribute === 'style') {
+      } else if (attribute === 'style') {
         return this.element.css(value);
       } else {
-        return this.element.attr(this.elementAttribute, value);
+        return this.element.attr(attribute, value);
       }
+    };
+
+    binder.prototype.updateDom = function(provider) {
+      var attr, resolved, results, value;
+      resolved = safeEval(this.expression, window.state);
+      results = [];
+      for (attr in resolved) {
+        value = resolved[attr];
+        results.push(this.setAttribute(attr, value));
+      }
+      return results;
     };
 
     return binder;
@@ -64,14 +73,12 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     return accessed[0];
   };
   bindTo = function(element, bindingId) {
-    var components, elementAttribute, expression, instance, provider, providerName, target;
+    var expression, instance, provider, providerName, target;
     target = element.data('bind');
-    components = target.split(/:(.+)/);
-    elementAttribute = components[0].trim();
-    expression = components[1].trim();
+    expression = "{" + target + "}";
     providerName = catchProvider(expression);
     provider = window.state.get(providerName);
-    instance = new binder(element, elementAttribute, provider, expression);
+    instance = new binder(element, provider, expression);
     return bindings[bindingId] = instance;
   };
   dataBind = function() {
