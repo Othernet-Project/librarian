@@ -69,13 +69,19 @@ STATUS_TAB_ID = 'status-tab'
                 </%ui:apps_menu>
             </%block>
             <div class="o-pulldown-menubar-hbar" id="${MENUBAR_ID}-hbar" role="menubar">
-                <a href="${nojs.comp_url('menu')}" role="button" aria-controls="${MENUBAR_ID}" class="o-pulldown-menubar-hbar-activator o-activator">
+                <%
+                    show_menu = len(list(menu_group('main'))) > 1
+                    tag_name = 'a' if show_menu else 'span'
+                %>
+                <${tag_name} href="${nojs.comp_url('menu')}" role="button" aria-controls="${MENUBAR_ID}" class="o-pulldown-menubar-hbar-activator${' o-activator' if show_menu else ''}">
                     <span class="o-pulldown-menubar-hbar-activator-label">
                         <span class="o-pulldown-menubar-hbar-activator-label-icon icon icon-outernet"></span>
                         <span class="o-pulldown-menubar-hbar-activator-label-text">${_('Toggle apps menu')}</span>
                     </span>
+                    % if show_menu:
                     <span class="o-pulldown-menubar-hbar-activator-icon icon"></span>
-                </a>
+                    % endif
+                </${tag_name}>
                 <div class="o-pulldown-menubar-hbar-bar">
                     <div class="o-contextbar o-panel" id="${CONTEXT_BAR_ID}">
                         <div class="o-panel">
