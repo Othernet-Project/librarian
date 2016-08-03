@@ -69,9 +69,10 @@
 
         # target is an array of keys and/or indexes targeting a leaf of
         # the underlying structure
-        while target.length > 1
-          data = data[target.shift()]
-        data[target.shift()] = processed
+        copy = target.slice()
+        while copy.length > 1
+          data = data[copy.shift()]
+        data[copy.shift()] = processed
         return
 
       # add processor func to list of callbacks

@@ -73,7 +73,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         target = null;
       }
       processor = function(provider) {
-        var data, processed;
+        var copy, data, processed;
         data = provider.get();
         processed = fn(data);
         if (target === null) {
@@ -84,10 +84,11 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
           data[target] = processed;
           return;
         }
-        while (target.length > 1) {
-          data = data[target.shift()];
+        copy = target.slice();
+        while (copy.length > 1) {
+          data = data[copy.shift()];
         }
-        data[target.shift()] = processed;
+        data[copy.shift()] = processed;
       };
       return this.onchange(processor);
     };
