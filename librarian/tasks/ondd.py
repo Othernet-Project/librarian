@@ -45,6 +45,9 @@ class ONDDQueryTask(Task):
             db=db)
 
     def query_cache(self):
+        """
+        Return the post-processed values of ondd cache status information.
+        """
         cache_min = exts.config['ondd.cache_min']
         cache_max = exts.config['ondd.cache_quota']
         cache_status = exts.ondd.get_cache_storage()
@@ -89,12 +92,25 @@ class ONDDQueryTask(Task):
                     alert=cache_critical)
 
     def calculate_strength(self, snr):
+        """
+        Return a string representing the estimated signal strength based on
+        the raw SNR value.
+        """
+        # dividing the raw snr value by two gives us a value between 0 and 4,
+        # which is the range of acceptable values for the indicator, with 4
+        # being max strength that translates into "full"
+        # in case it exceeds 4, it will just use the max value
         strength = min(int(snr / 2), self.MAX_STRENGTH)
         if strength == self.MAX_STRENGTH:
             strength = 'full'
         return '-{strength}'.format(strength=strength)
 
     def query_status(self):
+        """
+        Return the raw status data obtained from the ondd endpoint as-is, only
+        extended with librarian's interpretation of the signal strength, based
+        on the values that it got.
+        """
         status = exts.ondd.get_status()
         sig_state = status['state']
         sig_lut = {
@@ -105,6 +121,8 @@ class ONDDQueryTask(Task):
             ondd_consts.STATE_FRAME_LOCK: (self.calculate_strength, '-recv'),
         }
         (fn, suffix) = sig_lut[sig_state]
+        # this results in a string such as "-2-recv", "-1-lock", etc or in case
+        # there is no usable signal it's just "-search" or "-detect"
         strength = fn(status['snr']) + suffix
         status.update(strength=strength)
         return status
