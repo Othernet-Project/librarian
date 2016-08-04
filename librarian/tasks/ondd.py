@@ -1,4 +1,5 @@
 from greentasks import Task
+from ondd_ipc import consts as ondd_consts
 
 from ..core.exts import ext_container as exts
 
@@ -6,17 +7,44 @@ from ..core.exts import ext_container as exts
 _ = lambda x: x
 
 
-class ONDDQueryCacheStorageStatusTask(Task):
+class ONDDQueryTask(Task):
     name = 'ondd'
     periodic = True
 
+    #: Maximum signal strength usable by the indicator
+    MAX_STRENGTH = 4
+
     def get_start_delay(self):
-        return exts.config['ondd.cache_refresh_rate']
+        return exts.config['ondd.refresh_rate']
 
     def get_delay(self, previous_delay):
-        return exts.config['ondd.cache_refresh_rate']
+        return exts.config['ondd.refresh_rate']
 
-    def run(self):
+    def send_cache_warning(self):
+        db = exts.databases.librarian
+        exts.notifications.send(
+            # Translators, notification displayed when internal cache storage
+            # is running out of disk space
+            _('Download capacity is getting low. '
+              'Please ask the administrator to take action.'),
+            category='ondd_cache',
+            dismissable=False,
+            priority=exts.notifications.CRITICAL,
+            group='guest',
+            db=db)
+        exts.notifications.send(
+            # Translators, notification displayed when internal cache storage
+            # is running out of disk space
+            _('Download cache capacity is getting low. You will stop receiving'
+              ' new content if you run out of storage space. Please move some '
+              'content from the internal storage to an external one.'),
+            category='ondd_cache',
+            dismissable=False,
+            priority=exts.notifications.CRITICAL,
+            group='superuser',
+            db=db)
+
+    def query_cache(self):
         cache_min = exts.config['ondd.cache_min']
         cache_max = exts.config['ondd.cache_quota']
         cache_status = exts.ondd.get_cache_storage()
@@ -47,42 +75,45 @@ class ONDDQueryCacheStorageStatusTask(Task):
         # Sanity check
         assert virt_free + cache_used == cache_max
 
-        cache_status = dict(total=cache_max,
-                            free=virt_free,
-                            used=cache_used,
-                            alert=cache_critical)
-        provider = exts.state['ondd']
-        data = provider.get() or {}
-        data.update(cache=cache_status)
-        provider.set(data)
-
         # First clean any notifications
         db = exts.databases.librarian
         exts.notifications.delete_by_category('ondd_cache', db)
 
-        if not cache_critical:
-            # We have enough free space, so bail
-            return
+        if cache_critical:
+            # Now we also need to warn the user about low cache capacity
+            self.send_cache_warning()
 
-        # Now we also need to warn the user about low cache capacity
-        exts.notifications.send(
-            # Translators, notification displayed when internal cache storage
-            # is running out of disk space
-            _('Download capacity is getting low. '
-              'Please ask the administrator to take action.'),
-            category='ondd_cache',
-            dismissable=False,
-            priority=exts.notifications.CRITICAL,
-            group='guest',
-            db=db)
-        exts.notifications.send(
-            # Translators, notification displayed when internal cache storage
-            # is running out of disk space
-            _('Download cache capacity is getting low. You will stop receiving'
-              ' new content if you run out of storage space. Please move some '
-              'content from the internal storage to an external one.'),
-            category='ondd_cache',
-            dismissable=False,
-            priority=exts.notifications.CRITICAL,
-            group='superuser',
-            db=db)
+        return dict(total=cache_max,
+                    free=virt_free,
+                    used=cache_used,
+                    alert=cache_critical)
+
+    def calculate_strength(self, snr):
+        strength = min(int(snr / 2), self.MAX_STRENGTH)
+        if strength == self.MAX_STRENGTH:
+            strength = 'full'
+        return '-{strength}'.format(strength=strength)
+
+    def query_status(self):
+        status = exts.ondd.get_status()
+        sig_state = status['state']
+        sig_lut = {
+            ondd_consts.STATE_SEARCH: (lambda x: '-search', ''),
+            ondd_consts.STATE_SIGDET: (lambda x: '-detect', ''),
+            ondd_consts.STATE_CONST_LOCK: (self.calculate_strength, ''),
+            ondd_consts.STATE_CODE_LOCK: (self.calculate_strength, '-lock'),
+            ondd_consts.STATE_FRAME_LOCK: (self.calculate_strength, '-recv'),
+        }
+        (fn, suffix) = sig_lut[sig_state]
+        strength = fn(status['snr']) + suffix
+        status.update(strength=strength)
+        return status
+
+    def run(self):
+        cache = self.query_cache()
+        status = self.query_status()
+        # update global state through provider
+        data = dict(cache=cache, status=status)
+        provider = exts.state['ondd']
+        provider.set(data)
+
