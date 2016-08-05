@@ -16,8 +16,15 @@ def test___get_key(container):
 
 
 def test___get(container):
-    container._StateContainer__get('testkey')
+    ret_val = container._StateContainer__get('testkey', None)
     container._cache.get.assert_called_once_with('testkey')
+    assert ret_val is container._cache.get.return_value
+
+
+def test___get_default_value(container):
+    container._cache.get.return_value = None
+    ret_val = container._StateContainer__get('testkey', 42)
+    assert ret_val == 42
 
 
 def test___set(container):

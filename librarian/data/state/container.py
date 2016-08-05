@@ -32,12 +32,15 @@ class StateContainer(object):
                                         id=self._id,
                                         provider=provider)
 
-    def __get(self, key):
+    def __get(self, key, default):
         """
         Callback function invoked by :py:class:`StorageProvider` instances when
         they query for their data.
         """
-        return self._cache.get(key)
+        data = self._cache.get(key)
+        if data is None:
+            return default
+        return data
 
     def __set(self, provider_name, key, data, timeout):
         """

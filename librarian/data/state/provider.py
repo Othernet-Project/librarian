@@ -33,6 +33,8 @@ class StateProvider(object):
     allowed_modes = (READ, WRITE)
     #: Default timeout value (0 - never times out)
     timeout = 0
+    #: Default value to be returned if not set
+    default_value = None
 
     def __init__(self, getter, setter, onchange):
         if not self.name:
@@ -76,6 +78,12 @@ class StateProvider(object):
         """
         return self.timeout
 
+    def get_default_value(self):
+        """
+        Return the default value to be returned in case data was not set.
+        """
+        return self.default_value
+
     def get(self):
         """
         Return data (if possible) that is managed by this provider.
@@ -89,7 +97,8 @@ class StateProvider(object):
             raise AccessPermissionDenied("StateProvider '{}' denied read"
                                          " access".format(self.name))
         # read and return data
-        return self._getter()
+        default = self.get_default_value()
+        return self._getter(default)
 
     def set(self, data):
         """
