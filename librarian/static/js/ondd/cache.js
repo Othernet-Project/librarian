@@ -14,12 +14,12 @@
     return templates[messageTemplateId].replace('{percentage}', data.cache.usedPercentage).replace('{amount}', data.cache.hFree);
   };
   initPlugin = function(e) {
-    var cache;
+    var provider;
     $("#" + messageTemplateId).loadTemplate();
-    cache = window.state.get('ondd');
-    cache.postprocessor(usedPercentage, ['cache', 'usedPercentage']);
-    cache.postprocessor(hFree, ['cache', 'hFree']);
-    return cache.postprocessor(msgFree, ['cache', 'msgFree']);
+    provider = window.state.provider('ondd');
+    provider.postprocessor(usedPercentage, ['cache', 'usedPercentage']);
+    provider.postprocessor(hFree, ['cache', 'hFree']);
+    return provider.postprocessor(msgFree, ['cache', 'msgFree']);
   };
   return section.on('dashboard-plugin-loaded', initPlugin);
 })(this, this.jQuery, this.template);

@@ -22,10 +22,10 @@
   initPlugin = (e) ->
     $("##{messageTemplateId}").loadTemplate()
 
-    cache = window.state.get 'ondd'
-    cache.postprocessor usedPercentage, ['cache', 'usedPercentage']
-    cache.postprocessor hFree, ['cache', 'hFree']
-    cache.postprocessor msgFree, ['cache', 'msgFree']
+    provider = window.state.provider 'ondd'
+    provider.postprocessor usedPercentage, ['cache', 'usedPercentage']
+    provider.postprocessor hFree, ['cache', 'hFree']
+    provider.postprocessor msgFree, ['cache', 'msgFree']
 
 
   section.on 'dashboard-plugin-loaded', initPlugin
