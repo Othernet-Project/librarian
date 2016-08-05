@@ -80,7 +80,7 @@
 
   update = (data) ->
     for key, value of data
-      instance = window.state.get key
+      instance = window.state.provider key
       instance.set value
 
   fetch = () ->

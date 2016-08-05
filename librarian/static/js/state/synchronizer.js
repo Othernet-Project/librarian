@@ -8,7 +8,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   stateUrl = "/" + locale + "/state/";
   window.state = {};
   registry = {};
-  window.state.get = function(name) {
+  window.state.provider = function(name) {
     var config, instance;
     instance = registry[name];
     if (instance == null) {
@@ -101,7 +101,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     results = [];
     for (key in data) {
       value = data[key];
-      instance = window.state.get(key);
+      instance = window.state.provider(key);
       results.push(instance.set(value));
     }
     return results;

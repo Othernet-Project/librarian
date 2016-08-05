@@ -77,7 +77,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     target = element.data('bind');
     expression = "{" + target + "}";
     providerName = catchProvider(expression);
-    provider = window.state.get(providerName);
+    provider = window.state.provider(providerName);
     instance = new binder(element, provider, expression);
     return bindings[bindingId] = instance;
   };
