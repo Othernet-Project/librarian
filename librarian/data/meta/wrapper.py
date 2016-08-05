@@ -22,6 +22,7 @@ class MetaWrapper(object):
 
     def __init__(self, data):
         self._data = data
+        self._metadata = self._data.get('metadata', {})
 
     def get(self, key, language=NO_LANGUAGE, default=None):
         """
@@ -35,11 +36,11 @@ class MetaWrapper(object):
         caster_fn = self.CASTERS.get(key, lambda x: x)
         try:
             # lookup under specific language / key
-            return caster_fn(self._data[language][key])
+            return caster_fn(self._metadata[language][key])
         except KeyError:
             try:
                 # specific language not found, try language-less version
-                return caster_fn(self._data[NO_LANGUAGE][key])
+                return caster_fn(self._metadata[NO_LANGUAGE][key])
             except KeyError:
                 # return default value since no data was found under given keys
                 return default
