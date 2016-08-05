@@ -132,6 +132,6 @@ class ONDDQueryTask(Task):
         status = self.query_status()
         # update global state through provider
         data = dict(cache=cache, status=status)
-        provider = exts.state['ondd']
+        provider = exts.state.provider('ondd')
         provider.set(data)
 
