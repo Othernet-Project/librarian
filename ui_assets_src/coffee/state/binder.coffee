@@ -70,7 +70,7 @@
     expression = "{#{target}}"
     # extract the provider name from an expression using the trapper mechanism
     providerName = catchProvider expression
-    provider = window.state.get providerName
+    provider = window.state.provider providerName
     instance = new binder(element, provider, expression)
     bindings[bindingId] = instance
 

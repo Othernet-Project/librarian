@@ -8,7 +8,7 @@
   registry = {}
 
 
-  window.state.get = (name) ->
+  window.state.provider = (name) ->
     instance = registry[name]
     if !instance?
       instance = new provider name

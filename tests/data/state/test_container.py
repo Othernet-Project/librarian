@@ -46,8 +46,14 @@ def test___onchange(container):
 def test_provider_access(container):
     prov = mock.Mock()
     container._registry['prov'] = prov
-    assert container['prov'] is prov
-    assert container.prov is prov
+    assert container.provider('prov') is prov
+
+
+def test_provider_value_access(container):
+    prov = mock.Mock()
+    container._registry['prov'] = prov
+    assert container['prov'] == prov.get.return_value
+    assert container.prov == prov.get.return_value
 
 
 def test_register_already_exists(container):

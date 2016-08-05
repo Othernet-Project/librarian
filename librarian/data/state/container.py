@@ -68,11 +68,17 @@ class StateContainer(object):
 
     def __getattr__(self, name):
         """
-        Return a storage provider instance specified by ``name``.
+        Shorthand for getting the provider and calling it's ``get`` method.
         """
-        return self._registry[name]
+        return self._registry[name].get()
 
     def __getitem__(self, name):
+        """
+        Shorthand for getting the provider and calling it's ``get`` method.
+        """
+        return self._registry[name].get()
+
+    def provider(self, name):
         """
         Return a storage provider instance specified by ``name``.
         """
