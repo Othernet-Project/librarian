@@ -6,6 +6,6 @@ class ONDDProvider(StateProvider):
     allowed_methods = 'rw'
     default_value = {
         'status': {
-            'strength': ''
+            'indicator': '-search'
         }
     }

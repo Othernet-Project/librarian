@@ -1,5 +1,5 @@
 from greentasks import Task
-from ondd_ipc import consts as ondd_consts
+from ondd_ipc import consts as c_ondd
 
 from ..core.exts import ext_container as exts
 
@@ -91,20 +91,6 @@ class ONDDQueryTask(Task):
                     used=cache_used,
                     alert=cache_critical)
 
-    def calculate_strength(self, snr):
-        """
-        Return a string representing the estimated signal strength based on
-        the raw SNR value.
-        """
-        # dividing the raw snr value by two gives us a value between 0 and 4,
-        # which is the range of acceptable values for the indicator, with 4
-        # being max strength that translates into "full"
-        # in case it exceeds 4, it will just use the max value
-        strength = min(int(snr / 2), self.MAX_STRENGTH)
-        if strength == self.MAX_STRENGTH:
-            strength = 'full'
-        return '-{strength}'.format(strength=strength)
-
     def query_status(self):
         """
         Return the raw status data obtained from the ondd endpoint as-is, only
@@ -113,18 +99,25 @@ class ONDDQueryTask(Task):
         """
         status = exts.ondd.get_status()
         sig_state = status['state']
-        sig_lut = {
-            ondd_consts.STATE_SEARCH: (lambda x: '-search', ''),
-            ondd_consts.STATE_SIGDET: (lambda x: '-detect', ''),
-            ondd_consts.STATE_CONST_LOCK: (self.calculate_strength, ''),
-            ondd_consts.STATE_CODE_LOCK: (self.calculate_strength, '-lock'),
-            ondd_consts.STATE_FRAME_LOCK: (self.calculate_strength, '-recv'),
+        is_receiving = any(strm['bitrate'] > 0 for strm in status['streams'])
+        # dividing the raw snr value by two gives us a value between 0 and 4,
+        # which is the range of acceptable values for the indicator, with 4
+        # being max strength that translates into "full"
+        # in case it exceeds 4, it will just use the max value
+        strength = min(int(status['snr'] / 2), self.MAX_STRENGTH)
+        if strength == self.MAX_STRENGTH:
+            strength = 'full'
+        middle = '-{strength}'.format(strength=strength)
+        state_lut = {
+            c_ondd.STATE_SEARCH: '-search',
+            c_ondd.STATE_SIGDET: '-detect',
+            c_ondd.STATE_CONST_LOCK: middle,
+            c_ondd.STATE_CODE_LOCK: middle + '-lock',
+            c_ondd.STATE_FRAME_LOCK: middle + ('-lock', '-recv')[is_receiving],
         }
-        (fn, suffix) = sig_lut[sig_state]
         # this results in a string such as "-2-recv", "-1-lock", etc or in case
         # there is no usable signal it's just "-search" or "-detect"
-        strength = fn(status['snr']) + suffix
-        status.update(strength=strength)
+        status.update(indicator=state_lut[sig_state])
         return status
 
     def run(self):
