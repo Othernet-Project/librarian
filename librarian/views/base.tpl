@@ -82,7 +82,9 @@ STATUS_TAB_ID = 'status-tab'
                         <%block name="menubar_panel"/>
                         </div>
                         <div class="o-panel">
-                            <span class="o-signal-status icon" data-bind="class: 'o-signal-status icon icon-signal' + ondd.status.strength"></span>
+                            <span class="o-contextbar-menu">
+                                <span class="icon ${'icon-signal' + th.state.ondd['status']['strength']}" data-bind="class: 'icon icon-signal' + ondd.status.strength"></span>
+                            </span>
                             <a href="${nojs.comp_url('sidebar')}" class="o-contextbar-menu" role="button" arial-controls="${CONTEXT_MENU_ID}">
                                 <span class="o-contextbar-menu-label">${_('Toggle context menu')}</span>
                                 <span class="o-contextbar-menu-icon icon"></span>
