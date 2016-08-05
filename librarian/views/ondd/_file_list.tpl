@@ -24,6 +24,8 @@ def truncate_name(name, max_size=50, separator='...'):
     return name[0:first_len] + separator + name[(name_len - second_len):]
 %>
 
+<% files = th.state.ondd['transfers'] %>
+
 % if not files:
     ## Translators, shown on dashboard when no files are currently being
     ## downloaded

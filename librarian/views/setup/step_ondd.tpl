@@ -35,7 +35,7 @@
             </p>
         </div>
 
-        <div id="signal-status" class="signal-status ondd-status" data-url="${i18n_url('ondd:status')}">
+        <div id="signal-status" class="signal-status ondd-status">
             ${status.body()}
         </div>
     </div>

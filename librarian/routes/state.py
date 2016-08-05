@@ -7,6 +7,7 @@ from ..utils.route_mixins import JSONResponseMixin
 class StateRoute(JSONResponseMixin, NonIterableRouteBase):
     name = 'state:handler'
     path = '/state/'
+    exclude_plugins = ['setup_plugin']
 
     def get(self):
         providers = exts.state.fetch_changes()

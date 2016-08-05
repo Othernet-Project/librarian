@@ -120,11 +120,20 @@ class ONDDQueryTask(Task):
         status.update(indicator=state_lut[sig_state])
         return status
 
+    def query_transfers(self):
+        """
+        Return the active transfers as reported by the ondd endpoint.
+        """
+        return exts.ondd.get_transfers()
+
     def run(self):
         cache = self.query_cache()
         status = self.query_status()
+        transfers = self.query_transfers()
         # update global state through provider
-        data = dict(cache=cache, status=status)
+        data = dict(cache=cache,
+                    status=status,
+                    transfers=transfers)
         provider = exts.state.provider('ondd')
         provider.set(data)
 

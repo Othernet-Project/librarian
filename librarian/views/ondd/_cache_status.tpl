@@ -1,4 +1,5 @@
 <% 
+cache_status = th.state.ondd['cache']
 used_pct = round(float(cache_status['used']) / cache_status['total'] * 100, 2)
 ## Translators, shows the disk space status of the storage where ondd download cache is stored 
 status_template = _("{percentage}% used ({amount} available)")
