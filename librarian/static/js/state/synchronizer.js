@@ -3,7 +3,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
 (function(window, $, templates) {
   var FETCH_INTERVAL, fetch, locale, provider, registry, stateUrl, update;
-  FETCH_INTERVAL = 5000;
+  FETCH_INTERVAL = 3000;
   locale = (window.location.pathname.split('/'))[1];
   stateUrl = "/" + locale + "/state/";
   window.state = {};

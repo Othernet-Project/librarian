@@ -1,6 +1,6 @@
 ((window, $, templates) ->
 
-  FETCH_INTERVAL = 5000
+  FETCH_INTERVAL = 3000
 
   locale = (window.location.pathname.split '/')[1]
   stateUrl = "/#{locale}/state/"
