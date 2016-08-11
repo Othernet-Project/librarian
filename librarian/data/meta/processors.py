@@ -9,6 +9,7 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 import itertools
+import logging
 import mimetypes
 import os
 
@@ -136,6 +137,9 @@ class Processor(object):
         try:
             return self.metadata_extractor.extract()
         except MetadataError:
+            return {}
+        except Exception:
+            logging.exception("Unhandled exception during etadata extraction.")
             return {}
 
     def _add_metadata(self, dest):
@@ -318,7 +322,18 @@ class HtmlProcessor(Processor):
         # get filenames of passed in paths
         old_name = os.path.basename(old) if old else None
         new_name = os.path.basename(new) if new else None
-        return cls._score(old_name) < cls._score(new_name)
+        # when both candidates are ``None``, don't accept any of them
+        if not old_name and not new_name:
+            return False
+        # if there's no existing entry point, any html will do
+        if not old_name:
+            return True
+        # if there is check if it scores higher by known names
+        if new_name in cls.FILE_NAMES or old_name in cls.FILE_NAMES:
+            return cls._score(old_name) < cls._score(new_name)
+        # if none of the filenames are known entry points, pick the first
+        # one by alphabetical order
+        return new_name < old_name
 
     def process(self):
         super(HtmlProcessor, self).process()

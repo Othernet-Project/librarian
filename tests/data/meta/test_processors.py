@@ -174,6 +174,9 @@ def test_for_type_success():
     ('index.htm', 'index.html', True),
     ('index.html', 'main.html', False),
     ('index.htm', 'main.html', False),
+    ('start.html', 'custom.html', False),
+    (None, 'custom.html', True),
+    ('custom.html', 'alpha.html', True),
 ])
 def test_is_entry_point(old, new, use):
     assert mod.HtmlProcessor.is_entry_point(new, old) is use

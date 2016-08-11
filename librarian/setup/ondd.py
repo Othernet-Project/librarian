@@ -83,7 +83,6 @@ class ONDDStep:
                             SNR_MIN=snr_min,
                             SNR_MAX=snr_max)
             return dict(successful=True)
-
         # Form is not valid
         if is_test_mode:
             # We only do something about this in test mode
@@ -99,5 +98,5 @@ class ONDDStep:
                         SNR_MIN=snr_min,
                         SNR_MAX=snr_max)
 
-        request.app.supervisor.exts.setup.append({'ondd': {}})
+        ondd_helpers.write_ondd_setup({})
         return dict(successful=True)
