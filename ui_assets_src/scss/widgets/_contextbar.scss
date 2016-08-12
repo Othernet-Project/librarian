@@ -49,7 +49,6 @@
   .icon {
     // Basic geometry
     position: relative;
-    top: 1.1rem;
     width: 100%;
 
     // Styling
@@ -58,6 +57,10 @@
 
     // FX
     @include transition(color $o-animation-speed);
+  }
+
+  .o-panel-right .icon {
+    top: 1.1rem;
   }
 
   .o-contextbar-menu-icon {

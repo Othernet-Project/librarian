@@ -87,7 +87,7 @@ STATUS_TAB_ID = 'status-tab'
                         <div class="o-panel">
                         <%block name="menubar_panel"/>
                         </div>
-                        <div class="o-panel">
+                        <div class="o-panel o-panel-right">
                             <div class="o-panel-splitter">
                                 <div class="o-panel">
                                     <span class="o-contextbar-item">
