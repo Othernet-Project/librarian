@@ -9,14 +9,20 @@
   // Basic geometry
   @include split-panel($o-contextbar-menu-icon-width, $o-contextbar-height);
 
-  .o-contextbar-menu {
+  .o-panel-splitter {
+    @include split-panel(50%, $o-contextbar-height);
+  }
+
+  .o-contextbar-item {
     // Basic geometry
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+  }
 
+  .o-contextbar-menu {
     // Styling
     text-decoration: none;
     color: $o-contextbar-text-color;
@@ -40,21 +46,25 @@
     display: none;
   }
 
-  .o-contextbar-menu-icon {
+  .icon {
     // Basic geometry
     position: relative;
-    top: 1.1rem;
     width: 100%;
-    text-align: center;
 
     // Styling
     text-align: center;
     font-size: $o-contextbar-menu-icon-size;
 
-    // Icon
-    @include icon(menu);
-
     // FX
     @include transition(color $o-animation-speed);
+  }
+
+  .o-panel-right .icon {
+    top: 1.1rem;
+  }
+
+  .o-contextbar-menu-icon {
+    // Icon
+    @include icon(menu);
   }
 }
