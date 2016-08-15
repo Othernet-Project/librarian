@@ -17,7 +17,8 @@ from .options import Options
 from .utils import generate_random_key
 
 
-USERNAME_REGEX = re.compile(r'^\S{1,12}$')
+# This is the same restriction as the Unix pw, but restricted to 12 characters
+USERNAME_REGEX = re.compile(r'^[a-zA-Z]\w{0,11}$')
 
 
 def authenticated_only(func):
