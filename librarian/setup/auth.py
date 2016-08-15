@@ -55,7 +55,7 @@ class SuperuserStep:
                     db=exts.databases.librarian, reset_token=reset_token)
 
         if not exts.config['setup.super_is_system']:
-            return dict(success=True)
+            return dict(successful=True)
 
         try:
             replace_user(DEFAULT_USER, username, password)
