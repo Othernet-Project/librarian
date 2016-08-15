@@ -38,7 +38,7 @@ def adduser(username, password):
     Add a new system user and set its password
     """
     p = subprocess.Popen([ADDUSER, '-u', UID, '-s', SHELL, '-h', HOME,
-                          '-g', SUDO_GROUP, username], stdin=subprocess.PIPE)
+                          '-G', SUDO_GROUP, username], stdin=subprocess.PIPE)
     p.communicate('{pw}\n{pw}\n'.format(pw=password))
     if not p.returncode == 0:
         raise RuntimeError("Could not create account '{}'".format(username))
