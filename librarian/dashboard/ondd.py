@@ -10,7 +10,6 @@ This software is free software licensed under the terms of GPLv3. See COPYING
 file that comes with the source code, or http://www.gnu.org/licenses/gpl.txt.
 """
 
-from bottle import request
 from bottle_utils.i18n import lazy_gettext as _
 
 from ..forms import ondd as ondd_forms
@@ -59,28 +58,13 @@ class ONDDDashboardPlugin(DashboardPlugin):
     def get_context(self):
         initial_data = ondd_helpers.read_ondd_setup()
         preset = match_preset(initial_data)
-        ondd_client = request.app.supervisor.exts.ondd
-        snr_min = request.app.config.get('ondd.snr_min', 0.2)
-        snr_max = request.app.config.get('ondd.snr_max', 0.9)
-        cache_max = request.app.config['ondd.cache_quota']
-        default = {'total': cache_max,
-                   'free': cache_max,
-                   'used': 0,
-                   'alert': None}
-        cache_status = request.app.supervisor.exts.cache.get('ondd.cache')
-        cache_status = cache_status or default
         ONDDForm = ondd_forms.FORMS[ondd_helpers.get_band()]
         band = ondd_helpers.get_band()
-        return dict(status=ondd_client.get_status(),
-                    band=band,
+        return dict(band=band,
                     lband=ondd_helpers.LBAND,
                     kuband=ondd_helpers.KUBAND,
                     is_l=band == ondd_helpers.LBAND,
                     is_ku=band == ondd_helpers.KUBAND,
                     preset_keys=ONDDForm.PRESETS[0].values.keys(),
                     form=ONDDForm(initial_data),
-                    files=ondd_client.get_transfers(),
-                    SNR_MIN=snr_min,
-                    SNR_MAX=snr_max,
-                    selected_preset=preset,
-                    cache_status=cache_status)
+                    selected_preset=preset)

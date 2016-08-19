@@ -7,7 +7,7 @@
 
 <div class="ondd-status">
     <div class="left">
-        <div id="signal-status" class="signal-status" data-url="${i18n_url('ondd:status')}">
+        <div id="signal-status" class="signal-status">
             ${status.body()}
         </div>
         <div class="ondd-settings">
@@ -17,10 +17,10 @@
         </div>
     </div>
     <div class="right">
-        <div id="ondd-cache-status" class="ondd-cache-status" data-url="${i18n_url('ondd:cache_status')}">
+        <div id="ondd-cache-status" class="ondd-cache-status">
             ${cache_status.body()}
         </div>
-        <div id="ondd-file-list" class="ondd-file-list" data-url="${i18n_url('ondd:file_list')}">
+        <div id="ondd-file-list" class="ondd-file-list">
             ${file_list.body()}
         </div>
     </div>
