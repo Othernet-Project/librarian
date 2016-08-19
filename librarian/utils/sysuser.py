@@ -35,7 +35,7 @@ def deluser(username):
 
 def addgroup(username, group=None):
     group = group or username
-    ret = subprocess.call([ADDGROUP, username, username])
+    ret = subprocess.call([ADDGROUP, username, group])
     if ret:
         raise RuntimeError("could not add '{}' to '{}' group".format(
             username, group))
