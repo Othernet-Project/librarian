@@ -6,7 +6,7 @@
     <table>
         <tr>
             <td>${_("Selected frequency")}</td>
-            <td class="value" data-bind="text: ondd.status.freq + ' Mhz'">${'{} MHz'.format(status['freq'])}</td>
+            <td class="value" data-bind="text: ondd.status.freq + ' MHz'">${'{} MHz'.format(status['freq'])}</td>
         </tr>
         <tr>
             <td>${_("Offset from selected frequency")}</td>
