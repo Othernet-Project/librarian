@@ -15,7 +15,7 @@ import subprocess
 PREFIX = '/usr/sbin'
 DELUSER = PREFIX + '/deluser'
 ADDUSER = PREFIX + '/adduser'
-PASSWD = PREFIX + '/passwd'
+ADDGROUP = PREFIX + '/addgroup'
 
 # Account parameters
 HOME = '/home/outernet'
@@ -33,15 +33,25 @@ def deluser(username):
         raise RuntimeError("could not delete account '{}'".format(username))
 
 
+def addgroup(username, group=None):
+    group = group or username
+    ret = subprocess.call([ADDGROUP, username, username])
+    if ret:
+        raise RuntimeError("could not add '{}' to '{}' group".format(
+            username, group))
+
+
 def adduser(username, password):
     """
     Add a new system user and set its password
     """
     p = subprocess.Popen([ADDUSER, '-u', UID, '-s', SHELL, '-h', HOME,
-                          '-G', SUDO_GROUP, username], stdin=subprocess.PIPE)
+                          username], stdin=subprocess.PIPE)
     p.communicate('{pw}\n{pw}\n'.format(pw=password))
     if not p.returncode == 0:
         raise RuntimeError("Could not create account '{}'".format(username))
+    addgroup(username)
+    addgroup(username, SUDO_GROUP)
 
 
 def replace_user(existing, username, password):
