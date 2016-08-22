@@ -16,7 +16,25 @@ from bottle import request
 from bottle_utils import form
 from bottle_utils.i18n import lazy_gettext as _
 
-from ..core.contrib.auth.users import User
+from ..core.contrib.auth.users import User, USERNAME_REGEX
+
+
+class Username(form.Validator):
+    USERNAME_RE = USERNAME_REGEX
+
+    messages = {
+        # Translators, error message shown when username does not meet the
+        # requirements during sign-up.
+        'bad_username': _('Usernames must start with an English letter (a-z) '
+                          'and may contain up to 12 letters, numbers and an '
+                          "underscore character, '_'")
+    }
+
+    def validate(self, v):
+        if not v:
+            return
+        if self.USERNAME_RE.match(v.strip()) is None:
+            raise form.ValidationError('bad_username', {'value': v})
 
 
 class TokenValidator(form.Validator):
@@ -83,7 +101,7 @@ class RegistrationForm(form.Form):
     }
     # Translators, used as label in create user form
     username = form.StringField(_("Username"),
-                                validators=[form.Required()],
+                                validators=[form.Required(), Username()],
                                 placeholder=_('username'))
     # Translators, used as label in create user form
     password1 = form.PasswordField(_("Password"),

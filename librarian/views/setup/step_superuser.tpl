@@ -11,6 +11,7 @@
 <%block name="step_desc">
     <p>
         ${_('The superuser account is used to maintain the library and configure the receiver.')}
+        ${_('The superuser account username and passwrd can also be used in the log-in shell.')}
     </p>
 </%block>
 
