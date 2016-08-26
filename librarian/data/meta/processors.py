@@ -351,7 +351,7 @@ class ImageProcessor(Processor, ThumbProcessorMixin):
     name = ContentTypes.IMAGE
     metadata_class = ImageMetadata
 
-    EXTENSIONS = ['jpg', 'jpeg', 'png']
+    EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png']
 
     @staticmethod
     @runnable()
