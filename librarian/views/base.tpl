@@ -75,7 +75,13 @@ STATUS_TAB_ID = 'status-tab'
                 %>
                 <${tag_name} href="${nojs.comp_url('menu')}" role="button" aria-controls="${MENUBAR_ID}" class="o-pulldown-menubar-hbar-activator${' o-activator' if show_menu else ''}">
                     <span class="o-pulldown-menubar-hbar-activator-label">
-                        <span class="o-pulldown-menubar-hbar-activator-label-icon icon icon-outernet"></span>
+                        %if not showmenu:
+                        <a href="${url('sys:root')}">
+                        %endif
+                            <span class="o-pulldown-menubar-hbar-activator-label-icon icon icon-outernet"></span>
+                        %if not showmenu:
+                        </a>
+                        %endif
                         <span class="o-pulldown-menubar-hbar-activator-label-text">${_('Toggle apps menu')}</span>
                     </span>
                     % if show_menu:
