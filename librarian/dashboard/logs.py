@@ -23,7 +23,7 @@ def iter_lines(lines):
 
 class LogsDashboardPlugin(DashboardPlugin):
     # Translators, used as dashboard section title
-    heading = _('Application logs')
+    heading = _('Application Logs')
     name = 'logs'
 
     def get_context(self):

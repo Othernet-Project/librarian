@@ -28,7 +28,7 @@ except AttributeError:
 
 class DiskspaceDashboardPlugin(DashboardPlugin):
     # Translators, used as dashboard section title
-    heading = _('Storage devices')
+    heading = _('Storage Devices')
     name = 'diskspace'
 
     def get_template(self):
