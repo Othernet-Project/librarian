@@ -34,6 +34,7 @@ EXTENSION_VIEW_MAPPING = {
     'html': 'html',
     'htm': 'html',
     'xhtml': 'html',
+    'htmlgz': 'html',
     'mp3': 'audio',
     'wav': 'audio',
     'ogg': 'audio',

@@ -29,6 +29,7 @@ from .utils import runnable
 FILE_TYPE = 0
 DIRECTORY_TYPE = 1
 
+mimetypes.add_type("text/html",".htmlgz",True)
 
 class ThumbProcessorMixin(object):
 
