@@ -11,7 +11,7 @@ value = request.params.get('preset', str(selected_preset))
     % endfor
 </%def>
 
-<p class="o-field{' o-field-error' if form.preset.error else ''}">
+<p class="o-field${' o-field-error' if form.preset.error else ''}">
     ## Translators, label for select list that allows user to pick a satellite to tune into
     ${forms.label(_('Satellite'), id='transponders')}
     <select name="preset" id="transponders" class="transponders" data-fields="${' '.join(preset_keys)}">
