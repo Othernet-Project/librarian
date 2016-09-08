@@ -17,6 +17,10 @@ class ONDDFormBase(form.Form):
     @property
     def preset_data(self):
         index = self.processed_data.get('preset', 0)
+        # Negative indexing is valid on lists, so to properly handle when the
+        # custom preset is chosen, it must be checked here
+        if index < 0:
+            return {}
         try:
             preset = self.PRESETS[index - 1]
         except IndexError:
