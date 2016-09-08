@@ -67,11 +67,7 @@
 ## Checkbox
 ##
 
-<%def name="checkbox(name, value, is_checked=None, label=None, id=None)">
-    <%
-    current_value = request.params.getall(name)
-    is_checked = value in current_value if is_checked is None else is_checked
-    %>
+<%def name="checkbox(name, value, is_checked, label=None, id=None)">
     <input type="checkbox" id="${id or name | h}" name="${name | h}" value="${value | h}"${' checked' if is_checked else ''}>
     % if label:
         ${self.label(label, inline=True, id=id or name)}
@@ -147,7 +143,7 @@
         % elif fld.type == 'hidden':
             ${self.hidden(fld.name, value=fld.value, id=id, **kw)}
         % elif fld.type in ['checkbox', 'radio']:
-            ${self.checkbox(fld.name, value=fld.expected_value, is_checked=fld.default, label=label or fld.label, id=id, **kw)}
+            ${self.checkbox(fld.name, value=fld.expected_value, is_checked=fld.checked, label=label or fld.label, id=id, **kw)}
         % elif fld.type == 'textarea':
             ${self.textarea(fld.name, placeholder=fld.options.get('placeholder'), value=fld.value, id=id, **kw)}
         % elif fld.type == 'select':
