@@ -48,7 +48,7 @@ def match_preset(data):
 
 class ONDDDashboardPlugin(DashboardPlugin):
     # Translators, used as dashboard section title
-    heading = _('Tuner settings')
+    heading = _('Tuner Settings')
     name = 'ondd'
     priority = 10
 
