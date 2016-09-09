@@ -296,7 +296,7 @@ class HtmlProcessor(Processor):
     name = ContentTypes.HTML
     metadata_class = HtmlMetadata
 
-    EXTENSIONS = ['html', 'htm', 'xhtml']
+    EXTENSIONS = ['html', 'htm', 'xhtml', 'htmlgz']
     INDEX_NAMES = ['index', 'main', 'start']
     FILE_NAMES = list(reversed(['.'.join(p)
                                 for p in itertools.product(INDEX_NAMES,
