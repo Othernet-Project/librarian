@@ -1,13 +1,15 @@
 import functools
 
 from bottle import request
+from streamline import after
 
 from ...exts import ext_container as exts
 from .sessions import SessionExpired, SessionInvalid, Session
 
 
 # Set up a hook, so handlers that raise cannot escape session-saving
-def save_session():
+@after
+def save_session(route):
     if hasattr(request, 'session'):
         if request.session.modified:
             request.session.save()
