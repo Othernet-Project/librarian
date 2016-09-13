@@ -2,7 +2,6 @@
 
 <%namespace name="forms" file="/ui/forms.tpl"/>
 <%namespace name="settings_fields" file="/ondd/_settings_fields.tpl"/>
-<%namespace name="status" file="/ondd/_status.tpl"/>
 <%namespace name="presets" file="/ondd/_presets.tpl"/>
 
 <%block name="step_title">
@@ -21,22 +20,6 @@
     <div id="ondd-form" class="step-ondd-form">
         <div id="settings-form">
             ${settings_fields.body()}
-            <p>
-                <button id="tuner-test" type="submit" name="mode" value="test">
-                    ## Translators, used as button label for tuner test during
-                    ## setup wizard
-                    ${_('Test settings')}
-                </button>
-                % if is_l:
-                    <span class="o-field-help-message">
-                        ${_('After saving the tuner settings, it may take up to 15 minutes for a lock to be acquired.')}
-                    </span>
-                % endif
-            </p>
-        </div>
-
-        <div id="signal-status" class="signal-status ondd-status">
-            ${status.body()}
         </div>
     </div>
 </%block>
