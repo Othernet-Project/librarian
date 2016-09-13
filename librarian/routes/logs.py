@@ -12,6 +12,7 @@ from ..data.diagnostics import generate_report
 
 class SendAppLog(NonIterableRouteBase):
     path = '/applog'
+    exclude_plugins = ['setup_plugin']
 
     def get(self):
         log_path = self.config['logging.output']
