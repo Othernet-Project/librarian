@@ -114,7 +114,7 @@ class LForm(ONDDFormBase):
         return self.preset_data.get('sample_rate', value)
 
     def preprocess_rf_filter(self, value):
-        return float(self.preset_data.get('rf_filter', value))
+        return int(self.preset_data.get('rf_filter', value))
 
     def preprocess_descrambler(self, value):
         return self.preset_data.get('descrambler', value)
