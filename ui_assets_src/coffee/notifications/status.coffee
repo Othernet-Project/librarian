@@ -16,10 +16,20 @@
       notificationAlertEl.hide()
       notificationAlertEl.prev(separatorSelector).hide()
 
+  createField = (name, value) ->
+    input = $ '<input>'
+    input.attr 'type', 'hidden'
+    input.attr 'name', name
+    input.val value
+    input
+
   deleteNotification = (e) ->
     elem = $ @
     form = elem.parents formSelector
     url = form.attr 'action'
+    button = form.find 'button'
+    input = createField (button.attr 'name'), button.val()
+    form.append input
     res = $.post url, form.serialize()
     res.done () ->
       form.parent().remove()
