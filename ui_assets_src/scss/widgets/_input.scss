@@ -9,6 +9,7 @@ input[type=search],
 input[type=url],
 input[type=tel],
 input[type=number],
+textarea,
 select {
   // Basic geometry
   padding: $o-input-padding;
@@ -35,4 +36,8 @@ select {
 
 input[type=checkbox] {
   vertical-align: middle;
+}
+
+textarea {
+  height: $o-input-height * 3;
 }
