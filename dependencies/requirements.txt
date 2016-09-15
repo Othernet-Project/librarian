@@ -9,7 +9,7 @@ cssmin==0.2.0
 # fsal
 gevent==1.0.2
 greenlet==0.4.9
-greentasks==2.0.post1
+greentasks==2.0.post2
 hwd==0.3
 Mako==1.0.3
 MarkupSafe==0.23

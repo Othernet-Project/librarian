@@ -12,8 +12,10 @@ class Tasks(ObjectCollectorMixin, ListCollector):
 
     def __init__(self, supervisor):
         super(Tasks, self).__init__(supervisor)
-        delay = supervisor.config['app.consume_tasks_delay']
-        exts.tasks = TaskScheduler(consume_tasks_delay=delay)
+        delay = supervisor.config['tasks.consume_delay']
+        multiprocessing = supervisor.config['tasks.multiprocessing']
+        exts.tasks = TaskScheduler(consume_tasks_delay=delay,
+                                   multiprocessing=multiprocessing)
 
     def install_member(self, task_cls):
         exts.tasks.schedule(task_cls)
