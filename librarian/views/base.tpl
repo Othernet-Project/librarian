@@ -159,7 +159,7 @@ STATUS_TAB_ID = 'status-tab'
 
         <%block name="footer">
             <footer class="o-statusbar" id="${STATUSBAR_ID}">
-                <div class="o-statusbar-hbar o-activator" id="${id}-hbar" role="button" aria-controls="${id}-status">
+                <div class="o-statusbar-hbar o-activator" id="${STATUSBAR_ID}-hbar" role="button" aria-controls="${STATUSBAR_ID}-status">
                     <div class="o-statusbar-hbar-quick-status">
                         <%block name="statusbar_quick">
                             <%
