@@ -185,6 +185,23 @@ STATUS_TAB_ID = 'status-tab'
                                 </span>
                             % endif
                             </span>
+                            <% status = th.state.ondd['status'] %>
+                            <span class="separator"></span>
+                            <span class="ondd-status ondd-status-snr">
+                                <span>${_("SNR")}:</span>
+                                <span data-bind="text: ondd.status.snr + ' dB'">${'{} dB'.format(status['snr'])}</span>
+                            </span>
+                            <span class="separator"></span>
+                            <span class="ondd-status ondd-status-crc-ok">
+                                <span>${_("Packets")}:</span>
+                                <span data-bind="text: ondd.status.crc_ok">${status['crc_ok']}</span>
+                            </span>
+                            <span class="separator"></span>
+                            <% files = th.state.ondd['transfers'] %>
+                            <span class="ondd-status ondd-status-transfer">
+                                <span>${_("Downloading")}:</span>
+                                <span data-bind="text: ondd.transfers.length ? ondd.transfers[0].filename + ' (' + parseInt(Math.round(ondd.transfers[0].percentage)) + '%)' : ''">${'{} ({}%)'.format(files[0]['filename'], int(round(files[0]['percentage']))) if files else ''}</span>
+                            </span>
                         </%block>
                     </div>
                 </div>
