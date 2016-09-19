@@ -7,6 +7,7 @@ import pbkdf2
 
 from bottle import request
 
+from ...exts import ext_container as exts
 from ..databases.serializers import DateTimeDecoder, DateTimeEncoder
 from ..databases.utils import utcnow, from_csv, to_csv, row_to_dict
 
@@ -34,6 +35,8 @@ class InvalidUserCredentials(Exception):
 
 
 class User(BaseUser):
+
+    USER_CREATED_EVENT = 'user_created'
 
     InvalidUserCredentials = InvalidUserCredentials
 
@@ -155,6 +158,8 @@ class User(BaseUser):
                      'groups': groups}
         user = cls(db=db, **user_data)
         user.save()
+        # Announce the creation of the new user account
+        exts.events.publish(cls.USER_CREATED_EVENT, user)
         return user
 
     @classmethod
