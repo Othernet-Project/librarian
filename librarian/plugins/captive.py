@@ -31,7 +31,7 @@ def captive_portal_plugin(fn):
         elif status == '302':
             return redirect(self_url, 302)
         else:
-            response = template(template_name, {})
+            response = template('captive/{}'.format(template_name), {})
         raise HTTPResponse(response, int(status))
     return wrapper
 captive_portal_plugin.name = 'captive_portal_plugin'
