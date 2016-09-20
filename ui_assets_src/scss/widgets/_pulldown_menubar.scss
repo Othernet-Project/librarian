@@ -30,17 +30,17 @@ $o-pulldown-menubar-height: $o-pulldown-menubar-hbar-height + $o-pulldown-menuba
   // Alternative states
 
   &.open {
-    top: 0; 
+    top: 0;
 
     .o-pulldown-menubar-hbar-activator {
       // Styling
       background-color: $o-pulldown-menubar-hbar-activator-highlight-color;
       color: $o-pulldown-menubar-hbar-activator-highlight-text-color;
-    }
 
-    .o-pulldown-menubar-hbar-activator-icon {
-      // Icon
-      @include icon($o-pulldown-menubar-hbar-activator-open-icon);
+      .o-pulldown-menubar-hbar-activator-icon {
+        // Icon
+        @include icon($o-pulldown-menubar-hbar-activator-open-icon);
+      }
     }
   }
 
@@ -65,33 +65,6 @@ $o-pulldown-menubar-height: $o-pulldown-menubar-hbar-height + $o-pulldown-menuba
     bottom: 0;
     height: $o-pulldown-menubar-hbar-height;
   }
-    
-  .o-pulldown-menubar-hbar-activator {
-    // Basic geometry
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: $o-pulldown-menubar-hbar-activator-width;
-    height: 100%;
-
-    // Styling
-    text-align: center;
-    text-decoration: none;
-    line-height: $o-pulldown-menubar-hbar-height;
-    background-color: $o-pulldown-menubar-background;
-    color: $o-pulldown-menubar-text-color;
-    @include border-bottom-right-radius($o-pulldown-menubar-activator-corner-radius);
-
-    // FX
-    
-    @include transition(background-color $o-animation-speed);
-
-    &:hover, &:focus {
-      background: $o-pulldown-menubar-hbar-activator-highlight-color;
-      color: $o-pulldown-menubar-hbar-activator-highlight-text-color;
-    }
-  }
 
   .o-pulldown-menubar-hbar-bar {
     // Basic geometry
@@ -102,35 +75,76 @@ $o-pulldown-menubar-height: $o-pulldown-menubar-hbar-height + $o-pulldown-menuba
     height: 100%;
   }
 
-  .o-pulldown-menubar-hbar-activator-label {
+  // Button on the left edge of the hbar (menubar)
+  .o-pulldown-menubar-hbar-activator {
     // Basic geometry
-    position: relative;
-    top: -1px;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 0 1rem;
+    overflow: hidden; // Fixes large font cover area below hbar
 
-    .o-pulldown-menubar-hbar-activator-label-icon {
-      font-size: 1200%;
-      @include transition(color $o-animation-speed);
-      overflow: hidden; // Fixes large font cover area below hbar
-      color: $o-negative-base;
-    }
+    // Styling
+    text-align: center;
+    text-decoration: none;
+    background-color: $o-pulldown-menubar-background;
+    color: $o-pulldown-menubar-text-color;
+    @include border-bottom-right-radius($o-pulldown-menubar-activator-corner-radius);
 
-    .o-pulldown-menubar-hbar-activator-label-text {
-      display: none;
+    // FX
+
+    @include transition(background-color $o-animation-speed);
+
+    &:hover, &:focus {
+      background: $o-pulldown-menubar-hbar-activator-highlight-color;
+      color: $o-pulldown-menubar-hbar-activator-highlight-text-color;
     }
   }
 
-  .o-pulldown-menubar-hbar-activator-icon {
+  // Label for the button on the left edge of the hbar (menubar)
+  .o-pulldown-menubar-hbar-activator-label {
     // Basic geometry
-    vertical-align: middle;
+    display: block;
+    text-align: center;
+
+    // Because the logo is one large character (1200% font size) picked from
+    // the webfont, the alignment gets messed up (it's 2.5x as tall as the
+    // h-bar). We adjust this by moving the entire label element up by 4rem.
+    // Even though the logo is much larger than the h-bar, the container has
+    // overflow hidden, so it is contained within the h-bar height.
     position: relative;
+    line-height: 1;
+    top: -4rem;
 
-    // Styling
-    font-size: $o-pulldown-menubar-hbar-activator-icon-size;
+    // Text that is hidden, used only for non-visual UAs
+    .o-pulldown-menubar-hbar-activator-label-text {
+      display: none;
+    }
 
-    // Icon
-    @include icon($o-pulldown-menubar-hbar-activator-closed-icon);
+    // This logo
+    .o-pulldown-menubar-hbar-activator-label-icon {
+      @include transition(color $o-animation-speed);
+      color: $o-negative-base;
+      display: inline-block;
+      font-size: 1200%;
+    }
 
-    // FX
-    @include transition(color $o-animation-speed);
+    // The caret-down icon
+    .o-pulldown-menubar-hbar-activator-icon {
+      // Basic geometry
+      vertical-align: middle;
+      position: relative;
+
+      // Styling
+      font-size: $o-pulldown-menubar-hbar-activator-icon-size;
+
+      // Icon
+      @include icon($o-pulldown-menubar-hbar-activator-closed-icon);
+
+      // FX
+      @include transition(color $o-animation-speed);
+    }
   }
 }

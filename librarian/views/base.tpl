@@ -71,23 +71,16 @@ STATUS_TAB_ID = 'status-tab'
             <div class="o-pulldown-menubar-hbar" id="${MENUBAR_ID}-hbar" role="menubar">
                 <%
                     show_menu = len(list(menu_group('main'))) > 1
-                    tag_name = 'a' if show_menu else 'span'
                 %>
-                <${tag_name} href="${nojs.comp_url('menu')}" role="button" aria-controls="${MENUBAR_ID}" class="o-pulldown-menubar-hbar-activator${' o-activator' if show_menu else ''}">
+                <a href="${nojs.comp_url('menu') if show_menu else url('sys:root')}" role="button" aria-controls="${MENUBAR_ID}" class="o-pulldown-menubar-hbar-activator${' o-activator' if show_menu else ''}">
                     <span class="o-pulldown-menubar-hbar-activator-label">
-                        %if not showmenu:
-                        <a href="${url('sys:root')}">
-                        %endif
-                            <span class="o-pulldown-menubar-hbar-activator-label-icon icon icon-outernet"></span>
-                        %if not showmenu:
-                        </a>
-                        %endif
+                        <span class="o-pulldown-menubar-hbar-activator-label-icon icon icon-outernet"></span>
+                        % if show_menu:
                         <span class="o-pulldown-menubar-hbar-activator-label-text">${_('Toggle apps menu')}</span>
+                        <span class="o-pulldown-menubar-hbar-activator-icon icon"></span>
+                        % endif
                     </span>
-                    % if show_menu:
-                    <span class="o-pulldown-menubar-hbar-activator-icon icon"></span>
-                    % endif
-                </${tag_name}>
+                </a>
                 <div class="o-pulldown-menubar-hbar-bar">
                     <div class="o-contextbar o-panel" id="${CONTEXT_BAR_ID}">
                         <div class="o-panel">
