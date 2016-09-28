@@ -37,8 +37,6 @@
 <%def name="storage_info(storage)">
     <%
         is_loop = storage.name.startswith('loop')
-        usage = storage.stat
-
         if storage.is_loop:
             disk_type = 'internal'
             # Translators, used as description of storage device
@@ -68,13 +66,13 @@
         ${disk_type_label}
     </span>
     <span class="storage-usage storage-detail">
-        ${ui.progress_mini(usage.pct_used)}
+        ${ui.progress_mini(storage.pct_used)}
         ## Translators, this is used next to disk space usage indicator in settings 
         ## panel. The {used}, {total}, and {free} are placeholders.
         ${_('{used} of {total} ({free} free)').format(
-            used=h.hsize(usage.used),
-            total=h.hsize(usage.total),
-            free=h.hsize(usage.free))}
+            used=h.hsize(storage.used),
+            total=h.hsize(storage.total),
+            free=h.hsize(storage.free))}
     </span>
 </%def>
 

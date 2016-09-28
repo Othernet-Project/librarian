@@ -120,6 +120,7 @@ class StorageDir(object):
         self.path = path
         self.id = get_storage_id(self.path)
         self.mount = find_mount_point(path)
+        self.stat = os.statvfs(self.path)
         if self.mount:
             self.dev = get_storage_by_mtab_devname(self.mount.dev)
         else:
@@ -160,22 +161,25 @@ class StorageDir(object):
         return self.dev.name
 
     @property
-    def total_content_size(self):
-        success, size = exts.fsal.get_path_size(self.path)
-        if not success:
-            raise StorageError(self.id, 'Could not get content size')
-        return size
+    def total(self):
+        return self.stat.f_bsize * self.stat.f_blocks
 
     @property
-    def stat(self):
-        return self.dev.stat
+    def free(self):
+        return self.stat.f_bsize * self.stat.f_bfree
 
     @property
-    def free_space(self):
-        return self.stat.free
+    def used(self):
+        return self.total - self.free
+
+    @property
+    def pct_used(self):
+        return self.used * 100 / self.total
+
 
 
 class Storages(list):
+
     def __init__(self, paths, ignore_nonexistent=False):
         super(Storages, self).__init__()
         self.lut = {}
@@ -201,20 +205,20 @@ class Storages(list):
 
     def test_capacity(self, storage_id):
         target = self.get(storage_id)
-        return self.total_content_size() < target.free_space
+        return self.get_total_content_size() < target.free
 
     def get_total_content_size(self, exclude=[]):
         total = 0
         for s in self:
             if s.id in exclude:
                 continue
-            total += s.total_content_size
+            total += s.used
         return total
 
     def move_preflight(self, storage_id):
         dest = self.get(storage_id)
         content_size = self.get_total_content_size(exclude=[storage_id])
-        free_space = dest.free_space
+        free_space = dest.free
         if not len(self) > 1:
             raise NoMoveTargetError(dest, 'No other drives to move to')
         if not content_size:
