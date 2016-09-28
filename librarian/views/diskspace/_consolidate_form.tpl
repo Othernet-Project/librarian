@@ -90,9 +90,6 @@
     % for storage in storages:
         <div class="diskspace-storageinfo">
             ${self.storage_info(storage)}
-            <span class="storage-detail">
-                ${self.button(storage.id, active_storage_id)}
-            </span>
         </div>
     % endfor
 </form>

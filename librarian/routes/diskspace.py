@@ -1,7 +1,7 @@
 import logging
 
 from bottle_utils.i18n import i18n_url, lazy_gettext as _
-from streamline import RouteBase, XHRPartialFormRoute
+from streamline import RouteBase, XHRPartialRoute
 
 from ..core.contrib.templates.renderer import template
 from ..core.exts import ext_container as exts
@@ -63,7 +63,7 @@ class Notifier(object):
         self.notify(msg, priority)
 
 
-class Consolidate(XHRPartialFormRoute):
+class Consolidate(XHRPartialRoute):
     """ Gets a ID from request context, gathers a list of all drives and
     moves content from all other drives to the drive with matching ID """
     path = '/diskspace/consolidate/'
@@ -117,3 +117,6 @@ class Consolidate(XHRPartialFormRoute):
                                   redirect_url=i18n_url('dashboard:main'),
                                   redirect_target=_("settings"))
         return self.HTTPResponse(body=body)
+
+    def get(self):
+        return {}
