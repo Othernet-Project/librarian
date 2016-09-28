@@ -66,7 +66,8 @@
         ${disk_type_label}
     </span>
     <span class="storage-usage storage-detail">
-        ${ui.progress_mini(storage.pct_used)}
+        <% pct_used = storage.used * 100 / storage.total %>
+        ${ui.progress_mini(pct_used)}
         ## Translators, this is used next to disk space usage indicator in settings 
         ## panel. The {used}, {total}, and {free} are placeholders.
         ${_('{used} of {total} ({free} free)').format(

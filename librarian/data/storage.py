@@ -172,11 +172,6 @@ class StorageDir(object):
     def used(self):
         return self.total - self.free
 
-    @property
-    def pct_used(self):
-        return self.used * 100 / self.total
-
-
 
 class Storages(list):
 
