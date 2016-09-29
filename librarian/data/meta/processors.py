@@ -29,9 +29,6 @@ from .utils import runnable
 FILE_TYPE = 0
 DIRECTORY_TYPE = 1
 
-mimetypes.add_type("text/html",".htmlgz",True)
-mimetypes.add_type("text/html",".html.gz",True)
-
 class ThumbProcessorMixin(object):
 
     @staticmethod
@@ -297,7 +294,7 @@ class HtmlProcessor(Processor):
     name = ContentTypes.HTML
     metadata_class = HtmlMetadata
 
-    EXTENSIONS = ['html', 'htm', 'xhtml', 'htmlgz', 'html.gz']
+    EXTENSIONS = ['html', 'htm', 'xhtml']
     INDEX_NAMES = ['index', 'main', 'start']
     FILE_NAMES = list(reversed(['.'.join(p)
                                 for p in itertools.product(INDEX_NAMES,
