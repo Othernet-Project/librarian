@@ -52,7 +52,7 @@ class FSWriter(object):
         self._content_types = data['content_types']
 
     @classmethod
-    def _key(cls, path):
+    def key(cls, path):
         """
         Return the unique key under which the file system object can be cached.
         """
@@ -68,7 +68,7 @@ class FSWriter(object):
         missing = []
         path_chain = list(ancestors_of(self._path))
         for (i, path) in enumerate(path_chain):
-            entry = self._cache.get(self._key(path))
+            entry = self._cache.get(self.key(path))
             # in the event of the first missing entry from cache, abort
             # further lookup in it, since it's not possible to have a child
             # whithout it's parent stored, so none of the children would
@@ -87,7 +87,7 @@ class FSWriter(object):
                                 order='length(path)')
         for entry in self._db.fetchiter(query, missing):
             path = entry['path']
-            self._cache.set(self._key(path),
+            self._cache.set(self.key(path),
                             dict(entry),
                             timeout=self.CACHE_TIMEOUT)
             ancestors.append(entry)
@@ -117,31 +117,37 @@ class FSWriter(object):
                                      content_types=content_types))
         # fetch newly created entry, store it in cache and return it
         entry = self._fetch(path)
-        self._cache.set(self._key(path), entry, timeout=self.CACHE_TIMEOUT)
+        self._cache.set(self.key(path), entry, timeout=self.CACHE_TIMEOUT)
         return entry
 
-    def _update(self, path, content_types):
+    def _update(self, path, content_types, overwrite=False):
         """
         Update the ``content_types`` column of the file system object matching
         the passed in ``path``.
         """
-        cache_key = self._key(path)
+        cache_key = self.key(path)
         entry = self._cache.get(cache_key)
-        if entry and entry['content_types'] & content_types == content_types:
+        if (entry and not overwrite and
+                entry['content_types'] & content_types == content_types):
             # the cached version of entry already contained the specified
             # content type, so another update is not necessary
             return entry
         # entry was either not yet in cache, or the cached version did not have
         # the specified ``content_type`` yet
-        what = dict(content_types='content_types | %(content_types)s')
+        if overwrite:
+            what = dict(content_types='%(content_types)s')
+        else:
+            what = dict(content_types='content_types | %(content_types)s')
         query = self._db.Update(self.FS_TABLE, where='path = %(path)s', **what)
         self._db.execute(query, dict(path=path, content_types=content_types))
-        if not entry:
-            # entry was not in cache previously, so fetch it now
+        if not entry or overwrite:
+            # entry was not in cache previously, or it's content type was
+            # rewritten from scratch, so fetch it now
             entry = self._fetch(path)
         else:
-            # entry was in cache, just update it's content_types to match
-            # the above performed update
+            # entry was in cache and it's content type can be reliably
+            # predicted, so just update it's content_types to match the
+            # above performed update
             entry['content_types'] |= content_types
         # store updated entry in cache and return it
         self._cache.set(cache_key, entry, timeout=self.CACHE_TIMEOUT)
@@ -186,7 +192,9 @@ class FSWriter(object):
             self._update(self._parent_path, self._content_types)
         # update only the content types on fs entry if it already existed
         if self._path not in missing_paths:
-            last = self._update(self._path, self._content_types)
+            last = self._update(self._path,
+                                self._content_types,
+                                overwrite=self._type == DIRECTORY_TYPE)
         # returning the either now created or updated fs entry for ``path``
         return last
 
@@ -198,6 +206,7 @@ class FSWriter(object):
         that the file system object already exists.
         """
         return self._update(self._path, self._content_types)
+
 
 
 class Archive(object):
@@ -298,7 +307,7 @@ class Archive(object):
         path = path or self.ROOT_PATH
         (success, dirs, files) = self._fsal.list_dir(path or '.')
         if not success:
-            logging.warn(u"Scan stopped. Invalid path: '%s'", path)
+            logging.warning(u"Scan stopped. Invalid path: '%s'", path)
             raise StopIteration()
         # schedule paths to be analyzed, in the same blocking manner
         file_paths = (fso.rel_path for fso in files)
@@ -649,9 +658,8 @@ class Archive(object):
         for path in paths:
             for proc_cls in self.Processor.for_path(path):
                 proc_cls(path, fsal=self._fsal).deprocess()
-        parents = list(set(os.path.dirname(path) for path in paths))
-        # delete parent directories too, and they will be recreated afterwards
-        paths += parents
+            # invalidate cached entries
+            self._cache.delete(self.FSWriter.key(path))
         # first delete metadata by joining on fs table
         query = self._db.Delete('{} USING {}'.format(self.META_TABLE,
                                                      self.FS_TABLE),
@@ -664,8 +672,10 @@ class Archive(object):
         self._db.execute(query, paths)
         # after deleting meta entries, the contenttypes column of the parent
         # folder needs to be recalculated
-        for path in parents:
-            self._refresh_parent(path)
+        for parent_path in set(os.path.dirname(path) for path in paths):
+            # do not refresh parent if it was deleted
+            if parent_path not in paths:
+                self._refresh_parent(parent_path)
 
     def clear_and_reload(self):
         """
