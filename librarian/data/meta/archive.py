@@ -649,6 +649,9 @@ class Archive(object):
         for path in paths:
             for proc_cls in self.Processor.for_path(path):
                 proc_cls(path, fsal=self._fsal).deprocess()
+        parents = list(set(os.path.dirname(path) for path in paths))
+        # delete parent directories too, and they will be recreated afterwards
+        paths += parents
         # first delete metadata by joining on fs table
         query = self._db.Delete('{} USING {}'.format(self.META_TABLE,
                                                      self.FS_TABLE),
@@ -659,6 +662,10 @@ class Archive(object):
         query = self._db.Delete(self.FS_TABLE,
                                 where=self._db.sqlin('path', paths))
         self._db.execute(query, paths)
+        # after deleting meta entries, the contenttypes column of the parent
+        # folder needs to be recalculated
+        for path in parents:
+            self._refresh_parent(path)
 
     def clear_and_reload(self):
         """
