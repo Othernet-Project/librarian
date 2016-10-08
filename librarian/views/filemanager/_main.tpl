@@ -13,7 +13,7 @@ FACET_VIEW_MAPPINGS = (
     ('audio', _('Listen')),
     ('video', _('Watch')),
     ('html', _('Read')),
-    ('updates', _('Updates')),
+    ('updates', _('Recent')),
 )
 
 FACET_ICON_MAPPING = {
